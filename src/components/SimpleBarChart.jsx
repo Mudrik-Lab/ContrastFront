@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
+import Plot from "react-plotly.js";
 import {
   BarChart,
   Bar,
@@ -42,12 +43,9 @@ export default function SimpleBarChart() {
       return 0;
     }
   });
-  const tickFormat = (tick) => {
-    return tick + "ory";
-  };
 
   return (
-    <div className="w-full h-screen m-auto flex">
+    <div className="w-full h-screen m-auto flex flex-col">
       <BarChart
         barSize={"100%"}
         width={1000}
@@ -80,6 +78,17 @@ export default function SimpleBarChart() {
         <Legend verticalAlign="top" height={36} />
         <Bar dataKey="number" fill="#1F77B4" />
       </BarChart>
+      <Plot
+        data={[
+          {
+            x: topicsCountArr.map((x) => x.topic),
+            y: topicsCountArr.map((y) => y.number),
+            type: "bar",
+            mode: "lines",
+          },
+        ]}
+        layout={{ width: 1200, height: 800, title: "Free Queries" }}
+      />
     </div>
   );
 }
