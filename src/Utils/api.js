@@ -6,7 +6,7 @@ export async function queryApi({
   url,
   method,
   data = null,
-  isProtected = true,
+  isProtected,
   params
 }) {
     // const token = tokenHandler.getToken();

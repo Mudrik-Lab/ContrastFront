@@ -1,11 +1,13 @@
 import React from "react";
+import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
+import { Button } from "./Reusble";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   return (
     <div>
-      <nav className="bg-gray-800 px-2 py-2.5 fixed w-full z-20 top-0 left-0">
-        <div className="container flex flex-wrap items-center justify-between mx-auto">
+      <nav className="bg-gray-800 px-4 py-2.5 fixed w-full z-20 top-0 left-0 ">
+        <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between w-2/4">
             <div>
               <span className="text-white">LOGO</span>
@@ -17,25 +19,11 @@ export default function Navbar() {
               <ul className="flex flex-row text-white space-x-12">
                 <li className="flex items-center relative">
                   <button
-                    id="dropdownNavbarLink"
-                    data-dropdown-toggle="dropdownNavbar"
                     class="flex items-center text-white border-0 "
                     onClick={() => setGraphMenue(!graphMenue)}
                   >
                     Graphs
-                    <svg
-                      class="w-5 h-5 ml-1"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <Arrow />
                   </button>
 
                   {graphMenue && (
@@ -93,12 +81,7 @@ export default function Navbar() {
           <div className="flex flex-row items-center justify-between space-x-4 text-white">
             <div className=" w-6 h-6 bg-slate-400 rounded-full"></div>
             <span>Login</span>
-            <button
-              type="button"
-              className="text-gray-800 bg-gray-100 hover:bg-gray-500 font-medium rounded-sm text-sm px-5 py-1.5 text-center mr-3 "
-            >
-              Submit Research
-            </button>
+            <Button type="button">Submit Research</Button>
           </div>
         </div>
       </nav>
