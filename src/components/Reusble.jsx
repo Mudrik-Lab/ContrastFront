@@ -153,7 +153,7 @@ export const Label = ({ children }) => {
 export const RangeInput = ({}) => {
   const [number, setNumber] = React.useState();
   return (
-    <>
+    <div className="relative">
       <input
         type="range"
         onChange={(e) => setNumber(e.target.value)}
@@ -163,7 +163,15 @@ export const RangeInput = ({}) => {
         class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
         id="numOfExperiments"
       />
-      <output className="absolute text-sm ">{number}</output>
-    </>
+      <span
+        style={{
+          left: number * 0.9 + (number < 20 ? 5 : number < 70 ? 2 : 0) + "%",
+          top: 4,
+        }}
+        className="absolute text-sm pointer-events-none transition-all"
+      >
+        {number}
+      </span>
+    </div>
   );
 };
