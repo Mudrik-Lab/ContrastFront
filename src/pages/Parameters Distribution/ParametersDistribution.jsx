@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import useGetParamaetersDist from "../../apiHooks/useParametersDist";
+
 import {
   Label,
   RadioInput,

@@ -7,6 +7,7 @@ import PlotlyBarChart from "../components/PlotlyBarChart";
 import SimpleBarChart from "../components/SimpleBarChart";
 import SimplePieCahrt from "../components/SimplePieCahrt";
 import WorldMap from "../components/WorldMap";
+import AcrossTheYears from "./Across the years/AcrossTheYears";
 import FreeQueriesPage from "./FreeQueries/FreeQueriesPage";
 import ParametersDistribution from "./Parameters Distribution/ParametersDistribution";
 export const Home = () => {
@@ -17,7 +18,7 @@ export const Home = () => {
     >
       <Navbar />
 
-      <ParametersDistribution />
+      <AcrossTheYears />
     </div>
   );
 };

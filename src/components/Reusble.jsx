@@ -42,7 +42,7 @@ export const Text = ({
     <p
       onClick={onClick}
       className={classNames(
-        `font-sans text-${color ? colors[color][1] : "black"} font-${
+        `font-sans text-${color ? color : "black"} font-${
           weight ? weight : "medium"
         }  `
       )}
