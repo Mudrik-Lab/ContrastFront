@@ -2,7 +2,7 @@ import React from "react";
 import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
 import { ReactComponent as Profile } from "../assets/profile-circle.svg";
 
-import { BlueButton } from "./Reusble";
+import { Button } from "./Reusble";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -80,7 +80,7 @@ export default function Navbar() {
             {/* <div className=" w-6 h-6 bg-slate-400 rounded-full"></div> */}
             <Profile />
             <span>Login</span>
-            <BlueButton type="button">Submit Research</BlueButton>
+            <Button type="button">Submit Research</Button>
           </div>
         </div>
       </nav>

@@ -5,9 +5,9 @@ module.exports = {
     extend: {
       colors: {
         blue: "#66BFF1",
-        greyHeavy: "#6D6D6D",
-        greyReg: "#999999",
-        greyLight: "E9E9E9"
+        grayHeavy: "#6D6D6D",
+        grayReg: "#999999",
+        grayLight: "#E9E9E9",
       },
       gridTemplateRows: {
         // Simple 12 row grid

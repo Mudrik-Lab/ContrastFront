@@ -11,10 +11,14 @@ export const TextInput = ({ ...config }) => {
   );
 };
 
-export const BlueButton = ({ children, ...config }) => {
+export const Button = ({ children, black, ...config }) => {
   return (
     <button
-      className="text-white text-md leading-4 font-bold bg-blue hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center gap-2 "
+      className={classNames(
+        `text-white text-md leading-4 font-bold ${
+          black ? "bg-black" : "bg-blue"
+        } hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+      )}
       {...config}>
       {children}
     </button>
@@ -50,9 +54,9 @@ export const Text = ({
     <p
       onClick={onClick}
       className={classNames(
-        `text-${color ? color : "black"} font-${
-          weight ? weight : "medium"
-        } ${className}  `
+        `text-${color ? color : "black"} font-${weight ? weight : "medium"} ${
+          className ? className : ""
+        }  `
       )}
       style={{
         fontSize: lg ? "20px" : md ? "16px" : sm ? "12px" : size,
