@@ -7,17 +7,24 @@ export const TextInput = ({ ...config }) => {
     <input
       {...config}
       type="text"
-      className="border-cyan-600 border-2 rounded-md"
-    ></input>
+      className="border-cyan-600 border-2 rounded-md"></input>
   );
 };
 
-export const Button = ({ children, ...config }) => {
+export const BlueButton = ({ children, ...config }) => {
   return (
     <button
-      className="text-gray-800 bg-gray-100 hover:bg-gray-500 font-medium rounded-sm text-sm px-5 py-1.5 text-center mr-3 "
-      {...config}
-    >
+      className="text-white text-md leading-4 font-bold bg-blue hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center gap-2 "
+      {...config}>
+      {children}
+    </button>
+  );
+};
+export const WhiteButton = ({ children, ...config }) => {
+  return (
+    <button
+      className=" text-lg leading-4 font-bold bg-white hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center gap-2 "
+      {...config}>
       {children}
     </button>
   );
@@ -37,44 +44,22 @@ export const Text = ({
   center,
   color,
   onClick,
+  className,
 }) => {
   return (
     <p
       onClick={onClick}
       className={classNames(
-        `font-sans text-${color ? color : "black"} font-${
+        `text-${color ? color : "black"} font-${
           weight ? weight : "medium"
-        }  `
+        } ${className}  `
       )}
       style={{
         fontSize: lg ? "20px" : md ? "16px" : sm ? "12px" : size,
         textAlign: center && "center",
-      }}
-    >
+      }}>
       {children}
     </p>
-  );
-};
-
-export const AlertButton = ({ text, icon }) => {
-  const [colorPicker, setColorPicker] = React.useState(false);
-  // initial chosen should come from server
-  const [chosen, setChosen] = React.useState("green");
-
-  return (
-    <button
-      onClick={() => setColorPicker(!colorPicker)}
-      className={classNames(
-        "relative w-full rounded-xl flex justify-between items-center font-semibold p-2 bg-white text-midDarkColor border border-grayLight mt-2 mb-2"
-      )}
-    >
-      <div className="flex justify-start gap-2">
-        {icon}
-        {text}
-      </div>
-      <ColorTag color={chosen} />
-      {colorPicker && <ColorPicker chosen={chosen} setChosen={setChosen} />}
-    </button>
   );
 };
 
@@ -83,8 +68,7 @@ export const Select = ({ children, ...config }) => {
   return (
     <select
       id="countries"
-      className="bg-white border text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-    >
+      className="bg-white border text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
       <option className={optionClass} selected>
         X axis category selection..
       </option>
@@ -116,8 +100,7 @@ export const RadioInput = ({}) => {
         />
         <label
           for="red-radio"
-          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
           Amount
         </label>
       </div>
@@ -130,8 +113,7 @@ export const RadioInput = ({}) => {
         />
         <label
           for="green-radio"
-          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300"
-        >
+          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
           Percent
         </label>
       </div>
@@ -143,8 +125,7 @@ export const Label = ({ children }) => {
   return (
     <label
       for="Select"
-      class="block mb-2 text-sm text-gray-400 dark:text-white"
-    >
+      class="block mb-2 text-sm text-gray-400 dark:text-white">
       {children}
     </label>
   );
@@ -168,8 +149,7 @@ export const RangeInput = ({}) => {
           left: number * 0.9 + (number < 20 ? 5 : number < 70 ? 2 : 0) + "%",
           top: 4,
         }}
-        className="absolute text-sm pointer-events-none transition-all"
-      >
+        className="absolute text-sm pointer-events-none transition-all">
         {number}
       </span>
     </div>

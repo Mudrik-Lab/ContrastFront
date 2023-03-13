@@ -4,6 +4,7 @@ import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { QueryClient } from "@tanstack/react-query";
 import WorldMap from "./components/WorldMap";
+import HomePage from "./pages/Home/HomePage";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -12,8 +13,9 @@ const Screens = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/" element={<Home />} />
+          <Route path="/1" element={<Home />} />
           <Route path="/map" element={<WorldMap />} />
+          <Route path="/" element={<HomePage />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
