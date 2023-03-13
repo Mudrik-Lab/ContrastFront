@@ -6,6 +6,7 @@ import { ReactComponent as Graph } from "../../assets/icons/start-exploring.svg"
 import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Quote } from "../../assets/cite-quote.svg";
 import { ReactComponent as QouteIcon } from "../../assets/icons/copy-to-clipboard-icon.svg";
+import PapersIconsMenu from "../../components/PapersIconsMenu";
 
 export default function HomePage() {
   const cite =
@@ -47,7 +48,7 @@ export default function HomePage() {
           s
         </div>
       </div>
-      <div className="citing w-full mt-8 px-80">
+      <div className="citing w-full mt-8 mb-10 px-80">
         <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-4 p-4">
           <Quote />
           <Text>
@@ -72,7 +73,7 @@ export default function HomePage() {
           </div>
         </div>
       </div>
-      <div className="papers-visual-items w-full mt-8 px-48"></div>
+      <PapersIconsMenu />
     </div>
   );
 }
