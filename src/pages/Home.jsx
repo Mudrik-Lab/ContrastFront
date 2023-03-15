@@ -14,8 +14,7 @@ export const Home = () => {
   return (
     <div
       div
-      className="w-full h-screen m-auto flex flex-col gap-9 overflow-scroll"
-    >
+      className="w-full h-screen m-auto flex flex-col gap-9 overflow-scroll">
       <Navbar />
 
       <AcrossTheYears />

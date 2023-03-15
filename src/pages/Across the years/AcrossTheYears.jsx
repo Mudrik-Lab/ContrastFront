@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Plot from "react-plotly.js";
-import useGetExpiramentsGraphs from "../../apiHooks/useGetExpiramentsGraphs";
+import useGetExperimentsGraphs from "../../apiHooks/useGetExperimentsGraphs";
 
 import {
   Label,
@@ -17,7 +17,7 @@ export default function AcrossTheYears() {
   const [selected, setSelected] = React.useState(["tag", "TAG"]);
 
   const { data, isSuccess } = useQuery(["across_the_years"], () =>
-    useGetExpiramentsGraphs("across_the_years", "paradigm")
+    useGetExperimentsGraphs("across_the_years", "paradigm")
   );
   isSuccess && console.log(data);
 

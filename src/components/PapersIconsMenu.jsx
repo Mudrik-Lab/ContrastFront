@@ -8,6 +8,7 @@ import { ReactComponent as Trends } from "../assets/icons/trends.svg";
 import { ReactComponent as Timing } from "../assets/icons/timing.svg";
 import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
+import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world -map.svg";
 import { Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
@@ -38,6 +39,11 @@ export default function PapersIconsMenu() {
     {
       text: "Theories Comparison",
       icon: <TheoriesComparison />,
+      route: "/",
+    },
+    {
+      text: "Anatomical Findings",
+      icon: <AnatomicalFindings />,
       route: "/",
     },
     {
@@ -77,11 +83,11 @@ export default function PapersIconsMenu() {
         <Text weight="bold" lg>
           With A Range OF Unique Data Visualization Tools:{" "}
         </Text>
-        <div className="graphs-icons-box flex flex-wrap w-2/4 mx-auto gap-10 mt-4">
+        <div className="graphs-icons-box flex flex-wrap justify-center max-w-4xl mx-auto gap-10 mt-4">
           {iconsButtons.map((paper) => (
             <div
               id={paper.text}
-              className="flex flex-col  w-24 items-center cursor-pointer"
+              className="flex flex-col w-24 items-center cursor-pointer"
               onClick={() => navigate(paper.route)}>
               {paper.icon}
               <Text>{paper.text}</Text>

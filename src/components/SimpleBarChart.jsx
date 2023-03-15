@@ -22,15 +22,15 @@ export default function SimpleBarChart() {
     }
   }
 
-  topicsCountArr.sort(function (a, b) {
-    if (a.number > b.number) {
-      return 1;
-    } else if (a.number < b.number) {
-      return -1;
-    } else {
-      return 0;
-    }
-  });
+  // topicsCountArr.sort(function (a, b) {
+  //   if (a.number > b.number) {
+  //     return 1;
+  //   } else if (a.number < b.number) {
+  //     return -1;
+  //   } else {
+  //     return 0;
+  //   }
+  // });
 
   return (
     <div className="w-full  m-auto flex ">

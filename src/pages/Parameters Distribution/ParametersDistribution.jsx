@@ -13,11 +13,11 @@ import TagsSelect from "../../components/TagsSelect";
 export default function ParametersDistribution() {
   const [selected, setSelected] = React.useState(["tag", "TAG"]);
 
-  const { data, isSuccess } = useQuery(
-    ["parameters_distribution"],
-    useGetParamaetersDist
-  );
-  isSuccess && console.log(data);
+  // const { data, isSuccess } = useQuery(
+  //   ["parameters_distribution"],
+  //   useGetParamaetersDis
+  // );
+  // isSuccess && console.log(data);
 
   const colourOptions = [
     { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },

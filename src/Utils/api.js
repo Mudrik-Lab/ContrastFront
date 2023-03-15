@@ -1,7 +1,9 @@
 /** @format */
 
 import axios from "axios";
+
 // import * as tokenHandler from "./tokenHandler";
+
 export async function queryApi({
   url,
   method,
@@ -11,12 +13,12 @@ export async function queryApi({
 }) {
     // const token = tokenHandler.getToken();
     const token = "keyGsJHfx22k81Gdj";
-
+    const x = import.meta.env.VITE_API_URL
+    console.log(x)
   try {
     return axios({
       method,
-    //   url: process.env.VITE_API_URL + url,
-      url:url,
+      url: x + url,
       headers: isProtected && { Authorization: `Bearer ${token}` },
       data,
       params
