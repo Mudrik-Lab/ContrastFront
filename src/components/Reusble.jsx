@@ -59,7 +59,7 @@ export const Text = ({
         }  `
       )}
       style={{
-        fontSize: lg ? "20px" : md ? "16px" : sm ? "12px" : size,
+        fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,
         textAlign: center && "center",
       }}>
       {children}

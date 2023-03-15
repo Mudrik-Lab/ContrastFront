@@ -39,7 +39,7 @@ export default function ConTraStUseCases() {
       <h1 className="text-5xl ">ConTraSt Use Cases</h1>
       <div className="ConTraStUseCases flex flex-wrap gap-12 justify-center">
         {cardsInfo.map((card) => (
-          <div className="card bg-grayLight flex flex-col justify-center p-6 w-96">
+          <div className="card shadow-xl flex flex-col justify-center p-6 w-96">
             <img src={card.image} alt="" />
             <Text center lg weight="bold">
               {card.headline}
