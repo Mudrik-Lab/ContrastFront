@@ -1,52 +1,44 @@
 import React from "react";
+import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
+import { ReactComponent as Profile } from "../assets/profile-circle.svg";
+import Logo from "../assets/logoes/logo.png";
+
+import { Button, Text } from "./Reusble";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   return (
     <div>
-      <nav className="bg-gray-800 px-2 py-2.5 fixed w-full z-20 top-0 left-0">
-        <div className="container flex flex-wrap items-center justify-between mx-auto">
+      <nav className="bg-white px-16 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
+        <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between w-2/4">
-            <div>
-              <span className="text-white">LOGO</span>
+            <div className="flex gap-3 items-center">
+              <img src={Logo} alt="" />
+              <div className=" border-r border-black h-10 "></div>
+              <Text sm color="grayHeavy">
+                {" "}
+                High Level <br /> Cognition Lab{" "}
+              </Text>
             </div>
             <div
               className="items-center justify-between flex"
-              id="navbar-sticky"
-            >
-              <ul className="flex flex-row text-white space-x-12">
+              id="navbar-sticky">
+              <ul className="flex flex-row text-black space-x-12">
                 <li className="flex items-center relative">
                   <button
-                    id="dropdownNavbarLink"
-                    data-dropdown-toggle="dropdownNavbar"
                     class="flex items-center text-white border-0 "
-                    onClick={() => setGraphMenue(!graphMenue)}
-                  >
+                    onClick={() => setGraphMenue(!graphMenue)}>
                     Graphs
-                    <svg
-                      class="w-5 h-5 ml-1"
-                      aria-hidden="true"
-                      fill="currentColor"
-                      viewBox="0 0 20 20"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        fill-rule="evenodd"
-                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                        clip-rule="evenodd"
-                      ></path>
-                    </svg>
+                    <Arrow />
                   </button>
 
                   {graphMenue && (
                     <div
                       id="dropdownNavbar"
-                      class="z-10  bg-white rounded-md shadow w-44 absolute top-10"
-                    >
+                      class="z-10  bg-white rounded-md shadow w-44 absolute top-10">
                       <ul
                         class="py-2 text-sm text-gray-700 dark:text-gray-400"
-                        aria-labelledby="dropdownLargeButton"
-                      >
+                        aria-labelledby="dropdownLargeButton">
                         <li>
                           <a href="#" class="block px-4 py-2 hover:bg-gray-100">
                             Free Queries
@@ -75,7 +67,7 @@ export default function Navbar() {
                   )}
                 </li>
                 <li>
-                  <a href="#">About</a>
+                  <a href="/about">About</a>
                 </li>
                 <li>
                   <a href="#" aria-current="page">
@@ -90,15 +82,11 @@ export default function Navbar() {
               </ul>
             </div>
           </div>
-          <div className="flex flex-row items-center justify-between space-x-4 text-white">
-            <div className=" w-6 h-6 bg-slate-400 rounded-full"></div>
+          <div className="flex flex-row items-center justify-between space-x-4 text-black">
+            {/* <div className=" w-6 h-6 bg-slate-400 rounded-full"></div> */}
+            <Profile />
             <span>Login</span>
-            <button
-              type="button"
-              className="text-gray-800 bg-gray-100 hover:bg-gray-500 font-medium rounded-sm text-sm px-5 py-1.5 text-center mr-3 "
-            >
-              Submit Research
-            </button>
+            <Button type="button">Submit Research</Button>
           </div>
         </div>
       </nav>

@@ -1,6 +1,6 @@
 import { Form, Formik } from "formik";
 import * as React from "react";
-import { Button, Spacer, TextInput } from "../GlobalComponents";
+import { Button, Spacer, TextInput } from "../components/Reusble";
 
 const formWindow =
   "border-cyan-600 border-2 w-3/6 text-center rounded-md flex flex-col gap-4 p-12";
@@ -12,8 +12,7 @@ export const Login = () => {
         initialValues={{ username: "", password: "" }}
         onSubmit={(values) => {
           console.log(values);
-        }}
-      >
+        }}>
         {({ values, errors, handleChange }) => (
           <Form id="login_form" className={formWindow}>
             <h1 className="text-2xl text-sky-800">Login</h1>
@@ -26,6 +25,7 @@ export const Login = () => {
               Password: <TextInput onChange={handleChange} name="password" />
             </span>
             <Spacer height={24} />
+
             <span>
               {" "}
               <Button type="submit">Submit</Button>
