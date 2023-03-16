@@ -5,6 +5,7 @@ import { ReactComponent as Github } from "../../assets/icons/github-small.svg";
 import BrainImg from "../../assets/images/dreamstime.png";
 import TeamMembersCards from "./TeamMembersCards";
 import CommunityBox from "../Home/CommunityBox";
+import Footer from "../../components/Footer";
 
 export default function AboutPage() {
   const navHeight = 60;
@@ -43,7 +44,7 @@ export default function AboutPage() {
               : ContrastDB@gmail.com
             </Text>
           </div>
-          <div className=" border openSource-box bg-grayLight flex justify-between items-center gap-8 px-10 py-2 mx-28 my-16">
+          <div className=" openSource-box w-256 bg-grayLight flex justify-between items-center gap-4 px-10 py-2 mx-auto my-16">
             <Text weight="bold" size={32}>
               We Are Open Source
             </Text>
@@ -72,6 +73,7 @@ export default function AboutPage() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

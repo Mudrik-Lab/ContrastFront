@@ -1,18 +1,24 @@
 import React from "react";
 import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
 import { ReactComponent as Profile } from "../assets/profile-circle.svg";
+import Logo from "../assets/logoes/logo.png";
 
-import { Button } from "./Reusble";
+import { Button, Text } from "./Reusble";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   return (
     <div>
-      <nav className="bg-white px-4 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
+      <nav className="bg-white px-16 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
         <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between w-2/4">
-            <div>
-              <span className="text-black">LOGO</span>
+            <div className="flex gap-3 items-center">
+              <img src={Logo} alt="" />
+              <div className=" border-r border-black h-10 "></div>
+              <Text sm color="grayHeavy">
+                {" "}
+                High Level <br /> Cognition Lab{" "}
+              </Text>
             </div>
             <div
               className="items-center justify-between flex"
