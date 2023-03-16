@@ -3,6 +3,8 @@ import Navbar from "../../components/Navbar";
 import { Button, Spacer, Text } from "../../components/Reusble";
 import { ReactComponent as Github } from "../../assets/icons/github-small.svg";
 import BrainImg from "../../assets/images/dreamstime.png";
+import TeamMembersCards from "./TeamMembersCards";
+import CommunityBox from "../Home/CommunityBox";
 
 export default function AboutPage() {
   const navHeight = 60;
@@ -41,10 +43,11 @@ export default function AboutPage() {
               : ContrastDB@gmail.com
             </Text>
           </div>
-          <div className=" border openSource-box bg-grayLight flex justify-between items-center gap-4 px-6 py-2 mx-28 my-16">
+          <div className=" border openSource-box bg-grayLight flex justify-between items-center gap-8 px-10 py-2 mx-28 my-16">
             <Text weight="bold" size={32}>
               We Are Open Source
             </Text>
+            <div className=" border-r border-black h-16"></div>
             <div>
               <Text md>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -62,31 +65,10 @@ export default function AboutPage() {
             <Text size={43} center>
               ConTraSt Steering Committee
             </Text>
-            <div className="flex flex-wrap w-256 px-28 my-6">
-              <div className="team-member-card w-48 border flex flex-col items-center">
-                <div
-                  style={{
-                    width: 120,
-                    height: 120,
-                    borderRadius: "50%",
-                    backgroundImage: `url(${BrainImg})`,
-                    backgroundPosition: "center",
-                    backgroundSize: "cover",
-                    backgroundRepeat: "no-repeat",
-                  }}></div>
-                <Text center md weight="bold">
-                  Prof. L. Mudrik
-                </Text>
-                <Text center md>
-                  Project Manager
-                </Text>
-                <Text color="grayHeavy">
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                  commodo faucibus lacus quis laoreet. Vestibulum ante ipsum
-                  primis in
-                </Text>
-              </div>
-            </div>
+            <TeamMembersCards />
+            <Spacer height={40} />
+            <CommunityBox />
+            <Spacer height={120} />
           </div>
         </div>
       </div>
