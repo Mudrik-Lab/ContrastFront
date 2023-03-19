@@ -17,11 +17,11 @@ export default function AboutPage() {
         <Text size={57} color="blue" center>
           About ConTraSt
         </Text>
-        <div className="about-database mt-16">
+        <div className="about-database mt-16 mx-auto ">
           <Text size={43} center>
             The Consciousness Theories Studies (ConTraSt) database
           </Text>
-          <div className="flex gap-10 mt-6">
+          <div className="flex gap-10 mt-6 max-w-6xl mx-auto">
             <img src={BrainImg} alt="" />
             <Text md>
               This website allows researchers to conduct queries and examine
