@@ -8,6 +8,17 @@ module.exports = {
         grayHeavy: "#6D6D6D",
         grayReg: "#999999",
         grayLight: "#E9E9E9",
+        yellow: "#D2CC7F",
+        orange: "#D7A77F",
+        pink:"#DB7C82",
+        lilac: "#BD7DB2",
+        purple: "#9379BB",
+        navyBlue: "#6789B9",
+        darkTeal: "#5A9DB4",
+        teal: "#58ACB5",
+        lightTeal: "#5FB8A5",
+        lightGreen: "#72CC7C",
+
       },
       gridTemplateRows: {
         // Simple 12 row grid

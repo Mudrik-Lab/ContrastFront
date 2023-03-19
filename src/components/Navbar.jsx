@@ -1,4 +1,5 @@
 import React from "react";
+import classNames from "classnames";
 import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
 import { ReactComponent as Profile } from "../assets/profile-circle.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-icon.svg";
@@ -12,13 +13,68 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const page = window.location.pathname;
+  const graphsDropdownInfo = [
+    {
+      text: "Free Queries",
+      color: "yellow",
+      route: "/Free-Queries",
+    },
+    {
+      text: "Parameter Distribution",
+      color: "orange",
+      route: "/Parameter-Distribution",
+    },
+    {
+      text: "Parameter Distribution Bar",
+      color: "pink",
+      route: "/Parameter-Distribution-bar",
+    },
+    {
+      text: "Parameter Distribution Pie",
+      color: "lilac",
+      route: "/Parameter-Distribution-pie",
+    },
+    {
+      text: "Across The Years",
+      color: "purple",
+      route: "/Across-The-Years",
+    },
+    {
+      text: "Theory Driven",
+      color: "navyBlue",
+      route: "/Theory-Driven",
+    },
+    {
+      text: "Timing",
+      color: "darkTeal",
+      route: "/Timing",
+    },
+    {
+      text: "Frequencies",
+      color: "teal",
+      route: "/Frequencies",
+    },
+    {
+      text: "Journals",
+      color: "lightTeal",
+      route: "/",
+    },
+    {
+      text: "Consciousness World Map",
+      color: "lightGreen",
+      route: "/Consciousness-World-Map",
+    },
+  ];
 
   return (
     <div>
       <nav className="bg-white px-16 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
+        {/* <div className="bg-orange bg-pink bg-navyBlue bg-lightTeal bg-lightGreen bg-teal bg-darkTeal bg-yellow bg-purple bg-lilac"></div> */}
         <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between">
-            <div className="logo-right flex gap-3 items-center">
+            <div
+              className="logo-right flex gap-3 items-center cursor-pointer"
+              onClick={() => navigate("/")}>
               <img src={Logo} alt="" />
               <div className=" border-r border-black h-10 "></div>
               <Text sm color="grayHeavy">
@@ -36,37 +92,28 @@ export default function Navbar() {
                   Explore
                   <Arrow />
                 </button>
-
                 {graphMenue && (
                   <div
-                    id="dropdownNavbar"
-                    class="z-10  bg-white rounded-md shadow w-44 absolute top-10">
+                    id="dropdown-navbar"
+                    className="z-10  bg-white rounded-md shadow-lg w-80 absolute top-10">
                     <ul
-                      class="py-2 text-sm text-gray-700 dark:text-gray-400"
+                      className="py-2 text-lg text-gray-700 dark:text-gray-400"
                       aria-labelledby="dropdownLargeButton">
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                          Free Queries
-                        </a>
-                        <hr className="mx-3" />
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                          Settings
-                        </a>
-                        <hr className="mx-3" />
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                          Earnings
-                        </a>
-                        <hr className="mx-3" />
-                      </li>
-                      <li>
-                        <a href="#" class="block px-4 py-2 hover:bg-gray-100">
-                          Earnings
-                        </a>
-                      </li>
+                      {graphsDropdownInfo.map((row) => (
+                        <li>
+                          <a
+                            href={row.route}
+                            className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">
+                            <div
+                              className={classNames(
+                                `${"bg-" + row.color} rounded-full w-3 h-3`
+                              )}></div>
+                            {row.text}
+                          </a>
+
+                          <hr className="mx-3" />
+                        </li>
+                      ))}
                     </ul>
                   </div>
                 )}

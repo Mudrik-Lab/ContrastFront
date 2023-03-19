@@ -1,11 +1,13 @@
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Home } from "./pages/Home";
 import { Login } from "./pages/Login";
 import { QueryClient } from "@tanstack/react-query";
 import WorldMap from "./components/WorldMap";
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
+import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
+import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesPage";
+import ParametersDistribution from "./pages/Parameters Distribution/ParametersDistribution";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -14,10 +16,22 @@ const Screens = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/1" element={<Home />} />
-          <Route path="/map" element={<WorldMap />} />
+
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
+          <Route path="/Free-Queries" element={<FreeQueriesPage />} />
+          <Route
+            path="/Parameter-Distribution"
+            element={<ParametersDistribution />}
+          />
+          <Route path="/Parameter-Distribution-bar" element={<WorldMap />} />
+          <Route path="/Across-The-Years" element={<AcrossTheYears />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>
