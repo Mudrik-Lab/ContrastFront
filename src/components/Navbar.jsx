@@ -15,14 +15,14 @@ export default function Navbar() {
   const page = window.location.pathname;
   const graphsDropdownInfo = [
     {
-      text: "Free Queries",
+      text: "Parameter Distribution",
       color: "yellow",
-      route: "/Free-Queries",
+      route: "/Parameter-Distribution",
     },
     {
-      text: "Parameter Distribution",
+      text: "Theories Comparison",
       color: "orange",
-      route: "/Parameter-Distribution",
+      route: "/Theories-Comparison",
     },
     {
       text: "Parameter Distribution Bar",
@@ -35,7 +35,7 @@ export default function Navbar() {
       route: "/Parameter-Distribution-pie",
     },
     {
-      text: "Across The Years",
+      text: "Trends Across The Years",
       color: "purple",
       route: "/Across-The-Years",
     },

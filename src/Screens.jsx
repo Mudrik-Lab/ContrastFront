@@ -8,6 +8,7 @@ import AboutPage from "./pages/About/AboutPage";
 import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
 import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesPage";
 import ParametersDistribution from "./pages/Parameters Distribution/ParametersDistribution";
+import ContactPage from "./pages/ContactPage/ContactPage";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -26,6 +27,7 @@ const Screens = () => {
           />
           <Route path="/Parameter-Distribution-bar" element={<WorldMap />} />
           <Route path="/Across-The-Years" element={<AcrossTheYears />} />
+          <Route path="/Contact" element={<ContactPage />} />
           <Route path="/Consciousness-World-Map" element={<WorldMap />} />
           <Route path="/Consciousness-World-Map" element={<WorldMap />} />
           <Route path="/Consciousness-World-Map" element={<WorldMap />} />

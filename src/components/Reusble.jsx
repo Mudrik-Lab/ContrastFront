@@ -1,6 +1,7 @@
 /** @format */
 import React from "react";
 import classNames from "classnames";
+export const navHeight = 60;
 
 export const TextInput = ({ ...config }) => {
   return (
