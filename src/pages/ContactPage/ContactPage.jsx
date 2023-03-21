@@ -22,7 +22,7 @@ export default function ContactPage() {
                 Name
               </Text>
               <input
-                className="border-2 p-2 w-full mt-2"
+                className="border-2 p-2 w-full mt-2 "
                 type="text"
                 maxLength={30}
                 placeholder="Jhon Doe"
