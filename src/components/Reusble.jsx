@@ -1,6 +1,9 @@
 /** @format */
 import React from "react";
 import classNames from "classnames";
+import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
+import { Tooltip } from "flowbite";
+
 export const navHeight = 60;
 
 export const TextInput = ({ ...config }) => {
@@ -68,27 +71,21 @@ export const Text = ({
   );
 };
 
-export const Select = ({ children, ...config }) => {
+export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
   const optionClass = "block px-4 py-2 border text-gray-800";
+
   return (
     <select
       id="countries"
-      className="bg-white border text-sm rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
-      <option className={optionClass} selected>
-        X axis category selection..
+      className="bg-white border text-grayReg text-md rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+      <option className={optionClass} value="" selected>
+        {placeHolder}
       </option>
-      <option className={optionClass} value="US">
-        Somthing
-      </option>
-      <option className={optionClass} value="CA">
-        Somthing
-      </option>
-      <option className={optionClass} value="FR">
-        Somthing
-      </option>
-      <option className={optionClass} value="DE">
-        Somthing
-      </option>
+      {optionsArr.map((option) => (
+        <option className={optionClass} value={option}>
+          {option}
+        </option>
+      ))}
     </select>
   );
 };
@@ -126,6 +123,27 @@ export const RadioInput = ({}) => {
   );
 };
 
+export const FilterExplanation = ({ text, tooltip }) => {
+  // const [isTooltip, setIsTooltip] = React.useState(false);
+  return (
+    <div className="flex justify-center items-center gap-2">
+      <Text size={14} color="grayHeavy">
+        {text}
+      </Text>
+      <button data-tooltip-target="tooltip-default" type="button" class="">
+        <QuestionMark />
+      </button>
+      <div
+        id="tooltip-default"
+        role="tooltip"
+        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        {tooltip}
+        <div class="tooltip-arrow" data-popper-arrow></div>
+      </div>
+      <div className="cursor-pointer "></div>
+    </div>
+  );
+};
 export const Label = ({ children }) => {
   return (
     <label
@@ -137,7 +155,7 @@ export const Label = ({ children }) => {
 };
 
 export const RangeInput = ({}) => {
-  const [number, setNumber] = React.useState();
+  const [number, setNumber] = React.useState(50);
   return (
     <div className="relative">
       <input
@@ -154,7 +172,7 @@ export const RangeInput = ({}) => {
           left: number * 0.9 + (number < 20 ? 5 : number < 70 ? 2 : 0) + "%",
           top: 4,
         }}
-        className="absolute text-sm pointer-events-none transition-all">
+        className="absolute text-sm text-blue pointer-events-none transition-all">
         {number}
       </span>
     </div>

@@ -1,11 +1,11 @@
 import React from "react";
 import Select from "react-select";
 
-export default function TagsSelect({ options, placeholder }) {
+export default function TagsSelect({ options, placeholder, isMulti }) {
   return (
     <Select
       closeMenuOnSelect={true}
-      isMulti
+      isMulti={isMulti}
       options={options}
       placeholder={placeholder}
     />

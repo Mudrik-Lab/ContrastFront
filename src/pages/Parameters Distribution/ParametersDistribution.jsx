@@ -1,11 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-
+import Select from "react-select";
 import {
-  Label,
+  FilterExplanation,
   RadioInput,
   RangeInput,
-  Select,
+  Text,
 } from "../../components/Reusble";
 import SimpleBarChart from "../../components/SimpleBarChart";
 import TagsSelect from "../../components/TagsSelect";
@@ -31,29 +31,69 @@ export default function ParametersDistribution() {
     { value: "slate", label: "Slate", color: "#253858" },
     { value: "silver", label: "Silver", color: "#666666" },
   ];
+  const sectionClass =
+    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+  const selectOptions1 = ["Ory", "Elad", "Alon", "Dani"];
   return (
     <div className="flex ">
-      <div className="border p-7 pt-10 flex flex-col items-center">
-        <h1>Free Queries</h1>
-        <div className="w-72 shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-          <h4>Axis Controls</h4>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+      <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+        <Text size={28} weight="bold" color="blue">
+          Parameters Distribution
+        </Text>
+        <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <Text md weight="bold">
+            Axis Controls
+          </Text>
+          <div className={sectionClass}>
             <RangeInput />
-            <Label>min. # of experiments</Label>
+            <FilterExplanation
+              text="minimum number of experiments"
+              tooltip="few more words about minimum number of experiments"
+            />
           </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <Select />
-            <Label>choose Y axis Value</Label>
+          <div className={sectionClass}>
+            <Select
+              closeMenuOnSelect={true}
+              placeholder="X axis category selection.."
+              options={colourOptions}
+            />
+            <FilterExplanation
+              text="Choose parameter of interest"
+              tooltip="few more words about Choose parameter of interest"
+            />
           </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+          <div className={sectionClass}>
             <RadioInput />
-            <Label>choose X axis Value</Label>
+            <FilterExplanation
+              text="Select results format"
+              tooltip="few more words about Select results format"
+            />
           </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <h3>Filter Tags</h3>
-            <TagsSelect
+          <div className={sectionClass}>
+            <Text md weight="bold">
+              Filter Tags
+            </Text>
+            <Select
+              closeMenuOnSelect={true}
+              isMulti={true}
               options={colourOptions}
               placeholder="Paradigms Family"
+            />
+            <FilterExplanation
+              text="Paradigms Family"
+              tooltip="few more words about Paradigms Family"
+            />
+          </div>
+          <div className={sectionClass}>
+            <Select
+              closeMenuOnSelect={true}
+              placeholder="Paradigm"
+              options={colourOptions}
+            />
+
+            <FilterExplanation
+              text="Paradigm "
+              tooltip="few more words about Paradigm "
             />
           </div>
         </div>
