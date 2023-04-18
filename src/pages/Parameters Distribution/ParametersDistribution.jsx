@@ -11,10 +11,24 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
+import getConfuguration from "../../apiHooks/getConfiguration";
 
 export default function ParametersDistribution() {
   const [selected, setSelected] = React.useState({ value: "paradigm" });
+  const [selectedParent, setSelectedParent] = React.useState({ value: "" });
+  const { data: configuration } = useQuery(
+    [`parent_theories`],
+    getConfuguration
+  );
 
+  const parentTheories = configuration?.data.available_parent_theories.map(
+    (parentTheory) => ({
+      value: parentTheory,
+      label: parentTheory,
+      color: "#" + Math.floor(Math.random() * 16777215).toString(16),
+    })
+  );
+  console.log(parentTheories);
   const { data, isSuccess } = useQuery(
     [`parameters_distribution_barv${selected.value}`],
     () =>
@@ -68,18 +82,6 @@ export default function ParametersDistribution() {
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
-  const colourOptions = [
-    { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
-    { value: "blue", label: "Blue", color: "#0052CC", isDisabled: true },
-    { value: "purple", label: "Purple", color: "#5243AA" },
-    { value: "red", label: "Red", color: "#FF5630", isFixed: true },
-    { value: "orange", label: "Orange", color: "#FF8B00" },
-    { value: "yellow", label: "Yellow", color: "#FFC400" },
-    { value: "green", label: "Green", color: "#36B37E" },
-    { value: "forest", label: "Forest", color: "#00875A" },
-    { value: "slate", label: "Slate", color: "#253858" },
-    { value: "silver", label: "Silver", color: "#666666" },
-  ];
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   const selectOptions1 = ["Ory", "Elad", "Alon", "Dani"];
@@ -104,7 +106,7 @@ export default function ParametersDistribution() {
             <Select
               closeMenuOnSelect={true}
               placeholder="X axis category selection.."
-              options={colourOptions}
+              options={parentTheories}
             />
             <FilterExplanation
               text="Choose parameter of interest"
@@ -125,8 +127,9 @@ export default function ParametersDistribution() {
             <Select
               closeMenuOnSelect={true}
               isMulti={true}
-              options={colourOptions}
+              options={parentTheories}
               placeholder="Paradigms Family"
+              onChange={setSelectedParent}
             />
             <FilterExplanation
               text="Paradigms Family"

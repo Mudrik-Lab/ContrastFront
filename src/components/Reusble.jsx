@@ -91,31 +91,31 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
 };
 export const RadioInput = ({}) => {
   return (
-    <div class="flex flex-wrap">
-      <div class="flex items-center mr-4">
+    <div className="flex flex-wrap">
+      <div className="flex items-center mr-4">
         <input
           id="red-radio"
           type="radio"
           value=""
           name="colored-radio"
-          class="w-4 h-4 bg-gray-100 border-gray-300"
+          className="w-4 h-4 bg-gray-100 border-gray-300"
         />
         <label
-          for="red-radio"
-          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          htmlFor="red-radio"
+          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
           Amount
         </label>
       </div>
-      <div class="flex items-center mr-4">
+      <div className="flex items-center mr-4">
         <input
           type="radio"
           value=""
           name="colored-radio"
-          class="w-4 h-4 bg-gray-100 border-gray-300"
+          className="w-4 h-4 bg-gray-100 border-gray-300"
         />
         <label
-          for="green-radio"
-          class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
+          htmlFor="green-radio"
+          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
           Percent
         </label>
       </div>
@@ -130,15 +130,15 @@ export const FilterExplanation = ({ text, tooltip }) => {
       <Text size={14} color="grayHeavy">
         {text}
       </Text>
-      <button data-tooltip-target="tooltip-default" type="button" class="">
+      <button data-tooltip-target="tooltip-default" type="button" className="">
         <QuestionMark />
       </button>
       <div
         id="tooltip-default"
         role="tooltip"
-        class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
+        className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
         {tooltip}
-        <div class="tooltip-arrow" data-popper-arrow></div>
+        <div className="tooltip-arrow" data-popper-arrow></div>
       </div>
       <div className="cursor-pointer "></div>
     </div>
@@ -147,8 +147,8 @@ export const FilterExplanation = ({ text, tooltip }) => {
 export const Label = ({ children }) => {
   return (
     <label
-      for="Select"
-      class="block mb-2 text-sm text-gray-400 dark:text-white">
+      htmlFor="Select"
+      className="block mb-2 text-sm text-gray-400 dark:text-white">
       {children}
     </label>
   );
@@ -164,7 +164,7 @@ export const RangeInput = ({}) => {
         min={0}
         max={100}
         step={5}
-        class="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
+        className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
         id="numOfExperiments"
       />
       <span
