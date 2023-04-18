@@ -1,111 +1,79 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
-import useGetExperimentsGraphs from "../../apiHooks/useGetExperimentsGraphs";
+import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 
-import {
-  Label,
-  RadioInput,
-  RangeInput,
-  Select,
-  Text,
-} from "../../components/Reusble";
-import SimpleBarChart from "../../components/SimpleBarChart";
+import { Label, RadioInput, RangeInput, Text } from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
+import Navbar from "../../components/Navbar";
+import { tagsOptions } from "../../components/HardCoded";
 
 export default function AcrossTheYears() {
-  const [selected, setSelected] = React.useState(["tag", "TAG"]);
+  const [selected, setSelected] = useState({ value: "paradigm" });
 
-  const { data, isSuccess } = useQuery(["across_the_years"], () =>
-    useGetExperimentsGraphs("across_the_years", "paradigm")
+  const { data, isSuccess } = useQuery(
+    [`across_the_years${selected.value}`],
+    () => getExperimentsGraphs("across_the_years", selected.value)
   );
-  isSuccess && console.log(data);
+  // TODO: ask what should b the default breakdown
 
-  const tagsOptions = [
-    { value: "Paradigms Family", label: "Paradigms Family", isFixed: false },
-    { value: "Paradigms", label: "Paradigms", isDisabled: false },
-    { value: "Population", label: "Population" },
-    { value: "Task", label: "Task" },
-    { value: "Stimuli Category", label: "Stimuli Category" },
-    { value: "Modality", label: "Modality" },
-    {
-      value: "Consciousness Measure (Phase)",
-      label: "Consciousness Measure (Phase)",
-    },
-    {
-      value: "Consciousness Measure (Type)",
-      label: "Consciousness Measure (Type)",
-    },
-    { value: "Report vs. No Report", label: "Report vs. No Report" },
-    { value: "Findings (Tags)", label: "Findings (Tags)" },
-    { value: "Measures", label: "Measures" },
-    { value: "Theory Driven", label: "Theory Driven" },
-    { value: "Findings", label: "Findings" },
-    {
-      value: "State Consciousness vs. Content Consciousness",
-      label: "State Consciousness vs. Content Consciousness",
-    },
-  ];
+  const graphsData = [];
+  data?.data.map((row) => {
+    graphsData.push({
+      x: row.series.map((a) => a.year),
+      y: row.series.map((a) => a.value),
+      type: "scatter",
+      name: row.series_name,
+      mode: "lines+markers",
+    });
+  });
+  const screenWidth = window.screen.width;
+
   return (
-    <div className="flex ">
-      <div className="border p-7 pt-10 flex flex-col items-center">
-        <Text lg>Across the Years</Text>
-        <div className="w-72 shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-          <Text weight={"light"} md>
-            Axis Controls
+    <div>
+      <Navbar />
+      <div className="mt-12 flex ">
+        <div className=" p-7 pt-10 flex flex-col items-center">
+          <Text color="blue" weight="bold" size={30}>
+            Across the Years
           </Text>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <RangeInput />
-            <Label>min. # of experiments</Label>
-          </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <Select />
-            <Label>choose Y axis Value</Label>
-          </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <RadioInput />
-            <Label>choose X axis Value</Label>
-          </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <Text md weight={"light"}>
-              Filter Tags
+          <div className="w-[280px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <Text weight={"light"} md>
+              Axis Controls
             </Text>
-            <TagsSelect options={tagsOptions} placeholder="Add Filter Tags" />
+            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              <RangeInput />
+              <Label>min. # of experiments</Label>
+            </div>
+
+            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              <RadioInput />
+              <Label>choose X axis Value</Label>
+            </div>
+            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              <Text md weight={"light"}>
+                Filter Tags
+              </Text>
+              <TagsSelect
+                options={tagsOptions}
+                defaultValue={selected.value}
+                onChange={setSelected}
+              />
+            </div>
           </div>
         </div>
-      </div>
 
-      <div>
-        <Plot
-          data={[
-            {
-              x: [1, 20, 300],
-              y: [2, 62, 350],
-              type: "scatter",
-              name: "ory's",
-              mode: "lines+markers",
-            },
-            {
-              x: [1, 12, 300],
-              y: [2, 60, 30],
-              type: "scatter",
-              mode: "lines+markers",
-            },
-            {
-              x: [1, 3, 4],
-              y: [2, 6, 1200],
-              type: "scatter",
-              mode: "lines+markers",
-            },
-            {
-              x: [1, 20, 40],
-              y: [2, 60, 90],
-              type: "scatter",
-              mode: "lines+markers",
-            },
-          ]}
-          layout={{ autosize: true, title: "Across The Years" }}
-        />
+        <div className="w-full h-full">
+          <Plot
+            data={graphsData}
+            layout={{
+              autosize: false,
+
+              width: screenWidth - 338,
+              height: 800,
+            }}
+          />
+        </div>
       </div>
     </div>
   );

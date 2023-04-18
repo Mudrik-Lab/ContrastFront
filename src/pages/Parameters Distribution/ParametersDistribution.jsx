@@ -9,15 +9,69 @@ import {
 } from "../../components/Reusble";
 import SimpleBarChart from "../../components/SimpleBarChart";
 import TagsSelect from "../../components/TagsSelect";
+import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
+import Plot from "react-plotly.js";
+import autoprefixer from "autoprefixer";
 
 export default function ParametersDistribution() {
-  const [selected, setSelected] = React.useState(["tag", "TAG"]);
+  const [selected, setSelected] = React.useState(null);
 
-  // const { data, isSuccess } = useQuery(
-  //   ["parameters_distribution"],
-  //   useGetParamaetersDis
-  // );
-  // isSuccess && console.log(data);
+  const { data, isSuccess } = useQuery(
+    [`parameters_distribution_barv${"finding_tag"}`],
+    () =>
+      getExperimentsGraphs(
+        "parameters_distribution_bar",
+        "finding_tag",
+        "Global Workspace"
+      )
+  );
+
+  isSuccess && console.log(data?.data);
+
+  const X1 = data?.data.map((row) => row.series[0].value);
+  console.log(X1);
+
+  const Y = data?.data.map((row) => row.series_name);
+  console.log(Y);
+  const X2 = data?.data.map((row) => row.series[1]?.value || 0);
+  console.log(X2);
+
+  const graphsData2 = [];
+  data?.data.map((row) => {
+    graphsData2.push({
+      x: row.series[1]?.value || 0,
+      y: row.series_name,
+      type: "bar",
+      orientation: "h",
+      name: "challenges",
+    });
+  });
+
+  var trace1 = {
+    x: X1,
+    y: Y,
+    name: "pro",
+    orientation: "h",
+    marker: {
+      color: "rgba(55,128,191,0.6)",
+      width: 1,
+    },
+    type: "bar",
+  };
+  var trace2 = {
+    x: X2,
+    y: Y,
+    name: "challenges",
+    orientation: "h",
+    marker: {
+      color: "#F23D34",
+      width: 3,
+    },
+    type: "bar",
+  };
+
+  const screenWidth = window.screen.width;
+  const screenHeight = window.screen.height;
 
   const colourOptions = [
     { value: "ocean", label: "Ocean", color: "#00B8D9", isFixed: true },
@@ -99,8 +153,17 @@ export default function ParametersDistribution() {
         </div>
       </div>
 
-      <div>
-        <SimpleBarChart />
+      <div className="pl-12">
+        <Plot
+          data={[trace1, trace2]}
+          layout={{
+            autosize: false,
+            barmode: "stack",
+            width: screenWidth - 388,
+            height: screenHeight,
+            margin: { autoexpand: true, l: 200 },
+          }}
+        />
       </div>
     </div>
   );

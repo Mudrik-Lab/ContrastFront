@@ -32,10 +32,7 @@ export default function FreeQueriesPage() {
             <RangeInput />
             <Label>min. # of experiments</Label>
           </div>
-          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-            <Select />
-            <Label>choose Y axis Value</Label>
-          </div>
+
           <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
             <RadioInput />
             <Label>choose X axis Value</Label>
