@@ -7,34 +7,29 @@ import {
   RangeInput,
   Text,
 } from "../../components/Reusble";
-import SimpleBarChart from "../../components/SimpleBarChart";
-import TagsSelect from "../../components/TagsSelect";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import autoprefixer from "autoprefixer";
+import TagsSelect from "../../components/TagsSelect";
+import { tagsOptions } from "../../components/HardCoded";
 
 export default function ParametersDistribution() {
-  const [selected, setSelected] = React.useState(null);
+  const [selected, setSelected] = React.useState({ value: "paradigm" });
 
   const { data, isSuccess } = useQuery(
-    [`parameters_distribution_barv${"finding_tag"}`],
+    [`parameters_distribution_barv${selected.value}`],
     () =>
       getExperimentsGraphs(
         "parameters_distribution_bar",
-        "finding_tag",
+        selected.value,
         "Global Workspace"
       )
   );
 
-  isSuccess && console.log(data?.data);
-
   const X1 = data?.data.map((row) => row.series[0].value);
-  console.log(X1);
 
   const Y = data?.data.map((row) => row.series_name);
-  console.log(Y);
+
   const X2 = data?.data.map((row) => row.series[1]?.value || 0);
-  console.log(X2);
 
   const graphsData2 = [];
   data?.data.map((row) => {
@@ -139,10 +134,10 @@ export default function ParametersDistribution() {
             />
           </div>
           <div className={sectionClass}>
-            <Select
-              closeMenuOnSelect={true}
-              placeholder="Paradigm"
-              options={colourOptions}
+            <TagsSelect
+              options={tagsOptions}
+              defaultValue={selected.value}
+              onChange={setSelected}
             />
 
             <FilterExplanation
