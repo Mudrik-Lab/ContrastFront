@@ -13,8 +13,9 @@ import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
+import getJournals from "../../apiHooks/getJournals";
 
-export default function ParametersDistribution() {
+export default function Journals() {
   const [selected, setSelected] = React.useState({ value: "paradigm" });
   const [selectedParent, setSelectedParent] = React.useState({ value: "" });
   const { data: configuration } = useQuery(
@@ -29,57 +30,18 @@ export default function ParametersDistribution() {
       color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     })
   );
-
-  const { data, isSuccess } = useQuery(
-    [`parameters_distribution_bar${selected.value + selectedParent}`],
-    () =>
-      getExperimentsGraphs(
-        "parameters_distribution_bar",
-        selected.value,
-        "Global Workspace"
-      )
+  const { data, isSuccess } = useQuery([`journals`], () =>
+    getJournals("Global Workspace")
   );
-
-  const X1 = data?.data.map((row) => row.series[0].value);
-
-  const Y = data?.data.map((row) => row.series_name);
-
-  const X2 = data?.data.map((row) => row.series[1]?.value || 0);
-
-  const graphsData2 = [];
-  data?.data.map((row) => {
-    graphsData2.push({
-      x: row.series[1]?.value || 0,
-      y: row.series_name,
-      type: "bar",
-      orientation: "h",
-      name: "challenges",
-    });
-  });
+  const graphsData = data?.data;
+  console.log(graphsData);
 
   var trace1 = {
-    x: X1,
-    y: Y,
-    name: "pro",
-    orientation: "h",
-    marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 1,
-    },
+    x: graphsData.map((row) => row.key),
+    y: graphsData.map((row) => row.value),
     type: "bar",
   };
-  var trace2 = {
-    x: X2,
-    y: Y,
-    name: "challenges",
-    orientation: "h",
-    marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 100,
-    },
-    type: "bar",
-  };
-
+  console.log(trace1);
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
@@ -87,6 +49,7 @@ export default function ParametersDistribution() {
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div>
+      {" "}
       <Navbar />
       <div className="flex mt-12">
         <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
@@ -153,17 +116,15 @@ export default function ParametersDistribution() {
           </div>
         </div>
 
-        <div className="pl-12">
+        <div className="pl-2">
           <Plot
-            data={[trace1, trace2]}
+            data={[trace1]}
             layout={{
               autosize: false,
-              barmode: "stack",
-              title: "Parameter Distribution",
               width: screenWidth - 388,
               height: screenHeight,
-              margin: { autoexpand: true, l: 200 },
-              legend: { itemwidth: 90 },
+              margin: { autoexpand: true, b: 150 },
+              showlegend: true,
             }}
           />
         </div>

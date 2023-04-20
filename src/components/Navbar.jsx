@@ -57,7 +57,7 @@ export default function Navbar() {
     {
       text: "Journals",
       color: "lightTeal",
-      route: "/",
+      route: "/Journals",
     },
     {
       text: "Consciousness World Map",

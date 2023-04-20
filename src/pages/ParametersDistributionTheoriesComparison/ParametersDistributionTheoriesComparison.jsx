@@ -14,7 +14,7 @@ import { tagsOptions } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 
-export default function ParametersDistribution() {
+export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState({ value: "paradigm" });
   const [selectedParent, setSelectedParent] = React.useState({ value: "" });
   const { data: configuration } = useQuery(
@@ -29,9 +29,9 @@ export default function ParametersDistribution() {
       color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     })
   );
-
+  console.log(parentTheories);
   const { data, isSuccess } = useQuery(
-    [`parameters_distribution_bar${selected.value + selectedParent}`],
+    [`parameters_distribution_bar${selected.value}`],
     () =>
       getExperimentsGraphs(
         "parameters_distribution_bar",
@@ -68,17 +68,6 @@ export default function ParametersDistribution() {
     },
     type: "bar",
   };
-  var trace2 = {
-    x: X2,
-    y: Y,
-    name: "challenges",
-    orientation: "h",
-    marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 100,
-    },
-    type: "bar",
-  };
 
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
@@ -87,6 +76,7 @@ export default function ParametersDistribution() {
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div>
+      {" "}
       <Navbar />
       <div className="flex mt-12">
         <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
@@ -155,15 +145,14 @@ export default function ParametersDistribution() {
 
         <div className="pl-12">
           <Plot
-            data={[trace1, trace2]}
+            data={trace1}
             layout={{
               autosize: false,
               barmode: "stack",
-              title: "Parameter Distribution",
               width: screenWidth - 388,
               height: screenHeight,
               margin: { autoexpand: true, l: 200 },
-              legend: { itemwidth: 90 },
+              showlegend: true,
             }}
           />
         </div>

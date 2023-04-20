@@ -13,10 +13,13 @@ import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
+import getFrequencies from "../../apiHooks/getFrequencyGraph";
 
-export default function ParametersDistribution() {
+export default function Frequencies() {
   const [selected, setSelected] = React.useState({ value: "paradigm" });
-  const [selectedParent, setSelectedParent] = React.useState({ value: "" });
+  const [selectedParent, setSelectedParent] = React.useState({
+    value: "Global Workspace",
+  });
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfuguration
@@ -30,55 +33,41 @@ export default function ParametersDistribution() {
     })
   );
 
-  const { data, isSuccess } = useQuery(
-    [`parameters_distribution_bar${selected.value + selectedParent}`],
-    () =>
-      getExperimentsGraphs(
-        "parameters_distribution_bar",
-        selected.value,
-        "Global Workspace"
-      )
+  const { data, isSuccess } = useQuery([`frequencies${selected.value}`], () =>
+    getFrequencies("EEG", selectedParent.value)
   );
 
-  const X1 = data?.data.map((row) => row.series[0].value);
+  const colors = {
+    Alpha: Math.floor(Math.random() * 16777215).toString(16),
+    Beta: Math.floor(Math.random() * 16777215).toString(16),
+    Gamma: Math.floor(Math.random() * 16777215).toString(16),
+    Delta: Math.floor(Math.random() * 16777215).toString(16),
+    Theta: Math.floor(Math.random() * 16777215).toString(16),
+  };
+  const something = data?.data.map((row) => row.series);
 
-  const Y = data?.data.map((row) => row.series_name);
+  const graphsData = something
+    ?.reduce((acc, val) => acc.concat(val), [])
+    .sort((a, b) => a.name - b.name);
+  console.log(graphsData);
 
-  const X2 = data?.data.map((row) => row.series[1]?.value || 0);
-
-  const graphsData2 = [];
-  data?.data.map((row) => {
-    graphsData2.push({
-      x: row.series[1]?.value || 0,
-      y: row.series_name,
-      type: "bar",
+  const traces = [];
+  graphsData?.map((row, index) =>
+    traces.push({
+      x: [row.start, row.end],
+      y: [index, index],
+      name: "pro",
       orientation: "h",
-      name: "challenges",
-    });
-  });
+      scatter: { color: colors[row.name] },
+      line: {
+        color: colors[row.name],
+        width: 6,
+      },
+      type: "lines",
+    })
+  );
 
-  var trace1 = {
-    x: X1,
-    y: Y,
-    name: "pro",
-    orientation: "h",
-    marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 1,
-    },
-    type: "bar",
-  };
-  var trace2 = {
-    x: X2,
-    y: Y,
-    name: "challenges",
-    orientation: "h",
-    marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 100,
-    },
-    type: "bar",
-  };
+  console.log({ traces });
 
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
@@ -155,7 +144,7 @@ export default function ParametersDistribution() {
 
         <div className="pl-12">
           <Plot
-            data={[trace1, trace2]}
+            data={traces}
             layout={{
               autosize: false,
               barmode: "stack",
