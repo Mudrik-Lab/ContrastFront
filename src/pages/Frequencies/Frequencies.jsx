@@ -226,7 +226,7 @@ export default function Frequencies() {
               title: "Parameter Distribution",
               width: screenWidth - 388,
               height: screenHeight,
-              margin: { autoexpand: true, l: 200 },
+              margin: { autoexpand: true, l: 20 },
               legend: { itemwidth: 90 },
               showlegend: false,
               yaxis: {

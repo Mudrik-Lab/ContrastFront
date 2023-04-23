@@ -16,10 +16,13 @@ import Navbar from "../../components/Navbar";
 import { getRandomColor } from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
-  const [selected, setSelected] = React.useState({ value: "paradigm" });
-  const [selectedParent, setSelectedParent] = React.useState({ value: "" });
-  const [reporting, setReporting] = React.useState("");
+  const [selected, setSelected] = React.useState({ value: "paradigm_family" });
+  const [selectedParent, setSelectedParent] = React.useState({
+    value: "Global Workspace",
+  });
+  const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [isStacked, setIsStacked] = React.useState(true);
 
   const { data: configuration } = useQuery(
     [`parent_theories`],
@@ -37,17 +40,17 @@ export default function ParametersDistributionBar() {
   const { data, isSuccess } = useQuery(
     [
       `parameters_distribution_bar${
-        selected.value + selectedParent + reporting + experimentsNum
+        selected.value + selectedParent.value + reporting + experimentsNum
       }`,
     ],
     () =>
-      getExperimentsGraphs(
-        "parameters_distribution_bar",
-        selected.value,
-        "Global Workspace",
-        reporting,
-        experimentsNum
-      )
+      getExperimentsGraphs({
+        graphName: "parameters_distribution_bar",
+        breakdown: selected.value,
+        theory: selectedParent.value,
+        is_reporting: reporting,
+        // min_number_of_experiments: experimentsNum,
+      })
   );
 
   const X1 = data?.data.map((row) => row.series[0].value);
@@ -89,7 +92,7 @@ export default function ParametersDistributionBar() {
     },
     type: "bar",
   };
-  console.log(Y?.length);
+
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
@@ -100,8 +103,8 @@ export default function ParametersDistributionBar() {
       <Navbar />
       <div className="flex mt-12">
         <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue">
-            Parameters Distribution
+          <Text size={28} weight="bold" color="blue" center>
+            Parameters Distribution Bar
           </Text>
           <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <Text md weight="bold">
@@ -117,32 +120,16 @@ export default function ParametersDistributionBar() {
                 tooltip="few more words about minimum number of experiments"
               />
             </div>
-            <div className={sectionClass}>
-              <Select
-                closeMenuOnSelect={true}
-                placeholder="X axis category selection.."
-                options={parentTheories}
-              />
-              <FilterExplanation
-                text="Choose parameter of interest"
-                tooltip="few more words about Choose parameter of interest"
-              />
-            </div>
-            <div className={sectionClass}>
-              <FilterExplanation
-                text="Select results format"
-                tooltip="few more words about Select results format"
-              />
-            </div>
+
             <div className={sectionClass}>
               <Text md weight="bold">
                 Filter Tags
               </Text>
-              <Select
-                closeMenuOnSelect={true}
-                isMulti={true}
+              <TagsSelect
+                className="basic-single"
+                classNamePrefix="select"
+                defaultValue={selectedParent.value}
                 options={parentTheories}
-                placeholder="Paradigms Family"
                 onChange={setSelectedParent}
               />
               <FilterExplanation
@@ -152,6 +139,8 @@ export default function ParametersDistributionBar() {
             </div>
             <div className={sectionClass}>
               <TagsSelect
+                className="basic-single"
+                classNamePrefix="select"
                 options={tagsOptions}
                 defaultValue={selected.value}
                 onChange={setSelected}
@@ -172,6 +161,15 @@ export default function ParametersDistributionBar() {
                 setChecked={setReporting}
               />
             </div>
+            <div className="flex gap-2">
+              <label htmlFor="stacked">Is Stacked?</label>
+              <input
+                type="checkbox"
+                name="stacked"
+                checked={isStacked}
+                onChange={() => setIsStacked(!isStacked)}
+              />
+            </div>
           </div>
         </div>
 
@@ -179,8 +177,8 @@ export default function ParametersDistributionBar() {
           <Plot
             data={[trace1, trace2]}
             layout={{
-              barmode: "stack",
-              title: "Parameter Distribution",
+              barmode: isStacked ? "stack" : "group",
+              title: "Parameter Distribution Bar",
               width: screenWidth - 388,
               height: 35 * Y?.length + 150,
               margin: { autoexpand: true, l: 200 },
