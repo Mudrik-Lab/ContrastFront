@@ -12,6 +12,7 @@ import ContactPage from "./pages/ContactPage/ContactPage";
 import ParametersDistributionTheoriesComparison from "./pages/ParametersDistributionTheoriesComparison/ParametersDistributionTheoriesComparison";
 import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
+import SimplePieCahrt from "./components/SimplePieCahrt";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -36,7 +37,7 @@ const Screens = () => {
           />
           <Route path="/Frequencies" element={<Frequencies />} />
           <Route path="/Journals" element={<Journals />} />
-          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/SimplePieCahrt" element={<SimplePieCahrt />} />
           <Route path="/Consciousness-World-Map" element={<WorldMap />} />
           <Route path="/Consciousness-World-Map" element={<WorldMap />} />
         </Routes>

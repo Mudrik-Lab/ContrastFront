@@ -1,12 +1,26 @@
-import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import useGetPie from "../apiHooks/useGetPie";
 import Plot from "react-plotly.js";
+import axios from "axios";
 
 export default function SimplePieCahrt() {
-  const { data, isSuccess } = useQuery(["comparison"], useGetPie);
-
-  const RPTcategories = data?.data.records
+  const [first, setFirst] = React.useState();
+  React.useEffect(() => {
+    (async () => {
+      try {
+        const res = await axios({
+          url: "https://api.airtable.com/v0/appQHEMJ1PASK4Kfj/second-PieCharts",
+          method: "GET",
+          headers: { Authorization: `Bearer keyGsJHfx22k81Gdj` },
+        });
+        setFirst(res.data);
+        console.log(first);
+      } catch (error) {
+        console.error(error);
+      }
+    })();
+  }, []);
+  console.log(first);
+  const RPTcategories = first?.records
     .filter((record) => {
       return record.fields["THEORY"] === "RPT";
     })
@@ -25,7 +39,7 @@ export default function SimplePieCahrt() {
     }
   }
 
-  const GNWcategories = data?.data.records
+  const GNWcategories = first?.records
     .filter((record) => {
       return record.fields["THEORY"] === "GNW";
     })
