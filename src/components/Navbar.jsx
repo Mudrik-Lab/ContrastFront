@@ -87,7 +87,7 @@ export default function Navbar() {
             <ul className="flex flex-row text-black space-x-12">
               <li className="flex items-center relative">
                 <button
-                  class="flex items-center text-black border-0 gap-1 "
+                  className="flex items-center text-black border-0 gap-1 "
                   onClick={() => setGraphMenue(!graphMenue)}>
                   Explore
                   <Arrow />

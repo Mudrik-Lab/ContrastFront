@@ -7,7 +7,6 @@ import {
   RangeInput,
   Text,
 } from "../../components/Reusble";
-import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
@@ -16,10 +15,32 @@ import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 
 export default function Frequencies() {
-  const [selected, setSelected] = React.useState({ value: "paradigm" });
+  const techniques = [
+    { value: "EEG", label: "EEG" },
+    { value: "Intracranial EEG", label: "Intracranial EEG" },
+    { value: "MEG", label: "MEG" },
+    { value: "EEG+TMS", label: "EEG + TMS" },
+    { value: "Computational Modelling", label: "Computational Modelling" },
+    { value: "EEG+Intracranial EEG", label: "EEG + Intracranial EEG" },
+  ];
+  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [reporting, setReporting] = React.useState("either");
+  const [consciousness, setConsciousness] = React.useState("either");
+  const [theoryDriven, setTheoryDriven] = React.useState("either");
+  const [selectedTechniques, setSelectedTechniques] =
+    React.useState(techniques);
   const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
+    value: null,
   });
+
+  const colors = {
+    Alpha: "#C2549D",
+    Beta: "#EB5A88",
+    Gamma: "#EF7576",
+    Delta: "#4D3991",
+    Theta: "#8949A2",
+  };
+
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfuguration
@@ -33,29 +54,41 @@ export default function Frequencies() {
     })
   );
 
-  const { data, isSuccess } = useQuery([`frequencies${selected.value}`], () =>
-    getFrequencies("EEG", selectedParent.value)
+  const { data, isSuccess } = useQuery(
+    [
+      `frequencies${
+        selectedTechniques.join(" ") +
+        " " +
+        selectedParent.value +
+        " " +
+        reporting +
+        " " +
+        theoryDriven +
+        " " +
+        consciousness
+      }`,
+    ],
+    () =>
+      getFrequencies({
+        techniques: selectedTechniques,
+        theory: selectedParent.value,
+        is_reporting: reporting,
+        theory_driven: theoryDriven,
+        type_of_consciousness: consciousness,
+      })
   );
 
-  const colors = {
-    Alpha: Math.floor(Math.random() * 16777215).toString(16),
-    Beta: Math.floor(Math.random() * 16777215).toString(16),
-    Gamma: Math.floor(Math.random() * 16777215).toString(16),
-    Delta: Math.floor(Math.random() * 16777215).toString(16),
-    Theta: Math.floor(Math.random() * 16777215).toString(16),
-  };
   const something = data?.data.map((row) => row.series);
 
   const graphsData = something
     ?.reduce((acc, val) => acc.concat(val), [])
     .sort((a, b) => a.name - b.name);
-  console.log(graphsData);
 
   const traces = [];
   graphsData?.map((row, index) =>
     traces.push({
       x: [row.start, row.end],
-      y: [index, index],
+      y: [index + 1, index + 1],
       name: "pro",
       orientation: "h",
       scatter: { color: colors[row.name] },
@@ -66,8 +99,6 @@ export default function Frequencies() {
       type: "lines",
     })
   );
-
-  console.log({ traces });
 
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
@@ -86,39 +117,60 @@ export default function Frequencies() {
             <Text md weight="bold">
               Axis Controls
             </Text>
+            <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
+              {/* TODO: find Headline */}
+              <Text md weight={"light"}>
+                Theory Driven
+              </Text>
+              <div className={sectionClass}>
+                <Text md weight="bold">
+                  Techniqes
+                </Text>
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={selectedTechniques}
+                  options={techniques}
+                  placeholder="Techniques"
+                  onChange={setSelectedTechniques}
+                />
+                <FilterExplanation
+                  text="Paradigms Family"
+                  tooltip="few more words about Paradigms Family"
+                />
+              </div>
+              <RadioInput
+                name="Thery-Driven"
+                values={[
+                  { value: "driven", name: "Driven" },
+                  { value: "mentioning", name: "Mentioning" },
+                  { value: "either", name: "Either" },
+                  { value: "post-hoc", name: "Post Hoc" },
+                ]}
+                checked={theoryDriven}
+                setChecked={setTheoryDriven}
+              />
+            </div>
             <div className={sectionClass}>
-              <RangeInput />
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
               <FilterExplanation
                 text="minimum number of experiments"
                 tooltip="few more words about minimum number of experiments"
               />
             </div>
-            <div className={sectionClass}>
-              <Select
-                closeMenuOnSelect={true}
-                placeholder="X axis category selection.."
-                options={parentTheories}
-              />
-              <FilterExplanation
-                text="Choose parameter of interest"
-                tooltip="few more words about Choose parameter of interest"
-              />
-            </div>
-            <div className={sectionClass}>
-              <FilterExplanation
-                text="Select results format"
-                tooltip="few more words about Select results format"
-              />
-            </div>
+
             <div className={sectionClass}>
               <Text md weight="bold">
-                Filter Tags
+                Headline
               </Text>
-              <Select
-                closeMenuOnSelect={true}
-                isMulti={true}
+
+              <TagsSelect
                 options={parentTheories}
                 placeholder="Paradigms Family"
+                defaultValue={selectedParent.value}
                 onChange={setSelectedParent}
               />
               <FilterExplanation
@@ -126,16 +178,40 @@ export default function Frequencies() {
                 tooltip="few more words about Paradigms Family"
               />
             </div>
-            <div className={sectionClass}>
-              <TagsSelect
-                options={tagsOptions}
-                defaultValue={selected.value}
-                onChange={setSelected}
-              />
 
-              <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
+            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              {/* TODO: find Headline */}
+              <Text md weight={"light"}>
+                Reported
+              </Text>
+              <RadioInput
+                name="Report"
+                values={[
+                  { value: "report", name: "Report" },
+                  { value: "no_report", name: "No-Report" },
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={reporting}
+                setChecked={setReporting}
+              />
+            </div>
+            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              {/* TODO: find Headline */}
+              <Text md weight={"light"}>
+                Type of Consciousness
+              </Text>
+              <RadioInput
+                name="Consciousness"
+                values={[
+                  { value: "state", name: "State" },
+                  { value: "content", name: "Content" },
+
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={consciousness}
+                setChecked={setConsciousness}
               />
             </div>
           </div>
@@ -152,6 +228,17 @@ export default function Frequencies() {
               height: screenHeight,
               margin: { autoexpand: true, l: 200 },
               legend: { itemwidth: 90 },
+              showlegend: false,
+              yaxis: {
+                zeroline: false, // hide the zeroline
+                zerolinecolor: "#969696", // customize the color of the zeroline
+                zerolinewidth: 2, // customize the width of the zeroline
+              },
+              xaxis: {
+                zeroline: false, // hide the zeroline
+                zerolinecolor: "#969696", // customize the color of the zeroline
+                zerolinewidth: 2, // customize the width of the zeroline
+              },
             }}
           />
         </div>

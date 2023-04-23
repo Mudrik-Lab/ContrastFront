@@ -94,7 +94,7 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
   return (
     <div className="flex px-12 flex-wrap justify-center">
       {values.map((val) => (
-        <div className="mr-4">
+        <div className="mr-4" id={val.name}>
           <input
             id="red-radio"
             type="radio"
