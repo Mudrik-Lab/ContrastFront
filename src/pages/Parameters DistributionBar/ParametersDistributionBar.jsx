@@ -16,7 +16,7 @@ import Navbar from "../../components/Navbar";
 import { getRandomColor } from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
-  const [selected, setSelected] = React.useState({ value: "paradigm_family" });
+  const [selected, setSelected] = React.useState(tagsOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
   });
@@ -126,8 +126,6 @@ export default function ParametersDistributionBar() {
                 Filter Tags
               </Text>
               <TagsSelect
-                className="basic-single"
-                classNamePrefix="select"
                 defaultValue={selectedParent.value}
                 options={parentTheories}
                 onChange={setSelectedParent}
@@ -139,10 +137,8 @@ export default function ParametersDistributionBar() {
             </div>
             <div className={sectionClass}>
               <TagsSelect
-                className="basic-single"
-                classNamePrefix="select"
                 options={tagsOptions}
-                defaultValue={selected.value}
+                defaultValue={selected.label}
                 onChange={setSelected}
               />
 
