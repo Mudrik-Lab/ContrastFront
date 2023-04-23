@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import Select from "react-select";
 import {
   FilterExplanation,
   RadioInput,
