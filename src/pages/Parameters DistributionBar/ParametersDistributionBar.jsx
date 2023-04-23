@@ -13,10 +13,14 @@ import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
+import { getRandomColor } from "../../Utils/functions";
 
-export default function ParametersDistribution() {
+export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState({ value: "paradigm" });
   const [selectedParent, setSelectedParent] = React.useState({ value: "" });
+  const [reporting, setReporting] = React.useState("");
+  const [experimentsNum, setExperimentsNum] = React.useState(1);
+
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfuguration
@@ -31,12 +35,18 @@ export default function ParametersDistribution() {
   );
 
   const { data, isSuccess } = useQuery(
-    [`parameters_distribution_bar${selected.value + selectedParent}`],
+    [
+      `parameters_distribution_bar${
+        selected.value + selectedParent + reporting + experimentsNum
+      }`,
+    ],
     () =>
       getExperimentsGraphs(
         "parameters_distribution_bar",
         selected.value,
-        "Global Workspace"
+        "Global Workspace",
+        reporting,
+        experimentsNum
       )
   );
 
@@ -58,18 +68,18 @@ export default function ParametersDistribution() {
   });
 
   var trace1 = {
-    x: X1,
+    x: X1?.reverse(),
     y: Y,
     name: "pro",
     orientation: "h",
     marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
-      width: 1,
+      color: getRandomColor(X1?.length),
+      width: 100,
     },
     type: "bar",
   };
   var trace2 = {
-    x: X2,
+    x: X2?.reverse(),
     y: Y,
     name: "challenges",
     orientation: "h",
@@ -79,7 +89,7 @@ export default function ParametersDistribution() {
     },
     type: "bar",
   };
-
+  console.log(Y?.length);
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
@@ -98,7 +108,10 @@ export default function ParametersDistribution() {
               Axis Controls
             </Text>
             <div className={sectionClass}>
-              <RangeInput />
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
               <FilterExplanation
                 text="minimum number of experiments"
                 tooltip="few more words about minimum number of experiments"
@@ -116,7 +129,6 @@ export default function ParametersDistribution() {
               />
             </div>
             <div className={sectionClass}>
-              <RadioInput />
               <FilterExplanation
                 text="Select results format"
                 tooltip="few more words about Select results format"
@@ -149,6 +161,16 @@ export default function ParametersDistribution() {
                 text="Paradigm "
                 tooltip="few more words about Paradigm "
               />
+              <RadioInput
+                values={[
+                  { value: "report", name: "Report" },
+                  { value: "no_report", name: "No-Report" },
+                  { value: "both", name: "Both" },
+                  { value: "either", name: "Either" },
+                ]}
+                checked={reporting}
+                setChecked={setReporting}
+              />
             </div>
           </div>
         </div>
@@ -157,13 +179,16 @@ export default function ParametersDistribution() {
           <Plot
             data={[trace1, trace2]}
             layout={{
-              autosize: false,
               barmode: "stack",
               title: "Parameter Distribution",
               width: screenWidth - 388,
-              height: screenHeight,
+              height: 35 * Y?.length + 150,
               margin: { autoexpand: true, l: 200 },
               legend: { itemwidth: 90 },
+              xaxis: {
+                zeroline: true,
+                side: "top",
+              },
             }}
           />
         </div>

@@ -7,7 +7,7 @@ import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
 import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
 import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesPage";
-import ParametersDistribution from "./pages/Parameters Distribution/ParametersDistribution";
+import ParametersDistributionBar from "./pages/Parameters DistributionBar/ParametersDistributionBar";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import ParametersDistributionTheoriesComparison from "./pages/ParametersDistributionTheoriesComparison/ParametersDistributionTheoriesComparison";
 import Frequencies from "./pages/Frequencies/Frequencies";
@@ -25,10 +25,9 @@ const Screens = () => {
           <Route path="/about" element={<AboutPage />} />
           <Route path="/Free-Queries" element={<FreeQueriesPage />} />
           <Route
-            path="/Parameter-Distribution"
-            element={<ParametersDistribution />}
+            path="/Parameter-Distribution-bar"
+            element={<ParametersDistributionBar />}
           />
-          <Route path="/Parameter-Distribution-bar" element={<WorldMap />} />
           <Route path="/Across-The-Years" element={<AcrossTheYears />} />
           <Route path="/Contact" element={<ContactPage />} />
           <Route

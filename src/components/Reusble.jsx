@@ -3,6 +3,7 @@ import React from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite";
+import { useState } from "react";
 
 export const navHeight = 60;
 
@@ -89,36 +90,27 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
     </select>
   );
 };
-export const RadioInput = ({}) => {
+export const RadioInput = ({ name, values, checked, setChecked }) => {
   return (
-    <div className="flex flex-wrap">
-      <div className="flex items-center mr-4">
-        <input
-          id="red-radio"
-          type="radio"
-          value=""
-          name="colored-radio"
-          className="w-4 h-4 bg-gray-100 border-gray-300"
-        />
-        <label
-          htmlFor="red-radio"
-          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-          Amount
-        </label>
-      </div>
-      <div className="flex items-center mr-4">
-        <input
-          type="radio"
-          value=""
-          name="colored-radio"
-          className="w-4 h-4 bg-gray-100 border-gray-300"
-        />
-        <label
-          htmlFor="green-radio"
-          className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">
-          Percent
-        </label>
-      </div>
+    <div className="flex px-12 flex-wrap justify-center">
+      {values.map((val) => (
+        <div className="mr-4">
+          <input
+            id="red-radio"
+            type="radio"
+            name={name}
+            value={val.value}
+            checked={checked === val.value}
+            onChange={(e) => setChecked(e.target.value)}
+            className="w-4 h-4 bg-gray-100 border-gray-300"
+          />
+          <label
+            htmlFor="red-radio"
+            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 break-normal">
+            {val.name}
+          </label>
+        </div>
+      ))}
     </div>
   );
 };
@@ -154,8 +146,7 @@ export const Label = ({ children }) => {
   );
 };
 
-export const RangeInput = ({}) => {
-  const [number, setNumber] = React.useState(50);
+export const RangeInput = ({ number, setNumber }) => {
   return (
     <div className="relative">
       <input
@@ -164,6 +155,7 @@ export const RangeInput = ({}) => {
         min={0}
         max={100}
         step={5}
+        value={number}
         className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
         id="numOfExperiments"
       />

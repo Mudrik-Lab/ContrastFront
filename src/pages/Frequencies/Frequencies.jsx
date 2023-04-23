@@ -105,7 +105,6 @@ export default function Frequencies() {
               />
             </div>
             <div className={sectionClass}>
-              <RadioInput />
               <FilterExplanation
                 text="Select results format"
                 tooltip="few more words about Select results format"

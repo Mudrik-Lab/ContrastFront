@@ -79,7 +79,6 @@ export default function Journals() {
               />
             </div>
             <div className={sectionClass}>
-              <RadioInput />
               <FilterExplanation
                 text="Select results format"
                 tooltip="few more words about Select results format"
