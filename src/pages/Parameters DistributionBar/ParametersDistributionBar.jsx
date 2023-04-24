@@ -48,7 +48,7 @@ export default function ParametersDistributionBar() {
         breakdown: selected.value,
         theory: selectedParent.value,
         is_reporting: reporting,
-        // min_number_of_experiments: experimentsNum,
+        min_number_of_experiments: experimentsNum,
       })
   );
 

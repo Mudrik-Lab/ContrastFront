@@ -60,3 +60,17 @@ export const tagsOptions = [
     label: "Measure",
   },
 ];
+export const available_techniques_for_timings = [
+  { value: "EEG", label: "EEG" },
+  { value: "MEG", label: "MEG" },
+  { value: "TMS", label: "TMS" },
+  { value: "Computational Modelling", label: "Computational Modelling" },
+];
+
+export const ABColors = {
+  Alpha: "#C2549D",
+  Beta: "#EB5A88",
+  Gamma: "#EF7576",
+  Delta: "#4D3991",
+  Theta: "#8949A2",
+};
