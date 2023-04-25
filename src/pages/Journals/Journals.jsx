@@ -16,8 +16,14 @@ import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 
 export default function Journals() {
-  const [selected, setSelected] = React.useState({ value: "paradigm" });
-  const [selectedParent, setSelectedParent] = React.useState({ value: "" });
+  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [reporting, setReporting] = React.useState("either");
+  const [consciousness, setConsciousness] = React.useState("either");
+  const [theoryDriven, setTheoryDriven] = React.useState("either");
+  const [selectedParent, setSelectedParent] = React.useState({
+    value: "Global Workspace",
+    label: "Global Workspace",
+  });
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfuguration
@@ -27,22 +33,44 @@ export default function Journals() {
     (parentTheory) => ({
       value: parentTheory,
       label: parentTheory,
-      color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     })
   );
-  const { data, isSuccess } = useQuery([`journals`], () =>
-    getJournals("Global Workspace")
+  const { data, isSuccess } = useQuery(
+    [
+      `journals${
+        +" " +
+        selectedParent.value +
+        " " +
+        reporting +
+        " " +
+        theoryDriven +
+        " " +
+        experimentsNum +
+        " " +
+        consciousness
+      }`,
+    ],
+    () =>
+      getJournals({
+        theory: selectedParent.value,
+        is_reporting: reporting,
+        theory_driven: theoryDriven,
+        type_of_consciousness: consciousness,
+        min_number_of_experiments: experimentsNum,
+      })
   );
-  const graphsData = data?.data;
-  console.log(graphsData);
+  const graphsData = isSuccess ? data?.data : [];
 
   var trace1 = {
     x: graphsData.map((row) => row.key),
     y: graphsData.map((row) => row.value),
     type: "bar",
+    marker: {
+      color: Math.floor(Math.random() * 16777215).toString(16),
+    },
   };
-  console.log(trace1);
-  const screenWidth = window.screen.width;
+  console.log(trace1.x.length);
+  const graphWidth = 150 + trace1.x.length * 25;
   const screenHeight = window.screen.height;
 
   const sectionClass =
@@ -60,39 +88,30 @@ export default function Journals() {
             <Text md weight="bold">
               Axis Controls
             </Text>
+
             <div className={sectionClass}>
-              <RangeInput />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
-            <div className={sectionClass}>
-              <Select
-                closeMenuOnSelect={true}
-                placeholder="X axis category selection.."
-                options={parentTheories}
-              />
-              <FilterExplanation
-                text="Choose parameter of interest"
-                tooltip="few more words about Choose parameter of interest"
-              />
-            </div>
-            <div className={sectionClass}>
-              <FilterExplanation
-                text="Select results format"
-                tooltip="few more words about Select results format"
+              <Text md weight={"light"}>
+                Reported
+              </Text>
+              <RadioInput
+                name="Report"
+                values={[
+                  { value: "report", name: "Report" },
+                  { value: "no_report", name: "No-Report" },
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={reporting}
+                setChecked={setReporting}
               />
             </div>
             <div className={sectionClass}>
               <Text md weight="bold">
                 Filter Tags
               </Text>
-              <Select
-                closeMenuOnSelect={true}
-                isMulti={true}
+              <TagsSelect
                 options={parentTheories}
-                placeholder="Paradigms Family"
+                value={selectedParent}
                 onChange={setSelectedParent}
               />
               <FilterExplanation
@@ -101,15 +120,44 @@ export default function Journals() {
               />
             </div>
             <div className={sectionClass}>
-              <TagsSelect
-                options={tagsOptions}
-                defaultValue={selected.value}
-                onChange={setSelected}
+              <RadioInput
+                name="Thery-Driven"
+                values={[
+                  { value: "driven", name: "Driven" },
+                  { value: "mentioning", name: "Mentioning" },
+                  { value: "either", name: "Either" },
+                  { value: "post-hoc", name: "Post Hoc" },
+                ]}
+                checked={theoryDriven}
+                setChecked={setTheoryDriven}
               />
-
+            </div>
+            <div className={sectionClass}>
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
               <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
+                text="minimum number of experiments"
+                tooltip="few more words about minimum number of experiments"
+              />
+            </div>
+            <div className="w-full py-5 flex flex-col items-center gap-3 ">
+              {/* TODO: find Headline */}
+              <Text md weight={"light"}>
+                Type of Consciousness
+              </Text>
+              <RadioInput
+                name="Consciousness"
+                values={[
+                  { value: "state", name: "State" },
+                  { value: "content", name: "Content" },
+
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={consciousness}
+                setChecked={setConsciousness}
               />
             </div>
           </div>
@@ -120,8 +168,8 @@ export default function Journals() {
             data={[trace1]}
             layout={{
               autosize: false,
-              width: screenWidth - 388,
-              height: screenHeight,
+              width: graphWidth,
+              height: screenHeight - 100,
               margin: { autoexpand: true, b: 150 },
               showlegend: true,
             }}

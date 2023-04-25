@@ -170,8 +170,7 @@ export default function Frequencies() {
                 />
               </div>
 
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
+              <div className={sectionClass}>
                 <Text md weight={"light"}>
                   Reported
                 </Text>
@@ -187,7 +186,7 @@ export default function Frequencies() {
                   setChecked={setReporting}
                 />
               </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+              <div className={sectionClass}>
                 {/* TODO: find Headline */}
                 <Text md weight={"light"}>
                   Type of Consciousness
