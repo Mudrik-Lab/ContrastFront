@@ -11,9 +11,9 @@ import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 
 export default function AcrossTheYears() {
   const [selected, setSelected] = useState({ value: "paradigm" });
-  const [reporting, setReporting] = React.useState("");
-  const [consciousness, setConsciousness] = React.useState("");
-  const [experimentsNum, setExperimentsNum] = React.useState(null);
+  const [reporting, setReporting] = React.useState("either");
+  const [consciousness, setConsciousness] = React.useState("either");
+  const [experimentsNum, setExperimentsNum] = React.useState(1);
 
   const { data, isSuccess } = useQuery(
     [

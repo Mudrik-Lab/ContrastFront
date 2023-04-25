@@ -74,3 +74,4 @@ export const ABColors = {
   Delta: "#4D3991",
   Theta: "#8949A2",
 };
+export const TagsColors = {};

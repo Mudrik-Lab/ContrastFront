@@ -18,12 +18,13 @@ export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
+    label: "Global Workspace",
   });
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(1);
   const [isStacked, setIsStacked] = React.useState(true);
 
-  const { data: configuration } = useQuery(
+  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfuguration
   );
@@ -100,92 +101,94 @@ export default function ParametersDistributionBar() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12">
-        <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue" center>
-            Parameters Distribution Bar
-          </Text>
-          <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-            <Text md weight="bold">
-              Axis Controls
+      {configurationSuccess && (
+        <div className="flex mt-12">
+          <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+            <Text size={28} weight="bold" color="blue" center>
+              Parameters Distribution Bar
             </Text>
-            <div className={sectionClass}>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
-
-            <div className={sectionClass}>
+            <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
-                Filter Tags
+                Axis Controls
               </Text>
-              <TagsSelect
-                defaultValue={selectedParent.value}
-                options={parentTheories}
-                onChange={setSelectedParent}
-              />
-              <FilterExplanation
-                text="Paradigms Family"
-                tooltip="few more words about Paradigms Family"
-              />
-            </div>
-            <div className={sectionClass}>
-              <TagsSelect
-                options={tagsOptions}
-                defaultValue={selected.label}
-                onChange={setSelected}
-              />
+              <div className={sectionClass}>
+                <RangeInput
+                  number={experimentsNum}
+                  setNumber={setExperimentsNum}
+                />
+                <FilterExplanation
+                  text="minimum number of experiments"
+                  tooltip="few more words about minimum number of experiments"
+                />
+              </div>
 
-              <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
-              />
-              <RadioInput
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "both", name: "Both" },
-                  { value: "either", name: "Either" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className="flex gap-2">
-              <label htmlFor="stacked">Is Stacked?</label>
-              <input
-                type="checkbox"
-                name="stacked"
-                checked={isStacked}
-                onChange={() => setIsStacked(!isStacked)}
-              />
+              <div className={sectionClass}>
+                <Text md weight="bold">
+                  Filter Tags
+                </Text>
+                <TagsSelect
+                  value={selectedParent}
+                  options={parentTheories}
+                  onChange={setSelectedParent}
+                />
+                <FilterExplanation
+                  text="Paradigms Family"
+                  tooltip="few more words about Paradigms Family"
+                />
+              </div>
+              <div className={sectionClass}>
+                <TagsSelect
+                  options={tagsOptions}
+                  value={selected}
+                  onChange={setSelected}
+                />
+
+                <FilterExplanation
+                  text="Paradigm "
+                  tooltip="few more words about Paradigm "
+                />
+                <RadioInput
+                  values={[
+                    { value: "report", name: "Report" },
+                    { value: "no_report", name: "No-Report" },
+                    { value: "both", name: "Both" },
+                    { value: "either", name: "Either" },
+                  ]}
+                  checked={reporting}
+                  setChecked={setReporting}
+                />
+              </div>
+              <div className="flex gap-2">
+                <label htmlFor="stacked">Is Stacked?</label>
+                <input
+                  type="checkbox"
+                  name="stacked"
+                  checked={isStacked}
+                  onChange={() => setIsStacked(!isStacked)}
+                />
+              </div>
             </div>
           </div>
-        </div>
 
-        <div className="pl-12">
-          <Plot
-            data={[trace1, trace2]}
-            layout={{
-              barmode: isStacked ? "stack" : "group",
-              title: "Parameter Distribution Bar",
-              width: screenWidth - 388,
-              height: 35 * Y?.length + 150,
-              margin: { autoexpand: true, l: 200 },
-              legend: { itemwidth: 90 },
-              xaxis: {
-                zeroline: true,
-                side: "top",
-              },
-            }}
-          />
+          <div className="pl-12">
+            <Plot
+              data={[trace1, trace2]}
+              layout={{
+                barmode: isStacked ? "stack" : "group",
+                title: "Parameter Distribution Bar",
+                width: screenWidth - 388,
+                height: 35 * Y?.length + 150,
+                margin: { autoexpand: true, l: 200 },
+                legend: { itemwidth: 90 },
+                xaxis: {
+                  zeroline: true,
+                  side: "top",
+                },
+              }}
+            />
+          </div>
         </div>
-      </div>
+      )}
     </div>
   );
 }

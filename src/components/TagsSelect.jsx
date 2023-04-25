@@ -6,15 +6,16 @@ export default function TagsSelect({
 
   isMulti,
   onChange,
-  defaultValue,
+  value,
 }) {
   return (
     <Select
-      closeMenuOnSelect={true}
+      className="basic-single"
       isMulti={isMulti}
+      isSearchable={true}
       options={options}
       onChange={onChange}
-      defaultInputValue={defaultValue}
+      value={value}
     />
   );
 }

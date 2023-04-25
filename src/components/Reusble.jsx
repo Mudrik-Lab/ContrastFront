@@ -146,7 +146,7 @@ export const Label = ({ children }) => {
   );
 };
 
-export const RangeInput = ({ number, setNumber }) => {
+export const RangeInput = ({ number, setNumber, min, max, step }) => {
   return (
     <div className="relative">
       <input
@@ -154,7 +154,7 @@ export const RangeInput = ({ number, setNumber }) => {
         onChange={(e) => setNumber(e.target.value)}
         min={0}
         max={100}
-        step={5}
+        step={1}
         value={number}
         className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
         id="numOfExperiments"

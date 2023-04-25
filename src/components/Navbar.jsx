@@ -15,9 +15,9 @@ export default function Navbar() {
   const page = window.location.pathname;
   const graphsDropdownInfo = [
     {
-      text: "Parameter Distribution Bar",
+      text: "Parameter Distribution",
       color: "yellow",
-      route: "/Parameter-Distribution-Bar",
+      route: "/Parameter-Distribution",
     },
     {
       text: "Theories Comparison",

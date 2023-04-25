@@ -9,25 +9,18 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { ABColors, tagsOptions } from "../../components/HardCoded";
+import { ABColors } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 
 export default function Frequencies() {
-  //  const techniques =[
-  //   { value: "EEG", label: "EEG" },
-  //   { value: "MEG", label: "MEG" },
-  //   { value: "Computational Modelling", label: "Computational Modelling" },
-  // ];
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: null,
-  });
+  const [selectedParent, setSelectedParent] = React.useState({});
+  const [experimentsNum, setExperimentsNum] = React.useState(1);
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -43,25 +36,26 @@ export default function Frequencies() {
       )
     : [];
 
-  const parentTheories = configuration?.data.available_parent_theories.map(
-    (parentTheory) => ({
-      value: parentTheory,
-      label: parentTheory,
-    })
-  );
+  const parentTheories = configSuccess
+    ? configuration?.data.available_parent_theories.map((parentTheory) => ({
+        value: parentTheory,
+        label: parentTheory,
+      }))
+    : [];
 
   const { data, isSuccess } = useQuery(
     [
       `frequencies${
-        selectedTechniques?.join(" ") +
-        " " +
-        selectedParent.value +
-        " " +
-        reporting +
-        " " +
-        theoryDriven +
-        " " +
-        consciousness
+        selectedTechniques?.join(" ") + " " + selectedParent.value ||
+        "" +
+          " " +
+          reporting +
+          " " +
+          theoryDriven +
+          " " +
+          consciousness +
+          " " +
+          experimentsNum
       }`,
     ],
     () =>
@@ -71,9 +65,9 @@ export default function Frequencies() {
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
+        min_number_of_experiments: experimentsNum,
       })
   );
-
   const something = data?.data.map((row) => row.series);
 
   const graphsData = something
@@ -85,7 +79,7 @@ export default function Frequencies() {
     traces.push({
       x: [row.start, row.end],
       y: [index + 1, index + 1],
-      name: "pro",
+      name: row.name,
       orientation: "h",
       scatter: { color: ABColors[row.name] },
       line: {
@@ -106,7 +100,7 @@ export default function Frequencies() {
   return (
     <div>
       <Navbar />
-      {
+      {configSuccess && (
         <div className="flex mt-12">
           <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue">
@@ -118,9 +112,6 @@ export default function Frequencies() {
               </Text>
               <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
-                <Text md weight={"light"}>
-                  Theory Driven
-                </Text>
                 <div className={sectionClass}>
                   <Text md weight="bold">
                     Techniqes
@@ -165,13 +156,12 @@ export default function Frequencies() {
 
               <div className={sectionClass}>
                 <Text md weight="bold">
-                  Headline
+                  Theory
                 </Text>
 
                 <TagsSelect
                   options={parentTheories}
-                  placeholder="Paradigms Family"
-                  defaultValue={selectedParent.value}
+                  value={selectedParent}
                   onChange={setSelectedParent}
                 />
                 <FilterExplanation
@@ -229,7 +219,7 @@ export default function Frequencies() {
                 height: screenHeight,
                 margin: { autoexpand: true, l: 20 },
                 legend: { itemwidth: 90 },
-                showlegend: false,
+                showlegend: true,
                 yaxis: {
                   zeroline: false, // hide the zeroline
                   zerolinecolor: "#969696", // customize the color of the zeroline
@@ -244,7 +234,7 @@ export default function Frequencies() {
             />
           </div>
         </div>
-      }
+      )}
     </div>
   );
 }
