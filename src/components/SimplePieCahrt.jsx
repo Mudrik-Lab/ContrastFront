@@ -13,13 +13,11 @@ export default function SimplePieCahrt() {
           headers: { Authorization: `Bearer keyGsJHfx22k81Gdj` },
         });
         setFirst(res.data);
-        console.log(first);
       } catch (error) {
         console.error(error);
       }
     })();
   }, []);
-  console.log(first);
   const RPTcategories = first?.records
     .filter((record) => {
       return record.fields["THEORY"] === "RPT";
