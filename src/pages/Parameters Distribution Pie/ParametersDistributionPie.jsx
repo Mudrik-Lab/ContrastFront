@@ -43,76 +43,111 @@ export default function ParametersDistributionPie() {
       })
   );
 
-  console.log(data?.data);
+  const values1 = [];
+  const labels1 = [];
+  const ids1 = [];
+  const ids2 = [];
+  const values2 = [];
+  const labels2 = [];
 
+  data?.data.map((x, index) => {
+    values1.push(x.value);
+    labels1.push(x.series_name);
+    ids1.push(index);
+    x.series.map((y) => {
+      values2.push(y.value);
+      labels2.push(y.key + index);
+    });
+  });
+  console.log({ labels2, values2 });
   return (
     <div>
       <Navbar />
+      <Plot
+        data={[
+          {
+            direction: "clockwise",
+            values: values1,
+            labels: labels1,
+            ids: ids1,
+            type: "pie",
+            textinfo: "label+number",
+            textposition: "inside",
+            insidetextorientation: "radial",
+            domain: { column: 1 },
+            marker: { line: { width: 1, color: "white" } },
+          },
+          {
+            direction: "clockwise",
+            values: values2,
+            labels: labels2,
+            ids: ids1,
+            sort: false,
+            type: "pie",
+            textinfo: "label+value",
+            hole: 0.7,
+            textposition: "inside",
+            domain: { column: 10 },
+            marker: { line: { width: 1, color: "white" } },
+          },
+        ]}
+        layout={{
+          width: 1900,
+          height: 1100,
+          showlegend: false,
+
+          annotations: [{ showarrow: false }, { showarrow: false }],
+        }}
+      />
       {/* <Plot
         data={[
           {
-            values: data?.data.map((category) => category.value),
-            labels: data?.data.map((category) => category.series_name),
+            values: [20, 30, 50],
+            labels: ["A", "B", "C"],
             type: "pie",
-            textinfo: "label",
-            textposition: "inside",
-            domain: { column: 1 },
+            ids: ["A", "B", "C"], // Set the ids to the label values
+            name: "Pie 1",
+
+            marker: { line: { width: 1 } },
+          },
+          {
+            values: [10, 30, 60],
+            labels: ["X", "Y", "Z"],
+            type: "pie",
+            ids: ["X", "Y", "Z"], // Set the ids to the label values
+            name: "Pie 2",
+            hole: 0.9,
+            // marker: { line: { width: 1 } },
           },
         ]}
         layout={{
           width: 1000,
-          height: 700,
-          showlegend: true,
-        }}
-      /> */}
-
-      <Plot
-        data={[
-          {
-            values: [20, 80],
-            labels: ["Layer 1", ""],
-            type: "pie",
-
-            marker: {
-              colors: ["blue", "green"],
-            },
-            hoverinfo: "label+percent",
-          },
-          {
-            values: [60, 40],
-            labels: ["Layer 2", ""],
-            type: "pie",
-            hole: 0.7,
-            marker: {
-              colors: ["red", "orange"],
-            },
-            hoverinfo: "label+percent",
-          },
-        ]}
-        layout={{
+          height: 600,
           title: "Two-Layer Pie Chart",
+          showlegend: true,
+          grid: { rows: 1, columns: 2 },
           annotations: [
             {
               font: {
                 size: 20,
               },
               showarrow: false,
-              text: "Layer 1",
-              x: 0.9,
-              y: 0.9,
+              text: "Pie 1",
+              x: 0.18,
+              y: 0.5,
             },
             {
               font: {
                 size: 20,
               },
               showarrow: false,
-              text: "Layer 2",
-              x: 0.5,
+              text: "Pie 2",
+              x: 0.82,
               y: 0.5,
             },
           ],
         }}
-      />
+      /> */}
     </div>
   );
 }
