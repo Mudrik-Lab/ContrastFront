@@ -19,27 +19,27 @@ export default function PapersIconsMenu() {
     {
       text: "Parameter Distribution",
       icon: <ParameterDist />,
-      route: "/",
+      route: "/parameter-distribution",
     },
     {
       text: "Timing",
       icon: <Timing />,
-      route: "/",
+      route: "/timing",
     },
     {
       text: "Frequencies",
       icon: <Frequencies />,
-      route: "/",
+      route: "/frequencies",
     },
     {
-      text: "Parameter Distribution",
+      text: "parameter-distribution-bar",
       icon: <ParameterDist2 />,
-      route: "/",
+      route: "/parameter-distribution-bar",
     },
     {
       text: "Theories Comparison",
       icon: <TheoriesComparison />,
-      route: "/",
+      route: "/theories-comparison",
     },
     {
       text: "Anatomical Findings",
@@ -49,17 +49,17 @@ export default function PapersIconsMenu() {
     {
       text: "Theory Driven",
       icon: <TheoryDriven />,
-      route: "/",
+      route: "/theory-driven",
     },
     {
       text: "Parameter & Theory Distribution",
       icon: <ParameterTheory />,
-      route: "/",
+      route: "/parameter-distribution-pie",
     },
     {
       text: "Trends Across Time",
       icon: <Trends />,
-      route: "/",
+      route: "/across-the-years",
     },
 
     {

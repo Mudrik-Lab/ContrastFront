@@ -26,26 +26,25 @@ const Screens = () => {
 
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/Parameter-Distribution" element={<FreeQueriesPage />} />
+          <Route path="/parameter-distribution" element={<FreeQueriesPage />} />
           <Route
-            path="/Parameter-Distribution-bar"
+            path="/parameter-distribution-bar"
             element={<ParametersDistributionBar />}
           />
           <Route
-            path="/Parameter-Distribution-pie"
+            path="/parameter-distribution-pie"
             element={<ParametersDistributionPie />}
           />
-          <Route path="/Across-The-Years" element={<AcrossTheYears />} />
-          <Route path="/Contact" element={<ContactPage />} />
+          <Route path="/across-the-years" element={<AcrossTheYears />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route
-            path="/Theories-Comparison"
+            path="/theories-comparison"
             element={<ParametersDistributionTheoriesComparison />}
           />
-          <Route path="/Frequencies" element={<Frequencies />} />
-          <Route path="/Journals" element={<Journals />} />
-          <Route path="/SimplePieCahrt" element={<SimplePieCahrt />} />
-          <Route path="/Timing" element={<Timing />} />
-          <Route path="/Consciousness-World-Map" element={<WorldMap />} />
+          <Route path="/frequencies" element={<Frequencies />} />
+          <Route path="/journals" element={<Journals />} />
+          <Route path="/timing" element={<Timing />} />
+          <Route path="/consciousness-world-map" element={<WorldMap />} />
         </Routes>
       </BrowserRouter>
     </QueryClientProvider>

@@ -17,52 +17,52 @@ export default function Navbar() {
     {
       text: "Parameter Distribution",
       color: "yellow",
-      route: "/Parameter-Distribution",
+      route: "/parameter-distribution",
     },
     {
       text: "Theories Comparison",
       color: "orange",
-      route: "/Theories-Comparison",
+      route: "theories-comparison",
     },
     {
       text: "Parameter Distribution Bar",
       color: "pink",
-      route: "/Parameter-Distribution-bar",
+      route: "/parameter-distribution-bar",
     },
     {
       text: "Parameter Distribution Pie",
       color: "lilac",
-      route: "/Parameter-Distribution-pie",
+      route: "/parameter-distribution-pie",
     },
     {
       text: "Trends Across The Years",
       color: "purple",
-      route: "/Across-The-Years",
+      route: "/across-the-years",
     },
     {
       text: "Theory Driven",
       color: "navyBlue",
-      route: "/Theory-Driven",
+      route: "/theory-driven",
     },
     {
       text: "Timing",
       color: "darkTeal",
-      route: "/Timing",
+      route: "/timing",
     },
     {
       text: "Frequencies",
       color: "teal",
-      route: "/Frequencies",
+      route: "/frequencies",
     },
     {
       text: "Journals",
       color: "lightTeal",
-      route: "/Journals",
+      route: "/journals",
     },
     {
       text: "Consciousness World Map",
       color: "lightGreen",
-      route: "/Consciousness-World-Map",
+      route: "/consciousness-world-map",
     },
   ];
 
