@@ -13,12 +13,12 @@ export async function queryApi({
 }) {
     // const token = tokenHandler.getToken();
     const token = "keyGsJHfx22k81Gdj";
-    const x = import.meta.env.VITE_API_URL
-    console.log(x)
+    // const x = import.meta.env.VITE_API_URL
+    // console.log(x)
   try {
     return axios({
       method,
-      url: x + url,
+      url: url,
       headers: isProtected && { Authorization: `Bearer ${token}` },
       data,
       params
