@@ -8,6 +8,7 @@ export default async function getExperimentsGraphs({
   min_number_of_experiments,
   type_of_consciousness,
   theory_driven,
+  interpretation,
 }) {
   return await queryApi({
     url: `studies/experiments_graphs/${graphName}`,
@@ -18,6 +19,7 @@ export default async function getExperimentsGraphs({
       min_number_of_experiments,
       type_of_consciousness,
       theory_driven,
+      interpretation,
     },
     method: "GET",
   });

@@ -9,12 +9,11 @@ import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
 import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesPage";
 import ParametersDistributionBar from "./pages/Parameters Distribution Bar/ParametersDistributionBar";
 import ContactPage from "./pages/ContactPage/ContactPage";
-import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories Comparison/ParametersDistributionTheoriesComparison";
 import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
-import SimplePieCahrt from "./components/SimplePieCahrt";
 import Timing from "./pages/Timing/Timing";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
+import ParametersDistributionTheories from "./pages/Parameters Distribution Theories/ParametersDistributionTheories";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -39,7 +38,7 @@ const Screens = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/theories-comparison"
-            element={<ParametersDistributionTheoriesComparison />}
+            element={<ParametersDistributionTheories />}
           />
           <Route path="/frequencies" element={<Frequencies />} />
           <Route path="/journals" element={<Journals />} />

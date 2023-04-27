@@ -22,34 +22,14 @@ export default function PapersIconsMenu() {
       route: "/parameter-distribution",
     },
     {
-      text: "Timing",
-      icon: <Timing />,
-      route: "/timing",
-    },
-    {
-      text: "Frequencies",
-      icon: <Frequencies />,
-      route: "/frequencies",
-    },
-    {
-      text: "parameter-distribution-bar",
-      icon: <ParameterDist2 />,
-      route: "/parameter-distribution-bar",
-    },
-    {
       text: "Theories Comparison",
       icon: <TheoriesComparison />,
       route: "/theories-comparison",
     },
     {
-      text: "Anatomical Findings",
-      icon: <AnatomicalFindings />,
-      route: "/",
-    },
-    {
-      text: "Theory Driven",
-      icon: <TheoryDriven />,
-      route: "/theory-driven",
+      text: "parameter-distribution-bar",
+      icon: <ParameterDist2 />,
+      route: "/parameter-distribution-bar",
     },
     {
       text: "Parameter & Theory Distribution",
@@ -61,6 +41,26 @@ export default function PapersIconsMenu() {
       icon: <Trends />,
       route: "/across-the-years",
     },
+    {
+      text: "Theory Driven",
+      icon: <TheoryDriven />,
+      route: "/theory-driven",
+    },
+    {
+      text: "Timing",
+      icon: <Timing />,
+      route: "/timing",
+    },
+    {
+      text: "Frequencies",
+      icon: <Frequencies />,
+      route: "/frequencies",
+    },
+    // {
+    //   text: "Anatomical Findings",
+    //   icon: <AnatomicalFindings />,
+    //   route: "/",
+    // },
 
     {
       text: "Journals",
