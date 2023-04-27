@@ -70,12 +70,9 @@ export default function ParametersDistributionPie() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(breakdownsShorts[y.key] + index);
-      console.log(y.key);
       outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
     });
   });
-
-  console.log({ values1, values2, labels1, labels2 });
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";

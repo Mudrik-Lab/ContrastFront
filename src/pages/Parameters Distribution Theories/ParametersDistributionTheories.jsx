@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
@@ -16,6 +16,7 @@ import {
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
+import Toggle from "../../components/Toggle";
 
 export default function ParametersDistributionTheories() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -27,6 +28,7 @@ export default function ParametersDistributionTheories() {
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [interpretation, setInterpretation] = useState(true);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parameters_distribution_theories_comparison`],
@@ -46,7 +48,7 @@ export default function ParametersDistributionTheories() {
         " " +
         theoryDriven +
         " " +
-        "pro"
+        (interpretation ? "pro" : "challenges")
       }`,
     ],
     () =>
@@ -57,30 +59,11 @@ export default function ParametersDistributionTheories() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: "pro",
+        interpretation: interpretation ? "pro" : "challenges",
       })
   );
 
   isSuccess && console.log(data);
-
-  const values1 = [];
-  const labels1 = [];
-  const outsideColors = [];
-  const values2 = [];
-  const labels2 = [];
-
-  data?.data.map((x, index) => {
-    values1.push(x.value);
-    labels1.push(x.series_name);
-    x.series.map((y) => {
-      values2.push(y.value);
-      labels2.push(breakdownsShorts[y.key] + index);
-      console.log(y.key);
-      outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
-    });
-  });
-
-  console.log({ values1, values2, labels1, labels2 });
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -155,51 +138,65 @@ export default function ParametersDistributionTheories() {
                 setChecked={setConsciousness}
               />
             </div>
+            <div className={sectionClass}>
+              <Text md weight={"light"}>
+                Interpretation
+              </Text>
+
+              <div className="flex justify-center items-center gap-3 mt-3">
+                <Text>Challenges</Text>
+                <Toggle
+                  checked={interpretation}
+                  setChecked={() => setInterpretation(!interpretation)}
+                />
+                <Text>Pro</Text>
+              </div>
+            </div>
           </div>
         </div>
 
-        <div className="pl-12"></div>
-        <Plot
-          data={[
-            {
-              direction: "clockwise",
-              values: values1,
-              labels: labels1,
-              type: "pie",
-              textinfo: "label+number",
-              textposition: "inside",
-              insidetextorientation: "radial",
-              hole: 0.1,
-              domain: { x: [0, 1], y: [0.125, 0.875] },
-              marker: {
-                colors: paradigmsColors,
-                line: { width: 1, color: "white" },
-              },
-            },
-            {
-              direction: "clockwise",
-              values: values2,
-              labels: labels2,
-              sort: false,
-              type: "pie",
-              textinfo: "label+value",
-              hole: 0.75,
-              textposition: "inside",
-              domain: { x: [0, 1], y: [0, 1] },
-              marker: {
-                colors: outsideColors,
-                line: { width: 1, color: "white" },
-              },
-            },
-          ]}
-          layout={{
-            width: 1500,
-            height: 1000,
-            showlegend: false,
-
-            annotations: [{ showarrow: false }, { showarrow: false }],
-          }}
-        />
+        <div className="pl-12 flex flex-wrap">
+          {isSuccess &&
+            data.data.map((chart) => (
+              <Plot
+                data={[
+                  {
+                    direction: "clockwise",
+                    values: chart.series.map((row) => row.value),
+                    labels: chart.series.map((row) => row.key),
+                    type: "pie",
+                    textinfo: "label+number",
+                    textposition: "inside",
+                    hole: 0.4,
+                    // insidetextorientation: "radial",
+                    marker: {
+                      colors: paradigmsColors,
+                      line: { width: 1, color: "white" },
+                    },
+                  },
+                ]}
+                layout={{
+                  width: 600,
+                  height: 600,
+                  showlegend: false,
+                  annotations: [
+                    {
+                      text:
+                        breakdownsShorts[chart.series_name] +
+                        " = " +
+                        chart.value,
+                      showarrow: false,
+                      font: {
+                        size: 20,
+                      },
+                      x: 0.5,
+                      y: 0.5,
+                    },
+                  ],
+                }}
+              />
+            ))}
+        </div>
         {/* <Plot
         data={[
           {
