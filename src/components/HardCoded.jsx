@@ -13,7 +13,7 @@ export const tagsOptions = [
   },
   {
     value: "finding_tag",
-    label: "Ginding Tag",
+    label: "Finding Tag",
   },
   {
     value: "finding_tag_family",

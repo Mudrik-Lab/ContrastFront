@@ -9,7 +9,7 @@ import {
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { tagsOptions } from "../../components/HardCoded";
+import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import getConfuguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import { getRandomColor } from "../../Utils/functions";
@@ -53,41 +53,31 @@ export default function ParametersDistributionBar() {
       })
   );
 
-  const X1 = data?.data.map((row) => row.series[0].value);
+  const X1 = data?.data.map((row) => row.series[0].value).reverse();
 
-  const Y = data?.data.map((row) => row.series_name);
+  const Y = data?.data.map((row) => row.series_name).reverse();
 
-  const X2 = data?.data.map((row) => row.series[1]?.value || 0);
-
-  const graphsData2 = [];
-  data?.data.map((row) => {
-    graphsData2.push({
-      x: row.series[1]?.value || 0,
-      y: row.series_name,
-      type: "bar",
-      orientation: "h",
-      name: "challenges",
-    });
-  });
+  const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
+  console.log(Y);
 
   var trace1 = {
-    x: X1?.reverse(),
+    x: X1,
     y: Y,
     name: "pro",
     orientation: "h",
     marker: {
-      color: getRandomColor(X1?.length),
+      color: paradigmsColors[5],
       width: 100,
     },
     type: "bar",
   };
   var trace2 = {
-    x: X2?.reverse(),
+    x: X2,
     y: Y,
     name: "challenges",
     orientation: "h",
     marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
+      color: paradigmsColors[12],
       width: 100,
     },
     type: "bar",
@@ -170,23 +160,25 @@ export default function ParametersDistributionBar() {
             </div>
           </div>
 
-          <div className="pl-12">
-            <Plot
-              data={[trace1, trace2]}
-              layout={{
-                barmode: isStacked ? "stack" : "group",
-                title: "Parameter Distribution Bar",
-                width: screenWidth - 388,
-                height: 35 * Y?.length + 150,
-                margin: { autoexpand: true, l: 200 },
-                legend: { itemwidth: 90 },
-                xaxis: {
-                  zeroline: true,
-                  side: "top",
-                },
-              }}
-            />
-          </div>
+          {X1 && X2 && Y && (
+            <div className="pl-12">
+              <Plot
+                data={[trace1, trace2]}
+                layout={{
+                  barmode: isStacked ? "stack" : "group",
+                  title: "Parameter Distribution Bar",
+                  width: screenWidth - 388,
+                  height: 35 * Y?.length + 150,
+                  margin: { autoexpand: true, l: 200 },
+                  legend: { itemwidth: 90 },
+                  xaxis: {
+                    zeroline: true,
+                    side: "top",
+                  },
+                }}
+              />
+            </div>
+          )}
         </div>
       )}
     </div>

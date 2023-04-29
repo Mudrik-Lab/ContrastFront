@@ -73,7 +73,7 @@ export default function ParametersDistributionTheories() {
       <div className="flex mt-12">
         <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue">
-            Pie
+            Parameters Distribution Theories Comparison
           </Text>
           <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
