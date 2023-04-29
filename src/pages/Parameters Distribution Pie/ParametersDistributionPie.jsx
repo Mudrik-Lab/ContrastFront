@@ -192,7 +192,7 @@ export default function ParametersDistributionPie() {
             height: 1000,
             showlegend: false,
 
-            annotations: [{ showarrow: false }, { showarrow: false }],
+            annotations: [{ showarrow: false, text: "" }],
           }}
         />
         {/* <Plot

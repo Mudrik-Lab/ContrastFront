@@ -21,9 +21,7 @@ export default function Timings() {
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [selectedTags, setSelectedTags] = React.useState(null);
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
-  });
+  const [selectedParent, setSelectedParent] = React.useState({});
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -133,10 +131,6 @@ export default function Timings() {
                 tooltip="few more words about minimum number of experiments"
               />
               <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
-                <Text md weight={"light"}>
-                  Theory Driven
-                </Text>
                 <div className={sectionClass}>
                   <Text md weight="bold">
                     Techniqes
@@ -175,6 +169,9 @@ export default function Timings() {
                     tooltip="few more words about Techniqes"
                   />
                 </div>
+                <Text md weight="bold">
+                  Theory Driven
+                </Text>
                 <RadioInput
                   name="Thery-Driven"
                   values={[
@@ -190,7 +187,7 @@ export default function Timings() {
 
               <div className={sectionClass}>
                 <Text md weight="bold">
-                  Headline
+                  Theory
                 </Text>
 
                 <TagsSelect
@@ -207,7 +204,7 @@ export default function Timings() {
 
               <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
-                <Text md weight={"light"}>
+                <Text md weight="bold">
                   Reported
                 </Text>
                 <RadioInput
@@ -224,7 +221,7 @@ export default function Timings() {
               </div>
               <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
-                <Text md weight={"light"}>
+                <Text md weight="bold">
                   Type of Consciousness
                 </Text>
                 <RadioInput
