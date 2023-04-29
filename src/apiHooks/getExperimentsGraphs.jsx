@@ -11,7 +11,7 @@ export default async function getExperimentsGraphs({
   interpretation,
 }) {
   return await queryApi({
-    url: `studies/experiments_graphs/${graphName}`,
+    url: `studies/experiments_graphs/${graphName}/`,
     params: {
       breakdown,
       theory,

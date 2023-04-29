@@ -23,24 +23,35 @@ export default function AboutPage() {
           <div className="flex gap-10 mt-6 max-w-6xl mx-auto">
             <img src={BrainImg} alt="" />
             <Text md>
-              This website allows researchers to conduct queries and examine
-              trends in empirical papers that either tested or mentioned at
-              least one of the following theories of consciousness : Global
-              Neuronal Workspace (1,2), Integrated Information Theory (3,4),
-              Recurrent Processing Theory (5,6) and Higher Order Theories (7,8).
-              Below is a list of plots and searches that can be generated. For
-              each such plot/search you can also download a CSV file where all
-              relevant papers are listed. All details about the database and
-              included papers can be found in our preprint. Currently, the
-              datasets includes papers that were published by October 2019. We
-              are now working on adding all relevant papers that meet the
-              criteria and were published since.
-              <br /> Importantly, we are also exploring ways for making this
-              website more interactive and community-based so that users could
-              upload additional papers, and possibly also include more theories.
-              This is still under work, and we will update when we have news! If
-              you are interested in helping us in the process, please contact us
-              : ContrastDB@gmail.com
+              Welcome to the ConTraSt database website! This is an open access
+              interactive website, featuring the Consciousness Theories Studies
+              (ConTraSt) database. Below you can get a bird’s eye view on how
+              theories of consciousness have been studied and conduct your own
+              queries on the data. Here, we focus on four leading families of
+              theories: Global Workspace theories, Integrated Information
+              Theories, Higher Order Thought theories and First order &
+              predictive processing theories. We provide analytics on papers
+              that interpret their findings in light of these theories, aiming
+              at identifying trends in methodological choices, interpretations,
+              findings, and more, by classifying and quantifying the original
+              authors’ point of view with regard to their studies Below is a
+              list of plots and searches that can be generated. For each such
+              plot/search you can also download a CSV file where all relevant
+              papers are listed. We welcome the uploading of new, relevant,
+              papers to the database! If you have a paper that refers to one of
+              the above-mentioned families of theories, feel free to upload
+              information about the paper here [ADD LINK to the form]. New
+              uploads will be approved by the ConTraSt steering committee [ADD
+              LINK to the list of the members). The ConTraSt database was first
+              created by Itay Yaron{" "}
+              <a href="https://www.nature.com/articles/s41562-021-01284-5">
+                (see Yaron et al., 2022)
+              </a>
+              ; We have now expanded it to include more papers, and to allow
+              users in the community to participate in building and extending
+              it. We hope that it will become a major hub for the community of
+              consciousness studies, and welcome your feedback and suggestions
+              [ADD LINK to form].
             </Text>
           </div>
           <div className=" openSource-box w-256 bg-grayLight flex justify-between items-center gap-4 px-10 py-2 mx-auto my-16">

@@ -65,12 +65,12 @@ export default function PapersIconsMenu() {
     {
       text: "Journals",
       icon: <Journals />,
-      route: "/",
+      route: "/journals",
     },
     {
       text: "Consciousness World Map",
       icon: <WorldMap />,
-      route: "/",
+      route: "/consciousness-world-map",
     },
   ];
 

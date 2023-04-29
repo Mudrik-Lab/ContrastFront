@@ -27,7 +27,7 @@ export default function ParametersDistributionTheories() {
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [interpretation, setInterpretation] = useState(true);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -72,11 +72,14 @@ export default function ParametersDistributionTheories() {
       <Navbar />
       <div className="flex mt-12">
         <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue">
+          <Text center size={28} weight="bold" color="blue">
             Parameters Distribution Theories Comparison
           </Text>
           <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
+              <Text md weight="bold">
+                Axis Controls
+              </Text>
               <RangeInput
                 number={experimentsNum}
                 setNumber={setExperimentsNum}

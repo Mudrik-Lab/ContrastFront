@@ -21,7 +21,7 @@ export default function ParametersDistributionBar() {
     label: "Global Workspace",
   });
   const [reporting, setReporting] = React.useState("either");
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -66,7 +66,7 @@ export default function ParametersDistributionBar() {
     name: "pro",
     orientation: "h",
     marker: {
-      color: paradigmsColors[5],
+      color: paradigmsColors[12],
       width: 100,
     },
     type: "bar",
@@ -77,7 +77,7 @@ export default function ParametersDistributionBar() {
     name: "challenges",
     orientation: "h",
     marker: {
-      color: paradigmsColors[12],
+      color: paradigmsColors[6],
       width: 100,
     },
     type: "bar",
@@ -167,13 +167,21 @@ export default function ParametersDistributionBar() {
                 layout={{
                   barmode: isStacked ? "stack" : "group",
                   title: "Parameter Distribution Bar",
-                  width: screenWidth - 388,
+                  width: screenWidth - 470,
                   height: 35 * Y?.length + 150,
                   margin: { autoexpand: true, l: 200 },
                   legend: { itemwidth: 90 },
                   xaxis: {
                     zeroline: true,
                     side: "top",
+                  },
+                  yaxis: {
+                    // automargin: true,
+                    ticks: "outside",
+                    tickfont: {
+                      size: 12,
+                      standoff: 50,
+                    },
                   },
                 }}
               />

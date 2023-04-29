@@ -25,7 +25,7 @@ export default function ContactPage() {
                 className="border-2 p-2 w-full mt-2 "
                 type="text"
                 maxLength={30}
-                placeholder="Jhon Doe"
+                placeholder="John Doe"
               />
             </div>
 
@@ -37,7 +37,7 @@ export default function ContactPage() {
                 className="border-2 p-2 w-full mt-2"
                 type="text"
                 maxLength={30}
-                placeholder="JhonDoe@example.com"
+                placeholder="JohnDoe@example.com"
               />
             </div>
           </div>

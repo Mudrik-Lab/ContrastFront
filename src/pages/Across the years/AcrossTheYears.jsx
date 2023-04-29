@@ -10,10 +10,10 @@ import { tagsOptions } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 
 export default function AcrossTheYears() {
-  const [selected, setSelected] = useState({ value: "paradigm" });
+  const [selected, setSelected] = useState(tagsOptions[0]);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
 
   const { data, isSuccess } = useQuery(
     [
@@ -79,7 +79,7 @@ export default function AcrossTheYears() {
               </Text>
               <TagsSelect
                 options={tagsOptions}
-                defaultValue={selected.value}
+                value={selected}
                 onChange={setSelected}
               />
             </div>

@@ -15,7 +15,7 @@ import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
 
 export default function Timings() {
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -65,7 +65,9 @@ export default function Timings() {
         " " +
         consciousness +
         " " +
-        selectedTags
+        selectedTags +
+        " " +
+        experimentsNum
       }`,
     ],
     () =>
@@ -122,6 +124,14 @@ export default function Timings() {
               <Text md weight="bold">
                 Axis Controls
               </Text>
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
+              <FilterExplanation
+                text="minimum number of experiments"
+                tooltip="few more words about minimum number of experiments"
+              />
               <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
                 <Text md weight={"light"}>
@@ -175,16 +185,6 @@ export default function Timings() {
                   ]}
                   checked={theoryDriven}
                   setChecked={setTheoryDriven}
-                />
-              </div>
-              <div className={sectionClass}>
-                <RangeInput
-                  number={experimentsNum}
-                  setNumber={setExperimentsNum}
-                />
-                <FilterExplanation
-                  text="minimum number of experiments"
-                  tooltip="few more words about minimum number of experiments"
                 />
               </div>
 

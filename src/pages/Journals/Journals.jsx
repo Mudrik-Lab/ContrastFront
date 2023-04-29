@@ -16,7 +16,7 @@ import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 
 export default function Journals() {
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -87,7 +87,11 @@ export default function Journals() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <FilterExplanation
+              text="minimum number of experiments"
+              tooltip="few more words about minimum number of experiments"
+            />
             <div className={sectionClass}>
               <Text md weight={"light"}>
                 Reported
@@ -131,16 +135,7 @@ export default function Journals() {
                 setChecked={setTheoryDriven}
               />
             </div>
-            <div className={sectionClass}>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
+
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
               {/* TODO: find Headline */}
               <Text md weight={"light"}>

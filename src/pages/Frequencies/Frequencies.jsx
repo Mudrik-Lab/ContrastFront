@@ -20,7 +20,7 @@ export default function Frequencies() {
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [selectedParent, setSelectedParent] = React.useState({});
-  const [experimentsNum, setExperimentsNum] = React.useState(1);
+  const [experimentsNum, setExperimentsNum] = React.useState(0);
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -106,10 +106,20 @@ export default function Frequencies() {
             <Text size={28} weight="bold" color="blue">
               Frequencies
             </Text>
+
             <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
               </Text>
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
+              <FilterExplanation
+                text="minimum number of experiments"
+                tooltip="few more words about minimum number of experiments"
+              />
+
               <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
                 <div className={sectionClass}>
@@ -141,16 +151,6 @@ export default function Frequencies() {
                   ]}
                   checked={theoryDriven}
                   setChecked={setTheoryDriven}
-                />
-              </div>
-              <div className={sectionClass}>
-                <RangeInput
-                  number={experimentsNum}
-                  setNumber={setExperimentsNum}
-                />
-                <FilterExplanation
-                  text="minimum number of experiments"
-                  tooltip="few more words about minimum number of experiments"
                 />
               </div>
 
