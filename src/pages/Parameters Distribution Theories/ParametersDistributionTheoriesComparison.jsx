@@ -67,7 +67,7 @@ export default function ParametersDistributionTheoriesComparison() {
   chartsData?.map((chart) => {
     chart.series.forEach((row) => (row.color = parametersColors[row.key]));
   });
-  console.log({ chartsData });
+
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
