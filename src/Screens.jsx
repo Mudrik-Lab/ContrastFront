@@ -25,7 +25,10 @@ const Screens = () => {
 
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
-          <Route path="/parameter-distribution" element={<FreeQueriesPage />} />
+          <Route
+            path="/parameter-distribution-free-queries"
+            element={<FreeQueriesPage />}
+          />
           <Route
             path="/parameter-distribution-bar"
             element={<ParametersDistributionBar />}

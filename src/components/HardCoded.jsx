@@ -1,3 +1,15 @@
+import { ReactComponent as ParameterDist } from "../assets/icons/parameter-distribution.svg";
+import { ReactComponent as ParameterDist2 } from "../assets/icons/parameter-distribution2.svg";
+import { ReactComponent as TheoriesComparison } from "../assets/icons/theories-comparison.svg";
+import { ReactComponent as TheoryDriven } from "../assets/icons/theory-driven.svg";
+import { ReactComponent as ParameterTheory } from "../assets/icons/parameter&theory.svg";
+import { ReactComponent as Trends } from "../assets/icons/trends.svg";
+import { ReactComponent as Timing } from "../assets/icons/timing.svg";
+import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
+import { ReactComponent as Journals } from "../assets/icons/journals.svg";
+import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
+import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world -map.svg";
+
 export const tagsOptions = [
   {
     value: "paradigm_family",
@@ -100,3 +112,71 @@ export const breakdownsShorts = {
   "First Order & Predictive Processing": "RPT",
   Other: "Other",
 };
+
+export const graphsHeaders = [
+  {
+    text: "Parameter Distribution Free Queries",
+    color: "yellow",
+    icon: <ParameterDist />,
+    route: "/parameter-distribution-free-queries",
+  },
+  {
+    text: "Theories Comparison",
+    color: "orange",
+    icon: <TheoriesComparison />,
+    route: "theories-comparison",
+  },
+  {
+    text: "Parameter Distribution Bar",
+    icon: <ParameterDist2 />,
+    color: "pink",
+    route: "/parameter-distribution-bar",
+  },
+  {
+    text: "Parameter Distribution Pie",
+    icon: <ParameterTheory />,
+    color: "lilac",
+    route: "/parameter-distribution-pie",
+  },
+  {
+    text: "Trends Across The Years",
+    icon: <Trends />,
+    color: "purple",
+    route: "/across-the-years",
+  },
+  {
+    text: "Theory Driven",
+    icon: <TheoryDriven />,
+    color: "navyBlue",
+    route: "/theory-driven",
+  },
+  {
+    text: "Timing",
+    icon: <Timing />,
+    color: "darkTeal",
+    route: "/timing",
+  },
+  {
+    text: "Frequencies",
+    icon: <Frequencies />,
+    color: "teal",
+    route: "/frequencies",
+  },
+  // {
+  //   text: "Anatomical Findings",
+  //   icon: <AnatomicalFindings />,
+  //   route: "/",
+  // },
+  {
+    text: "Journals",
+    icon: <Journals />,
+    color: "lightTeal",
+    route: "/journals",
+  },
+  {
+    text: "Consciousness World Map",
+    icon: <WorldMap />,
+    color: "lightGreen",
+    route: "/consciousness-world-map",
+  },
+];
