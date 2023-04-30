@@ -183,10 +183,7 @@ export default function ParametersDistributionTheoriesComparison() {
                   showlegend: false,
                   annotations: [
                     {
-                      text:
-                        breakdownsShorts[chart.series_name] +
-                        " = " +
-                        chart.value,
+                      text: chart.series_name + " = " + chart.value,
                       showarrow: false,
                       font: {
                         size: 20,

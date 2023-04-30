@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import {
-  breakdownsShorts,
-  paradigmsColors,
-  tagsOptions,
-} from "../../components/HardCoded";
+import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -69,7 +65,7 @@ export default function ParametersDistributionPie() {
     labels1.push(x.series_name);
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(breakdownsShorts[y.key] + index);
+      labels2.push(y.key + index);
       outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
     });
   });
@@ -188,10 +184,9 @@ export default function ParametersDistributionPie() {
             },
           ]}
           layout={{
-            width: 1500,
+            width: 1200,
             height: 1000,
             showlegend: false,
-
             annotations: [{ showarrow: false, text: "" }],
           }}
         />
