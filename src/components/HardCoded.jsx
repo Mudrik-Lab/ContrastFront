@@ -180,3 +180,21 @@ export const graphsHeaders = [
     route: "/consciousness-world-map",
   },
 ];
+
+export const parametersColors = {
+  "Stimulus Degradation": "rgba(189, 183, 89, 1)",
+  Masking: "rgba(196, 137, 87, 1)",
+  Anesthesia: "rgba(202, 83, 90, 1)",
+  "Direct Stimulation": "rgba(164, 92, 150, 1)",
+  "Attentional Manipulation": "rgba(116, 88, 160, 1)",
+  "Disorders of Consciousness": "rgba(73, 107, 155, 1)",
+  Expectation: "rgba(62, 127, 148, 1)",
+  "Abnormal Contents of Consciousness": "rgba(34, 109, 116, 1)",
+  "Competition (Binocular)": "rgba(66, 153, 134, 1)",
+  Illusions: "rgba(79, 180, 89, 1)",
+  "Cognitive Tasks": "rgba(241, 192, 232,1)",
+  Familiarity: "rgba(255, 215, 0, 1)",
+  Sedation: "rgba(240, 128, 128, 1)",
+  "Case Study": "rgba(176, 196, 222, 1)",
+  "Psychedelic Drugs": "rgba(255, 160, 122, 1)",
+};

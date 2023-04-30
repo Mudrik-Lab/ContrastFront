@@ -10,9 +10,10 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import { getRandomColor } from "../../Utils/functions";
+import getExtraConfig from "../../apiHooks/getExtraConfig";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -26,8 +27,15 @@ export default function FreeQueriesBar() {
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
-    getConfuguration
+    getConfiguration
   );
+
+  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+    [`more_configurations`],
+    getExtraConfig
+  );
+
+  extraConfigSuccess && console.log(extraConfig);
 
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
@@ -58,7 +66,6 @@ export default function FreeQueriesBar() {
   const Y = data?.data.map((row) => row.series_name).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
-  console.log(Y);
 
   var trace1 = {
     x: X1,
@@ -95,7 +102,7 @@ export default function FreeQueriesBar() {
         <div className="flex mt-12">
           <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue" center>
-              Parameters Distribution Bar
+              Free
             </Text>
             <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">

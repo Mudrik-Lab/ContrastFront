@@ -10,7 +10,7 @@ import {
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { ABColors, tagsOptions } from "../../components/HardCoded";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
 
@@ -25,7 +25,7 @@ export default function Timings() {
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
-    getConfuguration
+    getConfiguration
   );
 
   const techniques = configSuccess
@@ -101,6 +101,8 @@ export default function Timings() {
       type: "lines",
     });
   });
+
+  console.log(tags);
 
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;

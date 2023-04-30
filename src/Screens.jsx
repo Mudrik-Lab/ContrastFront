@@ -1,4 +1,4 @@
-import { QueryClientProvider } from "@tanstack/react-query";
+import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { QueryClient } from "@tanstack/react-query";
@@ -15,42 +15,51 @@ import Timing from "./pages/Timing/Timing";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
 import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories/ParametersDistributionTheoriesComparison";
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
+import getConfiguration from "./apiHooks/getConfiguration";
+import getExtraConfig from "./apiHooks/getExtraConfig";
 
-const client = new QueryClient();
 const Screens = () => {
+  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
+    [`parent_theories`],
+    getConfiguration
+  );
+
+  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+    [`more_configurations`],
+    getExtraConfig
+  );
+
   return (
-    <QueryClientProvider client={client}>
-      <BrowserRouter>
-        <Routes>
-          <Route path="/login" element={<Login />} />
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route
-            path="/parameter-distribution-free-queries"
-            element={<FreeQueriesPage />}
-          />
-          <Route
-            path="/parameter-distribution-bar"
-            element={<ParametersDistributionBar />}
-          />
-          <Route
-            path="/parameter-distribution-pie"
-            element={<ParametersDistributionPie />}
-          />{" "}
-          <Route path="/theory-driven" element={<TheoryDriven />} />
-          <Route path="/across-the-years" element={<AcrossTheYears />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route
-            path="/theories-comparison"
-            element={<ParametersDistributionTheoriesComparison />}
-          />
-          <Route path="/frequencies" element={<Frequencies />} />
-          <Route path="/journals" element={<Journals />} />
-          <Route path="/timing" element={<Timing />} />
-          <Route path="/consciousness-world-map" element={<WorldMap />} />
-        </Routes>
-      </BrowserRouter>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<AboutPage />} />
+        <Route
+          path="/parameter-distribution-free-queries"
+          element={<FreeQueriesPage />}
+        />
+        <Route
+          path="/parameter-distribution-bar"
+          element={<ParametersDistributionBar />}
+        />
+        <Route
+          path="/parameter-distribution-pie"
+          element={<ParametersDistributionPie />}
+        />{" "}
+        <Route path="/theory-driven" element={<TheoryDriven />} />
+        <Route path="/across-the-years" element={<AcrossTheYears />} />
+        <Route path="/contact" element={<ContactPage />} />
+        <Route
+          path="/theories-comparison"
+          element={<ParametersDistributionTheoriesComparison />}
+        />
+        <Route path="/frequencies" element={<Frequencies />} />
+        <Route path="/journals" element={<Journals />} />
+        <Route path="/timing" element={<Timing />} />
+        <Route path="/consciousness-world-map" element={<WorldMap />} />
+      </Routes>
+    </BrowserRouter>
   );
 };
 

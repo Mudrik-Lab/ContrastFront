@@ -10,9 +10,9 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { getRandomColor } from "../../Utils/functions";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -23,10 +23,24 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  React.useEffect(() => {
+    setExperimentsNum(searchParams.get("min_number_of_experiments"));
+    setReporting(searchParams.get("is_reporting"));
+    // setSelected(searchParams.get("breakdown"));
+    // setSelectedParent(searchParams.get("theory"));
+  }, []);
+
+  React.useEffect(() => {
+    if (experimentsNum) {
+      setSearchParams({ min_number_of_experiments: experimentsNum });
+    }
+  }, [experimentsNum]);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
-    getConfuguration
+    getConfiguration
   );
 
   const parentTheories = configuration?.data.available_parent_theories.map(

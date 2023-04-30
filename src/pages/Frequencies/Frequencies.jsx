@@ -10,7 +10,7 @@ import {
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { ABColors } from "../../components/HardCoded";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 
@@ -24,7 +24,7 @@ export default function Frequencies() {
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
-    getConfuguration
+    getConfiguration
   );
 
   const techniques = configSuccess

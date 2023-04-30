@@ -1,10 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   breakdownsShorts,
   paradigmsColors,
+  parametersColors,
   tagsOptions,
 } from "../../components/HardCoded";
 import {
@@ -32,7 +33,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parameters_distribution_theories_comparison`],
-    getConfuguration
+    getConfiguration
   );
   const { data, isSuccess } = useQuery(
     [
@@ -62,8 +63,6 @@ export default function ParametersDistributionTheoriesComparison() {
         interpretation: interpretation ? "pro" : "challenges",
       })
   );
-
-  isSuccess && console.log(data);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -171,14 +170,14 @@ export default function ParametersDistributionTheoriesComparison() {
                     textinfo: "label+number",
                     textposition: "inside",
                     hole: 0.4,
-                    // insidetextorientation: "radial",
                     marker: {
-                      colors: paradigmsColors,
+                      colors: Object.values(parametersColors),
                       line: { width: 1, color: "white" },
                     },
                   },
                 ]}
                 layout={{
+                  colorway: Object.values(parametersColors),
                   width: 600,
                   height: 600,
                   showlegend: false,
@@ -200,117 +199,6 @@ export default function ParametersDistributionTheoriesComparison() {
               />
             ))}
         </div>
-        {/* <Plot
-        data={[
-          {
-            type: "sunburst",
-            labels: [
-              "Global Workspace0",
-              "First Order & Predictive Processing0",
-              "Integrated Information0",
-              "Higher Order Thought0",
-              "Global Workspace1",
-              "First Order & Predictive Processing1",
-              "Integrated Information1",
-              "Integrated Information2",
-              "Global Workspace2",
-              "First Order & Predictive Processing2",
-              "First Order & Predictive Processing3",
-              "Integrated Information3",
-              "Global Workspace3",
-              "Higher Order Thought3",
-              "Global Workspace4",
-              "First Order & Predictive Processing4",
-              "Integrated Information4",
-              "Higher Order Thought4",
-              "Global Workspace5",
-              "Integrated Information5",
-              "First Order & Predictive Processing5",
-              "Global Workspace6",
-              "First Order & Predictive Processing6",
-              "Integrated Information6",
-              "Global Workspace7",
-              "First Order & Predictive Processing7",
-              "Higher Order Thought7",
-              "Integrated Information7",
-              "Global Workspace8",
-              "First Order & Predictive Processing8",
-              "Integrated Information8",
-              "First Order & Predictive Processing9",
-              "Global Workspace9",
-              "Integrated Information9",
-              "Global Workspace10",
-              "Integrated Information10",
-              "First Order & Predictive Processing10",
-              "Global Workspace11",
-              "Integrated Information11",
-              "First Order & Predictive Processing12",
-              "Global Workspace12",
-              "Integrated Information12",
-              "Global Workspace13",
-              "Integrated Information13",
-              "Integrated Information14",
-            ],
-            parents: [
-              "Stimulus Degradation",
-              "Stimulus Degradation",
-              "Stimulus Degradation",
-              "Stimulus Degradation",
-              "Masking",
-              "Masking",
-              "Masking",
-              "Anesthesia",
-              "Anesthesia",
-              "Anesthesia",
-              "Direct Stimulation",
-              "Direct Stimulation",
-              "Direct Stimulation",
-              "Direct Stimulation",
-              "Attentional Manipulation",
-              "Attentional Manipulation",
-              "Attentional Manipulation",
-              "Attentional Manipulation",
-              "Disorders of Consciousness",
-              "Disorders of Consciousness",
-              "Disorders of Consciousness",
-              "Expectation",
-              "Expectation",
-              "Expectation",
-              "Abnormal Contents of Consciousness",
-              "Abnormal Contents of Consciousness",
-              "Abnormal Contents of Consciousness",
-              "Abnormal Contents of Consciousness",
-              "Competition (Binocular)",
-              "Competition (Binocular)",
-              "Competition (Binocular)",
-              "Illusions",
-              "Illusions",
-              "Illusions",
-              "Cognitive Tasks",
-              "Cognitive Tasks",
-              "Cognitive Tasks",
-              "Familiarity",
-              "Familiarity",
-              "Sedation",
-              "Sedation",
-              "Sedation",
-              "Case Study",
-              "Case Study",
-              "Psychedelic Drugs",
-            ],
-            textinfo: "label+number",
-            ids: values2,
-            outsidetextfont: { size: 20, color: "#377eb8" },
-            leaf: { opacity: 0.4 },
-            marker: { line: { width: 2 } },
-          },
-        ]}
-        layout={{
-          width: 1000,
-          height: 600,
-          title: "Two-Layer Pie Chart",
-        }}
-      /> */}
       </div>
     </div>
   );

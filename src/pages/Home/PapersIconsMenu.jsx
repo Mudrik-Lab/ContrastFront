@@ -2,6 +2,7 @@ import React from "react";
 
 import { Text } from "../../components/Reusble";
 import { useNavigate } from "react-router-dom";
+import { graphsHeaders } from "../../components/HardCoded";
 
 export default function PapersIconsMenu() {
   const navigate = useNavigate();
