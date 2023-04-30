@@ -94,7 +94,7 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
   return (
     <div className="flex px-12 flex-wrap justify-center">
       {values.map((val) => (
-        <div className="mr-4" id={val.name}>
+        <div className="mr-4" key={val.name}>
           <input
             id="red-radio"
             type="radio"
@@ -147,25 +147,27 @@ export const Label = ({ children }) => {
 };
 
 export const RangeInput = ({ number, setNumber, min, max, step }) => {
+  const [label, setLabel] = React.useState(number);
   return (
     <div className="relative">
       <input
         type="range"
-        onChange={(e) => setNumber(e.target.value)}
+        onChange={(e) => setLabel(e.target.value)}
+        onMouseUp={(e) => setNumber(e.target.value)}
         min={0}
+        defaultValue={0}
         max={100}
         step={1}
-        value={number}
         className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
         id="numOfExperiments"
       />
       <span
         style={{
-          left: number * 0.9 + (number < 20 ? 5 : number < 70 ? 2 : 0) + "%",
+          left: label * 0.9 + (label < 20 ? 5 : label < 70 ? 2 : 0) + "%",
           top: 4,
         }}
-        className="absolute text-sm text-blue pointer-events-none transition-all">
-        {number}
+        className="absolute text-sm text-blue pointer-events-none ">
+        {label}
       </span>
     </div>
   );

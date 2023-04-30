@@ -12,9 +12,10 @@ import TagsSelect from "../../components/TagsSelect";
 import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { getRandomColor } from "../../Utils/functions";
+import getExtraConfig from "../../apiHooks/getExtraConfig";
 
-export default function ParametersDistributionBar() {
+export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
@@ -23,25 +24,18 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
-
-  React.useEffect(() => {
-    setExperimentsNum(searchParams.get("min_number_of_experiments"));
-    setReporting(searchParams.get("is_reporting"));
-    // setSelected(searchParams.get("breakdown"));
-    // setSelectedParent(searchParams.get("theory"));
-  }, []);
-
-  React.useEffect(() => {
-    if (experimentsNum) {
-      setSearchParams({ min_number_of_experiments: experimentsNum });
-    }
-  }, [experimentsNum]);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
+
+  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+    [`more_configurations`],
+    getExtraConfig
+  );
+
+  extraConfigSuccess && console.log(extraConfig);
 
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
@@ -72,7 +66,6 @@ export default function ParametersDistributionBar() {
   const Y = data?.data.map((row) => row.series_name).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
-  console.log(Y);
 
   var trace1 = {
     x: X1,
@@ -109,7 +102,7 @@ export default function ParametersDistributionBar() {
         <div className="flex mt-12">
           <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue" center>
-              Parameters Distribution Bar
+              Free
             </Text>
             <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">

@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   breakdownsShorts,
@@ -30,7 +30,7 @@ export default function ParametersDistributionPie() {
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
-    getConfuguration
+    getConfiguration
   );
   const { data, isSuccess } = useQuery(
     [

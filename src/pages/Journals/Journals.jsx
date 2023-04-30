@@ -11,7 +11,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import { tagsOptions } from "../../components/HardCoded";
-import getConfuguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 
@@ -26,7 +26,7 @@ export default function Journals() {
   });
   const { data: configuration } = useQuery(
     [`parent_theories`],
-    getConfuguration
+    getConfiguration
   );
 
   const parentTheories = configuration?.data.available_parent_theories.map(

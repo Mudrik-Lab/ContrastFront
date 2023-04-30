@@ -9,8 +9,10 @@ import { ReactComponent as QouteIcon } from "../../assets/icons/copy-to-clipboar
 import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
+  const navigate = useNavigate();
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
   const copyToClipboard = () => {
@@ -38,7 +40,8 @@ export default function HomePage() {
           </Text>
         </div>
         <div className="header-buttons flex justify-start gap-4 mt-24">
-          <WhiteButton>
+          <WhiteButton
+            onClick={() => navigate("/parameter-distribution-free-queries")}>
             <Graph /> Start Exploring
           </WhiteButton>
           <div className="flex items-center gap-2">

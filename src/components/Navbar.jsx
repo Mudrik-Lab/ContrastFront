@@ -7,64 +7,13 @@ import Logo from "../assets/logoes/logo.png";
 
 import { Button, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
+import { graphsHeaders } from "./HardCoded";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   const navigate = useNavigate();
 
   const page = window.location.pathname;
-  const graphsDropdownInfo = [
-    {
-      text: "Parameter Distribution",
-      color: "yellow",
-      route: "/parameter-distribution",
-    },
-    {
-      text: "Theories Comparison",
-      color: "orange",
-      route: "theories-comparison",
-    },
-    {
-      text: "Parameter Distribution Bar",
-      color: "pink",
-      route: "/parameter-distribution-bar",
-    },
-    {
-      text: "Parameter Distribution Pie",
-      color: "lilac",
-      route: "/parameter-distribution-pie",
-    },
-    {
-      text: "Trends Across The Years",
-      color: "purple",
-      route: "/across-the-years",
-    },
-    {
-      text: "Theory Driven",
-      color: "navyBlue",
-      route: "/theory-driven",
-    },
-    {
-      text: "Timing",
-      color: "darkTeal",
-      route: "/timing",
-    },
-    {
-      text: "Frequencies",
-      color: "teal",
-      route: "/frequencies",
-    },
-    {
-      text: "Journals",
-      color: "lightTeal",
-      route: "/journals",
-    },
-    {
-      text: "Consciousness World Map",
-      color: "lightGreen",
-      route: "/consciousness-world-map",
-    },
-  ];
 
   return (
     <div>
@@ -99,7 +48,7 @@ export default function Navbar() {
                     <ul
                       className="py-2 text-lg text-gray-700 dark:text-gray-400"
                       aria-labelledby="dropdownLargeButton">
-                      {graphsDropdownInfo.map((row) => (
+                      {graphsHeaders.map((row) => (
                         <li>
                           <a
                             href={row.route}
