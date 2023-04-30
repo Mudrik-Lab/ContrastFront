@@ -1,55 +1,68 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import useGetPie from "../apiHooks/useGetPie";
 import Plot from "react-plotly.js";
+import getExperimentsGraphs from "../apiHooks/getExperimentsGraphs";
+import { tagsOptions } from "./HardCoded";
 
 export default function NestedPie() {
-  const { data, isSuccess } = useQuery(["comparison"], useGetPie);
-
-  const RPTcategories = data?.data.records
-    .filter((record) => {
-      return record.fields["THEORY"] === "RPT";
-    })
-    .map((record) => {
-      return record.fields["Category"];
-    })
-    .reduce((accumulator, value) => {
-      accumulator[value] = ++accumulator[value] || 1;
-      return accumulator;
-    }, {});
-
-  let RPTData = [];
-  if (RPTcategories) {
-    for (const [key, value] of Object.entries(RPTcategories)) {
-      RPTData.push({ name: key, value });
-    }
-  }
-
-  const GNWcategories = data?.data.records
-    .filter((record) => {
-      return record.fields["THEORY"] === "GNW";
-    })
-    .map((record) => {
-      return record.fields["Category"];
-    })
-    .reduce((accumulator, value) => {
-      accumulator[value] = ++accumulator[value] || 1;
-      return accumulator;
-    }, {});
-
-  let GNWData = [];
-  if (GNWcategories) {
-    for (const [key, value] of Object.entries(GNWcategories)) {
-      GNWData.push({ name: key, value });
-    }
-  }
+  const { data, isSuccess } = useQuery(
+    [`parameters_distribution_theories_comparison${+" " + "stam"}`],
+    () =>
+      getExperimentsGraphs({
+        graphName: "parameters_distribution_theories_comparison",
+        breakdown: tagsOptions[0].value,
+        interpretation: "challenges",
+      })
+  );
 
   // for matching external pie to internal- need to add to external's data "parentName"
   // like in https://codesandbox.io/s/jmjrt?file=/src/data.js:597-619
 
+  console.log(data?.data);
+
+  // Define the data for the first pie chart
+  var data1 = [
+    {
+      values: [19, 26, 55],
+      labels: ["Label A", "Label B", "Label C"],
+      type: "pie",
+      name: "Pie Chart 1",
+    },
+  ];
+
+  // Define the data for the second pie chart
+  var data2 = [
+    {
+      values: [10, 20, 70],
+      labels: ["Label D", "Label E", "Label F"],
+      type: "pie",
+      name: "Pie Chart 2",
+    },
+  ];
+
+  // Define the layout with a common legend for both pie charts
+  var layout = {
+    title: "Pie Charts with Common Legend",
+    legend: {
+      x: 0,
+      y: 1,
+      traceorder: "normal",
+      font: {
+        family: "sans-serif",
+        size: 12,
+        color: "#000",
+      },
+      bgcolor: "#E2E2E2",
+      bordercolor: "#FFFFFF",
+      borderwidth: 2,
+    },
+  };
+
   return (
     <div className="mt-60">
-      <Plot
+      <Plot data={[data1, data2]} layout={layout} />
+
+      {/* <Plot
         data={[
           {
             values: RPTData.map((category) => category.value),
@@ -79,7 +92,7 @@ export default function NestedPie() {
           showlegend: false,
           title: `RPT N=${RPTData.reduce((sum, a) => sum + a.value, 0)}`,
         }}
-      />
+      /> */}
     </div>
   );
 }

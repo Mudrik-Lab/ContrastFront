@@ -63,7 +63,11 @@ export default function ParametersDistributionTheoriesComparison() {
         interpretation: interpretation ? "pro" : "challenges",
       })
   );
-
+  const chartsData = data?.data;
+  chartsData?.map((chart) => {
+    chart.series.forEach((row) => (row.color = parametersColors[row.key]));
+  });
+  console.log({ chartsData });
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
@@ -159,7 +163,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
         <div className="pl-12 flex flex-wrap">
           {isSuccess &&
-            data.data.map((chart) => (
+            chartsData.map((chart) => (
               <Plot
                 data={[
                   {
@@ -171,7 +175,7 @@ export default function ParametersDistributionTheoriesComparison() {
                     textposition: "inside",
                     hole: 0.4,
                     marker: {
-                      colors: Object.values(parametersColors),
+                      colors: chart.series.map((row) => row.color),
                       line: { width: 1, color: "white" },
                     },
                   },

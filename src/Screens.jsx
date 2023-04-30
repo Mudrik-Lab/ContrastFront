@@ -17,6 +17,7 @@ import ParametersDistributionTheoriesComparison from "./pages/Parameters Distrib
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";
+import NestedPie from "./components/NestedPie";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -58,6 +59,7 @@ const Screens = () => {
         <Route path="/journals" element={<Journals />} />
         <Route path="/timing" element={<Timing />} />
         <Route path="/consciousness-world-map" element={<WorldMap />} />
+        <Route path="/try" element={<NestedPie />} />
       </Routes>
     </BrowserRouter>
   );
