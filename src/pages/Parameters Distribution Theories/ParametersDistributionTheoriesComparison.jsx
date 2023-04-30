@@ -18,7 +18,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 
-export default function ParametersDistributionTheories() {
+export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",

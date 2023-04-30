@@ -6,14 +6,15 @@ import WorldMap from "./components/WorldMap";
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
 import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
-import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesPage";
+import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesBar";
 import ParametersDistributionBar from "./pages/Parameters Distribution Bar/ParametersDistributionBar";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
 import Timing from "./pages/Timing/Timing";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
-import ParametersDistributionTheories from "./pages/Parameters Distribution Theories/ParametersDistributionTheories";
+import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories/ParametersDistributionTheoriesComparison";
+import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 
 const client = new QueryClient();
 const Screens = () => {
@@ -22,7 +23,6 @@ const Screens = () => {
       <BrowserRouter>
         <Routes>
           <Route path="/login" element={<Login />} />
-
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route
@@ -36,12 +36,13 @@ const Screens = () => {
           <Route
             path="/parameter-distribution-pie"
             element={<ParametersDistributionPie />}
-          />
+          />{" "}
+          <Route path="/theory-driven" element={<TheoryDriven />} />
           <Route path="/across-the-years" element={<AcrossTheYears />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route
             path="/theories-comparison"
-            element={<ParametersDistributionTheories />}
+            element={<ParametersDistributionTheoriesComparison />}
           />
           <Route path="/frequencies" element={<Frequencies />} />
           <Route path="/journals" element={<Journals />} />
