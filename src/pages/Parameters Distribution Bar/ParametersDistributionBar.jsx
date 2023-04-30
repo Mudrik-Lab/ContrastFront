@@ -12,7 +12,7 @@ import TagsSelect from "../../components/TagsSelect";
 import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -23,20 +23,28 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
-  React.useEffect(() => {
-    setExperimentsNum(searchParams.get("min_number_of_experiments"));
-    setReporting(searchParams.get("is_reporting"));
-    // setSelected(searchParams.get("breakdown"));
-    // setSelectedParent(searchParams.get("theory"));
-  }, []);
+  // React.useEffect(() => {
+  //   setExperimentsNum(searchParams.get("min_number_of_experiments"));
+  //   setReporting(searchParams.get("is_reporting"));
+  //   setSelected({
+  //     value: searchParams.get("breakdown"),
+  //     label: searchParams.get("breakdown"),
+  //   });
+  //   setSelectedParent({ value: searchParams.get("theory") });
+  // }, [searchParams]);
 
-  React.useEffect(() => {
-    if (experimentsNum) {
-      setSearchParams({ min_number_of_experiments: experimentsNum });
-    }
-  }, [experimentsNum]);
+  // React.useEffect(() => {
+  //   if (experimentsNum) {
+  //     setSearchParams({
+  //       breakdown: selected.value,
+  //       theory: selectedParent.value,
+  //       is_reporting: reporting,
+  //       min_number_of_experiments: experimentsNum,
+  //     });
+  //   }
+  // }, [selected.value, selectedParent.value, reporting, experimentsNum]);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
@@ -72,7 +80,6 @@ export default function ParametersDistributionBar() {
   const Y = data?.data.map((row) => row.series_name).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
-  console.log(Y);
 
   var trace1 = {
     x: X1,
