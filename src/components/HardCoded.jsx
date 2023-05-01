@@ -162,15 +162,16 @@ export const graphsHeaders = [
     color: "teal",
     route: "/frequencies",
   },
-  // {
-  //   text: "Anatomical Findings",
-  //   icon: <AnatomicalFindings />,
-  //   route: "/",
-  // },
+  {
+    text: "Anatomical Findings",
+    icon: <AnatomicalFindings />,
+    color: "lightTeal",
+    route: "/",
+  },
   {
     text: "Journals",
     icon: <Journals />,
-    color: "lightTeal",
+    color: "lightGreen",
     route: "/journals",
   },
   {

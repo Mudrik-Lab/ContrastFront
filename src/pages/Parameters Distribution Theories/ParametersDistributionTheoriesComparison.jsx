@@ -18,6 +18,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
+import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -35,7 +36,7 @@ export default function ParametersDistributionTheoriesComparison() {
     [`parameters_distribution_theories_comparison`],
     getConfiguration
   );
-  const { data, isSuccess } = useQuery(
+  const { data, isSuccess, isLoading } = useQuery(
     [
       `parameters_distribution_theories_comparison${
         +" " +
@@ -166,7 +167,7 @@ export default function ParametersDistributionTheoriesComparison() {
           <div className="funny-leggend flex flex-col gap-3 absolute top-36 left-[640px] z-10">
             {Object.keys(parametersColors).map((name) => (
               <div
-                className="h-16 w-32 border flex justify-center items-center "
+                className="h-16 w-32 flex justify-center items-center "
                 style={{ backgroundColor: parametersColors[name] }}>
                 <Text sm color="white" center>
                   {name}
@@ -174,8 +175,10 @@ export default function ParametersDistributionTheoriesComparison() {
               </div>
             ))}
           </div>
-          <div className="mx-auto border ">
-            {isSuccess &&
+          <div className="mx-auto  ">
+            {isLoading ? (
+              <Spinner />
+            ) : (
               chartsData.map((chart) => (
                 <Plot
                   data={[
@@ -216,7 +219,8 @@ export default function ParametersDistributionTheoriesComparison() {
                     ],
                   }}
                 />
-              ))}
+              ))
+            )}
           </div>
         </div>
       </div>

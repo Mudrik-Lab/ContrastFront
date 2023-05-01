@@ -8,6 +8,7 @@ import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
 import { tagsOptions } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
+import Spinner from "../../components/Spinner";
 
 export default function AcrossTheYears() {
   const [selected, setSelected] = useState(tagsOptions[0]);
@@ -15,7 +16,7 @@ export default function AcrossTheYears() {
   const [consciousness, setConsciousness] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
 
-  const { data, isSuccess } = useQuery(
+  const { data, isSuccess, isLoading } = useQuery(
     [
       `across_the_years${
         selected.value +
@@ -121,24 +122,36 @@ export default function AcrossTheYears() {
         </div>
 
         <div className="w-full h-full">
-          <Plot
-            data={graphsData}
-            layout={{
-              autosize: false,
-              showlegend: true,
-              legend: {
-                x: 1,
-                xanchor: "left",
-                y: 1,
-                font: {
-                  size: 18,
-                  color: "#000000",
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Plot
+              data={graphsData}
+              layout={{
+                autosize: false,
+                showlegend: true,
+                legend: {
+                  x: 1,
+                  xanchor: "left",
+                  y: 1,
+                  font: {
+                    size: 18,
+                    color: "#000000",
+                  },
                 },
-              },
-              width: screenWidth - 338,
-              height: screenHeight - 100,
-            }}
-          />
+                hoverlabel: {
+                  namelength: 40,
+                  font: {
+                    family: "Arial",
+                    size: 12,
+                    color: "#FFFFFF",
+                  },
+                },
+                width: screenWidth - 338,
+                height: screenHeight - 100,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

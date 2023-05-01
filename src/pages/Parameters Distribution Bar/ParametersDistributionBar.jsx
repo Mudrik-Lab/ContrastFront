@@ -13,6 +13,7 @@ import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import { useSearchParams } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -59,7 +60,7 @@ export default function ParametersDistributionBar() {
     })
   );
 
-  const { data, isSuccess } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `parameters_distribution_bar${
         selected.value + selectedParent.value + reporting + experimentsNum
@@ -183,29 +184,33 @@ export default function ParametersDistributionBar() {
 
           {X1 && X2 && Y && (
             <div className="pl-12">
-              <Plot
-                data={[trace1, trace2]}
-                layout={{
-                  barmode: isStacked ? "stack" : "group",
-                  title: "Parameter Distribution Bar",
-                  width: screenWidth - 470,
-                  height: 35 * Y?.length + 150,
-                  margin: { autoexpand: true, l: 200 },
-                  legend: { itemwidth: 90 },
-                  xaxis: {
-                    zeroline: true,
-                    side: "top",
-                  },
-                  yaxis: {
-                    // automargin: true,
-                    ticks: "outside",
-                    tickfont: {
-                      size: 12,
-                      standoff: 50,
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Plot
+                  data={[trace1, trace2]}
+                  layout={{
+                    barmode: isStacked ? "stack" : "group",
+                    title: "Parameter Distribution Bar",
+                    width: screenWidth - 470,
+                    height: 35 * Y?.length + 350,
+                    margin: { autoexpand: true, l: 200 },
+                    legend: { itemwidth: 90 },
+                    xaxis: {
+                      zeroline: true,
+                      side: "top",
                     },
-                  },
-                }}
-              />
+                    yaxis: {
+                      automargin: true,
+                      ticks: "outside",
+                      tickfont: {
+                        size: 14,
+                        standoff: 50,
+                      },
+                    },
+                  }}
+                />
+              )}
             </div>
           )}
         </div>

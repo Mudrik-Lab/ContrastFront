@@ -14,6 +14,7 @@ import { tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
+import Spinner from "../../components/Spinner";
 
 export default function Journals() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -35,7 +36,7 @@ export default function Journals() {
       label: parentTheory,
     })
   );
-  const { data, isSuccess } = useQuery(
+  const { data, isSuccess, isLoading } = useQuery(
     [
       `journals${
         +" " +
@@ -158,16 +159,20 @@ export default function Journals() {
         </div>
 
         <div className="pl-2">
-          <Plot
-            data={[trace1]}
-            layout={{
-              autosize: false,
-              width: graphWidth,
-              height: screenHeight - 100,
-              margin: { autoexpand: true, b: 150 },
-              showlegend: true,
-            }}
-          />
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Plot
+              data={[trace1]}
+              layout={{
+                autosize: false,
+                width: graphWidth,
+                height: screenHeight - 100,
+                margin: { autoexpand: true, b: 150 },
+                showlegend: true,
+              }}
+            />
+          )}
         </div>
       </div>
     </div>

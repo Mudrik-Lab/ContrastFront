@@ -3,8 +3,10 @@ import React from "react";
 import Plot from "react-plotly.js";
 import getExperimentsGraphs from "../apiHooks/getExperimentsGraphs";
 import { tagsOptions } from "./HardCoded";
+import Spinner from "./Spinner";
 
 export default function NestedPie() {
+  const [isLoading, setIsLoading] = React.useState(false);
   const { data, isSuccess } = useQuery(
     [`parameters_distribution_theories_comparison${+" " + "stam"}`],
     () =>
@@ -15,6 +17,13 @@ export default function NestedPie() {
       })
   );
 
+  const fetchData = () => {
+    setIsLoading(true);
+    // Make API request or do other async work here
+    setTimeout(() => {
+      setIsLoading(false);
+    }, 3000); // Simulate 3 second delay
+  };
   // for matching external pie to internal- need to add to external's data "parentName"
   // like in https://codesandbox.io/s/jmjrt?file=/src/data.js:597-619
 
@@ -60,6 +69,10 @@ export default function NestedPie() {
 
   return (
     <div className="mt-60">
+      <div>
+        <button onClick={fetchData}>Fetch Data</button>
+        {isLoading && <Spinner />}
+      </div>
       <Plot data={[data1, data2]} layout={layout} />
 
       {/* <Plot

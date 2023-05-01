@@ -13,6 +13,7 @@ import { ABColors, tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
+import Spinner from "../../components/Spinner";
 
 export default function Timings() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -50,7 +51,7 @@ export default function Timings() {
     })
   );
 
-  const { data, isSuccess } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `timings${
         selectedTechniques?.join(" ") +
@@ -135,7 +136,7 @@ export default function Timings() {
               <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
                 <div className={sectionClass}>
                   <Text md weight="bold">
-                    Techniqes
+                    Techniques
                   </Text>
                   {configSuccess && (
                     <Select
@@ -148,8 +149,8 @@ export default function Timings() {
                     />
                   )}
                   <FilterExplanation
-                    text="Techniqes"
-                    tooltip="few more words about Techniqes"
+                    text="Techniques"
+                    tooltip="few more words about Techniques"
                   />
                 </div>
                 <div className={sectionClass}>
@@ -167,8 +168,8 @@ export default function Timings() {
                     />
                   )}
                   <FilterExplanation
-                    text="Techniqes"
-                    tooltip="few more words about Techniqes"
+                    text="Techniques"
+                    tooltip="few more words about Techniques"
                   />
                 </div>
                 <Text md weight="bold">
@@ -243,29 +244,33 @@ export default function Timings() {
           </div>
 
           <div className="pl-12">
-            <Plot
-              data={traces}
-              layout={{
-                autosize: false,
-                barmode: "stack",
-                title: "Frequencies",
-                width: screenWidth - 388,
-                height: screenHeight,
-                margin: { autoexpand: true, l: 20 },
-                legend: { itemwidth: 90 },
-                showlegend: true,
-                yaxis: {
-                  zeroline: false, // hide the zeroline
-                  zerolinecolor: "#969696", // customize the color of the zeroline
-                  zerolinewidth: 2, // customize the width of the zeroline
-                },
-                xaxis: {
-                  zeroline: false, // hide the zeroline
-                  zerolinecolor: "#969696", // customize the color of the zeroline
-                  zerolinewidth: 2, // customize the width of the zeroline
-                },
-              }}
-            />
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Plot
+                data={traces}
+                layout={{
+                  autosize: false,
+                  barmode: "stack",
+                  title: "Frequencies",
+                  width: screenWidth - 388,
+                  height: screenHeight,
+                  margin: { autoexpand: true, l: 20 },
+                  legend: { itemwidth: 90 },
+                  showlegend: true,
+                  yaxis: {
+                    zeroline: false, // hide the zeroline
+                    zerolinecolor: "#969696", // customize the color of the zeroline
+                    zerolinewidth: 2, // customize the width of the zeroline
+                  },
+                  xaxis: {
+                    zeroline: false, // hide the zeroline
+                    zerolinecolor: "#969696", // customize the color of the zeroline
+                    zerolinewidth: 2, // customize the width of the zeroline
+                  },
+                }}
+              />
+            )}
           </div>
         </div>
       }
