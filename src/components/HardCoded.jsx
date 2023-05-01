@@ -8,7 +8,7 @@ import { ReactComponent as Timing } from "../assets/icons/timing.svg";
 import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
-import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world -map.svg";
+import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 
 export const tagsOptions = [
   {

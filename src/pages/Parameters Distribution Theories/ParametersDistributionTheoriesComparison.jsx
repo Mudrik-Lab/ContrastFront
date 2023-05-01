@@ -70,6 +70,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+  const screenWidth = window.screen.availWidth;
   return (
     <div>
       <Navbar />
@@ -161,44 +162,62 @@ export default function ParametersDistributionTheoriesComparison() {
           </div>
         </div>
 
-        <div className="pl-12 flex flex-wrap">
-          {isSuccess &&
-            chartsData.map((chart) => (
-              <Plot
-                data={[
-                  {
-                    direction: "clockwise",
-                    values: chart.series.map((row) => row.value),
-                    labels: chart.series.map((row) => row.key),
-                    type: "pie",
-                    textinfo: "label+number",
-                    textposition: "inside",
-                    hole: 0.4,
-                    marker: {
-                      colors: chart.series.map((row) => row.color),
-                      line: { width: 1, color: "white" },
-                    },
-                  },
-                ]}
-                layout={{
-                  colorway: Object.values(parametersColors),
-                  width: 600,
-                  height: 600,
-                  showlegend: false,
-                  annotations: [
-                    {
-                      text: chart.series_name + " = " + chart.value,
-                      showarrow: false,
-                      font: {
-                        size: 20,
-                      },
-                      x: 0.5,
-                      y: 0.5,
-                    },
-                  ],
-                }}
-              />
+        <div className=" relative">
+          <div className="funny-leggend flex flex-col gap-3 absolute top-36 left-[640px] z-50">
+            {Object.keys(parametersColors).map((name) => (
+              <div
+                className="h-16 w-32 border flex justify-center items-center "
+                style={{ backgroundColor: parametersColors[name] }}>
+                <Text sm color="white" center>
+                  {name}
+                </Text>
+              </div>
             ))}
+          </div>
+          <div className="mx-auto border ">
+            {isSuccess &&
+              chartsData.map((chart) => (
+                <Plot
+                  data={[
+                    {
+                      direction: "clockwise",
+                      values: chart.series.map((row) => row.value),
+                      labels: chart.series.map((row) => row.key),
+                      type: "pie",
+                      textinfo: "label+number",
+                      textposition: "inside",
+                      hole: 0.4,
+                      marker: {
+                        colors: chart.series.map((row) => row.color),
+                        line: { width: 1, color: "white" },
+                      },
+                    },
+                  ]}
+                  layout={{
+                    colorway: Object.values(parametersColors),
+                    width: 700,
+                    height: 700,
+                    showlegend: false,
+                    margin: { r: 100, l: 100 },
+                    annotations: [
+                      {
+                        text:
+                          chart.series_name + " <br />" + " = " + chart.value,
+                        showarrow: false,
+                        bgcolor: "#ffffff",
+                        opacity: 0.8,
+                        style: { whiteSpace: "pre-wrap" },
+                        font: {
+                          size: 18,
+                        },
+                        x: 0.5,
+                        y: 0.5,
+                      },
+                    ],
+                  }}
+                />
+              ))}
+          </div>
         </div>
       </div>
     </div>
