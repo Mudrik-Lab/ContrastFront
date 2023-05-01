@@ -125,7 +125,16 @@ export default function AcrossTheYears() {
             data={graphsData}
             layout={{
               autosize: false,
-              showlegend: false,
+              showlegend: true,
+              legend: {
+                x: 1,
+                xanchor: "left",
+                y: 1,
+                font: {
+                  size: 18,
+                  color: "#000000",
+                },
+              },
               width: screenWidth - 338,
               height: screenHeight - 100,
             }}

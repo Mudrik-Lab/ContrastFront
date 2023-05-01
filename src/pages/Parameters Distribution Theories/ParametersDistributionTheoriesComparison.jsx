@@ -163,7 +163,7 @@ export default function ParametersDistributionTheoriesComparison() {
         </div>
 
         <div className=" relative">
-          <div className="funny-leggend flex flex-col gap-3 absolute top-36 left-[640px] z-50">
+          <div className="funny-leggend flex flex-col gap-3 absolute top-36 left-[640px] z-10">
             {Object.keys(parametersColors).map((name) => (
               <div
                 className="h-16 w-32 border flex justify-center items-center "
