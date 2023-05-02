@@ -9,7 +9,11 @@ import {
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
+import {
+  paradigmsColors,
+  screenWidth,
+  tagsOptions,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import { useSearchParams } from "react-router-dom";
@@ -104,9 +108,6 @@ export default function ParametersDistributionBar() {
     },
     type: "bar",
   };
-
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";

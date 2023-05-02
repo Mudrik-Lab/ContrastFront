@@ -9,7 +9,7 @@ export default function TeamMembersCards() {
   const teamMembersInfo = [
     {
       image: Temp,
-      name: "Prof. L. Mudrik",
+      name: "Liad Mudrik",
       position: "Project Manager",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam commodo faucibus lacus quis laoreet. Vestibulum ante ipsum primis in. Nam commodo faucibus lacus quis laoreet",
       linkdIn: "",

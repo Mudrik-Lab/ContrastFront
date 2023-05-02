@@ -2,7 +2,7 @@ import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 import { QueryClient } from "@tanstack/react-query";
-import WorldMap from "./components/WorldMap";
+
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
 import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
@@ -11,13 +11,14 @@ import ParametersDistributionBar from "./pages/Parameters Distribution Bar/Param
 import ContactPage from "./pages/ContactPage/ContactPage";
 import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
-import Timing from "./pages/Timing/Timing";
+import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
 import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories/ParametersDistributionTheoriesComparison";
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";
 import NestedPie from "./components/NestedPie";
+import WorldMap from "./pages/Consciousness World Map/WorldMap";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -57,7 +58,7 @@ const Screens = () => {
         />
         <Route path="/frequencies" element={<Frequencies />} />
         <Route path="/journals" element={<Journals />} />
-        <Route path="/timing" element={<Timing />} />
+        <Route path="/timings" element={<Timing />} />
         <Route path="/consciousness-world-map" element={<WorldMap />} />
         <Route path="/try" element={<NestedPie />} />
       </Routes>

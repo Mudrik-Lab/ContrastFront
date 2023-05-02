@@ -43,7 +43,7 @@ export default function Timings() {
         })
       )
     : [];
-
+  console.log(tags);
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
       value: parentTheory,
@@ -102,8 +102,6 @@ export default function Timings() {
       type: "lines",
     });
   });
-
-  console.log(tags);
 
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;

@@ -77,7 +77,7 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
 
   return (
     <select
-      id="countries"
+      id="some-select"
       className="bg-white border text-grayReg text-md rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
       <option className={optionClass} value="" selected>
         {placeHolder}
