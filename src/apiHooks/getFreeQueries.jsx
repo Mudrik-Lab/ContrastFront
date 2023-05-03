@@ -2,23 +2,24 @@ import { queryApi } from "../Utils/api";
 
 export default async function getFreeQueries({
   breakdown,
-  theory,
+  techniques,
+  consciousness_measure_phases,
   is_reporting,
   min_number_of_experiments,
-  type_of_consciousness,
-  theory_driven,
-  interpretation,
 }) {
+  const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
+  const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
+    (item) => "&consciousness_measure_phases=" + item.value
+  );
+
   return await queryApi({
-    url: `studies/experiments_graphs/parameters_distribution_free_queries/`,
+    url: `studies/experiments_graphs/parameters_distribution_free_queries/?${
+      techniquesArr?.join("").slice(1) + consciousnessMeasurePhasesArr?.join("")
+    }`,
     params: {
       breakdown,
-      theory,
-      is_reporting,
       min_number_of_experiments,
-      type_of_consciousness,
-      theory_driven,
-      interpretation,
+      is_reporting,
     },
     method: "GET",
   });

@@ -10,7 +10,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
-  paradigmsColors,
+  colorsArray,
   screenWidth,
   tagsOptions,
 } from "../../components/HardCoded";
@@ -92,7 +92,7 @@ export default function ParametersDistributionBar() {
     name: "pro",
     orientation: "h",
     marker: {
-      color: paradigmsColors[12],
+      color: colorsArray[12],
       width: 100,
     },
     type: "bar",
@@ -103,7 +103,7 @@ export default function ParametersDistributionBar() {
     name: "challenges",
     orientation: "h",
     marker: {
-      color: paradigmsColors[6],
+      color: colorsArray[6],
       width: 100,
     },
     type: "bar",

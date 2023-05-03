@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
+import { colorsArray, tagsOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -60,7 +60,7 @@ export default function TheoryDriven() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(y.key + index);
-      outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
+      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 
@@ -149,7 +149,7 @@ export default function TheoryDriven() {
                   textposition: "inside",
                   domain: { x: [0, 1], y: [0.125, 0.875] },
                   marker: {
-                    colors: paradigmsColors,
+                    colors: colorsArray,
                     line: { width: 1, color: "white" },
                   },
                 },

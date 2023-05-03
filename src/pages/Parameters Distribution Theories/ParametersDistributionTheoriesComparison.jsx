@@ -4,7 +4,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   breakdownsShorts,
-  paradigmsColors,
+  colorsArray,
   parametersColors,
   tagsOptions,
 } from "../../components/HardCoded";

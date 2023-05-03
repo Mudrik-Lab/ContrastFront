@@ -12,7 +12,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
 import {
-  paradigmsColors,
+  colorsArray,
   screenHeight,
   screenWidth,
 } from "../../components/HardCoded";

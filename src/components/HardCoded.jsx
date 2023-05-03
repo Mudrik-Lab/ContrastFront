@@ -86,7 +86,7 @@ export const ABColors = {
   Delta: "#4D3991",
   Theta: "#8949A2",
 };
-export const paradigmsColors = [
+export const colorsArray = [
   "rgba(189, 183, 89, 1)",
   "rgba(196, 137, 87, 1)",
   "rgba(202, 83, 90, 1)",
