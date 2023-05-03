@@ -1,21 +1,19 @@
 import { queryApi } from "../Utils/api";
 
-export default async function getFrequencies({
-  techniques,
-  theory,
+export default async function getNations({
   is_reporting,
   theory_driven,
   type_of_consciousness,
+  theory,
   min_number_of_experiments,
 }) {
-  const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
-
+  const theoriesArr = theory?.map((t) => "&theory=" + t.value);
+  console.log(theory);
   return await queryApi({
-    url: `studies/experiments_graphs/frequencies/?${techniquesArr
-      .join("")
+    url: `studies/experiments_graphs/nations_of_consciousness/?${theoriesArr
+      ?.join("")
       .slice(1)}`,
     params: {
-      theory,
       is_reporting,
       theory_driven,
       type_of_consciousness,

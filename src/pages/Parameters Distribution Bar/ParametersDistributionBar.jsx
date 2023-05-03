@@ -9,10 +9,15 @@ import {
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
+import {
+  paradigmsColors,
+  screenWidth,
+  tagsOptions,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useSearchParams } from "react-router-dom";
+import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -23,20 +28,28 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
-  const [searchParams, setSearchParams] = useSearchParams();
+  // const [searchParams, setSearchParams] = useSearchParams();
 
-  React.useEffect(() => {
-    setExperimentsNum(searchParams.get("min_number_of_experiments"));
-    setReporting(searchParams.get("is_reporting"));
-    // setSelected(searchParams.get("breakdown"));
-    // setSelectedParent(searchParams.get("theory"));
-  }, []);
+  // React.useEffect(() => {
+  //   setExperimentsNum(searchParams.get("min_number_of_experiments"));
+  //   setReporting(searchParams.get("is_reporting"));
+  //   setSelected({
+  //     value: searchParams.get("breakdown"),
+  //     label: searchParams.get("breakdown"),
+  //   });
+  //   setSelectedParent({ value: searchParams.get("theory") });
+  // }, [searchParams]);
 
-  React.useEffect(() => {
-    if (experimentsNum) {
-      setSearchParams({ min_number_of_experiments: experimentsNum });
-    }
-  }, [experimentsNum]);
+  // React.useEffect(() => {
+  //   if (experimentsNum) {
+  //     setSearchParams({
+  //       breakdown: selected.value,
+  //       theory: selectedParent.value,
+  //       is_reporting: reporting,
+  //       min_number_of_experiments: experimentsNum,
+  //     });
+  //   }
+  // }, [selected.value, selectedParent.value, reporting, experimentsNum]);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
@@ -51,7 +64,7 @@ export default function ParametersDistributionBar() {
     })
   );
 
-  const { data, isSuccess } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `parameters_distribution_bar${
         selected.value + selectedParent.value + reporting + experimentsNum
@@ -72,7 +85,6 @@ export default function ParametersDistributionBar() {
   const Y = data?.data.map((row) => row.series_name).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
-  console.log(Y);
 
   var trace1 = {
     x: X1,
@@ -96,9 +108,6 @@ export default function ParametersDistributionBar() {
     },
     type: "bar",
   };
-
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -176,29 +185,33 @@ export default function ParametersDistributionBar() {
 
           {X1 && X2 && Y && (
             <div className="pl-12">
-              <Plot
-                data={[trace1, trace2]}
-                layout={{
-                  barmode: isStacked ? "stack" : "group",
-                  title: "Parameter Distribution Bar",
-                  width: screenWidth - 470,
-                  height: 35 * Y?.length + 150,
-                  margin: { autoexpand: true, l: 200 },
-                  legend: { itemwidth: 90 },
-                  xaxis: {
-                    zeroline: true,
-                    side: "top",
-                  },
-                  yaxis: {
-                    // automargin: true,
-                    ticks: "outside",
-                    tickfont: {
-                      size: 12,
-                      standoff: 50,
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Plot
+                  data={[trace1, trace2]}
+                  layout={{
+                    barmode: isStacked ? "stack" : "group",
+                    title: "Parameter Distribution Bar",
+                    width: screenWidth - 470,
+                    height: 35 * Y?.length + 350,
+                    margin: { autoexpand: true, l: 200 },
+                    legend: { itemwidth: 90 },
+                    xaxis: {
+                      zeroline: true,
+                      side: "top",
                     },
-                  },
-                }}
-              />
+                    yaxis: {
+                      automargin: true,
+                      ticks: "outside",
+                      tickfont: {
+                        size: 14,
+                        standoff: 50,
+                      },
+                    },
+                  }}
+                />
+              )}
             </div>
           )}
         </div>

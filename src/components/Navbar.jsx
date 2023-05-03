@@ -55,7 +55,9 @@ export default function Navbar() {
                             className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">
                             <div
                               className={classNames(
-                                `${"bg-" + row.color} rounded-full w-3 h-3`
+                                `${
+                                  "bg-" + row.color
+                                }  green rounded-full w-3 h-3`
                               )}></div>
                             {row.text}
                           </a>

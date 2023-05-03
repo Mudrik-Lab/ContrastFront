@@ -77,7 +77,7 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
 
   return (
     <select
-      id="countries"
+      id="some-select"
       className="bg-white border text-grayReg text-md rounded-sm focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
       <option className={optionClass} value="" selected>
         {placeHolder}
@@ -163,8 +163,8 @@ export const RangeInput = ({ number, setNumber, min, max, step }) => {
       />
       <span
         style={{
-          left: label * 0.9 + (label < 20 ? 5 : label < 70 ? 2 : 0) + "%",
-          top: 4,
+          left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
+          top: 3.5,
         }}
         className="absolute text-sm text-blue pointer-events-none ">
         {label}

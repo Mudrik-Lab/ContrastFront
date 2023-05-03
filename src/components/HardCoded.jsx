@@ -4,11 +4,11 @@ import { ReactComponent as TheoriesComparison } from "../assets/icons/theories-c
 import { ReactComponent as TheoryDriven } from "../assets/icons/theory-driven.svg";
 import { ReactComponent as ParameterTheory } from "../assets/icons/parameter&theory.svg";
 import { ReactComponent as Trends } from "../assets/icons/trends.svg";
-import { ReactComponent as Timing } from "../assets/icons/timing.svg";
+import { ReactComponent as Timings } from "../assets/icons/timing.svg";
 import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
-import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world -map.svg";
+import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 
 export const tagsOptions = [
   {
@@ -151,10 +151,10 @@ export const graphsHeaders = [
     route: "/theory-driven",
   },
   {
-    text: "Timing",
-    icon: <Timing />,
+    text: "Timings",
+    icon: <Timings />,
     color: "darkTeal",
-    route: "/timing",
+    route: "/timings",
   },
   {
     text: "Frequencies",
@@ -162,15 +162,16 @@ export const graphsHeaders = [
     color: "teal",
     route: "/frequencies",
   },
-  // {
-  //   text: "Anatomical Findings",
-  //   icon: <AnatomicalFindings />,
-  //   route: "/",
-  // },
+  {
+    text: "Anatomical Findings",
+    icon: <AnatomicalFindings />,
+    color: "lightTeal",
+    route: "/",
+  },
   {
     text: "Journals",
     icon: <Journals />,
-    color: "lightTeal",
+    color: "lightGreen",
     route: "/journals",
   },
   {
@@ -198,3 +199,5 @@ export const parametersColors = {
   "Case Study": "rgba(176, 196, 222, 1)",
   "Psychedelic Drugs": "rgba(255, 160, 122, 1)",
 };
+export const screenWidth = window.screen.width;
+export const screenHeight = window.screen.height;

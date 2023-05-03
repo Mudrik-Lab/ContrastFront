@@ -13,6 +13,7 @@ import { ABColors } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
+import Spinner from "../../components/Spinner";
 
 export default function Frequencies() {
   const [reporting, setReporting] = React.useState("either");
@@ -43,7 +44,7 @@ export default function Frequencies() {
       }))
     : [];
 
-  const { data, isSuccess } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `frequencies${
         selectedTechniques?.join(" ") + " " + selectedParent.value ||
@@ -124,7 +125,7 @@ export default function Frequencies() {
                 {/* TODO: find Headline */}
                 <div className={sectionClass}>
                   <Text md weight="bold">
-                    Techniqes
+                    Techniques
                   </Text>
                   {configSuccess && (
                     <Select
@@ -208,29 +209,33 @@ export default function Frequencies() {
           </div>
 
           <div className="pl-12">
-            <Plot
-              data={traces}
-              layout={{
-                autosize: false,
-                barmode: "stack",
-                title: "Frequencies",
-                width: screenWidth - 388,
-                height: screenHeight,
-                margin: { autoexpand: true, l: 20 },
-                legend: { itemwidth: 90 },
-                showlegend: true,
-                yaxis: {
-                  zeroline: false, // hide the zeroline
-                  zerolinecolor: "#969696", // customize the color of the zeroline
-                  zerolinewidth: 2, // customize the width of the zeroline
-                },
-                xaxis: {
-                  zeroline: false, // hide the zeroline
-                  zerolinecolor: "#969696", // customize the color of the zeroline
-                  zerolinewidth: 2, // customize the width of the zeroline
-                },
-              }}
-            />
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Plot
+                data={traces}
+                layout={{
+                  autosize: false,
+                  barmode: "stack",
+                  title: "Frequencies",
+                  width: screenWidth - 388,
+                  height: screenHeight,
+                  margin: { autoexpand: true, l: 20 },
+                  legend: { itemwidth: 90 },
+                  showlegend: true,
+                  yaxis: {
+                    zeroline: false, // hide the zeroline
+                    zerolinecolor: "#969696", // customize the color of the zeroline
+                    zerolinewidth: 2, // customize the width of the zeroline
+                  },
+                  xaxis: {
+                    zeroline: false, // hide the zeroline
+                    zerolinecolor: "#969696", // customize the color of the zeroline
+                    zerolinewidth: 2, // customize the width of the zeroline
+                  },
+                }}
+              />
+            )}
           </div>
         </div>
       )}

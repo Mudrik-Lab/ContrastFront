@@ -2,11 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import {
-  breakdownsShorts,
-  paradigmsColors,
-  tagsOptions,
-} from "../../components/HardCoded";
+import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -17,6 +13,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
+import Spinner from "../../components/Spinner";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -25,7 +22,7 @@ export default function TheoryDriven() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [interpretation, setInterpretation] = React.useState(true);
 
-  const { data, isSuccess } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `theory_driven_distribution_pie${
         +" " +
@@ -62,7 +59,7 @@ export default function TheoryDriven() {
     labels1.push(x.series_name);
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(breakdownsShorts[y.key] + index);
+      labels2.push(y.key + index);
       outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
     });
   });
@@ -137,45 +134,50 @@ export default function TheoryDriven() {
           </div>
         </div>
 
-        <div className="pl-12"></div>
-        <Plot
-          data={[
-            {
-              direction: "clockwise",
-              values: values1,
-              labels: labels1,
-              type: "pie",
-              textinfo: "label+number",
-              textposition: "inside",
-              domain: { x: [0, 1], y: [0.125, 0.875] },
-              marker: {
-                colors: paradigmsColors,
-                line: { width: 1, color: "white" },
-              },
-            },
-            {
-              direction: "clockwise",
-              values: values2,
-              labels: labels2,
-              sort: false,
-              type: "pie",
-              textinfo: "label+value",
-              hole: 0.75,
-              textposition: "inside",
-              domain: { x: [0, 1], y: [0, 1] },
-              marker: {
-                line: { width: 1, color: "white" },
-              },
-            },
-          ]}
-          layout={{
-            width: 1500,
-            height: 1000,
-            showlegend: false,
+        <div className="pl-12">
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Plot
+              data={[
+                {
+                  direction: "clockwise",
+                  values: values1,
+                  labels: labels1,
+                  type: "pie",
+                  textinfo: "label+number",
+                  textposition: "inside",
+                  domain: { x: [0, 1], y: [0.125, 0.875] },
+                  marker: {
+                    colors: paradigmsColors,
+                    line: { width: 1, color: "white" },
+                  },
+                },
+                {
+                  direction: "clockwise",
+                  values: values2,
+                  labels: labels2,
+                  sort: false,
+                  type: "pie",
+                  textinfo: "label+value",
+                  hole: 0.75,
+                  textposition: "inside",
+                  domain: { x: [0, 1], y: [0, 1] },
+                  marker: {
+                    line: { width: 1, color: "white" },
+                  },
+                },
+              ]}
+              layout={{
+                width: 1500,
+                height: 1000,
+                showlegend: false,
 
-            annotations: [{ showarrow: false, text: "" }],
-          }}
-        />
+                annotations: [{ showarrow: false, text: "" }],
+              }}
+            />
+          )}
+        </div>
       </div>
     </div>
   );
