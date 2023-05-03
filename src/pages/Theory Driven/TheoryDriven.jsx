@@ -7,6 +7,7 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  Spacer,
   Text,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
@@ -70,11 +71,11 @@ export default function TheoryDriven() {
     <div>
       <Navbar />
       <div className="flex mt-12">
-        <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue" center>
             Parameters Distribution Pie
           </Text>
-          <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
               <Text md weight="bold">
                 Axis Controls
@@ -88,7 +89,6 @@ export default function TheoryDriven() {
                 tooltip="few more words about minimum number of experiments"
               />
             </div>
-
             <div className={sectionClass}>
               <Text md weight={"light"}>
                 Reported
@@ -106,7 +106,6 @@ export default function TheoryDriven() {
               />
             </div>
             <div className={sectionClass}>
-              {/* TODO: find Headline */}
               <Text md weight={"light"}>
                 Type of Consciousness
               </Text>
@@ -123,6 +122,22 @@ export default function TheoryDriven() {
                 setChecked={setConsciousness}
               />
             </div>
+            <div className={sectionClass}>
+              <Text md>Theory Driven</Text>
+              <RadioInput
+                name="Thery-Driven"
+                values={[
+                  { value: "driven", name: "Driven" },
+                  { value: "mentioning", name: "Mentioning" },
+                  { value: "either", name: "Either" },
+                  { value: "post-hoc", name: "Post Hoc" },
+                ]}
+                checked={theoryDriven}
+                setChecked={setTheoryDriven}
+              />
+            </div>
+            <Spacer height={10} />
+            <Text md>Interpretation</Text>
             <div className="flex justify-center items-center gap-3 mt-3">
               <Text>Challenges</Text>
               <Toggle
@@ -130,7 +145,8 @@ export default function TheoryDriven() {
                 setChecked={() => setInterpretation(!interpretation)}
               />
               <Text>Pro</Text>
-            </div>
+            </div>{" "}
+            <Spacer height={10} />
           </div>
         </div>
 

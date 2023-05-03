@@ -14,7 +14,7 @@ export default async function getTimings({
 
   return await queryApi({
     url: `studies/experiments_graphs/timings/?${
-      techniquesArr?.join("").slice(1) + tagsArr?.join("")
+      techniquesArr?.join("") + tagsArr?.join("")
     }`,
     params: {
       theory,

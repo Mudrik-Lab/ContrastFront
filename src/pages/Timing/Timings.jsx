@@ -115,11 +115,11 @@ export default function Timings() {
       <Navbar />
       {
         <div className="flex mt-12">
-          <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+          <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue">
               Timings
             </Text>
-            <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
               </Text>

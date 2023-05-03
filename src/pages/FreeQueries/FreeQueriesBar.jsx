@@ -23,6 +23,11 @@ export default function FreeQueriesBar() {
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] =
     React.useState(null);
+  const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] =
+    React.useState(null);
+  const [tagsFamilies, setTagsFamilies] = React.useState(null);
+  const [tagsTypes, setTagsTypes] = React.useState(null);
+
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
@@ -46,10 +51,26 @@ export default function FreeQueriesBar() {
         })
       )
     : [];
-
-  console.log(consciousnessMeasurePhaseArr);
-
-  const { data, isSuccess } = useQuery(
+  const consciousnessMeasureTypesArr = extraConfigSuccess
+    ? extraConfig?.data.available_consciousness_measure_type.map((type) => ({
+        value: type,
+        label: type,
+      }))
+    : [];
+  const tagsFamiliesArr = extraConfigSuccess
+    ? extraConfig?.data.available_finding_tags_families.map((type) => ({
+        value: type,
+        label: type,
+      }))
+    : [];
+  const tagsTypesArr = extraConfigSuccess
+    ? extraConfig?.data.available_finding_tags_types.map((type) => ({
+        value: type.name,
+        label: type.name,
+      }))
+    : [];
+  console.log(tagsTypesArr);
+  const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
         selected.value +
@@ -60,7 +81,13 @@ export default function FreeQueriesBar() {
         " " +
         selectedTechniques?.map((row) => row.label).join(",") +
         " " +
-        consciousnessMeasurePhases?.map((row) => row.label).join(",")
+        consciousnessMeasurePhases?.map((row) => row.label).join(",") +
+        " " +
+        consciousnessMeasureTypes?.map((row) => row.label).join(",") +
+        " " +
+        tagsFamiliesArr?.map((row) => row.label).join(",") +
+        " " +
+        tagsTypesArr?.map((row) => row.label).join(",")
       }`,
     ],
     () =>
@@ -68,8 +95,11 @@ export default function FreeQueriesBar() {
         breakdown: selected.value,
         techniques: selectedTechniques,
         consciousness_measure_phases: consciousnessMeasurePhases,
+        consciousness_measure_types: consciousnessMeasureTypes,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
+        finding_tags_families: tagsFamilies,
+        finding_tags_types: tagsTypes,
       })
   );
 
@@ -89,7 +119,7 @@ export default function FreeQueriesBar() {
     },
     marker: {
       width: 100,
-      color: colorsArray[7],
+      color: "Blues",
 
       text: {
         font: {
@@ -110,17 +140,22 @@ export default function FreeQueriesBar() {
   extraConfigSuccess &&
     !consciousnessMeasurePhases &&
     setConsciousnessMeasurePhases(consciousnessMeasurePhaseArr);
-
+  extraConfigSuccess &&
+    !consciousnessMeasureTypes &&
+    setConsciousnessMeasureTypes(consciousnessMeasureTypesArr);
+  extraConfigSuccess && !tagsFamilies && setTagsFamilies(tagsFamiliesArr);
+  extraConfigSuccess && !tagsTypes && setTagsTypes(tagsTypesArr);
   return (
     <div>
       <Navbar />
       {configSuccess && (
         <div className="flex mt-12">
-          <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+          <div className="side-filter-box p-2 pt-10 flex flex-col items-center">
             <Text size={28} weight="bold" color="blue" center>
-              Free
+              Parameter Distribution <br />
+              Free Queries
             </Text>
-            <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 h-screen overflow-y-scroll">
               <Text md weight="bold">
                 Axis Controls
               </Text>
@@ -151,25 +186,52 @@ export default function FreeQueriesBar() {
               </div>
               <div className={sectionClass}>
                 {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTechniques}
-                    options={techniques}
-                    placeholder="Techniques"
-                    onChange={setSelectedTechniques}
-                  />
-                )}
+                  <>
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={selectedTechniques}
+                      options={techniques}
+                      placeholder="Techniques"
+                      onChange={setSelectedTechniques}
+                    />
 
-                {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={consciousnessMeasurePhases}
-                    options={consciousnessMeasurePhaseArr}
-                    placeholder="consciousness Measure Phase Types"
-                    onChange={setConsciousnessMeasurePhases}
-                  />
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasurePhases}
+                      options={consciousnessMeasurePhaseArr}
+                      placeholder="consciousness Measure Phase Types"
+                      onChange={setConsciousnessMeasurePhases}
+                    />
+
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasureTypes}
+                      options={consciousnessMeasureTypesArr}
+                      placeholder="consciousness Measure Types"
+                      onChange={setConsciousnessMeasureTypes}
+                    />
+
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsFamilies}
+                      options={tagsFamiliesArr}
+                      placeholder="Finding Tags Families"
+                      onChange={setTagsFamilies}
+                    />
+
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsTypes}
+                      options={tagsTypesArr}
+                      placeholder="Finding Tags Types"
+                      onChange={setTagsTypes}
+                    />
+                  </>
                 )}
               </div>
               <div className={sectionClass}>
@@ -192,7 +254,8 @@ export default function FreeQueriesBar() {
               <Plot
                 data={[trace1]}
                 layout={{
-                  title: "Parameter Distribution Bar",
+                  title: "Parameter Distribution Free Queries",
+
                   width: screenWidth - 500,
                   height: 45 * Y?.length + 150,
                   margin: { autoexpand: true, l: 20 },
