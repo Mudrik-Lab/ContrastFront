@@ -201,3 +201,29 @@ export const parametersColors = {
 };
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
+export const avalble_populations = [
+  {
+    value: "heathy Adults",
+    label: "Heathy Adults",
+  },
+  {
+    value: "patients",
+    label: "Patients",
+  },
+  {
+    value: "healthy college students",
+    label: "Healthy College Students",
+  },
+  {
+    value: "non-human",
+    label: "Non-human",
+  },
+  {
+    value: "children",
+    label: "Children",
+  },
+  {
+    value: "computer",
+    label: "Computer",
+  },
+];

@@ -221,7 +221,6 @@ export default function Timings() {
                 />
               </div>
               <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
                 <Text md weight="bold">
                   Type of Consciousness
                 </Text>
