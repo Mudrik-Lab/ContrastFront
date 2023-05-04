@@ -17,7 +17,6 @@ import getFreeQueries from "../../apiHooks/getFreeQueries";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
-
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
@@ -27,6 +26,7 @@ export default function FreeQueriesBar() {
     React.useState(null);
   const [tagsFamilies, setTagsFamilies] = React.useState(null);
   const [tagsTypes, setTagsTypes] = React.useState(null);
+  const [measures, setMeasures] = React.useState(null);
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
@@ -37,8 +37,8 @@ export default function FreeQueriesBar() {
     [`more_configurations`],
     getExtraConfig
   );
-  const techniques = configSuccess
-    ? configuration?.data.available_techniques_for_timings.map((technique) => ({
+  const techniquesArr = extraConfigSuccess
+    ? extraConfig?.data.available_techniques.map((technique) => ({
         value: technique,
         label: technique,
       }))
@@ -69,7 +69,12 @@ export default function FreeQueriesBar() {
         label: type.name,
       }))
     : [];
-  console.log(tagsTypesArr);
+  const measuresArr = extraConfigSuccess
+    ? extraConfig?.data.available_measure_types.map((type) => ({
+        value: type,
+        label: type,
+      }))
+    : [];
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
@@ -85,9 +90,11 @@ export default function FreeQueriesBar() {
         " " +
         consciousnessMeasureTypes?.map((row) => row.label).join(",") +
         " " +
-        tagsFamiliesArr?.map((row) => row.label).join(",") +
+        tagsFamilies?.map((row) => row.label).join(",") +
         " " +
-        tagsTypesArr?.map((row) => row.label).join(",")
+        tagsTypes?.map((row) => row.label).join(",") +
+        " " +
+        measures?.map((row) => row.label).join(",")
       }`,
     ],
     () =>
@@ -100,6 +107,7 @@ export default function FreeQueriesBar() {
         min_number_of_experiments: experimentsNum,
         finding_tags_families: tagsFamilies,
         finding_tags_types: tagsTypes,
+        measures: measures,
       })
   );
 
@@ -136,15 +144,16 @@ export default function FreeQueriesBar() {
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
-  configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
-  extraConfigSuccess &&
-    !consciousnessMeasurePhases &&
-    setConsciousnessMeasurePhases(consciousnessMeasurePhaseArr);
-  extraConfigSuccess &&
-    !consciousnessMeasureTypes &&
-    setConsciousnessMeasureTypes(consciousnessMeasureTypesArr);
-  extraConfigSuccess && !tagsFamilies && setTagsFamilies(tagsFamiliesArr);
-  extraConfigSuccess && !tagsTypes && setTagsTypes(tagsTypesArr);
+  // configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
+  // extraConfigSuccess &&
+  //   !consciousnessMeasurePhases &&
+  //   setConsciousnessMeasurePhases(consciousnessMeasurePhaseArr);
+  // extraConfigSuccess &&
+  //   !consciousnessMeasureTypes &&
+  //   setConsciousnessMeasureTypes(consciousnessMeasureTypesArr);
+  // extraConfigSuccess && !tagsFamilies && setTagsFamilies(tagsFamiliesArr);
+  // extraConfigSuccess && !tagsTypes && setTagsTypes(tagsTypesArr);
+  // extraConfigSuccess && !measures && setMeasures(measuresArr);
   return (
     <div>
       <Navbar />
@@ -191,7 +200,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={selectedTechniques}
-                      options={techniques}
+                      options={techniquesArr}
                       placeholder="Techniques"
                       onChange={setSelectedTechniques}
                     />
@@ -201,7 +210,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasurePhases}
                       options={consciousnessMeasurePhaseArr}
-                      placeholder="consciousness Measure Phase Types"
+                      placeholder={"consciousness Measure Phase "}
                       onChange={setConsciousnessMeasurePhases}
                     />
 
@@ -230,6 +239,15 @@ export default function FreeQueriesBar() {
                       options={tagsTypesArr}
                       placeholder="Finding Tags Types"
                       onChange={setTagsTypes}
+                    />
+
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={measures}
+                      options={measuresArr}
+                      placeholder="Measures"
+                      onChange={setMeasures}
                     />
                   </>
                 )}

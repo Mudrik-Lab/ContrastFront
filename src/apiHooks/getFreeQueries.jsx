@@ -9,6 +9,7 @@ export default async function getFreeQueries({
   consciousness_measure_types,
   finding_tags_families,
   finding_tags_types,
+  measures,
 }) {
   const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
   const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
@@ -23,14 +24,16 @@ export default async function getFreeQueries({
   const tagsTypesArr = finding_tags_types?.map(
     (item) => "&finding_tags_types=" + item.value
   );
+  const measuresArr = measures?.map((item) => "&measures=" + item.value);
 
   return await queryApi({
     url: `studies/experiments_graphs/parameters_distribution_free_queries/?${
-      techniquesArr?.join("").slice(1) +
+      techniquesArr?.join("") +
       consciousnessMeasurePhasesArr?.join("") +
       consciousnessMeasureTypesArr?.join("") +
       tagsFamiliesArr?.join("") +
-      tagsTypesArr?.join("")
+      tagsTypesArr?.join("") +
+      measuresArr?.join("")
     }`,
     params: {
       breakdown,
