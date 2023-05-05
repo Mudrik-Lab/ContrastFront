@@ -79,7 +79,7 @@ export const available_techniques_for_timings = [
   { value: "Computational Modelling", label: "Computational Modelling" },
 ];
 
-export const ABColors = {
+export const AlphaBetaColors = {
   Alpha: "#C2549D",
   Beta: "#EB5A88",
   Gamma: "#EF7576",

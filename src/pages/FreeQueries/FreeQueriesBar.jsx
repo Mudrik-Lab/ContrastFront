@@ -223,7 +223,7 @@ export default function FreeQueriesBar() {
     <div>
       <Navbar />
       {configSuccess && (
-        <div className="flex mt-12">
+        <div className="flex mt-12 p-2">
           <div
             className="side-filter-box p-2 pt-10 flex flex-col items-center "
             style={{ height: screenHeight }}>
@@ -231,7 +231,7 @@ export default function FreeQueriesBar() {
               Parameter Distribution <br />
               Free Queries
             </Text>
-            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 h-[1000px] overflow-y-scroll">
+            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll">
               <Text md weight="bold">
                 Axis Controls
               </Text>

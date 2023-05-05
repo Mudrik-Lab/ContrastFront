@@ -9,11 +9,12 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { ABColors, tagsOptions } from "../../components/HardCoded";
+import { AlphaBetaColors, tagsOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
 import Spinner from "../../components/Spinner";
+import { blueToYellow } from "../../Utils/functions";
 
 export default function Timings() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -35,15 +36,26 @@ export default function Timings() {
         label: technique,
       }))
     : [];
+  const traceColor =
+    configuration?.data.available_finding_tags_types_for_timings.reduce(
+      (result, key, index) => {
+        result[key] = blueToYellow(
+          configuration?.data.available_finding_tags_types_for_timings.length
+        )[index];
+        return result;
+      },
+      {}
+    );
+  console.log(traceColor);
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
-        (tag) => ({
+        (tag, index) => ({
           value: tag,
           label: tag,
         })
       )
     : [];
-  console.log(tags);
+
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
       value: parentTheory,
@@ -81,28 +93,29 @@ export default function Timings() {
       })
   );
 
-  const something = data?.data.map((row) => row.series);
+  const serieses = data?.data.map((row) => row.series);
 
-  const graphsData = something
+  const graphsData = serieses
     ?.reduce((acc, val) => acc.concat(val), [])
     .sort((a, b) => a.name - b.name);
 
   const traces = [];
   graphsData?.map((row, index) => {
-    traces.push({
-      x: [row.start, row.end],
-      y: [index + 1, index + 1],
-      name: row.name,
-      orientation: "h",
-      scatter: { color: ABColors[row.name] },
-      line: {
-        color: ABColors[row.name],
-        width: 6,
-      },
-      type: "lines",
-    });
-  });
+    index > 2 &&
+      traces.push({
+        x: [row.start, row.end],
+        y: [index + 1, index + 1],
+        name: row.name,
+        // marker: { colorbar: { tickangle: "auto" } },
 
+        line: {
+          width: 6,
+          color: traceColor[row.name],
+        },
+        type: "scatter",
+      });
+  });
+  console.log(graphsData);
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
@@ -114,12 +127,14 @@ export default function Timings() {
     <div>
       <Navbar />
       {
-        <div className="flex mt-12">
-          <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
+        <div className="flex mt-12 p-2">
+          <div
+            className="side-filter-box p-2 pt-10 flex flex-col items-center "
+            style={{ height: screenHeight }}>
             <Text size={28} weight="bold" color="blue">
               Timings
             </Text>
-            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <div className="w-[346px] h-screen overflow-y-scroll shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
               </Text>
@@ -249,12 +264,12 @@ export default function Timings() {
                 layout={{
                   autosize: false,
                   barmode: "stack",
-                  title: "Frequencies",
-                  width: screenWidth - 388,
-                  height: screenHeight,
+
+                  width: screenWidth - 538,
+                  height: screenHeight - 150,
                   margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 90 },
-                  showlegend: true,
+                  legend: { itemwidth: 15, font: { size: 18 } },
+                  showlegend: false,
                   yaxis: {
                     zeroline: false, // hide the zeroline
                     zerolinecolor: "#969696", // customize the color of the zeroline
@@ -268,6 +283,21 @@ export default function Timings() {
                 }}
               />
             )}
+          </div>
+          <div
+            className="mt-12 overflow-y-scroll"
+            style={{ height: screenHeight - 150 }}>
+            {blueToYellow(
+              configuration?.data.available_finding_tags_types_for_timings
+                .length
+            ).map((color, index) => (
+              <div className="flex justify-start items-center gap-2" id="color">
+                <div
+                  className="w-5 h-5 mt-2 "
+                  style={{ backgroundColor: color }}></div>
+                <Text>{Object.keys(traceColor)[index]}</Text>
+              </div>
+            ))}
           </div>
         </div>
       }

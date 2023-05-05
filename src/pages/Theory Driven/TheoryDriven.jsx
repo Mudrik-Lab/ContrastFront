@@ -70,7 +70,7 @@ export default function TheoryDriven() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12">
+      <div className="flex mt-12 p-2">
         <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue" center>
             Parameters Distribution Pie

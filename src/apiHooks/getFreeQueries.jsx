@@ -49,18 +49,18 @@ export default async function getFreeQueries({
 
   return await queryApi({
     url: `studies/experiments_graphs/parameters_distribution_free_queries/?${
-      techniquesArr?.join("") +
-      consciousnessMeasurePhasesArr?.join("") +
-      consciousnessMeasureTypesArr?.join("") +
-      tagsFamiliesArr?.join("") +
-      tagsTypesArr?.join("") +
-      measuresArr?.join("") +
-      paradigmFamiliesArr?.join("") +
-      paradigmsArr?.join("") +
-      populationArr?.join("") +
-      stimuliCategoriesArr?.join("") +
-      stimuliModalitiesArr?.join("") +
-      tasksArr?.join("")
+      (techniquesArr?.join("") || "") +
+      (consciousnessMeasurePhasesArr?.join("") || "") +
+      (consciousnessMeasureTypesArr?.join("") || "") +
+      (tagsFamiliesArr?.join("") || "") +
+      (tagsTypesArr?.join("") || "") +
+      (measuresArr?.join("") || "") +
+      (paradigmFamiliesArr?.join("") || "") +
+      (paradigmsArr?.join("") || "") +
+      (populationArr?.join("") || "") +
+      (stimuliCategoriesArr?.join("") || "") +
+      (stimuliModalitiesArr?.join("") || "") +
+      (tasksArr?.join("") || "")
     }`,
     params: {
       breakdown,

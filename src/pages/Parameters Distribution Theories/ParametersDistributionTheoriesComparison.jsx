@@ -76,7 +76,7 @@ export default function ParametersDistributionTheoriesComparison() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12">
+      <div className="flex mt-12 p-2">
         <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text center size={28} weight="bold" color="blue">
             Parameters Distribution Theories Comparison
