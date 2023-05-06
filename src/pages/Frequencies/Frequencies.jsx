@@ -9,7 +9,7 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { ABColors } from "../../components/HardCoded";
+import { AlphaBetaColors } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
@@ -69,12 +69,12 @@ export default function Frequencies() {
         min_number_of_experiments: experimentsNum,
       })
   );
-  const something = data?.data.map((row) => row.series);
+  const tracesData = data?.data.map((row) => row.series);
 
-  const graphsData = something
+  const graphsData = tracesData
     ?.reduce((acc, val) => acc.concat(val), [])
     .sort((a, b) => a.name - b.name);
-
+  console.log(graphsData);
   const traces = [];
   graphsData?.map((row, index) =>
     traces.push({
@@ -82,9 +82,9 @@ export default function Frequencies() {
       y: [index + 1, index + 1],
       name: row.name,
       orientation: "h",
-      scatter: { color: ABColors[row.name] },
+      scatter: { color: AlphaBetaColors[row.name] },
       line: {
-        color: ABColors[row.name],
+        color: AlphaBetaColors[row.name],
         width: 6,
       },
       type: "lines",
@@ -102,13 +102,13 @@ export default function Frequencies() {
     <div>
       <Navbar />
       {configSuccess && (
-        <div className="flex mt-12">
-          <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+        <div className="flex mt-12 p-2">
+          <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue">
               Frequencies
             </Text>
 
-            <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
               </Text>
@@ -220,9 +220,7 @@ export default function Frequencies() {
                   title: "Frequencies",
                   width: screenWidth - 388,
                   height: screenHeight,
-                  margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 90 },
-                  showlegend: true,
+                  showlegend: false,
                   yaxis: {
                     zeroline: false, // hide the zeroline
                     zerolinecolor: "#969696", // customize the color of the zeroline
@@ -236,6 +234,18 @@ export default function Frequencies() {
                 }}
               />
             )}
+          </div>
+          <div
+            className="mt-12 overflow-y-scroll"
+            style={{ height: screenHeight - 150 }}>
+            {Object.values(AlphaBetaColors).map((color, index) => (
+              <div className="flex justify-start items-end gap-2" id="color">
+                <div
+                  className="w-5 h-5 mt-2 "
+                  style={{ backgroundColor: color }}></div>
+                <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
+              </div>
+            ))}
           </div>
         </div>
       )}

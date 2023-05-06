@@ -79,14 +79,14 @@ export const available_techniques_for_timings = [
   { value: "Computational Modelling", label: "Computational Modelling" },
 ];
 
-export const ABColors = {
+export const AlphaBetaColors = {
   Alpha: "#C2549D",
   Beta: "#EB5A88",
   Gamma: "#EF7576",
   Delta: "#4D3991",
   Theta: "#8949A2",
 };
-export const paradigmsColors = [
+export const colorsArray = [
   "rgba(189, 183, 89, 1)",
   "rgba(196, 137, 87, 1)",
   "rgba(202, 83, 90, 1)",
@@ -201,3 +201,29 @@ export const parametersColors = {
 };
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
+export const avalble_populations = [
+  {
+    value: "heathy Adults",
+    label: "Heathy Adults",
+  },
+  {
+    value: "patients",
+    label: "Patients",
+  },
+  {
+    value: "healthy college students",
+    label: "Healthy College Students",
+  },
+  {
+    value: "non-human",
+    label: "Non-human",
+  },
+  {
+    value: "children",
+    label: "Children",
+  },
+  {
+    value: "computer",
+    label: "Computer",
+  },
+];

@@ -2,11 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { paradigmsColors, tagsOptions } from "../../components/HardCoded";
+import { colorsArray, tagsOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  Spacer,
   Text,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
@@ -16,10 +17,6 @@ import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
-    label: "Global Workspace",
-  });
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -67,7 +64,7 @@ export default function ParametersDistributionPie() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(y.key + index);
-      outsideColors.push(paradigmsColors[index]?.slice(0, -2) + "0.7)");
+      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 
@@ -76,12 +73,12 @@ export default function ParametersDistributionPie() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12">
-        <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+      <div className="flex mt-12 p-2">
+        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue" center>
             Parameters Distribution Pie
           </Text>
-          <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
               <Text md weight="bold">
                 Axis Controls
@@ -130,7 +127,6 @@ export default function ParametersDistributionPie() {
               />
             </div>
             <div className={sectionClass}>
-              {/* TODO: find Headline */}
               <Text md weight={"light"}>
                 Type of Consciousness
               </Text>
@@ -147,6 +143,19 @@ export default function ParametersDistributionPie() {
                 setChecked={setConsciousness}
               />
             </div>
+            <Spacer height={10} />
+            <Text md>Theory Driven</Text>
+            <RadioInput
+              name="Thery-Driven"
+              values={[
+                { value: "driven", name: "Driven" },
+                { value: "mentioning", name: "Mentioning" },
+                { value: "either", name: "Either" },
+                { value: "post-hoc", name: "Post Hoc" },
+              ]}
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
           </div>
         </div>
 
@@ -167,7 +176,7 @@ export default function ParametersDistributionPie() {
                   hole: 0.1,
                   domain: { x: [0, 1], y: [0.125, 0.875] },
                   marker: {
-                    colors: paradigmsColors,
+                    colors: colorsArray,
                     line: { width: 1, color: "white" },
                   },
                 },

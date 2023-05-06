@@ -11,7 +11,11 @@ import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
-import { screenHeight, screenWidth } from "../../components/HardCoded";
+import {
+  colorsArray,
+  screenHeight,
+  screenWidth,
+} from "../../components/HardCoded";
 import getNations from "../../apiHooks/getNations";
 
 export default function WorldMap() {
@@ -58,32 +62,19 @@ export default function WorldMap() {
         type_of_consciousness: consciousness,
       })
   );
-  const countries = [
-    "FIN",
-    "FRA",
-    "GUF",
-    "PYF",
-    "ATF",
-    "GAB",
-    "DEU",
-    "GHA",
-    "GIB",
-    "GRC",
-    "GRD",
-    "GLP",
-    "GUM",
-    "GNB",
-    "GUY",
-    "HTI",
-    "HMD",
-    "ISL",
-    "IND",
-    "IDN",
-    "IRQ",
-    "IRL",
-    "ISR",
-    "ITA",
-  ];
+
+  const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
+    acc[country] = (acc[country] || 0) + value;
+    return acc;
+  }, {});
+  console.log(sumPerCountry);
+  const sortedResult = sumPerCountry
+    ? Object.keys(sumPerCountry)
+        .sort()
+        .map((country) => {
+          return { country, totalValue: sumPerCountry[country] };
+        })
+    : [];
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -91,9 +82,9 @@ export default function WorldMap() {
   var graphData = [
     {
       type: "choropleth",
-      locations: countries,
-      text: countries,
-      z: data?.data.map((row) => row.count),
+      locations: data?.data.map((row) => row.country),
+      text: data?.data.map((row) => row.country_name),
+      z: data?.data.map((row) => row.total),
       colorscale: [
         [0, "rgb(5, 10, 172)"],
         [0.35, "rgb(40, 60, 190)"],
@@ -104,7 +95,7 @@ export default function WorldMap() {
       ],
       reversescale: true,
       marker: {
-        size: data?.data.map((row) => row.count),
+        size: data?.data.map((row) => row.total),
       },
       tick0: 0,
       zmin: 0,
@@ -113,7 +104,7 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0.05,
+        y: 0.1,
         tickprefix: "#",
         title: "Experiments<br>number",
       },
@@ -121,24 +112,21 @@ export default function WorldMap() {
     {
       type: "scattergeo",
       mode: "markers+text",
-      locations: countries,
-      text: data?.data.map((row) => row.count),
-      // textfont: {
-      //   color: "black",
-      //   size: 12,
-      // },
+      locations: sortedResult.map((row) => row.country),
+      text: sortedResult.map((row) => row.totalValue),
+      textfont: {
+        color: "black",
+        size: 10,
+      },
       marker: {
-        size: data?.data.map((row) => row.count),
+        size: sortedResult.map((row) => row.totalValue * 1.5 + 10),
         sizemode: "area",
         sizeref: 0.05,
         color: "white",
-        line: {
-          color: "black",
-        },
         cmin: 0,
         cmax: 50,
         line: {
-          color: "black",
+          color: "white",
         },
       },
       name: "europe data",
@@ -161,8 +149,13 @@ export default function WorldMap() {
         scale: 1.5,
       },
     },
-
-    width: screenWidth,
+    hovermode: "closest",
+    hoverlabel: {
+      bgcolor: "#333333",
+      font: { color: "#ffffff" },
+    },
+    hovertemplate: `<b>kljlkjkjss</b><extra></extra>`,
+    width: screenWidth - 388,
     height: screenHeight,
     showlegend: false,
     autosize: false,
@@ -172,12 +165,12 @@ export default function WorldMap() {
     <div>
       {" "}
       <Navbar />
-      <div className="flex mt-12">
-        <div className="side-filter-box border p-7 pt-10 flex flex-col items-center ">
+      <div className="flex mt-12 p-2">
+        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue">
             World Map
           </Text>
-          <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <Text md weight="bold">
               Axis Controls
             </Text>

@@ -58,11 +58,11 @@ export default function AcrossTheYears() {
     <div>
       <Navbar />
       <div className="mt-12 flex ">
-        <div className=" p-7 pt-10 flex flex-col items-center">
+        <div className=" side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text color="blue" weight="bold" size={30}>
             Across the Years
           </Text>
-          <div className="w-[346px] shadow-lg mt-10 mx-auto bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2  ">
             <Text weight="bold" md>
               Axis Controls
             </Text>
