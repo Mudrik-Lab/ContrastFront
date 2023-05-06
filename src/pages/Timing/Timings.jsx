@@ -101,18 +101,19 @@ export default function Timings() {
 
   const traces = [];
   graphsData?.map((row, index) => {
-    traces.push({
-      x: [row.start, row.end],
-      y: [index + 1, index + 1],
-      name: row.name,
-      // marker: { colorbar: { tickangle: "auto" } },
+    index > 8 &&
+      traces.push({
+        x: [row.start, row.end],
+        y: [index + 1, index + 1],
+        name: row.name,
+        // marker: { colorbar: { tickangle: "auto" } },
 
-      line: {
-        width: 6,
-        color: traceColor[row.name],
-      },
-      type: "scatter",
-    });
+        line: {
+          width: 6,
+          color: traceColor[row.name],
+        },
+        type: "scatter",
+      });
   });
   console.log(graphsData);
   const screenWidth = window.screen.width;

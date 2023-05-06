@@ -238,12 +238,12 @@ export default function Frequencies() {
           <div
             className="mt-12 overflow-y-scroll"
             style={{ height: screenHeight - 150 }}>
-            {Object.keys(AlphaBetaColors).map((color, index) => (
-              <div className="flex justify-start items-center gap-2" id="color">
+            {Object.values(AlphaBetaColors).map((color, index) => (
+              <div className="flex justify-start items-end gap-2" id="color">
                 <div
                   className="w-5 h-5 mt-2 "
                   style={{ backgroundColor: color }}></div>
-                {/* <Text>{Object.keys(traceColor)[index]}</Text> */}
+                <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
               </div>
             ))}
           </div>
