@@ -217,7 +217,7 @@ export default function Frequencies() {
                 layout={{
                   autosize: false,
                   barmode: "stack",
-                  title: "Frequencies",
+
                   width: screenWidth - 388,
                   height: screenHeight,
                   showlegend: false,

@@ -2,10 +2,6 @@
 import React from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
-import { Tooltip } from "flowbite";
-import { useState } from "react";
-
-export const navHeight = 60;
 
 export const TextInput = ({ ...config }) => {
   return (

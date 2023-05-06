@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <div>
-      <nav className="bg-white px-16 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
+      <nav className="bg-white px-16 h-[70px] flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
         {/* <div className="bg-orange bg-pink bg-navyBlue bg-lightTeal bg-lightGreen bg-teal bg-darkTeal bg-yellow bg-purple bg-lilac"></div> */}
         <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between">
