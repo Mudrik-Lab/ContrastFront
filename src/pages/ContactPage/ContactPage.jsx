@@ -2,15 +2,16 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import { ReactComponent as Graph } from "../../assets/icons/submit.svg";
 
-import { Text, Spacer, navHeight, Button } from "../../components/Reusble";
+import { Text, Spacer, Button } from "../../components/Reusble";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
+import { navHeight } from "../../components/HardCoded";
 
 export default function ContactPage() {
   return (
     <div>
       <Navbar />
-      <Spacer height={navHeight + 64} />
+      <Spacer height={navHeight + 54} />
       <div className="mx-auto max-w-xl mb-16">
         <Text size={57} color="blue" center>
           Contact ConTraSt

@@ -1,11 +1,12 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import { Button, navHeight, Spacer, Text } from "../../components/Reusble";
+import { Button, Spacer, Text } from "../../components/Reusble";
 import { ReactComponent as Github } from "../../assets/icons/github-small.svg";
 import BrainImg from "../../assets/images/dreamstime.png";
 import TeamMembersCards from "./TeamMembersCards";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
+import { navHeight } from "../../components/HardCoded";
 
 export default function AboutPage() {
   return (

@@ -5,12 +5,12 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  Spacer,
   Text,
 } from "../../components/Reusble";
-import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { tagsOptions } from "../../components/HardCoded";
+import { navHeight, screenHeight } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
@@ -70,21 +70,22 @@ export default function Journals() {
       color: Math.floor(Math.random() * 16777215).toString(16),
     },
   };
-  const graphWidth = 150 + trace1.x.length * 25;
-  const screenHeight = window.screen.height;
+  const graphWidth = 150 + trace1.x.length * 45;
+
+  console.log(screenHeight);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
-    <div>
+    <div style={{ height: screenHeight - 64 }}>
       {" "}
       <Navbar />
-      <div className="flex mt-12 p-2">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
+      <div className="flex mt-16 px-2 h-full">
+        <div className="side-filter-box h-full p-2 pt-10 flex flex-col items-center bg-white ">
           <Text size={28} weight="bold" color="blue">
             Journals
           </Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+          <div className="w-[346px] shadow-3xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll">
             <Text md weight="bold">
               Axis Controls
             </Text>
@@ -93,6 +94,23 @@ export default function Journals() {
               text="minimum number of experiments"
               tooltip="few more words about minimum number of experiments"
             />
+            <div className={sectionClass}>
+              <Text md weight={"light"}>
+                Reported
+              </Text>
+              <RadioInput
+                name="Report"
+                values={[
+                  { value: "report", name: "Report" },
+                  { value: "no_report", name: "No-Report" },
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={reporting}
+                setChecked={setReporting}
+              />
+            </div>
+
             <div className={sectionClass}>
               <Text md weight={"light"}>
                 Reported
@@ -136,9 +154,7 @@ export default function Journals() {
                 setChecked={setTheoryDriven}
               />
             </div>
-
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
-              {/* TODO: find Headline */}
               <Text md weight={"light"}>
                 Type of Consciousness
               </Text>
@@ -158,7 +174,7 @@ export default function Journals() {
           </div>
         </div>
 
-        <div className="pl-2">
+        <div className="pl-2 overflow-x-scroll h-full">
           {isLoading ? (
             <Spinner />
           ) : (
@@ -169,7 +185,7 @@ export default function Journals() {
                 width: graphWidth,
                 height: screenHeight - 100,
                 margin: { autoexpand: true, b: 150 },
-                showlegend: true,
+                showlegend: false,
               }}
             />
           )}

@@ -201,6 +201,7 @@ export const parametersColors = {
 };
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
+export const navHeight = 70;
 export const avalble_populations = [
   {
     value: "heathy Adults",
@@ -227,3 +228,10 @@ export const avalble_populations = [
     label: "Computer",
   },
 ];
+export const comparedTheories = {
+  "Global Workspace": "Global Workspace",
+  "Integrated Information": "<span> Integrated <br /> Information </span>",
+  "Higher Order Thought": "<span> Higher Order <br /> Thought </span> ",
+  "First Order & Predictive Processing":
+    "<span> First Order & <br /> Predictive <br /> Processing </span>",
+};

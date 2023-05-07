@@ -5,6 +5,7 @@ import Navbar from "../../components/Navbar";
 import {
   breakdownsShorts,
   colorsArray,
+  comparedTheories,
   parametersColors,
   tagsOptions,
 } from "../../components/HardCoded";
@@ -72,14 +73,14 @@ export default function ParametersDistributionTheoriesComparison() {
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-  const screenWidth = window.screen.availWidth;
+  console.log(comparedTheories["First Order & Predictive Processing"]);
   return (
-    <div>
+    <div className="w-full">
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-12 p-2 w-full ">
         <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text center size={28} weight="bold" color="blue">
-            Parameters Distribution Theories Comparison
+            Parameters Distribution <br /> Theories Comparison
           </Text>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
@@ -174,8 +175,8 @@ export default function ParametersDistributionTheoriesComparison() {
           </div>
         </div>
 
-        <div className=" relative">
-          <div className="funny-leggend flex flex-col gap-3 absolute top-36 left-[585px] z-10">
+        <div className="graph relative w-full mx-auto">
+          <div className="funny-leggend flex flex-col gap-3 absolute 2xl:top-1/2 2xl:left-1/2 transform 2xl:-translate-x-1/2 2xl:-translate-y-1/2 z-10">
             {Object.keys(parametersColors).map((name) => (
               <div
                 className="h-16 w-32 flex justify-center items-center "
@@ -186,7 +187,7 @@ export default function ParametersDistributionTheoriesComparison() {
               </div>
             ))}
           </div>
-          <div className="mx-auto  ">
+          <div className="four-wheels ml-20 2xl:max-w-[1200px] 2xl:mx-auto  ">
             {isLoading ? (
               <Spinner />
             ) : (
@@ -209,23 +210,24 @@ export default function ParametersDistributionTheoriesComparison() {
                   ]}
                   layout={{
                     colorway: Object.values(parametersColors),
-                    width: 650,
-                    height: 650,
+                    width: 600,
+                    height: 600,
                     showlegend: false,
                     margin: { r: 100, l: 100 },
                     annotations: [
                       {
                         text:
-                          chart.series_name + " <br />" + " = " + chart.value,
+                          comparedTheories[chart.series_name] +
+                          " <br />" +
+                          " = " +
+                          chart.value,
                         showarrow: false,
                         bgcolor: "#ffffff",
                         opacity: 0.8,
                         style: { whiteSpace: "pre-wrap" },
                         font: {
-                          size: 18,
+                          size: 16,
                         },
-                        x: 0.5,
-                        y: 0.5,
                       },
                     ],
                   }}
