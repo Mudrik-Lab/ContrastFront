@@ -37,3 +37,18 @@ export function blueToYellow(numColors) {
 
   return colors;
 }
+
+export function breakHeadlines(str, chartForLine) {
+  let newStr = "";
+  let charsCount = 0;
+  str.split(" ").map((word) => {
+    if (charsCount < chartForLine) {
+      newStr = newStr + " " + word;
+      charsCount = charsCount + word.length + 1;
+    } else {
+      newStr = newStr + "<br />" + word;
+      charsCount = 0;
+    }
+  });
+  return "<span>" + newStr.slice(1) + "</span>";
+}

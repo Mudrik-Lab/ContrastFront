@@ -21,6 +21,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
+import { breakHeadlines } from "../../Utils/functions";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(tagsOptions[0]);
@@ -73,7 +74,6 @@ export default function ParametersDistributionTheoriesComparison() {
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-  console.log(comparedTheories["First Order & Predictive Processing"]);
   return (
     <div className="w-full">
       <Navbar />
@@ -217,13 +217,12 @@ export default function ParametersDistributionTheoriesComparison() {
                     annotations: [
                       {
                         text:
-                          comparedTheories[chart.series_name] +
+                          breakHeadlines(chart.series_name, 11) +
                           " <br />" +
                           " = " +
                           chart.value,
                         showarrow: false,
-                        bgcolor: "#ffffff",
-                        opacity: 0.8,
+
                         style: { whiteSpace: "pre-wrap" },
                         font: {
                           size: 16,
