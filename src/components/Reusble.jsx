@@ -2,6 +2,7 @@
 import React from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
+import { Tooltip } from "flowbite-react";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -55,9 +56,9 @@ export const Text = ({
     <p
       onClick={onClick}
       className={classNames(
-        `text-${color ? color : "black"} font-${weight ? weight : "medium"} ${
-          className ? className : ""
-        }  `
+        `flex justify-center items-center gap-2 text-${
+          color ? color : "black"
+        } font-${weight ? weight : "medium"} ${className ? className : ""}  `
       )}
       style={{
         fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,
@@ -112,23 +113,13 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
 };
 
 export const FilterExplanation = ({ text, tooltip }) => {
-  // const [isTooltip, setIsTooltip] = React.useState(false);
   return (
-    <div className="flex justify-center items-center gap-2">
-      <Text size={14} color="grayHeavy">
-        {text}
-      </Text>
-      <button data-tooltip-target="tooltip-default" type="button" className="">
-        <QuestionMark />
-      </button>
-      <div
-        id="tooltip-default"
-        role="tooltip"
-        className="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        {tooltip}
-        <div className="tooltip-arrow" data-popper-arrow></div>
-      </div>
-      <div className="cursor-pointer "></div>
+    <div className="flex gap-2">
+      <Tooltip content="Tooltip content" trigger="click">
+        <button className="flex justify-center items-center gap-2">
+          {text} <QuestionMark />{" "}
+        </button>
+      </Tooltip>
     </div>
   );
 };

@@ -13,7 +13,7 @@ import TagsSelect from "../../components/TagsSelect";
 import {
   avalble_populations,
   colorsArray,
-  tagsOptions,
+  parametersOptions,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
@@ -21,7 +21,7 @@ import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
 
 export default function FreeQueriesBar() {
-  const [selected, setSelected] = React.useState(tagsOptions[0]);
+  const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [isReporting, setIsReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -51,66 +51,71 @@ export default function FreeQueriesBar() {
   );
   const techniquesArr = extraConfigSuccess
     ? extraConfig?.data.available_techniques.map((technique) => ({
-        value: technique,
-        label: technique,
+        value: technique.id,
+        label: technique.name,
       }))
     : [];
   const consciousnessMeasurePhaseArr = extraConfigSuccess
     ? extraConfig?.data.available_consciousness_measure_phase_type.map(
         (type) => ({
-          value: type,
-          label: type,
+          value: type.id,
+          label: type.name,
         })
       )
     : [];
   const consciousnessMeasureTypesArr = extraConfigSuccess
     ? extraConfig?.data.available_consciousness_measure_type.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
   const tagsFamiliesArr = extraConfigSuccess
     ? extraConfig?.data.available_finding_tags_families.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
   const tagsTypesArr = extraConfigSuccess
     ? extraConfig?.data.available_finding_tags_types.map((type) => ({
-        value: type.name,
+        value: type.id,
         label: type.name,
       }))
     : [];
   const measuresArr = extraConfigSuccess
     ? extraConfig?.data.available_measure_types.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
-  const paradigmFamiliesArr = tagsOptions;
+  const paradigmFamiliesArr = extraConfigSuccess
+    ? extraConfig?.data.available_paradigms_families.map((type) => ({
+        value: type.id,
+        label: type.name,
+      }))
+    : [];
   const paradigmsArr = extraConfigSuccess
     ? extraConfig?.data.available_paradigms.map((type) => ({
-        value: type.name,
+        value: type.id,
         label: type.name,
       }))
     : [];
   const populationsArr = avalble_populations;
   const stimuliCategoriesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_category_type.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
   const stimuliModalitiesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_modality_type.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
   const tasksArr = extraConfigSuccess
     ? extraConfig?.data.available_tasks_types.map((type) => ({
-        value: type,
-        label: type,
+        value: type.id,
+        label: type.name,
       }))
     : [];
 
@@ -170,7 +175,7 @@ export default function FreeQueriesBar() {
         tasks,
       })
   );
-
+  console.log(extraConfig?.data);
   const X1 = data?.data.map((row) => row.value).reverse();
 
   const Y = data?.data.map((row) => row.key).reverse();
@@ -247,17 +252,16 @@ export default function FreeQueriesBar() {
               </div>
               <div className={sectionClass}>
                 <Text md weight="bold">
-                  Theory
+                  Parameters
+                  <FilterExplanation
+                    // text="Paradigm "
+                    tooltip="few more words about Paradigm "
+                  />
                 </Text>
                 <TagsSelect
-                  options={tagsOptions}
+                  options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
-                />
-
-                <FilterExplanation
-                  text="Paradigm "
-                  tooltip="few more words about Paradigm "
                 />
               </div>
               <div className={sectionClass}>

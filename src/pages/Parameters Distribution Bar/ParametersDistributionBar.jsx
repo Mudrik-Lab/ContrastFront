@@ -12,7 +12,7 @@ import TagsSelect from "../../components/TagsSelect";
 import {
   colorsArray,
   screenWidth,
-  tagsOptions,
+  parametersOptions,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
@@ -20,7 +20,7 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionBar() {
-  const [selected, setSelected] = React.useState(tagsOptions[0]);
+  const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
     label: "Global Workspace",
@@ -151,7 +151,7 @@ export default function ParametersDistributionBar() {
               </div>
               <div className={sectionClass}>
                 <TagsSelect
-                  options={tagsOptions}
+                  options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />

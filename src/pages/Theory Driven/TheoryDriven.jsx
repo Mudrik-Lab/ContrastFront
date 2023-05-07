@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { colorsArray, tagsOptions } from "../../components/HardCoded";
+import { colorsArray, parametersOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -65,7 +65,6 @@ export default function TheoryDriven() {
     });
   });
 
-  console.log(trying);
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
@@ -173,7 +172,7 @@ export default function TheoryDriven() {
                 {
                   direction: "clockwise",
                   values: values2,
-                  labels: trying,
+                  labels: labels2,
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",

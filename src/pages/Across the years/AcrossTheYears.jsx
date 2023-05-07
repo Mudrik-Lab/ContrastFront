@@ -6,12 +6,12 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import { Label, RadioInput, RangeInput, Text } from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
-import { tagsOptions } from "../../components/HardCoded";
+import { parametersOptions } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 
 export default function AcrossTheYears() {
-  const [selected, setSelected] = useState(tagsOptions[0]);
+  const [selected, setSelected] = useState(parametersOptions[0]);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -79,7 +79,7 @@ export default function AcrossTheYears() {
                 Filter Tags
               </Text>
               <TagsSelect
-                options={tagsOptions}
+                options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
               />

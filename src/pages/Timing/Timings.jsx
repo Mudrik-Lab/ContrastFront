@@ -9,7 +9,7 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, tagsOptions } from "../../components/HardCoded";
+import { AlphaBetaColors, parametersOptions } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";

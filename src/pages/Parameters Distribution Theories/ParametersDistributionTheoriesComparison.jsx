@@ -7,7 +7,7 @@ import {
   colorsArray,
   comparedTheories,
   parametersColors,
-  tagsOptions,
+  parametersOptions,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
@@ -24,7 +24,7 @@ import Spinner from "../../components/Spinner";
 import { breakHeadlines } from "../../Utils/functions";
 
 export default function ParametersDistributionTheoriesComparison() {
-  const [selected, setSelected] = React.useState(tagsOptions[0]);
+  const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
     label: "Global Workspace",
@@ -98,18 +98,16 @@ export default function ParametersDistributionTheoriesComparison() {
             </div>
             <div className={sectionClass}>
               <Text md weight="bold">
-                Theory
+                Parameters
+                <FilterExplanation
+                  // text="Paradigm "
+                  tooltip="few more words about Paradigm "
+                />
               </Text>
-
               <TagsSelect
-                options={tagsOptions}
+                options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
-              />
-
-              <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
               />
             </div>
             <div className={sectionClass}>

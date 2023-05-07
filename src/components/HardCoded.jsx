@@ -10,7 +10,7 @@ import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 
-export const tagsOptions = [
+export const parametersOptions = [
   {
     value: "paradigm_family",
     label: "Paradigm Family",
