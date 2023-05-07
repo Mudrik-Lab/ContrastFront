@@ -60,11 +60,12 @@ export default function TheoryDriven() {
     labels1.push(x.series_name);
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(y.key + index);
+      labels2.push(`<span id=${index} >` + y.key + "</span>");
       outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 
+  console.log(trying);
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
@@ -73,7 +74,7 @@ export default function TheoryDriven() {
       <div className="flex mt-12 p-2">
         <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
           <Text size={28} weight="bold" color="blue" center>
-            Parameters Distribution Pie
+            Theory Driven Distribution Pie
           </Text>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
@@ -172,7 +173,7 @@ export default function TheoryDriven() {
                 {
                   direction: "clockwise",
                   values: values2,
-                  labels: labels2,
+                  labels: trying,
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",

@@ -63,7 +63,7 @@ export default function ParametersDistributionPie() {
     labels1.push(x.series_name);
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(y.key + index);
+      labels2.push(`<span id=${index} >` + y.key + "</span>");
       outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
