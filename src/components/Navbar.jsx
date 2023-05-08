@@ -86,7 +86,7 @@ export default function Navbar() {
                 </a>
               </li>
               <li>
-                <a href="#" aria-current="page">
+                <a href="/upload-new-paper" aria-current="page">
                   Upload New Paper
                 </a>
               </li>

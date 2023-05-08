@@ -167,8 +167,9 @@ export default function WorldMap() {
       <Navbar />
       <div className="flex mt-12 p-2">
         <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue">
-            World Map
+          <Text center size={28} weight="bold" color="blue">
+            World Map- <br />
+            Nation of Consciousness
           </Text>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <Text md weight="bold">
@@ -196,8 +197,9 @@ export default function WorldMap() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md weight="bold">
-                Filter Tags
+              <Text flexed md weight="bold">
+                Theories
+                <FilterExplanation tooltip="few more words about Theories" />
               </Text>
 
               {configSuccess && theories && (
@@ -210,10 +212,6 @@ export default function WorldMap() {
                   onChange={setTheory}
                 />
               )}
-              <FilterExplanation
-                text="Paradigms Family"
-                tooltip="few more words about Paradigms Family"
-              />
             </div>
             <div className={sectionClass}>
               <Text md weight="bold">

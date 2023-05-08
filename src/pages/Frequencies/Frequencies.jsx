@@ -108,7 +108,7 @@ export default function Frequencies() {
               Frequencies
             </Text>
 
-            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+            <div className="w-[346px] shadow-xl mt-10 mx-auto overflow-y-hidden rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
               </Text>
@@ -120,28 +120,39 @@ export default function Frequencies() {
                 text="minimum number of experiments"
                 tooltip="few more words about minimum number of experiments"
               />
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Theory
+                  <FilterExplanation tooltip="few more words about Thory" />
+                </Text>
 
-              <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
-                <div className={sectionClass}>
-                  <Text md weight="bold">
-                    Techniques
-                  </Text>
-                  {configSuccess && (
-                    <Select
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={selectedTechniques}
-                      options={techniques}
-                      placeholder="Techniques"
-                      onChange={setSelectedTechniques}
-                    />
-                  )}
-                  <FilterExplanation
-                    text="Paradigms Family"
-                    tooltip="few more words about Paradigms Family"
+                <TagsSelect
+                  options={parentTheories}
+                  placeholder="Paradigms Family"
+                  defaultValue={selectedParent.value}
+                  onChange={setSelectedParent}
+                />
+              </div>
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Techniques
+                  <FilterExplanation tooltip="few more words about techniques" />
+                </Text>
+                {configSuccess && (
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={true}
+                    value={selectedTechniques}
+                    options={techniques}
+                    placeholder="Techniques"
+                    onChange={setSelectedTechniques}
                   />
-                </div>
+                )}
+              </div>
+              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+                <Text md weight="bold">
+                  Theory Driven
+                </Text>
                 <RadioInput
                   name="Thery-Driven"
                   values={[
@@ -154,25 +165,9 @@ export default function Frequencies() {
                   setChecked={setTheoryDriven}
                 />
               </div>
-
-              <div className={sectionClass}>
+              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+                {/* TODO: find Headline */}
                 <Text md weight="bold">
-                  Theory
-                </Text>
-
-                <TagsSelect
-                  options={parentTheories}
-                  value={selectedParent}
-                  onChange={setSelectedParent}
-                />
-                <FilterExplanation
-                  text="Paradigms Family"
-                  tooltip="few more words about Paradigms Family"
-                />
-              </div>
-
-              <div className={sectionClass}>
-                <Text md weight={"light"}>
                   Reported
                 </Text>
                 <RadioInput
@@ -187,9 +182,8 @@ export default function Frequencies() {
                   setChecked={setReporting}
                 />
               </div>
-              <div className={sectionClass}>
-                {/* TODO: find Headline */}
-                <Text md weight={"light"}>
+              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+                <Text md weight="bold">
                   Type of Consciousness
                 </Text>
                 <RadioInput
@@ -235,9 +229,7 @@ export default function Frequencies() {
               />
             )}
           </div>
-          <div
-            className="mt-12 overflow-y-scroll"
-            style={{ height: screenHeight - 150 }}>
+          <div className="mt-24 " style={{ height: screenHeight - 150 }}>
             {Object.values(AlphaBetaColors).map((color, index) => (
               <div className="flex justify-start items-end gap-2" id="color">
                 <div

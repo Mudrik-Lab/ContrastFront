@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Plot from "react-plotly.js";
 import getExperimentsGraphs from "../apiHooks/getExperimentsGraphs";
-import { tagsOptions } from "./HardCoded";
+import { parametersOptions } from "./HardCoded";
 import Spinner from "./Spinner";
 
 export default function NestedPie() {
@@ -12,7 +12,7 @@ export default function NestedPie() {
     () =>
       getExperimentsGraphs({
         graphName: "parameters_distribution_theories_comparison",
-        breakdown: tagsOptions[0].value,
+        breakdown: parametersOptions[0].value,
         interpretation: "challenges",
       })
   );

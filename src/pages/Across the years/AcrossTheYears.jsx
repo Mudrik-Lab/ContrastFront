@@ -3,15 +3,21 @@ import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 
-import { Label, RadioInput, RangeInput, Text } from "../../components/Reusble";
+import {
+  FilterExplanation,
+  Label,
+  RadioInput,
+  RangeInput,
+  Text,
+} from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
-import { tagsOptions } from "../../components/HardCoded";
+import { parametersOptions } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 
 export default function AcrossTheYears() {
-  const [selected, setSelected] = useState(tagsOptions[0]);
+  const [selected, setSelected] = useState(parametersOptions[0]);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -36,8 +42,6 @@ export default function AcrossTheYears() {
         type_of_consciousness: consciousness,
       })
   );
-
-  // TODO: ask what should b the default breakdown
 
   const graphsData = [];
   data?.data.map((row) => {
@@ -75,18 +79,20 @@ export default function AcrossTheYears() {
             </div>
 
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              <Text md weight={"light"}>
-                Filter Tags
+              <Text md flexed weight={"bold"}>
+                Parameters
+                <FilterExplanation tooltip="few more words about Theory" />
               </Text>
               <TagsSelect
-                options={tagsOptions}
+                options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
               />
             </div>
+
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
               {/* TODO: find Headline */}
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Reported
               </Text>
               <RadioInput
@@ -102,8 +108,7 @@ export default function AcrossTheYears() {
               />
             </div>
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              {/* TODO: find Headline */}
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Type of Consciousness
               </Text>
               <RadioInput

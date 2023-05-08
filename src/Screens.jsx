@@ -19,6 +19,7 @@ import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";
 import NestedPie from "./components/NestedPie";
 import WorldMap from "./pages/Consciousness World Map/WorldMap";
+import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -37,6 +38,7 @@ const Screens = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
+        <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route
           path="/parameter-distribution-free-queries"
           element={<FreeQueriesPage />}

@@ -1,7 +1,9 @@
+import { colorsArray } from "../components/HardCoded";
+
 export function getRandomColor(numberOfColors) {
   var colors = [];
   for (var i = 0; i < numberOfColors; i++) {
-    colors.push(Math.floor(Math.random() * 16777215).toString(16));
+    colors.push("#" + Math.floor(Math.random() * 16777215).toString(16));
   }
   return colors;
 }
@@ -36,4 +38,19 @@ export function blueToYellow(numColors) {
   }
 
   return colors;
+}
+
+export function breakHeadlines(str, chartForLine) {
+  let newStr = "";
+  let charsCount = 0;
+  str.split(" ").map((word) => {
+    if (charsCount < chartForLine) {
+      newStr = newStr + " " + word;
+      charsCount = charsCount + word.length + 1;
+    } else {
+      newStr = newStr + "<br />" + word;
+      charsCount = 0;
+    }
+  });
+  return "<span>" + newStr.slice(1) + "</span>";
 }

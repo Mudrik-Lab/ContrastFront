@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { colorsArray, tagsOptions } from "../../components/HardCoded";
+import { colorsArray, parametersOptions } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -16,7 +16,7 @@ import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 
 export default function ParametersDistributionPie() {
-  const [selected, setSelected] = React.useState(tagsOptions[0]);
+  const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -63,7 +63,7 @@ export default function ParametersDistributionPie() {
     labels1.push(x.series_name);
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(y.key + index);
+      labels2.push(`<span id=${index} >` + y.key + "</span>");
       outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
@@ -94,19 +94,14 @@ export default function ParametersDistributionPie() {
             </div>
 
             <div className={sectionClass}>
-              <Text md weight="bold">
-                Theory
+              <Text flexed md weight="bold">
+                Parameters
+                <FilterExplanation tooltip="few more words about Paradigm " />
               </Text>
-
               <TagsSelect
-                options={tagsOptions}
+                options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
-              />
-
-              <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
               />
             </div>
 

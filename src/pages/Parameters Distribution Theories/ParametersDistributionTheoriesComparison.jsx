@@ -3,11 +3,10 @@ import React, { useState } from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
-  breakdownsShorts,
   colorsArray,
-  comparedTheories,
+  colorsNames,
   parametersColors,
-  tagsOptions,
+  parametersOptions,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
@@ -21,9 +20,11 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
+import { breakHeadlines, getRandomColor } from "../../Utils/functions";
+import getExtraConfig from "../../apiHooks/getExtraConfig";
 
 export default function ParametersDistributionTheoriesComparison() {
-  const [selected, setSelected] = React.useState(tagsOptions[0]);
+  const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [selectedParent, setSelectedParent] = React.useState({
     value: "Global Workspace",
     label: "Global Workspace",
@@ -34,10 +35,6 @@ export default function ParametersDistributionTheoriesComparison() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [interpretation, setInterpretation] = useState(true);
 
-  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
-    [`parameters_distribution_theories_comparison`],
-    getConfiguration
-  );
   const { data, isSuccess, isLoading } = useQuery(
     [
       `parameters_distribution_theories_comparison${
@@ -67,13 +64,20 @@ export default function ParametersDistributionTheoriesComparison() {
       })
   );
   const chartsData = data?.data;
-  chartsData?.map((chart) => {
-    chart.series.forEach((row) => (row.color = parametersColors[row.key]));
+  const keysArr = [];
+  chartsData?.map((theory) =>
+    theory.series.map((row) => keysArr.push(row.key))
+  );
+  const trimedKeysArr = [...new Set(keysArr)];
+  const someColors = colorsNames.slice(0, trimedKeysArr.length);
+
+  const keysColors = {};
+  [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
+    keysColors[key] = someColors[index];
   });
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-  console.log(comparedTheories["First Order & Predictive Processing"]);
   return (
     <div className="w-full">
       <Navbar />
@@ -97,23 +101,18 @@ export default function ParametersDistributionTheoriesComparison() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md weight="bold">
-                Theory
+              <Text md flexed weight="bold">
+                Parameters
+                <FilterExplanation tooltip="few more words about Paradigm " />
               </Text>
-
               <TagsSelect
-                options={tagsOptions}
+                options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
               />
-
-              <FilterExplanation
-                text="Paradigm "
-                tooltip="few more words about Paradigm "
-              />
             </div>
             <div className={sectionClass}>
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Reported
               </Text>
               <RadioInput
@@ -129,7 +128,7 @@ export default function ParametersDistributionTheoriesComparison() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Type of Consciousness
               </Text>
               <RadioInput
@@ -137,7 +136,6 @@ export default function ParametersDistributionTheoriesComparison() {
                 values={[
                   { value: "state", name: "State" },
                   { value: "content", name: "Content" },
-
                   { value: "either", name: "Either" },
                   { value: "both", name: "Both" },
                 ]}
@@ -146,7 +144,9 @@ export default function ParametersDistributionTheoriesComparison() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md>Theory Driven</Text>
+              <Text weight={"bold"} md>
+                Theory Driven
+              </Text>
               <RadioInput
                 name="Thery-Driven"
                 values={[
@@ -160,7 +160,7 @@ export default function ParametersDistributionTheoriesComparison() {
               />
             </div>
             <Spacer height={10} />
-            <Text md weight={"light"}>
+            <Text md weight={"bold"}>
               Interpretation
             </Text>
             <div className="flex justify-center items-center gap-3 mt-3">
@@ -176,13 +176,13 @@ export default function ParametersDistributionTheoriesComparison() {
         </div>
 
         <div className="graph relative w-full mx-auto">
-          <div className="funny-leggend flex flex-col gap-3 absolute 2xl:top-1/2 2xl:left-1/2 transform 2xl:-translate-x-1/2 2xl:-translate-y-1/2 z-10">
-            {Object.keys(parametersColors).map((name) => (
+          <div className=" funny-leggend mt-28 flex flex-col gap-3 absolute 2xl:mt-8 2xl:top-20 2xl:left-1/2 transform 2xl:-translate-x-1/2  z-10">
+            {Object.keys(keysColors)?.map((key) => (
               <div
-                className="h-16 w-32 flex justify-center items-center "
-                style={{ backgroundColor: parametersColors[name] }}>
-                <Text sm color="white" center>
-                  {name}
+                className=" p-1 w-28 flex justify-center items-center border"
+                style={{ backgroundColor: keysColors[key] }}>
+                <Text sm color="black" center>
+                  {key}
                 </Text>
               </div>
             ))}
@@ -191,6 +191,7 @@ export default function ParametersDistributionTheoriesComparison() {
             {isLoading ? (
               <Spinner />
             ) : (
+              keysColors &&
               chartsData.map((chart) => (
                 <Plot
                   data={[
@@ -203,13 +204,12 @@ export default function ParametersDistributionTheoriesComparison() {
                       textposition: "inside",
                       hole: 0.4,
                       marker: {
-                        colors: chart.series.map((row) => row.color),
+                        colors: chart.series.map((row) => keysColors[row.key]),
                         line: { width: 1, color: "white" },
                       },
                     },
                   ]}
                   layout={{
-                    colorway: Object.values(parametersColors),
                     width: 600,
                     height: 600,
                     showlegend: false,
@@ -217,13 +217,12 @@ export default function ParametersDistributionTheoriesComparison() {
                     annotations: [
                       {
                         text:
-                          comparedTheories[chart.series_name] +
+                          breakHeadlines(chart.series_name, 11) +
                           " <br />" +
                           " = " +
                           chart.value,
                         showarrow: false,
-                        bgcolor: "#ffffff",
-                        opacity: 0.8,
+
                         style: { whiteSpace: "pre-wrap" },
                         font: {
                           size: 16,

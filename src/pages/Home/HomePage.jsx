@@ -30,7 +30,7 @@ export default function HomePage() {
             ConTraSt Database
           </h1>
           <Text color="white" weight={300} size={32} className="leading-10">
-            examine trends
+            Examine trends
           </Text>
           <Text color="blue" weight={300} size={36} className="leading-10">
             in over 18,352 papers

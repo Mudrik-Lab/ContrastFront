@@ -15,27 +15,20 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 import Spinner from "../../components/Spinner";
+import Toggle from "../../components/Toggle";
 
 export default function Journals() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
-    label: "Global Workspace",
-  });
+  const [selectedParent, setSelectedParent] = React.useState({});
+
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
 
-  const parentTheories = configuration?.data.available_parent_theories.map(
-    (parentTheory) => ({
-      value: parentTheory,
-      label: parentTheory,
-    })
-  );
   const { data, isSuccess, isLoading } = useQuery(
     [
       `journals${
@@ -60,6 +53,13 @@ export default function Journals() {
         min_number_of_experiments: experimentsNum,
       })
   );
+
+  const parentTheories = configuration?.data.available_parent_theories.map(
+    (parentTheory) => ({
+      value: parentTheory,
+      label: parentTheory,
+    })
+  );
   const graphsData = isSuccess ? data?.data : [];
 
   var trace1 = {
@@ -72,8 +72,6 @@ export default function Journals() {
   };
   const graphWidth = 150 + trace1.x.length * 45;
 
-  console.log(screenHeight);
-
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
@@ -85,63 +83,69 @@ export default function Journals() {
           <Text size={28} weight="bold" color="blue">
             Journals
           </Text>
-          <div className="w-[346px] shadow-3xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll">
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="minimum number of experiments"
-              tooltip="few more words about minimum number of experiments"
-            />
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
               <Text md weight="bold">
-                Filter Tags
+                Axis Controls
               </Text>
-              <TagsSelect
-                options={parentTheories}
-                value={selectedParent}
-                onChange={setSelectedParent}
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
               />
               <FilterExplanation
-                text="Paradigms Family"
-                tooltip="few more words about Paradigms Family"
+                text="minimum number of experiments"
+                tooltip="few more words about minimum number of experiments"
               />
             </div>
             <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theory
+                <FilterExplanation tooltip="few more words about Thory" />
+              </Text>
+
+              <TagsSelect
+                options={parentTheories}
+                placeholder="Paradigms Family"
+                defaultValue={selectedParent.value}
+                onChange={setSelectedParent}
+              />
+            </div>
+            <div className={sectionClass}>
+              <Text md weight={"bold"}>
+                Reported
+              </Text>
+              <RadioInput
+                name="Report"
+                values={[
+                  { value: "report", name: "Report" },
+                  { value: "no_report", name: "No-Report" },
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={reporting}
+                setChecked={setReporting}
+              />
+            </div>
+            <div className={sectionClass}>
+              <Text md weight={"bold"}>
+                Type of Consciousness
+              </Text>
+              <RadioInput
+                name="Consciousness"
+                values={[
+                  { value: "state", name: "State" },
+                  { value: "content", name: "Content" },
+                  { value: "either", name: "Either" },
+                  { value: "both", name: "Both" },
+                ]}
+                checked={consciousness}
+                setChecked={setConsciousness}
+              />
+            </div>
+            <div className={sectionClass}>
+              <Text weight={"bold"} md>
+                Theory Driven
+              </Text>
               <RadioInput
                 name="Thery-Driven"
                 values={[
@@ -152,23 +156,6 @@ export default function Journals() {
                 ]}
                 checked={theoryDriven}
                 setChecked={setTheoryDriven}
-              />
-            </div>
-            <div className="w-full py-5 flex flex-col items-center gap-3 ">
-              <Text md weight={"light"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
               />
             </div>
           </div>
