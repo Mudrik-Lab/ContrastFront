@@ -49,14 +49,17 @@ export const Text = ({
   sm,
   center,
   color,
+  flexed,
   onClick,
   className,
+  id,
 }) => {
   return (
     <p
+      id={id}
       onClick={onClick}
       className={classNames(
-        `flex justify-center items-center gap-2 text-${
+        `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
         } font-${weight ? weight : "medium"} ${className ? className : ""}  `
       )}
@@ -115,7 +118,7 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
 export const FilterExplanation = ({ text, tooltip }) => {
   return (
     <div className="flex gap-2">
-      <Tooltip content="Tooltip content" trigger="click">
+      <Tooltip content={tooltip} trigger="click">
         <button className="flex justify-center items-center gap-2">
           {text} <QuestionMark />{" "}
         </button>
@@ -133,7 +136,7 @@ export const Label = ({ children }) => {
   );
 };
 
-export const RangeInput = ({ number, setNumber, min, max, step }) => {
+export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
   return (
     <div className="relative">

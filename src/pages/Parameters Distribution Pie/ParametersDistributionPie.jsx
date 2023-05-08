@@ -94,12 +94,9 @@ export default function ParametersDistributionPie() {
             </div>
 
             <div className={sectionClass}>
-              <Text md weight="bold">
+              <Text flexed md weight="bold">
                 Parameters
-                <FilterExplanation
-                  // text="Paradigm "
-                  tooltip="few more words about Paradigm "
-                />
+                <FilterExplanation tooltip="few more words about Paradigm " />
               </Text>
               <TagsSelect
                 options={parametersOptions}

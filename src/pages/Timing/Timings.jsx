@@ -115,7 +115,7 @@ export default function Timings() {
         type: "scatter",
       });
   });
-  console.log(graphsData);
+
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
 
@@ -146,45 +146,53 @@ export default function Timings() {
                 text="minimum number of experiments"
                 tooltip="few more words about minimum number of experiments"
               />
-              <div className="w-full border-b border-t py-5 flex flex-col items-center gap-3 ">
-                <div className={sectionClass}>
-                  <Text md weight="bold">
-                    Techniques
-                  </Text>
-                  {configSuccess && (
-                    <Select
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={selectedTechniques}
-                      options={techniques}
-                      placeholder="Techniques"
-                      onChange={setSelectedTechniques}
-                    />
-                  )}
-                  <FilterExplanation
-                    text="Techniques"
-                    tooltip="few more words about Techniques"
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Theory
+                  <FilterExplanation tooltip="few more words about Thory" />
+                </Text>
+
+                <TagsSelect
+                  options={parentTheories}
+                  placeholder="Paradigms Family"
+                  defaultValue={selectedParent.value}
+                  onChange={setSelectedParent}
+                />
+              </div>
+
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Techniques
+                  <FilterExplanation tooltip="few more words about techniques" />
+                </Text>
+                {configSuccess && (
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={true}
+                    value={selectedTechniques}
+                    options={techniques}
+                    placeholder="Techniques"
+                    onChange={setSelectedTechniques}
                   />
-                </div>
-                <div className={sectionClass}>
-                  <Text md weight="bold">
-                    Tags
-                  </Text>
-                  {configSuccess && (
-                    <Select
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={selectedTags}
-                      options={tags}
-                      placeholder="Tags"
-                      onChange={setSelectedTags}
-                    />
-                  )}
-                  <FilterExplanation
-                    text="Techniques"
-                    tooltip="few more words about Techniques"
+                )}
+              </div>
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Finding Tags
+                  <FilterExplanation tooltip="few more words about Finding Tags" />
+                </Text>
+                {configSuccess && (
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={true}
+                    value={selectedTags}
+                    options={tags}
+                    placeholder="Tags"
+                    onChange={setSelectedTags}
                   />
-                </div>
+                )}
+              </div>
+              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
                 <Text md weight="bold">
                   Theory Driven
                 </Text>
@@ -200,24 +208,6 @@ export default function Timings() {
                   setChecked={setTheoryDriven}
                 />
               </div>
-
-              <div className={sectionClass}>
-                <Text md weight="bold">
-                  Theory
-                </Text>
-
-                <TagsSelect
-                  options={parentTheories}
-                  placeholder="Paradigms Family"
-                  defaultValue={selectedParent.value}
-                  onChange={setSelectedParent}
-                />
-                <FilterExplanation
-                  text="Paradigms Family"
-                  tooltip="few more words about Paradigms Family"
-                />
-              </div>
-
               <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
                 {/* TODO: find Headline */}
                 <Text md weight="bold">

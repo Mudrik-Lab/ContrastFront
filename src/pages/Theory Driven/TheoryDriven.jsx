@@ -2,7 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { colorsArray, parametersOptions } from "../../components/HardCoded";
+import {
+  colorsArray,
+  parametersOptions,
+  screenHeight,
+} from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
@@ -90,7 +94,7 @@ export default function TheoryDriven() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Reported
               </Text>
               <RadioInput
@@ -106,7 +110,7 @@ export default function TheoryDriven() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md weight={"light"}>
+              <Text md weight={"bold"}>
                 Type of Consciousness
               </Text>
               <RadioInput
@@ -123,7 +127,9 @@ export default function TheoryDriven() {
               />
             </div>
             <div className={sectionClass}>
-              <Text md>Theory Driven</Text>
+              <Text weight={"bold"} md>
+                Theory Driven
+              </Text>
               <RadioInput
                 name="Thery-Driven"
                 values={[
@@ -137,7 +143,9 @@ export default function TheoryDriven() {
               />
             </div>
             <Spacer height={10} />
-            <Text md>Interpretation</Text>
+            <Text weight={"bold"} md>
+              Interpretation
+            </Text>
             <div className="flex justify-center items-center gap-3 mt-3">
               <Text>Challenges</Text>
               <Toggle
@@ -150,7 +158,7 @@ export default function TheoryDriven() {
           </div>
         </div>
 
-        <div className="pl-12">
+        <div>
           {isLoading ? (
             <Spinner />
           ) : (
@@ -186,7 +194,7 @@ export default function TheoryDriven() {
               ]}
               layout={{
                 width: 1500,
-                height: 1000,
+                height: screenHeight,
                 showlegend: false,
 
                 annotations: [{ showarrow: false, text: "" }],

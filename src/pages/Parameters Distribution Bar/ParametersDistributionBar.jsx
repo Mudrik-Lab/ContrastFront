@@ -118,7 +118,7 @@ export default function ParametersDistributionBar() {
         <div className="flex mt-12 p-2">
           <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
             <Text size={28} weight="bold" color="blue" center>
-              Parameters Distribution Bar
+              Parameters <br /> Distribution Bar
             </Text>
             <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
@@ -136,30 +136,31 @@ export default function ParametersDistributionBar() {
               </div>
 
               <div className={sectionClass}>
-                <Text md weight="bold">
-                  Filter Tags
+                <Text flexed md weight="bold">
+                  Theory
+                  <FilterExplanation tooltip="few more words about Theory" />
                 </Text>
                 <TagsSelect
                   value={selectedParent}
                   options={parentTheories}
                   onChange={setSelectedParent}
                 />
-                <FilterExplanation
-                  text="Paradigms Family"
-                  tooltip="few more words about Paradigms Family"
-                />
               </div>
               <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Parameters
+                  <FilterExplanation tooltip="few more words about Theory" />
+                </Text>
                 <TagsSelect
                   options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />
-
-                <FilterExplanation
-                  text="Paradigm "
-                  tooltip="few more words about Paradigm "
-                />
+              </div>
+              <div className={sectionClass}>
+                <Text md weight={"bold"}>
+                  Reported
+                </Text>
                 <RadioInput
                   values={[
                     { value: "report", name: "Report" },
@@ -193,7 +194,7 @@ export default function ParametersDistributionBar() {
                   layout={{
                     barmode: isStacked ? "stack" : "group",
                     title: "Parameter Distribution Bar",
-                    width: screenWidth - 470,
+                    width: screenWidth - 200,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: 200 },
                     legend: { itemwidth: 90 },

@@ -208,7 +208,7 @@ export default function FreeQueriesBar() {
   const selectStyles = {
     control: (provided) => ({
       ...provided,
-      width: 300, // Set the width here
+      width: 300,
     }),
   };
   const sectionClass =
@@ -314,7 +314,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasurePhases}
                       options={consciousnessMeasurePhaseArr}
-                      placeholder={"consciousness Measure Phase "}
+                      placeholder={"Consciousness Measure Phase "}
                       onChange={setConsciousnessMeasurePhases}
                     />
                     <Select
@@ -323,7 +323,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasureTypes}
                       options={consciousnessMeasureTypesArr}
-                      placeholder="consciousness Measure Types"
+                      placeholder="Consciousness Measure Types"
                       onChange={setConsciousnessMeasureTypes}
                     />
                     <Select
