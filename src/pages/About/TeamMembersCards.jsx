@@ -7,7 +7,7 @@ import { foundingBoardBios } from "../../components/HardCoded";
 
 export default function TeamMembersCards() {
   return (
-    <div className="flex flex-wrap justify-center w-256 px-24 my-6 gap-5  gap-y-7 mx-auto">
+    <div className="flex flex-wrap justify-center w-256 px-24 my-6 gap-5 gap-y-7 mx-auto">
       {foundingBoardBios.map((card) => (
         <div className="team-member-card w-48 flex flex-col items-center">
           <div
