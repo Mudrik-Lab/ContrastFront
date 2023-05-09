@@ -5,11 +5,20 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Text,
+  TheoryDrivenFilter,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, parametersOptions } from "../../components/HardCoded";
+import {
+  AlphaBetaColors,
+  navHeight,
+  parametersOptions,
+  sideWidth,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
@@ -128,124 +137,73 @@ export default function Timings() {
       <Navbar />
       {
         <div className="flex mt-12 p-2">
-          <div
-            className="side-filter-box p-2 pt-10 flex flex-col items-center "
-            style={{ height: screenHeight }}>
-            <Text size={28} weight="bold" color="blue">
-              Timings
+          <SideControl headline="Timings">
+            <Text md weight="bold">
+              Axis Controls
             </Text>
-            <div className="w-[346px] h-screen overflow-y-scroll shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-              <Text md weight="bold">
-                Axis Controls
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <FilterExplanation
+              text="minimum number of experiments"
+              tooltip="few more words about minimum number of experiments"
+            />
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theory
+                <FilterExplanation tooltip="few more words about Thory" />
               </Text>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
+
+              <TagsSelect
+                options={parentTheories}
+                placeholder="Paradigms Family"
+                defaultValue={selectedParent.value}
+                onChange={setSelectedParent}
               />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Theory
-                  <FilterExplanation tooltip="few more words about Thory" />
-                </Text>
-
-                <TagsSelect
-                  options={parentTheories}
-                  placeholder="Paradigms Family"
-                  defaultValue={selectedParent.value}
-                  onChange={setSelectedParent}
-                />
-              </div>
-
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Techniques
-                  <FilterExplanation tooltip="few more words about techniques" />
-                </Text>
-                {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTechniques}
-                    options={techniques}
-                    placeholder="Techniques"
-                    onChange={setSelectedTechniques}
-                  />
-                )}
-              </div>
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Finding Tags
-                  <FilterExplanation tooltip="few more words about Finding Tags" />
-                </Text>
-                {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTags}
-                    options={tags}
-                    placeholder="Tags"
-                    onChange={setSelectedTags}
-                  />
-                )}
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                <Text md weight="bold">
-                  Theory Driven
-                </Text>
-                <RadioInput
-                  name="Thery-Driven"
-                  values={[
-                    { value: "driven", name: "Driven" },
-                    { value: "mentioning", name: "Mentioning" },
-                    { value: "either", name: "Either" },
-                    { value: "post-hoc", name: "Post Hoc" },
-                  ]}
-                  checked={theoryDriven}
-                  setChecked={setTheoryDriven}
-                />
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
-                <Text md weight="bold">
-                  Reported
-                </Text>
-                <RadioInput
-                  name="Report"
-                  values={[
-                    { value: "report", name: "Report" },
-                    { value: "no_report", name: "No-Report" },
-                    { value: "either", name: "Either" },
-                    { value: "both", name: "Both" },
-                  ]}
-                  checked={reporting}
-                  setChecked={setReporting}
-                />
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                <Text md weight="bold">
-                  Type of Consciousness
-                </Text>
-                <RadioInput
-                  name="Consciousness"
-                  values={[
-                    { value: "state", name: "State" },
-                    { value: "content", name: "Content" },
-
-                    { value: "either", name: "Either" },
-                    { value: "both", name: "Both" },
-                  ]}
-                  checked={consciousness}
-                  setChecked={setConsciousness}
-                />
-              </div>
             </div>
-          </div>
 
-          <div className="pl-12">
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Techniques
+                <FilterExplanation tooltip="few more words about techniques" />
+              </Text>
+              {configSuccess && (
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={selectedTechniques}
+                  options={techniques}
+                  placeholder="Techniques"
+                  onChange={setSelectedTechniques}
+                />
+              )}
+            </div>
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Finding Tags
+                <FilterExplanation tooltip="few more words about Finding Tags" />
+              </Text>
+              {configSuccess && (
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={selectedTags}
+                  options={tags}
+                  placeholder="Tags"
+                  onChange={setSelectedTags}
+                />
+              )}
+            </div>
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
+          </SideControl>
+
+          <div style={{ marginLeft: sideWidth }}>
             {isLoading ? (
               <Spinner />
             ) : (
@@ -255,8 +213,8 @@ export default function Timings() {
                   autosize: false,
                   barmode: "stack",
 
-                  width: screenWidth - 538,
-                  height: screenHeight - 150,
+                  width: screenWidth - sideWidth - 200,
+                  height: screenHeight - 200,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 15, font: { size: 18 } },
                   showlegend: false,
@@ -276,7 +234,7 @@ export default function Timings() {
           </div>
           <div
             className="mt-12 overflow-y-scroll"
-            style={{ height: screenHeight - 150 }}>
+            style={{ height: screenHeight - 250 }}>
             {blueToYellow(
               configuration?.data.available_finding_tags_types_for_timings
                 .length

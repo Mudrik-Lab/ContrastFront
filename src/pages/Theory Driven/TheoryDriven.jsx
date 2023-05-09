@@ -4,15 +4,20 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   colorsArray,
-  parametersOptions,
+  navHeight,
   screenHeight,
+  screenWidth,
+  sideWidth,
 } from "../../components/HardCoded";
 import {
-  FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -74,90 +79,35 @@ export default function TheoryDriven() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12 p-2">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue" center>
-            Theory Driven Distribution Pie
+
+      <div className="flex mt-12 p-2 ">
+        <SideControl headline="Theory Driven Distribution Pie">
+          <Text md weight="bold">
+            Axis Controls
           </Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-            <div className={sectionClass}>
-              <Text md weight="bold">
-                Axis Controls
-              </Text>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text weight={"bold"} md>
-                Theory Driven
-              </Text>
-              <RadioInput
-                name="Thery-Driven"
-                values={[
-                  { value: "driven", name: "Driven" },
-                  { value: "mentioning", name: "Mentioning" },
-                  { value: "either", name: "Either" },
-                  { value: "post-hoc", name: "Post Hoc" },
-                ]}
-                checked={theoryDriven}
-                setChecked={setTheoryDriven}
-              />
-            </div>
-            <Spacer height={10} />
-            <Text weight={"bold"} md>
-              Interpretation
-            </Text>
-            <div className="flex justify-center items-center gap-3 mt-3">
-              <Text>Challenges</Text>
-              <Toggle
-                checked={interpretation}
-                setChecked={() => setInterpretation(!interpretation)}
-              />
-              <Text>Pro</Text>
-            </div>{" "}
-            <Spacer height={10} />
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
+          <Text weight={"bold"} md>
+            Interpretation
+          </Text>
+          <div className="flex justify-center items-center gap-3 mt-3">
+            <Text>Challenges</Text>
+            <Toggle
+              checked={interpretation}
+              setChecked={() => setInterpretation(!interpretation)}
+            />
+            <Text>Pro</Text>
           </div>
-        </div>
-
+        </SideControl>
         <div>
           {isLoading ? (
             <Spinner />
@@ -188,16 +138,16 @@ export default function TheoryDriven() {
                   textposition: "inside",
                   domain: { x: [0, 1], y: [0, 1] },
                   marker: {
+                    colors: "Reds",
                     line: { width: 1, color: "white" },
                   },
                 },
               ]}
               layout={{
-                width: 1500,
-                height: screenHeight,
+                width: screenWidth,
+                height: screenHeight - navHeight,
                 showlegend: false,
-
-                annotations: [{ showarrow: false, text: "" }],
+                margin: { l: 150 },
               }}
             />
           )}

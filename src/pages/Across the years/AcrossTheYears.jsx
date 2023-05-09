@@ -6,13 +6,19 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import {
   FilterExplanation,
   Label,
-  RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Text,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
-import { parametersOptions } from "../../components/HardCoded";
+import {
+  navHeight,
+  parametersOptions,
+  sideWidth,
+} from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 
@@ -61,11 +67,9 @@ export default function AcrossTheYears() {
   return (
     <div>
       <Navbar />
-      <div className="mt-12 flex ">
-        <div className=" side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text color="blue" weight="bold" size={30}>
-            Across the Years
-          </Text>
+      <div className="flex mt-12 p-2">
+        <SideControl headline={"Across the Years"}>
+          <Text color="blue" weight="bold" size={30}></Text>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2  ">
             <Text weight="bold" md>
               Axis Controls
@@ -89,44 +93,15 @@ export default function AcrossTheYears() {
                 onChange={setSelected}
               />
             </div>
-
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              {/* TODO: find Headline */}
-              <Text md weight={"bold"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "both", name: "Both" },
-                  { value: "either", name: "Either" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              <Text md weight={"bold"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-                  { value: "both", name: "Both" },
-                  { value: "either", name: "Either" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
           </div>
-        </div>
+        </SideControl>
 
-        <div className="w-full h-full">
+        <div className="w-full h-full" style={{ marginLeft: sideWidth }}>
           {isLoading ? (
             <Spinner />
           ) : (

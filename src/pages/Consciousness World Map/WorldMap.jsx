@@ -5,7 +5,11 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Text,
+  TheoryDrivenFilter,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
@@ -13,8 +17,10 @@ import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
 import {
   colorsArray,
+  navHeight,
   screenHeight,
   screenWidth,
+  sideWidth,
 } from "../../components/HardCoded";
 import getNations from "../../apiHooks/getNations";
 
@@ -156,7 +162,7 @@ export default function WorldMap() {
     },
     hovertemplate: `<b>kljlkjkjss</b><extra></extra>`,
     width: screenWidth - 388,
-    height: screenHeight,
+    height: screenHeight - navHeight,
     showlegend: false,
     autosize: false,
   };
@@ -166,92 +172,40 @@ export default function WorldMap() {
       {" "}
       <Navbar />
       <div className="flex mt-12 p-2">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text center size={28} weight="bold" color="blue">
-            World Map- <br />
-            Nation of Consciousness
+        <SideControl headline={"Nation of Consciousness"}>
+          <Text md weight="bold">
+            Axis Controls
           </Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-            <Text md weight="bold">
-              Axis Controls
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+
+          <div className={sectionClass}>
+            <Text flexed md weight="bold">
+              Theories
+              <FilterExplanation tooltip="few more words about Theories" />
             </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="minimum number of experiments"
-              tooltip="few more words about minimum number of experiments"
-            />
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theories
-                <FilterExplanation tooltip="few more words about Theories" />
-              </Text>
 
-              {configSuccess && theories && (
-                <Select
-                  closeMenuOnSelect={true}
-                  isMulti={true}
-                  value={theory}
-                  options={theories}
-                  placeholder="Theories"
-                  onChange={setTheory}
-                />
-              )}
-            </div>
-            <div className={sectionClass}>
-              <Text md weight="bold">
-                Theory Driven
-              </Text>
-              <RadioInput
-                name="Thery-Driven"
-                values={[
-                  { value: "driven", name: "Driven" },
-                  { value: "mentioning", name: "Mentioning" },
-                  { value: "either", name: "Either" },
-                  { value: "post-hoc", name: "Post Hoc" },
-                ]}
-                checked={theoryDriven}
-                setChecked={setTheoryDriven}
+            {configSuccess && theories && (
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={true}
+                value={theory}
+                options={theories}
+                placeholder="Theories"
+                onChange={setTheory}
               />
-            </div>
-
-            <div className="w-full py-5 flex flex-col items-center gap-3 ">
-              {/* TODO: find Headline */}
-              <Text md weight="bold">
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
+            )}
           </div>
-        </div>
-
-        <div className="pl-2">
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
+        </SideControl>
+        <div style={{ marginLeft: sideWidth }}>
           {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
         </div>
       </div>

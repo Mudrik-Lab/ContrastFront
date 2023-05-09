@@ -4,6 +4,8 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Text,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
@@ -13,6 +15,9 @@ import {
   colorsArray,
   screenWidth,
   parametersOptions,
+  navHeight,
+  screenHeight,
+  sideWidth,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
@@ -116,10 +121,7 @@ export default function ParametersDistributionBar() {
       <Navbar />
       {configurationSuccess && (
         <div className="flex mt-12 p-2">
-          <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-            <Text size={28} weight="bold" color="blue" center>
-              Parameters <br /> Distribution Bar
-            </Text>
+          <SideControl headline={" Parameters Distribution Bar"}>
             <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
               <Text md weight="bold">
                 Axis Controls
@@ -157,21 +159,9 @@ export default function ParametersDistributionBar() {
                   onChange={setSelected}
                 />
               </div>
-              <div className={sectionClass}>
-                <Text md weight={"bold"}>
-                  Reported
-                </Text>
-                <RadioInput
-                  values={[
-                    { value: "report", name: "Report" },
-                    { value: "no_report", name: "No-Report" },
-                    { value: "both", name: "Both" },
-                    { value: "either", name: "Either" },
-                  ]}
-                  checked={reporting}
-                  setChecked={setReporting}
-                />
-              </div>
+
+              <ReportFilter checked={reporting} setChecked={setReporting} />
+
               <div className="flex gap-2">
                 <label htmlFor="stacked">Is Stacked?</label>
                 <input
@@ -182,10 +172,10 @@ export default function ParametersDistributionBar() {
                 />
               </div>
             </div>
-          </div>
+          </SideControl>
 
           {X1 && X2 && Y && (
-            <div className="pl-12">
+            <div style={{ marginLeft: sideWidth }}>
               {isLoading ? (
                 <Spinner />
               ) : (

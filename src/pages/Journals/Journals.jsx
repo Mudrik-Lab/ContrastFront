@@ -5,12 +5,16 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { navHeight, screenHeight } from "../../components/HardCoded";
+import { navHeight, screenHeight, sideWidth } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
@@ -75,93 +79,47 @@ export default function Journals() {
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
-    <div style={{ height: screenHeight - 64 }}>
-      {" "}
+    <div style={{ height: screenHeight - navHeight }}>
       <Navbar />
-      <div className="flex mt-16 px-2 h-full">
-        <div className="side-filter-box h-full p-2 pt-10 flex flex-col items-center bg-white ">
-          <Text size={28} weight="bold" color="blue">
-            Journals
-          </Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-            <div className={sectionClass}>
-              <Text md weight="bold">
-                Axis Controls
-              </Text>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theory
-                <FilterExplanation tooltip="few more words about Thory" />
-              </Text>
-
-              <TagsSelect
-                options={parentTheories}
-                placeholder="Paradigms Family"
-                defaultValue={selectedParent.value}
-                onChange={setSelectedParent}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text weight={"bold"} md>
-                Theory Driven
-              </Text>
-              <RadioInput
-                name="Thery-Driven"
-                values={[
-                  { value: "driven", name: "Driven" },
-                  { value: "mentioning", name: "Mentioning" },
-                  { value: "either", name: "Either" },
-                  { value: "post-hoc", name: "Post Hoc" },
-                ]}
-                checked={theoryDriven}
-                setChecked={setTheoryDriven}
-              />
-            </div>
+      <div className="flex mt-12 p-2">
+        <SideControl headline={"Journals"}>
+          <div className={sectionClass}>
+            <Text md weight="bold">
+              Axis Controls
+            </Text>
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <FilterExplanation
+              text="minimum number of experiments"
+              tooltip="few more words about minimum number of experiments"
+            />
           </div>
-        </div>
+          <div className={sectionClass}>
+            <Text flexed md weight="bold">
+              Theory
+              <FilterExplanation tooltip="few more words about Thory" />
+            </Text>
 
-        <div className="pl-2 overflow-x-scroll h-full">
+            <TagsSelect
+              options={parentTheories}
+              placeholder="Paradigms Family"
+              defaultValue={selectedParent.value}
+              onChange={setSelectedParent}
+            />
+          </div>
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
+        </SideControl>
+
+        <div
+          className="overflow-x-scroll h-full"
+          style={{ marginLeft: sideWidth }}>
           {isLoading ? (
             <Spinner />
           ) : (

@@ -320,6 +320,8 @@ export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
+export const sideSectionClass =
+  "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
 export const avalble_populations = [
   {

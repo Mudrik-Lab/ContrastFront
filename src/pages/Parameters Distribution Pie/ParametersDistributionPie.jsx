@@ -2,13 +2,23 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { colorsArray, parametersOptions } from "../../components/HardCoded";
+import {
+  colorsArray,
+  navHeight,
+  parametersOptions,
+  screenHeight,
+  sideWidth,
+} from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -74,10 +84,7 @@ export default function ParametersDistributionPie() {
     <div>
       <Navbar />
       <div className="flex mt-12 p-2">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue" center>
-            Parameters Distribution Pie
-          </Text>
+        <SideControl headline={" Parameters Distribution Pie"}>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
               <Text md weight="bold">
@@ -105,56 +112,19 @@ export default function ParametersDistributionPie() {
               />
             </div>
 
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
-            <Spacer height={10} />
-            <Text md>Theory Driven</Text>
-            <RadioInput
-              name="Thery-Driven"
-              values={[
-                { value: "driven", name: "Driven" },
-                { value: "mentioning", name: "Mentioning" },
-                { value: "either", name: "Either" },
-                { value: "post-hoc", name: "Post Hoc" },
-              ]}
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
               checked={theoryDriven}
               setChecked={setTheoryDriven}
             />
           </div>
-        </div>
+        </SideControl>
 
-        <div className="pl-12">
+        <div style={{ marginLeft: sideWidth }}>
           {isLoading ? (
             <Spinner />
           ) : (

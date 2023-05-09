@@ -3,6 +3,12 @@ import React from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite-react";
+import {
+  navHeight,
+  screenHeight,
+  sideSectionClass,
+  sideWidth,
+} from "./HardCoded";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -96,7 +102,7 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
       {values.map((val) => (
         <div className="mr-4" key={val.name}>
           <input
-            id="red-radio"
+            id={name}
             type="radio"
             name={name}
             value={val.value}
@@ -105,7 +111,7 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
             className="w-4 h-4 bg-gray-100 border-gray-300"
           />
           <label
-            htmlFor="red-radio"
+            htmlFor={name}
             className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 break-normal">
             {val.name}
           </label>
@@ -139,26 +145,111 @@ export const Label = ({ children }) => {
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
   return (
-    <div className="relative">
-      <input
-        type="range"
-        onChange={(e) => setLabel(e.target.value)}
-        onMouseUp={(e) => setNumber(e.target.value)}
-        min={0}
-        defaultValue={0}
-        max={100}
-        step={1}
-        className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
-        id="numOfExperiments"
+    <div className={sideSectionClass}>
+      <FilterExplanation
+        text="minimum number of experiments"
+        tooltip="few more words about minimum number of experiments"
       />
-      <span
-        style={{
-          left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
-          top: 3.5,
-        }}
-        className="absolute text-sm text-blue pointer-events-none ">
-        {label}
-      </span>
+
+      <div className="relative">
+        <input
+          type="range"
+          onChange={(e) => setLabel(e.target.value)}
+          onMouseUp={(e) => setNumber(e.target.value)}
+          min={0}
+          defaultValue={0}
+          max={100}
+          step={1}
+          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
+          id="numOfExperiments"
+        />
+        <span
+          style={{
+            left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
+            top: 3.5,
+          }}
+          className="absolute text-sm text-blue pointer-events-none ">
+          {label}
+        </span>
+      </div>
+    </div>
+  );
+};
+
+export const SideControl = ({ children, headline }) => {
+  return (
+    <div
+      className="side-filter-box p-2 pt-10 flex flex-col items-center fixed z-10 "
+      style={{ height: screenHeight - navHeight, width: sideWidth }}>
+      <Text size={28} weight="bold" color="blue" center>
+        {headline}
+      </Text>
+      <div className=" shadow-xl mt-10 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[100px] ">
+        {children}
+      </div>
+    </div>
+  );
+};
+
+export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
+  return (
+    <div className={sideSectionClass}>
+      <Text md weight="bold">
+        Type of Consciousness
+      </Text>
+      <RadioInput
+        name="Consciousness"
+        values={[
+          { value: "state", name: "State" },
+          { value: "content", name: "Content" },
+          { value: "either", name: "Either" },
+          { value: "both", name: "Both" },
+        ]}
+        checked={checked}
+        setChecked={setChecked}
+      />
+    </div>
+  );
+};
+
+export const ReportFilter = ({ checked, setChecked }) => {
+  return (
+    <div className={sideSectionClass}>
+      <Text md weight="bold">
+        Report
+      </Text>
+      <RadioInput
+        name="Report"
+        values={[
+          { value: "report", name: "Report" },
+          { value: "no_report", name: "No-Report" },
+          { value: "either", name: "Either" },
+          { value: "both", name: "Both" },
+        ]}
+        checked={checked}
+        setChecked={setChecked}
+      />
+    </div>
+  );
+};
+
+export const TheoryDrivenFilter = ({ checked, setChecked }) => {
+  return (
+    <div className={sideSectionClass}>
+      <Text md weight="bold">
+        Theory Driven
+      </Text>
+      <RadioInput
+        name="Theory-Driven"
+        values={[
+          { value: "driven", name: "Driven" },
+          { value: "mentioning", name: "Mentioning" },
+          { value: "either", name: "Either" },
+          { value: "post-hoc", name: "Post Hoc" },
+        ]}
+        checked={checked}
+        setChecked={setChecked}
+      />
     </div>
   );
 };

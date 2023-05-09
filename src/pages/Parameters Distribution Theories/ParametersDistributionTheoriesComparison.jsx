@@ -5,13 +5,17 @@ import Navbar from "../../components/Navbar";
 import {
   colorsArray,
   colorsNames,
+  navHeight,
   parametersColors,
   parametersOptions,
+  screenHeight,
+  sideWidth,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  SideControl,
   Spacer,
   Text,
 } from "../../components/Reusble";
@@ -81,12 +85,9 @@ export default function ParametersDistributionTheoriesComparison() {
   return (
     <div className="w-full">
       <Navbar />
-      <div className="flex mt-12 p-2 w-full ">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text center size={28} weight="bold" color="blue">
-            Parameters Distribution <br /> Theories Comparison
-          </Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
+      <div className="flex mt-12 p-2">
+        <SideControl headline={" Parameters Distribution Theories Comparison"}>
+          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll">
             <div className={sectionClass}>
               <Text md weight="bold">
                 Axis Controls
@@ -171,12 +172,12 @@ export default function ParametersDistributionTheoriesComparison() {
               />
               <Text>Pro</Text>
             </div>{" "}
-            <Spacer height={10} />
+            <Spacer height={200} />
           </div>
-        </div>
+        </SideControl>
 
-        <div className="graph relative w-full mx-auto">
-          <div className=" funny-leggend mt-28 flex flex-col gap-3 absolute 2xl:mt-8 2xl:top-20 2xl:left-1/2 transform 2xl:-translate-x-1/2  z-10">
+        {/* <div className="graph relative w-full mx-auto"> */}
+        {/* <div className=" funny-leggend mt-28 flex flex-col gap-3 absolute 2xl:mt-8 2xl:top-20 2xl:left-1/2 transform 2xl:-translate-x-1/2  z-10">
             {Object.keys(keysColors)?.map((key) => (
               <div
                 className=" p-1 w-28 flex justify-center items-center border"
@@ -186,55 +187,57 @@ export default function ParametersDistributionTheoriesComparison() {
                 </Text>
               </div>
             ))}
-          </div>
-          <div className="four-wheels ml-20 2xl:max-w-[1200px] 2xl:mx-auto  ">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              keysColors &&
-              chartsData.map((chart) => (
-                <Plot
-                  data={[
+          </div> */}
+        <div
+          className="four-wheels ml-20 2xl:max-w-[1200px] 2xl:mx-auto "
+          style={{ marginLeft: sideWidth }}>
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            keysColors &&
+            chartsData.map((chart) => (
+              <Plot
+                data={[
+                  {
+                    direction: "clockwise",
+                    values: chart.series.map((row) => row.value),
+                    labels: chart.series.map((row) => row.key),
+                    type: "pie",
+                    textinfo: "label+number",
+                    textposition: "inside",
+                    hole: 0.4,
+                    marker: {
+                      colors: chart.series.map((row) => keysColors[row.key]),
+                      line: { width: 1, color: "white" },
+                    },
+                  },
+                ]}
+                layout={{
+                  width: 600,
+                  height: 600,
+                  showlegend: false,
+                  margin: { r: 100, l: 100 },
+                  annotations: [
                     {
-                      direction: "clockwise",
-                      values: chart.series.map((row) => row.value),
-                      labels: chart.series.map((row) => row.key),
-                      type: "pie",
-                      textinfo: "label+number",
-                      textposition: "inside",
-                      hole: 0.4,
-                      marker: {
-                        colors: chart.series.map((row) => keysColors[row.key]),
-                        line: { width: 1, color: "white" },
+                      text:
+                        breakHeadlines(chart.series_name, 11) +
+                        " <br />" +
+                        " = " +
+                        chart.value,
+                      showarrow: false,
+
+                      style: { whiteSpace: "pre-wrap" },
+                      font: {
+                        size: 16,
                       },
                     },
-                  ]}
-                  layout={{
-                    width: 600,
-                    height: 600,
-                    showlegend: false,
-                    margin: { r: 100, l: 100 },
-                    annotations: [
-                      {
-                        text:
-                          breakHeadlines(chart.series_name, 11) +
-                          " <br />" +
-                          " = " +
-                          chart.value,
-                        showarrow: false,
-
-                        style: { whiteSpace: "pre-wrap" },
-                        font: {
-                          size: 16,
-                        },
-                      },
-                    ],
-                  }}
-                />
-              ))
-            )}
-          </div>
+                  ],
+                }}
+              />
+            ))
+          )}
         </div>
+        {/* </div> */}
       </div>
     </div>
   );
