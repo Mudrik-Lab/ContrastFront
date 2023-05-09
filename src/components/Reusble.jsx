@@ -58,6 +58,7 @@ export const Text = ({
   flexed,
   onClick,
   className,
+  lineHeight,
   id,
 }) => {
   return (
@@ -67,7 +68,7 @@ export const Text = ({
       className={classNames(
         `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
-        } font-${weight ? weight : "medium"} ${className ? className : ""}  `
+        } font-${weight ? weight : "medium"} ${className ? className : ""} `
       )}
       style={{
         fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,

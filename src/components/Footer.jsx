@@ -1,6 +1,7 @@
 import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
 import { Text } from "./Reusble";
+import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft.svg";
 
 export default function Footer() {
   return (
@@ -18,7 +19,9 @@ export default function Footer() {
         <Text color="white">Modes of Governance</Text>
       </div>
       <div className="mr-10">
-        <Text color="white">Developed by Drorsoft</Text>
+        <Text color="white">
+          Developed by <Drorsoft />
+        </Text>
       </div>
     </div>
   );

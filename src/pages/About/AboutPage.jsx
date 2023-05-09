@@ -67,11 +67,13 @@ export default function AboutPage() {
               </Text>
             </div>
           </div>
-          <div className=" openSource-box w-256 bg-grayLight flex justify-between items-center gap-4 px-10 py-2 mx-auto my-16">
-            <Text weight="bold" size={32}>
-              We Are Open Source
-            </Text>
-            <div className=" border-r border-black h-16"></div>
+          <div className=" openSource-box w-256 bg-grayLight flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
+            <div className="w-[210px]">
+              <Text className={"leading-8 break-keep"} weight="bold" size={30}>
+                We Are <br /> Open Source
+              </Text>
+            </div>
+
             <div>
               <Text md>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
@@ -79,7 +81,7 @@ export default function AboutPage() {
               </Text>
             </div>
             <div className=" border-r border-black h-16"></div>
-            <div className=" flex flex-row">
+            <div className=" flex flex-row w-[170px">
               <Button style={{ fontSize: "14px" }} black>
                 <Github /> Get Source Code
               </Button>

@@ -1,9 +1,8 @@
 import React from "react";
 import { Text } from "../../components/Reusble";
-import { ReactComponent as Tempeleton } from "../../assets/logoes/tempelton.svg";
-import { ReactComponent as TelAvivUni } from "../../assets/logoes/tel-aviv-uni.svg";
-import { ReactComponent as Cogtate } from "../../assets/logoes/cogtate.svg";
-import { ReactComponent as All } from "../../assets/logoes/all-logoes-together.svg";
+import Tempeleton from "../../assets/logoes/tempelton.png";
+import TelAvivUni from "../../assets/logoes/tlv-uni.png";
+import Cogtate from "../../assets/logoes/cogtate.png";
 
 export default function ConTraStUseCases() {
   const cardsInfo = [
@@ -60,11 +59,20 @@ export default function ConTraStUseCases() {
           </div>
         </div>
       </div>
+
       <div className="footer flex justify-center items-center gap-6">
-        {/* <Cogtate />
-        <Tempeleton />
-        <TelAvivUni /> */}
-        <All />
+        <a href="">
+          <img
+            src={Tempeleton}
+            alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
+          />{" "}
+        </a>
+        <a href="">
+          <img src={Cogtate} alt="https://www.arc-cogitate.com/" />{" "}
+        </a>{" "}
+        <a href="">
+          <img src={TelAvivUni} alt="https://www.tau.ac.il/" />{" "}
+        </a>{" "}
       </div>
     </div>
   );

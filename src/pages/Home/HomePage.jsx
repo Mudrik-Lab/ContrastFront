@@ -10,6 +10,7 @@ import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -81,6 +82,7 @@ export default function HomePage() {
       <PapersIconsMenu />
       <CommunityBox />
       <ConTraStUseCases />
+      <Footer />
     </div>
   );
 }
