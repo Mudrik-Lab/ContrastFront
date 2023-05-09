@@ -24,8 +24,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { breakHeadlines, getRandomColor } from "../../Utils/functions";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
+import { breakHeadlines } from "../../Utils/functions";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -79,7 +78,7 @@ export default function ParametersDistributionTheoriesComparison() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-
+  console.log(chartsData);
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (

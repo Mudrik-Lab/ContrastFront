@@ -3,7 +3,6 @@ import React from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -16,7 +15,6 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
 import {
-  colorsArray,
   navHeight,
   screenHeight,
   screenWidth,
@@ -43,7 +41,6 @@ export default function WorldMap() {
       }))
     : [];
 
-  console.log(theories);
   const { data, isLoading } = useQuery(
     [
       `nations_of_consciousness${
@@ -73,7 +70,18 @@ export default function WorldMap() {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
-  console.log(sumPerCountry);
+
+  const mergedStates = {};
+  data?.data.forEach((row) => {
+    row[row.theory] = row.value;
+    const country = row.country;
+    if (!mergedStates[country]) {
+      mergedStates[country] = row;
+    } else {
+      mergedStates[country] = { ...mergedStates[country], ...row };
+    }
+  });
+
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)
         .sort()
@@ -81,10 +89,11 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
-
+  console.log(theories);
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
+  console.log(mergedStates);
   var graphData = [
     {
       type: "choropleth",
@@ -94,11 +103,20 @@ export default function WorldMap() {
       colorscale: [
         [0, "rgb(5, 10, 172)"],
         [0.35, "rgb(40, 60, 190)"],
-
         [0.6, "rgb(90, 120, 245)"],
-
         [1, "rgb(102, 191, 241,)"],
       ],
+      hoverinfo: "location+text",
+      hovertext: data?.data.map(
+        (row) =>
+          (mergedStates[row.country]["Global Workspace"] || "") +
+          ("<br>" + mergedStates[row.country]["Integrated Information"] || "") +
+          ("<br>" + mergedStates[row.country]["Higher Order Thought"] || "") +
+          ("<br>" + mergedStates[row.country]["Other"] || "") +
+          ("<br>" +
+            mergedStates[row.country]["First Order & Predictive Processing"] ||
+            "")
+      ),
       reversescale: true,
       marker: {
         size: data?.data.map((row) => row.total),
@@ -120,6 +138,7 @@ export default function WorldMap() {
       mode: "markers+text",
       locations: sortedResult.map((row) => row.country),
       text: sortedResult.map((row) => row.totalValue),
+      hoverinfo: "skip",
       textfont: {
         color: "black",
         size: 10,
@@ -129,6 +148,7 @@ export default function WorldMap() {
         sizemode: "area",
         sizeref: 0.05,
         color: "white",
+
         cmin: 0,
         cmax: 50,
         line: {
@@ -160,7 +180,7 @@ export default function WorldMap() {
       bgcolor: "#333333",
       font: { color: "#ffffff" },
     },
-    hovertemplate: `<b>kljlkjkjss</b><extra></extra>`,
+
     width: screenWidth - 388,
     height: screenHeight - navHeight,
     showlegend: false,

@@ -1,7 +1,7 @@
 import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
 import { Text } from "./Reusble";
-import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft.svg";
+import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 
 export default function Footer() {
   return (
@@ -20,7 +20,9 @@ export default function Footer() {
       </div>
       <div className="mr-10">
         <Text color="white">
-          Developed by <Drorsoft />
+          <a href="https://www.drorsoft.com/" target="_blank">
+            Developed by <Drorsoft />
+          </a>
         </Text>
       </div>
     </div>

@@ -65,13 +65,18 @@ export default function ConTraStUseCases() {
           <img
             src={Tempeleton}
             alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
+            target="_blank"
           />{" "}
         </a>
         <a href="">
-          <img src={Cogtate} alt="https://www.arc-cogitate.com/" />{" "}
+          <img
+            src={Cogtate}
+            alt="https://www.arc-cogitate.com/"
+            target="_blank"
+          />{" "}
         </a>{" "}
         <a href="">
-          <img src={TelAvivUni} alt="https://www.tau.ac.il/" />{" "}
+          <img src={TelAvivUni} alt="https://www.tau.ac.il/" target="_blank" />{" "}
         </a>{" "}
       </div>
     </div>
