@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Select from "react-select";
 import {
+  Button,
   FilterExplanation,
   RadioInput,
   RangeInput,
@@ -10,6 +11,7 @@ import {
   Spacer,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
@@ -25,6 +27,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
+import Footer from "../../components/Footer";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -381,6 +384,17 @@ export default function FreeQueriesBar() {
 
           {X1 && Y && (
             <div style={{ marginLeft: sideWidth }}>
+              <TopGraphText
+                text="To determine the minimum number of experiments in each category (i.e., filter out categories with very few entries), use the # of experiments slider
+Choose a parameter of interest by selecting one of the options in 'x axis' list,
+
+and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
+
+Then, you can filter the pool of experiments described in the graph, according to each of the variables in the database.
+
+Each list of options under each parameter combo box includes the specific values relevant for this parameter."
+                firstLine="The graph depicts the distribution of parameter values, according to your specifications."
+              />
               <Plot
                 data={[trace1]}
                 layout={{
@@ -409,6 +423,7 @@ export default function FreeQueriesBar() {
           )}
         </div>
       )}
+      <Footer />
     </div>
   );
 }

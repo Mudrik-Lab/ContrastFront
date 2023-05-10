@@ -20,6 +20,7 @@ import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 import Spinner from "../../components/Spinner";
 import Toggle from "../../components/Toggle";
+import Footer from "../../components/Footer";
 
 export default function Journals() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -136,6 +137,7 @@ export default function Journals() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

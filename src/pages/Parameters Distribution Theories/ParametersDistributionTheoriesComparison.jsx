@@ -18,6 +18,7 @@ import {
   SideControl,
   Spacer,
   Text,
+  TopGraphText,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -25,6 +26,7 @@ import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { breakHeadlines } from "../../Utils/functions";
+import Footer from "../../components/Footer";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -179,8 +181,14 @@ export default function ParametersDistributionTheoriesComparison() {
             ))}
           </div> */}
         <div
-          className="four-wheels ml-20 2xl:max-w-[1200px] 2xl:mx-auto "
+          className="four-wheels 2xl:mx-auto "
           style={{ marginLeft: sideWidth }}>
+          <TopGraphText
+            firstLine={
+              "The graph depicts the different distributions of parameters for the four theories separately."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -229,6 +237,7 @@ export default function ParametersDistributionTheoriesComparison() {
         </div>
         {/* </div> */}
       </div>
+      <Footer />
     </div>
   );
 }

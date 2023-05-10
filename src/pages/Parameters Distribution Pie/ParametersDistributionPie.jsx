@@ -18,12 +18,14 @@ import {
   Spacer,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
+import Footer from "../../components/Footer";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -124,7 +126,13 @@ export default function ParametersDistributionPie() {
           </div>
         </SideControl>
 
-        <div style={{ marginLeft: sideWidth }}>
+        <div style={{ width: "100%", marginLeft: sideWidth + 10 }}>
+          <TopGraphText
+            firstLine={
+              "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -171,6 +179,7 @@ export default function ParametersDistributionPie() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

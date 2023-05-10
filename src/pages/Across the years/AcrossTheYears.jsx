@@ -21,6 +21,7 @@ import {
 } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
+import Footer from "../../components/Footer";
 
 export default function AcrossTheYears() {
   const [selected, setSelected] = useState(parametersOptions[0]);
@@ -70,35 +71,31 @@ export default function AcrossTheYears() {
       <div className="flex mt-12 p-2">
         <SideControl headline={"Across the Years"}>
           <Text color="blue" weight="bold" size={30}></Text>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2  ">
-            <Text weight="bold" md>
-              Axis Controls
-            </Text>
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <Label>min. # of experiments</Label>
-            </div>
 
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              <Text md flexed weight={"bold"}>
-                Parameters
-                <FilterExplanation tooltip="few more words about Theory" />
-              </Text>
-              <TagsSelect
-                options={parametersOptions}
-                value={selected}
-                onChange={setSelected}
-              />
-            </div>
-            <TypeOfConsciousnessFilter
-              checked={consciousness}
-              setChecked={setConsciousness}
-            />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+          <Text weight="bold" md>
+            Axis Controls
+          </Text>
+          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <Label>min. # of experiments</Label>
           </div>
+
+          <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+            <Text md flexed weight={"bold"}>
+              Parameters
+              <FilterExplanation tooltip="few more words about Theory" />
+            </Text>
+            <TagsSelect
+              options={parametersOptions}
+              value={selected}
+              onChange={setSelected}
+            />
+          </div>
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
         </SideControl>
 
         <div className="w-full h-full" style={{ marginLeft: sideWidth }}>
@@ -134,6 +131,7 @@ export default function AcrossTheYears() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

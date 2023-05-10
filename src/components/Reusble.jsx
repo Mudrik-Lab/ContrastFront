@@ -19,11 +19,11 @@ export const TextInput = ({ ...config }) => {
   );
 };
 
-export const Button = ({ children, black, ...config }) => {
+export const Button = ({ extraClass, children, black, ...config }) => {
   return (
     <button
       className={classNames(
-        `text-white text-md leading-4 font-bold ${
+        `${extraClass} text-white text-md leading-4 font-bold ${
           black ? "bg-black" : "bg-blue"
         } hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
       )}
@@ -185,7 +185,7 @@ export const SideControl = ({ children, headline }) => {
       <Text size={28} weight="bold" color="blue" center>
         {headline}
       </Text>
-      <div className=" shadow-xl mt-10 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[100px] ">
+      <div className=" shadow-xl mt-10 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[200px] ">
         {children}
       </div>
     </div>
@@ -251,6 +251,22 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
         checked={checked}
         setChecked={setChecked}
       />
+    </div>
+  );
+};
+export const TopGraphText = ({ firstLine, text }) => {
+  const [extend, setExtend] = React.useState(false);
+  return (
+    <div className="bg-grayLight w-full items-center p-5 flex justify-between mt-10 px-8 ">
+      <div className="max-w-[85%]">
+        <Text>{firstLine}</Text>
+        {extend && <Text>{text}</Text>}
+      </div>
+      <Button
+        extraClass="bg-grayReg p-2 max-h-[30px]"
+        onClick={() => setExtend(!extend)}>
+        {extend ? "<<Read Less" : "Read More >>"}
+      </Button>
     </div>
   );
 };

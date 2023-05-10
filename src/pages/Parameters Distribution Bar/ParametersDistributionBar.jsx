@@ -7,6 +7,7 @@ import {
   ReportFilter,
   SideControl,
   Text,
+  TopGraphText,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -23,6 +24,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
+import Footer from "../../components/Footer";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -122,60 +124,64 @@ export default function ParametersDistributionBar() {
       {configurationSuccess && (
         <div className="flex mt-12 p-2">
           <SideControl headline={" Parameters Distribution Bar"}>
-            <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-              <Text md weight="bold">
-                Axis Controls
+            <Text md weight="bold">
+              Axis Controls
+            </Text>
+            <div className={sectionClass}>
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
+              <FilterExplanation
+                text="Minimum number of experiments"
+                tooltip="few more words about Minimum number of experiments"
+              />
+            </div>
+
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theory
+                <FilterExplanation tooltip="few more words about Theory" />
               </Text>
-              <div className={sectionClass}>
-                <RangeInput
-                  number={experimentsNum}
-                  setNumber={setExperimentsNum}
-                />
-                <FilterExplanation
-                  text="Minimum number of experiments"
-                  tooltip="few more words about Minimum number of experiments"
-                />
-              </div>
+              <TagsSelect
+                value={selectedParent}
+                options={parentTheories}
+                onChange={setSelectedParent}
+              />
+            </div>
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Parameters
+                <FilterExplanation tooltip="few more words about Theory" />
+              </Text>
+              <TagsSelect
+                options={parametersOptions}
+                value={selected}
+                onChange={setSelected}
+              />
+            </div>
 
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Theory
-                  <FilterExplanation tooltip="few more words about Theory" />
-                </Text>
-                <TagsSelect
-                  value={selectedParent}
-                  options={parentTheories}
-                  onChange={setSelectedParent}
-                />
-              </div>
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Parameters
-                  <FilterExplanation tooltip="few more words about Theory" />
-                </Text>
-                <TagsSelect
-                  options={parametersOptions}
-                  value={selected}
-                  onChange={setSelected}
-                />
-              </div>
+            <ReportFilter checked={reporting} setChecked={setReporting} />
 
-              <ReportFilter checked={reporting} setChecked={setReporting} />
-
-              <div className="flex gap-2">
-                <label htmlFor="stacked">Is Stacked?</label>
-                <input
-                  type="checkbox"
-                  name="stacked"
-                  checked={isStacked}
-                  onChange={() => setIsStacked(!isStacked)}
-                />
-              </div>
+            <div className="flex gap-2">
+              <label htmlFor="stacked">Is Stacked?</label>
+              <input
+                type="checkbox"
+                name="stacked"
+                checked={isStacked}
+                onChange={() => setIsStacked(!isStacked)}
+              />
             </div>
           </SideControl>
 
           {X1 && X2 && Y && (
             <div style={{ marginLeft: sideWidth }}>
+              <TopGraphText
+                firstLine={
+                  'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
+                }
+                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+              />
               {isLoading ? (
                 <Spinner />
               ) : (
@@ -184,7 +190,7 @@ export default function ParametersDistributionBar() {
                   layout={{
                     barmode: isStacked ? "stack" : "group",
                     title: "Parameter Distribution Bar",
-                    width: screenWidth - 200,
+                    width: screenWidth - sideWidth,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: 200 },
                     legend: { itemwidth: 90 },
@@ -207,6 +213,7 @@ export default function ParametersDistributionBar() {
           )}
         </div>
       )}
+      <Footer />
     </div>
   );
 }

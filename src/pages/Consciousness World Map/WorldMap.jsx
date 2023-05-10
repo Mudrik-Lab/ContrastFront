@@ -21,6 +21,7 @@ import {
   sideWidth,
 } from "../../components/HardCoded";
 import getNations from "../../apiHooks/getNations";
+import Footer from "../../components/Footer";
 
 export default function WorldMap() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -236,6 +237,7 @@ export default function WorldMap() {
           {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

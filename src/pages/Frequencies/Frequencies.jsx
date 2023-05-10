@@ -9,6 +9,7 @@ import {
   SideControl,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
@@ -22,6 +23,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
+import Footer from "../../components/Footer";
 
 export default function Frequencies() {
   const [reporting, setReporting] = React.useState("either");
@@ -159,7 +161,14 @@ export default function Frequencies() {
             />
           </SideControl>
 
-          <div style={{ marginLeft: sideWidth }}>
+          <div style={{ marginLeft: sideWidth, width: "100%" }}>
+            <TopGraphText
+              firstLine={
+                "The chart depicts the findings in the frequency domain of the experiments in the database."
+              }
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            />
+
             {isLoading ? (
               <Spinner />
             ) : (
@@ -168,9 +177,9 @@ export default function Frequencies() {
                 layout={{
                   autosize: false,
                   barmode: "stack",
+                  width: screenWidth - sideWidth - 300,
+                  height: screenHeight - 360,
 
-                  width: screenWidth - sideWidth - 200,
-                  height: screenHeight - 200,
                   margin: { autoexpand: true, l: 20 },
                   showlegend: false,
                   yaxis: {
@@ -187,7 +196,9 @@ export default function Frequencies() {
               />
             )}
           </div>
-          <div className="mt-24 " style={{ height: screenHeight - 150 }}>
+          <div
+            className=" fixed top-52 right-16 "
+            style={{ height: screenHeight - 150 }}>
             {Object.values(AlphaBetaColors).map((color, index) => (
               <div className="flex justify-start items-end gap-2" id="color">
                 <div
@@ -199,6 +210,7 @@ export default function Frequencies() {
           </div>
         </div>
       )}
+      <Footer />
     </div>
   );
 }

@@ -18,6 +18,7 @@ import {
   Spacer,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
@@ -27,6 +28,7 @@ import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { ToggleSwitch } from "flowbite-react";
 import { rawTeaxtToShow } from "../../Utils/functions";
+import Footer from "../../components/Footer";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -125,7 +127,14 @@ export default function TheoryDriven() {
             <Text>Pro</Text>
           </div>
         </SideControl>
-        <div>
+
+        <div style={{ width: "100%", marginLeft: sideWidth }}>
+          <TopGraphText
+            firstLine={
+              "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -161,7 +170,7 @@ export default function TheoryDriven() {
                 },
               ]}
               layout={{
-                width: screenWidth,
+                width: screenWidth - sideWidth - 200,
                 height: screenHeight - navHeight,
                 showlegend: false,
                 font: { size: 20 },
@@ -171,6 +180,7 @@ export default function TheoryDriven() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
