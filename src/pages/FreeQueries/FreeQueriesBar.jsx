@@ -30,7 +30,7 @@ export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [isReporting, setIsReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
+  const [theoryDriven, setTheoryDriven] = React.useState("driven");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] =

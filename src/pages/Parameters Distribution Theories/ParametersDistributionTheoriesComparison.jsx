@@ -28,10 +28,6 @@ import { breakHeadlines } from "../../Utils/functions";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
-    label: "Global Workspace",
-  });
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -78,7 +74,7 @@ export default function ParametersDistributionTheoriesComparison() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(chartsData);
+
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
@@ -86,93 +82,88 @@ export default function ParametersDistributionTheoriesComparison() {
       <Navbar />
       <div className="flex mt-12 p-2">
         <SideControl headline={" Parameters Distribution Theories Comparison"}>
-          <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll">
-            <div className={sectionClass}>
-              <Text md weight="bold">
-                Axis Controls
-              </Text>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md flexed weight="bold">
-                Parameters
-                <FilterExplanation tooltip="few more words about Paradigm " />
-              </Text>
-              <TagsSelect
-                options={parametersOptions}
-                value={selected}
-                onChange={setSelected}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"bold"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text weight={"bold"} md>
-                Theory Driven
-              </Text>
-              <RadioInput
-                name="Thery-Driven"
-                values={[
-                  { value: "driven", name: "Driven" },
-                  { value: "mentioning", name: "Mentioning" },
-                  { value: "either", name: "Either" },
-                  { value: "post-hoc", name: "Post Hoc" },
-                ]}
-                checked={theoryDriven}
-                setChecked={setTheoryDriven}
-              />
-            </div>
-            <Spacer height={10} />
-            <Text md weight={"bold"}>
-              Interpretation
+          <div className={sectionClass}>
+            <Text md weight="bold">
+              Axis Controls
             </Text>
-            <div className="flex justify-center items-center gap-3 mt-3">
-              <Text>Challenges</Text>
-              <Toggle
-                checked={interpretation}
-                setChecked={() => setInterpretation(!interpretation)}
-              />
-              <Text>Pro</Text>
-            </div>{" "}
-            <Spacer height={200} />
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <FilterExplanation
+              text="Minimum number of experiments"
+              tooltip="few more words about Minimum number of experiments"
+            />
           </div>
+          <div className={sectionClass}>
+            <Text md flexed weight="bold">
+              Parameters
+              <FilterExplanation tooltip="few more words about Paradigm " />
+            </Text>
+            <TagsSelect
+              options={parametersOptions}
+              value={selected}
+              onChange={setSelected}
+            />
+          </div>
+          <div className={sectionClass}>
+            <Text md weight={"bold"}>
+              Reported
+            </Text>
+            <RadioInput
+              name="Report"
+              values={[
+                { value: "report", name: "Report" },
+                { value: "no_report", name: "No-Report" },
+                { value: "either", name: "Either" },
+                { value: "both", name: "Both" },
+              ]}
+              checked={reporting}
+              setChecked={setReporting}
+            />
+          </div>
+          <div className={sectionClass}>
+            <Text md weight={"bold"}>
+              Type of Consciousness
+            </Text>
+            <RadioInput
+              name="Consciousness"
+              values={[
+                { value: "state", name: "State" },
+                { value: "content", name: "Content" },
+                { value: "either", name: "Either" },
+                { value: "both", name: "Both" },
+              ]}
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+          </div>
+          <div className={sectionClass}>
+            <Text weight={"bold"} md>
+              Theory Driven
+            </Text>
+            <RadioInput
+              name="Thery-Driven"
+              values={[
+                { value: "driven", name: "Driven" },
+                { value: "mentioning", name: "Mentioning" },
+                { value: "either", name: "Either" },
+                { value: "post-hoc", name: "Post Hoc" },
+              ]}
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
+          </div>
+          <Spacer height={10} />
+          <Text md weight={"bold"}>
+            Interpretation
+          </Text>
+          <div className="flex justify-center items-center gap-3 mt-3">
+            <Text>Challenges</Text>
+            <Toggle
+              checked={interpretation}
+              setChecked={() => setInterpretation(!interpretation)}
+            />
+            <Text>Pro</Text>
+          </div>{" "}
+          <Spacer height={200} />
         </SideControl>
 
         {/* <div className="graph relative w-full mx-auto"> */}

@@ -143,8 +143,8 @@ export default function Timings() {
             </Text>
             <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
             <FilterExplanation
-              text="minimum number of experiments"
-              tooltip="few more words about minimum number of experiments"
+              text="Minimum number of experiments"
+              tooltip="few more words about Minimum number of experiments"
             />
             <div className={sectionClass}>
               <Text flexed md weight="bold">

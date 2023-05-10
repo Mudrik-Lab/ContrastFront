@@ -4,6 +4,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   colorsArray,
+  colorsNames,
   navHeight,
   screenHeight,
   screenWidth,
@@ -25,6 +26,7 @@ import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { ToggleSwitch } from "flowbite-react";
+import { rawTeaxtToShow } from "../../Utils/functions";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -64,6 +66,7 @@ export default function TheoryDriven() {
   const outsideColors = [];
   const values2 = [];
   const labels2 = [];
+  const cleanLabels2 = [];
 
   data?.data.map((x, index) => {
     values1.push(x.value);
@@ -71,12 +74,25 @@ export default function TheoryDriven() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
+      cleanLabels2.push(y.key);
       outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+  const chartsData = data?.data;
+  const keysArr = [];
+  chartsData?.map((theory) =>
+    theory.series.map((row) => keysArr.push(row.key))
+  );
+  const trimedKeysArr = [...new Set(keysArr)];
+
+  const someColors = colorsNames.slice(0, trimedKeysArr.length);
+
+  const keysColors = {};
+  [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
+    keysColors[key] = someColors[index];
+  });
+  console.log(cleanLabels2);
   return (
     <div>
       <Navbar />
@@ -118,7 +134,7 @@ export default function TheoryDriven() {
                 {
                   direction: "clockwise",
                   values: values1,
-                  labels: labels1,
+                  labels: labels1.map((label) => rawTeaxtToShow(label)),
                   type: "pie",
                   textinfo: "label+number",
                   textposition: "inside",
@@ -135,11 +151,11 @@ export default function TheoryDriven() {
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",
-                  hole: 0.75,
+                  hole: 0.65,
                   textposition: "inside",
                   domain: { x: [0, 1], y: [0, 1] },
                   marker: {
-                    colors: "Reds",
+                    colors: cleanLabels2.map((label) => keysColors[label]),
                     line: { width: 1, color: "white" },
                   },
                 },
@@ -148,7 +164,8 @@ export default function TheoryDriven() {
                 width: screenWidth,
                 height: screenHeight - navHeight,
                 showlegend: false,
-                margin: { l: 150 },
+                font: { size: 20 },
+                margin: { l: sideWidth },
               }}
             />
           )}

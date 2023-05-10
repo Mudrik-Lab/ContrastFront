@@ -95,8 +95,8 @@ export default function ParametersDistributionPie() {
                 setNumber={setExperimentsNum}
               />
               <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
+                text="Minimum number of experiments"
+                tooltip="few more words about Minimum number of experiments"
               />
             </div>
 

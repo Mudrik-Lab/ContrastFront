@@ -17,12 +17,12 @@ export default function CommunityBox() {
       <div className=" border-r border-black h-64 "></div>
       <ul className="text-grayHeavy list-disc ml-4 text-xl ">
         <li>
-          download research references and mappings from over 18.352 papers and
+          Download research references and mappings from over 18.352 papers and
           counting
         </li>
-        <li>generate custom diagrams for unlimited use in your work</li>
+        <li>Generate custom diagrams for unlimited use in your work</li>
         <li>
-          submit your own papers and be a part of the collective conciseness!
+          Submit your own papers and be a part of the collective conciseness!
         </li>
       </ul>
     </div>
