@@ -24,6 +24,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
+import { ToggleSwitch } from "flowbite-react";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
