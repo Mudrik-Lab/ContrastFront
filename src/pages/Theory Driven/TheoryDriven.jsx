@@ -1,10 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   colorsArray,
-  colorsNames,
+  designerColors,
   navHeight,
   screenHeight,
   screenWidth,
@@ -88,7 +87,7 @@ export default function TheoryDriven() {
   );
   const trimedKeysArr = [...new Set(keysArr)];
 
-  const someColors = colorsNames.slice(0, trimedKeysArr.length);
+  const someColors = designerColors.slice(0, trimedKeysArr.length);
 
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {

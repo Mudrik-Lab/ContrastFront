@@ -17,13 +17,11 @@ export default function CommunityBox() {
       <div className=" border-r border-black h-64 "></div>
       <ul className="text-grayHeavy list-disc ml-4 text-xl ">
         <li>
-          Download research references and mappings from over 18.352 papers and
-          counting
+          Download research references and information about over 400
+          experiments and counting
         </li>
-        <li>Generate custom diagrams for unlimited use in your work</li>
-        <li>
-          Submit your own papers and be a part of the collective conciseness!
-        </li>
+        <li>Generate custom figures for unlimited use in your work</li>
+        <li>Submit your own papers and be a part of the ConTraSt database!</li>
       </ul>
     </div>
   );

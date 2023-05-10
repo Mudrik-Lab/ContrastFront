@@ -18,6 +18,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
   avalble_populations,
+  designerColors,
   navHeight,
   parametersOptions,
   sideSectionClass,
@@ -204,7 +205,7 @@ export default function FreeQueriesBar() {
     },
     marker: {
       width: 100,
-      color: "Blues",
+      color: designerColors,
 
       text: {
         font: {

@@ -3,7 +3,6 @@ import React from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -14,11 +13,7 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import {
-  AlphaBetaColors,
-  navHeight,
-  sideWidth,
-} from "../../components/HardCoded";
+import { AlphaBetaColors, sideWidth } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";

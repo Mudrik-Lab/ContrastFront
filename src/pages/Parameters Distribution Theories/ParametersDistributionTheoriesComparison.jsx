@@ -1,14 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
-  colorsArray,
-  colorsNames,
-  navHeight,
-  parametersColors,
+  designerColors,
   parametersOptions,
-  screenHeight,
   sideWidth,
 } from "../../components/HardCoded";
 import {
@@ -70,13 +65,13 @@ export default function ParametersDistributionTheoriesComparison() {
     theory.series.map((row) => keysArr.push(row.key))
   );
   const trimedKeysArr = [...new Set(keysArr)];
-  const someColors = colorsNames.slice(0, trimedKeysArr.length);
+  const someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
 
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-
+  console.log(keysColors);
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (

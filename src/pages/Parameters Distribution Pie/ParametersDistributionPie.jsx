@@ -4,6 +4,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
   colorsArray,
+  designerColors,
   navHeight,
   parametersOptions,
   screenHeight,
@@ -26,6 +27,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
+import { hexToRgba } from "../../Utils/functions";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -63,7 +65,6 @@ export default function ParametersDistributionPie() {
         min_number_of_experiments: experimentsNum,
       })
   );
-
   const values1 = [];
   const labels1 = [];
   const outsideColors = [];
@@ -76,7 +77,9 @@ export default function ParametersDistributionPie() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
-      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
+      outsideColors.push(
+        hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
+      );
     });
   });
 
@@ -149,7 +152,7 @@ export default function ParametersDistributionPie() {
                   hole: 0.1,
                   domain: { x: [0, 1], y: [0.125, 0.875] },
                   marker: {
-                    colors: colorsArray,
+                    colors: designerColors,
                     line: { width: 1, color: "white" },
                   },
                 },
