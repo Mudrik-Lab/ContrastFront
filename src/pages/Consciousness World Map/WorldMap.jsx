@@ -8,6 +8,7 @@ import {
   SideControl,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
@@ -135,7 +136,7 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0.1,
+        y: 0,
         tickprefix: "#",
         title: "Experiments<br>number",
       },
@@ -162,7 +163,7 @@ export default function WorldMap() {
           color: "white",
         },
       },
-      name: "europe data",
+      name: "Nations of Consciousness",
     },
   ];
   const layout = {
@@ -188,8 +189,8 @@ export default function WorldMap() {
       font: { color: "#ffffff" },
     },
 
-    width: screenWidth - 388,
-    height: screenHeight - navHeight,
+    width: screenWidth - 450,
+    height: screenHeight - 360,
     showlegend: false,
     autosize: false,
   };
@@ -199,8 +200,8 @@ export default function WorldMap() {
     <div>
       {" "}
       <Navbar />
-      <div className="flex mt-12 p-2">
-        <SideControl headline={"Nation of Consciousness"}>
+      <div className="flex mt-14 p-2 h-full">
+        <SideControl headline={"Nations of Consciousness"}>
           <Text md weight="bold">
             Axis Controls
           </Text>
@@ -233,7 +234,13 @@ export default function WorldMap() {
             setChecked={setTheoryDriven}
           />
         </SideControl>
-        <div style={{ marginLeft: sideWidth }}>
+        <div style={{ marginLeft: sideWidth, width: "100%" }}>
+          <TopGraphText
+            firstLine={
+              "Distribution of the experiments in the database according to nations extracted from author affiliations."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
         </div>
       </div>

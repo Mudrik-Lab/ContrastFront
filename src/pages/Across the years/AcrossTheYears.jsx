@@ -68,7 +68,7 @@ export default function AcrossTheYears() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-14 p-2">
         <SideControl headline={"Across the Years"}>
           <Text color="blue" weight="bold" size={30}></Text>
 

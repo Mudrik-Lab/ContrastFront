@@ -136,7 +136,7 @@ export default function Timings() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-14 p-2">
         <SideControl headline="Timings">
           <Text md weight="bold">
             Axis Controls

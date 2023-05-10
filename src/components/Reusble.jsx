@@ -180,13 +180,14 @@ export const RangeInput = ({ number, setNumber }) => {
 export const SideControl = ({ children, headline }) => {
   return (
     <div
-      className="side-filter-box p-2 pt-10 flex flex-col items-center fixed z-10 "
+      className="side-filter-box p-2 flex flex-col items-center fixed z-10 "
       style={{ height: screenHeight - navHeight, width: sideWidth }}>
       <Text size={28} weight="bold" color="blue" center>
         {headline}
       </Text>
-      <div className=" shadow-xl mt-10 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[200px] ">
+      <div className=" shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[200px] ">
         {children}
+        <Spacer height={200} />
       </div>
     </div>
   );

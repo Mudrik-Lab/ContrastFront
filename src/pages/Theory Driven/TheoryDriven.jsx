@@ -99,7 +99,7 @@ export default function TheoryDriven() {
     <div>
       <Navbar />
 
-      <div className="flex mt-12 p-2 ">
+      <div className="flex mt-14 p-2 ">
         <SideControl headline="Theory Driven Distribution Pie">
           <Text md weight="bold">
             Axis Controls

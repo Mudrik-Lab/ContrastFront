@@ -10,6 +10,7 @@ import {
   Spacer,
   Text,
   TheoryDrivenFilter,
+  TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
@@ -75,14 +76,14 @@ export default function Journals() {
       color: Math.floor(Math.random() * 16777215).toString(16),
     },
   };
-  const graphWidth = 150 + trace1.x.length * 45;
+  const graphWidth = 150 + trace1.x.length * 35;
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
-    <div style={{ height: screenHeight - navHeight }}>
+    <div className="h-full">
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-12 px-2">
         <SideControl headline={"Journals"}>
           <div className={sectionClass}>
             <Text md weight="bold">
@@ -121,6 +122,12 @@ export default function Journals() {
         <div
           className="overflow-x-scroll h-full"
           style={{ marginLeft: sideWidth }}>
+          <TopGraphText
+            firstLine={
+              "The bar chart depicts distribution of experiments according to the journals they were published in."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -129,8 +136,8 @@ export default function Journals() {
               layout={{
                 autosize: false,
                 width: graphWidth,
-                height: screenHeight - 100,
-                margin: { autoexpand: true, b: 150 },
+                height: screenHeight - 360,
+                margin: { autoexpand: true, b: 100 },
                 showlegend: false,
               }}
             />

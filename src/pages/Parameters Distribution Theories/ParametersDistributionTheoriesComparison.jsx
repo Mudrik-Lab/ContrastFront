@@ -82,7 +82,7 @@ export default function ParametersDistributionTheoriesComparison() {
   return (
     <div className="w-full">
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-14 p-2">
         <SideControl headline={" Parameters Distribution Theories Comparison"}>
           <div className={sectionClass}>
             <Text md weight="bold">
@@ -165,7 +165,6 @@ export default function ParametersDistributionTheoriesComparison() {
             />
             <Text>Pro</Text>
           </div>{" "}
-          <Spacer height={200} />
         </SideControl>
 
         {/* <div className="graph relative w-full mx-auto"> */}

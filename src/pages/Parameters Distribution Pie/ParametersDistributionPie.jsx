@@ -85,7 +85,7 @@ export default function ParametersDistributionPie() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12 p-2">
+      <div className="flex mt-14 p-2">
         <SideControl headline={" Parameters Distribution Pie"}>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
