@@ -70,17 +70,19 @@ export default function WorldMap() {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
-
   const mergedStates = {};
-  data?.data.forEach((row) => {
+  const sameData = data?.data;
+  sameData?.map((row) => {
     row[row.theory] = row.value;
-    const country = row.country;
+    const country = row.country_name;
+
     if (!mergedStates[country]) {
       mergedStates[country] = row;
     } else {
       mergedStates[country] = { ...mergedStates[country], ...row };
     }
   });
+  console.log(mergedStates);
 
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)
@@ -89,11 +91,10 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
-  console.log(theories);
+
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
-  console.log(mergedStates);
   var graphData = [
     {
       type: "choropleth",
@@ -107,16 +108,22 @@ export default function WorldMap() {
         [1, "rgb(102, 191, 241,)"],
       ],
       hoverinfo: "location+text",
-      hovertext: data?.data.map(
-        (row) =>
-          (mergedStates[row.country]["Global Workspace"] || "") +
-          ("<br>" + mergedStates[row.country]["Integrated Information"] || "") +
-          ("<br>" + mergedStates[row.country]["Higher Order Thought"] || "") +
-          ("<br>" + mergedStates[row.country]["Other"] || "") +
-          ("<br>" +
-            mergedStates[row.country]["First Order & Predictive Processing"] ||
-            "")
-      ),
+      hovertext: data?.data.map((row) => {
+        // delete mergedStates[row.country_name].theory;
+        // delete mergedStates[row.country_name].country;
+        // delete mergedStates[row.country_name].value;
+        // delete mergedStates[row.country_name].total;
+        // delete mergedStates[row.country_name].country_name;
+        return (
+          JSON.stringify(mergedStates[row.country_name])
+            ?.replaceAll("{", "")
+            .replaceAll("}", "")
+            .replaceAll('"', "")
+            .replaceAll(",", "<br>") +
+          "<br>Total:" +
+          row.total
+        );
+      }),
       reversescale: true,
       marker: {
         size: data?.data.map((row) => row.total),
@@ -187,6 +194,7 @@ export default function WorldMap() {
     autosize: false,
   };
   configSuccess && !theory && setTheory(theories);
+
   return (
     <div>
       {" "}
