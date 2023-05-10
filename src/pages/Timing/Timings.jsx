@@ -55,7 +55,6 @@ export default function Timings() {
       },
       {}
     );
-  console.log(traceColor);
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
         (tag, index) => ({

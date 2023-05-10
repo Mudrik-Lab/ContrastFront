@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "../../components/Reusble";
 
 import ShowMoreText from "react-show-more-text";
-import { ReactComponent as Email } from "../../assets/icons/email.svg";
+import { ReactComponent as Web } from "../../assets/icons/website.svg";
 import { foundingBoardBios } from "../../components/HardCoded";
 
 export default function TeamMembersCards() {
@@ -42,7 +42,7 @@ export default function TeamMembersCards() {
           </div>
           <div className="flex justify-center gap-3 mt-2">
             <a href={card.website} target="_blank">
-              <Email />
+              <Web />
             </a>
           </div>
         </div>

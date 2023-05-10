@@ -82,7 +82,6 @@ export default function Frequencies() {
   const graphsData = tracesData
     ?.reduce((acc, val) => acc.concat(val), [])
     .sort((a, b) => a.name - b.name);
-  console.log(graphsData);
   const traces = [];
   graphsData?.map((row, index) =>
     traces.push({

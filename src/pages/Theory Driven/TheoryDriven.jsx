@@ -92,7 +92,7 @@ export default function TheoryDriven() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(cleanLabels2);
+
   return (
     <div>
       <Navbar />

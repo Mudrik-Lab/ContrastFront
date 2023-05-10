@@ -54,8 +54,8 @@ export default function HomePage() {
           s
         </div>
       </div>
-      <div className="citing w-full mt-8 mb-10 px-80">
-        <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-4 p-4">
+      <div className="citing max-w-[830px] mx-auto mt-10">
+        <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-2 p-4">
           <Quote />
           <Text>
             Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt

@@ -82,7 +82,6 @@ export default function WorldMap() {
       mergedStates[country] = { ...mergedStates[country], ...row };
     }
   });
-  console.log(mergedStates);
 
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)

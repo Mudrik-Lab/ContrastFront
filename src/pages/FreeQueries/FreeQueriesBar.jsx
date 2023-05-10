@@ -185,7 +185,6 @@ export default function FreeQueriesBar() {
         tasks,
       })
   );
-  console.log(extraConfig?.data);
   const X1 = data?.data.map((row) => row.value).reverse();
 
   const Y = data?.data.map((row) => row.key).reverse();
