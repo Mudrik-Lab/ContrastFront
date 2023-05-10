@@ -34,7 +34,7 @@ export default function HomePage() {
             Examine trends
           </Text>
           <Text color="blue" weight={300} size={36} className="leading-10">
-            in over 18,352 papers
+            in over 400 experiments
           </Text>
           <Text color="white" weight={300} size={32} className="leading-10">
             studying theories of consciousness
