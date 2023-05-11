@@ -10,6 +10,7 @@ import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
+import Footer from "../../components/Footer";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -33,7 +34,7 @@ export default function HomePage() {
             Examine trends
           </Text>
           <Text color="blue" weight={300} size={36} className="leading-10">
-            in over 18,352 papers
+            in over 400 experiments
           </Text>
           <Text color="white" weight={300} size={32} className="leading-10">
             studying theories of consciousness
@@ -53,8 +54,8 @@ export default function HomePage() {
           s
         </div>
       </div>
-      <div className="citing w-full mt-8 mb-10 px-80">
-        <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-4 p-4">
+      <div className="citing max-w-[830px] mx-auto mt-10">
+        <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-2 p-4">
           <Quote />
           <Text>
             Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt
@@ -81,6 +82,7 @@ export default function HomePage() {
       <PapersIconsMenu />
       <CommunityBox />
       <ConTraStUseCases />
+      <Footer />
     </div>
   );
 }

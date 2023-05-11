@@ -54,3 +54,20 @@ export function breakHeadlines(str, chartForLine) {
   });
   return "<span>" + newStr.slice(1) + "</span>";
 }
+
+export function rawTeaxtToShow(text) {
+  text = text.replace(/[-_]/g, " ");
+  const words = text.split(" ");
+  const capitalizedWords = words.map(
+    (word) => word.charAt(0).toUpperCase() + word.slice(1)
+  );
+  return capitalizedWords.join(" ");
+}
+
+export function hexToRgba(hexColor) {
+  const hex = hexColor.replace("#", "");
+  const r = parseInt(hex.substring(0, 2), 16);
+  const g = parseInt(hex.substring(2, 4), 16);
+  const b = parseInt(hex.substring(4, 6), 16);
+  return `rgba(${r}, ${g}, ${b}, 1)`;
+}

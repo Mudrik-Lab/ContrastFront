@@ -2,18 +2,32 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
-import { colorsArray, parametersOptions } from "../../components/HardCoded";
+import {
+  colorsArray,
+  designerColors,
+  navHeight,
+  parametersOptions,
+  screenHeight,
+  sideWidth,
+} from "../../components/HardCoded";
 import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
+  TopGraphText,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
+import Footer from "../../components/Footer";
+import { hexToRgba } from "../../Utils/functions";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -51,7 +65,6 @@ export default function ParametersDistributionPie() {
         min_number_of_experiments: experimentsNum,
       })
   );
-
   const values1 = [];
   const labels1 = [];
   const outsideColors = [];
@@ -64,7 +77,9 @@ export default function ParametersDistributionPie() {
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
-      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
+      outsideColors.push(
+        hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
+      );
     });
   });
 
@@ -73,11 +88,8 @@ export default function ParametersDistributionPie() {
   return (
     <div>
       <Navbar />
-      <div className="flex mt-12 p-2">
-        <div className="side-filter-box p-2 pt-10 flex flex-col items-center ">
-          <Text size={28} weight="bold" color="blue" center>
-            Parameters Distribution Pie
-          </Text>
+      <div className="flex mt-14 p-2">
+        <SideControl headline={" Parameters Distribution Pie"}>
           <div className="w-[346px] shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
             <div className={sectionClass}>
               <Text md weight="bold">
@@ -88,8 +100,8 @@ export default function ParametersDistributionPie() {
                 setNumber={setExperimentsNum}
               />
               <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
+                text="Minimum number of experiments"
+                tooltip="few more words about Minimum number of experiments"
               />
             </div>
 
@@ -105,56 +117,25 @@ export default function ParametersDistributionPie() {
               />
             </div>
 
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Reported
-              </Text>
-              <RadioInput
-                name="Report"
-                values={[
-                  { value: "report", name: "Report" },
-                  { value: "no_report", name: "No-Report" },
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={reporting}
-                setChecked={setReporting}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text md weight={"light"}>
-                Type of Consciousness
-              </Text>
-              <RadioInput
-                name="Consciousness"
-                values={[
-                  { value: "state", name: "State" },
-                  { value: "content", name: "Content" },
-
-                  { value: "either", name: "Either" },
-                  { value: "both", name: "Both" },
-                ]}
-                checked={consciousness}
-                setChecked={setConsciousness}
-              />
-            </div>
-            <Spacer height={10} />
-            <Text md>Theory Driven</Text>
-            <RadioInput
-              name="Thery-Driven"
-              values={[
-                { value: "driven", name: "Driven" },
-                { value: "mentioning", name: "Mentioning" },
-                { value: "either", name: "Either" },
-                { value: "post-hoc", name: "Post Hoc" },
-              ]}
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
               checked={theoryDriven}
               setChecked={setTheoryDriven}
             />
           </div>
-        </div>
+        </SideControl>
 
-        <div className="pl-12">
+        <div style={{ width: "100%", marginLeft: sideWidth + 10 }}>
+          <TopGraphText
+            firstLine={
+              "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
           {isLoading ? (
             <Spinner />
           ) : (
@@ -171,7 +152,7 @@ export default function ParametersDistributionPie() {
                   hole: 0.1,
                   domain: { x: [0, 1], y: [0.125, 0.875] },
                   marker: {
-                    colors: colorsArray,
+                    colors: designerColors,
                     line: { width: 1, color: "white" },
                   },
                 },
@@ -201,6 +182,7 @@ export default function ParametersDistributionPie() {
           )}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

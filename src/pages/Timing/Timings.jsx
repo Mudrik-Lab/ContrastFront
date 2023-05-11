@@ -5,16 +5,27 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
+  SideControl,
   Text,
+  TheoryDrivenFilter,
+  TopGraphText,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, parametersOptions } from "../../components/HardCoded";
+import {
+  AlphaBetaColors,
+  navHeight,
+  parametersOptions,
+  sideWidth,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
 import Spinner from "../../components/Spinner";
 import { blueToYellow } from "../../Utils/functions";
+import Footer from "../../components/Footer";
 
 export default function Timings() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -46,7 +57,6 @@ export default function Timings() {
       },
       {}
     );
-  console.log(traceColor);
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
         (tag, index) => ({
@@ -126,171 +136,126 @@ export default function Timings() {
   return (
     <div>
       <Navbar />
-      {
-        <div className="flex mt-12 p-2">
-          <div
-            className="side-filter-box p-2 pt-10 flex flex-col items-center "
-            style={{ height: screenHeight }}>
-            <Text size={28} weight="bold" color="blue">
-              Timings
+      <div className="flex mt-14 p-2">
+        <SideControl headline="Timings">
+          <Text md weight="bold">
+            Axis Controls
+          </Text>
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+          <FilterExplanation
+            text="Minimum number of experiments"
+            tooltip="few more words about Minimum number of experiments"
+          />
+          <div className={sectionClass}>
+            <Text flexed md weight="bold">
+              Theory
+              <FilterExplanation tooltip="few more words about Thory" />
             </Text>
-            <div className="w-[346px] h-screen overflow-y-scroll shadow-xl mt-10 mx-auto rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 ">
-              <Text md weight="bold">
-                Axis Controls
-              </Text>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="minimum number of experiments"
-                tooltip="few more words about minimum number of experiments"
-              />
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Theory
-                  <FilterExplanation tooltip="few more words about Thory" />
-                </Text>
 
-                <TagsSelect
-                  options={parentTheories}
-                  placeholder="Paradigms Family"
-                  defaultValue={selectedParent.value}
-                  onChange={setSelectedParent}
-                />
-              </div>
-
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Techniques
-                  <FilterExplanation tooltip="few more words about techniques" />
-                </Text>
-                {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTechniques}
-                    options={techniques}
-                    placeholder="Techniques"
-                    onChange={setSelectedTechniques}
-                  />
-                )}
-              </div>
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Finding Tags
-                  <FilterExplanation tooltip="few more words about Finding Tags" />
-                </Text>
-                {configSuccess && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTags}
-                    options={tags}
-                    placeholder="Tags"
-                    onChange={setSelectedTags}
-                  />
-                )}
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                <Text md weight="bold">
-                  Theory Driven
-                </Text>
-                <RadioInput
-                  name="Thery-Driven"
-                  values={[
-                    { value: "driven", name: "Driven" },
-                    { value: "mentioning", name: "Mentioning" },
-                    { value: "either", name: "Either" },
-                    { value: "post-hoc", name: "Post Hoc" },
-                  ]}
-                  checked={theoryDriven}
-                  setChecked={setTheoryDriven}
-                />
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                {/* TODO: find Headline */}
-                <Text md weight="bold">
-                  Reported
-                </Text>
-                <RadioInput
-                  name="Report"
-                  values={[
-                    { value: "report", name: "Report" },
-                    { value: "no_report", name: "No-Report" },
-                    { value: "either", name: "Either" },
-                    { value: "both", name: "Both" },
-                  ]}
-                  checked={reporting}
-                  setChecked={setReporting}
-                />
-              </div>
-              <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-                <Text md weight="bold">
-                  Type of Consciousness
-                </Text>
-                <RadioInput
-                  name="Consciousness"
-                  values={[
-                    { value: "state", name: "State" },
-                    { value: "content", name: "Content" },
-
-                    { value: "either", name: "Either" },
-                    { value: "both", name: "Both" },
-                  ]}
-                  checked={consciousness}
-                  setChecked={setConsciousness}
-                />
-              </div>
-            </div>
+            <TagsSelect
+              options={parentTheories}
+              placeholder="Paradigms Family"
+              defaultValue={selectedParent.value}
+              onChange={setSelectedParent}
+            />
           </div>
 
-          <div className="pl-12">
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <Plot
-                data={traces}
-                layout={{
-                  autosize: false,
-                  barmode: "stack",
-
-                  width: screenWidth - 538,
-                  height: screenHeight - 150,
-                  margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 15, font: { size: 18 } },
-                  showlegend: false,
-                  yaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                  xaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                }}
+          <div className={sectionClass}>
+            <Text flexed md weight="bold">
+              Techniques
+              <FilterExplanation tooltip="few more words about techniques" />
+            </Text>
+            {configSuccess && (
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={true}
+                value={selectedTechniques}
+                options={techniques}
+                placeholder="Techniques"
+                onChange={setSelectedTechniques}
               />
             )}
           </div>
-          <div
-            className="mt-12 overflow-y-scroll"
-            style={{ height: screenHeight - 150 }}>
-            {blueToYellow(
-              configuration?.data.available_finding_tags_types_for_timings
-                .length
-            ).map((color, index) => (
-              <div className="flex justify-start items-center gap-2" id="color">
-                <div
-                  className="w-5 h-5 mt-2 "
-                  style={{ backgroundColor: color }}></div>
-                <Text>{Object.keys(traceColor)[index]}</Text>
-              </div>
-            ))}
+          <div className={sectionClass}>
+            <Text flexed md weight="bold">
+              Finding Tags
+              <FilterExplanation tooltip="few more words about Finding Tags" />
+            </Text>
+            {configSuccess && (
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={true}
+                value={selectedTags}
+                options={tags}
+                placeholder="Tags"
+                onChange={setSelectedTags}
+              />
+            )}
           </div>
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
+        </SideControl>
+
+        <div style={{ marginLeft: sideWidth }}>
+          <TopGraphText
+            firstLine={
+              "The chart depicts the findings in the temporal domain of the experiments in the database. Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend)."
+            }
+            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+          />
+
+          {isLoading ? (
+            <Spinner />
+          ) : (
+            <Plot
+              data={traces}
+              layout={{
+                autosize: false,
+                barmode: "stack",
+
+                width: screenWidth - sideWidth - 300,
+                height: screenHeight - 360,
+                margin: { autoexpand: true, l: 20 },
+                legend: { itemwidth: 15, font: { size: 18 } },
+                showlegend: false,
+                yaxis: {
+                  zeroline: false, // hide the zeroline
+                  zerolinecolor: "#969696", // customize the color of the zeroline
+                  zerolinewidth: 2, // customize the width of the zeroline
+                },
+                xaxis: {
+                  zeroline: false, // hide the zeroline
+                  zerolinecolor: "#969696", // customize the color of the zeroline
+                  zerolinewidth: 2, // customize the width of the zeroline
+                },
+              }}
+            />
+          )}
         </div>
-      }
+        <div
+          className="fixed overflow-y-scroll top-52 right-2 "
+          style={{ height: screenHeight - 450 }}>
+          {blueToYellow(
+            configuration?.data.available_finding_tags_types_for_timings.length
+          ).map((color, index) => (
+            <div className="flex justify-start items-end gap-2" id="color">
+              <div
+                className="w-4 h-4 mt-2 "
+                style={{ backgroundColor: color }}></div>
+              <Text sm>{Object.keys(traceColor)[index]}</Text>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <Footer />
     </div>
   );
 }

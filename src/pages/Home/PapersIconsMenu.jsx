@@ -14,7 +14,7 @@ export default function PapersIconsMenu() {
           Conduct Queries And Visually Examine Trends In Empirical Papers
         </h1>
         <Text weight="bold" lg>
-          With A Range OF Unique Data Visualization Tools:{" "}
+          With A Range of Unique Data Visualization Tools:{" "}
         </Text>
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
           {graphsHeaders.map((paper) => (

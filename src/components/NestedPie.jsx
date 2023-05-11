@@ -27,8 +27,6 @@ export default function NestedPie() {
   // for matching external pie to internal- need to add to external's data "parentName"
   // like in https://codesandbox.io/s/jmjrt?file=/src/data.js:597-619
 
-  console.log(data?.data);
-
   // Define the data for the first pie chart
   var data1 = [
     {

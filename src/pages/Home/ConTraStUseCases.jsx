@@ -1,9 +1,8 @@
 import React from "react";
 import { Text } from "../../components/Reusble";
-import { ReactComponent as Tempeleton } from "../../assets/logoes/tempelton.svg";
-import { ReactComponent as TelAvivUni } from "../../assets/logoes/tel-aviv-uni.svg";
-import { ReactComponent as Cogtate } from "../../assets/logoes/cogtate.svg";
-import { ReactComponent as All } from "../../assets/logoes/all-logoes-together.svg";
+import Tempeleton from "../../assets/logoes/tempelton.png";
+import TelAvivUni from "../../assets/logoes/tlv-uni.png";
+import Cogtate from "../../assets/logoes/cogtate.png";
 
 export default function ConTraStUseCases() {
   const cardsInfo = [
@@ -11,25 +10,31 @@ export default function ConTraStUseCases() {
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2mGuiTnSMifrKst2aOFNmjdbBBbGemF_zHbI2oO9&s",
       headline: "Find the papers that are most relevant to you",
-      text: "This website allows researchers to conduct queries and examine trends in empirical papers that either tested or mentioned at least one of the following theories of consciousness",
+      text: "Conduct your own queries, looking for different intersections of methods, approaches and paradigms. Download citations lists of relevant works that could help you map the field and get started!",
     },
     {
       image:
         "https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=1200&quality=85&auto=format&fit=max&s=a52bbe202f57ac0f5ff7f47166906403",
-      headline: "Find the papers that are most relevant to you",
-      text: "This website allows researchers to conduct queries and examine trends in empirical papers that either tested or mentioned at least one of the following theories of consciousness",
+      headline: "Compare between the theories",
+      text: "Choose parameters of interest and explore how these distribute between the different theories and within each one. This will allow you to ask meaningful questions about the ways in which the theories have been tested and studied, and perhaps give you ideas for you own new study",
     },
     {
       image:
         "https://www.fauna-flora.org/app/uploads/2022/11/AdobeStock_246102033_cropped-2-scaled.jpeg",
-      headline: "Find the papers that are most relevant to you",
-      text: "This website allows researchers to conduct queries and examine trends in empirical papers that either tested or mentioned at least one of the following theories of consciousness",
+      headline: "Discover trends over time",
+      text: "For each parameter of interest, explore how the experiments in the ConTraSt database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
     },
     {
       image:
         "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2mGuiTnSMifrKst2aOFNmjdbBBbGemF_zHbI2oO9&s",
-      headline: "Find the papers that are most relevant to you",
-      text: "This website allows researchers to conduct queries and examine trends in empirical papers that either tested or mentioned at least one of the following theories of consciousness",
+      headline: "Get a high level snapshot of findings",
+      text: "For both anatomical and temporal findings, get plots that summarize the current state of affairs and provide an overview of the way theories of consciousness have been studied",
+    },
+    {
+      image:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2mGuiTnSMifrKst2aOFNmjdbBBbGemF_zHbI2oO9&s",
+      headline: "Simply have fun ",
+      text: "You can also enjoy some of our plots that provide a more sociological view of the field: which theories are more popular in different countries and journals?...",
     },
   ];
   return (
@@ -47,7 +52,7 @@ export default function ConTraStUseCases() {
             <Text>{card.text}</Text>
           </div>
         ))}
-        <div className="simply-fun border bg-grayLight py-6 w-full">
+        {/* <div className="simply-fun border bg-grayLight py-6 w-full">
           <Text center lg weight="bold">
             Simply have fun
           </Text>
@@ -58,13 +63,27 @@ export default function ConTraStUseCases() {
               least one of the following theories of consciousness :{" "}
             </Text>
           </div>
-        </div>
+        </div> */}
       </div>
+
       <div className="footer flex justify-center items-center gap-6">
-        {/* <Cogtate />
-        <Tempeleton />
-        <TelAvivUni /> */}
-        <All />
+        <a href="">
+          <img
+            src={Tempeleton}
+            alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
+            target="_blank"
+          />{" "}
+        </a>
+        <a href="">
+          <img
+            src={Cogtate}
+            alt="https://www.arc-cogitate.com/"
+            target="_blank"
+          />{" "}
+        </a>{" "}
+        <a href="">
+          <img src={TelAvivUni} alt="https://www.tau.ac.il/" target="_blank" />{" "}
+        </a>{" "}
       </div>
     </div>
   );

@@ -8,7 +8,7 @@ export default async function getNations({
   min_number_of_experiments,
 }) {
   const theoriesArr = theory?.map((t) => "&theory=" + t.value);
-  console.log(theory);
+
   return await queryApi({
     url: `studies/experiments_graphs/nations_of_consciousness/?${theoriesArr
       ?.join("")
