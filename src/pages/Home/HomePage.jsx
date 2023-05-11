@@ -11,6 +11,7 @@ import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
+import brain from "../../assets/images/brain-prism-wide.jpg";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -19,12 +20,15 @@ export default function HomePage() {
   const copyToClipboard = () => {
     copy(cite);
   };
+  const containerStyle = {
+    backgroundImage: `url(${brain})`,
+  };
   return (
     <div>
       <Navbar />
       <div
-        style={{ height: "512px" }}
-        className="header w-full bg-black py-20 px-28 mt-14">
+        style={containerStyle}
+        className="header h-[512px] py-20 px-28 mt-14 bg-no-repeat bg-cover bg-center ">
         <div className="headline w-full">
           <h1 className="text-white text-5xl font-bold mb-10">
             {" "}
@@ -51,7 +55,6 @@ export default function HomePage() {
               Register & Contribute
             </Text>
           </div>
-          s
         </div>
       </div>
       <div className="citing max-w-[830px] mx-auto mt-10">

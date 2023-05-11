@@ -334,64 +334,86 @@ export const graphsHeaders = [
     text: "Parameter Distribution Free Queries",
     color: "yellow",
     icon: <ParameterDist />,
+    tooltip:
+      "The graph depicts the distribution of parameter values, according to your specifications.",
     route: "/parameter-distribution-free-queries",
   },
   {
     text: "Theories Comparison",
+    tooltip:
+      "The graph depicts the different distributions of parameters for the four theories separately.",
     color: "orange",
     icon: <TheoriesComparison />,
     route: "theories-comparison",
   },
   {
     text: "Parameter Distribution Bar",
+    tooltip:
+      'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.',
     icon: <ParameterDist2 />,
     color: "pink",
     route: "/parameter-distribution-bar",
   },
   {
     text: "Parameter Distribution Pie",
+    tooltip:
+      "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories.",
     icon: <ParameterTheory />,
     color: "lilac",
     route: "/parameter-distribution-pie",
   },
   {
     text: "Trends Across The Years",
+    tooltip:
+      "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time.",
     icon: <Trends />,
     color: "purple",
     route: "/across-the-years",
   },
   {
     text: "Theory Driven",
+    tooltip:
+      "The inner circle of the pie chart depicts the distribution of experiments divided into the categories: “Theory-Driven”, “Mentioning” or “Post hoc”",
     icon: <TheoryDriven />,
     color: "navyBlue",
     route: "/theory-driven",
   },
   {
     text: "Timings",
+    tooltip:
+      "The chart depicts the findings in the temporal domain of the experiments in the database.",
     icon: <Timings />,
     color: "darkTeal",
     route: "/timings",
   },
   {
     text: "Frequencies",
+    tooltip:
+      "The chart depicts the findings in the frequency domain of the experiments in the database.",
     icon: <Frequencies />,
     color: "teal",
     route: "/frequencies",
   },
   {
     text: "Anatomical Findings",
+    tooltip:
+      "The figure depicts the findings in the spatial domain of the experiments in the database which used fMRI.",
     icon: <AnatomicalFindings />,
     color: "lightTeal",
     route: "/",
   },
   {
     text: "Journals",
+    tooltip:
+      "The bar chart depicts distribution of experiments according to the journals they were published in.",
     icon: <Journals />,
     color: "lightGreen",
     route: "/journals",
   },
   {
     text: "Consciousness World Map",
+    tooltip:
+      "Distribution of the experiments in the database according to nations extracted from author affiliations.",
     icon: <WorldMap />,
     color: "lightGreen",
     route: "/consciousness-world-map",
