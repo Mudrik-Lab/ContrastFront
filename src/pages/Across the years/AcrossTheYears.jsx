@@ -125,13 +125,13 @@ export default function AcrossTheYears() {
                   },
                 },
                 width: screenWidth - 338,
-                height: screenHeight - 100,
+                height: screenHeight - 120,
               }}
             />
           )}
         </div>
       </div>
-      <Footer />
+      <Footer isFixed={true} />
     </div>
   );
 }

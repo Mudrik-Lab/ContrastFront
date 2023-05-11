@@ -144,7 +144,7 @@ export default function Journals() {
           )}
         </div>
       </div>
-      <Footer />
+      <Footer isFixed={true} />
     </div>
   );
 }

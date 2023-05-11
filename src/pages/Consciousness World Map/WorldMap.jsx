@@ -244,7 +244,7 @@ export default function WorldMap() {
           {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
         </div>
       </div>
-      <Footer />
+      <Footer isFixed={true} />
     </div>
   );
 }

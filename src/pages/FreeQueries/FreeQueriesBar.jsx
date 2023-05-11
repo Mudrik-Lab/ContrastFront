@@ -424,7 +424,7 @@ Each list of options under each parameter combo box includes the specific values
           )}
         </div>
       )}
-      <Footer />
+      <Footer isFixed={false} />
     </div>
   );
 }

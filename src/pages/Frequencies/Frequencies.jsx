@@ -205,7 +205,7 @@ export default function Frequencies() {
           </div>
         </div>
       )}
-      <Footer />
+      <Footer isFixed={true} />
     </div>
   );
 }

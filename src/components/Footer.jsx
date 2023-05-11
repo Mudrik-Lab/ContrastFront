@@ -2,10 +2,16 @@ import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
+import classNames from "classnames";
 
-export default function Footer() {
+export default function Footer({ isFixed }) {
   return (
-    <div className="w-full flex justify-between items-center py-4 px-16 bg-black">
+    <div
+      className={classNames(
+        `${
+          isFixed ? "absolute bottom-0" : ""
+        } w-full flex justify-between items-center py-4 px-16 bg-black `
+      )}>
       <div className="flex gap-3 items-center">
         <img src={Logo} alt="" />
         <div className=" border-r border-white h-10 "></div>
