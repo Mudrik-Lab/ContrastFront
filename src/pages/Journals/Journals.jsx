@@ -83,7 +83,7 @@ export default function Journals() {
   return (
     <div className="h-full">
       <Navbar />
-      <div className="flex mt-12 px-2">
+      <div className="flex mt-14 p-2">
         <SideControl headline={"Journals"}>
           <div className={sectionClass}>
             <Text md weight="bold">

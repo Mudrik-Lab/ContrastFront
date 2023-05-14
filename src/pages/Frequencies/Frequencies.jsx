@@ -44,7 +44,7 @@ export default function Frequencies() {
 
   const parentTheories = configSuccess
     ? configuration?.data.available_parent_theories.map((parentTheory) => ({
-        value: parentTheory,
+        value: encodeURIComponent(parentTheory),
         label: parentTheory,
       }))
     : [];

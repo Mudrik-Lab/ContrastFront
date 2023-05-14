@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <div>
-      <nav className="bg-white px-16 h-[70px] flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
+      <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
         {/* <div className="bg-orange bg-pink bg-navyBlue bg-lightTeal bg-lightGreen bg-teal bg-darkTeal bg-yellow bg-purple bg-lilac"></div> */}
         <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between">
@@ -32,7 +32,7 @@ export default function Navbar() {
               </Text>
             </div>
           </div>
-          <div className="navigate-buttons items-center justify-between flex">
+          <div className="navigate-buttons items-center justify-between flex ">
             <ul className="flex flex-row text-black space-x-12">
               <li className="flex items-center relative">
                 <button

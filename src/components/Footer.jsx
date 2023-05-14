@@ -21,7 +21,9 @@ export default function Footer({ isFixed }) {
         </Text>
       </div>
       <div className="flex gap-14">
-        <Text color="white">Terms of Use</Text>
+        <Text color="white">
+          <a href="/terms-of-use">Terms of Use</a>
+        </Text>
         <Text color="white">Modes of Governance</Text>
       </div>
       <div className="mr-10">

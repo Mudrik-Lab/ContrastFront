@@ -37,12 +37,13 @@ export default function WorldMap() {
   );
 
   const theories = configSuccess
-    ? configuration?.data.available_parent_theories.map((tag) => ({
-        value: tag,
-        label: tag,
-      }))
+    ? configuration?.data.available_parent_theories.map((tag) => {
+        return {
+          value: encodeURIComponent(tag),
+          label: tag,
+        };
+      })
     : [];
-
   const { data, isLoading } = useQuery(
     [
       `nations_of_consciousness${
@@ -67,17 +68,15 @@ export default function WorldMap() {
         type_of_consciousness: consciousness,
       })
   );
-
   const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
   const mergedStates = {};
-  const sameData = data?.data;
-  sameData?.map((row) => {
+
+  data?.data.map((row) => {
     row[row.theory] = row.value;
     const country = row.country_name;
-
     if (!mergedStates[country]) {
       mergedStates[country] = row;
     } else {
@@ -92,10 +91,10 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
+  console.log(mergedStates);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-
   var graphData = [
     {
       type: "choropleth",
@@ -110,11 +109,11 @@ export default function WorldMap() {
       ],
       hoverinfo: "location+text",
       hovertext: data?.data.map((row) => {
-        // delete mergedStates[row.country_name].theory;
-        // delete mergedStates[row.country_name].country;
-        // delete mergedStates[row.country_name].value;
-        // delete mergedStates[row.country_name].total;
-        // delete mergedStates[row.country_name].country_name;
+        delete mergedStates[row.country_name].theory;
+
+        delete mergedStates[row.country_name].value;
+
+        delete mergedStates[row.country_name].country_name;
         return (
           JSON.stringify(mergedStates[row.country_name])
             ?.replaceAll("{", "")

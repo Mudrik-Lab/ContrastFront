@@ -62,7 +62,7 @@ export const Text = ({
   id,
 }) => {
   return (
-    <p
+    <div
       id={id}
       onClick={onClick}
       className={classNames(
@@ -77,7 +77,7 @@ export const Text = ({
         textAlign: center && "center",
       }}>
       {children}
-    </p>
+    </div>
   );
 };
 
@@ -206,7 +206,7 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
         values={[
           { value: "state", name: "State" },
           { value: "content", name: "Content" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "both", name: "Both" },
         ]}
         checked={checked}
@@ -227,7 +227,7 @@ export const ReportFilter = ({ checked, setChecked }) => {
         values={[
           { value: "report", name: "Report" },
           { value: "no_report", name: "No-Report" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "both", name: "Both" },
         ]}
         checked={checked}
@@ -248,7 +248,7 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
         values={[
           { value: "driven", name: "Driven" },
           { value: "mentioning", name: "Mentioning" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "post-hoc", name: "Post Hoc" },
         ]}
         checked={checked}

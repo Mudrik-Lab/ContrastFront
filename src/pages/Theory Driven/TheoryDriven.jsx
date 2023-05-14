@@ -22,10 +22,8 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { ToggleSwitch } from "flowbite-react";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import Footer from "../../components/Footer";
 

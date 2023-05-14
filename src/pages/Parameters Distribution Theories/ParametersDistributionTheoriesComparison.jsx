@@ -10,10 +10,13 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
   SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
   TopGraphText,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -100,54 +103,15 @@ export default function ParametersDistributionTheoriesComparison() {
               onChange={setSelected}
             />
           </div>
-          <div className={sectionClass}>
-            <Text md weight={"bold"}>
-              Reported
-            </Text>
-            <RadioInput
-              name="Report"
-              values={[
-                { value: "report", name: "Report" },
-                { value: "no_report", name: "No-Report" },
-                { value: "either", name: "Either" },
-                { value: "both", name: "Both" },
-              ]}
-              checked={reporting}
-              setChecked={setReporting}
-            />
-          </div>
-          <div className={sectionClass}>
-            <Text md weight={"bold"}>
-              Type of Consciousness
-            </Text>
-            <RadioInput
-              name="Consciousness"
-              values={[
-                { value: "state", name: "State" },
-                { value: "content", name: "Content" },
-                { value: "either", name: "Either" },
-                { value: "both", name: "Both" },
-              ]}
-              checked={consciousness}
-              setChecked={setConsciousness}
-            />
-          </div>
-          <div className={sectionClass}>
-            <Text weight={"bold"} md>
-              Theory Driven
-            </Text>
-            <RadioInput
-              name="Thery-Driven"
-              values={[
-                { value: "driven", name: "Driven" },
-                { value: "mentioning", name: "Mentioning" },
-                { value: "either", name: "Either" },
-                { value: "post-hoc", name: "Post Hoc" },
-              ]}
-              checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />
-          </div>
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
           <Spacer height={10} />
           <Text md weight={"bold"}>
             Interpretation

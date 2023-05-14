@@ -16,8 +16,6 @@ import {
   colorsArray,
   screenWidth,
   parametersOptions,
-  navHeight,
-  screenHeight,
   sideWidth,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
@@ -175,7 +173,7 @@ export default function ParametersDistributionBar() {
           </SideControl>
 
           {X1 && X2 && Y && (
-            <div style={{ marginLeft: sideWidth }}>
+            <div style={{ marginLeft: sideWidth, width: "100%" }}>
               <TopGraphText
                 firstLine={
                   'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
