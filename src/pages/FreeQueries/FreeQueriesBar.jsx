@@ -31,6 +31,7 @@ import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
 import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { rawTeaxtToShow } from "../../Utils/functions";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -193,7 +194,7 @@ export default function FreeQueriesBar() {
   );
   const X1 = data?.data.map((row) => row.value).reverse();
 
-  const Y = data?.data.map((row) => row.key).reverse();
+  const Y = data?.data.map((row) => rawTeaxtToShow(row.key)).reverse();
 
   var trace1 = {
     x: X1,
@@ -252,8 +253,8 @@ export default function FreeQueriesBar() {
 
               <div className={sideSectionClass}>
                 <Text flexed md weight="bold">
-                  Parameters
-                  <FilterExplanation tooltip="few more words about Paradigm " />
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}

@@ -117,10 +117,7 @@ export default function Frequencies() {
                   number={experimentsNum}
                   setNumber={setExperimentsNum}
                 />
-                <FilterExplanation
-                  text="Minimum number of experiments"
-                  tooltip="few more words about Minimum number of experiments"
-                />
+
                 <div className={sectionClass}>
                   <Text flexed md weight="bold">
                     Theory

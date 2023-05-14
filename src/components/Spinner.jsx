@@ -36,6 +36,7 @@ const Spinner = () => {
             paper_bgcolor: "transparent",
             plot_bgcolor: "transparent",
           }}
+          config={{ displayModeBar: false }}
         />
       </div>
     </div>

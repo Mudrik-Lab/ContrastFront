@@ -10,6 +10,7 @@ import {
   sideWidth,
 } from "../../components/HardCoded";
 import {
+  FilterExplanation,
   RadioInput,
   RangeInput,
   ReportFilter,
@@ -120,8 +121,12 @@ export default function TheoryDriven() {
               checked={interpretation}
               setChecked={() => setInterpretation(!interpretation)}
             />
-            <Text>Pro</Text>
+            <Text>Supports</Text>
           </div>
+          <FilterExplanation
+            text="Interpretation"
+            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+          />
         </SideControl>
       }
       graph={
@@ -144,7 +149,7 @@ export default function TheoryDriven() {
                   type: "pie",
                   textinfo: "label+number",
                   textposition: "inside",
-                  domain: { x: [0, 1], y: [0.125, 0.875] },
+                  domain: { x: [0.5, 0.5], y: [0.2, 0.8] },
                   marker: {
                     colors: colorsArray,
                     line: { width: 1, color: "white" },
@@ -157,9 +162,9 @@ export default function TheoryDriven() {
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",
-                  hole: 0.65,
+                  hole: 0.6,
                   textposition: "inside",
-                  domain: { x: [0, 1], y: [0, 1] },
+                  domain: { x: [1, 1], y: [1, 1] },
                   marker: {
                     colors: cleanLabels2.map((label) => keysColors[label]),
                     line: { width: 1, color: "white" },

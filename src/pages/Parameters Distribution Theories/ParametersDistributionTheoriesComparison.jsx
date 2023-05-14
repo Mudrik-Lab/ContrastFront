@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import {
   designerColors,
+  myColors,
   parametersOptions,
   sideWidth,
 } from "../../components/HardCoded";
@@ -23,7 +24,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { breakHeadlines } from "../../Utils/functions";
+import { breakHeadlines, rawTeaxtToShow } from "../../Utils/functions";
 import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 
@@ -68,34 +69,33 @@ export default function ParametersDistributionTheoriesComparison() {
   chartsData?.map((theory) =>
     theory.series.map((row) => keysArr.push(row.key))
   );
-  const trimedKeysArr = [...new Set(keysArr)];
-  const someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
 
+  const trimedKeysArr = [...new Set(keysArr)];
+
+  let someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
+  if (selected.value === "paradigm") {
+    someColors = myColors.slice(0, trimedKeysArr.length);
+  }
+  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(keysColors);
+  console.log({ keysColors, selected });
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <PageTemplate
       control={
         <SideControl headline={" Parameters Distribution Theories Comparison"}>
-          <div className={sectionClass}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="Minimum number of experiments"
-              tooltip="few more words about Minimum number of experiments"
-            />
-          </div>
+          <Text md weight="bold">
+            Axis Controls
+          </Text>
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
           <div className={sectionClass}>
             <Text md flexed weight="bold">
-              Parameters
-              <FilterExplanation tooltip="few more words about Paradigm " />
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
             </Text>
             <TagsSelect
               options={parametersOptions}
@@ -122,8 +122,12 @@ export default function ParametersDistributionTheoriesComparison() {
               checked={interpretation}
               setChecked={() => setInterpretation(!interpretation)}
             />
-            <Text>Pro</Text>
-          </div>{" "}
+            <Text>Supports</Text>
+          </div>
+          <FilterExplanation
+            text="Interpretation"
+            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+          />
         </SideControl>
       }
       graph={
@@ -145,7 +149,9 @@ export default function ParametersDistributionTheoriesComparison() {
                     {
                       direction: "clockwise",
                       values: chart.series.map((row) => row.value),
-                      labels: chart.series.map((row) => row.key),
+                      labels: chart.series.map((row) =>
+                        rawTeaxtToShow(row.key)
+                      ),
                       type: "pie",
                       textinfo: "label+number",
                       textposition: "inside",

@@ -27,7 +27,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
-import { hexToRgba } from "../../Utils/functions";
+import { hexToRgba, rawTeaxtToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionPie() {
@@ -74,7 +74,7 @@ export default function ParametersDistributionPie() {
 
   data?.data.map((x, index) => {
     values1.push(x.value);
-    labels1.push(x.series_name);
+    labels1.push(rawTeaxtToShow(x.series_name));
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
@@ -83,7 +83,6 @@ export default function ParametersDistributionPie() {
       );
     });
   });
-
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
@@ -91,21 +90,15 @@ export default function ParametersDistributionPie() {
     <PageTemplate
       control={
         <SideControl headline={" Parameters Distribution Pie"}>
-          <div className={sectionClass}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="Minimum number of experiments"
-              tooltip="few more words about Minimum number of experiments"
-            />
-          </div>
+          <Text md weight="bold">
+            Axis Controls
+          </Text>
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
           <div className={sectionClass}>
             <Text flexed md weight="bold">
-              Parameters
-              <FilterExplanation tooltip="few more words about Paradigm " />
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
             </Text>
             <TagsSelect
               options={parametersOptions}

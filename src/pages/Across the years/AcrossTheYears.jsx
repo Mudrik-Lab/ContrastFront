@@ -24,6 +24,7 @@ import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { rawTeaxtToShow } from "../../Utils/functions";
 
 export default function AcrossTheYears() {
   const [selected, setSelected] = useState(parametersOptions[0]);
@@ -58,14 +59,12 @@ export default function AcrossTheYears() {
       x: row.series.map((a) => a.year),
       y: row.series.map((a) => a.value),
       type: "scatter",
-      name: row.series_name,
+      name: rawTeaxtToShow(row.series_name),
       mode: "lines+markers",
     });
   });
   const screenWidth = window.screen.width;
   const screenHeight = window.screen.height;
-
-  screenHeight;
 
   return (
     <div>
@@ -82,13 +81,12 @@ export default function AcrossTheYears() {
                 number={experimentsNum}
                 setNumber={setExperimentsNum}
               />
-              <Label>min. # of experiments</Label>
             </div>
 
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
               <Text md flexed weight={"bold"}>
-                Parameters
-                <FilterExplanation tooltip="few more words about Theory" />
+                Parameter of interest
+                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
               </Text>
               <TagsSelect
                 options={parametersOptions}

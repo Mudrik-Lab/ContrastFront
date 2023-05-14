@@ -24,6 +24,7 @@ import { useSearchParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { rawTeaxtToShow } from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -88,14 +89,14 @@ export default function ParametersDistributionBar() {
 
   const X1 = data?.data.map((row) => row.series[0].value).reverse();
 
-  const Y = data?.data.map((row) => row.series_name).reverse();
+  const Y = data?.data.map((row) => rawTeaxtToShow(row.series_name)).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
 
   var trace1 = {
     x: X1,
     y: Y,
-    name: "pro",
+    name: "Supports",
     orientation: "h",
     marker: {
       color: colorsArray[12],
@@ -106,7 +107,7 @@ export default function ParametersDistributionBar() {
   var trace2 = {
     x: X2,
     y: Y,
-    name: "challenges",
+    name: "Challenges",
     orientation: "h",
     marker: {
       color: colorsArray[6],
@@ -126,16 +127,11 @@ export default function ParametersDistributionBar() {
               <Text md weight="bold">
                 Axis Controls
               </Text>
-              <div className={sectionClass}>
-                <RangeInput
-                  number={experimentsNum}
-                  setNumber={setExperimentsNum}
-                />
-                <FilterExplanation
-                  text="Minimum number of experiments"
-                  tooltip="few more words about Minimum number of experiments"
-                />
-              </div>
+
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
+              />
 
               <div className={sectionClass}>
                 <Text flexed md weight="bold">
@@ -150,8 +146,8 @@ export default function ParametersDistributionBar() {
               </div>
               <div className={sectionClass}>
                 <Text flexed md weight="bold">
-                  Parameters
-                  <FilterExplanation tooltip="few more words about Theory" />
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}
@@ -162,8 +158,7 @@ export default function ParametersDistributionBar() {
 
               <ReportFilter checked={reporting} setChecked={setReporting} />
 
-              <div className="flex gap-2">
-                <label htmlFor="stacked">Is Stacked?</label>
+              <div className="flex gap-2 mt-4">
                 <input
                   type="checkbox"
                   name="stacked"
@@ -171,6 +166,10 @@ export default function ParametersDistributionBar() {
                   onChange={() => setIsStacked(!isStacked)}
                 />
               </div>
+              <FilterExplanation
+                text="Stacked (or side by side)?"
+                tooltip="You can choose how to display the comparison between experiments supporting (red bars) vs. challenging (blue bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
+              />
             </SideControl>
           }
           graph={
