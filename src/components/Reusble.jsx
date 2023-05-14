@@ -62,20 +62,22 @@ export const Text = ({
   id,
 }) => {
   return (
-    <p
+    <div
       id={id}
       onClick={onClick}
       className={classNames(
         `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
-        } font-${weight ? weight : "medium"} ${className ? className : ""} `
+        } font-${weight ? weight : "medium"} ${
+          className ? className : ""
+        } leading-${lineHeight}`
       )}
       style={{
         fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,
         textAlign: center && "center",
       }}>
       {children}
-    </p>
+    </div>
   );
 };
 
@@ -124,9 +126,9 @@ export const RadioInput = ({ name, values, checked, setChecked }) => {
 
 export const FilterExplanation = ({ text, tooltip }) => {
   return (
-    <div className="flex gap-2">
+    <div className="flex gap-2 mt-1">
       <Tooltip content={tooltip} trigger="click">
-        <button className="flex justify-center items-center gap-2">
+        <button className="flex justify-center items-center gap-2 text-sm">
           {text} <QuestionMark />{" "}
         </button>
       </Tooltip>
@@ -147,11 +149,6 @@ export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
   return (
     <div className={sideSectionClass}>
-      <FilterExplanation
-        text="Minimum number of experiments"
-        tooltip="few more words about Minimum number of experiments"
-      />
-
       <div className="relative">
         <input
           type="range"
@@ -173,6 +170,11 @@ export const RangeInput = ({ number, setNumber }) => {
           {label}
         </span>
       </div>
+      <FilterExplanation
+        text="Minimum number of experiments"
+        tooltip="You can determine the minimum number of experiments in each category of the chosen parameter (i.e., filter out categories with very few entries).
+        s"
+      />
     </div>
   );
 };
@@ -180,14 +182,17 @@ export const RangeInput = ({ number, setNumber }) => {
 export const SideControl = ({ children, headline }) => {
   return (
     <div
-      className="side-filter-box p-2 flex flex-col items-center fixed z-10 "
-      style={{ height: screenHeight - navHeight, width: sideWidth }}>
-      <Text size={28} weight="bold" color="blue" center>
-        {headline}
-      </Text>
-      <div className=" shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[200px] ">
+      className="side-filter-box  p-2 flex flex-col items-center fixed z-10  "
+      style={{ width: sideWidth, maxHeight: "calc(100vh - 200px)" }}>
+      <div className="p-4">
+        <Text size={28} weight="bold" color="blue" center>
+          {headline}
+        </Text>
+      </div>
+
+      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll  ">
         {children}
-        <Spacer height={200} />
+        <Spacer height={20} />
       </div>
     </div>
   );
@@ -196,19 +201,20 @@ export const SideControl = ({ children, headline }) => {
 export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
   return (
     <div className={sideSectionClass}>
-      <Text md weight="bold">
-        Type of Consciousness
-      </Text>
       <RadioInput
         name="Consciousness"
         values={[
           { value: "state", name: "State" },
           { value: "content", name: "Content" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "both", name: "Both" },
         ]}
         checked={checked}
         setChecked={setChecked}
+      />
+      <FilterExplanation
+        text="Type of consciousness"
+        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
       />
     </div>
   );
@@ -217,19 +223,20 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
 export const ReportFilter = ({ checked, setChecked }) => {
   return (
     <div className={sideSectionClass}>
-      <Text md weight="bold">
-        Report
-      </Text>
       <RadioInput
         name="Report"
         values={[
           { value: "report", name: "Report" },
           { value: "no_report", name: "No-Report" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "both", name: "Both" },
         ]}
         checked={checked}
         setChecked={setChecked}
+      />
+      <FilterExplanation
+        text="Report"
+        tooltip="You can use this to filter the results by experiments that use Report, No-Report techniques. Both techniques in the same experiment (an AND operator), or either (show all experiments that used either report or content consciousness; an OR operator)."
       />
     </div>
   );
@@ -238,19 +245,20 @@ export const ReportFilter = ({ checked, setChecked }) => {
 export const TheoryDrivenFilter = ({ checked, setChecked }) => {
   return (
     <div className={sideSectionClass}>
-      <Text md weight="bold">
-        Theory Driven
-      </Text>
       <RadioInput
         name="Theory-Driven"
         values={[
           { value: "driven", name: "Driven" },
           { value: "mentioning", name: "Mentioning" },
-          { value: "either", name: "Either" },
+          { value: "either", name: "No Filter" },
           { value: "post-hoc", name: "Post Hoc" },
         ]}
         checked={checked}
         setChecked={setChecked}
+      />{" "}
+      <FilterExplanation
+        text="Theory Driven"
+        tooltip="You can choose to filter the results by experiments that were aimed at testing at least one prediction made by the theories, experiments that only mention the theories in the introduction, experiments that post-hoc interpret their findings with respect to the theories, or experiments that do any one of these options (an OR operator)."
       />
     </div>
   );
@@ -258,7 +266,7 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
 export const TopGraphText = ({ firstLine, text }) => {
   const [extend, setExtend] = React.useState(false);
   return (
-    <div className="bg-grayLight w-full items-center p-5 flex justify-between mt-10 px-8 ">
+    <div className="bg-grayLight w-full items-center py-5 flex justify-between px-8 ">
       <div className="max-w-[85%]">
         <Text>{firstLine}</Text>
         {extend && <Text>{text}</Text>}

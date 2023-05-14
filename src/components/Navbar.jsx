@@ -17,7 +17,7 @@ export default function Navbar() {
 
   return (
     <div>
-      <nav className="bg-white px-16 h-[70px] flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
+      <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
         {/* <div className="bg-orange bg-pink bg-navyBlue bg-lightTeal bg-lightGreen bg-teal bg-darkTeal bg-yellow bg-purple bg-lilac"></div> */}
         <div className=" flex flex-wrap items-center justify-between w-full ">
           <div className="flex items-center justify-between">
@@ -32,7 +32,7 @@ export default function Navbar() {
               </Text>
             </div>
           </div>
-          <div className="navigate-buttons items-center justify-between flex">
+          <div className="navigate-buttons items-center justify-between flex ">
             <ul className="flex flex-row text-black space-x-12">
               <li className="flex items-center relative">
                 <button
@@ -43,29 +43,33 @@ export default function Navbar() {
                 </button>
                 {graphMenue && (
                   <div
-                    id="dropdown-navbar"
-                    className="z-10  bg-white rounded-md shadow-lg w-80 absolute top-10">
-                    <ul
-                      className="py-2 text-lg text-gray-700 dark:text-gray-400"
-                      aria-labelledby="dropdownLargeButton">
-                      {graphsHeaders.map((row) => (
-                        <li>
-                          <a
-                            href={row.route}
-                            className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">
-                            <div
-                              className={classNames(
-                                `${
-                                  "bg-" + row.color
-                                }  green rounded-full w-3 h-3`
-                              )}></div>
-                            {row.text}
-                          </a>
+                    className="fixed z-10 inset-0 flex  justify-center modal"
+                    onClick={() => setGraphMenue(false)}>
+                    <div
+                      id="dropdown-navbar"
+                      className="z-30 bg-white rounded-md shadow-lg w-80 absolute top-10">
+                      <ul
+                        className="py-2 text-lg text-gray-700 dark:text-gray-400"
+                        aria-labelledby="dropdownLargeButton">
+                        {graphsHeaders.map((row) => (
+                          <li id={row.color}>
+                            <a
+                              href={row.route}
+                              className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">
+                              <div
+                                className={classNames(
+                                  `${
+                                    "bg-" + row.color
+                                  }  green rounded-full w-3 h-3`
+                                )}></div>
+                              {row.text}
+                            </a>
 
-                          <hr className="mx-3" />
-                        </li>
-                      ))}
-                    </ul>
+                            <hr className="mx-3" />
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                 )}
               </li>

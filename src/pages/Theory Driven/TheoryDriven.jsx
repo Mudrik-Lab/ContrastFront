@@ -10,6 +10,7 @@ import {
   sideWidth,
 } from "../../components/HardCoded";
 import {
+  FilterExplanation,
   RadioInput,
   RangeInput,
   ReportFilter,
@@ -22,12 +23,11 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { ToggleSwitch } from "flowbite-react";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -95,10 +95,8 @@ export default function TheoryDriven() {
   });
 
   return (
-    <div>
-      <Navbar />
-
-      <div className="flex mt-14 p-2 ">
+    <PageTemplate
+      control={
         <SideControl headline="Theory Driven Distribution Pie">
           <Text md weight="bold">
             Axis Controls
@@ -123,11 +121,16 @@ export default function TheoryDriven() {
               checked={interpretation}
               setChecked={() => setInterpretation(!interpretation)}
             />
-            <Text>Pro</Text>
+            <Text>Supports</Text>
           </div>
+          <FilterExplanation
+            text="Interpretation"
+            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+          />
         </SideControl>
-
-        <div style={{ width: "100%", marginLeft: sideWidth }}>
+      }
+      graph={
+        <div>
           <TopGraphText
             firstLine={
               "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time."
@@ -146,7 +149,7 @@ export default function TheoryDriven() {
                   type: "pie",
                   textinfo: "label+number",
                   textposition: "inside",
-                  domain: { x: [0, 1], y: [0.125, 0.875] },
+                  domain: { x: [0.5, 0.5], y: [0.2, 0.8] },
                   marker: {
                     colors: colorsArray,
                     line: { width: 1, color: "white" },
@@ -159,9 +162,9 @@ export default function TheoryDriven() {
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",
-                  hole: 0.65,
+                  hole: 0.6,
                   textposition: "inside",
-                  domain: { x: [0, 1], y: [0, 1] },
+                  domain: { x: [1, 1], y: [1, 1] },
                   marker: {
                     colors: cleanLabels2.map((label) => keysColors[label]),
                     line: { width: 1, color: "white" },
@@ -169,17 +172,15 @@ export default function TheoryDriven() {
                 },
               ]}
               layout={{
-                width: screenWidth - sideWidth - 200,
-                height: screenHeight - navHeight,
+                width: screenWidth - 400,
+                height: screenHeight - 200,
                 showlegend: false,
                 font: { size: 20 },
-                margin: { l: sideWidth },
               }}
             />
           )}
         </div>
-      </div>
-      <Footer />
-    </div>
+      }
+    />
   );
 }

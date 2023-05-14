@@ -19,6 +19,7 @@ import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function Frequencies() {
   const [reporting, setReporting] = React.useState("either");
@@ -44,7 +45,7 @@ export default function Frequencies() {
 
   const parentTheories = configSuccess
     ? configuration?.data.available_parent_theories.map((parentTheory) => ({
-        value: parentTheory,
+        value: encodeURIComponent(parentTheory),
         label: parentTheory,
       }))
     : [];
@@ -104,93 +105,98 @@ export default function Frequencies() {
 
   return (
     <div>
-      <Navbar />
       {configSuccess && (
-        <div className="flex mt-14 p-2 ">
-          <SideControl headline={"Frequencies"}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="Minimum number of experiments"
-              tooltip="few more words about Minimum number of experiments"
-            />
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theory
-                <FilterExplanation tooltip="few more words about Thory" />
-              </Text>
-
-              <TagsSelect
-                options={parentTheories}
-                placeholder="Paradigms Family"
-                defaultValue={selectedParent.value}
-                onChange={setSelectedParent}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Techniques
-                <FilterExplanation tooltip="few more words about techniques" />
-              </Text>
-              {configSuccess && (
-                <Select
-                  closeMenuOnSelect={true}
-                  isMulti={true}
-                  value={selectedTechniques}
-                  options={techniques}
-                  placeholder="Techniques"
-                  onChange={setSelectedTechniques}
+        <div>
+          <PageTemplate
+            control={
+              <SideControl headline={"Frequencies"}>
+                <Text md weight="bold">
+                  Axis Controls
+                </Text>
+                <RangeInput
+                  number={experimentsNum}
+                  setNumber={setExperimentsNum}
                 />
-              )}
-            </div>
-            <TypeOfConsciousnessFilter
-              checked={consciousness}
-              setChecked={setConsciousness}
-            />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
-            <TheoryDrivenFilter
-              checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />
-          </SideControl>
 
-          <div style={{ marginLeft: sideWidth, width: "100%" }}>
-            <TopGraphText
-              firstLine={
-                "The chart depicts the findings in the frequency domain of the experiments in the database."
-              }
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-            />
+                <div className={sectionClass}>
+                  <Text flexed md weight="bold">
+                    Theory
+                    <FilterExplanation tooltip="few more words about Thory" />
+                  </Text>
 
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <Plot
-                data={traces}
-                layout={{
-                  autosize: false,
-                  barmode: "stack",
-                  width: screenWidth - sideWidth - 300,
-                  height: screenHeight - 360,
+                  <TagsSelect
+                    options={parentTheories}
+                    placeholder="Paradigms Family"
+                    defaultValue={selectedParent.value}
+                    onChange={setSelectedParent}
+                  />
+                </div>
+                <div className={sectionClass}>
+                  <Text flexed md weight="bold">
+                    Techniques
+                    <FilterExplanation tooltip="few more words about techniques" />
+                  </Text>
+                  {configSuccess && (
+                    <Select
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={selectedTechniques}
+                      options={techniques}
+                      placeholder="Techniques"
+                      onChange={setSelectedTechniques}
+                    />
+                  )}
+                </div>
+                <TypeOfConsciousnessFilter
+                  checked={consciousness}
+                  setChecked={setConsciousness}
+                />
+                <ReportFilter checked={reporting} setChecked={setReporting} />
+                <TheoryDrivenFilter
+                  checked={theoryDriven}
+                  setChecked={setTheoryDriven}
+                />
+              </SideControl>
+            }
+            graph={
+              <div>
+                <TopGraphText
+                  firstLine={
+                    "The chart depicts the findings in the frequency domain of the experiments in the database."
+                  }
+                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                />
 
-                  margin: { autoexpand: true, l: 20 },
-                  showlegend: false,
-                  yaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                  xaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                }}
-              />
-            )}
-          </div>
+                {isLoading ? (
+                  <Spinner />
+                ) : (
+                  <Plot
+                    data={traces}
+                    layout={{
+                      autosize: false,
+                      barmode: "stack",
+                      width: screenWidth - sideWidth - 300,
+                      height: screenHeight - 360,
+
+                      margin: { autoexpand: true, l: 20 },
+                      showlegend: false,
+                      yaxis: {
+                        zeroline: false, // hide the zeroline
+                        zerolinecolor: "#969696", // customize the color of the zeroline
+                        zerolinewidth: 2, // customize the width of the zeroline
+                      },
+                      xaxis: {
+                        zeroline: false, // hide the zeroline
+                        zerolinecolor: "#969696", // customize the color of the zeroline
+                        zerolinewidth: 2, // customize the width of the zeroline
+                      },
+                    }}
+                  />
+                )}
+              </div>
+            }
+          />
+
           <div
             className=" fixed top-52 right-16 "
             style={{ height: screenHeight - 150 }}>
@@ -205,7 +211,6 @@ export default function Frequencies() {
           </div>
         </div>
       )}
-      <Footer />
     </div>
   );
 }

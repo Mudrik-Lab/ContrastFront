@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import Navbar from "../../components/Navbar";
 import {
   designerColors,
+  myColors,
   parametersOptions,
   sideWidth,
 } from "../../components/HardCoded";
@@ -10,18 +11,22 @@ import {
   FilterExplanation,
   RadioInput,
   RangeInput,
+  ReportFilter,
   SideControl,
   Spacer,
   Text,
+  TheoryDrivenFilter,
   TopGraphText,
+  TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { breakHeadlines } from "../../Utils/functions";
+import { breakHeadlines, rawTeaxtToShow } from "../../Utils/functions";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -64,35 +69,33 @@ export default function ParametersDistributionTheoriesComparison() {
   chartsData?.map((theory) =>
     theory.series.map((row) => keysArr.push(row.key))
   );
-  const trimedKeysArr = [...new Set(keysArr)];
-  const someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
 
+  const trimedKeysArr = [...new Set(keysArr)];
+
+  let someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
+  if (selected.value === "paradigm") {
+    someColors = myColors.slice(0, trimedKeysArr.length);
+  }
+  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(keysColors);
+  console.log({ keysColors, selected });
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
-    <div className="w-full">
-      <Navbar />
-      <div className="flex mt-14 p-2">
+    <PageTemplate
+      control={
         <SideControl headline={" Parameters Distribution Theories Comparison"}>
-          <div className={sectionClass}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="Minimum number of experiments"
-              tooltip="few more words about Minimum number of experiments"
-            />
-          </div>
+          <Text md weight="bold">
+            Axis Controls
+          </Text>
+          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
           <div className={sectionClass}>
             <Text md flexed weight="bold">
-              Parameters
-              <FilterExplanation tooltip="few more words about Paradigm " />
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
             </Text>
             <TagsSelect
               options={parametersOptions}
@@ -100,54 +103,15 @@ export default function ParametersDistributionTheoriesComparison() {
               onChange={setSelected}
             />
           </div>
-          <div className={sectionClass}>
-            <Text md weight={"bold"}>
-              Reported
-            </Text>
-            <RadioInput
-              name="Report"
-              values={[
-                { value: "report", name: "Report" },
-                { value: "no_report", name: "No-Report" },
-                { value: "either", name: "Either" },
-                { value: "both", name: "Both" },
-              ]}
-              checked={reporting}
-              setChecked={setReporting}
-            />
-          </div>
-          <div className={sectionClass}>
-            <Text md weight={"bold"}>
-              Type of Consciousness
-            </Text>
-            <RadioInput
-              name="Consciousness"
-              values={[
-                { value: "state", name: "State" },
-                { value: "content", name: "Content" },
-                { value: "either", name: "Either" },
-                { value: "both", name: "Both" },
-              ]}
-              checked={consciousness}
-              setChecked={setConsciousness}
-            />
-          </div>
-          <div className={sectionClass}>
-            <Text weight={"bold"} md>
-              Theory Driven
-            </Text>
-            <RadioInput
-              name="Thery-Driven"
-              values={[
-                { value: "driven", name: "Driven" },
-                { value: "mentioning", name: "Mentioning" },
-                { value: "either", name: "Either" },
-                { value: "post-hoc", name: "Post Hoc" },
-              ]}
-              checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />
-          </div>
+          <TypeOfConsciousnessFilter
+            checked={consciousness}
+            setChecked={setConsciousness}
+          />
+          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <TheoryDrivenFilter
+            checked={theoryDriven}
+            setChecked={setTheoryDriven}
+          />
           <Spacer height={10} />
           <Text md weight={"bold"}>
             Interpretation
@@ -158,80 +122,73 @@ export default function ParametersDistributionTheoriesComparison() {
               checked={interpretation}
               setChecked={() => setInterpretation(!interpretation)}
             />
-            <Text>Pro</Text>
-          </div>{" "}
+            <Text>Supports</Text>
+          </div>
+          <FilterExplanation
+            text="Interpretation"
+            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+          />
         </SideControl>
-
-        {/* <div className="graph relative w-full mx-auto"> */}
-        {/* <div className=" funny-leggend mt-28 flex flex-col gap-3 absolute 2xl:mt-8 2xl:top-20 2xl:left-1/2 transform 2xl:-translate-x-1/2  z-10">
-            {Object.keys(keysColors)?.map((key) => (
-              <div
-                className=" p-1 w-28 flex justify-center items-center border"
-                style={{ backgroundColor: keysColors[key] }}>
-                <Text sm color="black" center>
-                  {key}
-                </Text>
-              </div>
-            ))}
-          </div> */}
-        <div
-          className="four-wheels 2xl:mx-auto "
-          style={{ marginLeft: sideWidth }}>
+      }
+      graph={
+        <div>
           <TopGraphText
             firstLine={
               "The graph depicts the different distributions of parameters for the four theories separately."
             }
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
           />
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            keysColors &&
-            chartsData.map((chart) => (
-              <Plot
-                data={[
-                  {
-                    direction: "clockwise",
-                    values: chart.series.map((row) => row.value),
-                    labels: chart.series.map((row) => row.key),
-                    type: "pie",
-                    textinfo: "label+number",
-                    textposition: "inside",
-                    hole: 0.4,
-                    marker: {
-                      colors: chart.series.map((row) => keysColors[row.key]),
-                      line: { width: 1, color: "white" },
-                    },
-                  },
-                ]}
-                layout={{
-                  width: 600,
-                  height: 600,
-                  showlegend: false,
-                  margin: { r: 100, l: 100 },
-                  annotations: [
+          <div className="four-wheels 2xl:mx-auto max-w-[1300px] ">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              keysColors &&
+              chartsData.map((chart) => (
+                <Plot
+                  data={[
                     {
-                      text:
-                        breakHeadlines(chart.series_name, 11) +
-                        " <br />" +
-                        " = " +
-                        chart.value,
-                      showarrow: false,
-
-                      style: { whiteSpace: "pre-wrap" },
-                      font: {
-                        size: 16,
+                      direction: "clockwise",
+                      values: chart.series.map((row) => row.value),
+                      labels: chart.series.map((row) =>
+                        rawTeaxtToShow(row.key)
+                      ),
+                      type: "pie",
+                      textinfo: "label+number",
+                      textposition: "inside",
+                      hole: 0.4,
+                      marker: {
+                        colors: chart.series.map((row) => keysColors[row.key]),
+                        line: { width: 1, color: "white" },
                       },
                     },
-                  ],
-                }}
-              />
-            ))
-          )}
+                  ]}
+                  layout={{
+                    width: 600,
+                    height: 600,
+                    showlegend: false,
+
+                    annotations: [
+                      {
+                        text:
+                          breakHeadlines(chart.series_name, 11) +
+                          " <br />" +
+                          " = " +
+                          chart.value,
+                        showarrow: false,
+
+                        style: { whiteSpace: "pre-wrap" },
+                        font: {
+                          size: 16,
+                        },
+                      },
+                    ],
+                  }}
+                />
+              ))
+            )}
+          </div>
         </div>
-        {/* </div> */}
-      </div>
-      <Footer />
-    </div>
+      }
+    />
   );
 }

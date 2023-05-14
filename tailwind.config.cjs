@@ -35,6 +35,9 @@ module.exports = {
         192: "42rem",
         256: "64rem",
       },
+      backgroundImage: {
+        'brain': "url('../assets/images/brain-prism-wide.jpg')",
+      },
     },
   },
   plugins: [

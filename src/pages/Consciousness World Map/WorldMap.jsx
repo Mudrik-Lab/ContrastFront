@@ -23,6 +23,7 @@ import {
 } from "../../components/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function WorldMap() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -37,12 +38,13 @@ export default function WorldMap() {
   );
 
   const theories = configSuccess
-    ? configuration?.data.available_parent_theories.map((tag) => ({
-        value: tag,
-        label: tag,
-      }))
+    ? configuration?.data.available_parent_theories.map((tag) => {
+        return {
+          value: encodeURIComponent(tag),
+          label: tag,
+        };
+      })
     : [];
-
   const { data, isLoading } = useQuery(
     [
       `nations_of_consciousness${
@@ -67,17 +69,15 @@ export default function WorldMap() {
         type_of_consciousness: consciousness,
       })
   );
-
   const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
   const mergedStates = {};
-  const sameData = data?.data;
-  sameData?.map((row) => {
+
+  data?.data.map((row) => {
     row[row.theory] = row.value;
     const country = row.country_name;
-
     if (!mergedStates[country]) {
       mergedStates[country] = row;
     } else {
@@ -92,10 +92,10 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
+  console.log(mergedStates);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-
   var graphData = [
     {
       type: "choropleth",
@@ -110,11 +110,11 @@ export default function WorldMap() {
       ],
       hoverinfo: "location+text",
       hovertext: data?.data.map((row) => {
-        // delete mergedStates[row.country_name].theory;
-        // delete mergedStates[row.country_name].country;
-        // delete mergedStates[row.country_name].value;
-        // delete mergedStates[row.country_name].total;
-        // delete mergedStates[row.country_name].country_name;
+        delete mergedStates[row.country_name].theory;
+
+        delete mergedStates[row.country_name].value;
+
+        delete mergedStates[row.country_name].country_name;
         return (
           JSON.stringify(mergedStates[row.country_name])
             ?.replaceAll("{", "")
@@ -198,53 +198,58 @@ export default function WorldMap() {
 
   return (
     <div>
-      {" "}
-      <Navbar />
-      <div className="flex mt-14 p-2 h-full">
-        <SideControl headline={"Nations of Consciousness"}>
-          <Text md weight="bold">
-            Axis Controls
-          </Text>
-          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-
-          <div className={sectionClass}>
-            <Text flexed md weight="bold">
-              Theories
-              <FilterExplanation tooltip="few more words about Theories" />
+      <PageTemplate
+        control={
+          <SideControl headline={"Nations of Consciousness"}>
+            <Text md weight="bold">
+              Axis Controls
             </Text>
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
-            {configSuccess && theories && (
-              <Select
-                closeMenuOnSelect={true}
-                isMulti={true}
-                value={theory}
-                options={theories}
-                placeholder="Theories"
-                onChange={setTheory}
-              />
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theories
+                <FilterExplanation tooltip="few more words about Theories" />
+              </Text>
+
+              {configSuccess && theories && (
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={theory}
+                  options={theories}
+                  placeholder="Theories"
+                  onChange={setTheory}
+                />
+              )}
+            </div>
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
+          </SideControl>
+        }
+        graph={
+          <div>
+            <TopGraphText
+              firstLine={
+                "Distribution of the experiments in the database according to nations extracted from author affiliations."
+              }
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            />
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Plot data={graphData} layout={layout} />
             )}
           </div>
-          <TypeOfConsciousnessFilter
-            checked={consciousness}
-            setChecked={setConsciousness}
-          />
-          <ReportFilter checked={reporting} setChecked={setReporting} />
-          <TheoryDrivenFilter
-            checked={theoryDriven}
-            setChecked={setTheoryDriven}
-          />
-        </SideControl>
-        <div style={{ marginLeft: sideWidth, width: "100%" }}>
-          <TopGraphText
-            firstLine={
-              "Distribution of the experiments in the database according to nations extracted from author affiliations."
-            }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-          />
-          {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
-        </div>
-      </div>
-      <Footer />
+        }
+      />
     </div>
   );
 }

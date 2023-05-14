@@ -53,7 +53,7 @@ export default function ContactPage() {
               rows="4"
             />
           </div>
-          <div className="mx-auto">
+          <div className="p-2">
             <Button>
               <Graph />
               Submit

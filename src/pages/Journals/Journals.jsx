@@ -22,6 +22,7 @@ import getJournals from "../../apiHooks/getJournals";
 import Spinner from "../../components/Spinner";
 import Toggle from "../../components/Toggle";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function Journals() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -82,69 +83,63 @@ export default function Journals() {
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div className="h-full">
-      <Navbar />
-      <div className="flex mt-12 px-2">
-        <SideControl headline={"Journals"}>
-          <div className={sectionClass}>
+      <PageTemplate
+        control={
+          <SideControl headline={"Journals"}>
             <Text md weight="bold">
               Axis Controls
             </Text>
             <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-            <FilterExplanation
-              text="Minimum number of experiments"
-              tooltip="few more words about Minimum number of experiments"
-            />
-          </div>
-          <div className={sectionClass}>
-            <Text flexed md weight="bold">
-              Theory
-              <FilterExplanation tooltip="few more words about Thory" />
-            </Text>
 
-            <TagsSelect
-              options={parentTheories}
-              placeholder="Paradigms Family"
-              defaultValue={selectedParent.value}
-              onChange={setSelectedParent}
-            />
-          </div>
-          <TypeOfConsciousnessFilter
-            checked={consciousness}
-            setChecked={setConsciousness}
-          />
-          <ReportFilter checked={reporting} setChecked={setReporting} />
-          <TheoryDrivenFilter
-            checked={theoryDriven}
-            setChecked={setTheoryDriven}
-          />
-        </SideControl>
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theory
+                <FilterExplanation tooltip="few more words about Thory" />
+              </Text>
 
-        <div
-          className="overflow-x-scroll h-full"
-          style={{ marginLeft: sideWidth }}>
-          <TopGraphText
-            firstLine={
-              "The bar chart depicts distribution of experiments according to the journals they were published in."
-            }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-          />
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            <Plot
-              data={[trace1]}
-              layout={{
-                autosize: false,
-                width: graphWidth,
-                height: screenHeight - 360,
-                margin: { autoexpand: true, b: 100 },
-                showlegend: false,
-              }}
+              <TagsSelect
+                options={parentTheories}
+                placeholder="Paradigms Family"
+                defaultValue={selectedParent.value}
+                onChange={setSelectedParent}
+              />
+            </div>
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
             />
-          )}
-        </div>
-      </div>
-      <Footer />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
+          </SideControl>
+        }
+        graph={
+          <div className="overflow-x-scroll h-full">
+            <TopGraphText
+              firstLine={
+                "The bar chart depicts distribution of experiments according to the journals they were published in."
+              }
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            />
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Plot
+                data={[trace1]}
+                layout={{
+                  autosize: false,
+                  width: graphWidth,
+                  height: screenHeight - 360,
+                  margin: { autoexpand: true, b: 100 },
+                  showlegend: false,
+                }}
+              />
+            )}
+          </div>
+        }
+      />
     </div>
   );
 }
