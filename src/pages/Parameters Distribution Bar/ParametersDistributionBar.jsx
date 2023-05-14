@@ -23,6 +23,7 @@ import Navbar from "../../components/Navbar";
 import { useSearchParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -118,62 +119,62 @@ export default function ParametersDistributionBar() {
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div>
-      <Navbar />
       {configurationSuccess && (
-        <div className="flex mt-14 p-2">
-          <SideControl headline={" Parameters Distribution Bar"}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <div className={sectionClass}>
-              <RangeInput
-                number={experimentsNum}
-                setNumber={setExperimentsNum}
-              />
-              <FilterExplanation
-                text="Minimum number of experiments"
-                tooltip="few more words about Minimum number of experiments"
-              />
-            </div>
-
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theory
-                <FilterExplanation tooltip="few more words about Theory" />
+        <PageTemplate
+          control={
+            <SideControl headline={" Parameters Distribution Bar"}>
+              <Text md weight="bold">
+                Axis Controls
               </Text>
-              <TagsSelect
-                value={selectedParent}
-                options={parentTheories}
-                onChange={setSelectedParent}
-              />
-            </div>
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Parameters
-                <FilterExplanation tooltip="few more words about Theory" />
-              </Text>
-              <TagsSelect
-                options={parametersOptions}
-                value={selected}
-                onChange={setSelected}
-              />
-            </div>
+              <div className={sectionClass}>
+                <RangeInput
+                  number={experimentsNum}
+                  setNumber={setExperimentsNum}
+                />
+                <FilterExplanation
+                  text="Minimum number of experiments"
+                  tooltip="few more words about Minimum number of experiments"
+                />
+              </div>
 
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Theory
+                  <FilterExplanation tooltip="few more words about Theory" />
+                </Text>
+                <TagsSelect
+                  value={selectedParent}
+                  options={parentTheories}
+                  onChange={setSelectedParent}
+                />
+              </div>
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Parameters
+                  <FilterExplanation tooltip="few more words about Theory" />
+                </Text>
+                <TagsSelect
+                  options={parametersOptions}
+                  value={selected}
+                  onChange={setSelected}
+                />
+              </div>
 
-            <div className="flex gap-2">
-              <label htmlFor="stacked">Is Stacked?</label>
-              <input
-                type="checkbox"
-                name="stacked"
-                checked={isStacked}
-                onChange={() => setIsStacked(!isStacked)}
-              />
-            </div>
-          </SideControl>
+              <ReportFilter checked={reporting} setChecked={setReporting} />
 
-          {X1 && X2 && Y && (
-            <div style={{ marginLeft: sideWidth, width: "100%" }}>
+              <div className="flex gap-2">
+                <label htmlFor="stacked">Is Stacked?</label>
+                <input
+                  type="checkbox"
+                  name="stacked"
+                  checked={isStacked}
+                  onChange={() => setIsStacked(!isStacked)}
+                />
+              </div>
+            </SideControl>
+          }
+          graph={
+            <div>
               <TopGraphText
                 firstLine={
                   'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
@@ -188,7 +189,7 @@ export default function ParametersDistributionBar() {
                   layout={{
                     barmode: isStacked ? "stack" : "group",
                     title: "Parameter Distribution Bar",
-                    width: screenWidth - sideWidth,
+                    width: screenWidth - 400,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: 200 },
                     legend: { itemwidth: 90 },
@@ -208,10 +209,9 @@ export default function ParametersDistributionBar() {
                 />
               )}
             </div>
-          )}
-        </div>
+          }
+        />
       )}
-      <Footer />
     </div>
   );
 }

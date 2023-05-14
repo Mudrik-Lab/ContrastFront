@@ -23,6 +23,7 @@ import {
 } from "../../components/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function WorldMap() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -197,53 +198,58 @@ export default function WorldMap() {
 
   return (
     <div>
-      {" "}
-      <Navbar />
-      <div className="flex mt-14 p-2 h-full">
-        <SideControl headline={"Nations of Consciousness"}>
-          <Text md weight="bold">
-            Axis Controls
-          </Text>
-          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-
-          <div className={sectionClass}>
-            <Text flexed md weight="bold">
-              Theories
-              <FilterExplanation tooltip="few more words about Theories" />
+      <PageTemplate
+        control={
+          <SideControl headline={"Nations of Consciousness"}>
+            <Text md weight="bold">
+              Axis Controls
             </Text>
+            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
-            {configSuccess && theories && (
-              <Select
-                closeMenuOnSelect={true}
-                isMulti={true}
-                value={theory}
-                options={theories}
-                placeholder="Theories"
-                onChange={setTheory}
-              />
+            <div className={sectionClass}>
+              <Text flexed md weight="bold">
+                Theories
+                <FilterExplanation tooltip="few more words about Theories" />
+              </Text>
+
+              {configSuccess && theories && (
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={theory}
+                  options={theories}
+                  placeholder="Theories"
+                  onChange={setTheory}
+                />
+              )}
+            </div>
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={setConsciousness}
+            />
+            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <TheoryDrivenFilter
+              checked={theoryDriven}
+              setChecked={setTheoryDriven}
+            />
+          </SideControl>
+        }
+        graph={
+          <div>
+            <TopGraphText
+              firstLine={
+                "Distribution of the experiments in the database according to nations extracted from author affiliations."
+              }
+              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            />
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              <Plot data={graphData} layout={layout} />
             )}
           </div>
-          <TypeOfConsciousnessFilter
-            checked={consciousness}
-            setChecked={setConsciousness}
-          />
-          <ReportFilter checked={reporting} setChecked={setReporting} />
-          <TheoryDrivenFilter
-            checked={theoryDriven}
-            setChecked={setTheoryDriven}
-          />
-        </SideControl>
-        <div style={{ marginLeft: sideWidth, width: "100%" }}>
-          <TopGraphText
-            firstLine={
-              "Distribution of the experiments in the database according to nations extracted from author affiliations."
-            }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
-          />
-          {isLoading ? <Spinner /> : <Plot data={graphData} layout={layout} />}
-        </div>
-      </div>
-      <Footer isFixed={true} />
+        }
+      />
     </div>
   );
 }

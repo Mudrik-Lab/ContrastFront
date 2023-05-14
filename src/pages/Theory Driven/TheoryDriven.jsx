@@ -26,6 +26,7 @@ import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -93,10 +94,8 @@ export default function TheoryDriven() {
   });
 
   return (
-    <div>
-      <Navbar />
-
-      <div className="flex mt-14 p-2 ">
+    <PageTemplate
+      control={
         <SideControl headline="Theory Driven Distribution Pie">
           <Text md weight="bold">
             Axis Controls
@@ -124,8 +123,9 @@ export default function TheoryDriven() {
             <Text>Pro</Text>
           </div>
         </SideControl>
-
-        <div style={{ width: "100%", marginLeft: sideWidth }}>
+      }
+      graph={
+        <div>
           <TopGraphText
             firstLine={
               "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time."
@@ -167,17 +167,15 @@ export default function TheoryDriven() {
                 },
               ]}
               layout={{
-                width: screenWidth - sideWidth - 200,
-                height: screenHeight - navHeight,
+                width: screenWidth - 400,
+                height: screenHeight - 200,
                 showlegend: false,
                 font: { size: 20 },
-                margin: { l: sideWidth },
               }}
             />
           )}
         </div>
-      </div>
-      <Footer />
-    </div>
+      }
+    />
   );
 }
