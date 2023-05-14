@@ -22,7 +22,7 @@ export default function ConTraStUseCases() {
       image:
         "https://www.fauna-flora.org/app/uploads/2022/11/AdobeStock_246102033_cropped-2-scaled.jpeg",
       headline: "Discover trends over time",
-      text: "For each parameter of interest, explore how the experiments in the ConTraSt database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
+      text: "For each Parameters, explore how the experiments in the ConTraSt database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
     },
     {
       image:

@@ -19,6 +19,7 @@ import TagsSelect from "../../components/TagsSelect";
 import {
   avalble_populations,
   designerColors,
+  isMoblile,
   navHeight,
   parametersOptions,
   screenWidth,
@@ -113,6 +114,7 @@ export default function FreeQueriesBar() {
         label: type.name,
       }))
     : [];
+
   const populationsArr = avalble_populations;
   const stimuliCategoriesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_category_type.map((type) => ({
@@ -253,8 +255,8 @@ export default function FreeQueriesBar() {
 
               <div className={sideSectionClass}>
                 <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
+                  Parameters
+                  <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. " />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}
@@ -392,15 +394,16 @@ export default function FreeQueriesBar() {
             <div>
               <TopGraphText
                 text="To determine the minimum number of experiments in each category (i.e., filter out categories with very few entries), use the # of experiments slider
-    Choose a parameter of interest by selecting one of the options in 'x axis' list, and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
+    Choose a Parameters by selecting one of the options in 'x axis' list, and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
     Then, you can filter the pool of experiments described in the graph, according to each of the variables in the database.
     Each list of options under each parameter combo box includes the specific values relevant for this parameter."
                 firstLine="The graph depicts the distribution of parameter values, according to your specifications."
               />
               <Plot
                 data={[trace1]}
+                config={{ displayModeBar: !isMoblile }}
                 layout={{
-                  width: screenWidth - 400,
+                  width: isMoblile ? screenWidth : screenWidth - 400,
                   height: 35 * Y?.length + 250,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 90 },

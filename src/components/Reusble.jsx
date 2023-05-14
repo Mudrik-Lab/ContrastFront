@@ -6,6 +6,7 @@ import { Tooltip } from "flowbite-react";
 import {
   navHeight,
   screenHeight,
+  screenWidth,
   sideSectionClass,
   sideWidth,
 } from "./HardCoded";
@@ -180,10 +181,19 @@ export const RangeInput = ({ number, setNumber }) => {
 };
 
 export const SideControl = ({ children, headline }) => {
+  const isMoblile = screenWidth < 600;
+
   return (
     <div
-      className="side-filter-box  p-2 flex flex-col items-center fixed z-10  "
-      style={{ width: sideWidth, maxHeight: "calc(100vh - 200px)" }}>
+      className={classNames(
+        `side-filter-box p-2 flex flex-col items-center ${
+          isMoblile ? "block" : "fixed"
+        } z-10`
+      )}
+      style={{
+        width: isMoblile ? "100%" : sideWidth,
+        maxHeight: isMoblile ? "400px" : "calc(100vh - 200px)",
+      }}>
       <div className="p-4">
         <Text size={28} weight="bold" color="blue" center>
           {headline}

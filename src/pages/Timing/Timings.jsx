@@ -255,8 +255,6 @@ export default function Timings() {
           </div>
         ))}
       </div>
-
-      <Footer isFixed={true} />
     </div>
   );
 }

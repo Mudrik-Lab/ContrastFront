@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -16,13 +15,10 @@ import {
   colorsArray,
   screenWidth,
   parametersOptions,
-  sideWidth,
+  isMoblile,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
-import { useSearchParams } from "react-router-dom";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 
@@ -146,8 +142,8 @@ export default function ParametersDistributionBar() {
               </div>
               <div className={sectionClass}>
                 <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                  Parameters
+                  <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference." />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}
@@ -185,10 +181,11 @@ export default function ParametersDistributionBar() {
               ) : (
                 <Plot
                   data={[trace1, trace2]}
+                  config={{ displayModeBar: !isMoblile }}
                   layout={{
                     barmode: isStacked ? "stack" : "group",
                     title: "Parameter Distribution Bar",
-                    width: screenWidth - 400,
+                    width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: 200 },
                     legend: { itemwidth: 90 },

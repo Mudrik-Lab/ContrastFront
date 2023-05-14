@@ -16,8 +16,11 @@ import {
 import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
 import {
+  isMoblile,
   navHeight,
   parametersOptions,
+  screenHeight,
+  screenWidth,
   sideWidth,
 } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
@@ -63,8 +66,6 @@ export default function AcrossTheYears() {
       mode: "lines+markers",
     });
   });
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
 
   return (
     <div>
@@ -85,8 +86,8 @@ export default function AcrossTheYears() {
 
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
               <Text md flexed weight={"bold"}>
-                Parameter of interest
-                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                Parameters
+                <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference." />
               </Text>
               <TagsSelect
                 options={parametersOptions}
@@ -114,7 +115,7 @@ export default function AcrossTheYears() {
                 data={graphsData}
                 layout={{
                   autosize: false,
-                  showlegend: true,
+                  showlegend: !isMoblile,
                   legend: {
                     x: 1,
                     xanchor: "left",
@@ -132,7 +133,7 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: screenWidth - 400,
+                  width: isMoblile ? screenWidth : screenWidth - 400,
                   height: screenHeight - 300,
                 }}
               />
@@ -140,8 +141,6 @@ export default function AcrossTheYears() {
           </div>
         }
       />
-
-      <Footer isFixed={true} />
     </div>
   );
 }

@@ -10,6 +10,15 @@ import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 
+export const screenWidth = window.screen.width;
+export const screenHeight = window.screen.height;
+export const navHeight = 80;
+export const sideWidth = 370;
+export const sideSectionClass =
+  "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+
+export const isMoblile = screenWidth < 600;
+
 export const parametersOptions = [
   {
     value: "paradigm_family",
@@ -419,13 +428,6 @@ export const graphsHeaders = [
     route: "/consciousness-world-map",
   },
 ];
-
-export const screenWidth = window.screen.width;
-export const screenHeight = window.screen.height;
-export const navHeight = 70;
-export const sideWidth = 370;
-export const sideSectionClass =
-  "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
 export const avalble_populations = [
   {

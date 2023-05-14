@@ -1,15 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
-import Navbar from "../../components/Navbar";
 import {
   designerColors,
+  isMoblile,
   myColors,
   parametersOptions,
-  sideWidth,
+  screenWidth,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -25,7 +24,6 @@ import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { breakHeadlines, rawTeaxtToShow } from "../../Utils/functions";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionTheoriesComparison() {
@@ -94,8 +92,8 @@ export default function ParametersDistributionTheoriesComparison() {
           <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
           <div className={sectionClass}>
             <Text md flexed weight="bold">
-              Parameter of interest
-              <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
+              Parameters
+              <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. " />
             </Text>
             <TagsSelect
               options={parametersOptions}
@@ -162,8 +160,9 @@ export default function ParametersDistributionTheoriesComparison() {
                       },
                     },
                   ]}
+                  config={{ displayModeBar: !isMoblile }}
                   layout={{
-                    width: 600,
+                    width: isMoblile ? screenWidth : 600,
                     height: 600,
                     showlegend: false,
 
