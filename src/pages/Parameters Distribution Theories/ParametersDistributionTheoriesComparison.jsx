@@ -25,6 +25,7 @@ import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { breakHeadlines } from "../../Utils/functions";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -78,9 +79,8 @@ export default function ParametersDistributionTheoriesComparison() {
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
-    <div className="w-full">
-      <Navbar />
-      <div className="flex mt-14 p-2">
+    <PageTemplate
+      control={
         <SideControl headline={" Parameters Distribution Theories Comparison"}>
           <div className={sectionClass}>
             <Text md weight="bold">
@@ -125,77 +125,64 @@ export default function ParametersDistributionTheoriesComparison() {
             <Text>Pro</Text>
           </div>{" "}
         </SideControl>
-
-        {/* <div className="graph relative w-full mx-auto"> */}
-        {/* <div className=" funny-leggend mt-28 flex flex-col gap-3 absolute 2xl:mt-8 2xl:top-20 2xl:left-1/2 transform 2xl:-translate-x-1/2  z-10">
-            {Object.keys(keysColors)?.map((key) => (
-              <div
-                className=" p-1 w-28 flex justify-center items-center border"
-                style={{ backgroundColor: keysColors[key] }}>
-                <Text sm color="black" center>
-                  {key}
-                </Text>
-              </div>
-            ))}
-          </div> */}
-        <div
-          className="four-wheels 2xl:mx-auto "
-          style={{ marginLeft: sideWidth }}>
+      }
+      graph={
+        <div>
           <TopGraphText
             firstLine={
               "The graph depicts the different distributions of parameters for the four theories separately."
             }
             text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
           />
-          {isLoading ? (
-            <Spinner />
-          ) : (
-            keysColors &&
-            chartsData.map((chart) => (
-              <Plot
-                data={[
-                  {
-                    direction: "clockwise",
-                    values: chart.series.map((row) => row.value),
-                    labels: chart.series.map((row) => row.key),
-                    type: "pie",
-                    textinfo: "label+number",
-                    textposition: "inside",
-                    hole: 0.4,
-                    marker: {
-                      colors: chart.series.map((row) => keysColors[row.key]),
-                      line: { width: 1, color: "white" },
-                    },
-                  },
-                ]}
-                layout={{
-                  width: 600,
-                  height: 600,
-                  showlegend: false,
-                  margin: { r: 100, l: 100 },
-                  annotations: [
+          <div className="four-wheels 2xl:mx-auto max-w-[1300px] ">
+            {isLoading ? (
+              <Spinner />
+            ) : (
+              keysColors &&
+              chartsData.map((chart) => (
+                <Plot
+                  data={[
                     {
-                      text:
-                        breakHeadlines(chart.series_name, 11) +
-                        " <br />" +
-                        " = " +
-                        chart.value,
-                      showarrow: false,
-
-                      style: { whiteSpace: "pre-wrap" },
-                      font: {
-                        size: 16,
+                      direction: "clockwise",
+                      values: chart.series.map((row) => row.value),
+                      labels: chart.series.map((row) => row.key),
+                      type: "pie",
+                      textinfo: "label+number",
+                      textposition: "inside",
+                      hole: 0.4,
+                      marker: {
+                        colors: chart.series.map((row) => keysColors[row.key]),
+                        line: { width: 1, color: "white" },
                       },
                     },
-                  ],
-                }}
-              />
-            ))
-          )}
+                  ]}
+                  layout={{
+                    width: 600,
+                    height: 600,
+                    showlegend: false,
+
+                    annotations: [
+                      {
+                        text:
+                          breakHeadlines(chart.series_name, 11) +
+                          " <br />" +
+                          " = " +
+                          chart.value,
+                        showarrow: false,
+
+                        style: { whiteSpace: "pre-wrap" },
+                        font: {
+                          size: 16,
+                        },
+                      },
+                    ],
+                  }}
+                />
+              ))
+            )}
+          </div>
         </div>
-        {/* </div> */}
-      </div>
-      <Footer />
-    </div>
+      }
+    />
   );
 }

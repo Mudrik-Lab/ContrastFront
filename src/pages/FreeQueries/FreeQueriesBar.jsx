@@ -21,6 +21,7 @@ import {
   designerColors,
   navHeight,
   parametersOptions,
+  screenWidth,
   sideSectionClass,
   sideWidth,
 } from "../../components/HardCoded";
@@ -29,6 +30,7 @@ import Navbar from "../../components/Navbar";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
 import Footer from "../../components/Footer";
+import PageTemplate from "../../components/PageTemplate";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -216,7 +218,6 @@ export default function FreeQueriesBar() {
     type: "bar",
   };
 
-  const screenWidth = window.screen.width;
   const selectStyles = {
     control: (provided) => ({
       ...provided,
@@ -236,170 +237,169 @@ export default function FreeQueriesBar() {
   // extraConfigSuccess && !measures && setMeasures(measuresArr);
   return (
     <div>
-      <Navbar />
       {configSuccess && (
-        <div className=" mt-12 p-2">
-          <SideControl headline={"Parameter Distribution Free Queries"}>
-            <Text center md weight="bold">
-              Axis Controls
-            </Text>
-
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-
-            <div className={sideSectionClass}>
-              <Text flexed md weight="bold">
-                Parameters
-                <FilterExplanation tooltip="few more words about Paradigm " />
+        <PageTemplate
+          control={
+            <SideControl headline={"Parameter Distribution Free Queries"}>
+              <Text center md weight="bold">
+                Axis Controls
               </Text>
-              <TagsSelect
-                options={parametersOptions}
-                value={selected}
-                onChange={setSelected}
+
+              <RangeInput
+                number={experimentsNum}
+                setNumber={setExperimentsNum}
               />
-            </div>
-            <TypeOfConsciousnessFilter
-              checked={consciousness}
-              setChecked={setConsciousness}
-            />
-            <ReportFilter checked={isReporting} setChecked={setIsReporting} />
-            <TheoryDrivenFilter
-              checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />
-            <div className={sideSectionClass}>
-              {configSuccess && (
-                <>
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={selectedTechniques}
-                    options={techniquesArr}
-                    placeholder="Techniques"
-                    onChange={setSelectedTechniques}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={consciousnessMeasurePhases}
-                    options={consciousnessMeasurePhaseArr}
-                    placeholder={"Consciousness Measure Phase "}
-                    onChange={setConsciousnessMeasurePhases}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={consciousnessMeasureTypes}
-                    options={consciousnessMeasureTypesArr}
-                    placeholder="Consciousness Measure Types"
-                    onChange={setConsciousnessMeasureTypes}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={tagsFamilies}
-                    options={tagsFamiliesArr}
-                    placeholder="Finding Tags Families"
-                    onChange={setTagsFamilies}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={tagsTypes}
-                    options={tagsTypesArr}
-                    placeholder="Finding Tags Types"
-                    onChange={setTagsTypes}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={measures}
-                    options={measuresArr}
-                    placeholder="Measures"
-                    onChange={setMeasures}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={paradigmFamilies}
-                    options={paradigmFamiliesArr}
-                    placeholder="Paradigm Families"
-                    onChange={setParadigmFamilies}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={paradigms}
-                    options={paradigmsArr}
-                    placeholder="Paradigms"
-                    onChange={setParadigms}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={populations}
-                    options={populationsArr}
-                    placeholder="Populations"
-                    onChange={setPopulations}
-                  />
 
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={stimuliCategories}
-                    options={stimuliCategoriesArr}
-                    placeholder="Stimuli Categories"
-                    onChange={setStimuliCategories}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={stimuliModalities}
-                    options={stimuliModalitiesArr}
-                    placeholder="Stimuli Modalities"
-                    onChange={setStimuliModalities}
-                  />
-                  <Select
-                    styles={selectStyles}
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={tasks}
-                    options={tasksArr}
-                    placeholder="Tasks"
-                    onChange={setTasks}
-                  />
-                </>
-              )}{" "}
-            </div>
-          </SideControl>
+              <div className={sideSectionClass}>
+                <Text flexed md weight="bold">
+                  Parameters
+                  <FilterExplanation tooltip="few more words about Paradigm " />
+                </Text>
+                <TagsSelect
+                  options={parametersOptions}
+                  value={selected}
+                  onChange={setSelected}
+                />
+              </div>
+              <TypeOfConsciousnessFilter
+                checked={consciousness}
+                setChecked={setConsciousness}
+              />
+              <ReportFilter checked={isReporting} setChecked={setIsReporting} />
+              <TheoryDrivenFilter
+                checked={theoryDriven}
+                setChecked={setTheoryDriven}
+              />
+              <div className={sideSectionClass}>
+                {configSuccess && (
+                  <>
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={selectedTechniques}
+                      options={techniquesArr}
+                      placeholder="Techniques"
+                      onChange={setSelectedTechniques}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasurePhases}
+                      options={consciousnessMeasurePhaseArr}
+                      placeholder={"Consciousness Measure Phase "}
+                      onChange={setConsciousnessMeasurePhases}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasureTypes}
+                      options={consciousnessMeasureTypesArr}
+                      placeholder="Consciousness Measure Types"
+                      onChange={setConsciousnessMeasureTypes}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsFamilies}
+                      options={tagsFamiliesArr}
+                      placeholder="Finding Tags Families"
+                      onChange={setTagsFamilies}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsTypes}
+                      options={tagsTypesArr}
+                      placeholder="Finding Tags Types"
+                      onChange={setTagsTypes}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={measures}
+                      options={measuresArr}
+                      placeholder="Measures"
+                      onChange={setMeasures}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={paradigmFamilies}
+                      options={paradigmFamiliesArr}
+                      placeholder="Paradigm Families"
+                      onChange={setParadigmFamilies}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={paradigms}
+                      options={paradigmsArr}
+                      placeholder="Paradigms"
+                      onChange={setParadigms}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={populations}
+                      options={populationsArr}
+                      placeholder="Populations"
+                      onChange={setPopulations}
+                    />
 
-          {X1 && Y && (
-            <div style={{ marginLeft: sideWidth }}>
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={stimuliCategories}
+                      options={stimuliCategoriesArr}
+                      placeholder="Stimuli Categories"
+                      onChange={setStimuliCategories}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={stimuliModalities}
+                      options={stimuliModalitiesArr}
+                      placeholder="Stimuli Modalities"
+                      onChange={setStimuliModalities}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tasks}
+                      options={tasksArr}
+                      placeholder="Tasks"
+                      onChange={setTasks}
+                    />
+                  </>
+                )}{" "}
+              </div>
+            </SideControl>
+          }
+          graph={
+            <div>
               <TopGraphText
                 text="To determine the minimum number of experiments in each category (i.e., filter out categories with very few entries), use the # of experiments slider
-Choose a parameter of interest by selecting one of the options in 'x axis' list,
-
-and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
-
-Then, you can filter the pool of experiments described in the graph, according to each of the variables in the database.
-
-Each list of options under each parameter combo box includes the specific values relevant for this parameter."
+    Choose a parameter of interest by selecting one of the options in 'x axis' list, and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
+    Then, you can filter the pool of experiments described in the graph, according to each of the variables in the database.
+    Each list of options under each parameter combo box includes the specific values relevant for this parameter."
                 firstLine="The graph depicts the distribution of parameter values, according to your specifications."
               />
               <Plot
                 data={[trace1]}
                 layout={{
-                  width: screenWidth - sideWidth,
+                  width: screenWidth - 400,
                   height: 35 * Y?.length + 250,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 90 },
@@ -421,10 +421,9 @@ Each list of options under each parameter combo box includes the specific values
                 }}
               />
             </div>
-          )}
-        </div>
+          }
+        />
       )}
-      <Footer isFixed={false} />
     </div>
   );
 }

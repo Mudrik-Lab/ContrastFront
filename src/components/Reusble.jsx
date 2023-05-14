@@ -182,14 +182,17 @@ export const RangeInput = ({ number, setNumber }) => {
 export const SideControl = ({ children, headline }) => {
   return (
     <div
-      className="side-filter-box p-2 flex flex-col items-center fixed z-10 "
-      style={{ height: screenHeight - navHeight, width: sideWidth }}>
-      <Text size={28} weight="bold" color="blue" center>
-        {headline}
-      </Text>
-      <div className=" shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll mb-[200px] ">
+      className="side-filter-box  p-2 flex flex-col items-center fixed z-10  "
+      style={{ width: sideWidth, maxHeight: "calc(100vh - 200px)" }}>
+      <div className="p-4">
+        <Text size={28} weight="bold" color="blue" center>
+          {headline}
+        </Text>
+      </div>
+
+      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll  ">
         {children}
-        <Spacer height={200} />
+        <Spacer height={20} />
       </div>
     </div>
   );
@@ -260,7 +263,7 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
 export const TopGraphText = ({ firstLine, text }) => {
   const [extend, setExtend] = React.useState(false);
   return (
-    <div className="bg-grayLight w-full items-center p-5 flex justify-between mt-10 px-8 ">
+    <div className="bg-grayLight w-full items-center py-5 flex justify-between px-8 ">
       <div className="max-w-[85%]">
         <Text>{firstLine}</Text>
         {extend && <Text>{text}</Text>}
