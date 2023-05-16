@@ -86,8 +86,8 @@ export default function AcrossTheYears() {
 
             <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
               <Text md flexed weight={"bold"}>
-                Parameters
-                <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference." />
+                Parameter of interest
+                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
               </Text>
               <TagsSelect
                 options={parametersOptions}

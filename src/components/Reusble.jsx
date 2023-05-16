@@ -192,7 +192,7 @@ export const SideControl = ({ children, headline }) => {
       )}
       style={{
         width: isMoblile ? "100%" : sideWidth,
-        maxHeight: isMoblile ? "400px" : "calc(100vh - 200px)",
+        maxHeight: isMoblile ? "400px" : "calc(100vh - 100px)",
       }}>
       <div className="p-4">
         <Text size={28} weight="bold" color="blue" center>

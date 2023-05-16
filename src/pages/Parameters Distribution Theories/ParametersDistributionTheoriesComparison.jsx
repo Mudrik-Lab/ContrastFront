@@ -91,9 +91,9 @@ export default function ParametersDistributionTheoriesComparison() {
           </Text>
           <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
           <div className={sectionClass}>
-            <Text md flexed weight="bold">
-              Parameters
-              <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. " />
+            <Text flexed md weight="bold">
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>
             <TagsSelect
               options={parametersOptions}

@@ -153,8 +153,8 @@ export default function ParametersDistributionBar() {
               </div>
               <div className={sectionClass}>
                 <Text flexed md weight="bold">
-                  Parameters
-                  <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference." />
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}
