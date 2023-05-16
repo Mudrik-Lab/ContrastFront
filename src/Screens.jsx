@@ -12,7 +12,7 @@ import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
 import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
-import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories/ParametersDistributionTheoriesComparison";
+import ParametersDistributionTheoriesComparison from "./pages/Theories Comparison/TheoriesComparison";
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";

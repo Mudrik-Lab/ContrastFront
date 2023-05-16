@@ -23,7 +23,11 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { breakHeadlines, rawTeaxtToShow } from "../../Utils/functions";
+import {
+  breakHeadlines,
+  breakLongLines,
+  rawTeaxtToShow,
+} from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionTheoriesComparison() {
@@ -32,9 +36,9 @@ export default function ParametersDistributionTheoriesComparison() {
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [interpretation, setInterpretation] = useState(true);
+  const [interpretation, setInterpretation] = useState(false);
 
-  const { data, isSuccess, isLoading } = useQuery(
+  const { data, isLoading } = useQuery(
     [
       `parameters_distribution_theories_comparison${
         +" " +
@@ -62,6 +66,7 @@ export default function ParametersDistributionTheoriesComparison() {
         interpretation: interpretation ? "pro" : "challenges",
       })
   );
+
   const chartsData = data?.data;
   const keysArr = [];
   chartsData?.map((theory) =>
@@ -74,18 +79,18 @@ export default function ParametersDistributionTheoriesComparison() {
   if (selected.value === "paradigm") {
     someColors = myColors.slice(0, trimedKeysArr.length);
   }
-  console.log(someColors);
+
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log({ keysColors, selected });
+
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <PageTemplate
       control={
-        <SideControl headline={" Parameters Distribution Theories Comparison"}>
+        <SideControl headline={"Theories Comparison"}>
           <Text md weight="bold">
             Axis Controls
           </Text>
@@ -101,6 +106,20 @@ export default function ParametersDistributionTheoriesComparison() {
               onChange={setSelected}
             />
           </div>
+          <div className={sectionClass}>
+            <div className="flex justify-center items-center gap-3 mt-3">
+              <Text>Supports</Text>
+              <Toggle
+                checked={interpretation}
+                setChecked={() => setInterpretation(!interpretation)}
+              />
+              <Text>Challenges</Text>
+            </div>
+            <FilterExplanation
+              text="Interpretation"
+              tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+            />
+          </div>
           <TypeOfConsciousnessFilter
             checked={consciousness}
             setChecked={setConsciousness}
@@ -111,21 +130,6 @@ export default function ParametersDistributionTheoriesComparison() {
             setChecked={setTheoryDriven}
           />
           <Spacer height={10} />
-          <Text md weight={"bold"}>
-            Interpretation
-          </Text>
-          <div className="flex justify-center items-center gap-3 mt-3">
-            <Text>Challenges</Text>
-            <Toggle
-              checked={interpretation}
-              setChecked={() => setInterpretation(!interpretation)}
-            />
-            <Text>Supports</Text>
-          </div>
-          <FilterExplanation
-            text="Interpretation"
-            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
-          />
         </SideControl>
       }
       graph={
@@ -146,9 +150,10 @@ export default function ParametersDistributionTheoriesComparison() {
                   data={[
                     {
                       direction: "clockwise",
+                      insidetextorientation: "horizontal",
                       values: chart.series.map((row) => row.value),
                       labels: chart.series.map((row) =>
-                        rawTeaxtToShow(row.key)
+                        breakLongLines(rawTeaxtToShow(row.key))
                       ),
                       type: "pie",
                       textinfo: "label+number",
@@ -165,13 +170,12 @@ export default function ParametersDistributionTheoriesComparison() {
                     width: isMoblile ? screenWidth : 600,
                     height: 600,
                     showlegend: false,
-
                     annotations: [
                       {
                         text:
-                          breakHeadlines(chart.series_name, 11) +
+                          breakLongLines(chart.series_name, 11) +
                           " <br />" +
-                          " = " +
+                          "N = " +
                           chart.value,
                         showarrow: false,
 
