@@ -138,7 +138,8 @@ export default function ParametersDistributionTheoriesComparison() {
             firstLine={
               "The graph depicts the different distributions of parameters for the four theories separately."
             }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            text="Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter. You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.
+            You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories."
           />
           <div className="four-wheels 2xl:mx-auto max-w-[1300px] ">
             {isLoading ? (

@@ -16,6 +16,7 @@ import {
   screenWidth,
   parametersOptions,
   isMoblile,
+  designerColors,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
@@ -92,13 +93,16 @@ export default function ParametersDistributionBar() {
   var trace1 = {
     x: X1,
     y: Y,
+    text: X1,
     name: "Supports",
+
     orientation: "h",
     textfont: {
       size: 18,
+      color: "white",
     },
     marker: {
-      color: colorsArray[12],
+      color: designerColors[25],
       width: 100,
       text: {
         font: {
@@ -111,13 +115,15 @@ export default function ParametersDistributionBar() {
   var trace2 = {
     x: X2,
     y: Y,
+    text: X2,
     name: "Challenges",
     orientation: "h",
     textfont: {
       size: 18,
+      color: "white",
     },
     marker: {
-      color: colorsArray[6],
+      color: designerColors[22],
       width: 100,
     },
     type: "bar",
@@ -142,7 +148,7 @@ export default function ParametersDistributionBar() {
 
               <div className={sectionClass}>
                 <Text flexed md weight="bold">
-                  Theory
+                  Theory Family
                   <FilterExplanation tooltip="few more words about Theory" />
                 </Text>
                 <TagsSelect
@@ -185,7 +191,9 @@ export default function ParametersDistributionBar() {
                 firstLine={
                   'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
                 }
-                text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                text="Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter. The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.
+                You can also filter the results according to reporting technique.
+                "
               />
               {isLoading ? (
                 <Spinner />
@@ -198,10 +206,16 @@ export default function ParametersDistributionBar() {
                     width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90 },
+                    legend: { itemwidth: 90, x: -0.2, y: 1.05 },
+
                     xaxis: {
+                      title: "Number of experiments",
                       zeroline: true,
                       side: "top",
+                      tickfont: {
+                        size: 16,
+                        standoff: 50,
+                      },
                     },
                     yaxis: {
                       showticklabels: !isMoblile,
