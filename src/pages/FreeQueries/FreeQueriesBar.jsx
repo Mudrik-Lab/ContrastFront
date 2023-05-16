@@ -202,8 +202,6 @@ export default function FreeQueriesBar() {
     x: X1,
     y: Y,
     text: Y,
-    // textangle: 30,
-    // name: "pro",
     orientation: "h",
     textfont: {
       size: 18,

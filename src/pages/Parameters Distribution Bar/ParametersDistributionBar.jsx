@@ -94,9 +94,17 @@ export default function ParametersDistributionBar() {
     y: Y,
     name: "Supports",
     orientation: "h",
+    textfont: {
+      size: 18,
+    },
     marker: {
       color: colorsArray[12],
       width: 100,
+      text: {
+        font: {
+          weight: "bold",
+        },
+      },
     },
     type: "bar",
   };
@@ -105,6 +113,9 @@ export default function ParametersDistributionBar() {
     y: Y,
     name: "Challenges",
     orientation: "h",
+    textfont: {
+      size: 18,
+    },
     marker: {
       color: colorsArray[6],
       width: 100,
@@ -184,16 +195,16 @@ export default function ParametersDistributionBar() {
                   config={{ displayModeBar: !isMoblile }}
                   layout={{
                     barmode: isStacked ? "stack" : "group",
-                    title: "Parameter Distribution Bar",
                     width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 350,
-                    margin: { autoexpand: true, l: 200 },
+                    margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
                     legend: { itemwidth: 90 },
                     xaxis: {
                       zeroline: true,
                       side: "top",
                     },
                     yaxis: {
+                      showticklabels: !isMoblile,
                       automargin: true,
                       ticks: "outside",
                       tickfont: {

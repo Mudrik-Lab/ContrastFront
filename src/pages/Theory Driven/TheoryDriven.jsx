@@ -4,6 +4,7 @@ import Navbar from "../../components/Navbar";
 import {
   colorsArray,
   designerColors,
+  isMoblile,
   navHeight,
   screenHeight,
   screenWidth,
@@ -172,8 +173,8 @@ export default function TheoryDriven() {
                 },
               ]}
               layout={{
-                width: screenWidth - 400,
-                height: screenHeight - 200,
+                width: isMoblile ? screenWidth : screenWidth - 400,
+                height: isMoblile ? screenWidth : screenHeight - 200,
                 showlegend: false,
                 font: { size: 20 },
               }}

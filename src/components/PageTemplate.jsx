@@ -6,7 +6,7 @@ import { isMoblile } from "./HardCoded";
 export default function PageTemplate({ graph, control }) {
   const containerStyle = {
     display: "grid",
-    gridTemplateColumns: isMoblile ? "auto" : "370px 1fr",
+    gridTemplateColumns: isMoblile ? "1fr" : "370px 1fr",
     gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "80px 1fr 100px",
     gridTemplateAreas: isMoblile
       ? `
@@ -52,9 +52,7 @@ export default function PageTemplate({ graph, control }) {
       </div>
       <div style={sidebarStyle}>{control}</div>
       <div style={mainStyle}>{graph}</div>
-      <div style={footerStyle}>
-        <Footer />
-      </div>
+      <div style={footerStyle}>{/* <Footer /> */}</div>
     </div>
   );
 }

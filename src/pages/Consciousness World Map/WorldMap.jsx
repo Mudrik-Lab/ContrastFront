@@ -16,6 +16,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
 import {
+  isMoblile,
   navHeight,
   screenHeight,
   screenWidth,
@@ -99,6 +100,7 @@ export default function WorldMap() {
   var graphData = [
     {
       type: "choropleth",
+      showscale: !isMoblile,
       locations: data?.data.map((row) => row.country),
       text: data?.data.map((row) => row.country_name),
       z: data?.data.map((row) => row.total),
@@ -131,6 +133,7 @@ export default function WorldMap() {
       },
       tick0: 0,
       zmin: 0,
+
       colorbar: {
         len: 0.5,
         yanchor: "bottom",
@@ -189,8 +192,8 @@ export default function WorldMap() {
       font: { color: "#ffffff" },
     },
 
-    width: screenWidth - 450,
-    height: screenHeight - 360,
+    width: isMoblile ? screenWidth : screenWidth - 450,
+    height: isMoblile ? screenWidth : screenHeight - 360,
     showlegend: false,
     autosize: false,
   };
@@ -245,7 +248,11 @@ export default function WorldMap() {
             {isLoading ? (
               <Spinner />
             ) : (
-              <Plot data={graphData} layout={layout} />
+              <Plot
+                data={graphData}
+                layout={layout}
+                config={{ displayModeBar: !isMoblile }}
+              />
             )}
           </div>
         }
