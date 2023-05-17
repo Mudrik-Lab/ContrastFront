@@ -7,6 +7,7 @@ import {
   isMoblile,
   parametersOptions,
   screenWidth,
+  sideSectionClass,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
@@ -26,7 +27,8 @@ import Footer from "../../components/Footer";
 import {
   breakLongLines,
   hexToRgba,
-  rawTeaxtToShow,
+  rawTeaxtToShow as rawTextToShow,
+  showTextToRaw as shownTextToRaw,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 
@@ -37,10 +39,7 @@ export default function ParametersDistributionPie() {
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [graphData, setGraphData] = React.useState([]);
-  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
-    [`parent_theories`],
-    getConfiguration
-  );
+
   const { data, isSuccess, isLoading } = useQuery(
     [
       `parameters_distribution_pie${
@@ -75,17 +74,16 @@ export default function ParametersDistributionPie() {
 
   data?.data.map((x, index) => {
     values1.push(x.value);
-    labels1.push(rawTeaxtToShow(x.series_name));
+    labels1.push(rawTextToShow(x.series_name));
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(`<span id=${index} >` + breakLongLines(y.key) + "</span>");
+      labels2.push(`<span id=${index} >` + y.key + "</span>");
       outsideColors.push(
         hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
       );
     });
   });
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+
   const initialGraphData = [
     //inner pie
     {
@@ -95,6 +93,7 @@ export default function ParametersDistributionPie() {
       labels: labels1,
       type: "pie",
       textinfo: "label+number",
+      hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
       textposition: "inside",
       insidetextorientation: "radial",
       hole: 0.1,
@@ -112,6 +111,7 @@ export default function ParametersDistributionPie() {
       labels: labels2,
       sort: false,
       type: "pie",
+      hovertemplate: "%{label}: %{value} <extra></extra>",
       textinfo: "label+value",
       hole: 0.75,
       textposition: "inside",
@@ -126,11 +126,15 @@ export default function ParametersDistributionPie() {
 
   function secondaryPie(seriesName) {
     const secondaryData = data?.data.find(
-      (row) => row.series_name === seriesName.label
+      (row) =>
+        row.series_name === seriesName.label ||
+        row.series_name === shownTextToRaw(seriesName.label) ||
+        row.series_name.toLowerCase() === seriesName.label.toLowerCase()
     );
+    console.log(secondaryData);
+
     const color = seriesName.color;
-    console.log(secondaryData.series.length);
-    console.log(Array(secondaryData.series.length).fill(color));
+
     setGraphData([
       //inner pie
       {
@@ -138,11 +142,13 @@ export default function ParametersDistributionPie() {
         direction: "clockwise",
         insidetextorientation: "radial",
         values: [1],
-        labels: secondaryData.series_name,
+        labels: [rawTextToShow(secondaryData.series_name)],
+        sort: false,
         type: "pie",
-        textinfo: "text",
+        hovertemplate: "<extra></extra>",
+        textinfo: "label",
+        textfont: { size: 30 },
         textposition: "inside",
-        hoverinfo: "none",
         hole: 0,
         domain: { x: [0, 1], y: [0.3, 0.7] },
         marker: {
@@ -158,6 +164,7 @@ export default function ParametersDistributionPie() {
         labels: secondaryData.series.map((row) => row.key),
         sort: false,
         type: "pie",
+        hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
         textinfo: "label+percent",
         hole: 0.4,
         textposition: "inside",
@@ -179,18 +186,17 @@ export default function ParametersDistributionPie() {
           </Text>
           <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
-          <div className={sectionClass}>
-            <Text flexed md weight="bold">
-              Parameter of interest
-              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
-            </Text>
+          <div className={sideSectionClass}>
             <TagsSelect
               options={parametersOptions}
               value={selected}
               onChange={setSelected}
             />
+            <Text size={14} flexed>
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+            </Text>
           </div>
-
           <TypeOfConsciousnessFilter
             checked={consciousness}
             setChecked={setConsciousness}
@@ -218,45 +224,10 @@ export default function ParametersDistributionPie() {
                 {graphData[0].name !== "drilled" ? (
                   <Plot
                     onClick={(e) => {
-                      console.log(e.points[0].color);
+                      console.log(e);
                       secondaryPie(e.points[0]);
                     }}
-                    data={[
-                      //inner pie
-                      {
-                        direction: "clockwise",
-                        insidetextorientation: "radial",
-                        values: values1,
-                        labels: labels1,
-                        type: "pie",
-                        textinfo: "label+number",
-                        textposition: "inside",
-                        insidetextorientation: "radial",
-                        hole: 0.1,
-                        domain: { x: [0, 1], y: [0.125, 0.875] },
-                        marker: {
-                          colors: designerColors,
-                          line: { width: 1, color: "white" },
-                        },
-                      },
-                      // outside pie
-                      {
-                        direction: "clockwise",
-                        insidetextorientation: "tangential",
-                        values: values2,
-                        labels: labels2,
-                        sort: false,
-                        type: "pie",
-                        textinfo: "label+value",
-                        hole: 0.75,
-                        textposition: "inside",
-                        domain: { x: [0, 1], y: [0, 1] },
-                        marker: {
-                          colors: outsideColors,
-                          line: { width: 1, color: "white" },
-                        },
-                      },
-                    ]}
+                    data={initialGraphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
                       width: isMoblile ? screenWidth : 1200,
@@ -276,6 +247,7 @@ export default function ParametersDistributionPie() {
                       width: isMoblile ? screenWidth : 1200,
                       height: isMoblile ? screenWidth : 1000,
                       showlegend: false,
+
                       annotations: [{ showarrow: false, text: "" }],
                     }}
                   />
@@ -283,20 +255,6 @@ export default function ParametersDistributionPie() {
               </div>
             )
           )}
-          {/* <Plot
-            onClick={(e) => {
-              console.log(e.points[0].color);
-              secondaryPie(e.points[0]);
-            }}
-            data={graphData}
-            config={{ displayModeBar: !isMoblile }}
-            layout={{
-              width: isMoblile ? screenWidth : 1200,
-              height: isMoblile ? screenWidth : 1000,
-              showlegend: false,
-              annotations: [{ showarrow: false, text: "" }],
-            }}
-          /> */}
         </div>
       }
     />

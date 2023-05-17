@@ -264,15 +264,15 @@ export default function FreeQueriesBar() {
               />
 
               <div className={sideSectionClass}>
-                <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
-                </Text>
                 <TagsSelect
                   options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />
+                <Text size={14} flexed>
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                </Text>
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}

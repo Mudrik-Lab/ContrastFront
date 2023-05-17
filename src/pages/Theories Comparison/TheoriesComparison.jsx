@@ -6,6 +6,7 @@ import {
   myColors,
   parametersOptions,
   screenWidth,
+  sideSectionClass,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
@@ -85,8 +86,6 @@ export default function ParametersDistributionTheoriesComparison() {
     keysColors[key] = someColors[index];
   });
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <PageTemplate
       control={
@@ -95,18 +94,18 @@ export default function ParametersDistributionTheoriesComparison() {
             Axis Controls
           </Text>
           <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-          <div className={sectionClass}>
-            <Text flexed md weight="bold">
-              Parameter of interest
-              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
-            </Text>
+          <div className={sideSectionClass}>
             <TagsSelect
               options={parametersOptions}
               value={selected}
               onChange={setSelected}
             />
+            <Text size={14} flexed>
+              Parameter of interest
+              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+            </Text>
           </div>
-          <div className={sectionClass}>
+          <div className={sideSectionClass}>
             <div className="flex justify-center items-center gap-3 mt-3">
               <Text>Supports</Text>
               <Toggle

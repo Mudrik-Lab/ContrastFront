@@ -17,6 +17,7 @@ import {
   parametersOptions,
   isMoblile,
   designerColors,
+  sideSectionClass,
 } from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
@@ -130,8 +131,6 @@ export default function ParametersDistributionBar() {
     type: "bar",
   };
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div>
       {configurationSuccess && (
@@ -147,27 +146,27 @@ export default function ParametersDistributionBar() {
                 setNumber={setExperimentsNum}
               />
 
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Theory Family
-                  <FilterExplanation tooltip="few more words about Theory" />
-                </Text>
+              <div className={sideSectionClass}>
                 <TagsSelect
                   value={selectedParent}
                   options={parentTheories}
                   onChange={setSelectedParent}
                 />
-              </div>
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                <Text size={14} flexed>
+                  Theory Family
+                  <FilterExplanation tooltip="few more words about Theory" />
                 </Text>
+              </div>
+              <div className={sideSectionClass}>
                 <TagsSelect
                   options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />
+                <Text size={14} flexed>
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                </Text>
               </div>
 
               <ReportFilter checked={reporting} setChecked={setReporting} />

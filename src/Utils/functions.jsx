@@ -61,12 +61,16 @@ export function rawTeaxtToShow(text) {
   const capitalizedWords = words.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
-  // if (text.length > 20) {
-  //   return capitalizedWords.join("<br>");
-  // }
   return capitalizedWords.join(" ");
 }
 
+export function showTextToRaw(text) {
+  const words = text.split(" ");
+  const rawWords = words.map(
+    (word) => word.charAt(0).toLowerCase() + word.slice(1)
+  );
+  return rawWords.join("_");
+}
 export function breakLongLines(text) {
   const words = text.split(" ");
   let line = "";

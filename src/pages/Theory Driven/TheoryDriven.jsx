@@ -113,9 +113,7 @@ export default function TheoryDriven() {
             checked={theoryDriven}
             setChecked={setTheoryDriven}
           />
-          <Text weight={"bold"} md>
-            Interpretation
-          </Text>
+
           <div className="flex justify-center items-center gap-3 mt-3">
             <Text>Challenges</Text>
             <Toggle
