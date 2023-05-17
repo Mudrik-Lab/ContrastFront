@@ -17,7 +17,7 @@ import {
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
-  avalble_populations,
+  available_populations,
   designerColors,
   isMoblile,
   navHeight,
@@ -123,7 +123,7 @@ export default function FreeQueriesBar() {
       }))
     : [];
 
-  const populationsArr = avalble_populations;
+  const populationsArr = available_populations;
   const stimuliCategoriesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_category_type.map((type, index) => ({
         value: type.id,

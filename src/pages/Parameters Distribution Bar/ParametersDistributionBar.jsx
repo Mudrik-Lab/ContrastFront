@@ -21,7 +21,7 @@ import {
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTeaxtToShow } from "../../Utils/functions";
+import { breakLongLines, rawTeaxtToShow } from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -95,7 +95,7 @@ export default function ParametersDistributionBar() {
     y: Y,
     text: X1,
     name: "Supports",
-
+    hoverinfo: "none",
     orientation: "h",
     textfont: {
       size: 18,
@@ -115,6 +115,7 @@ export default function ParametersDistributionBar() {
   var trace2 = {
     x: X2,
     y: Y,
+    hoverinfo: "none", //turn off the tooltip when hover the bars
     text: X2,
     name: "Challenges",
     orientation: "h",
@@ -206,7 +207,7 @@ export default function ParametersDistributionBar() {
                     width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90, x: -0.2, y: 1.05 },
+                    legend: { itemwidth: 90, x: -0.25, y: 1.05 },
 
                     xaxis: {
                       title: "Number of experiments",
@@ -222,7 +223,7 @@ export default function ParametersDistributionBar() {
                       automargin: true,
                       ticks: "outside",
                       tickfont: {
-                        size: 14,
+                        size: 10,
                         standoff: 50,
                       },
                     },

@@ -328,6 +328,86 @@ export const designerColors = [
   "#074D54",
   "#095C4A",
   "#088515",
+  "#FBF8CC",
+  "#FDE4CF",
+  "#FFCFD2",
+  "#F1C0E8",
+  "#CFBAF0",
+  "#A3C4F3",
+  "#90DBF4",
+  "#8EECF5",
+  "#98F5E1",
+  "#B9FBC0",
+  "#E6E2A6",
+  "#EAC6A7",
+  "#EDA6AA",
+  "#D79FCD",
+  "#B199D5",
+  "#85A6D6",
+  "#75BCD4",
+  "#73CCD5",
+  "#7BD6C3",
+  "#96E39E",
+  "#D2CC7F",
+  "#D7A77F",
+  "#DB7C82",
+  "#BD7DB2",
+  "#9379BB",
+  "#6789B9",
+  "#5A9DB4",
+  "#58ACB5",
+  "#5FB8A5",
+  "#72CC7C",
+  "#BDB759",
+  "#C48957",
+  "#CA535A",
+  "#A45C96",
+  "#7458A0",
+  "#496B9B",
+  "#3E7F94",
+  "#3D8D94",
+  "#429986",
+  "#4FB459",
+  "#B3AC46",
+  "#BB7A43",
+  "#C13E46",
+  "#974B89",
+  "#654893",
+  "#3A5C8D",
+  "#316F84",
+  "#307D84",
+  "#348A77",
+  "#3DA848",
+  "#A9A132",
+  "#B16A2F",
+  "#B82932",
+  "#8A3A7B",
+  "#563886",
+  "#2B4E7E",
+  "#236074",
+  "#226D74",
+  "#267B68",
+  "#2B9D37",
+  "#9E961F",
+  "#A85B1B",
+  "#AF151E",
+  "#7D2A6E",
+  "#472778",
+  "#1C3F70",
+  "#165064",
+  "#155D64",
+  "#176B59",
+  "#1A9126",
+  "#948B0C",
+  "#9E4C07",
+  "#A6000A",
+  "#701960",
+  "#38176B",
+  "#0D3061",
+  "#084154",
+  "#074D54",
+  "#095C4A",
+  "#088515",
 ];
 
 export const breakdownsShorts = {
@@ -346,6 +426,9 @@ export const graphsHeaders = [
     tooltip:
       "The graph depicts the distribution of parameter values, according to your specifications.",
     route: "/parameter-distribution-free-queries",
+    figureLine: "",
+    figureText:
+      "Here, you can use the toolbar on the left to create your own queries. Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Theories Comparison",
@@ -354,6 +437,9 @@ export const graphsHeaders = [
     color: "orange",
     icon: <TheoriesComparison />,
     route: "theories-comparison",
+    figureLine: "",
+    figureText:
+      "Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter. You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Parameter Distribution Bar",
@@ -362,6 +448,9 @@ export const graphsHeaders = [
     icon: <ParameterDist2 />,
     color: "pink",
     route: "/parameter-distribution-bar",
+    figureLine: "",
+    figureText:
+      "Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter. The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.You can also filter the results according to reporting technique.",
   },
   {
     text: "Parameter Distribution Pie",
@@ -370,6 +459,9 @@ export const graphsHeaders = [
     icon: <ParameterTheory />,
     color: "lilac",
     route: "/parameter-distribution-pie",
+    figureLine: "",
+    figureText:
+      "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across the different theories. The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Trends Across The Years",
@@ -378,6 +470,9 @@ export const graphsHeaders = [
     icon: <Trends />,
     color: "purple",
     route: "/across-the-years",
+    figureLine: "",
+    figureText:
+      "Here, you can select a specific parameter of interest, and see how the experiments in the database distribute over the different levels of that parameter over time. The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Theory Driven",
@@ -386,6 +481,9 @@ export const graphsHeaders = [
     icon: <TheoryDriven />,
     color: "navyBlue",
     route: "/theory-driven",
+    figureLine: "",
+    figureText:
+      "Here, you can see how the experiments in the database distribute with respect to their theoretical motivation: the category 'Theory driven' includes experiments that were a-priory designed to test the predictions of at least one theory. The category 'Mentioning' includes experiments that mentioned at least one family of theories in the introduction. The category 'Post hoc' includes experiments that only interpreted their results in light of the theories.<br/> The outer circle describes the distribution of the interpretations of each experiment in the inner circle slice according to the four families of theories. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Timings",
@@ -394,6 +492,9 @@ export const graphsHeaders = [
     icon: <Timings />,
     color: "darkTeal",
     route: "/timings",
+    figureLine: "",
+    figureText:
+      "Here, you can plot the time windows over which effects were reported in all experiments in the database that employed a time-resolved technique. Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later components. Components for which a time window was given are depicted as a continuous line spanning over the components range. Dots depict components for which only the peak was reported. <br/> In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Frequencies",
@@ -402,6 +503,9 @@ export const graphsHeaders = [
     icon: <Frequencies />,
     color: "teal",
     route: "/frequencies",
+    figureLine: "",
+    figureText:
+      "Here, you can plot the frequencies in which effects were reported in all experiments in the database that employed a time-resolved technique. Each horizontal line represents the frequency band reported in a specific experiment, colored according to its classification by the authors (see the legend). Darker colors indicate lower frequencies. Cases in which a specific frequency was reported (e.g., 5Hz), are represented by dots. In this figure, you can select a specific technique or multi-select more than one. You can also filter the results according to consciousness type, reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Anatomical Findings",
@@ -410,6 +514,9 @@ export const graphsHeaders = [
     icon: <AnatomicalFindings />,
     color: "lightTeal",
     route: "/",
+    figureLine: "",
+    figureText:
+      "Here, you can see the findings in the spatial domain, of the experiments in the database which used fMRI. Red, yellow, blue, and green activations represent experiments supporting the global workspace theories, integrated information, higher order, and re-entry and predictive processing theories, respectively. The intensity of the color of each activation indicates the relative frequency of the activation in each brain area, within the findings supporting each theory family. Note that this does not include any statistical analysis of the data, just a simple “vote count” of the number of experiments in which a specific area was reported. ",
   },
   {
     text: "Journals",
@@ -418,6 +525,9 @@ export const graphsHeaders = [
     icon: <Journals />,
     color: "lightGreen",
     route: "/journals",
+    figureLine: "",
+    figureText:
+      "Here, you can see in which journals the experiments in the database for a chosen theory family were reported. You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. ",
   },
   {
     text: "Consciousness World Map",
@@ -426,10 +536,13 @@ export const graphsHeaders = [
     icon: <WorldMap />,
     color: "lightGreen",
     route: "/consciousness-world-map",
+    figureLine: "",
+    figureText:
+      "Here, you can see how the different theories are supported in different countries around the world; the map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
 ];
 
-export const avalble_populations = [
+export const available_populations = [
   {
     value: "heathy Adults",
     label: "Heathy Adults",

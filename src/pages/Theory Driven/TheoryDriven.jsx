@@ -145,6 +145,7 @@ export default function TheoryDriven() {
               data={[
                 {
                   direction: "clockwise",
+                  insidetextorientation: "radial",
                   values: values1,
                   labels: labels1.map((label) => rawTeaxtToShow(label)),
                   type: "pie",
@@ -152,12 +153,13 @@ export default function TheoryDriven() {
                   textposition: "inside",
                   domain: { x: [0.5, 0.5], y: [0.2, 0.8] },
                   marker: {
-                    colors: colorsArray,
+                    colors: designerColors.slice(28, 31),
                     line: { width: 1, color: "white" },
                   },
                 },
                 {
                   direction: "clockwise",
+                  insidetextorientation: "tangential",
                   values: values2,
                   labels: labels2,
                   sort: false,

@@ -1,24 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import {
-  colorsArray,
   designerColors,
   isMoblile,
-  navHeight,
   parametersOptions,
-  screenHeight,
   screenWidth,
-  sideWidth,
 } from "../../components/HardCoded";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -29,7 +23,11 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 import Footer from "../../components/Footer";
-import { hexToRgba, rawTeaxtToShow } from "../../Utils/functions";
+import {
+  breakLongLines,
+  hexToRgba,
+  rawTeaxtToShow,
+} from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function ParametersDistributionPie() {
@@ -38,12 +36,12 @@ export default function ParametersDistributionPie() {
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
-
+  const [graphData, setGraphData] = React.useState([]);
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
-  const { data, isLoading } = useQuery(
+  const { data, isSuccess, isLoading } = useQuery(
     [
       `parameters_distribution_pie${
         +" " +
@@ -68,6 +66,7 @@ export default function ParametersDistributionPie() {
         min_number_of_experiments: experimentsNum,
       })
   );
+  console.log(data?.data);
   const values1 = [];
   const labels1 = [];
   const outsideColors = [];
@@ -79,7 +78,7 @@ export default function ParametersDistributionPie() {
     labels1.push(rawTeaxtToShow(x.series_name));
     x.series.map((y) => {
       values2.push(y.value);
-      labels2.push(`<span id=${index} >` + y.key + "</span>");
+      labels2.push(`<span id=${index} >` + breakLongLines(y.key) + "</span>");
       outsideColors.push(
         hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
       );
@@ -87,6 +86,89 @@ export default function ParametersDistributionPie() {
   });
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+  const initialGraphData = [
+    //inner pie
+    {
+      direction: "clockwise",
+      insidetextorientation: "radial",
+      values: values1,
+      labels: labels1,
+      type: "pie",
+      textinfo: "label+number",
+      textposition: "inside",
+      insidetextorientation: "radial",
+      hole: 0.1,
+      domain: { x: [0, 1], y: [0.125, 0.875] },
+      marker: {
+        colors: designerColors,
+        line: { width: 1, color: "white" },
+      },
+    },
+    // outside pie
+    {
+      direction: "clockwise",
+      insidetextorientation: "tangential",
+      values: values2,
+      labels: labels2,
+      sort: false,
+      type: "pie",
+      textinfo: "label+value",
+      hole: 0.75,
+      textposition: "inside",
+      domain: { x: [0, 1], y: [0, 1] },
+      marker: {
+        colors: outsideColors,
+        line: { width: 1, color: "white" },
+      },
+    },
+  ];
+  isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
+
+  function secondaryPie(seriesName) {
+    const secondaryData = data?.data.find(
+      (row) => row.series_name === seriesName.label
+    );
+    const color = seriesName.color;
+    console.log(secondaryData.series.length);
+    console.log(Array(secondaryData.series.length).fill(color));
+    setGraphData([
+      //inner pie
+      {
+        name: "drilled",
+        direction: "clockwise",
+        insidetextorientation: "radial",
+        values: [1],
+        labels: secondaryData.series_name,
+        type: "pie",
+        textinfo: "text",
+        textposition: "inside",
+        hoverinfo: "none",
+        hole: 0,
+        domain: { x: [0, 1], y: [0.3, 0.7] },
+        marker: {
+          colors: [color],
+          line: { width: 1, color: "white" },
+        },
+      },
+      // outside pie
+      {
+        direction: "clockwise",
+        insidetextorientation: "radial",
+        values: secondaryData.series.map((row) => row.value),
+        labels: secondaryData.series.map((row) => row.key),
+        sort: false,
+        type: "pie",
+        textinfo: "label+percent",
+        hole: 0.4,
+        textposition: "inside",
+        domain: { x: [0, 1], y: [0, 1] },
+        marker: {
+          colors: Array(secondaryData.series.length).fill(color),
+          line: { width: 1, color: "white" },
+        },
+      },
+    ]);
+  }
 
   return (
     <PageTemplate
@@ -131,48 +213,90 @@ export default function ParametersDistributionPie() {
           {isLoading ? (
             <Spinner />
           ) : (
-            <Plot
-              data={[
-                {
-                  direction: "clockwise",
-                  values: values1,
-                  labels: labels1,
-                  type: "pie",
-                  textinfo: "label+number",
-                  textposition: "inside",
-                  insidetextorientation: "radial",
-                  hole: 0.1,
-                  domain: { x: [0, 1], y: [0.125, 0.875] },
-                  marker: {
-                    colors: designerColors,
-                    line: { width: 1, color: "white" },
-                  },
-                },
-                {
-                  direction: "clockwise",
-                  values: values2,
-                  labels: labels2,
-                  sort: false,
-                  type: "pie",
-                  textinfo: "label+value",
-                  hole: 0.75,
-                  textposition: "inside",
-                  domain: { x: [0, 1], y: [0, 1] },
-                  marker: {
-                    colors: outsideColors,
-                    line: { width: 1, color: "white" },
-                  },
-                },
-              ]}
-              config={{ displayModeBar: !isMoblile }}
-              layout={{
-                width: isMoblile ? screenWidth : 1200,
-                height: isMoblile ? screenWidth : 1000,
-                showlegend: false,
-                annotations: [{ showarrow: false, text: "" }],
-              }}
-            />
+            graphData.length && (
+              <div>
+                {graphData[0].name !== "drilled" ? (
+                  <Plot
+                    onClick={(e) => {
+                      console.log(e.points[0].color);
+                      secondaryPie(e.points[0]);
+                    }}
+                    data={[
+                      //inner pie
+                      {
+                        direction: "clockwise",
+                        insidetextorientation: "radial",
+                        values: values1,
+                        labels: labels1,
+                        type: "pie",
+                        textinfo: "label+number",
+                        textposition: "inside",
+                        insidetextorientation: "radial",
+                        hole: 0.1,
+                        domain: { x: [0, 1], y: [0.125, 0.875] },
+                        marker: {
+                          colors: designerColors,
+                          line: { width: 1, color: "white" },
+                        },
+                      },
+                      // outside pie
+                      {
+                        direction: "clockwise",
+                        insidetextorientation: "tangential",
+                        values: values2,
+                        labels: labels2,
+                        sort: false,
+                        type: "pie",
+                        textinfo: "label+value",
+                        hole: 0.75,
+                        textposition: "inside",
+                        domain: { x: [0, 1], y: [0, 1] },
+                        marker: {
+                          colors: outsideColors,
+                          line: { width: 1, color: "white" },
+                        },
+                      },
+                    ]}
+                    config={{ displayModeBar: !isMoblile }}
+                    layout={{
+                      width: isMoblile ? screenWidth : 1200,
+                      height: isMoblile ? screenWidth : 1000,
+                      showlegend: false,
+                      annotations: [{ showarrow: false, text: "" }],
+                    }}
+                  />
+                ) : (
+                  <Plot
+                    onClick={(e) => {
+                      setGraphData(initialGraphData);
+                    }}
+                    data={graphData}
+                    config={{ displayModeBar: !isMoblile }}
+                    layout={{
+                      width: isMoblile ? screenWidth : 1200,
+                      height: isMoblile ? screenWidth : 1000,
+                      showlegend: false,
+                      annotations: [{ showarrow: false, text: "" }],
+                    }}
+                  />
+                )}
+              </div>
+            )
           )}
+          {/* <Plot
+            onClick={(e) => {
+              console.log(e.points[0].color);
+              secondaryPie(e.points[0]);
+            }}
+            data={graphData}
+            config={{ displayModeBar: !isMoblile }}
+            layout={{
+              width: isMoblile ? screenWidth : 1200,
+              height: isMoblile ? screenWidth : 1000,
+              showlegend: false,
+              annotations: [{ showarrow: false, text: "" }],
+            }}
+          /> */}
         </div>
       }
     />
