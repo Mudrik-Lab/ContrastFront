@@ -61,7 +61,25 @@ export function rawTeaxtToShow(text) {
   const capitalizedWords = words.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
+  // if (text.length > 20) {
+  //   return capitalizedWords.join("<br>");
+  // }
   return capitalizedWords.join(" ");
+}
+
+export function breakLongLines(text) {
+  const words = text.split(" ");
+  let line = "";
+  const lines = words.map((word, index) => {
+    if (line.length + word.length > 10) {
+      line = word;
+      return `<br />${line}`;
+    } else {
+      line += (index > 0 ? " " : "") + word;
+      return line;
+    }
+  });
+  return lines.join(" ");
 }
 
 export function hexToRgba(hexColor) {
@@ -70,4 +88,8 @@ export function hexToRgba(hexColor) {
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
   return `rgba(${r}, ${g}, ${b}, 1)`;
+}
+
+export function fitColorPerLabel(data) {
+  console.log(data);
 }

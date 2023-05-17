@@ -16,8 +16,11 @@ import {
 import TagsSelect from "../../components/TagsSelect";
 import Navbar from "../../components/Navbar";
 import {
+  isMoblile,
   navHeight,
   parametersOptions,
+  screenHeight,
+  screenWidth,
   sideWidth,
 } from "../../components/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
@@ -63,8 +66,6 @@ export default function AcrossTheYears() {
       mode: "lines+markers",
     });
   });
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
 
   return (
     <div>
@@ -114,7 +115,7 @@ export default function AcrossTheYears() {
                 data={graphsData}
                 layout={{
                   autosize: false,
-                  showlegend: true,
+                  showlegend: !isMoblile,
                   legend: {
                     x: 1,
                     xanchor: "left",
@@ -132,7 +133,7 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: screenWidth - 400,
+                  width: isMoblile ? screenWidth : screenWidth - 400,
                   height: screenHeight - 300,
                 }}
               />
@@ -140,8 +141,6 @@ export default function AcrossTheYears() {
           </div>
         }
       />
-
-      <Footer isFixed={true} />
     </div>
   );
 }

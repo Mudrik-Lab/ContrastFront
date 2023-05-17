@@ -13,7 +13,11 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, sideWidth } from "../../components/HardCoded";
+import {
+  AlphaBetaColors,
+  isMoblile,
+  sideWidth,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
@@ -172,13 +176,16 @@ export default function Frequencies() {
                 ) : (
                   <Plot
                     data={traces}
+                    config={{ displayModeBar: !isMoblile }}
                     layout={{
                       autosize: false,
                       barmode: "stack",
-                      width: screenWidth - sideWidth - 300,
+                      width: isMoblile
+                        ? screenWidth
+                        : screenWidth - sideWidth - 300,
                       height: screenHeight - 360,
 
-                      margin: { autoexpand: true, l: 20 },
+                      margin: { autoexpand: true, l: 25 },
                       showlegend: false,
                       yaxis: {
                         zeroline: false, // hide the zeroline
@@ -197,18 +204,20 @@ export default function Frequencies() {
             }
           />
 
-          <div
-            className=" fixed top-52 right-16 "
-            style={{ height: screenHeight - 150 }}>
-            {Object.values(AlphaBetaColors).map((color, index) => (
-              <div className="flex justify-start items-end gap-2" id="color">
-                <div
-                  className="w-5 h-5 mt-2 "
-                  style={{ backgroundColor: color }}></div>
-                <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
-              </div>
-            ))}
-          </div>
+          {!isMoblile && screenHeight > 500 && (
+            <div
+              className=" fixed top-52 right-16 "
+              style={{ height: screenHeight - 150 }}>
+              {Object.values(AlphaBetaColors).map((color, index) => (
+                <div className="flex justify-start items-end gap-2" id="color">
+                  <div
+                    className="w-5 h-5 mt-2 "
+                    style={{ backgroundColor: color }}></div>
+                  <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       )}
     </div>

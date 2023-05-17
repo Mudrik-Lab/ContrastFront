@@ -15,7 +15,13 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { navHeight, screenHeight, sideWidth } from "../../components/HardCoded";
+import {
+  isMoblile,
+  navHeight,
+  screenHeight,
+  screenWidth,
+  sideWidth,
+} from "../../components/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
@@ -130,8 +136,8 @@ export default function Journals() {
                 data={[trace1]}
                 layout={{
                   autosize: false,
-                  width: graphWidth,
-                  height: screenHeight - 360,
+                  width: isMoblile ? screenWidth : graphWidth,
+                  height: isMoblile ? screenHeight : screenHeight - 360,
                   margin: { autoexpand: true, b: 100 },
                   showlegend: false,
                 }}

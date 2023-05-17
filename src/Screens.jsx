@@ -1,7 +1,6 @@
 import { QueryClientProvider, useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
-import { QueryClient } from "@tanstack/react-query";
 
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
@@ -13,7 +12,7 @@ import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
 import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
-import ParametersDistributionTheoriesComparison from "./pages/Parameters Distribution Theories/ParametersDistributionTheoriesComparison";
+import ParametersDistributionTheoriesComparison from "./pages/Theories Comparison/TheoriesComparison";
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";

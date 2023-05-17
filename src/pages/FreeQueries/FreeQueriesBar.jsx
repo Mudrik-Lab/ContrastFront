@@ -19,6 +19,7 @@ import TagsSelect from "../../components/TagsSelect";
 import {
   avalble_populations,
   designerColors,
+  isMoblile,
   navHeight,
   parametersOptions,
   screenWidth,
@@ -54,82 +55,94 @@ export default function FreeQueriesBar() {
   const [stimuliModalities, setStimuliModalities] = React.useState(null);
   const [tasks, setTasks] = React.useState(null);
 
-  const { data: configuration, isSuccess: configSuccess } = useQuery(
-    [`parent_theories`],
-    getConfiguration
-  );
-
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
+  const allFiltersObj = {};
+  function getFiltersArrays(data, isSuccess) {}
+
   const techniquesArr = extraConfigSuccess
-    ? extraConfig?.data.available_techniques.map((technique) => ({
+    ? extraConfig?.data.available_techniques.map((technique, index) => ({
         value: technique.id,
         label: technique.name,
+        color: designerColors[index],
       }))
     : [];
   const consciousnessMeasurePhaseArr = extraConfigSuccess
     ? extraConfig?.data.available_consciousness_measure_phase_type.map(
-        (type) => ({
+        (type, index) => ({
           value: type.id,
           label: type.name,
+          color: designerColors[index],
         })
       )
     : [];
   const consciousnessMeasureTypesArr = extraConfigSuccess
-    ? extraConfig?.data.available_consciousness_measure_type.map((type) => ({
-        value: type.id,
-        label: type.name,
-      }))
+    ? extraConfig?.data.available_consciousness_measure_type.map(
+        (type, index) => ({
+          value: type.id,
+          label: type.name,
+          color: designerColors[index],
+        })
+      )
     : [];
   const tagsFamiliesArr = extraConfigSuccess
-    ? extraConfig?.data.available_finding_tags_families.map((type) => ({
+    ? extraConfig?.data.available_finding_tags_families.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const tagsTypesArr = extraConfigSuccess
-    ? extraConfig?.data.available_finding_tags_types.map((type) => ({
+    ? extraConfig?.data.available_finding_tags_types.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const measuresArr = extraConfigSuccess
-    ? extraConfig?.data.available_measure_types.map((type) => ({
+    ? extraConfig?.data.available_measure_types.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const paradigmFamiliesArr = extraConfigSuccess
-    ? extraConfig?.data.available_paradigms_families.map((type) => ({
+    ? extraConfig?.data.available_paradigms_families.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const paradigmsArr = extraConfigSuccess
-    ? extraConfig?.data.available_paradigms.map((type) => ({
+    ? extraConfig?.data.available_paradigms.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
+
   const populationsArr = avalble_populations;
   const stimuliCategoriesArr = extraConfigSuccess
-    ? extraConfig?.data.available_stimulus_category_type.map((type) => ({
+    ? extraConfig?.data.available_stimulus_category_type.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const stimuliModalitiesArr = extraConfigSuccess
-    ? extraConfig?.data.available_stimulus_modality_type.map((type) => ({
+    ? extraConfig?.data.available_stimulus_modality_type.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
   const tasksArr = extraConfigSuccess
-    ? extraConfig?.data.available_tasks_types.map((type) => ({
+    ? extraConfig?.data.available_tasks_types.map((type, index) => ({
         value: type.id,
         label: type.name,
+        color: designerColors[index],
       }))
     : [];
 
@@ -195,13 +208,12 @@ export default function FreeQueriesBar() {
   const X1 = data?.data.map((row) => row.value).reverse();
 
   const Y = data?.data.map((row) => rawTeaxtToShow(row.key)).reverse();
+  console.log(data?.data);
 
   var trace1 = {
     x: X1,
     y: Y,
-    text: Y,
-    // textangle: 30,
-    // name: "pro",
+    // text: Y,
     orientation: "h",
     textfont: {
       size: 18,
@@ -238,7 +250,7 @@ export default function FreeQueriesBar() {
   // extraConfigSuccess && !measures && setMeasures(measuresArr);
   return (
     <div>
-      {configSuccess && (
+      {extraConfigSuccess && (
         <PageTemplate
           control={
             <SideControl headline={"Parameter Distribution Free Queries"}>
@@ -254,7 +266,7 @@ export default function FreeQueriesBar() {
               <div className={sideSectionClass}>
                 <Text flexed md weight="bold">
                   Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
                 <TagsSelect
                   options={parametersOptions}
@@ -272,7 +284,11 @@ export default function FreeQueriesBar() {
                 setChecked={setTheoryDriven}
               />
               <div className={sideSectionClass}>
-                {configSuccess && (
+                <Text flexed md weight="bold">
+                  Filter by
+                  <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
+                </Text>
+                {extraConfigSuccess && (
                   <>
                     <Select
                       styles={selectStyles}
@@ -391,33 +407,36 @@ export default function FreeQueriesBar() {
           graph={
             <div>
               <TopGraphText
-                text="To determine the minimum number of experiments in each category (i.e., filter out categories with very few entries), use the # of experiments slider
-    Choose a parameter of interest by selecting one of the options in 'x axis' list, and pick a 'y axis' (the amount of experiments in each bin or the percent of experiments  out of all experiments in the database).
-    Then, you can filter the pool of experiments described in the graph, according to each of the variables in the database.
-    Each list of options under each parameter combo box includes the specific values relevant for this parameter."
+                text="Here, you can use the toolbar on the left to create your own queries. Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.
+                "
                 firstLine="The graph depicts the distribution of parameter values, according to your specifications."
               />
               <Plot
                 data={[trace1]}
+                config={{ displayModeBar: !isMoblile }}
                 layout={{
-                  width: screenWidth - 400,
+                  width: isMoblile ? screenWidth : screenWidth - 400,
                   height: 35 * Y?.length + 250,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 90 },
                   xaxis: {
+                    title: "Number of experiments",
                     zeroline: true,
                     side: "top",
-                    tickangle: 45,
+                    tickfont: {
+                      size: 16,
+                      standoff: 50,
+                    },
                   },
                   yaxis: {
-                    // automargin: true,
-                    showticklabels: false,
-                    // ticks: "outside",
-                    // tickangle: 315,
-                    // tickfont: {
-                    //   size: 12,
-                    //   standoff: 50,
-                    // },
+                    automargin: true,
+
+                    ticks: "outside",
+                    tickangle: 315,
+                    tickfont: {
+                      size: 12,
+                      standoff: 50,
+                    },
                   },
                 }}
               />

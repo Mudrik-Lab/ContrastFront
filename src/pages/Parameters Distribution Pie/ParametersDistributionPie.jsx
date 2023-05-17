@@ -5,9 +5,11 @@ import Navbar from "../../components/Navbar";
 import {
   colorsArray,
   designerColors,
+  isMoblile,
   navHeight,
   parametersOptions,
   screenHeight,
+  screenWidth,
   sideWidth,
 } from "../../components/HardCoded";
 import {
@@ -98,7 +100,7 @@ export default function ParametersDistributionPie() {
           <div className={sectionClass}>
             <Text flexed md weight="bold">
               Parameter of interest
-              <FilterExplanation tooltip="Choose the dependent variable to be queried. " />
+              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>
             <TagsSelect
               options={parametersOptions}
@@ -162,9 +164,10 @@ export default function ParametersDistributionPie() {
                   },
                 },
               ]}
+              config={{ displayModeBar: !isMoblile }}
               layout={{
-                width: 1200,
-                height: 1000,
+                width: isMoblile ? screenWidth : 1200,
+                height: isMoblile ? screenWidth : 1000,
                 showlegend: false,
                 annotations: [{ showarrow: false, text: "" }],
               }}

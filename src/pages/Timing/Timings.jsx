@@ -16,6 +16,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
   AlphaBetaColors,
+  isMoblile,
   navHeight,
   parametersOptions,
   sideWidth,
@@ -215,12 +216,12 @@ export default function Timings() {
             ) : (
               <Plot
                 data={traces}
+                config={{ displayModeBar: !isMoblile }}
                 layout={{
                   autosize: false,
                   barmode: "stack",
-
-                  width: screenWidth - 400,
-                  height: screenHeight - 300,
+                  width: isMoblile ? screenWidth : screenWidth - 400,
+                  height: screenHeight - 160,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 15, font: { size: 18 } },
                   showlegend: false,
@@ -241,22 +242,22 @@ export default function Timings() {
         }
       />
 
-      <div
-        className="fixed overflow-y-scroll top-52 right-2 "
-        style={{ height: screenHeight - 450 }}>
-        {blueToYellow(
-          configuration?.data.available_finding_tags_types_for_timings.length
-        ).map((color, index) => (
-          <div className="flex justify-start items-end gap-2" id="color">
-            <div
-              className="w-4 h-4 mt-2 "
-              style={{ backgroundColor: color }}></div>
-            <Text sm>{Object.keys(traceColor)[index]}</Text>
-          </div>
-        ))}
-      </div>
-
-      <Footer isFixed={true} />
+      {!isMoblile && screenHeight > 500 && (
+        <div
+          className="absolute overflow-y-scroll top-52 right-2 h-full"
+          style={{ height: screenHeight - 260 }}>
+          {blueToYellow(
+            configuration?.data.available_finding_tags_types_for_timings.length
+          ).map((color, index) => (
+            <div className="flex justify-start items-end gap-2" id="color">
+              <div
+                className="w-4 h-4 mt-2 "
+                style={{ backgroundColor: color }}></div>
+              <Text sm>{Object.keys(traceColor)[index]}</Text>
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 }
