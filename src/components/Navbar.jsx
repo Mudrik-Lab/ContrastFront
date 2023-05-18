@@ -7,7 +7,7 @@ import Logo from "../assets/logoes/logo.png";
 
 import { Button, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
-import { graphsHeaders } from "./HardCoded";
+import { graphsHeaders, screenHeight } from "./HardCoded";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -43,7 +43,7 @@ export default function Navbar() {
                 </button>
                 {graphMenue && (
                   <div
-                    className="fixed z-10 inset-0 flex  justify-center modal"
+                    className="fixed z-10 inset-0 flex  justify-center modal overflow-y-auto"
                     onClick={() => setGraphMenue(false)}>
                     <div
                       id="dropdown-navbar"
