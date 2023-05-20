@@ -1,5 +1,3 @@
-import { colorsArray } from "../components/HardCoded";
-
 export function getRandomColor(numberOfColors) {
   var colors = [];
   for (var i = 0; i < numberOfColors; i++) {

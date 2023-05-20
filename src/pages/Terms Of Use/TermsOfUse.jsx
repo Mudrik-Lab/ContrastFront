@@ -2,7 +2,7 @@ import React from "react";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Spacer, Text } from "../../components/Reusble";
-import { navHeight } from "../../components/HardCoded";
+import { navHeight } from "../../Utils/HardCoded";
 
 export default function TermOfUse() {
   const htmlEl = (

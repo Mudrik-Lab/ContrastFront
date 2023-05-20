@@ -5,7 +5,7 @@ import { ReactComponent as Graph } from "../../assets/icons/submit.svg";
 import { Text, Spacer, Button } from "../../components/Reusble";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
-import { navHeight } from "../../components/HardCoded";
+import { navHeight } from "../../Utils/HardCoded";
 
 export default function ContactPage() {
   return (

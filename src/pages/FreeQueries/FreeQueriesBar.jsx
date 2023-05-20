@@ -18,21 +18,17 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
   available_populations,
-  designerColors,
   isMoblile,
-  navHeight,
   parametersOptions,
   screenWidth,
   sideSectionClass,
   sideWidth,
-} from "../../components/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
+} from "../../Utils/HardCoded";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
+import { designerColors } from "../../Utils/Colors";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -59,8 +55,6 @@ export default function FreeQueriesBar() {
     [`more_configurations`],
     getExtraConfig
   );
-  const allFiltersObj = {};
-  function getFiltersArrays(data, isSuccess) {}
 
   const techniquesArr = extraConfigSuccess
     ? extraConfig?.data.available_techniques.map((technique, index) => ({

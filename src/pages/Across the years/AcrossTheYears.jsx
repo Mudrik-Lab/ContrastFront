@@ -14,19 +14,15 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
-import Navbar from "../../components/Navbar";
 import {
   isMoblile,
-  navHeight,
   parametersOptions,
   screenHeight,
   screenWidth,
   sideSectionClass,
-  sideWidth,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 

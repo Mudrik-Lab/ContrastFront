@@ -1,13 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import {
-  designerColors,
   isMoblile,
-  myColors,
   parametersOptions,
   screenWidth,
   sideSectionClass,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import {
   FilterExplanation,
   RangeInput,
@@ -24,12 +22,9 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import {
-  breakHeadlines,
-  breakLongLines,
-  rawTeaxtToShow,
-} from "../../Utils/functions";
+import { breakLongLines, rawTeaxtToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
+import { designerColors } from "../../Utils/Colors";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -78,7 +73,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
   let someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
   if (selected.value === "paradigm") {
-    someColors = myColors.slice(0, trimedKeysArr.length);
+    someColors = designerColors.slice(0, trimedKeysArr.length);
   }
 
   const keysColors = {};
@@ -140,13 +135,17 @@ export default function ParametersDistributionTheoriesComparison() {
             text="Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter. You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.
             You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories."
           />
-          <div className="four-wheels 2xl:mx-auto max-w-[1300px] ">
+          <div
+            className="four-wheels 2xl:mx-auto "
+            // style={{ maxWidth: "calc(100% / 2 )" }}
+          >
             {isLoading ? (
               <Spinner />
             ) : (
               keysColors &&
               chartsData.map((chart) => (
                 <Plot
+                  key={chart.series_name}
                   data={[
                     {
                       direction: "clockwise",
@@ -167,8 +166,8 @@ export default function ParametersDistributionTheoriesComparison() {
                   ]}
                   config={{ displayModeBar: !isMoblile }}
                   layout={{
-                    width: isMoblile ? screenWidth : 600,
-                    height: 600,
+                    width: isMoblile ? screenWidth : (screenWidth - 400) / 2,
+                    height: isMoblile ? screenWidth : (screenWidth - 400) / 2,
                     showlegend: false,
                     annotations: [
                       {

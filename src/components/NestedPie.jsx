@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Plot from "react-plotly.js";
 import getExperimentsGraphs from "../apiHooks/getExperimentsGraphs";
-import { parametersOptions } from "./HardCoded";
+import { parametersOptions } from "../Utils/HardCoded";
 import Spinner from "./Spinner";
 
 export default function NestedPie() {

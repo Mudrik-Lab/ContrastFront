@@ -6,7 +6,7 @@ import BrainImg from "../../assets/images/brain-prism-tall.jpg";
 import TeamMembersCards from "./TeamMembersCards";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
-import { navHeight } from "../../components/HardCoded";
+import { navHeight } from "../../Utils/HardCoded";
 
 export default function AboutPage() {
   const aLinkClass = "text-blue cursor-pointer";

@@ -12,17 +12,16 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
-  colorsArray,
   screenWidth,
   parametersOptions,
   isMoblile,
-  designerColors,
   sideSectionClass,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
-import { breakLongLines, rawTeaxtToShow } from "../../Utils/functions";
+import { rawTeaxtToShow } from "../../Utils/functions";
+import { designerColors } from "../../Utils/Colors";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);

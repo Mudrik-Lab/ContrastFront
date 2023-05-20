@@ -1,22 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import Navbar from "../../components/Navbar";
-import {
-  colorsArray,
-  designerColors,
-  isMoblile,
-  navHeight,
-  screenHeight,
-  screenWidth,
-  sideWidth,
-} from "../../components/HardCoded";
+import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -27,8 +16,8 @@ import Plot from "react-plotly.js";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { rawTeaxtToShow } from "../../Utils/functions";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { designerColors } from "../../Utils/Colors";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -65,7 +54,6 @@ export default function TheoryDriven() {
 
   const values1 = [];
   const labels1 = [];
-  const outsideColors = [];
   const values2 = [];
   const labels2 = [];
   const cleanLabels2 = [];
@@ -77,7 +65,6 @@ export default function TheoryDriven() {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
       cleanLabels2.push(y.key);
-      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 

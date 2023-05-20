@@ -20,7 +20,7 @@ import {
   navHeight,
   parametersOptions,
   sideWidth,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";

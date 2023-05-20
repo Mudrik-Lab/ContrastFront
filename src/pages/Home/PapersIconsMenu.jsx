@@ -2,8 +2,9 @@ import React from "react";
 
 import { Text } from "../../components/Reusble";
 import { useNavigate } from "react-router-dom";
-import { graphsHeaders } from "../../components/HardCoded";
+
 import { Tooltip } from "flowbite-react";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function PapersIconsMenu() {
   const navigate = useNavigate();

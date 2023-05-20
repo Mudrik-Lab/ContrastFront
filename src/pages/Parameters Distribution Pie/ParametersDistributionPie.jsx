@@ -1,14 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useRef } from "react";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
+import React from "react";
+
 import {
-  designerColors,
   isMoblile,
   parametersOptions,
   screenWidth,
   sideSectionClass,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import {
   FilterExplanation,
   RangeInput,
@@ -23,14 +21,13 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import {
-  breakLongLines,
   hexToRgba,
   rawTeaxtToShow as rawTextToShow,
   showTextToRaw as shownTextToRaw,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
+import { designerColors } from "../../Utils/Colors";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
