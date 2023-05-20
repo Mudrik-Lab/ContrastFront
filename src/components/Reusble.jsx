@@ -9,7 +9,7 @@ import {
   screenWidth,
   sideSectionClass,
   sideWidth,
-} from "./HardCoded";
+} from "../Utils/HardCoded";
 
 export const TextInput = ({ ...config }) => {
   return (

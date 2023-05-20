@@ -11,7 +11,7 @@ import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
-import brain from "../../assets/images/brain-prism-wide.jpg";
+import brain from "../../assets/images/XwW4T0UQ.jpeg";
 
 export default function HomePage() {
   const navigate = useNavigate();

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 
 import Plot from "react-plotly.js";
-import { colorsArray, screenHeight, screenWidth } from "./HardCoded";
+import { designerColors } from "../Utils/Colors";
 
 const Spinner = () => {
   const [angle, setAngle] = useState(0);
@@ -23,7 +23,7 @@ const Spinner = () => {
               values: [1, 3, 2, 5, 3, 4],
               hole: 0.4,
               rotation: angle,
-              marker: { colors: colorsArray },
+              marker: { colors: designerColors },
               hoverinfo: "none",
               showlegend: false,
             },

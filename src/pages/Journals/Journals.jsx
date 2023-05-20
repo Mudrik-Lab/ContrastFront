@@ -21,7 +21,7 @@ import {
   screenHeight,
   screenWidth,
   sideWidth,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";

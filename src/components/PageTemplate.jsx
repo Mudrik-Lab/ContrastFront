@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { isMoblile } from "./HardCoded";
+import { isMoblile } from "../Utils/HardCoded";
 
 export default function PageTemplate({ graph, control }) {
   const containerStyle = {

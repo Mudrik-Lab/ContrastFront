@@ -14,18 +14,15 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import TagsSelect from "../../components/TagsSelect";
-import Navbar from "../../components/Navbar";
 import {
   isMoblile,
-  navHeight,
   parametersOptions,
   screenHeight,
   screenWidth,
-  sideWidth,
-} from "../../components/HardCoded";
+  sideSectionClass,
+} from "../../Utils/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 
@@ -77,23 +74,23 @@ export default function AcrossTheYears() {
             <Text weight="bold" md>
               Axis Controls
             </Text>
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
+            <div className="w-full py-5 flex flex-col items-center gap-3 ">
               <RangeInput
                 number={experimentsNum}
                 setNumber={setExperimentsNum}
               />
             </div>
 
-            <div className="w-full border-b py-5 flex flex-col items-center gap-3 ">
-              <Text md flexed weight={"bold"}>
-                Parameter of interest
-                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
-              </Text>
+            <div className={sideSectionClass}>
               <TagsSelect
                 options={parametersOptions}
                 value={selected}
                 onChange={setSelected}
               />
+              <Text size={14} flexed>
+                Parameter of interest
+                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+              </Text>
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}

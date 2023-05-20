@@ -1,22 +1,11 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import Navbar from "../../components/Navbar";
-import {
-  colorsArray,
-  designerColors,
-  isMoblile,
-  navHeight,
-  screenHeight,
-  screenWidth,
-  sideWidth,
-} from "../../components/HardCoded";
+import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -27,8 +16,8 @@ import Plot from "react-plotly.js";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { rawTeaxtToShow } from "../../Utils/functions";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { designerColors } from "../../Utils/Colors";
 
 export default function TheoryDriven() {
   const [reporting, setReporting] = React.useState("either");
@@ -65,7 +54,6 @@ export default function TheoryDriven() {
 
   const values1 = [];
   const labels1 = [];
-  const outsideColors = [];
   const values2 = [];
   const labels2 = [];
   const cleanLabels2 = [];
@@ -77,7 +65,6 @@ export default function TheoryDriven() {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
       cleanLabels2.push(y.key);
-      outsideColors.push(colorsArray[index]?.slice(0, -2) + "0.7)");
     });
   });
 
@@ -113,9 +100,7 @@ export default function TheoryDriven() {
             checked={theoryDriven}
             setChecked={setTheoryDriven}
           />
-          <Text weight={"bold"} md>
-            Interpretation
-          </Text>
+
           <div className="flex justify-center items-center gap-3 mt-3">
             <Text>Challenges</Text>
             <Toggle
@@ -145,6 +130,7 @@ export default function TheoryDriven() {
               data={[
                 {
                   direction: "clockwise",
+                  insidetextorientation: "radial",
                   values: values1,
                   labels: labels1.map((label) => rawTeaxtToShow(label)),
                   type: "pie",
@@ -152,12 +138,13 @@ export default function TheoryDriven() {
                   textposition: "inside",
                   domain: { x: [0.5, 0.5], y: [0.2, 0.8] },
                   marker: {
-                    colors: colorsArray,
+                    colors: designerColors.slice(28, 31),
                     line: { width: 1, color: "white" },
                   },
                 },
                 {
                   direction: "clockwise",
+                  insidetextorientation: "tangential",
                   values: values2,
                   labels: labels2,
                   sort: false,

@@ -13,16 +13,10 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import {
-  AlphaBetaColors,
-  isMoblile,
-  sideWidth,
-} from "../../components/HardCoded";
+import { AlphaBetaColors, isMoblile, sideWidth } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function Frequencies() {

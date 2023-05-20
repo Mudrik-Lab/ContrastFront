@@ -7,7 +7,7 @@ import Logo from "../assets/logoes/logo.png";
 
 import { Button, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
-import { graphsHeaders } from "./HardCoded";
+import { graphsHeaders } from "../Utils/GraphsDetails";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -43,7 +43,7 @@ export default function Navbar() {
                 </button>
                 {graphMenue && (
                   <div
-                    className="fixed z-10 inset-0 flex  justify-center modal"
+                    className="fixed z-10 inset-0 flex  justify-center modal overflow-y-auto"
                     onClick={() => setGraphMenue(false)}>
                     <div
                       id="dropdown-navbar"
@@ -52,7 +52,7 @@ export default function Navbar() {
                         className="py-2 text-lg text-gray-700 dark:text-gray-400"
                         aria-labelledby="dropdownLargeButton">
                         {graphsHeaders.map((row) => (
-                          <li id={row.color}>
+                          <li id={row.color} key={row.text}>
                             <a
                               href={row.route}
                               className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">

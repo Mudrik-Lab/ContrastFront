@@ -17,22 +17,18 @@ import {
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
-  avalble_populations,
-  designerColors,
+  available_populations,
   isMoblile,
-  navHeight,
   parametersOptions,
   screenWidth,
   sideSectionClass,
   sideWidth,
-} from "../../components/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
+} from "../../Utils/HardCoded";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
+import { designerColors } from "../../Utils/Colors";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -59,8 +55,6 @@ export default function FreeQueriesBar() {
     [`more_configurations`],
     getExtraConfig
   );
-  const allFiltersObj = {};
-  function getFiltersArrays(data, isSuccess) {}
 
   const techniquesArr = extraConfigSuccess
     ? extraConfig?.data.available_techniques.map((technique, index) => ({
@@ -123,7 +117,7 @@ export default function FreeQueriesBar() {
       }))
     : [];
 
-  const populationsArr = avalble_populations;
+  const populationsArr = available_populations;
   const stimuliCategoriesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_category_type.map((type, index) => ({
         value: type.id,
@@ -264,15 +258,15 @@ export default function FreeQueriesBar() {
               />
 
               <div className={sideSectionClass}>
-                <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
-                </Text>
                 <TagsSelect
                   options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />
+                <Text size={14} flexed>
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                </Text>
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}

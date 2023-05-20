@@ -21,7 +21,7 @@ import {
   screenHeight,
   screenWidth,
   sideWidth,
-} from "../../components/HardCoded";
+} from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";

@@ -12,16 +12,16 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import {
-  colorsArray,
   screenWidth,
   parametersOptions,
   isMoblile,
-  designerColors,
-} from "../../components/HardCoded";
+  sideSectionClass,
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
+import { designerColors } from "../../Utils/Colors";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -95,7 +95,7 @@ export default function ParametersDistributionBar() {
     y: Y,
     text: X1,
     name: "Supports",
-
+    hoverinfo: "none",
     orientation: "h",
     textfont: {
       size: 18,
@@ -115,6 +115,7 @@ export default function ParametersDistributionBar() {
   var trace2 = {
     x: X2,
     y: Y,
+    hoverinfo: "none", //turn off the tooltip when hover the bars
     text: X2,
     name: "Challenges",
     orientation: "h",
@@ -129,8 +130,6 @@ export default function ParametersDistributionBar() {
     type: "bar",
   };
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div>
       {configurationSuccess && (
@@ -146,27 +145,27 @@ export default function ParametersDistributionBar() {
                 setNumber={setExperimentsNum}
               />
 
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Theory Family
-                  <FilterExplanation tooltip="few more words about Theory" />
-                </Text>
+              <div className={sideSectionClass}>
                 <TagsSelect
                   value={selectedParent}
                   options={parentTheories}
                   onChange={setSelectedParent}
                 />
-              </div>
-              <div className={sectionClass}>
-                <Text flexed md weight="bold">
-                  Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                <Text size={14} flexed>
+                  Theory Family
+                  <FilterExplanation tooltip="few more words about Theory" />
                 </Text>
+              </div>
+              <div className={sideSectionClass}>
                 <TagsSelect
                   options={parametersOptions}
                   value={selected}
                   onChange={setSelected}
                 />
+                <Text size={14} flexed>
+                  Parameter of interest
+                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                </Text>
               </div>
 
               <ReportFilter checked={reporting} setChecked={setReporting} />
@@ -206,7 +205,7 @@ export default function ParametersDistributionBar() {
                     width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90, x: -0.2, y: 1.05 },
+                    legend: { itemwidth: 90, x: -0.25, y: 1.05 },
 
                     xaxis: {
                       title: "Number of experiments",
@@ -222,7 +221,7 @@ export default function ParametersDistributionBar() {
                       automargin: true,
                       ticks: "outside",
                       tickfont: {
-                        size: 14,
+                        size: 10,
                         standoff: 50,
                       },
                     },

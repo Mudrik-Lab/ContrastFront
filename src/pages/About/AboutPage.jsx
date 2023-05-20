@@ -6,7 +6,7 @@ import BrainImg from "../../assets/images/brain-prism-tall.jpg";
 import TeamMembersCards from "./TeamMembersCards";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
-import { navHeight } from "../../components/HardCoded";
+import { navHeight } from "../../Utils/HardCoded";
 
 export default function AboutPage() {
   const aLinkClass = "text-blue cursor-pointer";
@@ -22,8 +22,10 @@ export default function AboutPage() {
           <Text size={43} center>
             The Consciousness Theories Studies (ConTraSt) database
           </Text>
-          <div className="flex gap-10 mt-6 max-w-6xl mx-auto h-[410px] ">
-            <img src={BrainImg} alt="" width={250} />
+          <div className="h-auto flex gap-10 mt-6 max-w-[1250px] mx-auto px-2">
+            <div className="h-auto bg-black flex flex-col justify-center">
+              <img src={BrainImg} alt="" />
+            </div>
 
             <Text md>
               Welcome to the ConTraSt database website! This is an open access

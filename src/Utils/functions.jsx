@@ -1,5 +1,3 @@
-import { colorsArray } from "../components/HardCoded";
-
 export function getRandomColor(numberOfColors) {
   var colors = [];
   for (var i = 0; i < numberOfColors; i++) {
@@ -61,12 +59,16 @@ export function rawTeaxtToShow(text) {
   const capitalizedWords = words.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
-  // if (text.length > 20) {
-  //   return capitalizedWords.join("<br>");
-  // }
   return capitalizedWords.join(" ");
 }
 
+export function showTextToRaw(text) {
+  const words = text.split(" ");
+  const rawWords = words.map(
+    (word) => word.charAt(0).toLowerCase() + word.slice(1)
+  );
+  return rawWords.join("_");
+}
 export function breakLongLines(text) {
   const words = text.split(" ");
   let line = "";
@@ -83,7 +85,7 @@ export function breakLongLines(text) {
 }
 
 export function hexToRgba(hexColor) {
-  const hex = hexColor.replace("#", "");
+  const hex = hexColor?.replace("#", "");
   const r = parseInt(hex.substring(0, 2), 16);
   const g = parseInt(hex.substring(2, 4), 16);
   const b = parseInt(hex.substring(4, 6), 16);
