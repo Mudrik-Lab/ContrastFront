@@ -38,6 +38,7 @@ export default function PageTemplate({ graph, control }) {
   const mainStyle = {
     gridArea: "main",
     height: "auto",
+    overflow: "scroll",
   };
 
   const footerStyle = {
@@ -52,7 +53,9 @@ export default function PageTemplate({ graph, control }) {
       </div>
       <div style={sidebarStyle}>{control}</div>
       <div style={mainStyle}>{graph}</div>
-      <div style={footerStyle}>{/* <Footer /> */}</div>
+      <div style={footerStyle}>
+        <Footer />
+      </div>
     </div>
   );
 }

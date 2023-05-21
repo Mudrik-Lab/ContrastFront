@@ -3,7 +3,6 @@ import React from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
-  RangeInput,
   ReportFilter,
   SideControl,
   Text,
@@ -25,7 +24,6 @@ export default function Frequencies() {
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [selectedParent, setSelectedParent] = React.useState({});
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -52,15 +50,7 @@ export default function Frequencies() {
     [
       `frequencies${
         selectedTechniques?.join(" ") + " " + selectedParent.value ||
-        "" +
-          " " +
-          reporting +
-          " " +
-          theoryDriven +
-          " " +
-          consciousness +
-          " " +
-          experimentsNum
+        "" + " " + reporting + " " + theoryDriven + " " + consciousness
       }`,
     ],
     () =>
@@ -70,7 +60,6 @@ export default function Frequencies() {
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
-        min_number_of_experiments: experimentsNum,
       })
   );
   const tracesData = data?.data.map((row) => row.series);
@@ -86,9 +75,10 @@ export default function Frequencies() {
       name: row.name,
       orientation: "h",
       scatter: { color: AlphaBetaColors[row.name] },
+      marker: { size: 4 },
       line: {
         color: AlphaBetaColors[row.name],
-        width: 6,
+        width: 4,
       },
       type: "lines",
     })
@@ -111,10 +101,6 @@ export default function Frequencies() {
                 <Text md weight="bold">
                   Axis Controls
                 </Text>
-                <RangeInput
-                  number={experimentsNum}
-                  setNumber={setExperimentsNum}
-                />
 
                 <div className={sectionClass}>
                   <Text flexed md weight="bold">
@@ -203,7 +189,10 @@ export default function Frequencies() {
               className=" fixed top-52 right-16 "
               style={{ height: screenHeight - 150 }}>
               {Object.values(AlphaBetaColors).map((color, index) => (
-                <div className="flex justify-start items-end gap-2" id="color">
+                <div
+                  className="flex justify-start items-end gap-2"
+                  id="color"
+                  key={color}>
                   <div
                     className="w-5 h-5 mt-2 "
                     style={{ backgroundColor: color }}></div>

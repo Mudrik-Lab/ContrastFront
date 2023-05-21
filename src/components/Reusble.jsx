@@ -4,6 +4,7 @@ import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite-react";
 import {
+  isMoblile,
   navHeight,
   screenHeight,
   screenWidth,
@@ -148,6 +149,7 @@ export const Label = ({ children }) => {
 
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
+
   return (
     <div className={sideSectionClass}>
       <div className="relative">
@@ -155,6 +157,7 @@ export const RangeInput = ({ number, setNumber }) => {
           type="range"
           onChange={(e) => setLabel(e.target.value)}
           onMouseUp={(e) => setNumber(e.target.value)}
+          onTouchEnd={(e) => setNumber(e.target.value)}
           min={0}
           defaultValue={0}
           max={100}
@@ -185,14 +188,10 @@ export const SideControl = ({ children, headline }) => {
 
   return (
     <div
-      className={classNames(
-        `side-filter-box p-2 flex flex-col items-center ${
-          isMoblile ? "block" : "fixed"
-        } z-10`
-      )}
+      className={classNames(`side-filter-box p-2 flex flex-col items-center`)}
       style={{
         width: isMoblile ? "100%" : sideWidth,
-        maxHeight: isMoblile ? "400px" : "calc(100vh - 100px)",
+        maxHeight: isMoblile ? "400px" : "100%",
       }}>
       <div className="p-4">
         <Text size={28} weight="bold" color="blue" center>

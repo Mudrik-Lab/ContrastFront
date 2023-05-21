@@ -16,7 +16,6 @@ import ParametersDistributionTheoriesComparison from "./pages/Theories Compariso
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
 import getConfiguration from "./apiHooks/getConfiguration";
 import getExtraConfig from "./apiHooks/getExtraConfig";
-import NestedPie from "./components/NestedPie";
 import WorldMap from "./pages/Consciousness World Map/WorldMap";
 import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
@@ -65,7 +64,6 @@ const Screens = () => {
         <Route path="/journals" element={<Journals />} />
         <Route path="/timings" element={<Timing />} />
         <Route path="/consciousness-world-map" element={<WorldMap />} />
-        <Route path="/try" element={<NestedPie />} />
       </Routes>
     </BrowserRouter>
   );

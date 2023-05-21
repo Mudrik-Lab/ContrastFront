@@ -25,6 +25,7 @@ import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
+import { designerColors } from "../../Utils/Colors";
 
 export default function AcrossTheYears() {
   const [selected, setSelected] = useState(parametersOptions[0]);
@@ -118,7 +119,7 @@ export default function AcrossTheYears() {
                     xanchor: "left",
                     y: 1,
                     font: {
-                      size: 18,
+                      size: 16,
                       color: "#000000",
                     },
                   },
@@ -130,8 +131,8 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: isMoblile ? screenWidth : screenWidth - 400,
-                  height: screenHeight - 300,
+                  width: isMoblile ? screenWidth : screenWidth - 370,
+                  height: screenHeight - 200,
                 }}
               />
             )}
