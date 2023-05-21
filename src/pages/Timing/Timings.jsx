@@ -90,7 +90,7 @@ export default function Timings() {
         type_of_consciousness: consciousness,
       })
   );
-
+  console.log(data?.data);
   const serieses = data?.data.map((row) => row.series);
 
   const graphsData = serieses
