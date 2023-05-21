@@ -1,15 +1,14 @@
 import React from "react";
 import { Text } from "../../components/Reusble";
-
 import ShowMoreText from "react-show-more-text";
 import { ReactComponent as Web } from "../../assets/icons/website.svg";
 import { foundingBoardBios } from "../../Utils/HardCoded";
 
 export default function TeamMembersCards() {
   return (
-    <div className="flex flex-wrap justify-center w-256 px-24 my-6 gap-5 gap-y-7 mx-auto sha">
+    <div className="flex flex-wrap justify-center w-256 px-24 my-6 gap-5 gap-y-7 mx-auto ">
       {foundingBoardBios.map((card) => (
-        <div className="team-member-card w-48 flex flex-col items-center shadow-lg p-2 rounded-lg">
+        <div className="team-member-card w-48 flex flex-col items-center shadow-lg p-2 rounded-lg relative">
           <div
             style={{
               width: 120,
@@ -21,7 +20,7 @@ export default function TeamMembersCards() {
               backgroundRepeat: "no-repeat",
             }}></div>
 
-          <div className="min-h-[110px] max-h-[230px]">
+          <div className="min-h-[180px] max-h-[260px]">
             <div className="flex flex-col justify-center items-center h-16 mb-4">
               <Text center md weight="bold">
                 {card.name}
@@ -32,7 +31,7 @@ export default function TeamMembersCards() {
             </div>
 
             <ShowMoreText
-              className="text-sm text-grayHeavy break-keep text-center"
+              className="text-sm text-grayHeavy break-keep text-center mb-10"
               lines={1}
               more="Show more"
               less="Show less"
@@ -45,7 +44,7 @@ export default function TeamMembersCards() {
               {card.text}
             </ShowMoreText>
           </div>
-          <div className="flex justify-center gap-3 mt-2">
+          <div className="absolute  bottom-2">
             <a href={card.website} target="_blank">
               <Web />
             </a>

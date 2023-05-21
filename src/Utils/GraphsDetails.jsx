@@ -51,7 +51,8 @@ export const graphsHeaders = [
     icon: <ParameterTheory />,
     color: "lilac",
     route: "/parameter-distribution-pie",
-    figureLine: "",
+    figureLine:
+      "The inner circle of the pie chart depicts the distribution of different parameters acorss theories. The outer circle describes the distribution of each inner slice to theories.",
     figureText:
       "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across the different theories. The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
@@ -62,7 +63,8 @@ export const graphsHeaders = [
     icon: <Trends />,
     color: "purple",
     route: "/across-the-years",
-    figureLine: "",
+    figureLine:
+      "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time",
     figureText:
       "Here, you can select a specific parameter of interest, and see how the experiments in the database distribute over the different levels of that parameter over time. The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },

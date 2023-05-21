@@ -3,8 +3,6 @@ import React from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
-  RadioInput,
-  RangeInput,
   ReportFilter,
   SideControl,
   Text,
@@ -14,23 +12,14 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import {
-  AlphaBetaColors,
-  isMoblile,
-  navHeight,
-  parametersOptions,
-  sideWidth,
-} from "../../Utils/HardCoded";
+import { isMoblile } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
 import getTimings from "../../apiHooks/getTimings";
 import Spinner from "../../components/Spinner";
 import { blueToYellow } from "../../Utils/functions";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function Timings() {
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
@@ -88,9 +77,7 @@ export default function Timings() {
         " " +
         consciousness +
         " " +
-        selectedTags +
-        " " +
-        experimentsNum
+        selectedTags
       }`,
     ],
     () =>
@@ -101,7 +88,6 @@ export default function Timings() {
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
-        min_number_of_experiments: experimentsNum,
       })
   );
 
@@ -118,12 +104,13 @@ export default function Timings() {
         x: [row.start, row.end],
         y: [index + 1, index + 1],
         name: row.name,
-        // marker: { colorbar: { tickangle: "auto" } },
+        marker: { size: 4 },
 
         line: {
-          width: 6,
+          width: 4,
           color: traceColor[row.name],
         },
+
         type: "scatter",
       });
   });
@@ -143,7 +130,6 @@ export default function Timings() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
             <div className={sectionClass}>
               <Text flexed md weight="bold">

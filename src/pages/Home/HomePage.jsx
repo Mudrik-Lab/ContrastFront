@@ -67,7 +67,8 @@ export default function HomePage() {
             consciousness theories. Nature Human Behaviour. <br />
             <a
               className="text-blue underline"
-              href="https://www.nature.com/articles/s41562-021-01284-5">
+              href="https://www.nature.com/articles/s41562-021-01284-5"
+              target="_blank">
               https://www.nature.com/articles/s41562-021-01284-5
             </a>
           </Text>
