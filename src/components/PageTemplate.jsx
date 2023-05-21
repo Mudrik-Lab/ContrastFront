@@ -37,7 +37,7 @@ export default function PageTemplate({ graph, control }) {
 
   const mainStyle = {
     gridArea: "main",
-    height: "auto",
+    // height: "auto",
     overflow: "scroll",
   };
 

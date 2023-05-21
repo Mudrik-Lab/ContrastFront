@@ -57,12 +57,12 @@ export const graphsHeaders = [
       "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across the different theories. The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
-    text: "Trends Across The Years",
+    text: "Trends Over Time",
     tooltip:
       "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time.",
     icon: <Trends />,
     color: "purple",
-    route: "/across-the-years",
+    route: "/trends-over-time",
     figureLine:
       "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time",
     figureText:

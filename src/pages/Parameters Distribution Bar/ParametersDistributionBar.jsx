@@ -22,6 +22,7 @@ import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
+import Toggle from "../../components/Toggle";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -171,17 +172,17 @@ export default function ParametersDistributionBar() {
               <ReportFilter checked={reporting} setChecked={setReporting} />
 
               <div className="flex gap-2 mt-4">
-                <input
-                  type="checkbox"
-                  name="stacked"
+                <Text>Side by side</Text>
+                <Toggle
                   checked={isStacked}
-                  onChange={() => setIsStacked(!isStacked)}
+                  setChecked={() => setIsStacked(!isStacked)}
+                />
+                <Text>Stacked</Text>
+                <FilterExplanation
+                  text=""
+                  tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
                 />
               </div>
-              <FilterExplanation
-                text="Stacked (or side by side)?"
-                tooltip="You can choose how to display the comparison between experiments supporting (red bars) vs. challenging (blue bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
-              />
             </SideControl>
           }
           graph={

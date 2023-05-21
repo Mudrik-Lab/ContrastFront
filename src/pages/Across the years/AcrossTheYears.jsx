@@ -69,7 +69,7 @@ export default function AcrossTheYears() {
     <div>
       <PageTemplate
         control={
-          <SideControl headline={"Across the Years"}>
+          <SideControl headline={"Trends over time"}>
             <Text color="blue" weight="bold" size={30}></Text>
 
             <Text weight="bold" md>
@@ -112,6 +112,12 @@ export default function AcrossTheYears() {
               <Plot
                 data={graphsData}
                 layout={{
+                  xaxis: {
+                    title: "Years",
+                  },
+                  yaxis: {
+                    title: "Number of experiments",
+                  },
                   autosize: false,
                   showlegend: !isMoblile,
                   legend: {

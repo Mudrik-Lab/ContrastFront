@@ -103,25 +103,36 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
 };
 export const RadioInput = ({ name, values, checked, setChecked }) => {
   return (
-    <div className="flex px-12 flex-wrap justify-center">
-      {values.map((val) => (
-        <div className="mr-4" key={val.name}>
-          <input
-            id={name}
-            type="radio"
-            name={name}
-            value={val.value}
-            checked={checked === val.value}
-            onChange={(e) => setChecked(e.target.value)}
-            className="w-4 h-4 bg-gray-100 border-gray-300"
-          />
-          <label
-            htmlFor={name}
-            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 break-normal">
-            {val.name}
+    <div
+      className="flex flex-wrap justify-between items-center px-10"
+      id={name}>
+      {values.map((option, index) =>
+        index % 2 === 0 ? (
+          <label key={option.value} className="flex items-center w-1/2">
+            <input
+              type="radio"
+              value={option.value}
+              checked={checked === option.value}
+              onChange={(e) => setChecked(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+            <span className="ml-2">{option.name}</span>
           </label>
-        </div>
-      ))}
+        ) : (
+          <label
+            key={option.value}
+            className="flex items-center justify-end w-1/2">
+            <span className="mr-2 text-right">{option.name}</span>
+            <input
+              type="radio"
+              value={option.value}
+              checked={checked === option.value}
+              onChange={(e) => setChecked(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+          </label>
+        )
+      )}
     </div>
   );
 };

@@ -206,8 +206,8 @@ export default function Timings() {
                 layout={{
                   autosize: false,
                   barmode: "stack",
-                  width: isMoblile ? screenWidth : screenWidth - 400,
-                  height: screenHeight - 160,
+                  width: isMoblile ? screenWidth : screenWidth - 560,
+                  height: screenHeight - 320,
                   margin: { autoexpand: true, l: 20 },
                   legend: { itemwidth: 15, font: { size: 18 } },
                   showlegend: false,
@@ -229,9 +229,7 @@ export default function Timings() {
       />
 
       {!isMoblile && screenHeight > 500 && (
-        <div
-          className="absolute overflow-y-scroll top-52 right-2 h-full"
-          style={{ height: screenHeight - 260 }}>
+        <div className="absolute overflow-y-scroll top-52 right-2 bg-white h-96">
           {blueToYellow(
             configuration?.data.available_finding_tags_types_for_timings.length
           ).map((color, index) => (
