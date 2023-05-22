@@ -1,9 +1,9 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -13,8 +13,11 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
-import { isMoblile, screenWidth } from "../../Utils/HardCoded";
+import {
+  isMoblile,
+  screenWidth,
+  sideSectionClass,
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getJournals from "../../apiHooks/getJournals";
 import Spinner from "../../components/Spinner";
@@ -27,7 +30,9 @@ export default function Journals() {
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedParent, setSelectedParent] = React.useState({});
+  const [theory, setTheory] = React.useState({});
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: configuration } = useQuery(
     [`parent_theories`],
@@ -37,7 +42,7 @@ export default function Journals() {
     [
       `journals${
         +" " +
-        selectedParent.value +
+        theory?.value +
         " " +
         reporting +
         " " +
@@ -50,7 +55,7 @@ export default function Journals() {
     ],
     () =>
       getJournals({
-        theory: selectedParent.value,
+        theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -76,9 +81,16 @@ export default function Journals() {
         designerColors[Math.floor(Math.random() * (designerColors.length - 1))],
     },
   };
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set("is_reporting", reporting);
+    queryParams.set("type_of_consciousness", consciousness);
+    queryParams.set("theory_driven", theoryDriven);
+    queryParams.set("min_number_of_experiments", experimentsNum);
+    queryParams.set("theory", theory?.value);
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div className="h-full">
       <PageTemplate
@@ -89,17 +101,22 @@ export default function Journals() {
             </Text>
             <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
 
-            <div className={sectionClass}>
+            <div className={sideSectionClass}>
               <Text flexed md weight="bold">
                 Theory Family
                 <FilterExplanation tooltip="few more words about Thory" />
               </Text>
 
-              <TagsSelect
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={false}
+                isClearable={true}
                 options={parentTheories}
-                placeholder="Paradigms Family"
-                defaultValue={selectedParent.value}
-                onChange={setSelectedParent}
+                value={theory}
+                onChange={(e) => {
+                  setTheory(e);
+                  navigate(`?theory=${encodeURIComponent(theory.value)}`);
+                }}
               />
             </div>
             <TypeOfConsciousnessFilter

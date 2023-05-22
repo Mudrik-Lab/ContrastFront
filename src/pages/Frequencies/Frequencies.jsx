@@ -11,8 +11,14 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, isMoblile, sideWidth } from "../../Utils/HardCoded";
+import {
+  AlphaBetaColors,
+  isMoblile,
+  screenHeight,
+  screenWidth,
+  sideSectionClass,
+  sideWidth,
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
@@ -24,7 +30,7 @@ export default function Frequencies() {
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [selectedParent, setSelectedParent] = React.useState({});
+  const [theory, setTheory] = React.useState({});
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -42,22 +48,41 @@ export default function Frequencies() {
 
   const parentTheories = configSuccess
     ? configuration?.data.available_parent_theories.map((parentTheory) => ({
-        value: encodeURIComponent(parentTheory),
+        value: parentTheory,
         label: parentTheory,
       }))
     : [];
-
+  console.log(
+    `frequencies${
+      selectedTechniques?.map((x) => x.value).join("+") +
+      " " +
+      theory?.value +
+      " " +
+      reporting +
+      " " +
+      theoryDriven +
+      " " +
+      consciousness
+    }`
+  );
   const { data, isLoading } = useQuery(
     [
       `frequencies${
-        selectedTechniques?.join(" ") + " " + selectedParent.value ||
-        "" + " " + reporting + " " + theoryDriven + " " + consciousness
+        selectedTechniques?.map((x) => x.value).join("+") +
+        " " +
+        theory?.value +
+        " " +
+        reporting +
+        " " +
+        theoryDriven +
+        " " +
+        consciousness
       }`,
     ],
     () =>
       getFrequencies({
         techniques: selectedTechniques,
-        theory: selectedParent.value,
+        theory: theory.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -85,11 +110,6 @@ export default function Frequencies() {
     })
   );
 
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
-
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
 
   return (
@@ -103,24 +123,21 @@ export default function Frequencies() {
                   Axis Controls
                 </Text>
 
-                <div className={sectionClass}>
-                  <Text flexed md weight="bold">
-                    Theory
-                    <FilterExplanation tooltip="few more words about Thory" />
-                  </Text>
-
-                  <TagsSelect
+                <div className={sideSectionClass}>
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={false}
+                    isClearable={true}
                     options={parentTheories}
-                    placeholder="Paradigms Family"
-                    defaultValue={selectedParent.value}
-                    onChange={setSelectedParent}
+                    value={theory}
+                    onChange={setTheory}
                   />
-                </div>
-                <div className={sectionClass}>
-                  <Text flexed md weight="bold">
-                    Techniques
-                    <FilterExplanation tooltip="few more words about techniques" />
+                  <Text size={14} flexed>
+                    Theory
+                    <FilterExplanation tooltip="few more words about theories" />
                   </Text>
+                </div>
+                <div className={sideSectionClass}>
                   {configSuccess && (
                     <Select
                       closeMenuOnSelect={true}
@@ -131,6 +148,10 @@ export default function Frequencies() {
                       onChange={setSelectedTechniques}
                     />
                   )}
+                  <Text flexed size={14}>
+                    Techniques
+                    <FilterExplanation tooltip="few more words about techniques" />
+                  </Text>
                 </div>
                 <TypeOfConsciousnessFilter
                   checked={consciousness}

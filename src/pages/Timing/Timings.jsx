@@ -12,7 +12,12 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
-import { isMoblile } from "../../Utils/HardCoded";
+import {
+  isMoblile,
+  screenHeight,
+  screenWidth,
+  sideSectionClass,
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getTimings from "../../apiHooks/getTimings";
 import Spinner from "../../components/Spinner";
@@ -26,7 +31,7 @@ export default function Timings() {
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
   const [selectedTags, setSelectedTags] = React.useState(null);
-  const [selectedParent, setSelectedParent] = React.useState({});
+  const [theory, setTheory] = React.useState({});
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -64,13 +69,15 @@ export default function Timings() {
       label: parentTheory,
     })
   );
+  // console.log(parentTheories);
+  // parentTheories && parentTheories.push({ value: null, label: "..." });
 
   const { data, isLoading } = useQuery(
     [
       `timings${
-        selectedTechniques?.join(" ") +
+        selectedTechniques?.map((x) => x.value).join("+") +
         " " +
-        selectedParent.value +
+        theory?.value +
         " " +
         reporting +
         " " +
@@ -85,13 +92,12 @@ export default function Timings() {
       getTimings({
         techniques: selectedTechniques,
         tags: selectedTags,
-        theory: selectedParent.value,
+        theory: theory.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
       })
   );
-  console.log(data?.data);
   const serieses = data?.data.map((row) => row.series);
 
   const graphsData = serieses
@@ -116,13 +122,9 @@ export default function Timings() {
       });
   });
 
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
-
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
   configSuccess && !selectedTags && setSelectedTags(tags);
+
   return (
     <div>
       <PageTemplate
@@ -131,26 +133,21 @@ export default function Timings() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theory
-                <FilterExplanation tooltip="few more words about Thory" />
-              </Text>
-
-              <TagsSelect
+            <div className={sideSectionClass}>
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={false}
+                isClearable={true}
                 options={parentTheories}
-                placeholder="Paradigms Family"
-                defaultValue={selectedParent.value}
-                onChange={setSelectedParent}
+                value={theory}
+                onChange={setTheory}
               />
-            </div>
-
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Techniques
-                <FilterExplanation tooltip="few more words about techniques" />
+              <Text size={14} flexed>
+                Theory
+                <FilterExplanation tooltip="few more words about theories" />
               </Text>
+            </div>
+            <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
                   closeMenuOnSelect={true}
@@ -161,12 +158,12 @@ export default function Timings() {
                   onChange={setSelectedTechniques}
                 />
               )}
-            </div>
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Components
-                <FilterExplanation tooltip="few more words about Finding Tags" />
+              <Text flexed size={14}>
+                Techniques
+                <FilterExplanation tooltip="few more words about techniques" />
               </Text>
+            </div>
+            <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
                   closeMenuOnSelect={true}
@@ -177,6 +174,10 @@ export default function Timings() {
                   onChange={setSelectedTags}
                 />
               )}
+              <Text flexed size={14}>
+                Components
+                <FilterExplanation tooltip="few more words about Finding Tags" />
+              </Text>
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}
@@ -186,7 +187,7 @@ export default function Timings() {
             <TheoryDrivenFilter
               checked={theoryDriven}
               setChecked={setTheoryDriven}
-            />
+            />{" "}
           </SideControl>
         }
         graph={
@@ -233,7 +234,7 @@ export default function Timings() {
                       return (
                         <div
                           className="flex justify-start items-end gap-2"
-                          id="color">
+                          key={color + index}>
                           <div
                             className="w-3 h-3 mt-2 "
                             style={{ backgroundColor: color }}></div>

@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite-react";
@@ -158,8 +158,20 @@ export const Label = ({ children }) => {
   );
 };
 
+export const ResetButton = ({ handleReset }) => {
+  return (
+    <button
+      className="text-blue border border-blue px-2 rounded-lg mt-2 shadow-sm"
+      onClick={handleReset}>
+      Reset to defaut
+    </button>
+  );
+};
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
+  useEffect(() => {
+    setLabel(number);
+  }, [number]);
 
   return (
     <div className={sideSectionClass}>
@@ -173,13 +185,13 @@ export const RangeInput = ({ number, setNumber }) => {
           defaultValue={0}
           max={100}
           step={1}
-          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
+          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
           id="numOfExperiments"
         />
         <span
           style={{
             left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
-            top: 3.5,
+            top: 4,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
           {label}
@@ -188,7 +200,7 @@ export const RangeInput = ({ number, setNumber }) => {
       <FilterExplanation
         text="Minimum number of experiments"
         tooltip="You can determine the minimum number of experiments in each category of the chosen parameter (i.e., filter out categories with very few entries).
-        s"
+        "
       />
     </div>
   );
