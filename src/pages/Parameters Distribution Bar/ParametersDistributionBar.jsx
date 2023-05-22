@@ -23,6 +23,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -188,12 +189,8 @@ export default function ParametersDistributionBar() {
           graph={
             <div>
               <TopGraphText
-                firstLine={
-                  'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
-                }
-                text="Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter. The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.
-                You can also filter the results according to reporting technique.
-                "
+                text={graphsHeaders[2].figureText}
+                firstLine={graphsHeaders[2].figureLine}
               />
               {isLoading ? (
                 <Spinner />

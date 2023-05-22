@@ -13,18 +13,11 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
 import Spinner from "../../components/Spinner";
-import {
-  isMoblile,
-  navHeight,
-  screenHeight,
-  screenWidth,
-  sideWidth,
-} from "../../Utils/HardCoded";
+import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function WorldMap() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
@@ -93,7 +86,8 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
-  console.log(mergedStates);
+
+  console.log(data?.data);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -105,11 +99,13 @@ export default function WorldMap() {
       text: data?.data.map((row) => row.country_name),
       z: data?.data.map((row) => row.total),
       colorscale: [
-        [0, "rgb(5, 10, 172)"],
-        [0.35, "rgb(40, 60, 190)"],
-        [0.6, "rgb(90, 120, 245)"],
-        [1, "rgb(102, 191, 241,)"],
+        [0.0, "rgb(128, 0, 0)"],
+        [0.25, "rgb(166, 0, 0)"],
+        [0.5, "rgb(204, 0, 0)"],
+        [0.75, "rgb(242, 51, 51)"],
+        [1.0, "rgb(255, 208, 208)"],
       ],
+
       hoverinfo: "location+text",
       hovertext: data?.data.map((row) => {
         delete mergedStates[row.country_name].theory;
@@ -140,7 +136,6 @@ export default function WorldMap() {
         orientation: "h",
         x: 0.5,
         y: 0,
-        tickprefix: "#",
         title: "Experiments<br>number",
       },
     },
@@ -211,7 +206,7 @@ export default function WorldMap() {
 
             <div className={sectionClass}>
               <Text flexed md weight="bold">
-                Theories
+                Theory Family
                 <FilterExplanation tooltip="few more words about Theories" />
               </Text>
 
@@ -240,10 +235,8 @@ export default function WorldMap() {
         graph={
           <div>
             <TopGraphText
-              firstLine={
-                "Distribution of the experiments in the database according to nations extracted from author affiliations."
-              }
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+              text={graphsHeaders[10].figureText}
+              firstLine={graphsHeaders[10].figureLine}
             />
             {isLoading ? (
               <Spinner />

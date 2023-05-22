@@ -17,6 +17,7 @@ import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { designerColors } from "../../Utils/Colors";
 
 export default function TheoryDriven() {
@@ -118,10 +119,8 @@ export default function TheoryDriven() {
       graph={
         <div>
           <TopGraphText
-            firstLine={
-              "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time."
-            }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            text={graphsHeaders[5].figureText}
+            firstLine={graphsHeaders[5].figureLine}
           />
           {isLoading ? (
             <Spinner />
@@ -136,7 +135,7 @@ export default function TheoryDriven() {
                   type: "pie",
                   textinfo: "label+number",
                   textposition: "inside",
-                  domain: { x: [0.5, 0.5], y: [0.2, 0.8] },
+                  domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
                   marker: {
                     colors: designerColors.slice(28, 31),
                     line: { width: 1, color: "white" },
@@ -150,9 +149,9 @@ export default function TheoryDriven() {
                   sort: false,
                   type: "pie",
                   textinfo: "label+value",
-                  hole: 0.6,
+                  hole: 0.4,
                   textposition: "inside",
-                  domain: { x: [1, 1], y: [1, 1] },
+
                   marker: {
                     colors: cleanLabels2.map((label) => keysColors[label]),
                     line: { width: 1, color: "white" },

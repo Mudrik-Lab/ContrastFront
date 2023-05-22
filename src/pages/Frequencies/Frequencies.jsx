@@ -17,6 +17,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function Frequencies() {
   const [reporting, setReporting] = React.useState("either");
@@ -75,10 +76,10 @@ export default function Frequencies() {
       name: row.name,
       orientation: "h",
       scatter: { color: AlphaBetaColors[row.name] },
-      marker: { size: 4 },
+      marker: { size: 3 },
       line: {
         color: AlphaBetaColors[row.name],
-        width: 4,
+        width: 3,
       },
       type: "lines",
     })
@@ -145,10 +146,8 @@ export default function Frequencies() {
             graph={
               <div>
                 <TopGraphText
-                  firstLine={
-                    "The chart depicts the findings in the frequency domain of the experiments in the database."
-                  }
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                  text={graphsHeaders[7].figureText}
+                  firstLine={graphsHeaders[7].figureLine}
                 />
 
                 {isLoading ? (
@@ -165,7 +164,7 @@ export default function Frequencies() {
                         : screenWidth - sideWidth - 300,
                       height: screenHeight - 360,
 
-                      margin: { autoexpand: true, l: 25 },
+                      margin: { autoexpand: true, l: 50 },
                       showlegend: false,
                       yaxis: {
                         zeroline: false, // hide the zeroline
@@ -173,6 +172,7 @@ export default function Frequencies() {
                         zerolinewidth: 2, // customize the width of the zeroline
                       },
                       xaxis: {
+                        title: " Frequency (Hz)",
                         zeroline: false, // hide the zeroline
                         zerolinecolor: "#969696", // customize the color of the zeroline
                         zerolinewidth: 2, // customize the width of the zeroline
@@ -186,7 +186,7 @@ export default function Frequencies() {
 
           {!isMoblile && screenHeight > 500 && (
             <div
-              className=" fixed top-52 right-16 "
+              className=" fixed top-52 right-24 "
               style={{ height: screenHeight - 150 }}>
               {Object.values(AlphaBetaColors).map((color, index) => (
                 <div

@@ -28,6 +28,7 @@ import {
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function ParametersDistributionPie() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -208,10 +209,8 @@ export default function ParametersDistributionPie() {
       graph={
         <div>
           <TopGraphText
-            firstLine={
-              "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories."
-            }
-            text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+            text={graphsHeaders[3].figureText}
+            firstLine={graphsHeaders[3].figureLine}
           />
           {isLoading ? (
             <Spinner />

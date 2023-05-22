@@ -17,6 +17,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import getTimings from "../../apiHooks/getTimings";
 import Spinner from "../../components/Spinner";
 import { blueToYellow } from "../../Utils/functions";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 import PageTemplate from "../../components/PageTemplate";
 
 export default function Timings() {
@@ -104,10 +105,10 @@ export default function Timings() {
         x: [row.start, row.end],
         y: [index + 1, index + 1],
         name: row.name,
-        marker: { size: 4 },
+        marker: { size: 3 },
 
         line: {
-          width: 4,
+          width: 3,
           color: traceColor[row.name],
         },
 
@@ -163,7 +164,7 @@ export default function Timings() {
             </div>
             <div className={sectionClass}>
               <Text flexed md weight="bold">
-                Finding Tags
+                Components
                 <FilterExplanation tooltip="few more words about Finding Tags" />
               </Text>
               {configSuccess && (
@@ -189,59 +190,66 @@ export default function Timings() {
           </SideControl>
         }
         graph={
-          <div>
+          <div className="overflow-x-scroll">
             <TopGraphText
-              firstLine={
-                "The chart depicts the findings in the temporal domain of the experiments in the database. Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend)."
-              }
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+              text={graphsHeaders[6].figureText}
+              firstLine={graphsHeaders[6].figureLine}
             />
 
             {isLoading ? (
               <Spinner />
             ) : (
-              <Plot
-                data={traces}
-                config={{ displayModeBar: !isMoblile }}
-                layout={{
-                  autosize: false,
-                  barmode: "stack",
-                  width: isMoblile ? screenWidth : screenWidth - 560,
-                  height: screenHeight - 320,
-                  margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 15, font: { size: 18 } },
-                  showlegend: false,
-                  yaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                  xaxis: {
-                    zeroline: false, // hide the zeroline
-                    zerolinecolor: "#969696", // customize the color of the zeroline
-                    zerolinewidth: 2, // customize the width of the zeroline
-                  },
-                }}
-              />
+              <div className="relative ">
+                <Plot
+                  data={traces}
+                  config={{ displayModeBar: !isMoblile, responsive: true }}
+                  layout={{
+                    width: isMoblile ? screenWidth : screenWidth - 600,
+                    height: screenHeight - 400,
+                    margin: { autoexpand: true, l: 50 },
+                    legend: { itemwidth: 15, font: { size: 18 } },
+                    showlegend: false,
+
+                    yaxis: {
+                      title: "Experiment",
+                      zeroline: false, // hide the zeroline
+                      zerolinecolor: "#969696", // customize the color of the zeroline
+                      zerolinewidth: 2, // customize the width of the zeroline
+                    },
+                    xaxis: {
+                      title: "Time (ms)",
+                      zeroline: false, // hide the zeroline
+                      zerolinecolor: "#969696", // customize the color of the zeroline
+                      zerolinewidth: 2, // customize the width of the zeroline
+                    },
+                  }}
+                />
+                {!isMoblile && screenHeight > 500 && (
+                  <div className="absolute right-10 top-40 w-[150px] overflow-y-scroll h-[400px] ">
+                    {blueToYellow(
+                      configuration?.data
+                        .available_finding_tags_types_for_timings.length
+                    ).map((color, index) => {
+                      return (
+                        <div
+                          className="flex justify-start items-end gap-2"
+                          id="color">
+                          <div
+                            className="w-3 h-3 mt-2 "
+                            style={{ backgroundColor: color }}></div>
+                          <p className="text-[10px] whitespace-nowrap overflow-hidden">
+                            {Object.keys(traceColor)[index]}
+                          </p>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
             )}
           </div>
         }
       />
-
-      {!isMoblile && screenHeight > 500 && (
-        <div className="absolute overflow-y-scroll top-52 right-2 bg-white h-96">
-          {blueToYellow(
-            configuration?.data.available_finding_tags_types_for_timings.length
-          ).map((color, index) => (
-            <div className="flex justify-start items-end gap-2" id="color">
-              <div
-                className="w-4 h-4 mt-2 "
-                style={{ backgroundColor: color }}></div>
-              <Text sm>{Object.keys(traceColor)[index]}</Text>
-            </div>
-          ))}
-        </div>
-      )}
     </div>
   );
 }
