@@ -26,11 +26,23 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function Journals() {
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [theory, setTheory] = React.useState({});
+  const queryParams = new URLSearchParams(location.search);
+  console.log();
+  const [experimentsNum, setExperimentsNum] = React.useState(
+    queryParams.get("min_number_of_experiments") || 0
+  );
+  const [reporting, setReporting] = React.useState(
+    queryParams.get("is_reporting") || "either"
+  );
+  const [consciousness, setConsciousness] = React.useState(
+    queryParams.get("type_of_consciousness") || "either"
+  );
+  const [theoryDriven, setTheoryDriven] = React.useState(
+    queryParams.get("theory_driven") || "either"
+  );
+  const [theory, setTheory] = React.useState(
+    { value: queryParams.get("theory"), label: queryParams.get("theory") } || {}
+  );
   const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
 
@@ -83,6 +95,7 @@ export default function Journals() {
   };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams);
     queryParams.set("is_reporting", reporting);
     queryParams.set("type_of_consciousness", consciousness);
     queryParams.set("theory_driven", theoryDriven);
@@ -99,7 +112,17 @@ export default function Journals() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <RangeInput
+              number={experimentsNum}
+              setNumber={(e) => {
+                setExperimentsNum(e);
+                navigate(
+                  `?min_number_of_experiments=${encodeURIComponent(
+                    experimentsNum
+                  )}`
+                );
+              }}
+            />
 
             <div className={sideSectionClass}>
               <Text flexed md weight="bold">
