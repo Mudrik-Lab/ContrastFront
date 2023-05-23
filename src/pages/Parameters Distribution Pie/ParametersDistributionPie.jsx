@@ -21,11 +21,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
-import {
-  hexToRgba,
-  rawTeaxtToShow as rawTextToShow,
-  showTextToRaw as shownTextToRaw,
-} from "../../Utils/functions";
+import { hexToRgba, rawTextToShow, showTextToRaw } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
@@ -126,7 +122,7 @@ export default function ParametersDistributionPie() {
     const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
-        row.series_name === shownTextToRaw(seriesName.label) ||
+        row.series_name === showTextToRaw(seriesName.label) ||
         row.series_name.toLowerCase() === seriesName.label.toLowerCase()
     );
     console.log(secondaryData);

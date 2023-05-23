@@ -24,7 +24,7 @@ import {
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTeaxtToShow } from "../../Utils/functions";
+import { rawTextToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 
@@ -61,7 +61,7 @@ export default function AcrossTheYears() {
       x: row.series.map((a) => a.year),
       y: row.series.map((a) => a.value),
       type: "scatter",
-      name: rawTeaxtToShow(row.series_name),
+      name: rawTextToShow(row.series_name),
       mode: "lines+markers",
     });
   });

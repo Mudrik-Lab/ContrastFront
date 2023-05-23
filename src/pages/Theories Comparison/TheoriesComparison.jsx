@@ -22,7 +22,7 @@ import Plot from "react-plotly.js";
 import TagsSelect from "../../components/TagsSelect";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { breakLongLines, rawTeaxtToShow } from "../../Utils/functions";
+import { breakLongLines, rawTextToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";

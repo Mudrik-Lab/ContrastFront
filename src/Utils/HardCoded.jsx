@@ -42,19 +42,19 @@ export const parametersOptions = [
   },
   {
     value: "stimuli_category",
-    label: "Stimuli Category",
+    label: "Stimulus Category",
   },
   {
     value: "modality",
-    label: "Modality",
+    label: "Stimulus modality",
   },
   {
     value: "consciousness_measure_phase",
-    label: "Consciousness Measure Phase",
+    label: "When was consciousness measured?",
   },
   {
     value: "consciousness_measure_type",
-    label: "Consciousness Measure Type",
+    label: "how was consciousness measured?",
   },
   {
     value: "type_of_consciousness",

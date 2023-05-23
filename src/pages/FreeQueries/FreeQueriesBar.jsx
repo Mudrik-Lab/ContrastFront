@@ -27,7 +27,7 @@ import {
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTeaxtToShow } from "../../Utils/functions";
+import { rawTextToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 
@@ -202,7 +202,7 @@ export default function FreeQueriesBar() {
   );
   const X1 = data?.data.map((row) => row.value).reverse();
 
-  const Y = data?.data.map((row) => rawTeaxtToShow(row.key)).reverse();
+  const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
   console.log(data?.data);
 
   var trace1 = {
@@ -291,7 +291,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={selectedTechniques}
                       options={techniquesArr}
-                      placeholder="Techniques"
+                      placeholder="Technique"
                       onChange={setSelectedTechniques}
                     />
                     <Select
@@ -300,7 +300,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasurePhases}
                       options={consciousnessMeasurePhaseArr}
-                      placeholder={"Consciousness Measure Phase "}
+                      placeholder={"When was consciousness measured? "}
                       onChange={setConsciousnessMeasurePhases}
                     />
                     <Select
@@ -309,7 +309,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasureTypes}
                       options={consciousnessMeasureTypesArr}
-                      placeholder="Consciousness Measure Types"
+                      placeholder="how was consciousness measured?"
                       onChange={setConsciousnessMeasureTypes}
                     />
                     <Select
@@ -318,7 +318,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={tagsFamilies}
                       options={tagsFamiliesArr}
-                      placeholder="Finding Tags Families"
+                      placeholder="Finding Types"
                       onChange={setTagsFamilies}
                     />
                     <Select
@@ -327,7 +327,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={tagsTypes}
                       options={tagsTypesArr}
-                      placeholder="Finding Tags Types"
+                      placeholder="Finding Type"
                       onChange={setTagsTypes}
                     />
                     <Select
@@ -354,7 +354,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={paradigms}
                       options={paradigmsArr}
-                      placeholder="Paradigms"
+                      placeholder="specific paradigm"
                       onChange={setParadigms}
                     />
                     <Select
@@ -363,7 +363,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={populations}
                       options={populationsArr}
-                      placeholder="Populations"
+                      placeholder="Population"
                       onChange={setPopulations}
                     />
 
@@ -373,7 +373,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliCategories}
                       options={stimuliCategoriesArr}
-                      placeholder="Stimuli Categories"
+                      placeholder="Stimulus Category"
                       onChange={setStimuliCategories}
                     />
                     <Select
@@ -382,7 +382,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliModalities}
                       options={stimuliModalitiesArr}
-                      placeholder="Stimuli Modalities"
+                      placeholder="Stimulus Modality"
                       onChange={setStimuliModalities}
                     />
                     <Select
@@ -391,7 +391,7 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={tasks}
                       options={tasksArr}
-                      placeholder="Tasks"
+                      placeholder="Task"
                       onChange={setTasks}
                     />
                   </>

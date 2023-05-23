@@ -154,12 +154,12 @@ export default function Timings() {
                   isMulti={true}
                   value={selectedTechniques}
                   options={techniques}
-                  placeholder="Techniques"
+                  placeholder="Technique"
                   onChange={setSelectedTechniques}
                 />
               )}
               <Text flexed size={14}>
-                Techniques
+                Technique
                 <FilterExplanation tooltip="few more words about techniques" />
               </Text>
             </div>

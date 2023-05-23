@@ -20,7 +20,7 @@ import {
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTeaxtToShow } from "../../Utils/functions";
+import { rawTextToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
