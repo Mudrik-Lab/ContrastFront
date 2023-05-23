@@ -1,4 +1,5 @@
 import { queryApi } from "../Utils/api";
+import { fixArraytoURL } from "../Utils/functions";
 
 export default async function getTimings({
   techniques,
@@ -8,12 +9,12 @@ export default async function getTimings({
   type_of_consciousness,
   tags,
 }) {
-  const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
-  const tagsArr = tags?.map((t) => "&tags_types=" + t.value);
+  const techniquesArr = fixArraytoURL(techniques, "techniques");
+  const tagsArr = fixArraytoURL(tags, "tags_types");
 
   return await queryApi({
     url: `studies/experiments_graphs/timings/?${
-      techniquesArr?.join("").slice(1) + tagsArr?.join("")
+      techniquesArr?.slice(1) + tagsArr
     }`,
     params: {
       theory,

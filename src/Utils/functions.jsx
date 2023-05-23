@@ -95,3 +95,9 @@ export function hexToRgba(hexColor) {
 export function fitColorPerLabel(data) {
   console.log(data);
 }
+
+export function fixArraytoURL(arr, name) {
+  const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
+  const urlString = queriesArr.join("");
+  return urlString;
+}

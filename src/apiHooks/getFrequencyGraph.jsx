@@ -1,4 +1,5 @@
 import { queryApi } from "../Utils/api";
+import { fixArraytoURL } from "../Utils/functions";
 
 export default async function getFrequencies({
   techniques,
@@ -7,12 +8,10 @@ export default async function getFrequencies({
   theory_driven,
   type_of_consciousness,
 }) {
-  const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
+  const techniquesArr = fixArraytoURL(techniques, "techniques");
 
   return await queryApi({
-    url: `studies/experiments_graphs/frequencies/?${techniquesArr
-      ?.join("")
-      .slice(1)}`,
+    url: `studies/experiments_graphs/frequencies/?${techniquesArr?.slice(1)}`,
     params: {
       theory,
       is_reporting,

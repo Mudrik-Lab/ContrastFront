@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -24,13 +24,29 @@ import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function Frequencies() {
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
+  const queryParams = new URLSearchParams(location.search);
+  console.log();
+  const [experimentsNum, setExperimentsNum] = React.useState(
+    queryParams.get("min_number_of_experiments") || 0
+  );
+  const [reporting, setReporting] = React.useState(
+    queryParams.get("is_reporting") || "either"
+  );
+  const [consciousness, setConsciousness] = React.useState(
+    queryParams.get("type_of_consciousness") || "either"
+  );
+  const [theoryDriven, setTheoryDriven] = React.useState(
+    queryParams.get("theory_driven") || "either"
+  );
+  const [theory, setTheory] = React.useState(
+    { value: queryParams.get("theory"), label: queryParams.get("theory") } || {}
+  );
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [theory, setTheory] = React.useState({});
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -109,6 +125,16 @@ export default function Frequencies() {
       type: "lines",
     })
   );
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams);
+    queryParams.set("is_reporting", reporting);
+    queryParams.set("type_of_consciousness", consciousness);
+    queryParams.set("theory_driven", theoryDriven);
+    queryParams.set("min_number_of_experiments", experimentsNum);
+    queryParams.set("theory", theory?.value);
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
 
   configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
 
@@ -130,7 +156,10 @@ export default function Frequencies() {
                     isClearable={true}
                     options={parentTheories}
                     value={theory}
-                    onChange={setTheory}
+                    onChange={(e) => {
+                      setTheory(e);
+                      navigate(`?theory=${encodeURIComponent(theory.value)}`);
+                    }}
                   />
                   <Text size={14} flexed>
                     Theory

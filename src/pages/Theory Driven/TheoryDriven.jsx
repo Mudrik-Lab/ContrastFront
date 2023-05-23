@@ -183,8 +183,8 @@ export default function TheoryDriven() {
           <ReportFilter checked={reporting} setChecked={setReporting} />
           {/* <TheoryDrivenFilter
             checked={theoryDriven}
-            setChecked={setTheoryDriven} */}
-          />
+            setChecked={setTheoryDriven}
+          /> */}
           <div className="flex justify-center items-center gap-3 mt-3">
             <Text>Challenges</Text>
             <Toggle

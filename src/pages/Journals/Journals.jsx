@@ -125,11 +125,6 @@ export default function Journals() {
             />
 
             <div className={sideSectionClass}>
-              <Text flexed md weight="bold">
-                Theory Family
-                <FilterExplanation tooltip="few more words about Thory" />
-              </Text>
-
               <Select
                 closeMenuOnSelect={true}
                 isMulti={false}
@@ -141,15 +136,34 @@ export default function Journals() {
                   navigate(`?theory=${encodeURIComponent(theory.value)}`);
                 }}
               />
+              <Text flexed size={14}>
+                Theory Family
+                <FilterExplanation tooltip="few more words about Thory" />
+              </Text>
             </div>
+
             <TypeOfConsciousnessFilter
               checked={consciousness}
-              setChecked={setConsciousness}
+              setChecked={(e) => {
+                setConsciousness(e);
+                navigate(
+                  `?type_of_consciousness=${encodeURIComponent(consciousness)}`
+                );
+              }}
             />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <ReportFilter
+              checked={reporting}
+              setChecked={(e) => {
+                setReporting(e);
+                navigate(`?is_reporting=${encodeURIComponent(reporting)}`);
+              }}
+            />
             <TheoryDrivenFilter
               checked={theoryDriven}
-              setChecked={setTheoryDriven}
+              setChecked={(e) => {
+                setTheoryDriven(e);
+                navigate(`?theory_driven=${encodeURIComponent(theoryDriven)}`);
+              }}
             />
           </SideControl>
         }
