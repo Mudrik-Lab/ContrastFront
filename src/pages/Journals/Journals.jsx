@@ -1,52 +1,60 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   isMoblile,
-  navHeight,
-  screenHeight,
   screenWidth,
-  sideWidth,
+  sideSectionClass,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Navbar from "../../components/Navbar";
 import getJournals from "../../apiHooks/getJournals";
 import Spinner from "../../components/Spinner";
-import Toggle from "../../components/Toggle";
-import Footer from "../../components/Footer";
 import PageTemplate from "../../components/PageTemplate";
+import { designerColors } from "../../Utils/Colors";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function Journals() {
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedParent, setSelectedParent] = React.useState({});
+  const queryParams = new URLSearchParams(location.search);
+  console.log();
+  const [experimentsNum, setExperimentsNum] = React.useState(
+    queryParams.get("min_number_of_experiments") || 0
+  );
+  const [reporting, setReporting] = React.useState(
+    queryParams.get("is_reporting") || "either"
+  );
+  const [consciousness, setConsciousness] = React.useState(
+    queryParams.get("type_of_consciousness") || "either"
+  );
+  const [theoryDriven, setTheoryDriven] = React.useState(
+    queryParams.get("theory_driven") || "either"
+  );
+  const [theory, setTheory] = React.useState(
+    { value: queryParams.get("theory"), label: queryParams.get("theory") } || {}
+  );
+  const navigate = useNavigate();
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const { data: configuration } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
-
   const { data, isSuccess, isLoading } = useQuery(
     [
       `journals${
         +" " +
-        selectedParent.value +
+        theory?.value +
         " " +
         reporting +
         " " +
@@ -59,7 +67,7 @@ export default function Journals() {
     ],
     () =>
       getJournals({
-        theory: selectedParent.value,
+        theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -74,19 +82,28 @@ export default function Journals() {
     })
   );
   const graphsData = isSuccess ? data?.data : [];
-
+  const Y = graphsData.map((row) => row.key);
   var trace1 = {
-    x: graphsData.map((row) => row.key),
-    y: graphsData.map((row) => row.value),
+    y: Y,
+    x: graphsData.map((row) => row.value).reverse(),
     type: "bar",
+    orientation: "h",
     marker: {
-      color: Math.floor(Math.random() * 16777215).toString(16),
+      color:
+        designerColors[Math.floor(Math.random() * (designerColors.length - 1))],
     },
   };
-  const graphWidth = 150 + trace1.x.length * 35;
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    console.log(queryParams);
+    queryParams.set("is_reporting", reporting);
+    queryParams.set("type_of_consciousness", consciousness);
+    queryParams.set("theory_driven", theoryDriven);
+    queryParams.set("min_number_of_experiments", experimentsNum);
+    queryParams.set("theory", theory?.value);
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   return (
     <div className="h-full">
       <PageTemplate
@@ -95,19 +112,34 @@ export default function Journals() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+            <RangeInput
+              number={experimentsNum}
+              setNumber={(e) => {
+                setExperimentsNum(e);
+                navigate(
+                  `?min_number_of_experiments=${encodeURIComponent(
+                    experimentsNum
+                  )}`
+                );
+              }}
+            />
 
-            <div className={sectionClass}>
+            <div className={sideSectionClass}>
               <Text flexed md weight="bold">
-                Theory
+                Theory Family
                 <FilterExplanation tooltip="few more words about Thory" />
               </Text>
 
-              <TagsSelect
+              <Select
+                closeMenuOnSelect={true}
+                isMulti={false}
+                isClearable={true}
                 options={parentTheories}
-                placeholder="Paradigms Family"
-                defaultValue={selectedParent.value}
-                onChange={setSelectedParent}
+                value={theory}
+                onChange={(e) => {
+                  setTheory(e);
+                  navigate(`?theory=${encodeURIComponent(theory.value)}`);
+                }}
               />
             </div>
             <TypeOfConsciousnessFilter
@@ -124,10 +156,8 @@ export default function Journals() {
         graph={
           <div className="overflow-x-scroll h-full">
             <TopGraphText
-              firstLine={
-                "The bar chart depicts distribution of experiments according to the journals they were published in."
-              }
-              text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+              text={graphsHeaders[9].figureText}
+              firstLine={graphsHeaders[9].figureLine}
             />
             {isLoading ? (
               <Spinner />
@@ -136,10 +166,30 @@ export default function Journals() {
                 data={[trace1]}
                 layout={{
                   autosize: false,
-                  width: isMoblile ? screenWidth : graphWidth,
-                  height: isMoblile ? screenHeight : screenHeight - 360,
-                  margin: { autoexpand: true, b: 100 },
+                  width: isMoblile ? screenWidth : screenWidth - 400,
+                  height: 35 * Y?.length + 350,
                   showlegend: false,
+
+                  legend: { itemwidth: 90 },
+                  xaxis: {
+                    title: "Number of experiments",
+                    zeroline: true,
+                    side: "top",
+                    tickfont: {
+                      size: 16,
+                      standoff: 50,
+                    },
+                  },
+                  yaxis: {
+                    automargin: true,
+
+                    ticks: "outside",
+                    tickangle: 315,
+                    tickfont: {
+                      size: 12,
+                      standoff: 50,
+                    },
+                  },
                 }}
               />
             )}

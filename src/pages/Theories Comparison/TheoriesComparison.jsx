@@ -25,6 +25,7 @@ import Spinner from "../../components/Spinner";
 import { breakLongLines, rawTeaxtToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -129,11 +130,8 @@ export default function ParametersDistributionTheoriesComparison() {
       graph={
         <div>
           <TopGraphText
-            firstLine={
-              "The graph depicts the different distributions of parameters for the four theories separately."
-            }
-            text="Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter. You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.
-            You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories."
+            text={graphsHeaders[1].figureText}
+            firstLine={graphsHeaders[1].figureLine}
           />
           <div
             className="four-wheels 2xl:mx-auto "

@@ -22,6 +22,8 @@ import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
+import Toggle from "../../components/Toggle";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function ParametersDistributionBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -171,28 +173,24 @@ export default function ParametersDistributionBar() {
               <ReportFilter checked={reporting} setChecked={setReporting} />
 
               <div className="flex gap-2 mt-4">
-                <input
-                  type="checkbox"
-                  name="stacked"
+                <Text>Side by side</Text>
+                <Toggle
                   checked={isStacked}
-                  onChange={() => setIsStacked(!isStacked)}
+                  setChecked={() => setIsStacked(!isStacked)}
+                />
+                <Text>Stacked</Text>
+                <FilterExplanation
+                  text=""
+                  tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
                 />
               </div>
-              <FilterExplanation
-                text="Stacked (or side by side)?"
-                tooltip="You can choose how to display the comparison between experiments supporting (red bars) vs. challenging (blue bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
-              />
             </SideControl>
           }
           graph={
             <div>
               <TopGraphText
-                firstLine={
-                  'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.'
-                }
-                text="Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter. The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.
-                You can also filter the results according to reporting technique.
-                "
+                text={graphsHeaders[2].figureText}
+                firstLine={graphsHeaders[2].figureLine}
               />
               {isLoading ? (
                 <Spinner />

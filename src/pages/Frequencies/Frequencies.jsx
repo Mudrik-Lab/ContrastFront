@@ -11,19 +11,26 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
-import { AlphaBetaColors, isMoblile, sideWidth } from "../../Utils/HardCoded";
+import {
+  AlphaBetaColors,
+  isMoblile,
+  screenHeight,
+  screenWidth,
+  sideSectionClass,
+  sideWidth,
+} from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function Frequencies() {
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [selectedParent, setSelectedParent] = React.useState({});
+  const [theory, setTheory] = React.useState({});
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -41,22 +48,41 @@ export default function Frequencies() {
 
   const parentTheories = configSuccess
     ? configuration?.data.available_parent_theories.map((parentTheory) => ({
-        value: encodeURIComponent(parentTheory),
+        value: parentTheory,
         label: parentTheory,
       }))
     : [];
-
+  console.log(
+    `frequencies${
+      selectedTechniques?.map((x) => x.value).join("+") +
+      " " +
+      theory?.value +
+      " " +
+      reporting +
+      " " +
+      theoryDriven +
+      " " +
+      consciousness
+    }`
+  );
   const { data, isLoading } = useQuery(
     [
       `frequencies${
-        selectedTechniques?.join(" ") + " " + selectedParent.value ||
-        "" + " " + reporting + " " + theoryDriven + " " + consciousness
+        selectedTechniques?.map((x) => x.value).join("+") +
+        " " +
+        theory?.value +
+        " " +
+        reporting +
+        " " +
+        theoryDriven +
+        " " +
+        consciousness
       }`,
     ],
     () =>
       getFrequencies({
         techniques: selectedTechniques,
-        theory: selectedParent.value,
+        theory: theory.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -75,20 +101,15 @@ export default function Frequencies() {
       name: row.name,
       orientation: "h",
       scatter: { color: AlphaBetaColors[row.name] },
-      marker: { size: 4 },
+      marker: { size: 3 },
       line: {
         color: AlphaBetaColors[row.name],
-        width: 4,
+        width: 3,
       },
       type: "lines",
     })
   );
 
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
-
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
 
   return (
@@ -102,24 +123,21 @@ export default function Frequencies() {
                   Axis Controls
                 </Text>
 
-                <div className={sectionClass}>
-                  <Text flexed md weight="bold">
-                    Theory
-                    <FilterExplanation tooltip="few more words about Thory" />
-                  </Text>
-
-                  <TagsSelect
+                <div className={sideSectionClass}>
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={false}
+                    isClearable={true}
                     options={parentTheories}
-                    placeholder="Paradigms Family"
-                    defaultValue={selectedParent.value}
-                    onChange={setSelectedParent}
+                    value={theory}
+                    onChange={setTheory}
                   />
-                </div>
-                <div className={sectionClass}>
-                  <Text flexed md weight="bold">
-                    Techniques
-                    <FilterExplanation tooltip="few more words about techniques" />
+                  <Text size={14} flexed>
+                    Theory
+                    <FilterExplanation tooltip="few more words about theories" />
                   </Text>
+                </div>
+                <div className={sideSectionClass}>
                   {configSuccess && (
                     <Select
                       closeMenuOnSelect={true}
@@ -130,6 +148,10 @@ export default function Frequencies() {
                       onChange={setSelectedTechniques}
                     />
                   )}
+                  <Text flexed size={14}>
+                    Techniques
+                    <FilterExplanation tooltip="few more words about techniques" />
+                  </Text>
                 </div>
                 <TypeOfConsciousnessFilter
                   checked={consciousness}
@@ -145,10 +167,8 @@ export default function Frequencies() {
             graph={
               <div>
                 <TopGraphText
-                  firstLine={
-                    "The chart depicts the findings in the frequency domain of the experiments in the database."
-                  }
-                  text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
+                  text={graphsHeaders[7].figureText}
+                  firstLine={graphsHeaders[7].figureLine}
                 />
 
                 {isLoading ? (
@@ -165,7 +185,7 @@ export default function Frequencies() {
                         : screenWidth - sideWidth - 300,
                       height: screenHeight - 360,
 
-                      margin: { autoexpand: true, l: 25 },
+                      margin: { autoexpand: true, l: 50 },
                       showlegend: false,
                       yaxis: {
                         zeroline: false, // hide the zeroline
@@ -173,6 +193,7 @@ export default function Frequencies() {
                         zerolinewidth: 2, // customize the width of the zeroline
                       },
                       xaxis: {
+                        title: " Frequency (Hz)",
                         zeroline: false, // hide the zeroline
                         zerolinecolor: "#969696", // customize the color of the zeroline
                         zerolinewidth: 2, // customize the width of the zeroline
@@ -186,7 +207,7 @@ export default function Frequencies() {
 
           {!isMoblile && screenHeight > 500 && (
             <div
-              className=" fixed top-52 right-16 "
+              className=" fixed top-52 right-24 "
               style={{ height: screenHeight - 150 }}>
               {Object.values(AlphaBetaColors).map((color, index) => (
                 <div

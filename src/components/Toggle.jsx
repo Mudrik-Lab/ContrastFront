@@ -6,7 +6,7 @@ export default function Toggle({ checked, setChecked }) {
   };
 
   return (
-    <label className="relative inline-flex items-center mr-5 cursor-pointer">
+    <label className="relative inline-flex items-center mx-2 cursor-pointer">
       <input
         type="checkbox"
         value=""

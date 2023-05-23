@@ -10,9 +10,9 @@ export default async function getFrequencies({
   const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
 
   return await queryApi({
-    url: `studies/experiments_graphs/frequencies/?${
-      techniquesArr && techniquesArr.join("").slice(1)
-    }`,
+    url: `studies/experiments_graphs/frequencies/?${techniquesArr
+      ?.join("")
+      .slice(1)}`,
     params: {
       theory,
       is_reporting,

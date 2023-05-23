@@ -1,4 +1,4 @@
-import { QueryClientProvider, useQuery } from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import { Login } from "./pages/Login";
 
@@ -54,7 +54,7 @@ const Screens = () => {
           element={<ParametersDistributionPie />}
         />{" "}
         <Route path="/theory-driven" element={<TheoryDriven />} />
-        <Route path="/across-the-years" element={<AcrossTheYears />} />
+        <Route path="/trends-over-time" element={<AcrossTheYears />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route
           path="/theories-comparison"

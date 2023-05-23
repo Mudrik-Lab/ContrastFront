@@ -1,5 +1,5 @@
 /** @format */
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite-react";
@@ -103,25 +103,36 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
 };
 export const RadioInput = ({ name, values, checked, setChecked }) => {
   return (
-    <div className="flex px-12 flex-wrap justify-center">
-      {values.map((val) => (
-        <div className="mr-4" key={val.name}>
-          <input
-            id={name}
-            type="radio"
-            name={name}
-            value={val.value}
-            checked={checked === val.value}
-            onChange={(e) => setChecked(e.target.value)}
-            className="w-4 h-4 bg-gray-100 border-gray-300"
-          />
-          <label
-            htmlFor={name}
-            className="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300 break-normal">
-            {val.name}
+    <div
+      className="flex flex-wrap justify-between items-center px-10"
+      id={name}>
+      {values.map((option, index) =>
+        index % 2 === 0 ? (
+          <label key={option.value} className="flex items-center w-1/2">
+            <input
+              type="radio"
+              value={option.value}
+              checked={checked === option.value}
+              onChange={(e) => setChecked(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+            <span className="ml-2">{option.name}</span>
           </label>
-        </div>
-      ))}
+        ) : (
+          <label
+            key={option.value}
+            className="flex items-center justify-end w-1/2">
+            <span className="mr-2 text-right">{option.name}</span>
+            <input
+              type="radio"
+              value={option.value}
+              checked={checked === option.value}
+              onChange={(e) => setChecked(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+          </label>
+        )
+      )}
     </div>
   );
 };
@@ -147,8 +158,20 @@ export const Label = ({ children }) => {
   );
 };
 
+export const ResetButton = ({ handleReset }) => {
+  return (
+    <button
+      className="text-blue border border-blue px-2 rounded-lg mt-2 shadow-sm"
+      onClick={handleReset}>
+      Reset to defaut
+    </button>
+  );
+};
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
+  useEffect(() => {
+    setLabel(number);
+  }, [number]);
 
   return (
     <div className={sideSectionClass}>
@@ -162,13 +185,13 @@ export const RangeInput = ({ number, setNumber }) => {
           defaultValue={0}
           max={100}
           step={1}
-          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer dark:bg-gray-700"
+          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
           id="numOfExperiments"
         />
         <span
           style={{
             left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
-            top: 3.5,
+            top: 4,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
           {label}
@@ -177,7 +200,7 @@ export const RangeInput = ({ number, setNumber }) => {
       <FilterExplanation
         text="Minimum number of experiments"
         tooltip="You can determine the minimum number of experiments in each category of the chosen parameter (i.e., filter out categories with very few entries).
-        s"
+        "
       />
     </div>
   );

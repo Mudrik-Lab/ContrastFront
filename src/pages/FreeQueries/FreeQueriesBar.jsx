@@ -29,6 +29,7 @@ import getFreeQueries from "../../apiHooks/getFreeQueries";
 import PageTemplate from "../../components/PageTemplate";
 import { rawTeaxtToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
+import { graphsHeaders } from "../../Utils/GraphsDetails";
 
 export default function FreeQueriesBar() {
   const [selected, setSelected] = React.useState(parametersOptions[0]);
@@ -401,9 +402,8 @@ export default function FreeQueriesBar() {
           graph={
             <div>
               <TopGraphText
-                text="Here, you can use the toolbar on the left to create your own queries. Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.
-                "
-                firstLine="The graph depicts the distribution of parameter values, according to your specifications."
+                text={graphsHeaders[0].figureText}
+                firstLine={graphsHeaders[0].figureLine}
               />
               <Plot
                 data={[trace1]}
