@@ -98,6 +98,22 @@ export function fitColorPerLabel(data) {
 
 export function fixArraytoURL(arr, name) {
   const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
-  const urlString = queriesArr.join("");
+  const urlString = queriesArr?.join("");
   return urlString;
+}
+
+export function buildUrl(pageName, paramName, value, navigate) {
+  const queryParams = new URLSearchParams(location.search);
+  queryParams.set(paramName, value);
+  navigate("/" + pageName + "?" + queryParams.toString());
+}
+
+export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
+  const selectedValues = Array.from(e, (option) => option);
+  const queryParams = new URLSearchParams(searchParams.toString());
+  queryParams.delete(paramName);
+  selectedValues.forEach((value) => {
+    queryParams.append(paramName, value.value);
+  });
+  navigate(`?${queryParams.toString()}`);
 }
