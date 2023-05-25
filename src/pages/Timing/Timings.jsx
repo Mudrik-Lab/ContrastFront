@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -11,7 +11,6 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   isMoblile,
   screenHeight,
@@ -24,14 +23,19 @@ import Spinner from "../../components/Spinner";
 import { blueToYellow } from "../../Utils/functions";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import PageTemplate from "../../components/PageTemplate";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 
 export default function Timings() {
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [selectedTags, setSelectedTags] = React.useState(null);
-  const [theory, setTheory] = React.useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [theory, setTheory] = React.useState();
+  const [selectedTechniques, setSelectedTechniques] = React.useState([]);
+  const [selectedTags, setSelectedTags] = React.useState([]);
+  const navigate = useNavigate();
+  const pageName = "timings";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -69,8 +73,6 @@ export default function Timings() {
       label: parentTheory,
     })
   );
-  // console.log(parentTheories);
-  // parentTheories && parentTheories.push({ value: null, label: "..." });
 
   const { data, isLoading } = useQuery(
     [
@@ -85,14 +87,14 @@ export default function Timings() {
         " " +
         consciousness +
         " " +
-        selectedTags
+        selectedTags?.map((x) => x.value).join("+")
       }`,
     ],
     () =>
       getTimings({
         techniques: selectedTechniques,
         tags: selectedTags,
-        theory: theory.value,
+        theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -122,8 +124,47 @@ export default function Timings() {
       });
   });
 
-  configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
-  configSuccess && !selectedTags && setSelectedTags(tags);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    if (queryParams.get("theory") !== "undefined") {
+      setTheory({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setTheory({});
+    }
+    if (configSuccess) {
+      const selectedTechValues = queryParams.getAll("techniques");
+      setSelectedTechniques(
+        selectedTechValues.map((item) => ({ value: item, label: item }))
+      );
+      const selectedTagValues = queryParams.getAll("tags_types");
+      setSelectedTags(
+        selectedTagValues.map((item) => ({ value: item, label: item }))
+      );
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (configSuccess) {
+      setSelectedTechniques(techniques);
+      setSelectedTags(tags);
+    }
+  }, [configSuccess]);
 
   return (
     <div>
@@ -140,11 +181,13 @@ export default function Timings() {
                 isClearable={true}
                 options={parentTheories}
                 value={theory}
-                onChange={setTheory}
+                onChange={(e) => {
+                  buildUrl(pageName, "theory", e.value, navigate);
+                }}
               />
-              <Text size={14} flexed>
-                Theory
-                <FilterExplanation tooltip="few more words about theories" />
+              <Text flexed size={14}>
+                Theory Family
+                <FilterExplanation tooltip="few more words about Thory" />
               </Text>
             </div>
             <div className={sideSectionClass}>
@@ -154,8 +197,15 @@ export default function Timings() {
                   isMulti={true}
                   value={selectedTechniques}
                   options={techniques}
-                  placeholder="Technique"
-                  onChange={setSelectedTechniques}
+                  placeholder="Techniques"
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(
+                      e,
+                      "techniques",
+                      searchParams,
+                      navigate
+                    )
+                  }
                 />
               )}
               <Text flexed size={14}>
@@ -171,7 +221,14 @@ export default function Timings() {
                   value={selectedTags}
                   options={tags}
                   placeholder="Tags"
-                  onChange={setSelectedTags}
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(
+                      e,
+                      "tags_types",
+                      searchParams,
+                      navigate
+                    )
+                  }
                 />
               )}
               <Text flexed size={14}>
@@ -181,13 +238,22 @@ export default function Timings() {
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}
-              setChecked={setConsciousness}
+              setChecked={(e) => {
+                buildUrl(pageName, "type_of_consciousness", e, navigate);
+              }}
             />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <ReportFilter
+              checked={reporting}
+              setChecked={(e) => {
+                buildUrl(pageName, "is_reporting", e, navigate);
+              }}
+            />
             <TheoryDrivenFilter
               checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />{" "}
+              setChecked={(e) => {
+                buildUrl(pageName, "theory_driven", e, navigate);
+              }}
+            />
           </SideControl>
         }
         graph={

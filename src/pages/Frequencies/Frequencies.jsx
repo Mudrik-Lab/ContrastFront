@@ -104,29 +104,30 @@ export default function Frequencies() {
   );
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    if (queryParams.get("theory") !== "undefined") {
+      setTheory({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setTheory({});
+    }
     if (configSuccess) {
-      const queryParams = new URLSearchParams(location.search);
-      queryParams.get("is_reporting")
-        ? setReporting(queryParams.get("is_reporting"))
-        : setReporting("either");
-      queryParams.get("type_of_consciousness")
-        ? setConsciousness(queryParams.get("type_of_consciousness"))
-        : setConsciousness("either");
-
-      queryParams.get("theory_driven")
-        ? setTheoryDriven(queryParams.get("theory_driven"))
-        : setTheoryDriven("either");
-
-      if (queryParams.get("theory") !== "undefined") {
-        setTheory({
-          value: queryParams.get("theory"),
-          label: queryParams.get("theory"),
-        });
-      } else {
-        setTheory({});
-      }
       const selectedValues = queryParams.getAll("techniques");
-
       setSelectedTechniques(
         selectedValues.map((item) => ({ value: item, label: item }))
       );
@@ -135,11 +136,9 @@ export default function Frequencies() {
 
   useEffect(() => {
     if (configSuccess) {
-      setSelectedTechniques(techniques); // Pre-populate selectedTechniques with all available options
+      setSelectedTechniques(techniques);
     }
   }, [configSuccess]);
-
-  // configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
 
   return (
     <div>

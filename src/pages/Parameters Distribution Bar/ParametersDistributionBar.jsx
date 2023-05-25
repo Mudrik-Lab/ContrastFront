@@ -34,28 +34,6 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [isStacked, setIsStacked] = React.useState(true);
-  // const [searchParams, setSearchParams] = useSearchParams();
-
-  // React.useEffect(() => {
-  //   setExperimentsNum(searchParams.get("min_number_of_experiments"));
-  //   setReporting(searchParams.get("is_reporting"));
-  //   setSelected({
-  //     value: searchParams.get("breakdown"),
-  //     label: searchParams.get("breakdown"),
-  //   });
-  //   setSelectedParent({ value: searchParams.get("theory") });
-  // }, [searchParams]);
-
-  // React.useEffect(() => {
-  //   if (experimentsNum) {
-  //     setSearchParams({
-  //       breakdown: selected.value,
-  //       theory: selectedParent.value,
-  //       is_reporting: reporting,
-  //       min_number_of_experiments: experimentsNum,
-  //     });
-  //   }
-  // }, [selected.value, selectedParent.value, reporting, experimentsNum]);
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
@@ -88,7 +66,7 @@ export default function ParametersDistributionBar() {
 
   const X1 = data?.data.map((row) => row.series[0].value).reverse();
 
-  const Y = data?.data.map((row) => rawTeaxtToShow(row.series_name)).reverse();
+  const Y = data?.data.map((row) => rawTextToShow(row.series_name)).reverse();
 
   const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
 

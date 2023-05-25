@@ -104,7 +104,6 @@ export default function Journals() {
       : setExperimentsNum(0);
 
     if (queryParams.get("theory") !== "undefined") {
-      console.log(queryParams.get("theory"));
       setTheory({
         value: queryParams.get("theory"),
         label: queryParams.get("theory"),
@@ -158,9 +157,6 @@ export default function Journals() {
               checked={reporting}
               setChecked={(e) => {
                 buildUrl(pageName, "is_reporting", e, navigate);
-                navigate(
-                  `?min_number_of_experiments=${experimentsNum}&theory=${theory.value}&type_of_consciousness=${consciousness}&is_reporting=${e}&theory_driven=${theoryDriven}`
-                );
               }}
             />
             <TheoryDrivenFilter

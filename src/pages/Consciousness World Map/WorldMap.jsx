@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -18,13 +18,22 @@ import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  buildUrl,
+  buildUrlForMultiSelect,
+  rawTextToShow,
+} from "../../Utils/functions";
 
 export default function WorldMap() {
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [theory, setTheory] = React.useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [experimentsNum, setExperimentsNum] = React.useState();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [theoryFamilies, setTheoryFamilies] = React.useState([]);
+  const navigate = useNavigate();
+  const pageName = "consciousness-world-map";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
@@ -42,7 +51,7 @@ export default function WorldMap() {
   const { data, isLoading } = useQuery(
     [
       `nations_of_consciousness${
-        theory +
+        theoryFamilies?.map((x) => x.value).join("+") +
         " " +
         reporting +
         " " +
@@ -56,7 +65,7 @@ export default function WorldMap() {
     () =>
       getNations({
         graphName: "nations_of_consciousness",
-        theory: theory,
+        theory: theoryFamilies,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
         theory_driven: theoryDriven,
@@ -86,8 +95,6 @@ export default function WorldMap() {
           return { country, totalValue: sumPerCountry[country] };
         })
     : [];
-
-  console.log(data?.data);
 
   const sectionClass =
     "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
@@ -192,7 +199,41 @@ export default function WorldMap() {
     showlegend: false,
     autosize: false,
   };
-  configSuccess && !theory && setTheory(theories);
+  useEffect(() => {
+    if (configSuccess) {
+      const queryParams = new URLSearchParams(location.search);
+
+      queryParams.get("is_reporting")
+        ? setReporting(queryParams.get("is_reporting"))
+        : setReporting("either");
+
+      queryParams.get("type_of_consciousness")
+        ? setConsciousness(queryParams.get("type_of_consciousness"))
+        : setConsciousness("either");
+
+      queryParams.get("theory_driven")
+        ? setTheoryDriven(queryParams.get("theory_driven"))
+        : setTheoryDriven("either");
+
+      queryParams.get("min_number_of_experiments")
+        ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+        : setExperimentsNum(0);
+
+      const selectedValues = queryParams.getAll("theory");
+      setTheoryFamilies(
+        selectedValues.map((item) => ({
+          value: item,
+          label: decodeURIComponent(item),
+        }))
+      );
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (configSuccess) {
+      setTheoryFamilies(theories);
+    }
+  }, [configSuccess]);
 
   return (
     <div>
@@ -202,8 +243,13 @@ export default function WorldMap() {
             <Text md weight="bold">
               Axis Controls
             </Text>
-            <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-
+            <RangeInput
+              number={experimentsNum}
+              setNumber={(e) => {
+                console.log(e);
+                buildUrl(pageName, "min_number_of_experiments", e, navigate);
+              }}
+            />
             <div className={sectionClass}>
               <Text flexed md weight="bold">
                 Theory Family
@@ -214,21 +260,32 @@ export default function WorldMap() {
                 <Select
                   closeMenuOnSelect={true}
                   isMulti={true}
-                  value={theory}
+                  value={theoryFamilies}
                   options={theories}
                   placeholder="Theories"
-                  onChange={setTheory}
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(e, "theory", searchParams, navigate)
+                  }
                 />
               )}
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}
-              setChecked={setConsciousness}
+              setChecked={(e) => {
+                buildUrl(pageName, "type_of_consciousness", e, navigate);
+              }}
             />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <ReportFilter
+              checked={reporting}
+              setChecked={(e) => {
+                buildUrl(pageName, "is_reporting", e, navigate);
+              }}
+            />
             <TheoryDrivenFilter
               checked={theoryDriven}
-              setChecked={setTheoryDriven}
+              setChecked={(e) => {
+                buildUrl(pageName, "theory_driven", e, navigate);
+              }}
             />
           </SideControl>
         }
