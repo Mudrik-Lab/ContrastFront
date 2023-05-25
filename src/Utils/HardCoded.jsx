@@ -112,7 +112,7 @@ import LucieC from "../assets/images/LucieC.jpg";
 import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
-import { blueToYellow } from "./functions";
+
 
 export const foundingBoardBios = [
   {
