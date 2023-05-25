@@ -11,6 +11,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
+<<<<<<< HEAD
 import {
   FrequenciesColors,
   isMoblile,
@@ -19,6 +20,10 @@ import {
   sideSectionClass,
   sideWidth,
 } from "../../Utils/HardCoded";
+=======
+import TagsSelect from "../../components/TagsSelect";
+import { FrequenciesColors, isMoblile, sideWidth } from "../../Utils/HardCoded";
+>>>>>>> a9a9d32 (frequencies graph fix)
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
@@ -81,8 +86,8 @@ export default function Frequencies() {
         type_of_consciousness: consciousness,
       })
   );
-  const tracesData = data?.data.map((row) => row.series);
 
+<<<<<<< HEAD
   const graphsData = tracesData
     ?.reduce((acc, val) => acc.concat(val), [])
     .sort((a, b) => a.name - b.name);
@@ -102,6 +107,36 @@ export default function Frequencies() {
       type: "lines",
     })
   );
+=======
+  let indexedDataList = [];
+  
+  for (let i = 0; i < data?.data.length; i++) {
+    const item = data?.data[i];
+    const objectsList = item.series;
+    const indexedObjects = objectsList.map(innerObject => {
+      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
+      return innerObject;
+    });
+    indexedDataList.push(indexedObjects);
+  }
+  const graphData = [].concat(...indexedDataList);
+
+  let traces = [];
+  graphData?.forEach((row) => {
+      traces.push({
+        type: "scatter", 
+        x: [row.start, row.end],
+        y: [row.index, row.index],
+        name: row.name,
+        marker: { size: 3, color: FrequenciesColors[row.name] },
+        opacity: 1,
+        line: {
+          width: 3,
+          color: FrequenciesColors[row.name],
+        },
+      });
+  });
+>>>>>>> a9a9d32 (frequencies graph fix)
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
