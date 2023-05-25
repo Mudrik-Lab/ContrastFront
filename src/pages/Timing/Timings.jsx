@@ -48,16 +48,7 @@ export default function Timings() {
         label: technique,
       }))
     : [];
-  const traceColor =
-    configuration?.data.available_finding_tags_types_for_timings.reduce(
-      (result, key, index) => {
-        result[key] = blueToYellow(
-          configuration?.data.available_finding_tags_types_for_timings.length
-        )[index];
-        return result;
-      },
-      {}
-    );
+
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
         (tag, index) => ({
@@ -100,28 +91,44 @@ export default function Timings() {
         type_of_consciousness: consciousness,
       })
   );
-  const serieses = data?.data.map((row) => row.series);
 
-  const graphsData = serieses
-    ?.reduce((acc, val) => acc.concat(val), [])
-    .sort((a, b) => a.name - b.name);
+  let indexedDataList = [];
+  let tagsForLegend = [];
+  for (let i = 0; i < data?.data.length; i++) {
+    const item = data?.data[i];
+    const objectsList = item.series;
+    const indexedObjects = objectsList.map((innerObject) => {
+      innerObject["index"] = i; // flatten the data structure & index each data point according to what cluster it was originally
+      tagsForLegend.push(innerObject["name"]);
+      return innerObject;
+    });
+    indexedDataList.push(indexedObjects);
+  }
+  const graphData = [].concat(...indexedDataList);
+  if (tagsForLegend[tagsForLegend.length - 1] === undefined) {
+    tagsForLegend.pop();
+  }
+  const legendSet = new Set(tagsForLegend);
+  const legendArray = [...legendSet];
+  const TimingsColors = blueToYellow(legendArray.length);
 
-  const traces = [];
-  graphsData?.map((row, index) => {
-    index > 8 &&
-      traces.push({
-        x: [row.start, row.end],
-        y: [index + 1, index + 1],
-        name: row.name,
-        marker: { size: 3 },
+  let traces = [];
+  graphData?.forEach((row) => {
+    const colorIndex = legendArray.indexOf(row.name);
 
-        line: {
-          width: 3,
-          color: traceColor[row.name],
-        },
-
-        type: "scatter",
-      });
+    traces.push({
+      type: "scatter",
+      x: [row.start, row.end],
+      y: [row.index, row.index],
+      name: row.name,
+      marker: { size: 3, color: TimingsColors[colorIndex] },
+      opacity: 1,
+      line: {
+        width: 3,
+        color: TimingsColors[colorIndex],
+      },
+      legendrank: TimingsColors[colorIndex],
+    });
   });
 
   useEffect(() => {
@@ -292,24 +299,20 @@ export default function Timings() {
                   }}
                 />
                 {!isMoblile && screenHeight > 500 && (
-                  <div className="absolute right-10 top-40 w-[150px] overflow-y-scroll h-[400px] ">
-                    {blueToYellow(
-                      configuration?.data
-                        .available_finding_tags_types_for_timings.length
-                    ).map((color, index) => {
-                      return (
+                  <div
+                    className="absolute overflow-y-scroll top-52 right-2 h-full"
+                    style={{ height: screenHeight - 260 }}>
+                    {blueToYellow(legendArray.length).map((color, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-start items-end gap-2"
+                        id="color">
                         <div
-                          className="flex justify-start items-end gap-2"
-                          key={color + index}>
-                          <div
-                            className="w-3 h-3 mt-2 "
-                            style={{ backgroundColor: color }}></div>
-                          <p className="text-[10px] whitespace-nowrap overflow-hidden">
-                            {Object.keys(traceColor)[index]}
-                          </p>
-                        </div>
-                      );
-                    })}
+                          className="w-4 h-4 mt-2 "
+                          style={{ backgroundColor: color }}></div>
+                        <Text sm>{Object.values(legendArray)[index]}</Text>
+                      </div>
+                    ))}
                   </div>
                 )}
               </div>

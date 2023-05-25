@@ -12,7 +12,7 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import {
-  AlphaBetaColors,
+  FrequenciesColors,
   isMoblile,
   screenHeight,
   screenWidth,
@@ -93,10 +93,10 @@ export default function Frequencies() {
       y: [index + 1, index + 1],
       name: row.name,
       orientation: "h",
-      scatter: { color: AlphaBetaColors[row.name] },
+      scatter: { color: FrequenciesColors[row.name] },
       marker: { size: 3 },
       line: {
-        color: AlphaBetaColors[row.name],
+        color: FrequenciesColors[row.name],
         width: 3,
       },
       type: "lines",
@@ -255,7 +255,7 @@ export default function Frequencies() {
             <div
               className=" fixed top-52 right-24 "
               style={{ height: screenHeight - 150 }}>
-              {Object.values(AlphaBetaColors).map((color, index) => (
+              {Object.values(FrequenciesColors).map((color, index) => (
                 <div
                   className="flex justify-start items-end gap-2"
                   id="color"
@@ -263,7 +263,7 @@ export default function Frequencies() {
                   <div
                     className="w-5 h-5 mt-2 "
                     style={{ backgroundColor: color }}></div>
-                  <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
+                  <Text>{Object.keys(FrequenciesColors)[index]}</Text>
                 </div>
               ))}
             </div>
