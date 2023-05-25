@@ -150,7 +150,7 @@ export default function ParametersDistributionTheoriesComparison() {
                       insidetextorientation: "horizontal",
                       values: chart.series.map((row) => row.value),
                       labels: chart.series.map((row) =>
-                        breakLongLines(rawTeaxtToShow(row.key))
+                        breakLongLines(rawTextToShow(row.key))
                       ),
                       type: "pie",
                       textinfo: "label+number",

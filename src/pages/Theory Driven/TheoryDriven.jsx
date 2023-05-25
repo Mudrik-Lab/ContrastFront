@@ -1,13 +1,12 @@
 import { useQuery } from "@tanstack/react-query";
 import React from "react";
-import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
+import { isMoblile, screenWidth } from "../../Utils/HardCoded";
 import {
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
@@ -15,7 +14,7 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { rawTextToShow, showTextToRaw } from "../../Utils/functions";
+import { rawTextToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { designerColors } from "../../Utils/Colors";
@@ -27,6 +26,7 @@ export default function TheoryDriven() {
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [interpretation, setInterpretation] = React.useState(true);
   const [graphData, setGraphData] = React.useState([]);
+  const [isSpecificTheory, setIsSpecificTheory] = React.useState(false);
 
   const { data, isLoading, isSuccess } = useQuery(
     [
@@ -81,7 +81,7 @@ export default function TheoryDriven() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-
+  console.log(labels1);
   const initialGraphData = [
     {
       direction: "clockwise",
@@ -93,7 +93,13 @@ export default function TheoryDriven() {
       textposition: "inside",
       domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
       marker: {
-        colors: designerColors.slice(28, 31),
+        colors: labels1.map((label) =>
+          label === "post-hoc"
+            ? designerColors[32]
+            : label === "mentioning"
+            ? designerColors[28]
+            : designerColors[33]
+        ),
         line: { width: 1, color: "white" },
       },
     },
@@ -126,47 +132,6 @@ export default function TheoryDriven() {
     console.log(secondaryData);
 
     const color = seriesName.color;
-
-    setGraphData([
-      {
-        //inner pie
-        name: "drilled",
-        direction: "clockwise",
-        insidetextorientation: "radial",
-        values: [1],
-        labels: [rawTextToShow(secondaryData.series_name)],
-        sort: false,
-        type: "pie",
-        hovertemplate: "<extra></extra>",
-        textinfo: "label",
-        textfont: { size: 30 },
-        textposition: "inside",
-        hole: 0,
-        domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
-        marker: {
-          colors: [color],
-          line: { width: 1, color: "white" },
-        },
-      },
-      {
-        //outer pie
-        direction: "clockwise",
-        insidetextorientation: "tangential",
-        values: secondaryData.series.map((row) => row.value),
-        labels: secondaryData.series.map((row) => row.key),
-        sort: false,
-        type: "pie",
-        hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
-        textinfo: "label+percent",
-        hole: 0.4,
-        textposition: "inside",
-
-        marker: {
-          colors: cleanLabels2.map((label) => keysColors[label]),
-          line: { width: 1, color: "white" },
-        },
-      },
-    ]);
   }
   return (
     <PageTemplate
@@ -210,46 +175,29 @@ export default function TheoryDriven() {
           ) : (
             graphData.length && (
               <div>
-                {graphData[0].name !== "drilled" ? (
-                  <Plot
-                    onClick={(e) => {
-                      theoryDriven === "either"
-                        ? e.label === "Post Hoc"
-                          ? setTheoryDriven("post-hoc")
-                          : e.label === "Driven"
-                          ? setTheoryDriven("driven")
-                          : setTheoryDriven("mentioning")
-                        : setTheoryDriven("either");
-                    }}
-                    // onClick={(e) => {
-                    //   console.log(e);
-                    //   secondaryPie(e.points[0]);
-                    // }}
-                    data={initialGraphData}
-                    config={{ displayModeBar: !isMoblile }}
-                    layout={{
-                      width: isMoblile ? screenWidth : 1200,
-                      height: isMoblile ? screenWidth : 1000,
-                      showlegend: false,
-                      annotations: [{ showarrow: false, text: "" }],
-                    }}
-                  />
-                ) : (
-                  <Plot
-                    // onClick={(e) => {
-                    //   setGraphData(initialGraphData);
-                    // }}
-                    data={graphData}
-                    config={{ displayModeBar: !isMoblile }}
-                    layout={{
-                      width: isMoblile ? screenWidth : 1200,
-                      height: isMoblile ? screenWidth : 1000,
-                      showlegend: false,
-
-                      annotations: [{ showarrow: false, text: "" }],
-                    }}
-                  />
-                )}
+                <Plot
+                  onClick={(e) => {
+                    setIsSpecificTheory(!isSpecificTheory);
+                    console.log(isSpecificTheory);
+                    isSpecificTheory
+                      ? setTheoryDriven("either")
+                      : e.points[0].label === "Post Hoc"
+                      ? setTheoryDriven("post-hoc")
+                      : e.points[0].label === "Driven"
+                      ? setTheoryDriven("driven")
+                      : e.points[0].label === "Mentioning"
+                      ? setTheoryDriven("mentioning")
+                      : setTheoryDriven("either");
+                  }}
+                  data={initialGraphData}
+                  config={{ displayModeBar: !isMoblile }}
+                  layout={{
+                    width: isMoblile ? screenWidth : 1200,
+                    height: isMoblile ? screenWidth : 1000,
+                    showlegend: false,
+                    annotations: [{ showarrow: false, text: "" }],
+                  }}
+                />
               </div>
             )
           )}
