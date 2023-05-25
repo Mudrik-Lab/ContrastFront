@@ -38,16 +38,9 @@ export default function Timings() {
         label: technique,
       }))
     : [];
-  const traceColor =
-    configuration?.data.available_finding_tags_types_for_timings.reduce(
-      (result, key, index) => {
-        result[key] = blueToYellow(
-          configuration?.data.available_finding_tags_types_for_timings.length
-        )[index];
-        return result;
-      },
-      {}
-    );
+
+
+
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
         (tag, index) => ({
@@ -90,28 +83,44 @@ export default function Timings() {
         type_of_consciousness: consciousness,
       })
   );
-  console.log(data?.data);
-  const serieses = data?.data.map((row) => row.series);
 
-  const graphsData = serieses
-    ?.reduce((acc, val) => acc.concat(val), [])
-    .sort((a, b) => a.name - b.name);
 
-  const traces = [];
-  graphsData?.map((row, index) => {
-    index > 8 &&
+  let indexedDataList = [];
+  let tagsForLegend = []
+  for (let i = 0; i < data?.data.length; i++) {
+    const item = data?.data[i];
+    const objectsList = item.series;
+    const indexedObjects = objectsList.map(innerObject => {
+      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
+      tagsForLegend.push(innerObject["name"]);
+      return innerObject;
+    });
+    indexedDataList.push(indexedObjects);
+  }
+  const graphData = [].concat(...indexedDataList);
+  if (tagsForLegend[tagsForLegend.length -1] === undefined) {
+    tagsForLegend.pop()
+  }
+  const legendSet = new Set(tagsForLegend)
+  const legendArray = [...legendSet]
+  const TimingsColors = blueToYellow(legendArray.length);
+
+  let traces = [];
+  graphData?.forEach((row) => {
+    const colorIndex = legendArray.indexOf(row.name)
+
       traces.push({
+        type: "scatter", 
         x: [row.start, row.end],
-        y: [index + 1, index + 1],
+        y: [row.index, row.index],
         name: row.name,
-        marker: { size: 4 },
-
+        marker: { size: 3, color: TimingsColors[colorIndex] },
+        opacity: 1,
         line: {
-          width: 4,
-          color: traceColor[row.name],
+          width: 3,
+          color: TimingsColors[colorIndex],
         },
-
-        type: "scatter",
+        legendrank: TimingsColors[colorIndex]
       });
   });
 
@@ -209,7 +218,8 @@ export default function Timings() {
                   width: isMoblile ? screenWidth : screenWidth - 400,
                   height: screenHeight - 160,
                   margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 15, font: { size: 18 } },
+                  legend: { itemwidth: 15, font: { size: 13 } },
+                  
                   showlegend: false,
                   yaxis: {
                     zeroline: false, // hide the zeroline
@@ -233,13 +243,13 @@ export default function Timings() {
           className="absolute overflow-y-scroll top-52 right-2 h-full"
           style={{ height: screenHeight - 260 }}>
           {blueToYellow(
-            configuration?.data.available_finding_tags_types_for_timings.length
+            legendArray.length
           ).map((color, index) => (
-            <div className="flex justify-start items-end gap-2" id="color">
+            <div key={index} className="flex justify-start items-end gap-2" id="color">
               <div
                 className="w-4 h-4 mt-2 "
                 style={{ backgroundColor: color }}></div>
-              <Text sm>{Object.keys(traceColor)[index]}</Text>
+              <Text sm>{Object.values(legendArray)[index]}</Text>
             </div>
           ))}
         </div>
