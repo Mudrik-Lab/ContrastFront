@@ -92,12 +92,13 @@ export default function Timings() {
     const objectsList = item.series;
     const indexedObjects = objectsList.map(innerObject => {
       innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
-      tagsForLegend.push(innerObject["name"]);
+      tagsForLegend.push(innerObject["name"]);  // add tag name to legend
       return innerObject;
     });
     indexedDataList.push(indexedObjects);
   }
   const graphData = [].concat(...indexedDataList);
+  
   if (tagsForLegend[tagsForLegend.length -1] === undefined) {
     tagsForLegend.pop()
   }
@@ -105,7 +106,7 @@ export default function Timings() {
   const legendArray = [...legendSet]
   const TimingsColors = blueToYellow(legendArray.length);
 
-  let traces = [];
+  const traces = [];
   graphData?.forEach((row) => {
     const colorIndex = legendArray.indexOf(row.name)
 
