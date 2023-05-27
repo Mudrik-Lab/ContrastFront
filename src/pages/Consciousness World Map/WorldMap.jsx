@@ -19,11 +19,7 @@ import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import {
-  buildUrl,
-  buildUrlForMultiSelect,
-  rawTextToShow,
-} from "../../Utils/functions";
+import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -200,25 +196,24 @@ export default function WorldMap() {
     autosize: false,
   };
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
     if (configSuccess) {
-      const queryParams = new URLSearchParams(location.search);
-
-      queryParams.get("is_reporting")
-        ? setReporting(queryParams.get("is_reporting"))
-        : setReporting("either");
-
-      queryParams.get("type_of_consciousness")
-        ? setConsciousness(queryParams.get("type_of_consciousness"))
-        : setConsciousness("either");
-
-      queryParams.get("theory_driven")
-        ? setTheoryDriven(queryParams.get("theory_driven"))
-        : setTheoryDriven("either");
-
-      queryParams.get("min_number_of_experiments")
-        ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
-        : setExperimentsNum(0);
-
       const selectedValues = queryParams.getAll("theory");
       setTheoryFamilies(
         selectedValues.map((item) => ({
@@ -228,7 +223,7 @@ export default function WorldMap() {
       );
     }
   }, [searchParams]);
-
+  console.log(reporting);
   useEffect(() => {
     if (configSuccess) {
       setTheoryFamilies(theories);
@@ -237,76 +232,83 @@ export default function WorldMap() {
 
   return (
     <div>
-      <PageTemplate
-        control={
-          <SideControl headline={"Nations of Consciousness"}>
-            <Text md weight="bold">
-              Axis Controls
-            </Text>
-            <RangeInput
-              number={experimentsNum}
-              setNumber={(e) => {
-                console.log(e);
-                buildUrl(pageName, "min_number_of_experiments", e, navigate);
-              }}
-            />
-            <div className={sectionClass}>
-              <Text flexed md weight="bold">
-                Theory Family
-                <FilterExplanation tooltip="few more words about Theories" />
+      {configSuccess && (
+        <PageTemplate
+          control={
+            <SideControl headline={"Nations of Consciousness"}>
+              <Text md weight="bold">
+                Axis Controls
               </Text>
+              <RangeInput
+                number={experimentsNum}
+                setNumber={(e) => {
+                  console.log(e);
+                  buildUrl(pageName, "min_number_of_experiments", e, navigate);
+                }}
+              />
+              <div className={sectionClass}>
+                <Text flexed md weight="bold">
+                  Theory Family
+                  <FilterExplanation tooltip="few more words about Theories" />
+                </Text>
 
-              {configSuccess && theories && (
-                <Select
-                  closeMenuOnSelect={true}
-                  isMulti={true}
-                  value={theoryFamilies}
-                  options={theories}
-                  placeholder="Theories"
-                  onChange={(e) =>
-                    buildUrlForMultiSelect(e, "theory", searchParams, navigate)
-                  }
+                {configSuccess && theories && (
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={true}
+                    value={theoryFamilies}
+                    options={theories}
+                    placeholder="Theories"
+                    onChange={(e) =>
+                      buildUrlForMultiSelect(
+                        e,
+                        "theory",
+                        searchParams,
+                        navigate
+                      )
+                    }
+                  />
+                )}
+              </div>
+              <TypeOfConsciousnessFilter
+                checked={consciousness}
+                setChecked={(e) => {
+                  buildUrl(pageName, "type_of_consciousness", e, navigate);
+                }}
+              />
+              <ReportFilter
+                checked={reporting}
+                setChecked={(e) => {
+                  buildUrl(pageName, "is_reporting", e, navigate);
+                }}
+              />
+              <TheoryDrivenFilter
+                checked={theoryDriven}
+                setChecked={(e) => {
+                  buildUrl(pageName, "theory_driven", e, navigate);
+                }}
+              />
+            </SideControl>
+          }
+          graph={
+            <div>
+              <TopGraphText
+                text={graphsHeaders[10].figureText}
+                firstLine={graphsHeaders[10].figureLine}
+              />
+              {isLoading ? (
+                <Spinner />
+              ) : (
+                <Plot
+                  data={graphData}
+                  layout={layout}
+                  config={{ displayModeBar: !isMoblile }}
                 />
               )}
             </div>
-            <TypeOfConsciousnessFilter
-              checked={consciousness}
-              setChecked={(e) => {
-                buildUrl(pageName, "type_of_consciousness", e, navigate);
-              }}
-            />
-            <ReportFilter
-              checked={reporting}
-              setChecked={(e) => {
-                buildUrl(pageName, "is_reporting", e, navigate);
-              }}
-            />
-            <TheoryDrivenFilter
-              checked={theoryDriven}
-              setChecked={(e) => {
-                buildUrl(pageName, "theory_driven", e, navigate);
-              }}
-            />
-          </SideControl>
-        }
-        graph={
-          <div>
-            <TopGraphText
-              text={graphsHeaders[10].figureText}
-              firstLine={graphsHeaders[10].figureLine}
-            />
-            {isLoading ? (
-              <Spinner />
-            ) : (
-              <Plot
-                data={graphData}
-                layout={layout}
-                config={{ displayModeBar: !isMoblile }}
-              />
-            )}
-          </div>
-        }
-      />
+          }
+        />
+      )}
     </div>
   );
 }
