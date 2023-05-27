@@ -7,9 +7,9 @@ export function getRandomColor(numberOfColors) {
 }
 export function blueToYellow(numColors) {
   const colors = [];
-  const startColor = [41, 24, 107]; // deep dark blue
-  const midColor = [128, 182, 134]; // light green
-  const endColor = [254, 247, 202]; // light yellow
+  const startColor = [254, 247, 202]; // light yellow 
+  const midColor = [100, 200, 200]; // light green
+  const endColor = [41, 24, 107]; // deep dark blue
 
   const numMidColors = Math.ceil(numColors / 2);
 

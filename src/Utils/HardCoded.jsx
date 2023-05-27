@@ -70,12 +70,12 @@ export const parametersOptions = [
   },
 ];
 
-export const AlphaBetaColors = {
+export const FrequenciesColors = {
+  Delta: "#4D3991",
+  Theta: "#8949A2",
   Alpha: "#C2549D",
   Beta: "#EB5A88",
   Gamma: "#EF7576",
-  Delta: "#4D3991",
-  Theta: "#8949A2",
 };
 
 export const available_populations = [
@@ -112,6 +112,7 @@ import LucieC from "../assets/images/LucieC.jpg";
 import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
+
 
 export const foundingBoardBios = [
   {

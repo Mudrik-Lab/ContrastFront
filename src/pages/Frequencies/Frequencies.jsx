@@ -12,7 +12,7 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import {
-  AlphaBetaColors,
+  FrequenciesColors,
   isMoblile,
   screenHeight,
   screenWidth,
@@ -88,28 +88,41 @@ export default function Frequencies() {
         type_of_consciousness: consciousness,
       })
   );
-  const tracesData = data?.data.map((row) => row.series);
 
-  const graphsData = tracesData
-    ?.reduce((acc, val) => acc.concat(val), [])
-    .sort((a, b) => a.name - b.name);
-  const traces = [];
-  graphsData?.map((row, index) =>
-    traces.push({
-      x: [row.start, row.end],
-      y: [index + 1, index + 1],
-      name: row.name,
-      orientation: "h",
-      scatter: { color: AlphaBetaColors[row.name] },
-      marker: { size: 3 },
-      line: {
-        color: AlphaBetaColors[row.name],
-        width: 3,
-      },
-      type: "lines",
-    })
-  );
+  let indexedDataList = [];
+  
+  for (let i = 0; i < data?.data.length; i++) {
+    const item = data?.data[i];
+    const objectsList = item.series;
+    const indexedObjects = objectsList.map(innerObject => {
+      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
+      return innerObject;
+    });
+    indexedDataList.push(indexedObjects);
+  }
+  const graphData = [].concat(...indexedDataList);
 
+  let traces = [];
+  graphData?.forEach((row) => {
+      traces.push({
+        type: "scatter", 
+        x: [row.start, row.end],
+        y: [row.index, row.index],
+        name: row.name,
+        marker: { size: 3, color: FrequenciesColors[row.name] },
+        opacity: 1,
+        line: {
+          width: 3,
+          color: FrequenciesColors[row.name],
+        },
+      });
+  });
+
+  const screenWidth = window.screen.width;
+  const screenHeight = window.screen.height;
+
+  const sectionClass =
+    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
   configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
 
   return (
@@ -209,7 +222,7 @@ export default function Frequencies() {
             <div
               className=" fixed top-52 right-24 "
               style={{ height: screenHeight - 150 }}>
-              {Object.values(AlphaBetaColors).map((color, index) => (
+              {Object.values(FrequenciesColors).map((color, index) => (
                 <div
                   className="flex justify-start items-end gap-2"
                   id="color"
@@ -217,7 +230,7 @@ export default function Frequencies() {
                   <div
                     className="w-5 h-5 mt-2 "
                     style={{ backgroundColor: color }}></div>
-                  <Text>{Object.keys(AlphaBetaColors)[index]}</Text>
+                  <Text>{Object.keys(FrequenciesColors)[index]}</Text>
                 </div>
               ))}
             </div>
