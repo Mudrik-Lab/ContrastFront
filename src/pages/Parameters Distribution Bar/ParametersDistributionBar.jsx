@@ -11,7 +11,6 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   screenWidth,
   parametersOptions,

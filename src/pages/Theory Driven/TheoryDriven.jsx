@@ -143,8 +143,8 @@ export default function TheoryDriven() {
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
+
     if (queryParams.get("interpretation")) {
-      console.log(queryParams.get("interpretation"));
       queryParams.get("interpretation") === "true"
         ? setInterpretation(true)
         : setInterpretation(false);

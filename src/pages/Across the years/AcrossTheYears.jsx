@@ -80,6 +80,7 @@ export default function AcrossTheYears() {
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
+
     if (queryParams.get("breakdown")) {
       setSelected({
         value: queryParams.get("breakdown"),
@@ -88,6 +89,7 @@ export default function AcrossTheYears() {
     } else {
       setSelected(parametersOptions[0]);
     }
+
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
   return (
