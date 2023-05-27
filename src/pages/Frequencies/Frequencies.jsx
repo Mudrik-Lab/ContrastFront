@@ -95,7 +95,7 @@ export default function Frequencies() {
   }
   const graphData = [].concat(...indexedDataList);
 
-  let traces = [];
+  const traces = [];
   graphData?.forEach((row) => {
     traces.push({
       type: "scatter",
