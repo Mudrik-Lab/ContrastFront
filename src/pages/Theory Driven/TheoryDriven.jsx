@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import { isMoblile, screenWidth } from "../../Utils/HardCoded";
 import {
   FilterExplanation,
@@ -7,6 +7,7 @@ import {
   ReportFilter,
   SideControl,
   Text,
+  TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
@@ -14,19 +15,23 @@ import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
-import { rawTextToShow } from "../../Utils/functions";
+import { buildUrl, rawTextToShow } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { designerColors } from "../../Utils/Colors";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function TheoryDriven() {
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [interpretation, setInterpretation] = React.useState(true);
-  const [graphData, setGraphData] = React.useState([]);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [experimentsNum, setExperimentsNum] = React.useState();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [interpretation, setInterpretation] = React.useState();
   const [isSpecificTheory, setIsSpecificTheory] = React.useState(false);
+
+  const navigate = useNavigate();
+  const pageName = "theory-driven";
 
   const { data, isLoading, isSuccess } = useQuery(
     [
@@ -40,7 +45,7 @@ export default function TheoryDriven() {
         " " +
         theoryDriven +
         " " +
-        (interpretation ? "pro" : "challenges")
+        (interpretation === "true" ? "pro" : "challenges")
       }`,
     ],
     () =>
@@ -50,7 +55,7 @@ export default function TheoryDriven() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: interpretation ? "pro" : "challenges",
+        interpretation: interpretation === "true" ? "pro" : "challenges",
       })
   );
 
@@ -81,7 +86,6 @@ export default function TheoryDriven() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(labels1);
   const initialGraphData = [
     {
       direction: "clockwise",
@@ -91,6 +95,7 @@ export default function TheoryDriven() {
       type: "pie",
       textinfo: "label+number",
       textposition: "inside",
+      automargin: true,
       domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
       marker: {
         colors: labels1.map((label) =>
@@ -113,26 +118,44 @@ export default function TheoryDriven() {
       textinfo: "label+value",
       hole: 0.4,
       textposition: "inside",
-
+      automargin: true,
       marker: {
         colors: cleanLabels2.map((label) => keysColors[label]),
         line: { width: 1, color: "white" },
       },
     },
   ];
-  isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
-  function secondaryPie(seriesName) {
-    const secondaryData =
-      seriesName.label === "Post Hoc"
-        ? data?.data[0]
-        : seriesName.label === "Driven"
-        ? data?.data[1]
-        : data?.data[2];
-    console.log(secondaryData);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
 
-    const color = seriesName.color;
-  }
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
+    if (queryParams.get("interpretation")) {
+      console.log(queryParams.get("interpretation"));
+      queryParams.get("interpretation") === "true"
+        ? setInterpretation(true)
+        : setInterpretation(false);
+      setInterpretation(queryParams.get("interpretation"));
+    } else {
+      setInterpretation(true);
+    }
+
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
   return (
     <PageTemplate
       control={
@@ -140,21 +163,33 @@ export default function TheoryDriven() {
           <Text md weight="bold">
             Axis Controls
           </Text>
-          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
+          <RangeInput
+            number={experimentsNum}
+            setNumber={(e) => {
+              buildUrl(pageName, "min_number_of_experiments", e, navigate);
+            }}
+          />
           <TypeOfConsciousnessFilter
             checked={consciousness}
-            setChecked={setConsciousness}
+            setChecked={(e) => {
+              buildUrl(pageName, "type_of_consciousness", e, navigate);
+            }}
           />
-          <ReportFilter checked={reporting} setChecked={setReporting} />
-          {/* <TheoryDrivenFilter
-            checked={theoryDriven}
-            setChecked={setTheoryDriven}
-          /> */}
+          <ReportFilter
+            checked={reporting}
+            setChecked={(e) => {
+              buildUrl(pageName, "is_reporting", e, navigate);
+            }}
+          />
+
           <div className="flex justify-center items-center gap-3 mt-3">
             <Text>Challenges</Text>
             <Toggle
-              checked={interpretation}
-              setChecked={() => setInterpretation(!interpretation)}
+              checked={interpretation === "true" ? true : false}
+              setChecked={(e) => {
+                console.log(e);
+                buildUrl(pageName, "interpretation", e, navigate);
+              }}
             />
             <Text>Supports</Text>
           </div>
@@ -173,33 +208,36 @@ export default function TheoryDriven() {
           {isLoading ? (
             <Spinner />
           ) : (
-            graphData.length && (
-              <div>
-                <Plot
-                  onClick={(e) => {
-                    setIsSpecificTheory(!isSpecificTheory);
-                    console.log(isSpecificTheory);
-                    isSpecificTheory
-                      ? setTheoryDriven("either")
-                      : e.points[0].label === "Post Hoc"
-                      ? setTheoryDriven("post-hoc")
-                      : e.points[0].label === "Driven"
-                      ? setTheoryDriven("driven")
-                      : e.points[0].label === "Mentioning"
-                      ? setTheoryDriven("mentioning")
-                      : setTheoryDriven("either");
-                  }}
-                  data={initialGraphData}
-                  config={{ displayModeBar: !isMoblile }}
-                  layout={{
-                    width: isMoblile ? screenWidth : 1200,
-                    height: isMoblile ? screenWidth : 1000,
-                    showlegend: false,
-                    annotations: [{ showarrow: false, text: "" }],
-                  }}
-                />
-              </div>
-            )
+            <div>
+              <Plot
+                onClick={(e) => {
+                  setIsSpecificTheory(!isSpecificTheory);
+                  console.log(isSpecificTheory);
+                  isSpecificTheory
+                    ? buildUrl(pageName, "theory_driven", "either", navigate)
+                    : e.points[0].label === "Post Hoc"
+                    ? buildUrl(pageName, "theory_driven", "post-hoc", navigate)
+                    : e.points[0].label === "Driven"
+                    ? buildUrl(pageName, "theory_driven", "driven", navigate)
+                    : e.points[0].label === "Mentioning"
+                    ? buildUrl(
+                        pageName,
+                        "theory_driven",
+                        "mentioning",
+                        navigate
+                      )
+                    : buildUrl(pageName, "theory_driven", "either", navigate);
+                }}
+                data={initialGraphData}
+                config={{ displayModeBar: !isMoblile }}
+                layout={{
+                  width: isMoblile ? screenWidth : 1200,
+                  height: isMoblile ? screenWidth : 1000,
+                  showlegend: false,
+                  annotations: [{ showarrow: false, text: "" }],
+                }}
+              />
+            </div>
           )}
         </div>
       }

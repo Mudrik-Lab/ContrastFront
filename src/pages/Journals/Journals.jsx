@@ -27,14 +27,12 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { buildUrl } from "../../Utils/functions";
 
 export default function Journals() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [reporting, setReporting] = React.useState();
   const [consciousness, setConsciousness] = React.useState();
   const [theoryDriven, setTheoryDriven] = React.useState();
-  const [theory, setTheory] = React
-    .useState
-    // { value: queryParams.get("theory"), label: queryParams.get("theory") } || {}
-    ();
+  const [theory, setTheory] = React.useState();
   const navigate = useNavigate();
   const pageName = "journals";
 
@@ -113,7 +111,7 @@ export default function Journals() {
     }
 
     navigate({ search: queryParams.toString() });
-  }, [location.search]);
+  }, [searchParams]);
 
   return (
     <div className="h-full">
