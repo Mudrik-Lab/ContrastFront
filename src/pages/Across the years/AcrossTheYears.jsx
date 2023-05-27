@@ -4,7 +4,6 @@ import Plot from "react-plotly.js";
 import Select from "react-select";
 import {
   FilterExplanation,
-  Label,
   RangeInput,
   ReportFilter,
   SideControl,

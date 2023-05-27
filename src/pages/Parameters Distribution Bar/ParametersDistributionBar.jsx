@@ -1,5 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
+import Select from "react-select";
 import {
   FilterExplanation,
   RangeInput,
@@ -20,20 +21,23 @@ import {
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTextToShow } from "../../Utils/functions";
+
 import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { buildUrl, rawTextToShow } from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
-  const [selected, setSelected] = React.useState(parametersOptions[0]);
-  const [selectedParent, setSelectedParent] = React.useState({
-    value: "Global Workspace",
-    label: "Global Workspace",
-  });
-  const [reporting, setReporting] = React.useState("either");
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selected, setSelected] = React.useState();
+  const [selectedParent, setSelectedParent] = React.useState();
+  const [reporting, setReporting] = React.useState();
+  const [experimentsNum, setExperimentsNum] = React.useState();
   const [isStacked, setIsStacked] = React.useState(true);
+
+  const navigate = useNavigate();
+  const pageName = "parameter-distribution-bar";
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
@@ -51,14 +55,22 @@ export default function ParametersDistributionBar() {
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_bar${
-        selected.value + selectedParent.value + reporting + experimentsNum
+        selected?.value +
+        " " +
+        selectedParent?.value +
+        " " +
+        reporting +
+        " " +
+        experimentsNum
       }`,
     ],
     () =>
+      selected &&
+      selectedParent &&
       getExperimentsGraphs({
         graphName: "parameters_distribution_bar",
-        breakdown: selected.value,
-        theory: selectedParent.value,
+        breakdown: selected?.value,
+        theory: selectedParent?.value,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
       })
@@ -110,6 +122,40 @@ export default function ParametersDistributionBar() {
     type: "bar",
   };
 
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
+
+    if (queryParams.get("breakdown")) {
+      setSelected({
+        value: queryParams.get("breakdown"),
+        label: rawTextToShow(queryParams.get("breakdown")),
+      });
+    } else {
+      setSelected(parametersOptions[0]);
+    }
+
+    if (queryParams.get("theory")) {
+      setSelectedParent({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setSelectedParent({
+        value: "Global Workspace",
+        label: "Global Workspace",
+      });
+    }
+
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
   return (
     <div>
       {configurationSuccess && (
@@ -122,14 +168,21 @@ export default function ParametersDistributionBar() {
 
               <RangeInput
                 number={experimentsNum}
-                setNumber={setExperimentsNum}
+                setNumber={(e) => {
+                  buildUrl(pageName, "min_number_of_experiments", e, navigate);
+                }}
               />
 
               <div className={sideSectionClass}>
-                <TagsSelect
-                  value={selectedParent}
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={false}
+                  isClearable={true}
                   options={parentTheories}
-                  onChange={setSelectedParent}
+                  value={selectedParent}
+                  onChange={(e) => {
+                    buildUrl(pageName, "theory", e.value, navigate);
+                  }}
                 />
                 <Text size={14} flexed>
                   Theory Family
@@ -137,10 +190,15 @@ export default function ParametersDistributionBar() {
                 </Text>
               </div>
               <div className={sideSectionClass}>
-                <TagsSelect
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={false}
+                  isClearable={false}
                   options={parametersOptions}
                   value={selected}
-                  onChange={setSelected}
+                  onChange={(e) => {
+                    buildUrl(pageName, "breakdown", e.value, navigate);
+                  }}
                 />
                 <Text size={14} flexed>
                   Parameter of interest
@@ -148,7 +206,12 @@ export default function ParametersDistributionBar() {
                 </Text>
               </div>
 
-              <ReportFilter checked={reporting} setChecked={setReporting} />
+              <ReportFilter
+                checked={reporting}
+                setChecked={(e) => {
+                  buildUrl(pageName, "is_reporting", e, navigate);
+                }}
+              />
 
               <div className="flex gap-2 mt-4">
                 <Text>Side by side</Text>

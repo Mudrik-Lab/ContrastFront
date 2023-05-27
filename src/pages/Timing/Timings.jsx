@@ -301,8 +301,8 @@ export default function Timings() {
                 />
                 {!isMoblile && screenHeight > 500 && (
                   <div
-                    className="absolute overflow-y-scroll top-52 right-2 h-full"
-                    style={{ height: screenHeight - 260 }}>
+                    className="absolute top-52 right-2 h-[300px] overflow-y-scroll"
+                    style={{ height: screenHeight - 610 }}>
                     {blueToYellow(legendArray.length).map((color, index) => (
                       <div
                         key={index}
