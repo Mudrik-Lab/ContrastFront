@@ -7,7 +7,6 @@ import {
   ReportFilter,
   SideControl,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";

@@ -33,6 +33,7 @@ export default function Journals() {
   const [consciousness, setConsciousness] = React.useState();
   const [theoryDriven, setTheoryDriven] = React.useState();
   const [theory, setTheory] = React.useState();
+
   const navigate = useNavigate();
   const pageName = "journals";
 
