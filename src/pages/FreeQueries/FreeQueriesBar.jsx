@@ -1,56 +1,66 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
-  Button,
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   available_populations,
   isMoblile,
   parametersOptions,
   screenWidth,
   sideSectionClass,
-  sideWidth,
 } from "../../Utils/HardCoded";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
 import PageTemplate from "../../components/PageTemplate";
-import { rawTeaxtToShow } from "../../Utils/functions";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import {
+  buildUrl,
+  buildUrlForMultiSelect,
+  rawTextToShow,
+} from "../../Utils/functions";
+import Toggle from "../../components/Toggle";
 
 export default function FreeQueriesBar() {
-  const [selected, setSelected] = React.useState(parametersOptions[0]);
-  const [isReporting, setIsReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("driven");
-  const [experimentsNum, setExperimentsNum] = React.useState(0);
-  const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] =
-    React.useState(null);
-  const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] =
-    React.useState(null);
-  const [tagsFamilies, setTagsFamilies] = React.useState(null);
-  const [tagsTypes, setTagsTypes] = React.useState(null);
-  const [measures, setMeasures] = React.useState(null);
-  const [paradigmFamilies, setParadigmFamilies] = React.useState(null);
-  const [paradigms, setParadigms] = React.useState(null);
-  const [populations, setPopulations] = React.useState(null);
-  const [stimuliCategories, setStimuliCategories] = React.useState(null);
-  const [stimuliModalities, setStimuliModalities] = React.useState(null);
-  const [tasks, setTasks] = React.useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [selected, setSelected] = useState();
+  const [interpretation, setInterpretation] = useState();
+  const [isReporting, setIsReporting] = useState();
+  const [consciousness, setConsciousness] = useState();
+  const [theoryDriven, setTheoryDriven] = useState();
+  const [experimentsNum, setExperimentsNum] = useState();
+
+  const [selectedTechniques, setSelectedTechniques] = useState([]);
+  const [paradigmFamilies, setParadigmFamilies] = useState([]);
+  const [paradigms, setParadigms] = useState([]);
+  const [stimuliCategories, setStimuliCategories] = useState([]);
+  const [stimuliModalities, setStimuliModalities] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [populations, setPopulations] = useState([]);
+  const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] = useState(
+    []
+  );
+  const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] = useState(
+    []
+  );
+  const [tagsFamilies, setTagsFamilies] = useState([]);
+  const [tagsTypes, setTagsTypes] = useState([]);
+
+  const [measures, setMeasures] = useState([]);
+
+  const navigate = useNavigate();
+  const pageName = "parameter-distribution-free-queries";
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
@@ -61,7 +71,6 @@ export default function FreeQueriesBar() {
     ? extraConfig?.data.available_techniques.map((technique, index) => ({
         value: technique.id,
         label: technique.name,
-        color: designerColors[index],
       }))
     : [];
   const consciousnessMeasurePhaseArr = extraConfigSuccess
@@ -69,7 +78,6 @@ export default function FreeQueriesBar() {
         (type, index) => ({
           value: type.id,
           label: type.name,
-          color: designerColors[index],
         })
       )
     : [];
@@ -78,7 +86,6 @@ export default function FreeQueriesBar() {
         (type, index) => ({
           value: type.id,
           label: type.name,
-          color: designerColors[index],
         })
       )
     : [];
@@ -86,35 +93,30 @@ export default function FreeQueriesBar() {
     ? extraConfig?.data.available_finding_tags_families.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const tagsTypesArr = extraConfigSuccess
     ? extraConfig?.data.available_finding_tags_types.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const measuresArr = extraConfigSuccess
     ? extraConfig?.data.available_measure_types.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const paradigmFamiliesArr = extraConfigSuccess
     ? extraConfig?.data.available_paradigms_families.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const paradigmsArr = extraConfigSuccess
     ? extraConfig?.data.available_paradigms.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
 
@@ -123,28 +125,24 @@ export default function FreeQueriesBar() {
     ? extraConfig?.data.available_stimulus_category_type.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const stimuliModalitiesArr = extraConfigSuccess
     ? extraConfig?.data.available_stimulus_modality_type.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
   const tasksArr = extraConfigSuccess
     ? extraConfig?.data.available_tasks_types.map((type, index) => ({
         value: type.id,
         label: type.name,
-        color: designerColors[index],
       }))
     : [];
-
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
-        selected.value +
+        selected?.value +
         " " +
         isReporting +
         " " +
@@ -153,6 +151,8 @@ export default function FreeQueriesBar() {
         consciousness +
         " " +
         theoryDriven +
+        " " +
+        (interpretation === "true" ? "pro" : "challenges") +
         " " +
         selectedTechniques?.map((row) => row.label).join(",") +
         " " +
@@ -181,11 +181,12 @@ export default function FreeQueriesBar() {
     ],
     () =>
       getFreeQueries({
-        breakdown: selected.value,
+        breakdown: selected?.value,
         is_reporting: isReporting,
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
+        interpretation: interpretation === "true" ? "pro" : "challenges",
         techniques: selectedTechniques,
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
@@ -202,8 +203,7 @@ export default function FreeQueriesBar() {
   );
   const X1 = data?.data.map((row) => row.value).reverse();
 
-  const Y = data?.data.map((row) => rawTeaxtToShow(row.key)).reverse();
-  console.log(data?.data);
+  const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 
   var trace1 = {
     x: X1,
@@ -233,16 +233,106 @@ export default function FreeQueriesBar() {
     }),
   };
 
-  // configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
-  // extraConfigSuccess &&
-  //   !consciousnessMeasurePhases &&
-  //   setConsciousnessMeasurePhases(consciousnessMeasurePhaseArr);
-  // extraConfigSuccess &&
-  //   !consciousnessMeasureTypes &&
-  //   setConsciousnessMeasureTypes(consciousnessMeasureTypesArr);
-  // extraConfigSuccess && !tagsFamilies && setTagsFamilies(tagsFamiliesArr);
-  // extraConfigSuccess && !tagsTypes && setTagsTypes(tagsTypesArr);
-  // extraConfigSuccess && !measures && setMeasures(measuresArr);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    function updateMultiFilterState(setState, queryName, optionsArr) {
+      setState(
+        queryParams.getAll(queryName).map((item) => {
+          return {
+            value: parseInt(item),
+            label: optionsArr.find((x) => x.value == item).label,
+          };
+        })
+      );
+    }
+
+    queryParams.get("is_reporting")
+      ? setIsReporting(queryParams.get("is_reporting"))
+      : setIsReporting("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("driven");
+
+    if (queryParams.get("interpretation")) {
+      queryParams.get("interpretation") === "true"
+        ? setInterpretation(true)
+        : setInterpretation(false);
+      setInterpretation(queryParams.get("interpretation"));
+    } else {
+      setInterpretation(true);
+    }
+
+    if (queryParams.get("breakdown")) {
+      setSelected({
+        value: queryParams.get("breakdown"),
+        label: rawTextToShow(queryParams.get("breakdown")),
+      });
+    } else {
+      setSelected(parametersOptions[0]);
+    }
+    if (extraConfigSuccess) {
+      updateMultiFilterState(
+        setSelectedTechniques,
+        "techniques",
+        techniquesArr
+      );
+      updateMultiFilterState(
+        setParadigmFamilies,
+        "paradigm_families",
+        paradigmFamiliesArr
+      );
+      updateMultiFilterState(setParadigms, "paradigms", paradigmsArr);
+      updateMultiFilterState(
+        setStimuliCategories,
+        "stimuli_categories",
+        stimuliCategoriesArr
+      );
+      updateMultiFilterState(
+        setStimuliModalities,
+        "stimuli_modalities",
+        stimuliModalitiesArr
+      );
+      updateMultiFilterState(setTasks, "tasks", tasksArr);
+      setPopulations(
+        queryParams.getAll("populations").map((item) => {
+          return {
+            value: item,
+            label: populationsArr.find((x) => x.value == item).label,
+          };
+        })
+      );
+
+      updateMultiFilterState(
+        setConsciousnessMeasurePhases,
+        "consciousness_measure_phases",
+        consciousnessMeasurePhaseArr
+      );
+      updateMultiFilterState(
+        setConsciousnessMeasureTypes,
+        "consciousness_measure_types",
+        consciousnessMeasureTypesArr
+      );
+      updateMultiFilterState(
+        setTagsFamilies,
+        "finding_tags_families",
+        tagsFamiliesArr
+      );
+      updateMultiFilterState(setTagsTypes, "finding_tags_types", tagsTypesArr);
+      updateMultiFilterState(setMeasures, "measures", measuresArr);
+    }
+
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
+
   return (
     <div>
       {extraConfigSuccess && (
@@ -255,28 +345,60 @@ export default function FreeQueriesBar() {
 
               <RangeInput
                 number={experimentsNum}
-                setNumber={setExperimentsNum}
+                setNumber={(e) => {
+                  buildUrl(pageName, "min_number_of_experiments", e, navigate);
+                }}
               />
 
               <div className={sideSectionClass}>
-                <TagsSelect
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={false}
+                  isClearable={false}
                   options={parametersOptions}
                   value={selected}
-                  onChange={setSelected}
+                  onChange={(e) => {
+                    buildUrl(pageName, "breakdown", e.value, navigate);
+                  }}
                 />
                 <Text size={14} flexed>
                   Parameter of interest
                   <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
               </div>
+              <div className={sideSectionClass}>
+                <div className="flex justify-center items-center gap-3 mt-3">
+                  <Text>Challenges</Text>
+                  <Toggle
+                    checked={interpretation === "true" ? true : false}
+                    setChecked={(e) => {
+                      buildUrl(pageName, "interpretation", e, navigate);
+                    }}
+                  />
+                  <Text>Supports</Text>
+                </div>
+                <FilterExplanation
+                  text="Interpretation"
+                  tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+                />
+              </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}
-                setChecked={setConsciousness}
+                setChecked={(e) => {
+                  buildUrl(pageName, "type_of_consciousness", e, navigate);
+                }}
               />
-              <ReportFilter checked={isReporting} setChecked={setIsReporting} />
+              <ReportFilter
+                checked={isReporting}
+                setChecked={(e) => {
+                  buildUrl(pageName, "is_reporting", e, navigate);
+                }}
+              />
               <TheoryDrivenFilter
                 checked={theoryDriven}
-                setChecked={setTheoryDriven}
+                setChecked={(e) => {
+                  buildUrl(pageName, "theory_driven", e, navigate);
+                }}
               />
               <div className={sideSectionClass}>
                 <Text flexed md weight="bold">
@@ -291,53 +413,15 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={selectedTechniques}
                       options={techniquesArr}
-                      placeholder="Techniques"
-                      onChange={setSelectedTechniques}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={consciousnessMeasurePhases}
-                      options={consciousnessMeasurePhaseArr}
-                      placeholder={"Consciousness Measure Phase "}
-                      onChange={setConsciousnessMeasurePhases}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={consciousnessMeasureTypes}
-                      options={consciousnessMeasureTypesArr}
-                      placeholder="Consciousness Measure Types"
-                      onChange={setConsciousnessMeasureTypes}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={tagsFamilies}
-                      options={tagsFamiliesArr}
-                      placeholder="Finding Tags Families"
-                      onChange={setTagsFamilies}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={tagsTypes}
-                      options={tagsTypesArr}
-                      placeholder="Finding Tags Types"
-                      onChange={setTagsTypes}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={measures}
-                      options={measuresArr}
-                      placeholder="Measures"
-                      onChange={setMeasures}
+                      placeholder="Technique"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "techniques",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
                     <Select
                       styles={selectStyles}
@@ -346,7 +430,14 @@ export default function FreeQueriesBar() {
                       value={paradigmFamilies}
                       options={paradigmFamiliesArr}
                       placeholder="Paradigm Families"
-                      onChange={setParadigmFamilies}
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "paradigm_families",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
                     <Select
                       styles={selectStyles}
@@ -354,17 +445,15 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={paradigms}
                       options={paradigmsArr}
-                      placeholder="Paradigms"
-                      onChange={setParadigms}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={populations}
-                      options={populationsArr}
-                      placeholder="Populations"
-                      onChange={setPopulations}
+                      placeholder="Specific Paradigm"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "paradigms",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
 
                     <Select
@@ -373,8 +462,15 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliCategories}
                       options={stimuliCategoriesArr}
-                      placeholder="Stimuli Categories"
-                      onChange={setStimuliCategories}
+                      placeholder="Stimulus Category"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "stimuli_categories",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
                     <Select
                       styles={selectStyles}
@@ -382,17 +478,131 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliModalities}
                       options={stimuliModalitiesArr}
-                      placeholder="Stimuli Modalities"
-                      onChange={setStimuliModalities}
+                      placeholder="Stimulus Modality"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "stimuli_modalities",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
+
                     <Select
                       styles={selectStyles}
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={tasks}
                       options={tasksArr}
-                      placeholder="Tasks"
-                      onChange={setTasks}
+                      placeholder="Task"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "tasks",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={populations}
+                      options={populationsArr}
+                      placeholder="Population"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "populations",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasureTypes}
+                      options={consciousnessMeasureTypesArr}
+                      placeholder="how was consciousness measured?"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "consciousness_measure_types",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={consciousnessMeasurePhases}
+                      options={consciousnessMeasurePhaseArr}
+                      placeholder={"When was consciousness measured? "}
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "consciousness_measure_phases",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsFamilies}
+                      options={tagsFamiliesArr}
+                      placeholder="Finding Types"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "finding_tags_families",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tagsTypes}
+                      options={tagsTypesArr}
+                      placeholder="Specific Finding"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "finding_tags_types",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={measures}
+                      options={measuresArr}
+                      placeholder="Measures"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "measures",
+                          searchParams,
+                          navigate
+                        );
+                      }}
                     />
                   </>
                 )}{" "}

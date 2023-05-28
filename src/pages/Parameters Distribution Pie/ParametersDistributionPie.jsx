@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
-
+import React, { useEffect } from "react";
+import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
@@ -19,24 +19,29 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 import {
   hexToRgba,
-  rawTeaxtToShow as rawTextToShow,
-  showTextToRaw as shownTextToRaw,
+  rawTextToShow,
+  showTextToRaw,
+  buildUrl,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
 
 export default function ParametersDistributionPie() {
+  const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState(parametersOptions[0]);
   const [reporting, setReporting] = React.useState("either");
   const [consciousness, setConsciousness] = React.useState("either");
   const [theoryDriven, setTheoryDriven] = React.useState("either");
   const [experimentsNum, setExperimentsNum] = React.useState(0);
   const [graphData, setGraphData] = React.useState([]);
+
+  const navigate = useNavigate();
+  const pageName = "parameter-distribution-pie";
 
   const { data, isSuccess, isLoading } = useQuery(
     [
@@ -63,7 +68,6 @@ export default function ParametersDistributionPie() {
         min_number_of_experiments: experimentsNum,
       })
   );
-  console.log(data?.data);
   const values1 = [];
   const labels1 = [];
   const outsideColors = [];
@@ -123,11 +127,14 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
+    console.log(showTextToRaw(seriesName.label));
     const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
-        row.series_name === shownTextToRaw(seriesName.label) ||
-        row.series_name.toLowerCase() === seriesName.label.toLowerCase()
+        row.series_name === showTextToRaw(seriesName.label) ||
+        row.series_name.toLowerCase() === seriesName.label.toLowerCase() ||
+        row.series_name.toLowerCase() ===
+          showTextToRaw(seriesName.label.toLowerCase())
     );
     console.log(secondaryData);
 
@@ -174,7 +181,35 @@ export default function ParametersDistributionPie() {
       },
     ]);
   }
+  console.log(data?.data);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
 
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
+    if (queryParams.get("breakdown")) {
+      setSelected({
+        value: queryParams.get("breakdown"),
+        label: rawTextToShow(queryParams.get("breakdown")),
+      });
+    } else {
+      setSelected(parametersOptions[0]);
+    }
+    navigate({ search: queryParams.toString() });
+  }, [searchParams]);
   return (
     <PageTemplate
       control={
@@ -182,13 +217,22 @@ export default function ParametersDistributionPie() {
           <Text md weight="bold">
             Axis Controls
           </Text>
-          <RangeInput number={experimentsNum} setNumber={setExperimentsNum} />
-
+          <RangeInput
+            number={experimentsNum}
+            setNumber={(e) => {
+              buildUrl(pageName, "min_number_of_experiments", e, navigate);
+            }}
+          />
           <div className={sideSectionClass}>
-            <TagsSelect
+            <Select
+              closeMenuOnSelect={true}
+              isMulti={false}
+              isClearable={false}
               options={parametersOptions}
               value={selected}
-              onChange={setSelected}
+              onChange={(e) => {
+                buildUrl(pageName, "breakdown", e.value, navigate);
+              }}
             />
             <Text size={14} flexed>
               Parameter of interest
@@ -197,12 +241,21 @@ export default function ParametersDistributionPie() {
           </div>
           <TypeOfConsciousnessFilter
             checked={consciousness}
-            setChecked={setConsciousness}
+            setChecked={(e) => {
+              buildUrl(pageName, "type_of_consciousness", e, navigate);
+            }}
           />
-          <ReportFilter checked={reporting} setChecked={setReporting} />
+          <ReportFilter
+            checked={reporting}
+            setChecked={(e) => {
+              buildUrl(pageName, "is_reporting", e, navigate);
+            }}
+          />
           <TheoryDrivenFilter
             checked={theoryDriven}
-            setChecked={setTheoryDriven}
+            setChecked={(e) => {
+              buildUrl(pageName, "theory_driven", e, navigate);
+            }}
           />
         </SideControl>
       }

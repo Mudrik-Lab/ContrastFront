@@ -5,6 +5,7 @@ export default async function getFreeQueries({
   is_reporting,
   min_number_of_experiments,
   type_of_consciousness,
+  interpretation,
   theory_driven,
   techniques,
   consciousness_measure_phases,
@@ -69,6 +70,7 @@ export default async function getFreeQueries({
       is_reporting,
       type_of_consciousness,
       theory_driven,
+      interpretation,
     },
     method: "GET",
   });

@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -11,7 +11,6 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   isMoblile,
   screenHeight,
@@ -24,14 +23,19 @@ import Spinner from "../../components/Spinner";
 import { blueToYellow } from "../../Utils/functions";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import PageTemplate from "../../components/PageTemplate";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 
 export default function Timings() {
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [selectedTags, setSelectedTags] = React.useState(null);
-  const [theory, setTheory] = React.useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [theory, setTheory] = React.useState();
+  const [selectedTechniques, setSelectedTechniques] = React.useState([]);
+  const [selectedTags, setSelectedTags] = React.useState([]);
+  const navigate = useNavigate();
+  const pageName = "timings";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -44,8 +48,6 @@ export default function Timings() {
         label: technique,
       }))
     : [];
-
-
 
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
@@ -62,8 +64,6 @@ export default function Timings() {
       label: parentTheory,
     })
   );
-  // console.log(parentTheories);
-  // parentTheories && parentTheories.push({ value: null, label: "..." });
 
   const { data, isLoading } = useQuery(
     [
@@ -78,14 +78,14 @@ export default function Timings() {
         " " +
         consciousness +
         " " +
-        selectedTags
+        selectedTags?.map((x) => x.value).join("+")
       }`,
     ],
     () =>
       getTimings({
         techniques: selectedTechniques,
         tags: selectedTags,
-        theory: theory.value,
+        theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -94,47 +94,88 @@ export default function Timings() {
 
 
   let indexedDataList = [];
-  let tagsForLegend = []
+  let tagsForLegend = [];
   for (let i = 0; i < data?.data.length; i++) {
     const item = data?.data[i];
     const objectsList = item.series;
-    const indexedObjects = objectsList.map(innerObject => {
-      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
-      tagsForLegend.push(innerObject["name"]);  // add tag name to legend
+    const indexedObjects = objectsList.map((innerObject) => {
+      innerObject["index"] = i; // flatten the data structure & index each data point according to what cluster it was originally
+      tagsForLegend.push(innerObject["name"]); // add tag name to legend
+
       return innerObject;
     });
     indexedDataList.push(indexedObjects);
   }
   const graphData = [].concat(...indexedDataList);
-  
-  if (tagsForLegend[tagsForLegend.length -1] === undefined) {
-    tagsForLegend.pop()
+
+
+  if (tagsForLegend[tagsForLegend.length - 1] === undefined) {
+    tagsForLegend.pop();
   }
-  const legendSet = new Set(tagsForLegend)
-  const legendArray = [...legendSet]
+  const legendSet = new Set(tagsForLegend);
+  const legendArray = [...legendSet];
+
   const TimingsColors = blueToYellow(legendArray.length);
 
   const traces = [];
   graphData?.forEach((row) => {
-    const colorIndex = legendArray.indexOf(row.name)
-
-      traces.push({
-        type: "scatter", 
-        x: [row.start, row.end],
-        y: [row.index, row.index],
-        name: row.name,
-        marker: { size: 3, color: TimingsColors[colorIndex] },
-        opacity: 1,
-        line: {
-          width: 3,
-          color: TimingsColors[colorIndex],
-        },
-        legendrank: TimingsColors[colorIndex]
-      });
+    const colorIndex = legendArray.indexOf(row.name);
+    traces.push({
+      type: "scatter",
+      x: [row.start, row.end],
+      y: [row.index, row.index],
+      name: row.name,
+      marker: { size: 3, color: TimingsColors[colorIndex] },
+      opacity: 1,
+      line: {
+        width: 3,
+        color: TimingsColors[colorIndex],
+      },
+      legendrank: TimingsColors[colorIndex],
+    });
   });
 
-  configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
-  configSuccess && !selectedTags && setSelectedTags(tags);
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    if (queryParams.get("theory") !== "undefined") {
+      setTheory({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setTheory({});
+    }
+    if (configSuccess) {
+      const selectedTechValues = queryParams.getAll("techniques");
+      setSelectedTechniques(
+        selectedTechValues.map((item) => ({ value: item, label: item }))
+      );
+      const selectedTagValues = queryParams.getAll("tags_types");
+      setSelectedTags(
+        selectedTagValues.map((item) => ({ value: item, label: item }))
+      );
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (configSuccess) {
+      setSelectedTechniques(techniques);
+      setSelectedTags(tags);
+    }
+  }, [configSuccess]);
 
   return (
     <div>
@@ -151,11 +192,13 @@ export default function Timings() {
                 isClearable={true}
                 options={parentTheories}
                 value={theory}
-                onChange={setTheory}
+                onChange={(e) => {
+                  buildUrl(pageName, "theory", e?.value, navigate);
+                }}
               />
-              <Text size={14} flexed>
-                Theory
-                <FilterExplanation tooltip="few more words about theories" />
+              <Text flexed size={14}>
+                Theory Family
+                <FilterExplanation tooltip="few more words about Thory" />
               </Text>
             </div>
             <div className={sideSectionClass}>
@@ -166,11 +209,18 @@ export default function Timings() {
                   value={selectedTechniques}
                   options={techniques}
                   placeholder="Techniques"
-                  onChange={setSelectedTechniques}
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(
+                      e,
+                      "techniques",
+                      searchParams,
+                      navigate
+                    )
+                  }
                 />
               )}
               <Text flexed size={14}>
-                Techniques
+                Technique
                 <FilterExplanation tooltip="few more words about techniques" />
               </Text>
             </div>
@@ -182,7 +232,14 @@ export default function Timings() {
                   value={selectedTags}
                   options={tags}
                   placeholder="Tags"
-                  onChange={setSelectedTags}
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(
+                      e,
+                      "tags_types",
+                      searchParams,
+                      navigate
+                    )
+                  }
                 />
               )}
               <Text flexed size={14}>
@@ -192,13 +249,22 @@ export default function Timings() {
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}
-              setChecked={setConsciousness}
+              setChecked={(e) => {
+                buildUrl(pageName, "type_of_consciousness", e, navigate);
+              }}
             />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <ReportFilter
+              checked={reporting}
+              setChecked={(e) => {
+                buildUrl(pageName, "is_reporting", e, navigate);
+              }}
+            />
             <TheoryDrivenFilter
               checked={theoryDriven}
-              setChecked={setTheoryDriven}
-            />{" "}
+              setChecked={(e) => {
+                buildUrl(pageName, "theory_driven", e, navigate);
+              }}
+            />
           </SideControl>
         }
         graph={
@@ -238,23 +304,22 @@ export default function Timings() {
                   }}
                 />
                 {!isMoblile && screenHeight > 500 && (
-                  <div className="absolute right-10 top-40 w-[150px] overflow-y-scroll h-[400px]">
-                    {blueToYellow(
-                     legendArray.length
-                    ).map((color, index) => {
-                      return (
+
+                  <div
+                    className="absolute top-52 right-2 overflow-y-scroll"
+                    style={{ height: screenHeight - 610 }}>
+                    {blueToYellow(legendArray.length).map((color, index) => (
+                      <div
+                        key={index}
+                        className="flex justify-start items-end gap-2"
+                        id="color">
                         <div
-                          className="flex justify-start items-end gap-2"
-                          key={color + index}>
-                          <div
-                            className="w-3 h-3 mt-2 "
-                            style={{ backgroundColor: color }}></div>
-                          <p className="text-[10px] whitespace-nowrap overflow-hidden">
-                          {Object.values(legendArray)[index]}
-                          </p>
-                        </div>
-                      );
-                    })}
+                          className="w-4 h-4 mt-2 "
+                          style={{ backgroundColor: color }}></div>
+                        <Text sm>{Object.values(legendArray)[index]}</Text>
+                      </div>
+                    ))}
+
                   </div>
                 )}
               </div>

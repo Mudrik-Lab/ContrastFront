@@ -7,7 +7,9 @@ export function getRandomColor(numberOfColors) {
 }
 export function blueToYellow(numColors) {
   const colors = [];
-  const startColor = [254, 247, 202]; // light yellow 
+
+  const startColor = [254, 247, 202]; // light yellow
+
   const midColor = [100, 200, 200]; // light green
   const endColor = [41, 24, 107]; // deep dark blue
 
@@ -53,7 +55,7 @@ export function breakHeadlines(str, chartForLine) {
   return "<span>" + newStr.slice(1) + "</span>";
 }
 
-export function rawTeaxtToShow(text) {
+export function rawTextToShow(text) {
   text = text.replace(/[-_]/g, " ");
   const words = text.split(" ");
   const capitalizedWords = words.map(
@@ -94,4 +96,34 @@ export function hexToRgba(hexColor) {
 
 export function fitColorPerLabel(data) {
   console.log(data);
+}
+
+export function fixArraytoURL(arr, name) {
+  const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
+  const urlString = queriesArr?.join("");
+  return urlString;
+}
+
+export function buildUrl(pageName, paramName, value, navigate) {
+  if (value) {
+    console.log("first");
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set(paramName, value);
+    navigate("/" + pageName + "?" + queryParams.toString());
+  } else {
+    console.log("second");
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.delete(paramName);
+    navigate(`/${pageName}?${queryParams.toString()}`);
+  }
+}
+
+export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
+  const selectedValues = Array.from(e, (option) => option);
+  const queryParams = new URLSearchParams(searchParams.toString());
+  queryParams.delete(paramName);
+  selectedValues.forEach((value) => {
+    queryParams.append(paramName, value.value);
+  });
+  navigate(`?${queryParams.toString()}`);
 }

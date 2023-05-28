@@ -113,7 +113,7 @@ export const graphsHeaders = [
       "The figure depicts the findings in the spatial domain of the experiments in the database which used fMRI.",
     icon: <AnatomicalFindings />,
     color: "lightTeal",
-    route: "/",
+    route: "/anatomical-findings",
     figureLine:
       "Here, you can see the findings in the spatial domain, of the experiments in the database which used fMRI.",
     figureText:

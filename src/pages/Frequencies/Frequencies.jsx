@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -24,13 +24,18 @@ import getFrequencies from "../../apiHooks/getFrequencyGraph";
 import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { useNavigate, useSearchParams } from "react-router-dom";
+import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 
 export default function Frequencies() {
-  const [reporting, setReporting] = React.useState("either");
-  const [consciousness, setConsciousness] = React.useState("either");
-  const [theoryDriven, setTheoryDriven] = React.useState("either");
-  const [selectedTechniques, setSelectedTechniques] = React.useState(null);
-  const [theory, setTheory] = React.useState({});
+  const [searchParams, setSearchParams] = useSearchParams();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [theory, setTheory] = React.useState();
+  const [selectedTechniques, setSelectedTechniques] = React.useState([]);
+  const navigate = useNavigate();
+  const pageName = "frequencies";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`confuguration`],
@@ -52,19 +57,7 @@ export default function Frequencies() {
         label: parentTheory,
       }))
     : [];
-  console.log(
-    `frequencies${
-      selectedTechniques?.map((x) => x.value).join("+") +
-      " " +
-      theory?.value +
-      " " +
-      reporting +
-      " " +
-      theoryDriven +
-      " " +
-      consciousness
-    }`
-  );
+
   const { data, isLoading } = useQuery(
     [
       `frequencies${
@@ -82,7 +75,7 @@ export default function Frequencies() {
     () =>
       getFrequencies({
         techniques: selectedTechniques,
-        theory: theory.value,
+        theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
@@ -90,7 +83,7 @@ export default function Frequencies() {
   );
 
   let indexedDataList = [];
-  
+
   for (let i = 0; i < data?.data.length; i++) {
     const item = data?.data[i];
     const objectsList = item.series;
@@ -104,26 +97,58 @@ export default function Frequencies() {
 
   const traces = [];
   graphData?.forEach((row) => {
-      traces.push({
-        type: "scatter", 
-        x: [row.start, row.end],
-        y: [row.index, row.index],
-        name: row.name,
-        marker: { size: 3, color: FrequenciesColors[row.name] },
-        opacity: 1,
-        line: {
-          width: 3,
-          color: FrequenciesColors[row.name],
-        },
-      });
+
+    traces.push({
+      type: "scatter",
+      x: [row.start, row.end],
+      y: [row.index, row.index],
+      name: row.name,
+      marker: { size: 3, color: FrequenciesColors[row.name] },
+      opacity: 1,
+      line: {
+        width: 3,
+        color: FrequenciesColors[row.name],
+      },
+    });
   });
 
-  const screenWidth = window.screen.width;
-  const screenHeight = window.screen.height;
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-  configSuccess && !selectedTechniques && setSelectedTechniques(techniques);
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    if (queryParams.get("theory") !== "undefined") {
+      setTheory({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setTheory({});
+    }
+    if (configSuccess) {
+      const selectedValues = queryParams.getAll("techniques");
+      setSelectedTechniques(
+        selectedValues.map((item) => ({ value: item, label: item }))
+      );
+    }
+  }, [searchParams]);
+
+  useEffect(() => {
+    if (configSuccess) {
+      setSelectedTechniques(techniques);
+    }
+  }, [configSuccess]);
+
 
   return (
     <div>
@@ -143,11 +168,13 @@ export default function Frequencies() {
                     isClearable={true}
                     options={parentTheories}
                     value={theory}
-                    onChange={setTheory}
+                    onChange={(e) => {
+                      buildUrl(pageName, "theory", e?.value, navigate);
+                    }}
                   />
-                  <Text size={14} flexed>
-                    Theory
-                    <FilterExplanation tooltip="few more words about theories" />
+                  <Text flexed size={14}>
+                    Theory Family
+                    <FilterExplanation tooltip="few more words about Thory" />
                   </Text>
                 </div>
                 <div className={sideSectionClass}>
@@ -158,22 +185,38 @@ export default function Frequencies() {
                       value={selectedTechniques}
                       options={techniques}
                       placeholder="Techniques"
-                      onChange={setSelectedTechniques}
+                      onChange={(e) =>
+                        buildUrlForMultiSelect(
+                          e,
+                          "techniques",
+                          searchParams,
+                          navigate
+                        )
+                      }
                     />
                   )}
                   <Text flexed size={14}>
-                    Techniques
+                    Technique
                     <FilterExplanation tooltip="few more words about techniques" />
                   </Text>
                 </div>
                 <TypeOfConsciousnessFilter
                   checked={consciousness}
-                  setChecked={setConsciousness}
+                  setChecked={(e) => {
+                    buildUrl(pageName, "type_of_consciousness", e, navigate);
+                  }}
                 />
-                <ReportFilter checked={reporting} setChecked={setReporting} />
+                <ReportFilter
+                  checked={reporting}
+                  setChecked={(e) => {
+                    buildUrl(pageName, "is_reporting", e, navigate);
+                  }}
+                />
                 <TheoryDrivenFilter
                   checked={theoryDriven}
-                  setChecked={setTheoryDriven}
+                  setChecked={(e) => {
+                    buildUrl(pageName, "theory_driven", e, navigate);
+                  }}
                 />
               </SideControl>
             }

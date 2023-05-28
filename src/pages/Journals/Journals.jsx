@@ -24,27 +24,18 @@ import Spinner from "../../components/Spinner";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { buildUrl } from "../../Utils/functions";
 
 export default function Journals() {
-  const queryParams = new URLSearchParams(location.search);
-  console.log();
-  const [experimentsNum, setExperimentsNum] = React.useState(
-    queryParams.get("min_number_of_experiments") || 0
-  );
-  const [reporting, setReporting] = React.useState(
-    queryParams.get("is_reporting") || "either"
-  );
-  const [consciousness, setConsciousness] = React.useState(
-    queryParams.get("type_of_consciousness") || "either"
-  );
-  const [theoryDriven, setTheoryDriven] = React.useState(
-    queryParams.get("theory_driven") || "either"
-  );
-  const [theory, setTheory] = React.useState(
-    { value: queryParams.get("theory"), label: queryParams.get("theory") } || {}
-  );
-  const navigate = useNavigate();
   const [searchParams, setSearchParams] = useSearchParams();
+  const [experimentsNum, setExperimentsNum] = React.useState();
+  const [reporting, setReporting] = React.useState();
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [theory, setTheory] = React.useState();
+
+  const navigate = useNavigate();
+  const pageName = "journals";
 
   const { data: configuration } = useQuery(
     [`parent_theories`],
@@ -84,7 +75,7 @@ export default function Journals() {
   const graphsData = isSuccess ? data?.data : [];
   const Y = graphsData.map((row) => row.key);
   var trace1 = {
-    y: Y,
+    y: Y.reverse(),
     x: graphsData.map((row) => row.value).reverse(),
     type: "bar",
     orientation: "h",
@@ -93,14 +84,33 @@ export default function Journals() {
         designerColors[Math.floor(Math.random() * (designerColors.length - 1))],
     },
   };
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    console.log(queryParams);
-    queryParams.set("is_reporting", reporting);
-    queryParams.set("type_of_consciousness", consciousness);
-    queryParams.set("theory_driven", theoryDriven);
-    queryParams.set("min_number_of_experiments", experimentsNum);
-    queryParams.set("theory", theory?.value);
+    queryParams.get("is_reporting")
+      ? setReporting(queryParams.get("is_reporting"))
+      : setReporting("either");
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
+    queryParams.get("min_number_of_experiments")
+      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
+      : setExperimentsNum(0);
+
+    if (queryParams.get("theory") !== "undefined") {
+      setTheory({
+        value: queryParams.get("theory"),
+        label: queryParams.get("theory"),
+      });
+    } else {
+      setTheory({});
+    }
+
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
@@ -115,21 +125,11 @@ export default function Journals() {
             <RangeInput
               number={experimentsNum}
               setNumber={(e) => {
-                setExperimentsNum(e);
-                navigate(
-                  `?min_number_of_experiments=${encodeURIComponent(
-                    experimentsNum
-                  )}`
-                );
+                buildUrl(pageName, "min_number_of_experiments", e, navigate);
               }}
             />
 
             <div className={sideSectionClass}>
-              <Text flexed md weight="bold">
-                Theory Family
-                <FilterExplanation tooltip="few more words about Thory" />
-              </Text>
-
               <Select
                 closeMenuOnSelect={true}
                 isMulti={false}
@@ -137,19 +137,32 @@ export default function Journals() {
                 options={parentTheories}
                 value={theory}
                 onChange={(e) => {
-                  setTheory(e);
-                  navigate(`?theory=${encodeURIComponent(theory.value)}`);
+                  buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
+              <Text flexed size={14}>
+                Theory Family
+                <FilterExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
+              </Text>
             </div>
+
             <TypeOfConsciousnessFilter
               checked={consciousness}
-              setChecked={setConsciousness}
+              setChecked={(e) => {
+                buildUrl(pageName, "type_of_consciousness", e, navigate);
+              }}
             />
-            <ReportFilter checked={reporting} setChecked={setReporting} />
+            <ReportFilter
+              checked={reporting}
+              setChecked={(e) => {
+                buildUrl(pageName, "is_reporting", e, navigate);
+              }}
+            />
             <TheoryDrivenFilter
               checked={theoryDriven}
-              setChecked={setTheoryDriven}
+              setChecked={(e) => {
+                buildUrl(pageName, "theory_driven", e, navigate);
+              }}
             />
           </SideControl>
         }
