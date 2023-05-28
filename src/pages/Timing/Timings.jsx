@@ -92,7 +92,6 @@ export default function Timings() {
       })
   );
 
-
   let indexedDataList = [];
   let tagsForLegend = [];
   for (let i = 0; i < data?.data.length; i++) {
@@ -107,7 +106,6 @@ export default function Timings() {
     indexedDataList.push(indexedObjects);
   }
   const graphData = [].concat(...indexedDataList);
-
 
   if (tagsForLegend[tagsForLegend.length - 1] === undefined) {
     tagsForLegend.pop();
@@ -171,11 +169,26 @@ export default function Timings() {
   }, [searchParams]);
 
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const techniquesOnURL = queryParams.getAll("techniques");
+    const tagsOnURL = queryParams.getAll("tags_types");
+
     if (configSuccess) {
-      setSelectedTechniques(techniques);
-      setSelectedTags(tags);
+      techniquesOnURL.length === 0
+        ? buildUrlForMultiSelect(
+            techniques,
+            "techniques",
+            searchParams,
+            navigate
+          )
+        : setSelectedTechniques(
+            techniquesOnURL.map((x) => ({ value: x, label: x }))
+          );
+      tagsOnURL.length === 0
+        ? buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate)
+        : setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));
     }
-  }, [configSuccess]);
+  }, [configSuccess, location.search]);
 
   return (
     <div>
@@ -286,8 +299,8 @@ export default function Timings() {
                     height: screenHeight - 400,
                     margin: { autoexpand: true, l: 50 },
                     legend: { itemwidth: 15, font: { size: 18 } },
-                    
-                  showlegend: false,
+
+                    showlegend: false,
 
                     yaxis: {
                       title: "Experiments",
@@ -304,7 +317,6 @@ export default function Timings() {
                   }}
                 />
                 {!isMoblile && screenHeight > 500 && (
-
                   <div
                     className="absolute top-52 right-2 overflow-y-scroll"
                     style={{ height: screenHeight - 610 }}>
@@ -319,7 +331,6 @@ export default function Timings() {
                         <Text sm>{Object.values(legendArray)[index]}</Text>
                       </div>
                     ))}
-
                   </div>
                 )}
               </div>

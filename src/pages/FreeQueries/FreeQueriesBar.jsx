@@ -6,6 +6,7 @@ import {
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -572,6 +573,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
+                      menuPlacement="top"
                       styles={selectStyles}
                       closeMenuOnSelect={true}
                       isMulti={true}
@@ -589,6 +591,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
+                      menuPlacement="top"
                       styles={selectStyles}
                       closeMenuOnSelect={true}
                       isMulti={true}
@@ -604,6 +607,7 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
+                    <Spacer height={120} />
                   </>
                 )}{" "}
               </div>
