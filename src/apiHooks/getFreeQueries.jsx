@@ -5,7 +5,7 @@ export default async function getFreeQueries({
   is_reporting,
   min_number_of_experiments,
   type_of_consciousness,
-  interpretation,
+  interpretations,
   theory_driven,
   techniques,
   consciousness_measure_phases,
@@ -48,6 +48,12 @@ export default async function getFreeQueries({
     (item) => "&stimuli_modalities=" + item.value
   );
   const tasksArr = tasks?.map((item) => "&tasks=" + item.value);
+  const theoryDrivenArr = theory_driven?.map(
+    (item) => "&theory_driven=" + item.value
+  );
+  const interpretationsArr = interpretations?.map(
+    (item) => "&interpretations_types=" + item.value
+  );
 
   return await queryApi({
     url: `studies/experiments_graphs/parameters_distribution_free_queries/?${
@@ -62,6 +68,8 @@ export default async function getFreeQueries({
       (populationArr?.join("") || "") +
       (stimuliCategoriesArr?.join("") || "") +
       (stimuliModalitiesArr?.join("") || "") +
+      (interpretationsArr?.join("") || "") +
+      (theoryDrivenArr?.join("") || "") +
       (tasksArr?.join("") || "")
     }`,
     params: {
@@ -69,8 +77,6 @@ export default async function getFreeQueries({
       min_number_of_experiments,
       is_reporting,
       type_of_consciousness,
-      theory_driven,
-      interpretation,
     },
     method: "GET",
   });
