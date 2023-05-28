@@ -87,8 +87,8 @@ export default function Frequencies() {
   for (let i = 0; i < data?.data.length; i++) {
     const item = data?.data[i];
     const objectsList = item.series;
-    const indexedObjects = objectsList.map(innerObject => {
-      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
+    const indexedObjects = objectsList.map((innerObject) => {
+      innerObject["index"] = i; // flatten the data structure & index each data point according to what cluster it was originally
       return innerObject;
     });
     indexedDataList.push(indexedObjects);
@@ -97,7 +97,6 @@ export default function Frequencies() {
 
   const traces = [];
   graphData?.forEach((row) => {
-
     traces.push({
       type: "scatter",
       x: [row.start, row.end],
@@ -141,14 +140,28 @@ export default function Frequencies() {
         selectedValues.map((item) => ({ value: item, label: item }))
       );
     }
+    navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
+  // useEffect to state the initial values on mount (insert all options or take from url)
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const techniquesOnURL = queryParams.getAll("techniques");
     if (configSuccess) {
-      setSelectedTechniques(techniques);
+      if (techniquesOnURL.length === 0) {
+        buildUrlForMultiSelect(
+          techniques,
+          "techniques",
+          searchParams,
+          navigate
+        );
+      } else {
+        setSelectedTechniques(
+          techniquesOnURL.map((x) => ({ value: x, label: x }))
+        );
+      }
     }
   }, [configSuccess]);
-
 
   return (
     <div>
@@ -178,23 +191,22 @@ export default function Frequencies() {
                   </Text>
                 </div>
                 <div className={sideSectionClass}>
-                  {configSuccess && (
-                    <Select
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={selectedTechniques}
-                      options={techniques}
-                      placeholder="Techniques"
-                      onChange={(e) =>
-                        buildUrlForMultiSelect(
-                          e,
-                          "techniques",
-                          searchParams,
-                          navigate
-                        )
-                      }
-                    />
-                  )}
+                  <Select
+                    closeMenuOnSelect={true}
+                    isMulti={true}
+                    value={selectedTechniques}
+                    options={techniques}
+                    placeholder="Techniques"
+                    onChange={(e) => {
+                      buildUrlForMultiSelect(
+                        e,
+                        "techniques",
+                        searchParams,
+                        navigate
+                      );
+                    }}
+                  />
+
                   <Text flexed size={14}>
                     Technique
                     <FilterExplanation tooltip="few more words about techniques" />

@@ -223,10 +223,16 @@ export default function WorldMap() {
       );
     }
   }, [searchParams]);
-  console.log(reporting);
+
   useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const theoriesOnURL = queryParams.getAll("techniques");
     if (configSuccess) {
-      setTheoryFamilies(theories);
+      if (theoriesOnURL.length === 0) {
+        buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
+      } else {
+        setTheoryFamilies(theoriesOnURL.map((x) => ({ value: x, label: x })));
+      }
     }
   }, [configSuccess]);
 
@@ -252,23 +258,16 @@ export default function WorldMap() {
                   <FilterExplanation tooltip="few more words about Theories" />
                 </Text>
 
-                {configSuccess && theories && (
-                  <Select
-                    closeMenuOnSelect={true}
-                    isMulti={true}
-                    value={theoryFamilies}
-                    options={theories}
-                    placeholder="Theories"
-                    onChange={(e) =>
-                      buildUrlForMultiSelect(
-                        e,
-                        "theory",
-                        searchParams,
-                        navigate
-                      )
-                    }
-                  />
-                )}
+                <Select
+                  closeMenuOnSelect={true}
+                  isMulti={true}
+                  value={theoryFamilies}
+                  options={theories}
+                  placeholder="Theories"
+                  onChange={(e) =>
+                    buildUrlForMultiSelect(e, "theory", searchParams, navigate)
+                  }
+                />
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}
