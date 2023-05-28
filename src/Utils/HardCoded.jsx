@@ -80,15 +80,15 @@ export const FrequenciesColors = {
 
 export const available_populations = [
   {
-    value: "heathy Adults",
-    label: "Heathy Adults",
+    value: "healthy_adults",
+    label: "Healthy Adults",
   },
   {
     value: "patients",
     label: "Patients",
   },
   {
-    value: "healthy college students",
+    value: "Healthy_college_students",
     label: "Healthy College Students",
   },
   {
@@ -112,7 +112,6 @@ import LucieC from "../assets/images/LucieC.jpg";
 import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
-
 
 export const foundingBoardBios = [
   {

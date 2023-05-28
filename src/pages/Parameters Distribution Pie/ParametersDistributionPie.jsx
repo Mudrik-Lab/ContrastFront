@@ -19,7 +19,6 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import Spinner from "../../components/Spinner";
 import {
   hexToRgba,
@@ -128,11 +127,14 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
+    console.log(showTextToRaw(seriesName.label));
     const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
         row.series_name === showTextToRaw(seriesName.label) ||
-        row.series_name.toLowerCase() === seriesName.label.toLowerCase()
+        row.series_name.toLowerCase() === seriesName.label.toLowerCase() ||
+        row.series_name.toLowerCase() ===
+          showTextToRaw(seriesName.label.toLowerCase())
     );
     console.log(secondaryData);
 
@@ -179,7 +181,7 @@ export default function ParametersDistributionPie() {
       },
     ]);
   }
-
+  console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
