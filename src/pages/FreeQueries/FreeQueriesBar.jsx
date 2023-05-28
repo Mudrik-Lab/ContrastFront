@@ -8,7 +8,6 @@ import {
   SideControl,
   Spacer,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
@@ -36,12 +35,11 @@ import Toggle from "../../components/Toggle";
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
-  const [interpretation, setInterpretation] = useState();
   const [isReporting, setIsReporting] = useState();
   const [consciousness, setConsciousness] = useState();
-  const [theoryDriven, setTheoryDriven] = useState();
   const [experimentsNum, setExperimentsNum] = useState();
 
+  const [theoryDriven, setTheoryDriven] = useState([]);
   const [selectedTechniques, setSelectedTechniques] = useState([]);
   const [paradigmFamilies, setParadigmFamilies] = useState([]);
   const [paradigms, setParadigms] = useState([]);
@@ -57,7 +55,7 @@ export default function FreeQueriesBar() {
   );
   const [tagsFamilies, setTagsFamilies] = useState([]);
   const [tagsTypes, setTagsTypes] = useState([]);
-
+  const [interpretations, setInterpretations] = useState([]);
   const [measures, setMeasures] = useState([]);
 
   const navigate = useNavigate();
@@ -140,6 +138,19 @@ export default function FreeQueriesBar() {
         label: type.name,
       }))
     : [];
+  const theoryDrivenArr = extraConfigSuccess
+    ? extraConfig?.data.available_theory_driven_types.map((type, index) => ({
+        value: type,
+        label: rawTextToShow(type),
+      }))
+    : [];
+
+  const interpretationsArr = [
+    { value: "challenges", label: "Challenges" },
+    { value: "pro", label: "Support" },
+    { value: "neutral", label: "Neutral" },
+  ];
+
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
@@ -151,9 +162,9 @@ export default function FreeQueriesBar() {
         " " +
         consciousness +
         " " +
-        theoryDriven +
+        theoryDriven?.map((row) => row.label).join(",") +
         " " +
-        (interpretation === "true" ? "pro" : "challenges") +
+        interpretations?.map((row) => row.label).join(",") +
         " " +
         selectedTechniques?.map((row) => row.label).join(",") +
         " " +
@@ -187,7 +198,7 @@ export default function FreeQueriesBar() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: interpretation === "true" ? "pro" : "challenges",
+        interpretations: interpretations,
         techniques: selectedTechniques,
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
@@ -240,7 +251,7 @@ export default function FreeQueriesBar() {
       setState(
         queryParams.getAll(queryName).map((item) => {
           return {
-            value: parseInt(item),
+            value: Number(item) === parseFloat(item) ? parseInt(item) : item,
             label: optionsArr.find((x) => x.value == item).label,
           };
         })
@@ -258,19 +269,6 @@ export default function FreeQueriesBar() {
     queryParams.get("type_of_consciousness")
       ? setConsciousness(queryParams.get("type_of_consciousness"))
       : setConsciousness("either");
-
-    queryParams.get("theory_driven")
-      ? setTheoryDriven(queryParams.get("theory_driven"))
-      : setTheoryDriven("driven");
-
-    if (queryParams.get("interpretation")) {
-      queryParams.get("interpretation") === "true"
-        ? setInterpretation(true)
-        : setInterpretation(false);
-      setInterpretation(queryParams.get("interpretation"));
-    } else {
-      setInterpretation(true);
-    }
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -303,14 +301,7 @@ export default function FreeQueriesBar() {
         stimuliModalitiesArr
       );
       updateMultiFilterState(setTasks, "tasks", tasksArr);
-      setPopulations(
-        queryParams.getAll("populations").map((item) => {
-          return {
-            value: item,
-            label: populationsArr.find((x) => x.value == item).label,
-          };
-        })
-      );
+      updateMultiFilterState(setPopulations, "populations", populationsArr);
 
       updateMultiFilterState(
         setConsciousnessMeasurePhases,
@@ -328,6 +319,12 @@ export default function FreeQueriesBar() {
         tagsFamiliesArr
       );
       updateMultiFilterState(setTagsTypes, "finding_tags_types", tagsTypesArr);
+      updateMultiFilterState(
+        setInterpretations,
+        "interpretations_types",
+        interpretationsArr
+      );
+      updateMultiFilterState(setTheoryDriven, "theory_driven", theoryDrivenArr);
       updateMultiFilterState(setMeasures, "measures", measuresArr);
     }
 
@@ -367,22 +364,7 @@ export default function FreeQueriesBar() {
                   <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
               </div>
-              <div className={sideSectionClass}>
-                <div className="flex justify-center items-center gap-3 mt-3">
-                  <Text>Challenges</Text>
-                  <Toggle
-                    checked={interpretation === "true" ? true : false}
-                    setChecked={(e) => {
-                      buildUrl(pageName, "interpretation", e, navigate);
-                    }}
-                  />
-                  <Text>Supports</Text>
-                </div>
-                <FilterExplanation
-                  text="Interpretation"
-                  tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
-                />
-              </div>
+
               <TypeOfConsciousnessFilter
                 checked={consciousness}
                 setChecked={(e) => {
@@ -395,12 +377,7 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-              <TheoryDrivenFilter
-                checked={theoryDriven}
-                setChecked={(e) => {
-                  buildUrl(pageName, "theory_driven", e, navigate);
-                }}
-              />
+
               <div className={sideSectionClass}>
                 <Text flexed md weight="bold">
                   Filter by
@@ -571,6 +548,22 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={theoryDriven}
+                      options={theoryDrivenArr}
+                      placeholder="Theory Driven"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "theory_driven",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
 
                     <Select
                       menuPlacement="top"
@@ -589,7 +582,23 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
+                    <Select
+                      menuPlacement="top"
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={interpretations}
+                      options={interpretationsArr}
+                      placeholder="Interpretations"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "interpretations_types",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
                     <Select
                       menuPlacement="top"
                       styles={selectStyles}

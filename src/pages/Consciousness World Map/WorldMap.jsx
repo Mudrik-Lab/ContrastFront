@@ -102,11 +102,11 @@ export default function WorldMap() {
       text: data?.data.map((row) => row.country_name),
       z: data?.data.map((row) => row.total),
       colorscale: [
-        [0.0, "rgb(128, 0, 0)"],
-        [0.25, "rgb(166, 0, 0)"],
-        [0.5, "rgb(204, 0, 0)"],
-        [0.75, "rgb(242, 51, 51)"],
-        [1.0, "rgb(255, 208, 208)"],
+        [0.0, "rgb(75, 56, 86)"],
+        [0.25, "rgb(108, 91, 127)"],
+        [0.5, "rgb(161,113,255)"],
+        [0.75, "rgb(194,123,255)"],
+        [1.0, "rgb(252,208,255)"],
       ],
 
       hoverinfo: "location+text",
