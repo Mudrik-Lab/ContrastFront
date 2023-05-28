@@ -103,9 +103,17 @@ export function fixArraytoURL(arr, name) {
 }
 
 export function buildUrl(pageName, paramName, value, navigate) {
-  const queryParams = new URLSearchParams(location.search);
-  queryParams.set(paramName, value);
-  navigate("/" + pageName + "?" + queryParams.toString());
+  if (value) {
+    console.log("first");
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.set(paramName, value);
+    navigate("/" + pageName + "?" + queryParams.toString());
+  } else {
+    console.log("second");
+    const queryParams = new URLSearchParams(location.search);
+    queryParams.delete(paramName);
+    navigate(`/${pageName}?${queryParams.toString()}`);
+  }
 }
 
 export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {

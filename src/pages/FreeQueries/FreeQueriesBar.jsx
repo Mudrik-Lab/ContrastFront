@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
   FilterExplanation,
@@ -12,7 +12,6 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
-import TagsSelect from "../../components/TagsSelect";
 import {
   available_populations,
   isMoblile,
@@ -31,30 +30,34 @@ import {
   buildUrlForMultiSelect,
   rawTextToShow,
 } from "../../Utils/functions";
+import Toggle from "../../components/Toggle";
 
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
-  const [selected, setSelected] = React.useState();
-  const [isReporting, setIsReporting] = React.useState();
-  const [consciousness, setConsciousness] = React.useState();
-  const [theoryDriven, setTheoryDriven] = React.useState();
-  const [experimentsNum, setExperimentsNum] = React.useState();
+  const [selected, setSelected] = useState();
+  const [interpretation, setInterpretation] = useState();
+  const [isReporting, setIsReporting] = useState();
+  const [consciousness, setConsciousness] = useState();
+  const [theoryDriven, setTheoryDriven] = useState();
+  const [experimentsNum, setExperimentsNum] = useState();
 
-  const [selectedTechniques, setSelectedTechniques] = React.useState([]);
-  const [paradigmFamilies, setParadigmFamilies] = React.useState([]);
-  const [paradigms, setParadigms] = React.useState([]);
-  const [stimuliCategories, setStimuliCategories] = React.useState([]);
-  const [stimuliModalities, setStimuliModalities] = React.useState([]);
-  const [tasks, setTasks] = React.useState([]);
-  const [populations, setPopulations] = React.useState([]);
-  const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] =
-    React.useState([]);
-  const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] =
-    React.useState([]);
-  const [tagsFamilies, setTagsFamilies] = React.useState([]);
-  const [tagsTypes, setTagsTypes] = React.useState([]);
+  const [selectedTechniques, setSelectedTechniques] = useState([]);
+  const [paradigmFamilies, setParadigmFamilies] = useState([]);
+  const [paradigms, setParadigms] = useState([]);
+  const [stimuliCategories, setStimuliCategories] = useState([]);
+  const [stimuliModalities, setStimuliModalities] = useState([]);
+  const [tasks, setTasks] = useState([]);
+  const [populations, setPopulations] = useState([]);
+  const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] = useState(
+    []
+  );
+  const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] = useState(
+    []
+  );
+  const [tagsFamilies, setTagsFamilies] = useState([]);
+  const [tagsTypes, setTagsTypes] = useState([]);
 
-  const [measures, setMeasures] = React.useState([]);
+  const [measures, setMeasures] = useState([]);
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-free-queries";
@@ -149,6 +152,8 @@ export default function FreeQueriesBar() {
         " " +
         theoryDriven +
         " " +
+        (interpretation === "true" ? "pro" : "challenges") +
+        " " +
         selectedTechniques?.map((row) => row.label).join(",") +
         " " +
         consciousnessMeasurePhases?.map((row) => row.label).join(",") +
@@ -181,6 +186,7 @@ export default function FreeQueriesBar() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
+        interpretation: interpretation === "true" ? "pro" : "challenges",
         techniques: selectedTechniques,
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
@@ -255,6 +261,15 @@ export default function FreeQueriesBar() {
     queryParams.get("theory_driven")
       ? setTheoryDriven(queryParams.get("theory_driven"))
       : setTheoryDriven("driven");
+
+    if (queryParams.get("interpretation")) {
+      queryParams.get("interpretation") === "true"
+        ? setInterpretation(true)
+        : setInterpretation(false);
+      setInterpretation(queryParams.get("interpretation"));
+    } else {
+      setInterpretation(true);
+    }
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -350,6 +365,22 @@ export default function FreeQueriesBar() {
                   Parameter of interest
                   <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
+              </div>
+              <div className={sideSectionClass}>
+                <div className="flex justify-center items-center gap-3 mt-3">
+                  <Text>Challenges</Text>
+                  <Toggle
+                    checked={interpretation === "true" ? true : false}
+                    setChecked={(e) => {
+                      buildUrl(pageName, "interpretation", e, navigate);
+                    }}
+                  />
+                  <Text>Supports</Text>
+                </div>
+                <FilterExplanation
+                  text="Interpretation"
+                  tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
+                />
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}

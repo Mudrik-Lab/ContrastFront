@@ -20,6 +20,7 @@ import WorldMap from "./pages/Consciousness World Map/WorldMap";
 import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
 import PageTemplate from "./components/PageTemplate";
+import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -60,6 +61,7 @@ const Screens = () => {
           path="/theories-comparison"
           element={<ParametersDistributionTheoriesComparison />}
         />
+        <Route path="/anatomical-findings" element={<AnatomicalFindings />} />
         <Route path="/frequencies" element={<Frequencies />} />
         <Route path="/journals" element={<Journals />} />
         <Route path="/timings" element={<Timing />} />

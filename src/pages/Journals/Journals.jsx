@@ -75,7 +75,7 @@ export default function Journals() {
   const graphsData = isSuccess ? data?.data : [];
   const Y = graphsData.map((row) => row.key);
   var trace1 = {
-    y: Y,
+    y: Y.reverse(),
     x: graphsData.map((row) => row.value).reverse(),
     type: "bar",
     orientation: "h",
@@ -137,12 +137,12 @@ export default function Journals() {
                 options={parentTheories}
                 value={theory}
                 onChange={(e) => {
-                  buildUrl(pageName, "theory", e.value, navigate);
+                  buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
               <Text flexed size={14}>
                 Theory Family
-                <FilterExplanation tooltip="few more words about Thory" />
+                <FilterExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
               </Text>
             </div>
 

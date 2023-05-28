@@ -175,11 +175,11 @@ export default function ParametersDistributionBar() {
                 <Select
                   closeMenuOnSelect={true}
                   isMulti={false}
-                  isClearable={true}
+                  isClearable={false}
                   options={parentTheories}
                   value={selectedParent}
                   onChange={(e) => {
-                    buildUrl(pageName, "theory", e.value, navigate);
+                    buildUrl(pageName, "theory", e?.value, navigate);
                   }}
                 />
                 <Text size={14} flexed>

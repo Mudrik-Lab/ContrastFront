@@ -167,7 +167,7 @@ export default function Frequencies() {
                     options={parentTheories}
                     value={theory}
                     onChange={(e) => {
-                      buildUrl(pageName, "theory", e.value, navigate);
+                      buildUrl(pageName, "theory", e?.value, navigate);
                     }}
                   />
                   <Text flexed size={14}>
