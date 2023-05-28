@@ -113,6 +113,7 @@ import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
 
+
 export const foundingBoardBios = [
   {
     name: "Liad Mudrik",

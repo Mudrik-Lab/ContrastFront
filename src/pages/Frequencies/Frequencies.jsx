@@ -87,8 +87,8 @@ export default function Frequencies() {
   for (let i = 0; i < data?.data.length; i++) {
     const item = data?.data[i];
     const objectsList = item.series;
-    const indexedObjects = objectsList.map((innerObject) => {
-      innerObject["index"] = i; // flatten the data structure & index each data point according to what cluster it was originally
+    const indexedObjects = objectsList.map(innerObject => {
+      innerObject["index"] = i ;    // flatten the data structure & index each data point according to what cluster it was originally
       return innerObject;
     });
     indexedDataList.push(indexedObjects);
@@ -97,6 +97,7 @@ export default function Frequencies() {
 
   const traces = [];
   graphData?.forEach((row) => {
+
     traces.push({
       type: "scatter",
       x: [row.start, row.end],
@@ -147,6 +148,7 @@ export default function Frequencies() {
       setSelectedTechniques(techniques);
     }
   }, [configSuccess]);
+
 
   return (
     <div>

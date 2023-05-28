@@ -92,6 +92,7 @@ export default function Timings() {
       })
   );
 
+
   let indexedDataList = [];
   let tagsForLegend = [];
   for (let i = 0; i < data?.data.length; i++) {
@@ -100,23 +101,25 @@ export default function Timings() {
     const indexedObjects = objectsList.map((innerObject) => {
       innerObject["index"] = i; // flatten the data structure & index each data point according to what cluster it was originally
       tagsForLegend.push(innerObject["name"]); // add tag name to legend
+
       return innerObject;
     });
     indexedDataList.push(indexedObjects);
   }
   const graphData = [].concat(...indexedDataList);
 
+
   if (tagsForLegend[tagsForLegend.length - 1] === undefined) {
     tagsForLegend.pop();
   }
   const legendSet = new Set(tagsForLegend);
   const legendArray = [...legendSet];
+
   const TimingsColors = blueToYellow(legendArray.length);
 
   const traces = [];
   graphData?.forEach((row) => {
     const colorIndex = legendArray.indexOf(row.name);
-
     traces.push({
       type: "scatter",
       x: [row.start, row.end],
@@ -283,10 +286,11 @@ export default function Timings() {
                     height: screenHeight - 400,
                     margin: { autoexpand: true, l: 50 },
                     legend: { itemwidth: 15, font: { size: 18 } },
-                    showlegend: false,
+                    
+                  showlegend: false,
 
                     yaxis: {
-                      title: "Experiment",
+                      title: "Experiments",
                       zeroline: false, // hide the zeroline
                       zerolinecolor: "#969696", // customize the color of the zeroline
                       zerolinewidth: 2, // customize the width of the zeroline
@@ -300,8 +304,9 @@ export default function Timings() {
                   }}
                 />
                 {!isMoblile && screenHeight > 500 && (
+
                   <div
-                    className="absolute top-52 right-2 h-[300px] overflow-y-scroll"
+                    className="absolute top-52 right-2 overflow-y-scroll"
                     style={{ height: screenHeight - 610 }}>
                     {blueToYellow(legendArray.length).map((color, index) => (
                       <div
@@ -314,6 +319,7 @@ export default function Timings() {
                         <Text sm>{Object.values(legendArray)[index]}</Text>
                       </div>
                     ))}
+
                   </div>
                 )}
               </div>
