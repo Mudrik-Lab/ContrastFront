@@ -102,9 +102,9 @@ export default function WorldMap() {
       text: data?.data.map((row) => row.country_name),
       z: data?.data.map((row) => row.total),
       colorscale: [
-        [0.0, "rgb(75, 56, 86)"],
-        [0.25, "rgb(108, 91, 127)"],
-        [0.5, "rgb(161,113,255)"],
+        [0.0, "rgb(100, 56, 110)"],
+        [0.25, "rgb(88,58,136)"],
+        [0.5, "rgb(161,113,240)"],
         [0.75, "rgb(194,123,255)"],
         [1.0, "rgb(252,208,255)"],
       ],

@@ -531,6 +531,23 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
+                    <Select
+                      menuPlacement="top"
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={measures}
+                      options={measuresArr}
+                      placeholder="Measures"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "measures",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
 
                     <Select
                       styles={selectStyles}
@@ -543,22 +560,6 @@ export default function FreeQueriesBar() {
                         buildUrlForMultiSelect(
                           e,
                           "finding_tags_families",
-                          searchParams,
-                          navigate
-                        );
-                      }}
-                    />
-                    <Select
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={theoryDriven}
-                      options={theoryDrivenArr}
-                      placeholder="Theory Driven"
-                      onChange={(e) => {
-                        buildUrlForMultiSelect(
-                          e,
-                          "theory_driven",
                           searchParams,
                           navigate
                         );
@@ -582,6 +583,23 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
+
+                    <Select
+                      styles={selectStyles}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={theoryDriven}
+                      options={theoryDrivenArr}
+                      placeholder="Theory Driven"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "theory_driven",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
                     <Select
                       menuPlacement="top"
                       styles={selectStyles}
@@ -599,24 +617,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                    <Select
-                      menuPlacement="top"
-                      styles={selectStyles}
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={measures}
-                      options={measuresArr}
-                      placeholder="Measures"
-                      onChange={(e) => {
-                        buildUrlForMultiSelect(
-                          e,
-                          "measures",
-                          searchParams,
-                          navigate
-                        );
-                      }}
-                    />
-                    <Spacer height={120} />
                   </>
                 )}{" "}
               </div>

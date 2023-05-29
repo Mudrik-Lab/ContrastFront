@@ -7,7 +7,7 @@ export default function PageTemplate({ graph, control }) {
   const containerStyle = {
     display: "grid",
     gridTemplateColumns: isMoblile ? "1fr" : "370px 1fr",
-    gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "80px 1fr 100px",
+    gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "80px 1fr 81px",
     gridTemplateAreas: isMoblile
       ? `
     "navbar "
@@ -21,29 +21,25 @@ export default function PageTemplate({ graph, control }) {
           "footer footer"
         `,
     height: isMoblile ? "auto" : "100vh",
+    width: "100vw",
   };
 
   const navbarStyle = {
     gridArea: "navbar",
-    height: isMoblile ? "160px" : "80px",
   };
 
   const sidebarStyle = {
     gridArea: "sidebar",
-    width: isMoblile ? "100%" : "370px",
-    height: isMoblile ? "auto" : "calc(100vh - 161px)",
     // overflow: isMoblile ? "scroll" : "auto",
   };
 
   const mainStyle = {
     gridArea: "main",
-    // height: "auto",
     overflow: "scroll",
   };
 
   const footerStyle = {
     gridArea: "footer",
-    height: isMoblile ? "120px" : "80px",
   };
 
   return (

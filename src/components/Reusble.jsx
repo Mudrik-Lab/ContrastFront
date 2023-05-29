@@ -211,7 +211,9 @@ export const SideControl = ({ children, headline }) => {
 
   return (
     <div
-      className={classNames(`side-filter-box p-2 flex flex-col items-center`)}
+      className={classNames(
+        `side-filter-box p-2 flex flex-col items-center overflow-y-scroll h-full`
+      )}
       style={{
         width: isMoblile ? "100%" : sideWidth,
         maxHeight: isMoblile ? "400px" : "100%",
