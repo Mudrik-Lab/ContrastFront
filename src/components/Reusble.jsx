@@ -214,7 +214,7 @@ export const SideControl = ({ children, headline }) => {
       className="side-filter-box p-2 flex flex-col items-center"
       style={{
         width: isMoblile ? "100%" : sideWidth,
-        maxHeight: isMoblile ? "400px" : "calc(100vh - 200px)",
+        maxHeight: isMoblile ? "400px" : "100vh",
       }}>
       <div className="p-4">
         <Text size={28} weight="bold" color="blue" center>

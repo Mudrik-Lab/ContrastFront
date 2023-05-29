@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  screenHeight,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -279,8 +280,8 @@ export default function ParametersDistributionPie() {
                     data={initialGraphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      width: screenWidth / 2,
-                      height: screenWidth / 2,
+                      width: screenHeight,
+                      height: screenHeight,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}
@@ -293,10 +294,9 @@ export default function ParametersDistributionPie() {
                     data={graphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      width: isMoblile ? screenWidth : 1200,
-                      height: isMoblile ? screenWidth : 1000,
+                      width: screenHeight,
+                      height: screenHeight,
                       showlegend: false,
-
                       annotations: [{ showarrow: false, text: "" }],
                     }}
                   />

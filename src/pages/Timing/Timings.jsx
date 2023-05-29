@@ -281,7 +281,7 @@ export default function Timings() {
           </SideControl>
         }
         graph={
-          <div className=" overflow-auto h-full">
+          <div style={{ height: "calc(100% - 100px)" }}>
             <TopGraphText
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
@@ -324,15 +324,17 @@ export default function Timings() {
                 />
                 {!isMoblile && screenHeight > 500 && (
                   <div
-                    className=" overflow-y-scroll "
-                    style={{ height: "calc(100% - 200px)" }}>
+                    style={{
+                      height: "calc(100% - 200px)",
+                      marginTop: "50px",
+                    }}>
                     {blueToYellow(legendArray.length).map((color, index) => (
                       <div
                         key={index}
-                        className="flex justify-start items-end gap-2"
+                        className="flex justify-start items-center gap-2 "
                         id="color">
                         <div
-                          className="w-2 h-2 sm:w-4 sm:h-4 mt-2 "
+                          className="w-3 h-3  "
                           style={{ backgroundColor: color }}></div>
                         <p className="text-[10px] sm:text-[12px]">
                           {Object.values(legendArray)[index]}

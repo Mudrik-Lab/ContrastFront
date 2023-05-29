@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { isMoblile, screenWidth } from "../../Utils/HardCoded";
+import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import {
   FilterExplanation,
   RangeInput,
@@ -230,8 +230,8 @@ export default function TheoryDriven() {
                 data={initialGraphData}
                 config={{ displayModeBar: !isMoblile }}
                 layout={{
-                  width: isMoblile ? screenWidth : 1200,
-                  height: isMoblile ? screenWidth : 1000,
+                  width: isMoblile ? screenWidth : screenHeight,
+                  height: isMoblile ? screenWidth : screenHeight,
                   showlegend: false,
                   annotations: [{ showarrow: false, text: "" }],
                 }}
