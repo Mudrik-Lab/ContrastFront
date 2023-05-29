@@ -102,6 +102,7 @@ export default function Frequencies() {
       x: [row.start, row.end],
       y: [row.index, row.index],
       name: row.name,
+
       marker: { size: 3, color: FrequenciesColors[row.name] },
       opacity: 1,
       line: {

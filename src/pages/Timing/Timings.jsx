@@ -281,7 +281,7 @@ export default function Timings() {
           </SideControl>
         }
         graph={
-          <div className="overflow-x-scroll">
+          <div className=" overflow-auto h-full">
             <TopGraphText
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
@@ -290,14 +290,20 @@ export default function Timings() {
             {isLoading ? (
               <Spinner />
             ) : (
-              <div className="relative ">
+              <div className=" w-full h-full flex gap-2">
                 <Plot
                   data={traces}
                   config={{ displayModeBar: !isMoblile, responsive: true }}
+                  style={{
+                    width: "calc(100% - 200px)",
+                    height: "calc(100% - 200px)",
+                  }}
                   layout={{
-                    width: isMoblile ? screenWidth : screenWidth - 600,
-                    height: screenHeight - 400,
-                    margin: { autoexpand: true, l: 50 },
+                    // width: isMoblile ? screenWidth : screenWidth - 600,
+                    // height: screenHeight - 400,
+                    // margin: { autoexpand: true, l: 50 },
+
+                    autosize: true,
                     legend: { itemwidth: 15, font: { size: 18 } },
 
                     showlegend: false,
@@ -318,17 +324,19 @@ export default function Timings() {
                 />
                 {!isMoblile && screenHeight > 500 && (
                   <div
-                    className="absolute top-52 right-2 overflow-y-scroll"
-                    style={{ height: screenHeight - 610 }}>
+                    className=" overflow-y-scroll "
+                    style={{ height: "calc(100% - 200px)" }}>
                     {blueToYellow(legendArray.length).map((color, index) => (
                       <div
                         key={index}
                         className="flex justify-start items-end gap-2"
                         id="color">
                         <div
-                          className="w-4 h-4 mt-2 "
+                          className="w-2 h-2 sm:w-4 sm:h-4 mt-2 "
                           style={{ backgroundColor: color }}></div>
-                        <Text sm>{Object.values(legendArray)[index]}</Text>
+                        <p className="text-[10px] sm:text-[12px]">
+                          {Object.values(legendArray)[index]}
+                        </p>
                       </div>
                     ))}
                   </div>
