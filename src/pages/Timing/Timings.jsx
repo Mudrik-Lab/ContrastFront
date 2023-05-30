@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -118,18 +120,21 @@ export default function Timings() {
   const traces = [];
   graphData?.forEach((row) => {
     const colorIndex = legendArray.indexOf(row.name);
+    const hovertemplate = `${row.start} - ${row.end} <br> ${row.name} <extra></extra>`;
     traces.push({
       type: "scatter",
       x: [row.start, row.end],
       y: [row.index, row.index],
       name: row.name,
+      hovertemplate: hovertemplate,
+      textinfo: "name",
+      hovertext: row.name,
       marker: { size: 3, color: TimingsColors[colorIndex] },
       opacity: 1,
       line: {
         width: 3,
         color: TimingsColors[colorIndex],
       },
-      legendrank: TimingsColors[colorIndex],
     });
   });
 
@@ -278,6 +283,10 @@ export default function Timings() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
+            <Spacer height={20} />
+            <ButtonReversed onClick={() => navigate("/" + pageName)}>
+              Reset all filters to default
+            </ButtonReversed>
           </SideControl>
         }
         graph={
@@ -286,7 +295,6 @@ export default function Timings() {
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
             />
-
             {isLoading ? (
               <Spinner />
             ) : (
@@ -296,18 +304,12 @@ export default function Timings() {
                   config={{ displayModeBar: !isMoblile, responsive: true }}
                   style={{
                     width: "calc(100% - 200px)",
-                    height: "calc(100% - 200px)",
+                    height: "calc(100% - 100px)",
                   }}
                   layout={{
-                    // width: isMoblile ? screenWidth : screenWidth - 600,
-                    // height: screenHeight - 400,
-                    // margin: { autoexpand: true, l: 50 },
-
                     autosize: true,
                     legend: { itemwidth: 15, font: { size: 18 } },
-
                     showlegend: false,
-
                     yaxis: {
                       title: "Experiments",
                       zeroline: false, // hide the zeroline

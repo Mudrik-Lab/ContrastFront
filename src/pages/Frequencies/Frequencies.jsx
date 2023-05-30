@@ -2,9 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -14,10 +16,7 @@ import Plot from "react-plotly.js";
 import {
   FrequenciesColors,
   isMoblile,
-  screenHeight,
-  screenWidth,
   sideSectionClass,
-  sideWidth,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getFrequencies from "../../apiHooks/getFrequencyGraph";
@@ -231,6 +230,10 @@ export default function Frequencies() {
                     buildUrl(pageName, "theory_driven", e, navigate);
                   }}
                 />
+                <Spacer height={20} />
+                <ButtonReversed onClick={() => navigate("/" + pageName)}>
+                  Reset all filters to default
+                </ButtonReversed>
               </SideControl>
             }
             graph={

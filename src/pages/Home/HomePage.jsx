@@ -28,7 +28,7 @@ export default function HomePage() {
       <Navbar />
       <div
         style={containerStyle}
-        className="header h-[512px] py-20 px-28 mt-14 bg-no-repeat bg-cover bg-center ">
+        className="header sm:h-[512px] py-20 px-28 mt-14 bg-no-repeat bg-cover bg-center ">
         <div className="headline w-full">
           <h1 className="text-white text-5xl font-bold mb-10">
             {" "}

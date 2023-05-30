@@ -4,7 +4,7 @@ import { ReactComponent as Profile } from "../../assets/icons/profile-negative-i
 
 export default function CommunityBox() {
   return (
-    <div className="community-box w-144 bg-grayLight mx-auto flex justify-between items-start gap-8 p-8">
+    <div className="community-box sm:w-144 bg-grayLight mx-auto flex justify-between items-start gap-8 p-8">
       <div className="flex flex-col justify-between h-full gap-32 ">
         <Text color="grayHeavy" size={32} weight="bold" lineHeight={8}>
           Be A Part Of The ConTraSt Community

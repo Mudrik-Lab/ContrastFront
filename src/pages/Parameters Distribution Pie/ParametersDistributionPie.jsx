@@ -9,10 +9,12 @@ import {
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -96,7 +98,7 @@ export default function ParametersDistributionPie() {
       labels: labels1,
       type: "pie",
       textinfo: "label+number",
-      hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
+      hovertemplate: "%{label}: %{value} <extra></extra>",
       textposition: "inside",
       insidetextorientation: "radial",
       hole: 0.1,
@@ -151,7 +153,7 @@ export default function ParametersDistributionPie() {
         labels: [rawTextToShow(secondaryData.series_name)],
         sort: false,
         type: "pie",
-        hovertemplate: "<extra></extra>",
+        hovertemplate: "%{label} <extra></extra>",
         textinfo: "label",
         textfont: { size: 30 },
         textposition: "inside",
@@ -170,8 +172,8 @@ export default function ParametersDistributionPie() {
         labels: secondaryData.series.map((row) => row.key),
         sort: false,
         type: "pie",
-        hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
-        textinfo: "label+value+percent",
+        hovertemplate: "%{label}: %{value} <extra></extra>",
+        textinfo: "label+value",
         hole: 0.4,
         textposition: "inside",
         domain: { x: [0, 1], y: [0, 1] },
@@ -258,6 +260,10 @@ export default function ParametersDistributionPie() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
+          <Spacer height={20} />
+          <ButtonReversed onClick={() => navigate("/" + pageName)}>
+            Reset all filters to default
+          </ButtonReversed>
         </SideControl>
       }
       graph={

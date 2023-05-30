@@ -3,10 +3,12 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -80,8 +82,7 @@ export default function Journals() {
     type: "bar",
     orientation: "h",
     marker: {
-      color:
-        designerColors[Math.floor(Math.random() * (designerColors.length - 1))],
+      color: designerColors[46],
     },
   };
 
@@ -164,6 +165,10 @@ export default function Journals() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
+            <Spacer height={20} />
+            <ButtonReversed onClick={() => navigate("/" + pageName)}>
+              Reset all filters to default
+            </ButtonReversed>
           </SideControl>
         }
         graph={

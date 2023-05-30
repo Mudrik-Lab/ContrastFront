@@ -113,18 +113,16 @@ import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
 
-
 export const foundingBoardBios = [
   {
     name: "Liad Mudrik",
     image: Liad,
-    text: "School of Psychological Sciences and Sagol School of Neuroscience,Tel Aviv University.",
+    text: "School of Psychological Sciences and Sagol School of Neuroscience, Tel Aviv University.",
     website: "https://mudriklab.tau.ac.il",
   },
   {
     name: "Stephen Fleming",
     image: Steve,
-    title: "Professor of Cognitive Neuroscience",
     text: "University College London",
     website: "https://metacoglab.org/",
   },
@@ -143,7 +141,6 @@ export const foundingBoardBios = [
   {
     name: "Axel Cleeremans",
     image: Axel,
-    title: "Director",
     text: "Center for Research in Cognition & Neurosciences, Université libre de Bruxelles (BELGIUM)",
     website: "https://axc.ulb.be/",
   },
@@ -163,8 +160,13 @@ export const foundingBoardBios = [
   {
     name: "Ned Block",
     image: Ned,
-    title: "Silver Professor",
     text: "Departments of Philosophy, Psychology, and Center for Neural Science New York University",
     website: "https://www.nedblock.us",
+  },
+  {
+    name: "Itay Yaron",
+    image: "",
+    text: "",
+    website: "",
   },
 ];

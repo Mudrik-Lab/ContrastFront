@@ -8,6 +8,7 @@ import {
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
@@ -190,7 +191,10 @@ export default function ParametersDistributionTheoriesComparison() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
-          <Spacer height={10} />
+          <Spacer height={20} />
+          <ButtonReversed onClick={() => navigate("/" + pageName)}>
+            Reset all filters to default
+          </ButtonReversed>
         </SideControl>
       }
       graph={
@@ -199,10 +203,7 @@ export default function ParametersDistributionTheoriesComparison() {
             text={graphsHeaders[1].figureText}
             firstLine={graphsHeaders[1].figureLine}
           />
-          <div
-            className="four-wheels mx-auto max-w-[1100px] "
-            // style={{ maxWidth: "calc(100% / 2 )" }}
-          >
+          <div className="four-wheels mx-auto max-w-[1800px] ">
             {isLoading ? (
               <Spinner />
             ) : (
@@ -219,6 +220,7 @@ export default function ParametersDistributionTheoriesComparison() {
                         breakLongLines(rawTextToShow(row.key))
                       ),
                       type: "pie",
+                      hovertemplate: "%{label}: %{value} <extra></extra>",
                       textinfo: "label+number",
                       textposition: "inside",
                       hole: 0.4,
