@@ -211,10 +211,10 @@ export const SideControl = ({ children, headline }) => {
 
   return (
     <div
-      className={classNames(`side-filter-box p-2 flex flex-col items-center`)}
+      className="side-filter-box p-2 flex flex-col items-center"
       style={{
         width: isMoblile ? "100%" : sideWidth,
-        maxHeight: isMoblile ? "400px" : "100%",
+        maxHeight: isMoblile ? "400px" : "100vh",
       }}>
       <div className="p-4">
         <Text size={28} weight="bold" color="blue" center>

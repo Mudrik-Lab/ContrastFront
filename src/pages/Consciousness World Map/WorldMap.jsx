@@ -102,9 +102,9 @@ export default function WorldMap() {
       text: data?.data.map((row) => row.country_name),
       z: data?.data.map((row) => row.total),
       colorscale: [
-        [0.0, "rgb(75, 56, 86)"],
-        [0.25, "rgb(108, 91, 127)"],
-        [0.5, "rgb(161,113,255)"],
+        [0.0, "rgb(100, 56, 110)"],
+        [0.25, "rgb(88,58,136)"],
+        [0.5, "rgb(161,113,240)"],
         [0.75, "rgb(194,123,255)"],
         [1.0, "rgb(252,208,255)"],
       ],
@@ -190,10 +190,10 @@ export default function WorldMap() {
       font: { color: "#ffffff" },
     },
 
-    width: isMoblile ? screenWidth : screenWidth - 450,
-    height: isMoblile ? screenWidth : screenHeight - 360,
+    // width: isMoblile ? screenWidth : screenWidth - 450,
+    // height: isMoblile ? screenWidth : screenHeight - 360,
     showlegend: false,
-    autosize: false,
+    autosize: true,
   };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -290,7 +290,7 @@ export default function WorldMap() {
             </SideControl>
           }
           graph={
-            <div>
+            <div style={{ width: "100%", height: "calc(100% - 100px)" }}>
               <TopGraphText
                 text={graphsHeaders[10].figureText}
                 firstLine={graphsHeaders[10].figureLine}
@@ -300,8 +300,9 @@ export default function WorldMap() {
               ) : (
                 <Plot
                   data={graphData}
+                  style={{ width: "100%", height: "100%" }}
                   layout={layout}
-                  config={{ displayModeBar: !isMoblile }}
+                  config={{ displayModeBar: !isMoblile, responsive: true }}
                 />
               )}
             </div>

@@ -102,6 +102,7 @@ export default function Frequencies() {
       x: [row.start, row.end],
       y: [row.index, row.index],
       name: row.name,
+
       marker: { size: 3, color: FrequenciesColors[row.name] },
       opacity: 1,
       line: {
@@ -233,7 +234,7 @@ export default function Frequencies() {
               </SideControl>
             }
             graph={
-              <div>
+              <div style={{ height: "calc(100% - 100px)" }}>
                 <TopGraphText
                   text={graphsHeaders[7].figureText}
                   firstLine={graphsHeaders[7].figureLine}
@@ -242,40 +243,56 @@ export default function Frequencies() {
                 {isLoading ? (
                   <Spinner />
                 ) : (
-                  <Plot
-                    data={traces}
-                    config={{ displayModeBar: !isMoblile }}
-                    layout={{
-                      autosize: false,
-                      barmode: "stack",
-                      width: isMoblile
-                        ? screenWidth
-                        : screenWidth - sideWidth - 300,
-                      height: screenHeight - 360,
+                  <div className="h-full flex gap-4 items-center">
+                    <Plot
+                      data={traces}
+                      style={{ width: "100%", height: "100%" }}
+                      config={{ displayModeBar: !isMoblile, responsive: true }}
+                      layout={{
+                        autosize: true,
+                        barmode: "stack",
+                        // width: isMoblile
+                        //   ? screenWidth
+                        //   : screenWidth - sideWidth - 300,
+                        // height: screenHeight - 360,
 
-                      margin: { autoexpand: true, l: 50 },
-                      showlegend: false,
-                      yaxis: {
-                        zeroline: false, // hide the zeroline
-                        zerolinecolor: "#969696", // customize the color of the zeroline
-                        zerolinewidth: 2, // customize the width of the zeroline
-                      },
-                      xaxis: {
-                        title: " Frequency (Hz)",
-                        zeroline: false, // hide the zeroline
-                        zerolinecolor: "#969696", // customize the color of the zeroline
-                        zerolinewidth: 2, // customize the width of the zeroline
-                      },
-                    }}
-                  />
+                        margin: { autoexpand: true, l: 50 },
+                        showlegend: false,
+                        yaxis: {
+                          zeroline: false, // hide the zeroline
+                          zerolinecolor: "#969696", // customize the color of the zeroline
+                          zerolinewidth: 2, // customize the width of the zeroline
+                        },
+                        xaxis: {
+                          title: " Frequency (Hz)",
+                          zeroline: false, // hide the zeroline
+                          zerolinecolor: "#969696", // customize the color of the zeroline
+                          zerolinewidth: 2, // customize the width of the zeroline
+                        },
+                      }}
+                    />
+                    <div className="mr-20">
+                      {Object.values(FrequenciesColors).map((color, index) => (
+                        <div
+                          className="flex justify-start items-center gap-2 mt-3"
+                          id="color"
+                          key={color}>
+                          <div
+                            className="w-5 h-5 "
+                            style={{ backgroundColor: color }}></div>
+                          <Text>{Object.keys(FrequenciesColors)[index]}</Text>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
                 )}
               </div>
             }
           />
 
-          {!isMoblile && screenHeight > 500 && (
+          {/* {!isMoblile && screenHeight > 500 && (
             <div
-              className=" fixed top-52 right-24 "
+              className=" fixed top-52 right-24 h-[150px]"
               style={{ height: screenHeight - 150 }}>
               {Object.values(FrequenciesColors).map((color, index) => (
                 <div
@@ -289,7 +306,7 @@ export default function Frequencies() {
                 </div>
               ))}
             </div>
-          )}
+          )} */}
         </div>
       )}
     </div>

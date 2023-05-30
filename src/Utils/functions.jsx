@@ -71,19 +71,30 @@ export function showTextToRaw(text) {
   );
   return rawWords.join("_");
 }
-export function breakLongLines(text) {
-  const words = text.split(" ");
-  let line = "";
-  const lines = words.map((word, index) => {
-    if (line.length + word.length > 10) {
-      line = word;
-      return `<br />${line}`;
+export function breakLongLines(sentence, chunkSize) {
+  const words = sentence.split(" "); // Split the sentence into individual words
+  let result = "";
+  let currentChunk = "";
+
+  for (let i = 0; i < words.length; i++) {
+    const word = words[i];
+
+    if (currentChunk.length + word.length <= chunkSize) {
+      // Add the word to the current chunk
+      currentChunk += (currentChunk ? " " : "") + word;
     } else {
-      line += (index > 0 ? " " : "") + word;
-      return line;
+      // Start a new chunk
+      result += (result ? "<br />" : "") + currentChunk;
+      currentChunk = word;
     }
-  });
-  return lines.join(" ");
+  }
+
+  if (currentChunk) {
+    // Add the last chunk
+    result += (result ? "<br />" : "") + currentChunk;
+  }
+
+  return result;
 }
 
 export function hexToRgba(hexColor) {

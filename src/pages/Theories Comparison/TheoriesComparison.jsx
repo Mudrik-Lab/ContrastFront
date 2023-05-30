@@ -127,7 +127,6 @@ export default function ParametersDistributionTheoriesComparison() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
-
   return (
     <PageTemplate
       control={
@@ -201,7 +200,7 @@ export default function ParametersDistributionTheoriesComparison() {
             firstLine={graphsHeaders[1].figureLine}
           />
           <div
-            className="four-wheels 2xl:mx-auto "
+            className="four-wheels mx-auto max-w-[1100px] "
             // style={{ maxWidth: "calc(100% / 2 )" }}
           >
             {isLoading ? (
@@ -229,10 +228,10 @@ export default function ParametersDistributionTheoriesComparison() {
                       },
                     },
                   ]}
-                  config={{ displayModeBar: !isMoblile }}
+                  config={{ displayModeBar: false }}
                   layout={{
-                    width: isMoblile ? screenWidth : (screenWidth - 400) / 2,
-                    height: isMoblile ? screenWidth : (screenWidth - 400) / 2,
+                    width: isMoblile ? screenWidth : screenWidth / 3,
+                    height: isMoblile ? screenWidth : screenWidth / 3,
                     showlegend: false,
                     annotations: [
                       {

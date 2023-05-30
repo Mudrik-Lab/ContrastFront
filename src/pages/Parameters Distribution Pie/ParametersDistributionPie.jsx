@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  screenHeight,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -108,7 +109,7 @@ export default function ParametersDistributionPie() {
     // outside pie
     {
       direction: "clockwise",
-      insidetextorientation: "tangential",
+      insidetextorientation: "radial",
       values: values2,
       labels: labels2,
       sort: false,
@@ -170,7 +171,7 @@ export default function ParametersDistributionPie() {
         sort: false,
         type: "pie",
         hovertemplate: "%{label}: %{value}<br> %{percent} <extra></extra>",
-        textinfo: "label+percent",
+        textinfo: "label+value+percent",
         hole: 0.4,
         textposition: "inside",
         domain: { x: [0, 1], y: [0, 1] },
@@ -279,8 +280,8 @@ export default function ParametersDistributionPie() {
                     data={initialGraphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      width: isMoblile ? screenWidth : 1200,
-                      height: isMoblile ? screenWidth : 1000,
+                      width: screenHeight,
+                      height: screenHeight,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}
@@ -293,10 +294,9 @@ export default function ParametersDistributionPie() {
                     data={graphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      width: isMoblile ? screenWidth : 1200,
-                      height: isMoblile ? screenWidth : 1000,
+                      width: screenHeight,
+                      height: screenHeight,
                       showlegend: false,
-
                       annotations: [{ showarrow: false, text: "" }],
                     }}
                   />
