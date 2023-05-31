@@ -1,8 +1,11 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
 import { ReactComponent as Graph } from "../../assets/icons/submit.svg";
+import { ReactComponent as Message } from "../../assets/icons/message.svg";
+import { ReactComponent as Light } from "../../assets/icons/lightball.svg";
+import { ReactComponent as Paper } from "../../assets/icons/paper.svg";
 
-import { Text, Spacer, Button } from "../../components/Reusble";
+import { Text, Spacer, Button, ButtonReversed } from "../../components/Reusble";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
 import { navHeight } from "../../Utils/HardCoded";
@@ -16,7 +19,18 @@ export default function ContactPage() {
         <Text size={57} color="blue" center>
           Contact ConTraSt
         </Text>
-        <div className=" contact-box mx-auto shadow-lg flex flex-col p-4">
+        <div className=" contact-box mx-auto shadow-lg flex gap-4 px-5 py-5 ">
+          <Button>
+            <Message /> Give Us Feedback
+          </Button>
+          <ButtonReversed>
+            <Paper /> Vet A Paper
+          </ButtonReversed>
+          <ButtonReversed>
+            <Light /> Suggest A Feature
+          </ButtonReversed>
+        </div>
+        <div className=" contact-box mx-auto shadow-lg flex flex-col p-5">
           <div className="flex justify-between gap-3">
             <div className="p-2 w-full">
               <Text color="blue" weight="bold">

@@ -38,13 +38,11 @@ export default function ConTraStUseCases() {
     },
   ];
   return (
-    <div
-      style={{ width: "calc(384px*2 + 48px )" }}
-      className=" w-256 mx-auto my-20 flex flex-col items-center gap-8 ">
+    <div className=" sm:w-256 mx-auto my-20 flex flex-col items-center gap-8 ">
       <h1 className="text-5xl ">ConTraSt Use Cases</h1>
-      <div className="ConTraStUseCases flex flex-wrap gap-12 justify-center">
+      <div className="ConTraStUseCases sm:flex sm:flex-wrap gap-12 justify-center mx-auto">
         {cardsInfo.map((card) => (
-          <div className="card shadow-xl flex flex-col justify-center p-6 w-96">
+          <div className="card shadow-xl flex flex-col justify-center p-6 w-96 mt-2 sm:mt-0">
             <img src={card.image} alt="" />
             <Text center lg weight="bold">
               {card.headline}
@@ -52,18 +50,6 @@ export default function ConTraStUseCases() {
             <Text>{card.text}</Text>
           </div>
         ))}
-        {/* <div className="simply-fun border bg-grayLight py-6 w-full">
-          <Text center lg weight="bold">
-            Simply have fun
-          </Text>
-          <div className="px-40 mt-4">
-            <Text center>
-              This website allows researchers to conduct queries and examine
-              trends in empirical papers that either tested or mentioned at
-              least one of the following theories of consciousness :{" "}
-            </Text>
-          </div>
-        </div> */}
       </div>
 
       <div className="footer flex justify-center items-center gap-6">

@@ -10,7 +10,7 @@ export default function PapersIconsMenu() {
   const navigate = useNavigate();
 
   return (
-    <div className="papers-visual-items w-full mt-8 px-48">
+    <div className="papers-visual-items w-full mt-8 sm:px-48">
       <div className=" mx-auto p-4 flex flex-col items-center gap-6">
         <h1 className="text-4xl text-center">
           Conduct Queries And Visually Examine Trends In Empirical Papers

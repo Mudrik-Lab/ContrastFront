@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TopGraphText,
 } from "../../components/Reusble";
@@ -223,6 +225,10 @@ export default function ParametersDistributionBar() {
                   tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
                 />
               </div>
+              <Spacer height={20} />
+              <ButtonReversed onClick={() => navigate("/" + pageName)}>
+                Reset all filters to default
+              </ButtonReversed>
             </SideControl>
           }
           graph={

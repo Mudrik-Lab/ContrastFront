@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -226,7 +228,7 @@ export default function WorldMap() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-    const theoriesOnURL = queryParams.getAll("techniques");
+    const theoriesOnURL = queryParams.getAll("theory");
     if (configSuccess) {
       if (theoriesOnURL.length === 0) {
         buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
@@ -287,6 +289,10 @@ export default function WorldMap() {
                   buildUrl(pageName, "theory_driven", e, navigate);
                 }}
               />
+              <Spacer height={20} />
+              <ButtonReversed onClick={() => navigate("/" + pageName)}>
+                Reset all filters to default
+              </ButtonReversed>
             </SideControl>
           }
           graph={

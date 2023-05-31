@@ -67,22 +67,27 @@ export default function AboutPage() {
               </a>
             </Text>
           </div>
-          <div className=" openSource-box w-[815px] bg-grayLight flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
-            <div className="w-[210px]">
+          <div className=" openSource-box max-w-[815px] bg-grayLight sm:flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
+            <div className="w-[165px]">
               <Text className={"leading-8 break-keep"} weight="bold" size={30}>
                 We Are <br /> Open Source
               </Text>
             </div>
 
-            <div className="w-[346px]">
+            <div className="max-w-[390px]">
               <Text md>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam
-                commodo faucibus lacus quis laoreet.{" "}
+                We believe in open-science! In this link, you can find our full
+                database and the codes for creating the queries
               </Text>
             </div>
             <div className=" border-r border-black h-16"></div>
-            <div className=" flex flex-row w-[170px">
-              <Button style={{ fontSize: "14px" }} black>
+            <div className=" flex flex-row ">
+              <Button
+                style={{ fontSize: "14px" }}
+                black
+                onClick={() =>
+                  window.open("https://github.com/Mudrik-Lab/Contrast2")
+                }>
                 <Github /> Get Source Code
               </Button>
             </div>

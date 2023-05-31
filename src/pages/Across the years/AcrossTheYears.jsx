@@ -3,10 +3,12 @@ import React, { useEffect, useState } from "react";
 import Plot from "react-plotly.js";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
@@ -139,6 +141,10 @@ export default function AcrossTheYears() {
                 buildUrl(pageName, "is_reporting", e, navigate);
               }}
             />
+            <Spacer height={20} />
+            <ButtonReversed onClick={() => navigate("/" + pageName)}>
+              Reset all filters to default
+            </ButtonReversed>
           </SideControl>
         }
         graph={

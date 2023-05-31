@@ -2,10 +2,12 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
+  Spacer,
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
@@ -85,13 +87,15 @@ export default function TheoryDriven() {
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  const initialGraphData = [
+  const graphData = [
     {
+      //inner
       direction: "clockwise",
       insidetextorientation: "radial",
       values: values1,
       labels: labels1.map((label) => rawTextToShow(label)),
       type: "pie",
+      hovertemplate: "%{label}: %{value} <extra></extra>",
       textinfo: "label+number",
       textposition: "inside",
       automargin: true,
@@ -108,12 +112,14 @@ export default function TheoryDriven() {
       },
     },
     {
+      //outer
       direction: "clockwise",
       insidetextorientation: "tangential",
       values: values2,
       labels: labels2,
       sort: false,
       type: "pie",
+      hovertemplate: "%{label}: %{value} <extra></extra>",
       textinfo: "label+value",
       hole: 0.4,
       textposition: "inside",
@@ -196,6 +202,10 @@ export default function TheoryDriven() {
             text="Interpretation"
             tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
           />
+          <Spacer height={20} />
+          <ButtonReversed onClick={() => navigate("/" + pageName)}>
+            Reset all filters to default
+          </ButtonReversed>
         </SideControl>
       }
       graph={
@@ -227,7 +237,7 @@ export default function TheoryDriven() {
                       )
                     : buildUrl(pageName, "theory_driven", "either", navigate);
                 }}
-                data={initialGraphData}
+                data={graphData}
                 config={{ displayModeBar: !isMoblile }}
                 layout={{
                   width: isMoblile ? screenWidth : screenHeight,

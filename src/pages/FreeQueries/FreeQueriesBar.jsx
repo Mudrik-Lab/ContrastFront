@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
+  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
@@ -585,6 +586,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
+                      menuPlacement="top"
                       styles={selectStyles}
                       closeMenuOnSelect={true}
                       isMulti={true}
@@ -620,6 +622,10 @@ export default function FreeQueriesBar() {
                   </>
                 )}{" "}
               </div>
+              <Spacer height={20} />
+              <ButtonReversed onClick={() => navigate("/" + pageName)}>
+                Reset all filters to default
+              </ButtonReversed>
             </SideControl>
           }
           graph={

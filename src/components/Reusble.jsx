@@ -3,14 +3,7 @@ import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 import { Tooltip } from "flowbite-react";
-import {
-  isMoblile,
-  navHeight,
-  screenHeight,
-  screenWidth,
-  sideSectionClass,
-  sideWidth,
-} from "../Utils/HardCoded";
+import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -27,8 +20,18 @@ export const Button = ({ extraClass, children, black, ...config }) => {
       className={classNames(
         `${extraClass} text-white text-md leading-4 font-bold ${
           black ? "bg-black" : "bg-blue"
-        } hover:bg-gray-500 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        } hover:bg-white hover:text-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
       )}
+      {...config}>
+      {children}
+    </button>
+  );
+};
+export const ButtonReversed = ({ children, ...config }) => {
+  return (
+    <button
+      className="
+         text-blue hover:text-white text-md leading-4 font-bold bg-white hover:bg-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap"
       {...config}>
       {children}
     </button>
@@ -158,15 +161,16 @@ export const Label = ({ children }) => {
   );
 };
 
-export const ResetButton = ({ handleReset }) => {
+export const ResetButton = ({ ...config }) => {
   return (
     <button
       className="text-blue border border-blue px-2 rounded-lg mt-2 shadow-sm"
-      onClick={handleReset}>
-      Reset to defaut
+      {...config}>
+      Reset all filters to defaut
     </button>
   );
 };
+
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
   useEffect(() => {
@@ -246,7 +250,8 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
       />
       <FilterExplanation
         text="Type of consciousness"
-        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, 
+        state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
       />
     </div>
   );
