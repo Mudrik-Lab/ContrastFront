@@ -4,9 +4,11 @@ import Plot from "react-plotly.js";
 import Select from "react-select";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -141,10 +143,8 @@ export default function AcrossTheYears() {
                 buildUrl(pageName, "is_reporting", e, navigate);
               }}
             />
-            <Spacer height={20} />
-            <ButtonReversed onClick={() => navigate("/" + pageName)}>
-              Reset all filters to default
-            </ButtonReversed>
+            <CSV data={data} />
+            <Reset pageName={pageName} />
           </SideControl>
         }
         graph={

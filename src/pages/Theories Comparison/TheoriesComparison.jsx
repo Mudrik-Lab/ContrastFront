@@ -9,9 +9,11 @@ import {
 } from "../../Utils/HardCoded";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -55,7 +57,7 @@ export default function ParametersDistributionTheoriesComparison() {
         " " +
         theoryDriven +
         " " +
-        (interpretation === "true" ? "pro" : "challenges")
+        (interpretation === "true" ? "challenges" : "pro")
       }`,
     ],
     () =>
@@ -67,7 +69,7 @@ export default function ParametersDistributionTheoriesComparison() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: interpretation === "true" ? "pro" : "challenges",
+        interpretation: interpretation === "true" ? "challenges" : "pro",
       })
   );
 
@@ -159,14 +161,14 @@ export default function ParametersDistributionTheoriesComparison() {
           </div>
           <div className={sideSectionClass}>
             <div className="flex justify-center items-center gap-3 mt-3">
-              <Text>Challenges</Text>
+              <Text>Supports</Text>
               <Toggle
                 checked={interpretation === "true" ? true : false}
                 setChecked={(e) => {
                   buildUrl(pageName, "interpretation", e, navigate);
                 }}
               />
-              <Text>Supports</Text>
+              <Text>Challenges</Text>
             </div>
             <FilterExplanation
               text="Interpretation"
@@ -191,10 +193,9 @@ export default function ParametersDistributionTheoriesComparison() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
-          <Spacer height={20} />
-          <ButtonReversed onClick={() => navigate("/" + pageName)}>
-            Reset all filters to default
-          </ButtonReversed>
+          <CSV data={data} />
+          <Spacer height={40} />
+          <Reset pageName={pageName} />
         </SideControl>
       }
       graph={

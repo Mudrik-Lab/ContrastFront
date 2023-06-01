@@ -1,11 +1,18 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
+import {
+  isMoblile,
+  screenHeight,
+  screenWidth,
+  sideSectionClass,
+} from "../../Utils/HardCoded";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -46,7 +53,7 @@ export default function TheoryDriven() {
         " " +
         theoryDriven +
         " " +
-        (interpretation === "true" ? "pro" : "challenges")
+        (interpretation === "true" ? "challenges" : "pro")
       }`,
     ],
     () =>
@@ -56,7 +63,7 @@ export default function TheoryDriven() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: interpretation === "true" ? "pro" : "challenges",
+        interpretation: interpretation === "true" ? "challenges" : "pro",
       })
   );
 
@@ -186,26 +193,25 @@ export default function TheoryDriven() {
               buildUrl(pageName, "is_reporting", e, navigate);
             }}
           />
-
-          <div className="flex justify-center items-center gap-3 mt-3">
-            <Text>Challenges</Text>
-            <Toggle
-              checked={interpretation === "true" ? true : false}
-              setChecked={(e) => {
-                console.log(e);
-                buildUrl(pageName, "interpretation", e, navigate);
-              }}
+          <div className={sideSectionClass}>
+            <div className="flex justify-center items-center gap-3 mt-3">
+              <Text>Supports</Text>
+              <Toggle
+                checked={interpretation === "true" ? true : false}
+                setChecked={(e) => {
+                  console.log(e);
+                  buildUrl(pageName, "interpretation", e, navigate);
+                }}
+              />{" "}
+              <Text>Challenges</Text>
+            </div>
+            <FilterExplanation
+              text="Interpretation"
+              tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
             />
-            <Text>Supports</Text>
           </div>
-          <FilterExplanation
-            text="Interpretation"
-            tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
-          />
-          <Spacer height={20} />
-          <ButtonReversed onClick={() => navigate("/" + pageName)}>
-            Reset all filters to default
-          </ButtonReversed>
+          <CSV data={data} />
+          <Reset pageName={pageName} />
         </SideControl>
       }
       graph={

@@ -3,9 +3,11 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -192,8 +194,6 @@ export default function WorldMap() {
       font: { color: "#ffffff" },
     },
 
-    // width: isMoblile ? screenWidth : screenWidth - 450,
-    // height: isMoblile ? screenWidth : screenHeight - 360,
     showlegend: false,
     autosize: true,
   };
@@ -289,14 +289,13 @@ export default function WorldMap() {
                   buildUrl(pageName, "theory_driven", e, navigate);
                 }}
               />
-              <Spacer height={20} />
-              <ButtonReversed onClick={() => navigate("/" + pageName)}>
-                Reset all filters to default
-              </ButtonReversed>
+              <CSV data={data} />
+
+              <Reset pageName={pageName} />
             </SideControl>
           }
           graph={
-            <div style={{ width: "100%", height: "calc(100% - 100px)" }}>
+            <div style={{ width: "98%", height: "calc(100% - 100px)" }}>
               <TopGraphText
                 text={graphsHeaders[10].figureText}
                 firstLine={graphsHeaders[10].figureLine}

@@ -7,10 +7,10 @@ function App() {
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        staleTime: 120000, // Cache data for 2 minute
+        staleTime: 60 * 60000, // Cache data for 60 minute
         refetchOnMount: false, // Don't refetch data when the component mounts
         refetchOnWindowFocus: false, // Don't refetch data when the window regains focus
-        refetchInterval: 120000, // Refetch data every 120 seconds
+        refetchInterval: 60 * 60000, // Refetch data every 60 minute
       },
     },
   });

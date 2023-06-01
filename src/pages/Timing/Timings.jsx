@@ -3,8 +3,10 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -16,7 +18,6 @@ import Plot from "react-plotly.js";
 import {
   isMoblile,
   screenHeight,
-  screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
@@ -283,10 +284,9 @@ export default function Timings() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
-            <Spacer height={20} />
-            <ButtonReversed onClick={() => navigate("/" + pageName)}>
-              Reset all filters to default
-            </ButtonReversed>
+            <CSV data={data} />
+            <Spacer height={40} />
+            <Reset pageName={pageName} />
           </SideControl>
         }
         graph={
