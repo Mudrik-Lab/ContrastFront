@@ -132,7 +132,6 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
-    console.log(showTextToRaw(seriesName.label));
     const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
@@ -141,7 +140,6 @@ export default function ParametersDistributionPie() {
         row.series_name.toLowerCase() ===
           showTextToRaw(seriesName.label.toLowerCase())
     );
-    console.log(secondaryData);
 
     const color = seriesName.color;
 
@@ -186,7 +184,6 @@ export default function ParametersDistributionPie() {
       },
     ]);
   }
-  console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -280,7 +277,6 @@ export default function ParametersDistributionPie() {
                 {graphData[0].name !== "drilled" ? (
                   <Plot
                     onClick={(e) => {
-                      console.log(e);
                       secondaryPie(e.points[0]);
                     }}
                     data={initialGraphData}

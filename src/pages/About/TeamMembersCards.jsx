@@ -11,10 +11,10 @@ export default function TeamMembersCards() {
       <div className="flex flex-wrap justify-center w-[900px] px-24 my-6 gap-5 gap-y-7 mx-auto ">
         {foundingBoardBios
           .sort((a, b) => {
-            if (a.name < b.name) {
+            if (a.secondName < b.secondName) {
               return -1;
             }
-            if (a.name > b.name) {
+            if (a.secondName > b.secondName) {
               return 1;
             }
             return 0;

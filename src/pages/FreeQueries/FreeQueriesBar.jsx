@@ -9,7 +9,6 @@ import {
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
@@ -195,6 +194,7 @@ export default function FreeQueriesBar() {
       }`,
     ],
     () =>
+      selected.value &&
       getFreeQueries({
         breakdown: selected?.value,
         is_reporting: isReporting,
