@@ -12,6 +12,8 @@ import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
 import Footer from "../../components/Footer";
 import brain from "../../assets/images/XwW4T0UQ.jpeg";
+import mobileBrain from "../../assets/images/brain-prism-tall.jpg";
+import { isMoblile } from "../../Utils/HardCoded";
 
 export default function HomePage() {
   const navigate = useNavigate();
@@ -21,8 +23,9 @@ export default function HomePage() {
     copy(cite);
   };
   const containerStyle = {
-    backgroundImage: `url(${brain})`,
+    backgroundImage: `url(${isMoblile ? brain : brain})`,
   };
+  console.log(isMoblile);
   return (
     <div>
       <Navbar />
@@ -58,7 +61,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className="citing max-w-[830px] mx-auto mt-10">
-        <div className=" border cite-box bg-grayLight mx-auto flex justify-between items-center gap-2 p-4">
+        <div className=" border cite-box bg-grayLight mx-auto sm:flex justify-between items-center gap-2 p-4">
           <Quote />
           <Text>
             Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt

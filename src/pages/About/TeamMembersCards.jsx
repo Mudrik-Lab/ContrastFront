@@ -3,7 +3,7 @@ import { Text } from "../../components/Reusble";
 import ShowMoreText from "react-show-more-text";
 import { ReactComponent as Web } from "../../assets/icons/website.svg";
 import karine from "../../assets/images/Karine.jpg";
-import { foundingBoardBios } from "../../Utils/HardCoded";
+import { foundingBoardBios } from "../../Utils/FoundersBios";
 
 export default function TeamMembersCards() {
   return (

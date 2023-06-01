@@ -141,7 +141,7 @@ export default function WorldMap() {
         orientation: "h",
         x: 0.5,
         y: 0,
-        title: "Experiments<br>number",
+        title: "# of experiments",
       },
     },
     {
