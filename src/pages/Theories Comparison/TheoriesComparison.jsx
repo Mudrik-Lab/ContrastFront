@@ -8,7 +8,6 @@ import {
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
-  ButtonReversed,
   CSV,
   FilterExplanation,
   RangeInput,
@@ -61,7 +60,7 @@ export default function ParametersDistributionTheoriesComparison() {
       }`,
     ],
     () =>
-      selected &&
+      selected.value &&
       getExperimentsGraphs({
         graphName: "parameters_distribution_theories_comparison",
         breakdown: selected?.value,

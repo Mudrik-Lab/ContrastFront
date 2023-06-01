@@ -10,7 +10,6 @@ export default async function getExperimentsGraphs({
   theory_driven,
   interpretation,
 }) {
-  console.log(interpretation);
   return await queryApi({
     url: `studies/experiments_graphs/${graphName}/`,
     params: {

@@ -76,8 +76,11 @@ export default function AboutPage() {
 
             <div className="max-w-[390px]">
               <Text md>
-                We believe in open-science! In this link, you can find our full
-                database and the codes for creating the queries
+                We believe in open-science! In this link, you can find a CSV
+                file with all the data presented on this website and the code
+                for creating the queries and graphs. The data is licensed under
+                CC-BY-SA-4.0 creative commons open license and the code under
+                the GNU GPLv3 open source license
               </Text>
             </div>
             <div className=" border-r border-black h-16"></div>

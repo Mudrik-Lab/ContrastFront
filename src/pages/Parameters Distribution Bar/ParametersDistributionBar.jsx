@@ -2,13 +2,10 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
-  ButtonReversed,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
-  Button,
-  Spacer,
   Text,
   TopGraphText,
   CSV,
@@ -30,7 +27,6 @@ import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";
-import axios from "axios";
 
 export default function ParametersDistributionBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -71,8 +67,8 @@ export default function ParametersDistributionBar() {
       }`,
     ],
     () =>
-      selected &&
-      selectedParent &&
+      selected.value &&
+      selectedParent.value &&
       getExperimentsGraphs({
         graphName: "parameters_distribution_bar",
         breakdown: selected?.value,
