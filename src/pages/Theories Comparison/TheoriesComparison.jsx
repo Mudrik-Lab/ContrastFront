@@ -41,7 +41,7 @@ export default function ParametersDistributionTheoriesComparison() {
   const navigate = useNavigate();
   const pageName = "theories-comparison";
 
-  const { data, isLoading } = useQuery(
+  const { data, isLoading, isSuccess } = useQuery(
     [
       `parameters_distribution_theories_comparison${
         +" " +
@@ -208,7 +208,8 @@ export default function ParametersDistributionTheoriesComparison() {
               <Spinner />
             ) : (
               keysColors &&
-              chartsData.map((chart) => (
+              isSuccess &&
+              chartsData?.map((chart) => (
                 <Plot
                   key={chart.series_name}
                   data={[

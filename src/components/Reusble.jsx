@@ -250,8 +250,7 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
       />
       <FilterExplanation
         text="Type of consciousness"
-        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, 
-        state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
       />
     </div>
   );

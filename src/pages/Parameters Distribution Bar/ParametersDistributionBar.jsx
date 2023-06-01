@@ -254,6 +254,8 @@ export default function ParametersDistributionBar() {
                       title: "Number of experiments",
                       zeroline: true,
                       side: "top",
+                      tickmode: "linear",
+                      dtick: 10,
                       tickfont: {
                         size: 16,
                         standoff: 50,

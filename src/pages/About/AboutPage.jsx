@@ -86,7 +86,10 @@ export default function AboutPage() {
                 style={{ fontSize: "14px" }}
                 black
                 onClick={() =>
-                  window.open("https://github.com/Mudrik-Lab/Contrast2")
+                  window.open(
+                    "https://github.com/Mudrik-Lab/Contrast2",
+                    "_blank"
+                  )
                 }>
                 <Github /> Get Source Code
               </Button>
