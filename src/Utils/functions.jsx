@@ -1,3 +1,4 @@
+import { saveAs } from "file-saver";
 export function getRandomColor(numberOfColors) {
   var colors = [];
   for (var i = 0; i < numberOfColors; i++) {

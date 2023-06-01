@@ -3,8 +3,10 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -230,10 +232,9 @@ export default function Frequencies() {
                     buildUrl(pageName, "theory_driven", e, navigate);
                   }}
                 />
-                <Spacer height={20} />
-                <ButtonReversed onClick={() => navigate("/" + pageName)}>
-                  Reset all filters to default
-                </ButtonReversed>
+
+                <CSV data={data} />
+                <Reset pageName={pageName} />
               </SideControl>
             }
             graph={

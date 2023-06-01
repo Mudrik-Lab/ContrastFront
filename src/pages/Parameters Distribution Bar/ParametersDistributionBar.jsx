@@ -7,9 +7,12 @@ import {
   RangeInput,
   ReportFilter,
   SideControl,
+  Button,
   Spacer,
   Text,
   TopGraphText,
+  CSV,
+  Reset,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
@@ -27,6 +30,7 @@ import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";
+import axios from "axios";
 
 export default function ParametersDistributionBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -35,6 +39,7 @@ export default function ParametersDistributionBar() {
   const [reporting, setReporting] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [isStacked, setIsStacked] = React.useState(true);
+  const [isCsv, setIsCsv] = React.useState(false);
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-bar";
@@ -61,7 +66,8 @@ export default function ParametersDistributionBar() {
         " " +
         reporting +
         " " +
-        experimentsNum
+        experimentsNum +
+        isCsv
       }`,
     ],
     () =>
@@ -73,14 +79,14 @@ export default function ParametersDistributionBar() {
         theory: selectedParent?.value,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
+        is_csv: isCsv,
       })
   );
+  const X1 = data?.data?.map((row) => row.series[0].value).reverse();
 
-  const X1 = data?.data.map((row) => row.series[0].value).reverse();
+  const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
 
-  const Y = data?.data.map((row) => rawTextToShow(row.series_name)).reverse();
-
-  const X2 = data?.data.map((row) => row.series[1]?.value || 0).reverse();
+  const X2 = data?.data?.map((row) => row.series[1]?.value || 0).reverse();
 
   var trace1 = {
     x: X1,
@@ -212,23 +218,22 @@ export default function ParametersDistributionBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-
-              <div className="flex gap-2 mt-4">
-                <Text>Side by side</Text>
-                <Toggle
-                  checked={isStacked}
-                  setChecked={() => setIsStacked(!isStacked)}
-                />
-                <Text>Stacked</Text>
-                <FilterExplanation
-                  text=""
-                  tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
-                />
+              <div className={sideSectionClass}>
+                <div className="flex gap-2 mt-4">
+                  <Text>Side by side</Text>
+                  <Toggle
+                    checked={isStacked}
+                    setChecked={() => setIsStacked(!isStacked)}
+                  />
+                  <Text>Stacked</Text>
+                  <FilterExplanation
+                    text=""
+                    tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
+                  />
+                </div>
               </div>
-              <Spacer height={20} />
-              <ButtonReversed onClick={() => navigate("/" + pageName)}>
-                Reset all filters to default
-              </ButtonReversed>
+              <CSV data={data} />
+              <Reset pageName={pageName} />
             </SideControl>
           }
           graph={

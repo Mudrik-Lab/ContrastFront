@@ -2,8 +2,12 @@
 import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
+RessetIcon;
+import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
+import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
 import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
+import { useNavigate } from "react-router-dom";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -166,7 +170,7 @@ export const ResetButton = ({ ...config }) => {
     <button
       className="text-blue border border-blue px-2 rounded-lg mt-2 shadow-sm"
       {...config}>
-      Reset all filters to defaut
+      Reset to defaut
     </button>
   );
 };
@@ -215,7 +219,7 @@ export const SideControl = ({ children, headline }) => {
 
   return (
     <div
-      className="side-filter-box p-2 flex flex-col items-center"
+      className="side-filter-box p-2 flex flex-col items-center "
       style={{
         width: isMoblile ? "100%" : sideWidth,
         maxHeight: isMoblile ? "400px" : "100vh",
@@ -226,7 +230,7 @@ export const SideControl = ({ children, headline }) => {
         </Text>
       </div>
 
-      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll  ">
+      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-50 ">
         {children}
         <Spacer height={20} />
       </div>
@@ -250,7 +254,7 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
       />
       <FilterExplanation
         text="Type of consciousness"
-        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness, state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+        tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
       />
     </div>
   );
@@ -302,16 +306,39 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
 export const TopGraphText = ({ firstLine, text }) => {
   const [extend, setExtend] = React.useState(false);
   return (
-    <div className="bg-grayLight w-full items-center py-5 flex justify-between px-8 ">
+    <div className="bg-grayLight w-full items-center py-5 flex justify-between px-8  ">
       <div className="max-w-[85%]">
         <Text>{firstLine}</Text>
         {extend && <Text>{text}</Text>}
       </div>
       <Button
-        extraClass="bg-grayReg p-2 max-h-[30px]"
+        extraClass="bg-grayReg p-2.5 max-h-[34px] border-grayLight"
         onClick={() => setExtend(!extend)}>
         {extend ? "<<Read Less" : "Read More >>"}
       </Button>
+    </div>
+  );
+};
+export const CSV = ({ data }) => {
+  return (
+    <a href={data?.request.responseURL + "&is_csv=true"}>
+      <Button extraClass="mt-4 mb-16">
+        <CsvIcon />
+        Download
+      </Button>
+    </a>
+  );
+};
+export const Reset = ({ pageName, setInterpretation }) => {
+  const navigate = useNavigate();
+  return (
+    <div>
+      <ButtonReversed
+        onClick={() => {
+          navigate("/" + pageName);
+        }}>
+        <RessetIcon /> Reset to default
+      </ButtonReversed>
     </div>
   );
 };

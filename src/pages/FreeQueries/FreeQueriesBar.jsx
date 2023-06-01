@@ -3,9 +3,11 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
   ButtonReversed,
+  CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
+  Reset,
   SideControl,
   Spacer,
   Text,
@@ -622,10 +624,8 @@ export default function FreeQueriesBar() {
                   </>
                 )}{" "}
               </div>
-              <Spacer height={20} />
-              <ButtonReversed onClick={() => navigate("/" + pageName)}>
-                Reset all filters to default
-              </ButtonReversed>
+              <CSV data={data} />
+              <Reset pageName={pageName} />
             </SideControl>
           }
           graph={
