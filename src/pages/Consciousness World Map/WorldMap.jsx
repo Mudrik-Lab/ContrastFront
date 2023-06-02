@@ -96,11 +96,12 @@ export default function WorldMap() {
       const theory = row.theory;
       const value = row.value;
       const fullTextItem = {
-        country,
+        Country: country,
         [theory]: value,
         Total: row.total,
       };
       const theoryOnlyTextItem = {
+        Country: country,
         [theory]: value,
       };
 
@@ -128,7 +129,7 @@ export default function WorldMap() {
     .replaceAll(",", "<br>"))
     })
 
-  console.log("hover_text", hover_text);
+  console.log("data", data?.data);
     var graphData = [
     {
       type: "choropleth",
