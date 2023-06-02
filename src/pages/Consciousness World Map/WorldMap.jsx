@@ -91,14 +91,14 @@ export default function WorldMap() {
     const mergedStates = [];
 
     data?.data.forEach((row) => {
-      const abbrevCountry = row.country;
+      
       const country = row.country_name;
       const theory = row.theory;
       const value = row.value;
       const fullTextItem = {
+        country,
         [theory]: value,
-        total: row.total,
-        abbrevCountry: abbrevCountry
+        Total: row.total,
       };
       const theoryOnlyTextItem = {
         [theory]: value,
@@ -107,9 +107,9 @@ export default function WorldMap() {
       if (!mergedStates[country]) {
         mergedStates[country] = fullTextItem;
       } else {
-        mergedStates[country] = {
+        mergedStates[country] = {...theoryOnlyTextItem,
           ...mergedStates[country],
-          ...theoryOnlyTextItem,
+          
         };
       }
     });
@@ -118,19 +118,15 @@ export default function WorldMap() {
   }
   
   const mergedStates = buildHoverText(data);
-
-  const countries = mergedStates/* .Object.keys() */
-  const countriesList = mergedStates.map((row) => {return {abbrevCountry: row.country, fullCountry: row.country_name}})
-
   console.log("mergedStates", mergedStates);
-  console.log("countriesList", countriesList);
-  const hover_text = mergedStates.map((row) => {
-    
-    JSON.stringify(row)
+
+  const hover_text = data?.data.map((row) => {
+    return (JSON.stringify(mergedStates[row.country_name])
     ?.replaceAll("{", "")
     .replaceAll("}", "")
     .replaceAll('"', "")
-    .replaceAll(",", "<br>")})
+    .replaceAll(",", "<br>"))
+    })
 
   console.log("hover_text", hover_text);
     var graphData = [
