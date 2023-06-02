@@ -119,7 +119,6 @@ export default function WorldMap() {
   }
   
   const mergedStates = buildHoverText(data);
-  console.log("mergedStates", mergedStates);
 
   const hover_text = data?.data.map((row) => {
     return (JSON.stringify(mergedStates[row.country_name])
@@ -129,7 +128,6 @@ export default function WorldMap() {
     .replaceAll(",", "<br>"))
     })
 
-  console.log("data", data?.data);
     var graphData = [
     {
       type: "choropleth",
