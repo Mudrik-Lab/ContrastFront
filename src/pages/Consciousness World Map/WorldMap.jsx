@@ -1,15 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
-import {
-  ButtonReversed,
+import {  
   CSV,
   FilterExplanation,
   RangeInput,
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -72,21 +70,14 @@ export default function WorldMap() {
         type_of_consciousness: consciousness,
       })
   );
+
+  const sectionClass =
+    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
+
   const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
-  const mergedStates = {};
-
-  data?.data.map((row) => {
-    row[row.theory] = row.value;
-    const country = row.country_name;
-    if (!mergedStates[country]) {
-      mergedStates[country] = row;
-    } else {
-      mergedStates[country] = { ...mergedStates[country], ...row };
-    }
-  });
 
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)
@@ -96,9 +87,53 @@ export default function WorldMap() {
         })
     : [];
 
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-  var graphData = [
+  function buildHoverText(data) {
+    const mergedStates = [];
+
+    data?.data.forEach((row) => {
+      const abbrevCountry = row.country;
+      const country = row.country_name;
+      const theory = row.theory;
+      const value = row.value;
+      const fullTextItem = {
+        [theory]: value,
+        total: row.total,
+        abbrevCountry: abbrevCountry
+      };
+      const theoryOnlyTextItem = {
+        [theory]: value,
+      };
+
+      if (!mergedStates[country]) {
+        mergedStates[country] = fullTextItem;
+      } else {
+        mergedStates[country] = {
+          ...mergedStates[country],
+          ...theoryOnlyTextItem,
+        };
+      }
+    });
+
+    return mergedStates;
+  }
+  
+  const mergedStates = buildHoverText(data);
+
+  const countries = mergedStates/* .Object.keys() */
+  const countriesList = mergedStates.map((row) => {return {abbrevCountry: row.country, fullCountry: row.country_name}})
+
+  console.log("mergedStates", mergedStates);
+  console.log("countriesList", countriesList);
+  const hover_text = mergedStates.map((row) => {
+    
+    JSON.stringify(row)
+    ?.replaceAll("{", "")
+    .replaceAll("}", "")
+    .replaceAll('"', "")
+    .replaceAll(",", "<br>")})
+
+  console.log("hover_text", hover_text);
+    var graphData = [
     {
       type: "choropleth",
       showscale: !isMoblile,
@@ -114,22 +149,7 @@ export default function WorldMap() {
       ],
 
       hoverinfo: "location+text",
-      hovertext: data?.data.map((row) => {
-        delete mergedStates[row.country_name].theory;
-
-        delete mergedStates[row.country_name].value;
-
-        delete mergedStates[row.country_name].country_name;
-        return (
-          JSON.stringify(mergedStates[row.country_name])
-            ?.replaceAll("{", "")
-            .replaceAll("}", "")
-            .replaceAll('"', "")
-            .replaceAll(",", "<br>") +
-          "<br>Total:" +
-          row.total
-        );
-      }),
+      hovertext: hover_text,
       reversescale: true,
       marker: {
         size: data?.data.map((row) => row.total),
@@ -233,7 +253,7 @@ export default function WorldMap() {
       if (theoriesOnURL.length === 0) {
         buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
       } else {
-        setTheoryFamilies(theoriesOnURL.map((x) => ({ value: x, label: x })));
+        setTheoryFamilies(theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) })));
       }
     }
   }, [configSuccess]);
@@ -250,7 +270,7 @@ export default function WorldMap() {
               <RangeInput
                 number={experimentsNum}
                 setNumber={(e) => {
-                  console.log(e);
+                  e && console.log(e);
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
@@ -264,7 +284,7 @@ export default function WorldMap() {
                   closeMenuOnSelect={true}
                   isMulti={true}
                   value={theoryFamilies}
-                  options={theories}
+                  options={theories.map((theory) => theory.label)}
                   placeholder="Theories"
                   onChange={(e) =>
                     buildUrlForMultiSelect(e, "theory", searchParams, navigate)
