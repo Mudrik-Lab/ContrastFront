@@ -75,18 +75,29 @@ export default function ParametersDistributionTheoriesComparison() {
   const chartsData = data?.data;
   const keysArr = [];
   chartsData?.map((theory) =>
-    theory.series.map((row) => keysArr.push(row.key))
+    theory.series
+      .sort((a, b) => {
+        if (a.value < b.value) {
+          return 1;
+        }
+        if (a.value > b.value) {
+          return -1;
+        }
+        return 0;
+      })
+      .map((row) => keysArr.push(row.key))
   );
-
+  console.log(chartsData);
+  console.log(keysArr);
   const trimedKeysArr = [...new Set(keysArr)];
 
-  let someColors = designerColors.reverse().slice(0, trimedKeysArr.length);
+  let someColors = designerColors.slice(0, trimedKeysArr.length);
   if (selected?.value === "paradigm") {
     someColors = designerColors.slice(0, trimedKeysArr.length);
   }
 
   const keysColors = {};
-  [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
+  [...new Set(trimedKeysArr)]?.map((key, index) => {
     keysColors[key] = someColors[index];
   });
 

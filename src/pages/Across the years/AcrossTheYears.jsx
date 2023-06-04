@@ -70,6 +70,15 @@ export default function AcrossTheYears() {
       mode: "lines+markers",
     });
   });
+  console.log(data?.data);
+  let highestY = [];
+  if (data) {
+    highestY = data?.data
+      .map((row) => row.series.slice(-1).map((x) => x.value))
+      .flat();
+    console.log(Math.max(...highestY));
+  }
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -164,6 +173,8 @@ export default function AcrossTheYears() {
                   },
                   yaxis: {
                     title: "Number of experiments",
+                    tickmode: "linear",
+                    dtick: Math.max(...highestY) > 20 ? 20 : 1,
                   },
                   autosize: false,
                   showlegend: !isMoblile,

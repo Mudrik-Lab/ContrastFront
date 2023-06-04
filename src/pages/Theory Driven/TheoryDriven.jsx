@@ -107,6 +107,7 @@ export default function TheoryDriven() {
       textposition: "inside",
       automargin: true,
       domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
+      textfont: { size: 20 },
       marker: {
         colors: labels1.map((label) =>
           label === "post-hoc"
@@ -131,6 +132,7 @@ export default function TheoryDriven() {
       hole: 0.4,
       textposition: "inside",
       automargin: true,
+      textfont: { size: 16 },
       marker: {
         colors: cleanLabels2.map((label) => keysColors[label]),
         line: { width: 1, color: "white" },
@@ -219,6 +221,7 @@ export default function TheoryDriven() {
           <TopGraphText
             text={graphsHeaders[5].figureText}
             firstLine={graphsHeaders[5].figureLine}
+            legendLine={graphsHeaders[5].legendLine}
           />
           {isLoading ? (
             <Spinner />

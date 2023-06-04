@@ -91,6 +91,7 @@ export default function ParametersDistributionBar() {
     name: "Supports",
     hoverinfo: "none",
     orientation: "h",
+    insidetextanchor: "middle",
     textfont: {
       size: 18,
       color: "white",
@@ -113,6 +114,7 @@ export default function ParametersDistributionBar() {
     text: X2,
     name: "Challenges",
     orientation: "h",
+    insidetextanchor: "middle",
     textfont: {
       size: 18,
       color: "white",

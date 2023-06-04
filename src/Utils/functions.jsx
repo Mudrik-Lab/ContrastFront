@@ -138,3 +138,12 @@ export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
   });
   navigate(`?${queryParams.toString()}`);
 }
+export function eliminateSmallSlices(data) {
+  const innerCircleValues = data?.map((row) => row.value);
+  const total = innerCircleValues?.reduce((a, b) => a + b, 0);
+  if (total && innerCircleValues) {
+    return data?.filter((row) => row.value > total / 200);
+  } else {
+    return data;
+  }
+}
