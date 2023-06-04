@@ -303,13 +303,19 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
     </div>
   );
 };
-export const TopGraphText = ({ firstLine, text }) => {
+export const TopGraphText = ({ firstLine, text, legendLine }) => {
   const [extend, setExtend] = React.useState(false);
   return (
     <div className="bg-grayLight w-full items-center py-5 flex justify-between px-8  ">
       <div className="max-w-[85%]">
         <Text>{firstLine}</Text>
-        {extend && <Text>{text}</Text>}
+        {extend && (
+          <Text>
+            {text}
+            <br />
+            {legendLine}
+          </Text>
+        )}
       </div>
       <Button
         extraClass="bg-grayReg p-2.5 max-h-[34px] border-grayLight"

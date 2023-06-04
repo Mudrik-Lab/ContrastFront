@@ -58,6 +58,8 @@ export const graphsHeaders = [
       "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across the different theories.",
     figureText:
       "The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    legendLine:
+      "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
   },
   {
     text: "Trends Over Time",
@@ -81,7 +83,9 @@ export const graphsHeaders = [
     figureLine:
       "Here, you can see how the experiments in the database distribute with respect to their theoretical motivation: the category 'Theory driven' includes experiments that were a-priory designed to test the predictions of at least one theory.",
     figureText:
-      "The category 'Mentioning' includes experiments that mentioned at least one family of theories in the introduction. The category 'Post hoc' includes experiments that only interpreted their results in light of the theories.<br/> The outer circle describes the distribution of the interpretations of each experiment in the inner circle slice according to the four families of theories. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "The category 'Mentioning' includes experiments that mentioned at least one family of theories in the introduction. The category 'Post hoc' includes experiments that only interpreted their results in light of the theories. The outer circle describes the distribution of the interpretations of each experiment in the inner circle slice according to the four families of theories. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    legendLine:
+      "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
   },
   {
     text: "Timings",
@@ -93,7 +97,7 @@ export const graphsHeaders = [
     figureLine:
       "Here, you can plot the time windows over which effects were reported in all experiments in the database that employed a time-resolved technique.",
     figureText:
-      "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later components. Components for which a time window was given are depicted as a continuous line spanning over the components range. Dots depict components for which only the peak was reported. <br/> In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later components. Components for which a time window was given are depicted as a continuous line spanning over the components range. Dots depict components for which only the peak was reported. In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
   {
     text: "Frequencies",

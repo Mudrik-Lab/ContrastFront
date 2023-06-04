@@ -30,6 +30,7 @@ import {
   rawTextToShow,
   showTextToRaw,
   buildUrl,
+  eliminateSmallSlices,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
@@ -79,7 +80,7 @@ export default function ParametersDistributionPie() {
   const values2 = [];
   const labels2 = [];
 
-  data?.data.map((x, index) => {
+  eliminateSmallSlices(data?.data)?.map((x, index) => {
     values1.push(x.value);
     labels1.push(rawTextToShow(x.series_name));
     x.series.map((y) => {
@@ -95,14 +96,13 @@ export default function ParametersDistributionPie() {
     //inner pie
     {
       direction: "clockwise",
-      insidetextorientation: "radial",
       values: values1,
       labels: labels1,
       type: "pie",
       textinfo: "label+number",
       hovertemplate: "%{label}: %{value} <extra></extra>",
       textposition: "inside",
-      insidetextorientation: "radial",
+      insidetextorientation: "horizontal",
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
       marker: {
@@ -132,7 +132,7 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
-    const secondaryData = data?.data.find(
+    const secondaryData = eliminateSmallSlices(data?.data).find(
       (row) =>
         row.series_name === seriesName.label ||
         row.series_name === showTextToRaw(seriesName.label) ||
@@ -184,6 +184,7 @@ export default function ParametersDistributionPie() {
       },
     ]);
   }
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -267,6 +268,7 @@ export default function ParametersDistributionPie() {
         <div>
           <TopGraphText
             text={graphsHeaders[3].figureText}
+            legendLine={graphsHeaders[3].legendLine}
             firstLine={graphsHeaders[3].figureLine}
           />
           {isLoading ? (
