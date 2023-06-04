@@ -16,7 +16,6 @@ import {
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -30,7 +29,6 @@ import {
   rawTextToShow,
   showTextToRaw,
   buildUrl,
-  eliminateSmallSlices,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
@@ -80,7 +78,7 @@ export default function ParametersDistributionPie() {
   const values2 = [];
   const labels2 = [];
 
-  eliminateSmallSlices(data?.data)?.map((x, index) => {
+  data?.data?.map((x, index) => {
     values1.push(x.value);
     labels1.push(rawTextToShow(x.series_name));
     x.series.map((y) => {
@@ -132,7 +130,7 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
-    const secondaryData = eliminateSmallSlices(data?.data).find(
+    const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
         row.series_name === showTextToRaw(seriesName.label) ||

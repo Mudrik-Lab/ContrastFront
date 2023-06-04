@@ -263,6 +263,7 @@ export default function Frequencies() {
                         margin: { autoexpand: true, l: 50 },
                         showlegend: false,
                         yaxis: {
+                          title: " Experment Index",
                           zeroline: false, // hide the zeroline
                           zerolinecolor: "#969696", // customize the color of the zeroline
                           zerolinewidth: 2, // customize the width of the zeroline

@@ -3,6 +3,7 @@ import Logo from "../assets/logoes/logo-negative.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 import classNames from "classnames";
+import { isMoblile } from "../Utils/HardCoded";
 
 export default function Footer({ isFixed }) {
   return (
@@ -10,9 +11,9 @@ export default function Footer({ isFixed }) {
       className={classNames(
         `${
           isFixed ? "absolute bottom-0" : ""
-        } w-full flex justify-between items-center py-4 px-16 bg-black `
+        } w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none `
       )}>
-      <div className="flex gap-3 items-center">
+      <div className="flex gap-3 items-center ">
         <img src={Logo} alt="" />
         <div className=" border-r border-white h-10 "></div>
         <Text sm color="white">
@@ -20,13 +21,13 @@ export default function Footer({ isFixed }) {
           High Level <br /> Cognition Lab{" "}
         </Text>
       </div>
-      <div className="flex gap-14">
+      <div className="flex flex-col items-center sm:flex-row sm:gap-14 my-6 sm:my-0">
         <Text color="white">
           <a href="/terms-of-use">Terms of Use</a>
         </Text>
         <Text color="white">Modes of Governance</Text>
       </div>
-      <div className="mr-10">
+      <div className=" sm:mr-10">
         <Text color="white">
           <a href="https://www.drorsoft.com/" target="_blank">
             Developed by <Drorsoft />
