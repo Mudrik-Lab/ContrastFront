@@ -5,7 +5,7 @@ import { ReactComponent as Profile } from "../assets/profile-circle.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 
-import { Button, Text } from "./Reusble";
+import { Button, Temporary, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";
@@ -162,24 +162,28 @@ export default function Navbar() {
                 </li>
 
                 <li>
-                  <a
+                  {/* <a
                     className={page === "/contact" ? "text-blue font-bold" : ""}
                     href="contact"
                     aria-current="page">
                     Contact
-                  </a>
+                  </a> */}
+                  <Temporary>Contact</Temporary>
                 </li>
                 <li>
-                  <a href="/upload-new-paper" aria-current="page">
+                  {/* <a href="/upload-new-paper" aria-current="page">
                     Upload New Paper
-                  </a>
+                  </a> */}
+                  <Temporary>Upload New Paper</Temporary>
                 </li>
               </ul>
             </div>
             <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
-              <Profile />
-              <span>Login</span>
-              <Button type="button">
+              <Temporary>
+                <Profile />
+              </Temporary>
+              <Temporary>Login</Temporary>
+              <Button type="button" isCommingSoon>
                 {" "}
                 <ProfileIcon /> Register
               </Button>

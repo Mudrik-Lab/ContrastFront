@@ -87,8 +87,7 @@ export default function ParametersDistributionTheoriesComparison() {
       })
       .map((row) => keysArr.push(row.key))
   );
-  console.log(chartsData);
-  console.log(keysArr);
+
   const trimedKeysArr = [...new Set(keysArr)];
 
   let someColors = designerColors.slice(0, trimedKeysArr.length);

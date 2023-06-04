@@ -18,17 +18,38 @@ export const TextInput = ({ ...config }) => {
   );
 };
 
-export const Button = ({ extraClass, children, black, ...config }) => {
+export const Button = ({
+  extraClass,
+  children,
+  black,
+  isCommingSoon,
+  ...config
+}) => {
+  const [hover, setHover] = React.useState(false);
   return (
-    <button
-      className={classNames(
-        `${extraClass} text-white text-md leading-4 font-bold ${
-          black ? "bg-black" : "bg-blue"
-        } hover:bg-white hover:text-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+    <div className={classNames(`${isCommingSoon ? "relative" : ""}`)}>
+      {hover && isCommingSoon && (
+        <p
+          className="bg-indigo-900 text-white p-1 min-w-full z-50  "
+          style={{
+            position: "absolute",
+            top: "calc(50% - 16px)",
+          }}>
+          Comming soon
+        </p>
       )}
-      {...config}>
-      {children}
-    </button>
+      <button
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className={classNames(
+          `${extraClass} text-white text-md leading-4 font-bold ${
+            black ? "bg-black" : "bg-blue border-[3px] border-blue"
+          } hover:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        )}
+        {...config}>
+        {children}
+      </button>
+    </div>
   );
 };
 export const ButtonReversed = ({ children, ...config }) => {
@@ -345,6 +366,29 @@ export const Reset = ({ pageName, setInterpretation }) => {
         }}>
         <RessetIcon /> Reset to default
       </ButtonReversed>
+    </div>
+  );
+};
+export const Temporary = ({ extraClass, children }) => {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <div className="relative">
+      {hover && (
+        <p
+          className="bg-indigo-900 text-white p-1 min-w-full z-50 "
+          style={{
+            position: "absolute",
+            top: "calc(50% - 16px)",
+          }}>
+          Comming soon
+        </p>
+      )}
+      <p
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className={classNames(`${extraClass}`)}>
+        {children}
+      </p>
     </div>
   );
 };

@@ -201,7 +201,6 @@ export default function TheoryDriven() {
               <Toggle
                 checked={interpretation === "true" ? true : false}
                 setChecked={(e) => {
-                  console.log(e);
                   buildUrl(pageName, "interpretation", e, navigate);
                 }}
               />{" "}
@@ -230,7 +229,6 @@ export default function TheoryDriven() {
               <Plot
                 onClick={(e) => {
                   setIsSpecificTheory(!isSpecificTheory);
-                  console.log(isSpecificTheory);
                   isSpecificTheory
                     ? buildUrl(pageName, "theory_driven", "either", navigate)
                     : e.points[0].label === "Post Hoc"

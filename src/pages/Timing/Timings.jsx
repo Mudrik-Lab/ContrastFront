@@ -294,6 +294,7 @@ export default function Timings() {
             <TopGraphText
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
+              legendLine={graphsHeaders[6].legendLine}
             />
             {isLoading ? (
               <Spinner />

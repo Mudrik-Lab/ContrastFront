@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
-import {  
+import {
   CSV,
   FilterExplanation,
   RangeInput,
@@ -91,7 +91,6 @@ export default function WorldMap() {
     const mergedStates = [];
 
     data?.data.forEach((row) => {
-      
       const country = row.country_name;
       const theory = row.theory;
       const value = row.value;
@@ -108,27 +107,27 @@ export default function WorldMap() {
       if (!mergedStates[country]) {
         mergedStates[country] = fullTextItem;
       } else {
-        mergedStates[country] = {...theoryOnlyTextItem,
+        mergedStates[country] = {
+          ...theoryOnlyTextItem,
           ...mergedStates[country],
-          
         };
       }
     });
 
     return mergedStates;
   }
-  
+
   const mergedStates = buildHoverText(data);
 
   const hover_text = data?.data.map((row) => {
-    return (JSON.stringify(mergedStates[row.country_name])
-    ?.replaceAll("{", "")
-    .replaceAll("}", "")
-    .replaceAll('"', "")
-    .replaceAll(",", "<br>"))
-    })
+    return JSON.stringify(mergedStates[row.country_name])
+      ?.replaceAll("{", "")
+      .replaceAll("}", "")
+      .replaceAll('"', "")
+      .replaceAll(",", "<br>");
+  });
 
-    var graphData = [
+  var graphData = [
     {
       type: "choropleth",
       showscale: !isMoblile,
@@ -248,7 +247,9 @@ export default function WorldMap() {
       if (theoriesOnURL.length === 0) {
         buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
       } else {
-        setTheoryFamilies(theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) })));
+        setTheoryFamilies(
+          theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) }))
+        );
       }
     }
   }, [configSuccess]);
@@ -265,7 +266,6 @@ export default function WorldMap() {
               <RangeInput
                 number={experimentsNum}
                 setNumber={(e) => {
-                  e && console.log(e);
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />

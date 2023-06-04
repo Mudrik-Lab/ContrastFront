@@ -105,9 +105,7 @@ export function hexToRgba(hexColor) {
   return `rgba(${r}, ${g}, ${b}, 1)`;
 }
 
-export function fitColorPerLabel(data) {
-  console.log(data);
-}
+export function fitColorPerLabel(data) {}
 
 export function fixArraytoURL(arr, name) {
   const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
@@ -117,12 +115,10 @@ export function fixArraytoURL(arr, name) {
 
 export function buildUrl(pageName, paramName, value, navigate) {
   if (value) {
-    console.log("first");
     const queryParams = new URLSearchParams(location.search);
     queryParams.set(paramName, value);
     navigate("/" + pageName + "?" + queryParams.toString());
   } else {
-    console.log("second");
     const queryParams = new URLSearchParams(location.search);
     queryParams.delete(paramName);
     navigate(`/${pageName}?${queryParams.toString()}`);
