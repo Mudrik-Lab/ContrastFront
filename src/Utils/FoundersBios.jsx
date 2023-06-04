@@ -71,6 +71,6 @@ export const foundingBoardBios = [
     secondName: "Yaron",
     image: Itay,
     text: "Sagol School of Neuroscience, Tel Aviv University.",
-    website: "",
+    website: "https://people.socsci.tau.ac.il/mu/mudriklab/people/#gkit-popup",
   },
 ];
