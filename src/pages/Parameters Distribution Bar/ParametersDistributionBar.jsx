@@ -13,6 +13,7 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
+import Plotly from "plotly.js-dist-min";
 import {
   screenWidth,
   parametersOptions,
@@ -26,7 +27,11 @@ import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, rawTextToShow } from "../../Utils/functions";
+import {
+  buildUrl,
+  handleDownloadSVG,
+  rawTextToShow,
+} from "../../Utils/functions";
 
 export default function ParametersDistributionBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -243,38 +248,57 @@ export default function ParametersDistributionBar() {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Plot
-                  data={[trace1, trace2]}
-                  config={{ displayModeBar: !isMoblile }}
-                  layout={{
-                    barmode: isStacked ? "stack" : "group",
-                    width: isMoblile ? screenWidth : screenWidth - 400,
-                    height: 35 * Y?.length + 350,
-                    margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90, x: -0.25, y: 1.05 },
+                <div id="graphDiv">
+                  <Plot
+                    data={[trace1, trace2]}
+                    config={{
+                      displayModeBar: !isMoblile,
+                      modeBarButtons: [
+                        [
+                          {
+                            name: "Download SVG",
+                            icon: {
+                              width: 1000,
+                              height: 1000,
+                              path: "M875.77,187.89H750.22l-52.17-69.79a58.88,58.88,0,0,0-98.29,0l-52.17,69.79H169.68a84.25,84.25,0,0,0-84.17,84.17V817.83a84.25,84.25,0,0,0,84.17,84.17H875.77a84.25,84.25,0,0,0,84.17-84.17V272.06A84.25,84.25,0,0,0,875.77,187.89Zm-457.7,503.56a155.11,155.11,0,1,1,155.11-155.11A155.11,155.11,0,0,1,418.07,691.45ZM860.94,272.06a61.58,61.58,0,0,1-61.43,61.43H323.36a61.58,61.58,0,0,1-61.43-61.43V187.89h0a61.58,61.58,0,0,1,61.43-61.43H799.51A61.58,61.58,0,0,1,860.94,187.89h0Zm0,0",
+                              ascent: 850,
+                              descent: 150,
+                            },
+                            click: handleDownloadSVG,
+                          },
+                        ],
+                      ],
+                    }}
+                    layout={{
+                      barmode: isStacked ? "stack" : "group",
+                      width: isMoblile ? screenWidth : screenWidth - 400,
+                      height: 35 * Y?.length + 350,
+                      margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
+                      legend: { itemwidth: 90, x: -0.25, y: 1.05 },
 
-                    xaxis: {
-                      title: "Number of experiments",
-                      zeroline: true,
-                      side: "top",
-                      tickmode: "linear",
-                      dtick: 10,
-                      tickfont: {
-                        size: 16,
-                        standoff: 50,
+                      xaxis: {
+                        title: "Number of experiments",
+                        zeroline: true,
+                        side: "top",
+                        tickmode: "linear",
+                        dtick: 10,
+                        tickfont: {
+                          size: 16,
+                          standoff: 50,
+                        },
                       },
-                    },
-                    yaxis: {
-                      showticklabels: !isMoblile,
-                      automargin: true,
-                      ticks: "outside",
-                      tickfont: {
-                        size: 10,
-                        standoff: 50,
+                      yaxis: {
+                        showticklabels: !isMoblile,
+                        automargin: true,
+                        ticks: "outside",
+                        tickfont: {
+                          size: 10,
+                          standoff: 50,
+                        },
                       },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               )}
             </div>
           }

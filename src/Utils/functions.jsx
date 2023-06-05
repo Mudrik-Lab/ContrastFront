@@ -143,3 +143,17 @@ export function eliminateSmallSlices(data) {
     return data;
   }
 }
+
+export function handleDownloadSVG() {
+  const graphDiv =
+    document.getElementsByClassName("svg-container")[0].childNodes[0];
+  console.log(graphDiv);
+  const svgData = graphDiv.outerHTML;
+  const blob = new Blob([svgData], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "element.svg";
+  link.click();
+  URL.revokeObjectURL(url);
+}
