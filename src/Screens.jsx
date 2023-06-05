@@ -21,6 +21,7 @@ import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
 import PageTemplate from "./components/PageTemplate";
 import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
+import MobileScreen from "./pages/MobileScreen/MobileScreen";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -41,7 +42,7 @@ const Screens = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
-        <Route path="/temp" element={<PageTemplate />} />
+        <Route path="/temp" element={<MobileScreen />} />
         <Route
           path="/parameter-distribution-free-queries"
           element={<FreeQueriesPage />}

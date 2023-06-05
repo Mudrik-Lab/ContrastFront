@@ -3,7 +3,6 @@ import Logo from "../assets/logoes/logo-negative.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 import classNames from "classnames";
-import { isMoblile } from "../Utils/HardCoded";
 
 export default function Footer({ isFixed }) {
   return (
@@ -17,8 +16,7 @@ export default function Footer({ isFixed }) {
         <img src={Logo} alt="" />
         <div className=" border-r border-white h-10 "></div>
         <Text sm color="white">
-          {" "}
-          High Level <br /> Cognition Lab{" "}
+          High Level <br /> Cognition Lab
         </Text>
       </div>
       <div className="flex flex-col items-center sm:flex-row sm:gap-14 my-6 sm:my-0">
