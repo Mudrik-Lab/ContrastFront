@@ -111,7 +111,7 @@ export default function ParametersDistributionPie() {
     // outside pie
     {
       direction: "clockwise",
-      insidetextorientation: "radial",
+      insidetextorientation: "horizontal",
       values: values2,
       labels: labels2,
       sort: false,
@@ -146,7 +146,7 @@ export default function ParametersDistributionPie() {
       {
         name: "drilled",
         direction: "clockwise",
-        insidetextorientation: "radial",
+        insidetextorientation: "horizontal",
         values: [1],
         labels: [rawTextToShow(secondaryData.series_name)],
         sort: false,
@@ -165,7 +165,7 @@ export default function ParametersDistributionPie() {
       // outside pie
       {
         direction: "clockwise",
-        insidetextorientation: "radial",
+        insidetextorientation: "horizontal",
         values: secondaryData.series.map((row) => row.value),
         labels: secondaryData.series.map((row) => row.key),
         sort: false,
@@ -258,8 +258,10 @@ export default function ParametersDistributionPie() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
-          <CSV data={data} />
-          <Reset pageName={pageName} />
+          <div className="w-full flex items-center justify-between my-4">
+            <CSV data={data} />
+            <Reset pageName={pageName} />
+          </div>
         </SideControl>
       }
       graph={

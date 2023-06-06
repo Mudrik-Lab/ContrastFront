@@ -44,4 +44,9 @@ module.exports = {
     require('flowbite/plugin')
 ]
 ,
+safelist: [{
+  pattern: /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen)/
+}
+
+]
 };

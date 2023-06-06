@@ -167,8 +167,10 @@ export default function Journals() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
-            <CSV data={data} />
-            <Reset pageName={pageName} />
+            <div className="w-full flex items-center justify-between my-4">
+              <CSV data={data} />
+              <Reset pageName={pageName} />
+            </div>
           </SideControl>
         }
         graph={

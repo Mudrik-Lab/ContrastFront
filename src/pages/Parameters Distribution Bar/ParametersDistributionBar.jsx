@@ -13,7 +13,6 @@ import {
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
-import Plotly from "plotly.js-dist-min";
 import {
   screenWidth,
   parametersOptions,
@@ -235,8 +234,12 @@ export default function ParametersDistributionBar() {
                   />
                 </div>
               </div>
-              <CSV data={data} />
-              <Reset pageName={pageName} />
+              <div className="w-full flex items-center justify-between my-4">
+                <div className="w-full flex items-center justify-between my-4">
+                  <CSV data={data} />
+                  <Reset pageName={pageName} />
+                </div>
+              </div>
             </SideControl>
           }
           graph={

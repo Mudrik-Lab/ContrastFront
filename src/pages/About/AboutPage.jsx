@@ -84,8 +84,15 @@ export default function AboutPage() {
                   We believe in open-science! In this link, you can find a CSV
                   file with all the data presented on this website and the code
                   for creating the queries and graphs. The data is licensed
-                  under CC-BY-SA-4.0 creative commons open license and the code
-                  under the GNU GPLv3 open source license
+                  under{" "}
+                  <a
+                    className="text-blue underline"
+                    href="https://creativecommons.org/licenses/by-sa/4.0/"
+                    target="_blank">
+                    CC-BY-SA-4.0 creative commons
+                  </a>{" "}
+                  open license and the code under the GNU GPLv3 open source
+                  license
                 </Text>
               </div>
               <div className="h-4  sm:border-r border-black sm:h-24"></div>

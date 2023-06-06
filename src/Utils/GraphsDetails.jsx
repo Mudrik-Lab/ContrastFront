@@ -19,7 +19,7 @@ export const graphsHeaders = [
       "The graph depicts the distribution of parameter values, according to your specifications.",
     route: "/parameter-distribution-free-queries",
     figureLine:
-      "Here, you can use the toolbar on the left to create your own queries",
+      "Here, you can use the toolbar on the left to create your own queries of the data, and generate new figures based on your parameters of interest.",
     figureText:
       " Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },

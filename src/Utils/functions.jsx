@@ -157,3 +157,15 @@ export function handleDownloadSVG() {
   link.click();
   URL.revokeObjectURL(url);
 }
+
+export function increaseContrast(color, contrastAmount) {
+  const tc = tinycolor(color);
+  const contrastedColor = tc.darken(contrastAmount);
+  return contrastedColor.toHexString();
+}
+
+export function enlargeFonts(element, fontSizeIncrease) {
+  const currentFontSize = parseFloat(getComputedStyle(element).fontSize);
+  const enlargedFontSize = currentFontSize + fontSizeIncrease;
+  element.style.fontSize = `${enlargedFontSize}px`;
+}

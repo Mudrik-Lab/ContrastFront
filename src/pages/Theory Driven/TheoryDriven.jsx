@@ -98,7 +98,7 @@ export default function TheoryDriven() {
     {
       //inner
       direction: "clockwise",
-      insidetextorientation: "radial",
+      insidetextorientation: "horizontal",
       values: values1,
       labels: labels1.map((label) => rawTextToShow(label)),
       type: "pie",
@@ -122,7 +122,7 @@ export default function TheoryDriven() {
     {
       //outer
       direction: "clockwise",
-      insidetextorientation: "tangential",
+      insidetextorientation: "horizontal",
       values: values2,
       labels: labels2,
       sort: false,
@@ -211,8 +211,10 @@ export default function TheoryDriven() {
               tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
             />
           </div>
-          <CSV data={data} />
-          <Reset pageName={pageName} />
+          <div className="w-full flex items-center justify-between my-4">
+            <CSV data={data} />
+            <Reset pageName={pageName} />
+          </div>
         </SideControl>
       }
       graph={

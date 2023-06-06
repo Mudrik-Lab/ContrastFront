@@ -1,8 +1,6 @@
 import React from "react";
-import PageTemplate from "../../components/PageTemplate";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import { useQuery } from "@tanstack/react-query";
-import { screenHeight } from "../../Utils/HardCoded";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { Spacer, TopGraphText, Text } from "../../components/Reusble";
@@ -16,7 +14,7 @@ export default function AnatomicalFindings() {
   );
   const pic = data?.data.images[0].image;
   return (
-    <div>
+    <div className="relative">
       <Navbar />
       <Spacer height={80} />
       {isSuccess && (
@@ -35,11 +33,15 @@ export default function AnatomicalFindings() {
           {isLoading ? (
             <Spinner />
           ) : (
-            <img src={pic} width={"85%"} className="mx-auto" />
+            <div
+              style={{ height: "calc(100vh - 200px)" }}
+              className=" flex justify-center items-center">
+              <img src={pic} className="max-h-full my-0 mx-auto" />
+            </div>
           )}
         </div>
       )}
-      <Footer />
+      <Footer isFixed />
     </div>
   );
 }

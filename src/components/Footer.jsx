@@ -10,7 +10,7 @@ export default function Footer({ isFixed }) {
       className={classNames(
         `${
           isFixed ? "absolute bottom-0" : ""
-        } w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none `
+        } w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
       )}>
       <div className="flex gap-3 items-center ">
         <img src={Logo} alt="" />
