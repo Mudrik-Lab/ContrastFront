@@ -36,28 +36,9 @@ function App() {
       },
     },
   });
-  const colors = [
-    blue,
-    grayHeavy,
-    grayReg,
-    grayLight,
-    yellow,
-    orange,
-    pink,
-    lilac,
-    purple,
-    navyBlue,
-    darkTeal,
-    teal,
-    lightGreen,
-    lightTeal,
-    lightGreen,
-  ];
+
   return (
     <div className="App" ref={elementRef}>
-      {colors.map((color) => (
-        <div className={classNames(`bg-${color}`)}></div>
-      ))}
       <QueryClientProvider client={client}>
         <Screens />
       </QueryClientProvider>
