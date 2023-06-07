@@ -17,6 +17,7 @@ import {
 import Plot from "react-plotly.js";
 import {
   isMoblile,
+  plotConfig,
   screenHeight,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -304,7 +305,7 @@ export default function Timings() {
               <div className=" w-full h-full flex gap-2">
                 <Plot
                   data={traces}
-                  config={{ displayModeBar: !isMoblile, responsive: true }}
+                  config={plotConfig}
                   style={{
                     width: "calc(100% - 200px)",
                     height: "calc(100% - 100px)",

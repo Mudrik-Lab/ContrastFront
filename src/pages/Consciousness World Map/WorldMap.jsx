@@ -16,7 +16,12 @@ import {
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
-import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
+import {
+  isMoblile,
+  plotConfig,
+  screenHeight,
+  screenWidth,
+} from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
@@ -156,7 +161,7 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0,
+        y: 0.02,
         title: "# of experiments",
       },
     },
@@ -323,7 +328,7 @@ export default function WorldMap() {
                   data={graphData}
                   style={{ width: "100%", height: "100%" }}
                   layout={layout}
-                  config={{ displayModeBar: !isMoblile, responsive: true }}
+                  config={plotConfig}
                 />
               )}
             </div>

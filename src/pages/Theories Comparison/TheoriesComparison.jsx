@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -242,7 +243,7 @@ export default function ParametersDistributionTheoriesComparison() {
                       },
                     },
                   ]}
-                  config={{ displayModeBar: false }}
+                  config={plotConfig}
                   layout={{
                     width: isMoblile ? screenWidth : screenWidth / 3,
                     height: isMoblile ? screenWidth : screenWidth / 3,

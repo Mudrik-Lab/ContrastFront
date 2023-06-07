@@ -1,3 +1,5 @@
+import { handleDownloadSVG } from "./functions";
+
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
@@ -6,6 +8,35 @@ export const sideWidth = 370;
 export const sideSectionClass =
   "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
+export const plotConfig = {
+  modeBarButtonsToRemove: [
+    "zoomin",
+    "zoomout",
+    "pan",
+    "select",
+    "lasso",
+    "autoscale2d",
+  ],
+  scrollZoom: true,
+  displayModeBar: true,
+  toImageButtonOptions: {
+    format: "svg", // one of png, svg, jpeg, webp
+    filename: `${window.location.href}`,
+    scale: 1, // Multiply title/legend/axis/canvas sizes by this factor
+  },
+  // modeBarButtonsToAdd: [
+  //   {
+  //     name: "Download plot as svg",
+  //     icon: {
+  //       width: 20,
+  //       height: 20,
+  //       path: "M12 22L3 13h5V3h8v10h5l-9 9z",
+  //     },
+  //     click: handleDownloadSVG,
+  //   },
+  // ],
+  displaylogo: false,
+};
 export const isMoblile = screenWidth < 600;
 
 export const parametersOptions = [

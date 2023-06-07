@@ -22,7 +22,7 @@ export default function Navbar() {
   return (
     <div>
       {isMoblile ? (
-        <nav className="bg-white px-6 py-2.5  fixed w-full z-20 top-0 left-0 shadow-lg ">
+        <nav className="bg-white px-6 py-2.5 fixed w-full z-20 top-0 left-0 shadow-lg ">
           <div className="flex items-center justify-between w-full ">
             <div
               className="logo-right flex gap-3 items-center cursor-pointer"
@@ -51,7 +51,7 @@ export default function Navbar() {
                     </button>
                     {graphMenue && (
                       <div
-                        className="fixed z-10 inset-0 flex  justify-center modal overflow-y-auto"
+                        className="fixed z-10 inset-0 flex justify-center modal overflow-y-auto"
                         onClick={() => setGraphMenue(false)}>
                         <div
                           id="dropdown-navbar"
@@ -135,11 +135,11 @@ export default function Navbar() {
                   </button>
                   {graphMenue && (
                     <div
-                      className="fixed z-10 inset-0 flex  justify-center modal overflow-y-auto"
+                      className="fixed z-10 inset-0 flex justify-center modal overflow-y-auto"
                       onClick={() => setGraphMenue(false)}>
                       <div
                         id="dropdown-navbar"
-                        className="z-30 bg-white rounded-md shadow-lg w-80 absolute top-10">
+                        className="z-30 bg-white rounded-md shadow-lg w-[340px] absolute top-10">
                         <ul
                           className="py-2 text-lg text-gray-700 dark:text-gray-400"
                           aria-labelledby="dropdownLargeButton">

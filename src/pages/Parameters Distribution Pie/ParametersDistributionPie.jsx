@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -282,7 +283,7 @@ export default function ParametersDistributionPie() {
                       secondaryPie(e.points[0]);
                     }}
                     data={initialGraphData}
-                    config={{ displayModeBar: !isMoblile }}
+                    config={plotConfig}
                     layout={{
                       width: screenHeight,
                       height: screenHeight,

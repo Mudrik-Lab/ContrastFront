@@ -19,6 +19,7 @@ import {
 import Plot from "react-plotly.js";
 import {
   isMoblile,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -184,6 +185,7 @@ export default function Journals() {
             ) : (
               <Plot
                 data={[trace1]}
+                config={plotConfig}
                 layout={{
                   autosize: false,
                   width: isMoblile ? screenWidth : screenWidth - 400,

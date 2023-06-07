@@ -23,7 +23,9 @@ export default function Footer({ isFixed }) {
         <Text color="white">
           <a href="/terms-of-use">Terms of Use</a>
         </Text>
-        <Text color="white">Modes of Governance</Text>
+        <Text color="white">
+          <a href="modes-of-governance">Modes of Governance</a>{" "}
+        </Text>
       </div>
       <div className=" sm:mr-10">
         <Text color="white">

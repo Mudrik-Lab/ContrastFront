@@ -19,6 +19,7 @@ import {
   available_populations,
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -679,7 +680,7 @@ export default function FreeQueriesBar() {
               />
               <Plot
                 data={[trace1]}
-                config={{ displayModeBar: !isMoblile }}
+                config={plotConfig}
                 layout={{
                   width: isMoblile ? screenWidth : screenWidth - 400,
                   height: 35 * Y?.length + 250,

@@ -23,6 +23,7 @@ import PageTemplate from "./components/PageTemplate";
 import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
 import { isMoblile } from "./Utils/HardCoded";
+import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -43,6 +44,7 @@ const Screens = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
+        <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route

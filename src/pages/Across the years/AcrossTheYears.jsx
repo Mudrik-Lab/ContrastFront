@@ -18,6 +18,7 @@ import {
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -168,6 +169,7 @@ export default function AcrossTheYears() {
             ) : (
               <Plot
                 data={graphsData}
+                config={plotConfig}
                 layout={{
                   xaxis: {
                     title: "Years",

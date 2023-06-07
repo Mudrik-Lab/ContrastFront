@@ -18,6 +18,7 @@ import Plot from "react-plotly.js";
 import {
   FrequenciesColors,
   isMoblile,
+  plotConfig,
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
@@ -253,7 +254,7 @@ export default function Frequencies() {
                     <Plot
                       data={traces}
                       style={{ width: "100%", height: "100%" }}
-                      config={{ displayModeBar: !isMoblile, responsive: true }}
+                      config={plotConfig}
                       layout={{
                         autosize: true,
                         barmode: "stack",

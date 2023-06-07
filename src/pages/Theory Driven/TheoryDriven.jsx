@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import {
   isMoblile,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -247,7 +248,7 @@ export default function TheoryDriven() {
                     : buildUrl(pageName, "theory_driven", "either", navigate);
                 }}
                 data={graphData}
-                config={{ displayModeBar: !isMoblile }}
+                config={plotConfig}
                 layout={{
                   width: isMoblile ? screenWidth : screenHeight,
                   height: isMoblile ? screenWidth : screenHeight,
