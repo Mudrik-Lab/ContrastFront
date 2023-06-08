@@ -18,24 +18,46 @@ export const TextInput = ({ ...config }) => {
   );
 };
 
-export const Button = ({ extraClass, children, black, ...config }) => {
+export const Button = ({
+  extraClass,
+  children,
+  black,
+  isCommingSoon,
+  ...config
+}) => {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <div className={classNames(`${isCommingSoon ? "relative" : ""}`)}>
+      {hover && isCommingSoon && (
+        <p
+          className="bg-indigo-900 text-white p-1 min-w-full z-50  "
+          style={{
+            position: "absolute",
+            top: "calc(50% - 16px)",
+          }}>
+          Comming soon
+        </p>
+      )}
+      <button
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className={classNames(
+          `${extraClass} text-white text-md leading-4 font-bold ${
+            black ? "bg-black" : "bg-blue border-[3px] border-blue"
+          } hover:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        )}
+        {...config}>
+        {children}
+      </button>
+    </div>
+  );
+};
+export const ButtonReversed = ({ children, extraClass, ...config }) => {
   return (
     <button
       className={classNames(
-        `${extraClass} text-white text-md leading-4 font-bold ${
-          black ? "bg-black" : "bg-blue"
-        } hover:bg-white hover:text-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        ` ${extraClass} text-blue hover:text-white text-md leading-4 font-bold bg-white hover:bg-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
       )}
-      {...config}>
-      {children}
-    </button>
-  );
-};
-export const ButtonReversed = ({ children, ...config }) => {
-  return (
-    <button
-      className="
-         text-blue hover:text-white text-md leading-4 font-bold bg-white hover:bg-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap"
       {...config}>
       {children}
     </button>
@@ -108,13 +130,28 @@ export const Select = ({ children, placeHolder, optionsArr, ...config }) => {
     </select>
   );
 };
-export const RadioInput = ({ name, values, checked, setChecked }) => {
+export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
   return (
     <div
-      className="flex flex-wrap justify-between items-center px-10"
+      className={classNames(
+        `flex flex-wrap justify-between items-center ${
+          isFlat ? "text-sm gap-4" : "px-10"
+        }`
+      )}
       id={name}>
       {values.map((option, index) =>
-        index % 2 === 0 ? (
+        isFlat ? (
+          <label key={option.value} className="flex items-center">
+            <input
+              type="radio"
+              value={option.value}
+              checked={checked === option.value}
+              onChange={(e) => setChecked(e.target.value)}
+              className="form-radio h-4 w-4 text-indigo-600"
+            />
+            <span className="ml-1">{option.name}</span>
+          </label>
+        ) : index % 2 === 0 ? (
           <label key={option.value} className="flex items-center w-1/2">
             <input
               type="radio"
@@ -162,16 +199,6 @@ export const Label = ({ children }) => {
       className="block mb-2 text-sm text-gray-400 dark:text-white">
       {children}
     </label>
-  );
-};
-
-export const ResetButton = ({ ...config }) => {
-  return (
-    <button
-      className="text-blue border border-blue px-2 rounded-lg mt-2 shadow-sm"
-      {...config}>
-      Reset to defaut
-    </button>
   );
 };
 
@@ -230,7 +257,7 @@ export const SideControl = ({ children, headline }) => {
         </Text>
       </div>
 
-      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-50 ">
+      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-30 ">
         {children}
         <Spacer height={20} />
       </div>
@@ -328,7 +355,7 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
 export const CSV = ({ data }) => {
   return (
     <a href={data?.request.responseURL + "&is_csv=true"}>
-      <Button extraClass="mt-4 mb-16">
+      <Button extraClass={"px-3 py-1.5 "}>
         <CsvIcon />
         Download
       </Button>
@@ -340,11 +367,35 @@ export const Reset = ({ pageName, setInterpretation }) => {
   return (
     <div>
       <ButtonReversed
+        extraClass={"px-3 py-1.5"}
         onClick={() => {
           navigate("/" + pageName);
         }}>
         <RessetIcon /> Reset to default
       </ButtonReversed>
+    </div>
+  );
+};
+export const Temporary = ({ extraClass, children }) => {
+  const [hover, setHover] = React.useState(false);
+  return (
+    <div className="relative">
+      {hover && (
+        <p
+          className="bg-indigo-900 text-white p-1 min-w-full z-50 "
+          style={{
+            position: "absolute",
+            top: "calc(50% - 16px)",
+          }}>
+          Comming soon
+        </p>
+      )}
+      <p
+        onMouseEnter={() => setHover(true)}
+        onMouseLeave={() => setHover(false)}
+        className={classNames(`${extraClass}`)}>
+        {children}
+      </p>
     </div>
   );
 };

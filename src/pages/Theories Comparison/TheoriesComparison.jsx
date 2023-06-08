@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -87,8 +88,7 @@ export default function ParametersDistributionTheoriesComparison() {
       })
       .map((row) => keysArr.push(row.key))
   );
-  console.log(chartsData);
-  console.log(keysArr);
+
   const trimedKeysArr = [...new Set(keysArr)];
 
   let someColors = designerColors.slice(0, trimedKeysArr.length);
@@ -203,9 +203,10 @@ export default function ParametersDistributionTheoriesComparison() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
-          <CSV data={data} />
-          <Spacer height={40} />
-          <Reset pageName={pageName} />
+          <div className="w-full flex items-center justify-between my-4">
+            <CSV data={data} />
+            <Reset pageName={pageName} />
+          </div>
         </SideControl>
       }
       graph={
@@ -242,7 +243,7 @@ export default function ParametersDistributionTheoriesComparison() {
                       },
                     },
                   ]}
-                  config={{ displayModeBar: false }}
+                  config={plotConfig}
                   layout={{
                     width: isMoblile ? screenWidth : screenWidth / 3,
                     height: isMoblile ? screenWidth : screenWidth / 3,

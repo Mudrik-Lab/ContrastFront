@@ -18,6 +18,7 @@ import {
   parametersOptions,
   isMoblile,
   sideSectionClass,
+  plotConfig,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
@@ -39,7 +40,6 @@ export default function ParametersDistributionBar() {
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-bar";
-
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
@@ -160,6 +160,7 @@ export default function ParametersDistributionBar() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+
   return (
     <div>
       {configurationSuccess && (
@@ -230,8 +231,12 @@ export default function ParametersDistributionBar() {
                   />
                 </div>
               </div>
-              <CSV data={data} />
-              <Reset pageName={pageName} />
+              <div className="w-full flex items-center justify-between my-4">
+                <div className="w-full flex items-center justify-between my-4">
+                  <CSV data={data} />
+                  <Reset pageName={pageName} />
+                </div>
+              </div>
             </SideControl>
           }
           graph={
@@ -243,38 +248,40 @@ export default function ParametersDistributionBar() {
               {isLoading ? (
                 <Spinner />
               ) : (
-                <Plot
-                  data={[trace1, trace2]}
-                  config={{ displayModeBar: !isMoblile }}
-                  layout={{
-                    barmode: isStacked ? "stack" : "group",
-                    width: isMoblile ? screenWidth : screenWidth - 400,
-                    height: 35 * Y?.length + 350,
-                    margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90, x: -0.25, y: 1.05 },
+                <div id="graphDiv">
+                  <Plot
+                    data={[trace1, trace2]}
+                    config={plotConfig}
+                    layout={{
+                      barmode: isStacked ? "stack" : "group",
+                      width: isMoblile ? screenWidth : screenWidth - 400,
+                      height: 35 * Y?.length + 350,
+                      margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
+                      legend: { itemwidth: 90, x: -0.25, y: 1.05 },
 
-                    xaxis: {
-                      title: "Number of experiments",
-                      zeroline: true,
-                      side: "top",
-                      tickmode: "linear",
-                      dtick: 10,
-                      tickfont: {
-                        size: 16,
-                        standoff: 50,
+                      xaxis: {
+                        title: "Number of experiments",
+                        zeroline: true,
+                        side: "top",
+                        tickmode: "linear",
+                        dtick: 10,
+                        tickfont: {
+                          size: 16,
+                          standoff: 50,
+                        },
                       },
-                    },
-                    yaxis: {
-                      showticklabels: !isMoblile,
-                      automargin: true,
-                      ticks: "outside",
-                      tickfont: {
-                        size: 10,
-                        standoff: 50,
+                      yaxis: {
+                        showticklabels: !isMoblile,
+                        automargin: true,
+                        ticks: "outside",
+                        tickfont: {
+                          size: 10,
+                          standoff: 50,
+                        },
                       },
-                    },
-                  }}
-                />
+                    }}
+                  />
+                </div>
               )}
             </div>
           }

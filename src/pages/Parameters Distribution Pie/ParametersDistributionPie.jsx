@@ -4,6 +4,7 @@ import Select from "react-select";
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -16,7 +17,6 @@ import {
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -30,7 +30,6 @@ import {
   rawTextToShow,
   showTextToRaw,
   buildUrl,
-  eliminateSmallSlices,
 } from "../../Utils/functions";
 import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
@@ -80,7 +79,7 @@ export default function ParametersDistributionPie() {
   const values2 = [];
   const labels2 = [];
 
-  eliminateSmallSlices(data?.data)?.map((x, index) => {
+  data?.data?.map((x, index) => {
     values1.push(x.value);
     labels1.push(rawTextToShow(x.series_name));
     x.series.map((y) => {
@@ -113,7 +112,7 @@ export default function ParametersDistributionPie() {
     // outside pie
     {
       direction: "clockwise",
-      insidetextorientation: "radial",
+      insidetextorientation: "horizontal",
       values: values2,
       labels: labels2,
       sort: false,
@@ -132,7 +131,7 @@ export default function ParametersDistributionPie() {
   isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
 
   function secondaryPie(seriesName) {
-    const secondaryData = eliminateSmallSlices(data?.data).find(
+    const secondaryData = data?.data.find(
       (row) =>
         row.series_name === seriesName.label ||
         row.series_name === showTextToRaw(seriesName.label) ||
@@ -148,7 +147,7 @@ export default function ParametersDistributionPie() {
       {
         name: "drilled",
         direction: "clockwise",
-        insidetextorientation: "radial",
+        insidetextorientation: "horizontal",
         values: [1],
         labels: [rawTextToShow(secondaryData.series_name)],
         sort: false,
@@ -167,7 +166,7 @@ export default function ParametersDistributionPie() {
       // outside pie
       {
         direction: "clockwise",
-        insidetextorientation: "radial",
+        insidetextorientation: "horizontal",
         values: secondaryData.series.map((row) => row.value),
         labels: secondaryData.series.map((row) => row.key),
         sort: false,
@@ -260,8 +259,10 @@ export default function ParametersDistributionPie() {
               buildUrl(pageName, "theory_driven", e, navigate);
             }}
           />
-          <CSV data={data} />
-          <Reset pageName={pageName} />
+          <div className="w-full flex items-center justify-between my-4">
+            <CSV data={data} />
+            <Reset pageName={pageName} />
+          </div>
         </SideControl>
       }
       graph={
@@ -282,7 +283,7 @@ export default function ParametersDistributionPie() {
                       secondaryPie(e.points[0]);
                     }}
                     data={initialGraphData}
-                    config={{ displayModeBar: !isMoblile }}
+                    config={plotConfig}
                     layout={{
                       width: screenHeight,
                       height: screenHeight,

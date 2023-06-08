@@ -11,7 +11,7 @@ export default function PapersIconsMenu() {
 
   return (
     <div className="papers-visual-items w-full mt-8 sm:px-48">
-      <div className=" mx-auto p-4 flex flex-col items-center gap-6">
+      <div className=" mx-auto p-0 sm:p-4 flex flex-col items-center gap-6">
         <h1 className="text-4xl text-center">
           Conduct Queries And Visually Examine Trends In Empirical Papers
         </h1>
@@ -21,7 +21,7 @@ export default function PapersIconsMenu() {
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
           {graphsHeaders.map((paper) => (
             <div
-              id={paper.text}
+              key={paper.text}
               className="flex flex-col w-24 items-center cursor-pointer p-2 hover:bg-grayLight"
               onClick={() => navigate(paper.route)}>
               <Tooltip content={paper.tooltip} trigger="hover">

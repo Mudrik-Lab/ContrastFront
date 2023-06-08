@@ -21,6 +21,9 @@ import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
 import PageTemplate from "./components/PageTemplate";
 import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
+import MobileScreen from "./pages/MobileScreen/MobileScreen";
+import { isMoblile } from "./Utils/HardCoded";
+import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -41,31 +44,59 @@ const Screens = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
-        <Route path="/temp" element={<PageTemplate />} />
+        <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
+        <Route path="/temp" element={<MobileScreen />} />
+        <Route path="/contact" element={<ContactPage />} />
         <Route
           path="/parameter-distribution-free-queries"
-          element={<FreeQueriesPage />}
+          element={isMoblile ? <MobileScreen /> : <FreeQueriesPage />}
         />
         <Route
           path="/parameter-distribution-bar"
-          element={<ParametersDistributionBar />}
+          element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
         />
         <Route
           path="/parameter-distribution-pie"
-          element={<ParametersDistributionPie />}
+          element={isMoblile ? <MobileScreen /> : <ParametersDistributionPie />}
         />{" "}
-        <Route path="/theory-driven" element={<TheoryDriven />} />
-        <Route path="/trends-over-time" element={<AcrossTheYears />} />
-        <Route path="/contact" element={<ContactPage />} />
+        <Route
+          path="/theory-driven"
+          element={isMoblile ? <MobileScreen /> : <TheoryDriven />}
+        />
+        <Route
+          path="/trends-over-time"
+          element={isMoblile ? <MobileScreen /> : <AcrossTheYears />}
+        />
         <Route
           path="/theories-comparison"
-          element={<ParametersDistributionTheoriesComparison />}
+          element={
+            isMoblile ? (
+              <MobileScreen />
+            ) : (
+              <ParametersDistributionTheoriesComparison />
+            )
+          }
         />
-        <Route path="/anatomical-findings" element={<AnatomicalFindings />} />
-        <Route path="/frequencies" element={<Frequencies />} />
-        <Route path="/journals" element={<Journals />} />
-        <Route path="/timings" element={<Timing />} />
-        <Route path="/consciousness-world-map" element={<WorldMap />} />
+        <Route
+          path="/anatomical-findings"
+          element={isMoblile ? <MobileScreen /> : <AnatomicalFindings />}
+        />
+        <Route
+          path="/frequencies"
+          element={isMoblile ? <MobileScreen /> : <Frequencies />}
+        />
+        <Route
+          path="/journals"
+          element={isMoblile ? <MobileScreen /> : <Journals />}
+        />
+        <Route
+          path="/timings"
+          element={isMoblile ? <MobileScreen /> : <Timing />}
+        />
+        <Route
+          path="/consciousness-world-map"
+          element={isMoblile ? <MobileScreen /> : <WorldMap />}
+        />
       </Routes>
     </BrowserRouter>
   );

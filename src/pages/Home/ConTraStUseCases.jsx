@@ -38,11 +38,15 @@ export default function ConTraStUseCases() {
     },
   ];
   return (
-    <div className=" sm:w-256 mx-auto my-20 flex flex-col items-center gap-8 ">
-      <h1 className="text-5xl ">ConTraSt Use Cases</h1>
+    <div className=" sm:w-256 mx-auto my-20 flex flex-col items-center sm:gap-8 ">
+      <h1 className="text-4xl sm:text-5xl text-center sm:text-left ">
+        ConTraSt Use Cases
+      </h1>
       <div className="ConTraStUseCases sm:flex sm:flex-wrap gap-12 justify-center mx-auto">
         {cardsInfo.map((card) => (
-          <div className="card shadow-xl flex flex-col justify-center p-6 w-96 mt-2 sm:mt-0">
+          <div
+            className="card shadow-xl flex flex-col justify-center p-6 sm:w-96 mt-2 sm:mt-0"
+            key={card.text}>
             <img src={card.image} alt="" />
             <Text center lg weight="bold">
               {card.headline}
@@ -52,7 +56,7 @@ export default function ConTraStUseCases() {
         ))}
       </div>
 
-      <div className="footer flex justify-center items-center gap-6">
+      <div className="footer flex justify-center items-center gap-6 mt-8 sm:mt-0">
         <a href="">
           <img
             src={Tempeleton}

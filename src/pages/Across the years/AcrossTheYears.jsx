@@ -18,6 +18,7 @@ import {
 import {
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -70,13 +71,12 @@ export default function AcrossTheYears() {
       mode: "lines+markers",
     });
   });
-  console.log(data?.data);
+
   let highestY = [];
   if (data) {
     highestY = data?.data
       .map((row) => row.series.slice(-1).map((x) => x.value))
       .flat();
-    console.log(Math.max(...highestY));
   }
 
   useEffect(() => {
@@ -152,8 +152,10 @@ export default function AcrossTheYears() {
                 buildUrl(pageName, "is_reporting", e, navigate);
               }}
             />
-            <CSV data={data} />
-            <Reset pageName={pageName} />
+            <div className="w-full flex items-center justify-between my-4">
+              <CSV data={data} />
+              <Reset pageName={pageName} />
+            </div>
           </SideControl>
         }
         graph={
@@ -167,6 +169,7 @@ export default function AcrossTheYears() {
             ) : (
               <Plot
                 data={graphsData}
+                config={plotConfig}
                 layout={{
                   xaxis: {
                     title: "Years",

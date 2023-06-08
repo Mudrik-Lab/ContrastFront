@@ -19,6 +19,7 @@ export default async function getFreeQueries({
   stimuli_categories,
   stimuli_modalities,
   tasks,
+  interpretation_theories,
 }) {
   const techniquesArr = techniques?.map((t) => "&techniques=" + t.value);
   const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
@@ -51,6 +52,10 @@ export default async function getFreeQueries({
   const theoryDrivenArr = theory_driven?.map(
     (item) => "&theory_driven=" + item.value
   );
+  const interpretationTheoriesArr = interpretation_theories?.map(
+    (item) => "&interpretation_theories=" + item.value
+  );
+  console.log(interpretation_theories);
   const interpretationsArr = interpretations?.map(
     (item) => "&interpretations_types=" + item.value
   );
@@ -70,6 +75,7 @@ export default async function getFreeQueries({
       (stimuliModalitiesArr?.join("") || "") +
       (interpretationsArr?.join("") || "") +
       (theoryDrivenArr?.join("") || "") +
+      (interpretationTheoriesArr?.join("") || "") +
       (tasksArr?.join("") || "")
     }`,
     params: {

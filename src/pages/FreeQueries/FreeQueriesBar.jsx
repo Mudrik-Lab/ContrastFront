@@ -5,6 +5,7 @@ import {
   ButtonReversed,
   CSV,
   FilterExplanation,
+  RadioInput,
   RangeInput,
   ReportFilter,
   Reset,
@@ -18,6 +19,7 @@ import {
   available_populations,
   isMoblile,
   parametersOptions,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -32,7 +34,7 @@ import {
   buildUrlForMultiSelect,
   rawTextToShow,
 } from "../../Utils/functions";
-import Toggle from "../../components/Toggle";
+import getConfiguration from "../../apiHooks/getConfiguration";
 
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -57,17 +59,21 @@ export default function FreeQueriesBar() {
   );
   const [tagsFamilies, setTagsFamilies] = useState([]);
   const [tagsTypes, setTagsTypes] = useState([]);
+  const [theoryFamilies, setTheoryFamilies] = React.useState([]);
   const [interpretations, setInterpretations] = useState([]);
   const [measures, setMeasures] = useState([]);
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-free-queries";
 
+  const { data: configuration, isSuccess: configSuccess } = useQuery(
+    [`parent_theories`],
+    getConfiguration
+  );
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
-
   const techniquesArr = extraConfigSuccess
     ? extraConfig?.data.available_techniques.map((technique, index) => ({
         value: technique.id,
@@ -146,6 +152,15 @@ export default function FreeQueriesBar() {
         label: rawTextToShow(type),
       }))
     : [];
+  const theories = configSuccess
+    ? configuration?.data.available_parent_theories.map((tag, index) => {
+        return {
+          value: index,
+          label: tag,
+          id: index,
+        };
+      })
+    : [];
 
   const interpretationsArr = [
     { value: "challenges", label: "Challenges" },
@@ -153,6 +168,8 @@ export default function FreeQueriesBar() {
     { value: "neutral", label: "Neutral" },
   ];
 
+  const theoriesArr = configSuccess ? extraConfig?.data.available_theories : [];
+  console.log(theoriesArr);
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
@@ -190,7 +207,9 @@ export default function FreeQueriesBar() {
         " " +
         stimuliModalities?.map((row) => row.label).join(",") +
         " " +
-        tasks?.map((row) => row.label).join(",")
+        tasks?.map((row) => row.label).join(",") +
+        " " +
+        theoryFamilies?.map((x) => x.value).join(",")
       }`,
     ],
     () =>
@@ -213,6 +232,7 @@ export default function FreeQueriesBar() {
         paradigms,
         stimuli_categories: stimuliCategories,
         stimuli_modalities: stimuliModalities,
+        interpretation_theories: theoryFamilies,
         tasks,
       })
   );
@@ -260,6 +280,7 @@ export default function FreeQueriesBar() {
         })
       );
     }
+    console.log(extraConfig?.data);
 
     queryParams.get("is_reporting")
       ? setIsReporting(queryParams.get("is_reporting"))
@@ -330,7 +351,15 @@ export default function FreeQueriesBar() {
       updateMultiFilterState(setTheoryDriven, "theory_driven", theoryDrivenArr);
       updateMultiFilterState(setMeasures, "measures", measuresArr);
     }
-
+    if (configSuccess) {
+      const selectedValues = queryParams.getAll("interpretation_theories");
+      setTheoryFamilies(
+        selectedValues.map((item) => ({
+          value: item,
+          label: decodeURIComponent(item),
+        }))
+      );
+    }
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
@@ -343,14 +372,12 @@ export default function FreeQueriesBar() {
               <Text center md weight="bold">
                 Axis Controls
               </Text>
-
               <RangeInput
                 number={experimentsNum}
                 setNumber={(e) => {
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
-
               <div className={sideSectionClass}>
                 <Select
                   closeMenuOnSelect={true}
@@ -367,7 +394,6 @@ export default function FreeQueriesBar() {
                   <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
               </div>
-
               <TypeOfConsciousnessFilter
                 checked={consciousness}
                 setChecked={(e) => {
@@ -380,14 +406,13 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-
-              <div className={sideSectionClass}>
-                <Text flexed md weight="bold">
-                  Filter by
-                  <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
-                </Text>
-                {extraConfigSuccess && (
-                  <>
+              <Text flexed md weight="bold">
+                Filter by
+                <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
+              </Text>
+              {extraConfigSuccess && (
+                <>
+                  <div className={sideSectionClass}>
                     <Select
                       styles={selectStyles}
                       closeMenuOnSelect={true}
@@ -586,7 +611,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
                     <Select
                       menuPlacement="top"
                       styles={selectStyles}
@@ -604,15 +628,34 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
+                  </div>
+                  <div className={sideSectionClass}>
                     <Select
-                      menuPlacement="top"
-                      styles={selectStyles}
                       closeMenuOnSelect={true}
                       isMulti={true}
+                      styles={selectStyles}
+                      value={theoryFamilies}
+                      options={theories}
+                      placeholder="Theories"
+                      onChange={(e) =>
+                        buildUrlForMultiSelect(
+                          e,
+                          "interpretation_theories",
+                          searchParams,
+                          navigate
+                        )
+                      }
+                    />
+                    <Select
+                      isDisabled={theoryFamilies.length === 0}
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      styles={selectStyles}
                       value={interpretations}
                       options={interpretationsArr}
-                      placeholder="Interpretations"
+                      placeholder="interpretations"
                       onChange={(e) => {
+                        console.log(e);
                         buildUrlForMultiSelect(
                           e,
                           "interpretations_types",
@@ -621,11 +664,14 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                  </>
-                )}{" "}
+                    <FilterExplanation text="Interpretations" tooltip="" />
+                  </div>
+                </>
+              )}{" "}
+              <div className="w-full flex items-center justify-between my-4">
+                <CSV data={data} />
+                <Reset pageName={pageName} />
               </div>
-              <CSV data={data} />
-              <Reset pageName={pageName} />
             </SideControl>
           }
           graph={
@@ -636,7 +682,7 @@ export default function FreeQueriesBar() {
               />
               <Plot
                 data={[trace1]}
-                config={{ displayModeBar: !isMoblile }}
+                config={plotConfig}
                 layout={{
                   width: isMoblile ? screenWidth : screenWidth - 400,
                   height: 35 * Y?.length + 250,

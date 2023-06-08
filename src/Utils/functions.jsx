@@ -105,9 +105,7 @@ export function hexToRgba(hexColor) {
   return `rgba(${r}, ${g}, ${b}, 1)`;
 }
 
-export function fitColorPerLabel(data) {
-  console.log(data);
-}
+export function fitColorPerLabel(data) {}
 
 export function fixArraytoURL(arr, name) {
   const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
@@ -117,12 +115,10 @@ export function fixArraytoURL(arr, name) {
 
 export function buildUrl(pageName, paramName, value, navigate) {
   if (value) {
-    console.log("first");
     const queryParams = new URLSearchParams(location.search);
     queryParams.set(paramName, value);
     navigate("/" + pageName + "?" + queryParams.toString());
   } else {
-    console.log("second");
     const queryParams = new URLSearchParams(location.search);
     queryParams.delete(paramName);
     navigate(`/${pageName}?${queryParams.toString()}`);
@@ -146,4 +142,30 @@ export function eliminateSmallSlices(data) {
   } else {
     return data;
   }
+}
+
+export function handleDownloadSVG() {
+  const graphDiv =
+    document.getElementsByClassName("svg-container")[0].childNodes[0];
+  console.log(graphDiv);
+  const svgData = graphDiv.outerHTML;
+  const blob = new Blob([svgData], { type: "image/svg+xml" });
+  const url = URL.createObjectURL(blob);
+  const link = document.createElement("a");
+  link.href = url;
+  link.download = "element.svg";
+  link.click();
+  URL.revokeObjectURL(url);
+}
+
+export function increaseContrast(color, contrastAmount) {
+  const tc = tinycolor(color);
+  const contrastedColor = tc.darken(contrastAmount);
+  return contrastedColor.toHexString();
+}
+
+export function enlargeFonts(element, fontSizeIncrease) {
+  const currentFontSize = parseFloat(getComputedStyle(element).fontSize);
+  const enlargedFontSize = currentFontSize + fontSizeIncrease;
+  element.style.fontSize = `${enlargedFontSize}px`;
 }

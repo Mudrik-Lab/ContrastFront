@@ -2,6 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import {
   isMoblile,
+  plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
@@ -98,7 +99,7 @@ export default function TheoryDriven() {
     {
       //inner
       direction: "clockwise",
-      insidetextorientation: "radial",
+      insidetextorientation: "horizontal",
       values: values1,
       labels: labels1.map((label) => rawTextToShow(label)),
       type: "pie",
@@ -122,7 +123,7 @@ export default function TheoryDriven() {
     {
       //outer
       direction: "clockwise",
-      insidetextorientation: "tangential",
+      insidetextorientation: "horizontal",
       values: values2,
       labels: labels2,
       sort: false,
@@ -201,7 +202,6 @@ export default function TheoryDriven() {
               <Toggle
                 checked={interpretation === "true" ? true : false}
                 setChecked={(e) => {
-                  console.log(e);
                   buildUrl(pageName, "interpretation", e, navigate);
                 }}
               />{" "}
@@ -212,8 +212,10 @@ export default function TheoryDriven() {
               tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
             />
           </div>
-          <CSV data={data} />
-          <Reset pageName={pageName} />
+          <div className="w-full flex items-center justify-between my-4">
+            <CSV data={data} />
+            <Reset pageName={pageName} />
+          </div>
         </SideControl>
       }
       graph={
@@ -230,7 +232,6 @@ export default function TheoryDriven() {
               <Plot
                 onClick={(e) => {
                   setIsSpecificTheory(!isSpecificTheory);
-                  console.log(isSpecificTheory);
                   isSpecificTheory
                     ? buildUrl(pageName, "theory_driven", "either", navigate)
                     : e.points[0].label === "Post Hoc"
@@ -247,7 +248,7 @@ export default function TheoryDriven() {
                     : buildUrl(pageName, "theory_driven", "either", navigate);
                 }}
                 data={graphData}
-                config={{ displayModeBar: !isMoblile }}
+                config={plotConfig}
                 layout={{
                   width: isMoblile ? screenWidth : screenHeight,
                   height: isMoblile ? screenWidth : screenHeight,

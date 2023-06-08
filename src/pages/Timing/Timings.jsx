@@ -17,6 +17,7 @@ import {
 import Plot from "react-plotly.js";
 import {
   isMoblile,
+  plotConfig,
   screenHeight,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -284,9 +285,11 @@ export default function Timings() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
-            <CSV data={data} />
-            <Spacer height={40} />
-            <Reset pageName={pageName} />
+
+            <div className="w-full flex items-center justify-between my-4">
+              <CSV data={data} />
+              <Reset pageName={pageName} />
+            </div>
           </SideControl>
         }
         graph={
@@ -294,6 +297,7 @@ export default function Timings() {
             <TopGraphText
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
+              legendLine={graphsHeaders[6].legendLine}
             />
             {isLoading ? (
               <Spinner />
@@ -301,7 +305,7 @@ export default function Timings() {
               <div className=" w-full h-full flex gap-2">
                 <Plot
                   data={traces}
-                  config={{ displayModeBar: !isMoblile, responsive: true }}
+                  config={plotConfig}
                   style={{
                     width: "calc(100% - 200px)",
                     height: "calc(100% - 100px)",

@@ -18,6 +18,7 @@ import Plot from "react-plotly.js";
 import {
   FrequenciesColors,
   isMoblile,
+  plotConfig,
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
@@ -233,8 +234,10 @@ export default function Frequencies() {
                   }}
                 />
 
-                <CSV data={data} />
-                <Reset pageName={pageName} />
+                <div className="w-full flex items-center justify-between my-4">
+                  <CSV data={data} />
+                  <Reset pageName={pageName} />
+                </div>
               </SideControl>
             }
             graph={
@@ -251,7 +254,7 @@ export default function Frequencies() {
                     <Plot
                       data={traces}
                       style={{ width: "100%", height: "100%" }}
-                      config={{ displayModeBar: !isMoblile, responsive: true }}
+                      config={plotConfig}
                       layout={{
                         autosize: true,
                         barmode: "stack",
@@ -263,6 +266,7 @@ export default function Frequencies() {
                         margin: { autoexpand: true, l: 50 },
                         showlegend: false,
                         yaxis: {
+                          title: " Experment Index",
                           zeroline: false, // hide the zeroline
                           zerolinecolor: "#969696", // customize the color of the zeroline
                           zerolinewidth: 2, // customize the width of the zeroline

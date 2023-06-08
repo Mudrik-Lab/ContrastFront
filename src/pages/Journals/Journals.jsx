@@ -19,6 +19,7 @@ import {
 import Plot from "react-plotly.js";
 import {
   isMoblile,
+  plotConfig,
   screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -167,8 +168,10 @@ export default function Journals() {
                 buildUrl(pageName, "theory_driven", e, navigate);
               }}
             />
-            <CSV data={data} />
-            <Reset pageName={pageName} />
+            <div className="w-full flex items-center justify-between my-4">
+              <CSV data={data} />
+              <Reset pageName={pageName} />
+            </div>
           </SideControl>
         }
         graph={
@@ -182,6 +185,7 @@ export default function Journals() {
             ) : (
               <Plot
                 data={[trace1]}
+                config={plotConfig}
                 layout={{
                   autosize: false,
                   width: isMoblile ? screenWidth : screenWidth - 400,

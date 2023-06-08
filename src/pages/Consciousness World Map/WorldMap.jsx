@@ -1,7 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
-import {  
+import {
   CSV,
   FilterExplanation,
   RangeInput,
@@ -16,7 +16,12 @@ import {
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
-import { isMoblile, screenHeight, screenWidth } from "../../Utils/HardCoded";
+import {
+  isMoblile,
+  plotConfig,
+  screenHeight,
+  screenWidth,
+} from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
@@ -91,7 +96,6 @@ export default function WorldMap() {
     const mergedStates = [];
 
     data?.data.forEach((row) => {
-      
       const country = row.country_name;
       const theory = row.theory;
       const value = row.value;
@@ -108,27 +112,27 @@ export default function WorldMap() {
       if (!mergedStates[country]) {
         mergedStates[country] = fullTextItem;
       } else {
-        mergedStates[country] = {...theoryOnlyTextItem,
+        mergedStates[country] = {
+          ...theoryOnlyTextItem,
           ...mergedStates[country],
-          
         };
       }
     });
 
     return mergedStates;
   }
-  
+
   const mergedStates = buildHoverText(data);
 
   const hover_text = data?.data.map((row) => {
-    return (JSON.stringify(mergedStates[row.country_name])
-    ?.replaceAll("{", "")
-    .replaceAll("}", "")
-    .replaceAll('"', "")
-    .replaceAll(",", "<br>"))
-    })
+    return JSON.stringify(mergedStates[row.country_name])
+      ?.replaceAll("{", "")
+      .replaceAll("}", "")
+      .replaceAll('"', "")
+      .replaceAll(",", "<br>");
+  });
 
-    var graphData = [
+  var graphData = [
     {
       type: "choropleth",
       showscale: !isMoblile,
@@ -157,7 +161,7 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0,
+        y: 0.02,
         title: "# of experiments",
       },
     },
@@ -248,7 +252,9 @@ export default function WorldMap() {
       if (theoriesOnURL.length === 0) {
         buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
       } else {
-        setTheoryFamilies(theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) })));
+        setTheoryFamilies(
+          theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) }))
+        );
       }
     }
   }, [configSuccess]);
@@ -265,7 +271,6 @@ export default function WorldMap() {
               <RangeInput
                 number={experimentsNum}
                 setNumber={(e) => {
-                  e && console.log(e);
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
@@ -304,9 +309,10 @@ export default function WorldMap() {
                   buildUrl(pageName, "theory_driven", e, navigate);
                 }}
               />
-              <CSV data={data} />
-
-              <Reset pageName={pageName} />
+              <div className="w-full flex items-center justify-between my-4">
+                <CSV data={data} />
+                <Reset pageName={pageName} />
+              </div>
             </SideControl>
           }
           graph={
@@ -322,7 +328,7 @@ export default function WorldMap() {
                   data={graphData}
                   style={{ width: "100%", height: "100%" }}
                   layout={layout}
-                  config={{ displayModeBar: !isMoblile, responsive: true }}
+                  config={plotConfig}
                 />
               )}
             </div>

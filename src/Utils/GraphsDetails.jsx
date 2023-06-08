@@ -19,7 +19,7 @@ export const graphsHeaders = [
       "The graph depicts the distribution of parameter values, according to your specifications.",
     route: "/parameter-distribution-free-queries",
     figureLine:
-      "Here, you can use the toolbar on the left to create your own queries",
+      "Here, you can use the toolbar on the left to create your own queries of the data, and generate new figures based on your parameters of interest.",
     figureText:
       " Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
@@ -98,6 +98,8 @@ export const graphsHeaders = [
       "Here, you can plot the time windows over which effects were reported in all experiments in the database that employed a time-resolved technique.",
     figureText:
       "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later components. Components for which a time window was given are depicted as a continuous line spanning over the components range. Dots depict components for which only the peak was reported. In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    legendLine:
+      "To zoom in on a specific time window, simply draw a rectangle with your mouse on the area of interest, and the figure will change accordingly.",
   },
   {
     text: "Frequencies",
@@ -122,6 +124,8 @@ export const graphsHeaders = [
       "Here, you can see the findings in the spatial domain, of the experiments in the database which used fMRI.",
     figureText:
       "Red, yellow, blue, and green activations represent experiments supporting the global workspace theories, integrated information, higher order, and re-entry and predictive processing theories, respectively. The intensity of the color of each activation indicates the relative frequency of the activation in each brain area, within the findings supporting each theory family. Note that this does not include any statistical analysis of the data, just a simple “vote count” of the number of experiments in which a specific area was reported. ",
+    legendLine:
+      "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
   },
   {
     text: "Journals",
