@@ -168,6 +168,8 @@ export default function FreeQueriesBar() {
     { value: "neutral", label: "Neutral" },
   ];
 
+  const theoriesArr = configSuccess ? extraConfig?.data.available_theories : [];
+  console.log(theoriesArr);
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${

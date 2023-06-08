@@ -21,7 +21,7 @@ export default function PapersIconsMenu() {
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
           {graphsHeaders.map((paper) => (
             <div
-              id={paper.text}
+              key={paper.text}
               className="flex flex-col w-24 items-center cursor-pointer p-2 hover:bg-grayLight"
               onClick={() => navigate(paper.route)}>
               <Tooltip content={paper.tooltip} trigger="hover">

@@ -13,7 +13,7 @@ export default function CommunityBox() {
           weight="bold"
           center={isMoblile}
           lineHeight={isMoblile ? 8 : 12}>
-          Join ConTraSt community
+          Join the ConTraSt community
         </Text>
         {!isMoblile && (
           <Button isCommingSoon>
