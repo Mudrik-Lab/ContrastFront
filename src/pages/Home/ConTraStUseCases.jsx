@@ -57,22 +57,19 @@ export default function ConTraStUseCases() {
       </div>
 
       <div className="footer flex justify-center items-center gap-6 mt-8 sm:mt-0">
-        <a href="">
+        <a
+          href="https://live-templeton-next-nhemv.appa.pantheon.site/"
+          target="_blank">
           <img
             src={Tempeleton}
             alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
-            target="_blank"
           />{" "}
         </a>
-        <a href="">
-          <img
-            src={Cogtate}
-            alt="https://www.arc-cogitate.com/"
-            target="_blank"
-          />{" "}
+        <a href="https://www.arc-cogitate.com/" target="_blank">
+          <img src={Cogtate} alt="https://www.arc-cogitate.com/ " />{" "}
         </a>{" "}
-        <a href="">
-          <img src={TelAvivUni} alt="https://www.tau.ac.il/" target="_blank" />{" "}
+        <a href="https://www.tau.ac.il/" target="_blank">
+          <img src={TelAvivUni} alt="https://www.tau.ac.il/" />{" "}
         </a>{" "}
       </div>
     </div>

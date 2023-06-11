@@ -2,6 +2,7 @@
 
 body{
   font-family: 'PT Sans', sans-serif !important;
+  
 }
 
 ::-webkit-scrollbar {
@@ -22,4 +23,6 @@ body{
     background-color: #66BFF1;
   }
 
- 
+  .bigger-text {
+    font-size: 1.5rem; /* Adjust the desired font size here */
+  }

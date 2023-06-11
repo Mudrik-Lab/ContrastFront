@@ -2,30 +2,21 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactComponent as Accessibility } from "./assets/icons/accessibility-icon.svg";
 import { ReactComponent as Close } from "./assets/icons/remove-icon.svg";
+import { ReactComponent as TextIcon } from "./assets/icons/noun-contrast.svg";
+import { ReactComponent as ContrastIcon } from "./assets/icons/noun-text.svg";
 import "./App.css";
 import Screens from "./Screens";
-import { Button } from "./components/Reusble";
-import classNames from "classnames";
+import { BigButton, Button } from "./components/Reusble";
 
 function App() {
   const [open, setOpen] = React.useState(false);
+  const [isBiggerText, setIsBiggerText] = React.useState(false);
   const elementRef = React.useRef(null);
 
-  const handleIncreaseContrast = () => {
-    if (elementRef.current) {
-      const currentColor = getComputedStyle(elementRef.current).color;
-      const contrastedColor = increaseContrast(currentColor, 10);
-      elementRef.current.style.color = contrastedColor;
-    }
+  const toggleBiggerText = () => {
+    setIsBiggerText(!isBiggerText);
   };
 
-  const handleEnlargeFonts = () => {
-    console.log(elementRef.current);
-
-    if (elementRef.current) {
-      enlargeFonts(elementRef.current, 2);
-    }
-  };
   const client = new QueryClient({
     defaultOptions: {
       queries: {
@@ -42,8 +33,8 @@ function App() {
       <QueryClientProvider client={client}>
         <Screens />
       </QueryClientProvider>
-      <div className="fixed top-1/2 flex flex-row-reverse items-start z-50">
-        <div className=" justify-end items-center h-16 w-16 bg-sky-900  rounded-r-full p-2">
+      {/* <div className="fixed top-1/3 flex flex-row-reverse items-start z-50 ">
+        <div className=" justify-end items-center h-16 w-16 bg-darkBlue  rounded-r-full p-2 border border-white border-l-0">
           {open ? (
             <Close className="w-12 h-12" onClick={() => setOpen(false)} />
           ) : (
@@ -54,16 +45,19 @@ function App() {
           )}
         </div>
         {open && (
-          <div className="bg-sky-900 h-[400px] w-[400px] p-2 pl-0">
-            <div className="bg-white h-full w-full">
-              <Button onClick={handleIncreaseContrast}>
-                Increase Contrast
-              </Button>
-              <Button onClick={handleEnlargeFonts}>Enlarge Fonts</Button>
+          <div className="bg-darkBlue h-40 w-80 p-2 pl-0 border border-white border-l-0">
+            <div className="bg-white h-full w-full flex justify-between p-2 gap-2">
+              <BigButton
+                icon={<ContrastIcon />}
+                text={"Enlarge text"}
+                onClick={toggleBiggerText}></BigButton>
+              <BigButton icon={<TextIcon />} text={"Increase contrast"}>
+                {" "}
+              </BigButton>
             </div>
           </div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 }

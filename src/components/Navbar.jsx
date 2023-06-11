@@ -34,7 +34,9 @@ export default function Navbar() {
                 High Level <br /> Cognition Lab
               </Text>
             </div>
-            <button onClick={() => setIsMobileOpen(!isMobileOpen)}>
+            <button
+              onClick={() => setIsMobileOpen(!isMobileOpen)}
+              aria-label="hamburger-menu">
               {!isMobileOpen ? <Burger /> : <X />}
             </button>
           </div>

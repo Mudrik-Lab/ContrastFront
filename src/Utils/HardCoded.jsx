@@ -1,5 +1,3 @@
-import { handleDownloadSVG } from "./functions";
-
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
