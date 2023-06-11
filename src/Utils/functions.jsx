@@ -1,10 +1,3 @@
-export function getRandomColor(numberOfColors) {
-  var colors = [];
-  for (var i = 0; i < numberOfColors; i++) {
-    colors.push("#" + Math.floor(Math.random() * 16777215).toString(16));
-  }
-  return colors;
-}
 export function blueToYellow(numColors) {
   const colors = [];
 
@@ -38,21 +31,6 @@ export function blueToYellow(numColors) {
   }
 
   return colors;
-}
-
-export function breakHeadlines(str, chartForLine) {
-  let newStr = "";
-  let charsCount = 0;
-  str.split(" ").map((word) => {
-    if (charsCount < chartForLine) {
-      newStr = newStr + " " + word;
-      charsCount = charsCount + word.length + 1;
-    } else {
-      newStr = newStr + "<br />" + word;
-      charsCount = 0;
-    }
-  });
-  return "<span>" + newStr.slice(1) + "</span>";
 }
 
 export function rawTextToShow(text) {
@@ -105,8 +83,6 @@ export function hexToRgba(hexColor) {
   return `rgba(${r}, ${g}, ${b}, 1)`;
 }
 
-export function fitColorPerLabel(data) {}
-
 export function fixArraytoURL(arr, name) {
   const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
   const urlString = queriesArr?.join("");
@@ -134,38 +110,26 @@ export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
   });
   navigate(`?${queryParams.toString()}`);
 }
-export function eliminateSmallSlices(data) {
-  const innerCircleValues = data?.map((row) => row.value);
-  const total = innerCircleValues?.reduce((a, b) => a + b, 0);
-  if (total && innerCircleValues) {
-    return data?.filter((row) => row.value > total / 200);
-  } else {
-    return data;
-  }
-}
+// export function eliminateSmallSlices(data) {
+//   const innerCircleValues = data?.map((row) => row.value);
+//   const total = innerCircleValues?.reduce((a, b) => a + b, 0);
+//   if (total && innerCircleValues) {
+//     return data?.filter((row) => row.value > total / 200);
+//   } else {
+//     return data;
+//   }
+// }
 
-export function handleDownloadSVG() {
-  const graphDiv =
-    document.getElementsByClassName("svg-container")[0].childNodes[0];
-  console.log(graphDiv);
-  const svgData = graphDiv.outerHTML;
-  const blob = new Blob([svgData], { type: "image/svg+xml" });
-  const url = URL.createObjectURL(blob);
-  const link = document.createElement("a");
-  link.href = url;
-  link.download = "element.svg";
-  link.click();
-  URL.revokeObjectURL(url);
-}
-
-export function increaseContrast(color, contrastAmount) {
-  const tc = tinycolor(color);
-  const contrastedColor = tc.darken(contrastAmount);
-  return contrastedColor.toHexString();
-}
-
-export function enlargeFonts(element, fontSizeIncrease) {
-  const currentFontSize = parseFloat(getComputedStyle(element).fontSize);
-  const enlargedFontSize = currentFontSize + fontSizeIncrease;
-  element.style.fontSize = `${enlargedFontSize}px`;
-}
+// export function handleDownloadSVG() {
+//   const graphDiv =
+//     document.getElementsByClassName("svg-container")[0].childNodes[0];
+//   console.log(graphDiv);
+//   const svgData = graphDiv.outerHTML;
+//   const blob = new Blob([svgData], { type: "image/svg+xml" });
+//   const url = URL.createObjectURL(blob);
+//   const link = document.createElement("a");
+//   link.href = url;
+//   link.download = "element.svg";
+//   link.click();
+//   URL.revokeObjectURL(url);
+// }

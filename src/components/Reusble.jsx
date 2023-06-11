@@ -399,3 +399,12 @@ export const Temporary = ({ extraClass, children }) => {
     </div>
   );
 };
+
+export const BigButton = ({ extraClass, icon, text, ...config }) => {
+  return (
+    <button className="h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md">
+      {icon}
+      {text}
+    </button>
+  );
+};

@@ -61,7 +61,7 @@ export default function HomePage() {
         </div>
       </div>
       <div className="px-4">
-        <div className="citing  sm:max-w-[830px] mx-auto mt-10">
+        <div className="citing sm:max-w-[830px] mx-auto mt-10">
           <div className=" border cite-box bg-grayLight mx-auto sm:flex justify-between items-center gap-2 p-4">
             <Quote />
             <Text>
@@ -73,7 +73,7 @@ export default function HomePage() {
               consciousness theories. Nature Human Behaviour.
               {!isMoblile ? <br /> : " "}
               <a
-                className="text-blue underline"
+                className="text-darkBlue underline"
                 href="https://www.nature.com/articles/s41562-021-01284-5"
                 target="_blank">
                 https://www.nature.com/articles/s41562-021-01284-5

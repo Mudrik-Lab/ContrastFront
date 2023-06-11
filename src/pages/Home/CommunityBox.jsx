@@ -8,7 +8,7 @@ export default function CommunityBox() {
     <div className="community-box sm:w-144 bg-grayLight mx-auto flex flex-col sm:flex-row justify-between items-center sm:items-start gap-8 p-8">
       <div className="flex flex-col justify-between h-full gap-12 ">
         <Text
-          color="grayHeavy"
+          color="black"
           size={32}
           weight="bold"
           center={isMoblile}
@@ -23,7 +23,7 @@ export default function CommunityBox() {
         )}
       </div>
       {!isMoblile && <div className=" border-r border-black h-64 "></div>}
-      <ul className="text-grayHeavy list-disc ml-4 text-xl ">
+      <ul className="text-black list-disc ml-4 text-xl ">
         <li>
           Download research references and information about over 400
           experiments and counting
