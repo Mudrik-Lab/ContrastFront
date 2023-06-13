@@ -9,17 +9,17 @@ import Footer from "../../components/Footer";
 import { isMoblile, navHeight } from "../../Utils/HardCoded";
 
 export default function AboutPage() {
-  const aLinkClass = "text-blue cursor-pointer";
+  const aLinkClass = "text-darkBlue underline cursor-pointer";
   return (
     <div id="about-page">
       <Navbar />
       <Spacer height={navHeight + 64} />
       <div className="max-w-[1018px] mx-auto">
-        <Text size={57} color="blue" center>
+        <Text className="text-6xl" color="blue" center>
           About ConTraSt
         </Text>
-        <div className="about-database sm:mt-16 mx-auto ">
-          <Text size={isMoblile ? 36 : 43} center>
+        <div className="about-database sm:mt-10 mx-auto ">
+          <Text className="text-4xl leading-snug" center>
             The Consciousness Theories Studies (ConTraSt) database
           </Text>
           <div className="h-auto flex flex-col sm:flex-row sm:gap-10 mt-6 max-w-[1250px] mx-auto sm:px-2">
@@ -27,7 +27,7 @@ export default function AboutPage() {
               <img src={BrainImg} alt="" />
             </div>
 
-            <Text md className="px-4 sm:px-0 ">
+            <Text className="px-4 sm:px-0 ">
               Welcome to the ConTraSt database website! This is an open access
               interactive website, featuring the Consciousness Theories Studies
               (ConTraSt) database. Below you can get a bird’s eye view on how
@@ -71,22 +71,21 @@ export default function AboutPage() {
             <div className=" openSource-box max-w-[815px] bg-grayLight sm:flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
               <div className="sm:w-[165px] ">
                 <Text
-                  className={"sm:leading-8 "}
+                  className={"sm:leading-8 text-[30px]"}
                   weight="bold"
-                  size={30}
                   center={isMoblile}>
                   We Are{isMoblile ? " " : <br />} Open Source
                 </Text>
               </div>
 
               <div className="max-w-[390px]">
-                <Text md>
+                <Text>
                   We believe in open-science! In this link, you can find a CSV
                   file with all the data presented on this website and the code
                   for creating the queries and graphs. The data is licensed
                   under{" "}
                   <a
-                    className="text-blue underline"
+                    className="text-darkBlue underline"
                     href="https://creativecommons.org/licenses/by-sa/4.0/"
                     target="_blank">
                     CC-BY-SA-4.0 creative commons
@@ -111,7 +110,7 @@ export default function AboutPage() {
               </div>
             </div>
             <div id="steering_committee">
-              <Text size={isMoblile ? 36 : 43} center>
+              <Text className="text-4xl" center>
                 ConTraSt Steering Committee
               </Text>
               <TeamMembersCards />

@@ -202,7 +202,7 @@ export default function Timings() {
       <PageTemplate
         control={
           <SideControl headline="Timings">
-            <Text md weight="bold">
+            <Text lg weight="bold">
               Axis Controls
             </Text>
             <div className={sideSectionClass}>
@@ -216,7 +216,7 @@ export default function Timings() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed size={14}>
+              <Text flexed className="text-sm">
                 Theory Family
                 <FilterExplanation tooltip="few more words about Thory" />
               </Text>
@@ -239,7 +239,7 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed size={14}>
+              <Text flexed className="text-sm">
                 Technique
                 <FilterExplanation tooltip="few more words about techniques" />
               </Text>
@@ -262,7 +262,7 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed size={14}>
+              <Text flexed className="text-sm">
                 Components
                 <FilterExplanation tooltip="few more words about Finding Tags" />
               </Text>
@@ -342,7 +342,7 @@ export default function Timings() {
                         <div
                           className="w-3 h-3  "
                           style={{ backgroundColor: color }}></div>
-                        <p className="text-[10px] sm:text-[12px]">
+                        <p className="text-xs">
                           {Object.values(legendArray)[index]}
                         </p>
                       </div>

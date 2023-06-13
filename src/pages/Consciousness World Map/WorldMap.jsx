@@ -265,7 +265,7 @@ export default function WorldMap() {
         <PageTemplate
           control={
             <SideControl headline={"Nations of Consciousness"}>
-              <Text md weight="bold">
+              <Text lg weight="bold">
                 Axis Controls
               </Text>
               <RangeInput
@@ -275,7 +275,7 @@ export default function WorldMap() {
                 }}
               />
               <div className={sectionClass}>
-                <Text flexed md weight="bold">
+                <Text flexed lg weight="bold">
                   Theory Family
                   <FilterExplanation tooltip="few more words about Theories" />
                 </Text>

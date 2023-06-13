@@ -144,7 +144,7 @@ export default function ParametersDistributionTheoriesComparison() {
     <PageTemplate
       control={
         <SideControl headline={"Theories Comparison"}>
-          <Text md weight="bold">
+          <Text lg weight="bold">
             Axis Controls
           </Text>
           <RangeInput
@@ -164,7 +164,7 @@ export default function ParametersDistributionTheoriesComparison() {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
             />
-            <Text size={14} flexed>
+            <Text className="text-sm" flexed>
               Parameter of interest
               <FilterExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>

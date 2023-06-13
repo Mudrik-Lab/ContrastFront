@@ -173,7 +173,7 @@ export default function Frequencies() {
           <PageTemplate
             control={
               <SideControl headline={"Frequencies"}>
-                <Text md weight="bold">
+                <Text lg weight="bold">
                   Axis Controls
                 </Text>
 
@@ -188,7 +188,7 @@ export default function Frequencies() {
                       buildUrl(pageName, "theory", e?.value, navigate);
                     }}
                   />
-                  <Text flexed size={14}>
+                  <Text className="text-sm">
                     Theory Family
                     <FilterExplanation tooltip="few more words about Thory" />
                   </Text>
@@ -210,7 +210,7 @@ export default function Frequencies() {
                     }}
                   />
 
-                  <Text flexed size={14}>
+                  <Text flexed className="text-sm">
                     Technique
                     <FilterExplanation tooltip="few more words about techniques" />
                   </Text>

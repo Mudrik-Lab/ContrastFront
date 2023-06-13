@@ -2,10 +2,8 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
-  ButtonReversed,
   CSV,
   FilterExplanation,
-  RadioInput,
   RangeInput,
   ReportFilter,
   Reset,
@@ -265,6 +263,7 @@ export default function FreeQueriesBar() {
     control: (provided) => ({
       ...provided,
       width: 300,
+      fontSize: 16,
     }),
   };
 
@@ -369,7 +368,7 @@ export default function FreeQueriesBar() {
         <PageTemplate
           control={
             <SideControl headline={"Parameter Distribution Free Queries"}>
-              <Text center md weight="bold">
+              <Text center lg weight="bold">
                 Axis Controls
               </Text>
               <RangeInput
@@ -380,6 +379,8 @@ export default function FreeQueriesBar() {
               />
               <div className={sideSectionClass}>
                 <Select
+                  styles={selectStyles}
+                  aria-label="Parameter of interest"
                   closeMenuOnSelect={true}
                   isMulti={false}
                   isClearable={false}
@@ -389,7 +390,7 @@ export default function FreeQueriesBar() {
                     buildUrl(pageName, "breakdown", e.value, navigate);
                   }}
                 />
-                <Text size={14} flexed>
+                <Text className="text-sm" flexed>
                   Parameter of interest
                   <FilterExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
@@ -406,7 +407,7 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-              <Text flexed md weight="bold">
+              <Text flexed lg weight="bold">
                 Filter by
                 <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
               </Text>
@@ -420,6 +421,7 @@ export default function FreeQueriesBar() {
                       value={selectedTechniques}
                       options={techniquesArr}
                       placeholder="Technique"
+                      aria-label="Technique"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -436,6 +438,7 @@ export default function FreeQueriesBar() {
                       value={paradigmFamilies}
                       options={paradigmFamiliesArr}
                       placeholder="Paradigm Families"
+                      aria-label="Paradigm Families"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -452,6 +455,7 @@ export default function FreeQueriesBar() {
                       value={paradigms}
                       options={paradigmsArr}
                       placeholder="Specific Paradigm"
+                      aria-label="Specific Paradigm"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -469,6 +473,7 @@ export default function FreeQueriesBar() {
                       value={stimuliCategories}
                       options={stimuliCategoriesArr}
                       placeholder="Stimulus Category"
+                      aria-label="Stimulus Category"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -485,6 +490,7 @@ export default function FreeQueriesBar() {
                       value={stimuliModalities}
                       options={stimuliModalitiesArr}
                       placeholder="Stimulus Modality"
+                      aria-label="Stimulus Modality"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -502,6 +508,7 @@ export default function FreeQueriesBar() {
                       value={tasks}
                       options={tasksArr}
                       placeholder="Task"
+                      aria-label="Task"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -518,6 +525,7 @@ export default function FreeQueriesBar() {
                       value={populations}
                       options={populationsArr}
                       placeholder="Population"
+                      aria-label="Population"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -533,7 +541,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={consciousnessMeasureTypes}
                       options={consciousnessMeasureTypesArr}
-                      placeholder="how was consciousness measured?"
+                      placeholder="How was consciousness measured?"
+                      aria-label="How was consciousness measured?"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -550,6 +559,7 @@ export default function FreeQueriesBar() {
                       value={consciousnessMeasurePhases}
                       options={consciousnessMeasurePhaseArr}
                       placeholder={"When was consciousness measured? "}
+                      aria-label={"When was consciousness measured? "}
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -567,6 +577,7 @@ export default function FreeQueriesBar() {
                       value={measures}
                       options={measuresArr}
                       placeholder="Measures"
+                      aria-label="Measures"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -584,6 +595,7 @@ export default function FreeQueriesBar() {
                       value={tagsFamilies}
                       options={tagsFamiliesArr}
                       placeholder="Finding Types"
+                      aria-label="Finding Types"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -602,6 +614,7 @@ export default function FreeQueriesBar() {
                       value={tagsTypes}
                       options={tagsTypesArr}
                       placeholder="Specific Finding"
+                      aria-label="Specific Finding"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -619,6 +632,7 @@ export default function FreeQueriesBar() {
                       value={theoryDriven}
                       options={theoryDrivenArr}
                       placeholder="Theory Driven"
+                      aria-label="Theory Driven"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -637,6 +651,7 @@ export default function FreeQueriesBar() {
                       value={theoryFamilies}
                       options={theories}
                       placeholder="Theories"
+                      aria-label="Theories"
                       onChange={(e) =>
                         buildUrlForMultiSelect(
                           e,
@@ -654,6 +669,7 @@ export default function FreeQueriesBar() {
                       value={interpretations}
                       options={interpretationsArr}
                       placeholder="interpretations"
+                      aria-label="interpretations"
                       onChange={(e) => {
                         console.log(e);
                         buildUrlForMultiSelect(

@@ -17,10 +17,10 @@ export default function MobileScreen() {
         className=" bg-black flex flex-col justify-center items-center px-5 gap-14">
         <div className="flex flex-col items-center">
           <Desktop />
-          <Text size={32} color="white" center>
+          <Text className="text-3xl" color="white" center>
             This Feature is currently only available for desktop
           </Text>
-          <Text color="white" size={14}>
+          <Text color="white" className="text-sm">
             Join us from a personal computer near you
           </Text>
         </div>

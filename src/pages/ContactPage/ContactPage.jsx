@@ -16,7 +16,7 @@ export default function ContactPage() {
       <Navbar />
       <Spacer height={navHeight + 54} />
       <div className="mx-auto max-w-xl mb-16">
-        <Text size={57} color="blue" center>
+        <Text className="text-6xl" color="blue" center>
           Contact ConTraSt
         </Text>
         <div className=" contact-box mx-auto shadow-lg flex gap-4 px-5 py-5 ">

@@ -36,7 +36,7 @@ export default function TeamMembersCards() {
 
               <div className="min-h-[180px] max-h-[260px]">
                 <div className="flex flex-col justify-center items-center my-4">
-                  <Text center md weight="bold">
+                  <Text center lg weight="bold">
                     {card.name}
                   </Text>
                 </div>
@@ -55,7 +55,10 @@ export default function TeamMembersCards() {
                 </ShowMoreText>
               </div>
               <div className="absolute  bottom-2">
-                <a href={card.website} target="_blank">
+                <a
+                  href={card.website}
+                  aria-label="link to member's website"
+                  target="_blank">
                   <Web />
                 </a>
               </div>
@@ -63,7 +66,7 @@ export default function TeamMembersCards() {
           ))}
       </div>
       <div className="flex justify-center mt-24 mx-auto ">
-        <div className="team-member-card w-48 flex flex-col items-center shadow-lg p-2 rounded-lg relative">
+        <div className="Karine's-card w-48 flex flex-col items-center shadow-lg p-2 rounded-lg relative">
           <div
             style={{
               width: 120,
@@ -77,7 +80,7 @@ export default function TeamMembersCards() {
 
           <div className="w-[150px]">
             <div className="flex flex-col justify-center items-center my-4">
-              <Text center md weight="bold">
+              <Text center lg weight="bold">
                 {"Karine Jospe"}
               </Text>
             </div>
@@ -100,6 +103,7 @@ export default function TeamMembersCards() {
               href={
                 "https://people.socsci.tau.ac.il/mu/mudriklab/people/#gkit-popup"
               }
+              aria-label="link to Karine's website"
               target="_blank">
               <Web />
             </a>

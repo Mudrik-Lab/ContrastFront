@@ -29,7 +29,7 @@ export default function Navbar() {
               onClick={() => navigate("/")}>
               <img src={Logo} alt="" />
               <div className=" border-r border-black h-10 "></div>
-              <Text sm color="grayHeavy">
+              <Text xs color="grayHeavy">
                 {" "}
                 High Level <br /> Cognition Lab
               </Text>
@@ -112,7 +112,7 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
+        <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-30 top-0 left-0 shadow-lg ">
           <div className=" flex flex-wrap items-center justify-between w-full ">
             <div className="flex items-center justify-between">
               <div
@@ -120,7 +120,7 @@ export default function Navbar() {
                 onClick={() => navigate("/")}>
                 <img src={Logo} alt="" />
                 <div className=" border-r border-black h-10 "></div>
-                <Text sm color="grayHeavy">
+                <Text xs color="grayHeavy">
                   {" "}
                   High Level <br /> Cognition Lab{" "}
                 </Text>

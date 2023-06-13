@@ -80,20 +80,18 @@ export const Spacer = ({ height }) => {
 export const Text = ({
   weight,
   children,
-  size,
+  xl,
   lg,
-  md,
-  sm,
+  xs,
   center,
   color,
   flexed,
   onClick,
   className,
-  lineHeight,
   id,
 }) => {
   return (
-    <div
+    <p
       id={id}
       onClick={onClick}
       className={classNames(
@@ -101,14 +99,13 @@ export const Text = ({
           color ? color : "black"
         } font-${weight ? weight : "medium"} ${
           className ? className : ""
-        } leading-${lineHeight}`
+        } text-${xl ? "xl" : lg ? "lg" : xs ? "xs" : "base"}`
       )}
       style={{
-        fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,
         textAlign: center && "center",
       }}>
       {children}
-    </div>
+    </p>
   );
 };
 
@@ -135,7 +132,7 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
     <div
       className={classNames(
         `flex flex-wrap justify-between items-center ${
-          isFlat ? "text-sm gap-4" : "px-10"
+          isFlat ? "text-sm gap-4" : "text-base px-8"
         }`
       )}
       id={name}>
@@ -222,6 +219,7 @@ export const RangeInput = ({ number, setNumber }) => {
           step={1}
           className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
           id="numOfExperiments"
+          aria-label="number of experiments range input"
         />
         <span
           style={{
@@ -252,12 +250,12 @@ export const SideControl = ({ children, headline }) => {
         maxHeight: isMoblile ? "400px" : "100vh",
       }}>
       <div className="p-4">
-        <Text size={28} weight="bold" color="blue" center>
+        <Text className="text-3xl" weight="bold" color="blue" center>
           {headline}
         </Text>
       </div>
 
-      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-30 ">
+      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-20 ">
         {children}
         <Spacer height={20} />
       </div>
@@ -402,7 +400,9 @@ export const Temporary = ({ extraClass, children }) => {
 
 export const BigButton = ({ extraClass, icon, text, ...config }) => {
   return (
-    <button className="h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md">
+    <button
+      className="h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md"
+      {...config}>
       {icon}
       {text}
     </button>

@@ -2,16 +2,18 @@ import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactComponent as Accessibility } from "./assets/icons/accessibility-icon.svg";
 import { ReactComponent as Close } from "./assets/icons/remove-icon.svg";
-import { ReactComponent as TextIcon } from "./assets/icons/noun-contrast.svg";
-import { ReactComponent as ContrastIcon } from "./assets/icons/noun-text.svg";
+import { ReactComponent as ContrastIcon } from "./assets/icons/noun-contrast.svg";
+import { ReactComponent as TextIcon } from "./assets/icons/noun-text.svg";
 import "./App.css";
 import Screens from "./Screens";
 import { BigButton, Button } from "./components/Reusble";
+import { enlargeFont, updateTextClass } from "./Utils/functions";
+import classNames from "classnames";
 
 function App() {
   const [open, setOpen] = React.useState(false);
+  const [isHighContrast, setIsHighContrast] = React.useState(false);
   const [isBiggerText, setIsBiggerText] = React.useState(false);
-  const elementRef = React.useRef(null);
 
   const toggleBiggerText = () => {
     setIsBiggerText(!isBiggerText);
@@ -29,11 +31,15 @@ function App() {
   });
 
   return (
-    <div className="App" ref={elementRef}>
+    <div
+      className={classNames(
+        `${isHighContrast ? "bg-white text-black" : ""} App `
+      )}
+      onClick={() => (open ? setOpen(false) : null)}>
       <QueryClientProvider client={client}>
         <Screens />
       </QueryClientProvider>
-      {/* <div className="fixed top-1/3 flex flex-row-reverse items-start z-50 ">
+      <div className="fixed top-1/4 flex flex-row-reverse items-start z-50 ">
         <div className=" justify-end items-center h-16 w-16 bg-darkBlue  rounded-r-full p-2 border border-white border-l-0">
           {open ? (
             <Close className="w-12 h-12" onClick={() => setOpen(false)} />
@@ -49,15 +55,18 @@ function App() {
             <div className="bg-white h-full w-full flex justify-between p-2 gap-2">
               <BigButton
                 icon={<ContrastIcon />}
+                text={"Increase contrast"}
+                onClick={() => setIsHighContrast(true)}></BigButton>
+              <BigButton
+                icon={<TextIcon />}
                 text={"Enlarge text"}
-                onClick={toggleBiggerText}></BigButton>
-              <BigButton icon={<TextIcon />} text={"Increase contrast"}>
+                onClick={updateTextClass}>
                 {" "}
               </BigButton>
             </div>
           </div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 }

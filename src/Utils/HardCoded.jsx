@@ -7,15 +7,8 @@ export const sideSectionClass =
   "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 
 export const plotConfig = {
-  modeBarButtonsToRemove: [
-    "zoomin",
-    "zoomout",
-    "pan",
-    "select",
-    "lasso",
-    "autoscale2d",
-  ],
-  scrollZoom: true,
+  modeBarButtonsToRemove: ["pan", "select", "lasso", "autoscale2d"],
+  scrollZoom: false,
   displayModeBar: true,
   toImageButtonOptions: {
     format: "svg", // one of png, svg, jpeg, webp

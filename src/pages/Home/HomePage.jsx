@@ -25,7 +25,6 @@ export default function HomePage() {
   const containerStyle = {
     backgroundImage: `url(${isMoblile ? mobileBrain : brain})`,
   };
-  console.log(isMoblile);
   return (
     <div>
       <Navbar />
@@ -37,15 +36,11 @@ export default function HomePage() {
             {" "}
             ConTraSt Database
           </h1>
-          <Text color="white" weight={300} size={32} className="leading-10">
-            Examine trends
-          </Text>
-          <Text color="blue" weight={300} size={36} className="leading-10">
-            in over 400 experiments
-          </Text>
-          <Text color="white" weight={300} size={32} className="leading-10">
+          <h1 className="text-white text-3xl">Examine trends</h1>
+          <h1 className="text-blue text-3xl"> in over 400 experiments</h1>
+          <h1 className="text-white text-3xl">
             studying theories of consciousness
-          </Text>
+          </h1>
         </div>
         <div className="header-buttons flex flex-col items-center sm:flex-row sm:justify-start gap-4 mt-60 sm:mt-24">
           <WhiteButton
@@ -61,19 +56,17 @@ export default function HomePage() {
         </div>
       </div>
       <div className="px-4">
-        <div className="citing sm:max-w-[830px] mx-auto mt-10">
+        <div className="citing sm:max-w-[870px] mx-auto mt-10">
           <div className=" border cite-box bg-grayLight mx-auto sm:flex justify-between items-center gap-2 p-4">
-            <Quote />
+            <div className="w-16">
+              <Quote />
+            </div>
             <Text>
               Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The
-              ConTraSt
-              {!isMoblile ? <br /> : " "}
-              database for analysing and comparing empirical studies of{" "}
-              {!isMoblile ? <br /> : " "}
-              consciousness theories. Nature Human Behaviour.
-              {!isMoblile ? <br /> : " "}
+              ConTraSt database for analysing and comparing empirical studies of{" "}
+              consciousness theories. Nature Human Behaviour.{" "}
               <a
-                className="text-darkBlue underline"
+                className="text-darkBlue underline break-all"
                 href="https://www.nature.com/articles/s41562-021-01284-5"
                 target="_blank">
                 https://www.nature.com/articles/s41562-021-01284-5
@@ -82,7 +75,7 @@ export default function HomePage() {
             <div className=" border-b my-4 sm:my-0 sm:border-r border-black sm:h-16 "></div>
             <div className=" flex flex-row justify-center sm:justify-start">
               <Button
-                extraClass="text-[18px] sm:text-sm "
+                extraClass="text-lg sm:text-sm "
                 black
                 onClick={copyToClipboard}>
                 <QouteIcon /> Copy Cite to Clipboard

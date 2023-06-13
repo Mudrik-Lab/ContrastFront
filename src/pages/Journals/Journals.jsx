@@ -123,7 +123,7 @@ export default function Journals() {
       <PageTemplate
         control={
           <SideControl headline={"Journals"}>
-            <Text md weight="bold">
+            <Text lg weight="bold">
               Axis Controls
             </Text>
             <RangeInput
@@ -144,7 +144,7 @@ export default function Journals() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed size={14}>
+              <Text flexed className="text-sm">
                 Theory Family
                 <FilterExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
               </Text>
