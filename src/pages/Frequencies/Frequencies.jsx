@@ -179,6 +179,7 @@ export default function Frequencies() {
 
                 <div className={sideSectionClass}>
                   <Select
+                    aria-label="theory family"
                     closeMenuOnSelect={true}
                     isMulti={false}
                     isClearable={true}
@@ -195,6 +196,7 @@ export default function Frequencies() {
                 </div>
                 <div className={sideSectionClass}>
                   <Select
+                    aria-label="Techniques"
                     closeMenuOnSelect={true}
                     isMulti={true}
                     value={selectedTechniques}

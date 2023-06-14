@@ -15,7 +15,7 @@
     "copy-to-clipboard": "^3.3.3",
     "flowbite": "^1.6.5",
     "flowbite-react": "^0.4.4",
-    "formik": "^2.2.9",
+    "formik": "^2.4.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-plotly.js": "^2.6.0",
@@ -27,7 +27,8 @@
     "react-toastify": "^9.1.1",
     "recharts": "^2.2.0",
     "valtio": "^1.7.6",
-    "vite-plugin-svgr": "^2.3.0"
+    "vite-plugin-svgr": "^2.3.0",
+    "yup": "^1.2.0"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

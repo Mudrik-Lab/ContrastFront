@@ -24,6 +24,7 @@ import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
 import { isMoblile } from "./Utils/HardCoded";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
+import Register from "./pages/Register/Register";
 
 const Screens = () => {
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -47,6 +48,7 @@ const Screens = () => {
         <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/register" element={<Register />} />
         <Route
           path="/parameter-distribution-free-queries"
           element={isMoblile ? <MobileScreen /> : <FreeQueriesPage />}

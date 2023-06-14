@@ -126,6 +126,7 @@ export default function AcrossTheYears() {
 
             <div className={sideSectionClass}>
               <Select
+                aria-label="parameter of interest"
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}

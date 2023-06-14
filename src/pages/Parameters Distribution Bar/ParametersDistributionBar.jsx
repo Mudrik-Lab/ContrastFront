@@ -180,6 +180,7 @@ export default function ParametersDistributionBar() {
 
               <div className={sideSectionClass}>
                 <Select
+                  aria-label="theory family"
                   closeMenuOnSelect={true}
                   isMulti={false}
                   isClearable={false}
@@ -196,6 +197,7 @@ export default function ParametersDistributionBar() {
               </div>
               <div className={sideSectionClass}>
                 <Select
+                  aria-label="parameter of interest"
                   closeMenuOnSelect={true}
                   isMulti={false}
                   isClearable={false}

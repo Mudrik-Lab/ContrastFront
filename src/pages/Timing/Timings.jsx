@@ -207,6 +207,7 @@ export default function Timings() {
             </Text>
             <div className={sideSectionClass}>
               <Select
+                aria-label="theory family"
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={true}
@@ -224,6 +225,7 @@ export default function Timings() {
             <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
+                  aria-label="techniques"
                   closeMenuOnSelect={true}
                   isMulti={true}
                   value={selectedTechniques}
@@ -247,6 +249,7 @@ export default function Timings() {
             <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
+                  aria-label="tags"
                   closeMenuOnSelect={true}
                   isMulti={true}
                   value={selectedTags}

@@ -15,10 +15,6 @@ function App() {
   const [isHighContrast, setIsHighContrast] = React.useState(false);
   const [isBiggerText, setIsBiggerText] = React.useState(false);
 
-  const toggleBiggerText = () => {
-    setIsBiggerText(!isBiggerText);
-  };
-
   const client = new QueryClient({
     defaultOptions: {
       queries: {
@@ -58,9 +54,14 @@ function App() {
                 text={"Increase contrast"}
                 onClick={() => setIsHighContrast(true)}></BigButton>
               <BigButton
+                extraClass={classNames(`${isBiggerText ? "opacity-50" : ""}`)}
                 icon={<TextIcon />}
+                disabled={isBiggerText}
                 text={"Enlarge text"}
-                onClick={updateTextClass}>
+                onClick={() => {
+                  updateTextClass();
+                  setIsBiggerText(true);
+                }}>
                 {" "}
               </BigButton>
             </div>

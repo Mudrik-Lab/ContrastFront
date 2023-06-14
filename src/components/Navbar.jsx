@@ -197,7 +197,7 @@ export default function Navbar() {
                 <Profile />
               </Temporary>
               <Temporary>Login</Temporary>
-              <Button type="button" isCommingSoon>
+              <Button type="button" onClick={() => navigate("/register")}>
                 {" "}
                 <ProfileIcon /> Register
               </Button>

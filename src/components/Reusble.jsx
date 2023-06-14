@@ -182,7 +182,9 @@ export const FilterExplanation = ({ text, tooltip }) => {
   return (
     <div className="flex gap-2 mt-1">
       <Tooltip content={tooltip} trigger="click">
-        <button className="flex justify-center items-center gap-2 text-sm">
+        <button
+          className="flex justify-center items-center gap-2 text-sm"
+          aria-label={tooltip}>
           {text} <QuestionMark />{" "}
         </button>
       </Tooltip>
@@ -215,7 +217,7 @@ export const RangeInput = ({ number, setNumber }) => {
           onTouchEnd={(e) => setNumber(e.target.value)}
           min={0}
           defaultValue={0}
-          max={100}
+          max={99}
           step={1}
           className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
           id="numOfExperiments"
@@ -223,8 +225,8 @@ export const RangeInput = ({ number, setNumber }) => {
         />
         <span
           style={{
-            left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
-            top: 4,
+            left: label * 0.9 + (label < 10 ? 4 : label < 55 ? 2 : 0) + "%",
+            top: 1,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
           {label}
@@ -401,7 +403,9 @@ export const Temporary = ({ extraClass, children }) => {
 export const BigButton = ({ extraClass, icon, text, ...config }) => {
   return (
     <button
-      className="h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md"
+      className={classNames(
+        `${extraClass} h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md`
+      )}
       {...config}>
       {icon}
       {text}

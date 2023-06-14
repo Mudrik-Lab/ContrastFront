@@ -281,6 +281,7 @@ export default function WorldMap() {
                 </Text>
 
                 <Select
+                  aria-label="theories"
                   closeMenuOnSelect={true}
                   isMulti={true}
                   value={theoryFamilies}
