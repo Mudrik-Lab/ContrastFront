@@ -1,12 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
-import { ReactComponent as Profile } from "../assets/profile-circle.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
-
+import { useQuery } from "@tanstack/react-query";
 import { Button, Temporary, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
@@ -14,6 +13,7 @@ import { isMoblile } from "../Utils/HardCoded";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
 import { removeToken } from "../Utils/tokenHandler";
+import getUser from "../apiHooks/getUser";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -23,21 +23,20 @@ export default function Navbar() {
   const page = window.location.pathname;
   const snap = useSnapshot(state);
 
+  const { data: userData, isSuccess: userSuccess } = useQuery(
+    [`user`],
+    () => snap.auth && getUser()
+  );
+  useEffect(() => {
+    if (userData?.data) {
+      state.user = userData?.data;
+    }
+  }, [userSuccess]);
+
   const handleLogout = async () => {
     await removeToken();
     state.auth = null;
-    state.user = {
-      id: null,
-      user: null,
-      date_of_birth: null,
-      self_identified_gender: null,
-      academic_affiliation: null,
-      country_of_residence: null,
-      academic_stage: null,
-      has_ASSC_membership: null,
-      username: null,
-      email: null,
-    };
+    state.user = {};
   };
   return (
     <div>
@@ -215,11 +214,11 @@ export default function Navbar() {
               {/* <Temporary>
                 <Profile />
               </Temporary> */}
-              {snap.user.username ? (
+              {snap.auth ? (
                 <>
                   <Button type="button" onClick={() => navigate("/register")}>
                     {" "}
-                    <ProfileIcon /> {snap.user.username}
+                    <ProfileIcon /> {snap.user?.username}
                   </Button>
                   <a href="/" onClick={handleLogout}>
                     Logout

@@ -44,7 +44,7 @@ export default function Login() {
       <Navbar />
       <div className="flex justify-center items-center h-screen w-screen">
         <div className="bg-white rounded-lg shadow-3xl px-4 py-6 flex flex-col items-center gap-5">
-          <h2 className="mx-auto text-3xl font-bold text-blue">Login</h2>
+          <h2 className="mx-auto text-3xl">Login</h2>
 
           <Formik initialValues={initialValues} onSubmit={handleSubmit}>
             {({ isSubmitting, dirty }) => (

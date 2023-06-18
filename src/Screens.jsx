@@ -12,8 +12,7 @@ import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
 import ParametersDistributionTheoriesComparison from "./pages/Theories Comparison/TheoriesComparison";
 import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
-import getConfiguration from "./apiHooks/getConfiguration";
-import getExtraConfig from "./apiHooks/getExtraConfig";
+
 import WorldMap from "./pages/Consciousness World Map/WorldMap";
 import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
@@ -24,32 +23,8 @@ import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ProtectedRoute from "./Utils/ProtectedRoute";
-import getUser from "./apiHooks/getUser";
-import { useSnapshot } from "valtio";
-import { state } from "./state";
-import { useEffect } from "react";
 
 const Screens = () => {
-  const snap = useSnapshot(state);
-  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
-    [`parent_theories`],
-    getConfiguration
-  );
-  const { data: userData, isSuccess: userSuccess } = useQuery(
-    [`user`],
-    getUser
-  );
-  if (userSuccess) {
-    if (userData.data) {
-      state.user = userData.data;
-    }
-  }
-
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
-    getExtraConfig
-  );
-
   return (
     <BrowserRouter>
       <Routes>

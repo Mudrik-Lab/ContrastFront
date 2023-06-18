@@ -69,7 +69,7 @@ export default function RegisterComponent() {
       <Navbar />
       <div className="flex justify-center items-center h-screen w-screen">
         <div className="bg-white rounded-lg shadow-3xl px-4 py-6 flex flex-col items-center gap-5">
-          <h2 className="mx-auto text-3xl font-bold text-blue">Register</h2>
+          <h2 className="mx-auto text-3xl ">Register</h2>
 
           <Formik
             initialValues={initialValues}
@@ -86,10 +86,9 @@ export default function RegisterComponent() {
                         name="name"
                         className={fieldClass}
                       />
-                      <FilterExplanation
-                        text={"A rememberable user name "}
-                        tooltip={""}
-                      />
+                      <label className="text-sm" htmlFor="name">
+                        Choose a username
+                      </label>
                       <ErrorMessage
                         name="name"
                         component="div"
@@ -104,10 +103,10 @@ export default function RegisterComponent() {
                         name="email"
                         className={fieldClass}
                       />
-                      <FilterExplanation
-                        text={"Your academic email address "}
-                        tooltip={""}
-                      />
+
+                      <label className="text-sm" htmlFor="name">
+                        Enter your preferred email.
+                      </label>
                       <ErrorMessage
                         name="email"
                         component="div"
@@ -122,10 +121,10 @@ export default function RegisterComponent() {
                         name="password"
                         className={fieldClass}
                       />
-                      <FilterExplanation
-                        text={"8 characters or more with at least one digit "}
-                        tooltip={""}
-                      />
+                      <label className="text-sm" htmlFor="password">
+                        8 characters or more with at least one digit
+                      </label>
+
                       <ErrorMessage
                         name="password"
                         component="div"
@@ -151,7 +150,7 @@ export default function RegisterComponent() {
                   </div>
                 ) : (
                   <div className="flex flex-col items-center gap-5 px-4">
-                    <h3 className="text-lg">Welcome, </h3>
+                    <h3 className="text-lg">Welcome,{values.name} </h3>
 
                     <p className="w-72 text-center text-sm">
                       Please fill in the following details for a better
