@@ -11,6 +11,9 @@ import { Button, Temporary, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";
+import { useSnapshot } from "valtio";
+import { state } from "../state";
+import { removeToken } from "../Utils/tokenHandler";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -18,7 +21,24 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const page = window.location.pathname;
+  const snap = useSnapshot(state);
 
+  const handleLogout = async () => {
+    await removeToken();
+    state.auth = null;
+    state.user = {
+      id: null,
+      user: null,
+      date_of_birth: null,
+      self_identified_gender: null,
+      academic_affiliation: null,
+      country_of_residence: null,
+      academic_stage: null,
+      has_ASSC_membership: null,
+      username: null,
+      email: null,
+    };
+  };
   return (
     <div>
       {isMoblile ? (
@@ -101,10 +121,10 @@ export default function Navbar() {
                     <Temporary>Contact</Temporary>
                   </li>
                   <li>
-                    {/* <a href="/upload-new-paper" aria-current="page">
-                    Upload New Paper
-                  </a> */}
-                    <Temporary>Upload New Paper</Temporary>
+                    <a href="/upload-new-paper" aria-current="page">
+                      Upload New Paper
+                    </a>
+                    {/* <Temporary>Upload New Paper</Temporary> */}
                   </li>
                 </ul>
               </div>
@@ -185,22 +205,39 @@ export default function Navbar() {
                   <Temporary>Contact</Temporary>
                 </li>
                 <li>
-                  {/* <a href="/upload-new-paper" aria-current="page">
+                  <a href="/upload-new-paper" aria-current="page">
                     Upload New Paper
-                  </a> */}
-                  <Temporary>Upload New Paper</Temporary>
+                  </a>
                 </li>
               </ul>
             </div>
             <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
-              <Temporary>
+              {/* <Temporary>
                 <Profile />
-              </Temporary>
-              <Temporary>Login</Temporary>
-              <Button type="button" onClick={() => navigate("/register")}>
-                {" "}
-                <ProfileIcon /> Register
-              </Button>
+              </Temporary> */}
+              {snap.user.username ? (
+                <>
+                  <Button type="button" onClick={() => navigate("/register")}>
+                    {" "}
+                    <ProfileIcon /> {snap.user.username}
+                  </Button>
+                  <a href="/" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </>
+              ) : (
+                <>
+                  <Button type="button" onClick={() => navigate("/register")}>
+                    {" "}
+                    <ProfileIcon /> Register now
+                  </Button>
+                  <a
+                    className={page === "/login" ? "text-blue font-bold" : ""}
+                    href="login">
+                    Login
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </nav>

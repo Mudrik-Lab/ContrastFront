@@ -167,3 +167,14 @@ export function updateTextClass() {
   updateClass("text-sm", "text-xl");
   updateClass("text-xs", "text-lg");
 }
+export const generateSelectOptions = (start, end) => {
+  const options = [];
+  for (let i = start; i <= end; i++) {
+    options.push(
+      <option key={i} value={i}>
+        {i}
+      </option>
+    );
+  }
+  return options;
+};

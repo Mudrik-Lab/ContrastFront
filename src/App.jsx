@@ -7,8 +7,9 @@ import { ReactComponent as TextIcon } from "./assets/icons/noun-text.svg";
 import "./App.css";
 import Screens from "./Screens";
 import { BigButton, Button } from "./components/Reusble";
-import { enlargeFont, updateTextClass } from "./Utils/functions";
+import { updateTextClass } from "./Utils/functions";
 import classNames from "classnames";
+import useAuth from "./apiHooks/useAuth";
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -25,16 +26,22 @@ function App() {
       },
     },
   });
-
+  const { isLoadingToken, snap } = useAuth();
   return (
     <div
       className={classNames(
         `${isHighContrast ? "bg-white text-black" : ""} App `
       )}
       onClick={() => (open ? setOpen(false) : null)}>
-      <QueryClientProvider client={client}>
-        <Screens />
-      </QueryClientProvider>
+      <div>
+        {isLoadingToken ? (
+          <div className="text-blue text-3xl">Loading...</div>
+        ) : (
+          <QueryClientProvider client={client}>
+            <Screens />
+          </QueryClientProvider>
+        )}
+      </div>
       <div className="fixed top-1/4 flex flex-row-reverse items-start z-50 ">
         <div className=" justify-end items-center h-16 w-16 bg-darkBlue  rounded-r-full p-2 border border-white border-l-0">
           {open ? (

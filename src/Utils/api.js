@@ -1,8 +1,8 @@
 /** @format */
 
 import axios from "axios";
+import { getToken } from "./tokenHandler";
 
-// import * as tokenHandler from "./tokenHandler";
 
 export async function queryApi({
   url,
@@ -11,8 +11,8 @@ export async function queryApi({
   isProtected,
   params
 }) {
-    // const token = tokenHandler.getToken();
-    const token = "keyGsJHfx22k81Gdj";
+   const token = getToken();
+    
     // const x = import.meta.env.VITE_API_URL
     // console.log(x)
   try {

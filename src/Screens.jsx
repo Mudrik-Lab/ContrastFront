@@ -1,7 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "./pages/Login";
-
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
 import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
@@ -19,18 +17,33 @@ import getExtraConfig from "./apiHooks/getExtraConfig";
 import WorldMap from "./pages/Consciousness World Map/WorldMap";
 import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
 import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
-import PageTemplate from "./components/PageTemplate";
 import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
 import { isMoblile } from "./Utils/HardCoded";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import ProtectedRoute from "./Utils/ProtectedRoute";
+import getUser from "./apiHooks/getUser";
+import { useSnapshot } from "valtio";
+import { state } from "./state";
+import { useEffect } from "react";
 
 const Screens = () => {
+  const snap = useSnapshot(state);
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
+  const { data: userData, isSuccess: userSuccess } = useQuery(
+    [`user`],
+    getUser
+  );
+  if (userSuccess) {
+    if (userData.data) {
+      state.user = userData.data;
+    }
+  }
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
@@ -43,12 +56,20 @@ const Screens = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
         <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
+        <Route
+          path="/upload-new-paper"
+          element={
+            <ProtectedRoute
+              path="/upload-new-paper"
+              element={<UploadNewPaper />}
+            />
+          }
+        />
         <Route
           path="/parameter-distribution-free-queries"
           element={isMoblile ? <MobileScreen /> : <FreeQueriesPage />}
