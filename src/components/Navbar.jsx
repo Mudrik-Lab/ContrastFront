@@ -23,10 +23,14 @@ export default function Navbar() {
   const page = window.location.pathname;
   const snap = useSnapshot(state);
 
-  const { data: userData, isSuccess: userSuccess } = useQuery(
-    [`user`],
-    () => snap.auth && getUser()
-  );
+  const { data: userData, isSuccess: userSuccess } = useQuery([`user`], () => {
+    if (snap.auth && snap.user.username) {
+      return getUser;
+    } else {
+      return null;
+    }
+  });
+
   useEffect(() => {
     if (userData?.data) {
       state.user = userData?.data;
@@ -38,6 +42,8 @@ export default function Navbar() {
     state.auth = null;
     state.user = {};
   };
+
+  console.log(snap);
   return (
     <div>
       {isMoblile ? (
@@ -211,14 +217,11 @@ export default function Navbar() {
               </ul>
             </div>
             <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
-              {/* <Temporary>
-                <Profile />
-              </Temporary> */}
               {snap.auth ? (
                 <>
                   <Button type="button" onClick={() => navigate("/register")}>
                     {" "}
-                    <ProfileIcon /> {snap.user?.username}
+                    <ProfileIcon /> {snap.user?.username || snap.tempUsername}
                   </Button>
                   <a href="/" onClick={handleLogout}>
                     Logout

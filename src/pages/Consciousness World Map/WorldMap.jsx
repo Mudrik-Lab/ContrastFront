@@ -16,12 +16,7 @@ import {
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
-import {
-  isMoblile,
-  plotConfig,
-  screenHeight,
-  screenWidth,
-} from "../../Utils/HardCoded";
+import { isMoblile, plotConfig } from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";

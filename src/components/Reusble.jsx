@@ -412,3 +412,15 @@ export const BigButton = ({ extraClass, icon, text, ...config }) => {
     </button>
   );
 };
+export const Checkbox = ({ field }) => {
+  return (
+    <label className="flex gap-2 items-center text-sm">
+      <input
+        {...field}
+        className="text-blue focus:outline-none"
+        type="checkbox"
+      />
+      <span>I want to get updates from ConTraSt website</span>
+    </label>
+  );
+};

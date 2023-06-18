@@ -10,8 +10,10 @@ export default function useAuth() {
 
   React.useEffect(() => {
     let tokenFromState = snap.auth;
+    console.log(tokenFromState);
     if (!tokenFromState) {
       const resToken = getToken();
+      console.log(resToken);
       if (resToken) {
         if (isValidToken(resToken)) {
           state.auth = resToken;

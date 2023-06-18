@@ -23,6 +23,7 @@ import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ProtectedRoute from "./Utils/ProtectedRoute";
+import SecondaryRegister from "./pages/Register/SecondaryRegister";
 
 const Screens = () => {
   return (
@@ -36,6 +37,7 @@ const Screens = () => {
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
+        <Route path="/register-add-details" element={<SecondaryRegister />} />
         <Route
           path="/upload-new-paper"
           element={

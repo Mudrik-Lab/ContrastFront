@@ -4,4 +4,5 @@ export const state = proxy({
   auth: null,
   path: "/",
   user: {},
+  tempUsername: null,
 });
