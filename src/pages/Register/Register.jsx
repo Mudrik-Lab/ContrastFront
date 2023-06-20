@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { fieldClass } from "../../Utils/HardCoded";
+import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
 import createRegitration from "../../apiHooks/createRegistration";
@@ -14,8 +14,10 @@ import {
   setToken,
 } from "../../Utils/tokenHandler";
 import { state } from "../../state";
+import { useState } from "react";
 
 export default function RegisterComponent() {
+  const [errorMsg, setErrorMsg] = useState(false);
   const navigate = useNavigate();
   const initialValues = {
     name: "",
@@ -45,7 +47,6 @@ export default function RegisterComponent() {
       if (result.status === 201) {
         state.tempUsername = values.name;
         const res = await useLogin(values.name, values.password);
-
         if (res.error) {
           setServerError(res.error.message);
           console.log(res.error);
@@ -54,12 +55,12 @@ export default function RegisterComponent() {
             setToken(res.data.access);
             setRefreshToken(res.data.refresh);
             state.auth = res.data.access;
-            navigate("/register-add-details");
+            navigate("/profile");
           }
         }
       }
     } catch (error) {
-      console.log(error);
+      error.response.status === 400 && setErrorMsg(true);
     }
   };
 
@@ -77,7 +78,7 @@ export default function RegisterComponent() {
             {({ isValid, dirty }) => (
               <Form>
                 <div className="flex flex-col items-center gap-5 px-4">
-                  <div className="mb-4 flex flex-col items-center ">
+                  <div className=" flex flex-col items-center ">
                     <Field
                       type="text"
                       id="name"
@@ -90,7 +91,7 @@ export default function RegisterComponent() {
                     <ErrorMessage
                       name="name"
                       component="div"
-                      className="text-red-500 mt-1"
+                      className={errorMsgClass}
                     />
                   </div>
 
@@ -108,7 +109,7 @@ export default function RegisterComponent() {
                     <ErrorMessage
                       name="email"
                       component="div"
-                      className="text-red-500 mt-1"
+                      className={errorMsgClass}
                     />
                   </div>
 
@@ -126,9 +127,18 @@ export default function RegisterComponent() {
                     <ErrorMessage
                       name="password"
                       component="div"
-                      className="text-red-500 mt-1"
+                      className={errorMsgClass}
                     />
                   </div>
+                  {errorMsg && (
+                    <p className={errorMsgClass}>
+                      Error occurred. Try again later.
+                      <br /> If you already have a user try to{" "}
+                      <a className="underline text-blue" href="/login">
+                        login
+                      </a>
+                    </p>
+                  )}
                   <div className="border-b border-black w-full my-4"></div>
                   <div className="flex justify-start w-full gap-4 items-center">
                     <button

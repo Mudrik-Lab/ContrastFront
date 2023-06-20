@@ -4,7 +4,7 @@ import { state } from "../../state";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { FilterExplanation } from "../../components/Reusble";
-import { fieldClass } from "../../Utils/HardCoded";
+import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
 import useLogin from "../../apiHooks/loginApi";
@@ -26,8 +26,7 @@ export default function Login() {
     const res = await useLogin(values.name, values.password);
 
     if (res.error) {
-      setServerError(res.error.message);
-      console.log(res.error);
+      setServerError(res.error.response.data.detail);
     } else {
       if (isValidToken(res.data.access)) {
         setToken(res.data.access);
@@ -64,7 +63,7 @@ export default function Login() {
                     <ErrorMessage
                       name="name"
                       component="div"
-                      className="text-red-500 mt-1"
+                      className={errorMsgClass}
                     />
                   </div>
 
@@ -82,11 +81,13 @@ export default function Login() {
                     <ErrorMessage
                       name="password"
                       component="div"
-                      className="text-red-500 mt-1"
+                      className={errorMsgClass}
                     />
                   </div>
                   <div className="border-b border-black w-full my-4"></div>
-                  {serverError && <p className="text-red-700">{serverError}</p>}
+                  {serverError && (
+                    <p className={errorMsgClass}>{serverError}</p>
+                  )}
                   <div className="flex justify-start w-full gap-4 items-center">
                     <button
                       disabled={!dirty && isSubmitting}

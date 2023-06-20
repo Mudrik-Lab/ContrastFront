@@ -170,9 +170,10 @@ export function updateTextClass() {
 export const generateSelectOptions = (start, end) => {
   const options = [];
   for (let i = start; i <= end; i++) {
+    const value = i.toString().padStart(2, "0");
     options.push(
-      <option key={i} value={i}>
-        {i}
+      <option key={i} value={value}>
+        {value}
       </option>
     );
   }

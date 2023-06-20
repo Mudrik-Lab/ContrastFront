@@ -1,8 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import React, { useMemo } from "react";
+import React, { useMemo, useState } from "react";
 import countryList from "react-select-country-list";
 import { generateSelectOptions } from "../../Utils/functions";
-import { fieldClass } from "../../Utils/HardCoded";
+import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import Navbar from "../../components/Navbar";
 import { useSnapshot } from "valtio";
@@ -10,9 +10,13 @@ import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
 import { format } from "date-fns";
 import { Checkbox } from "../../components/Reusble";
+import { useNavigate } from "react-router-dom";
 
 export default function SecondaryRegister() {
+  const [errorMsg, setErrorMsg] = useState("");
+  const [successBox, setSuccessBox] = useState("");
   const snap = useSnapshot(state);
+  const navigate = useNavigate();
   const countryOption = useMemo(() => countryList().getData(), []);
   const genderOptions = [
     { value: "man", label: "Man" },
@@ -44,10 +48,8 @@ export default function SecondaryRegister() {
     try {
       console.log(values);
       const result = await createProfile({
-        date_of_birth: format(
-          new Date(values.year, values.month - 1, values.day),
-          "yyyy-MM-dd"
-        ),
+        date_of_birth: `${values.year}-${values.month}-${values.day}`,
+
         self_identified_gender: values.gender,
         academic_affiliation: values.academicAffiliation,
         country_of_residence: values.country,
@@ -56,22 +58,11 @@ export default function SecondaryRegister() {
       });
       console.log(result);
       if (result.status === 201) {
-        const res = await useLogin(values.name, values.password);
-
-        if (res.error) {
-          setServerError(res.error.message);
-          console.log(res.error);
-        } else {
-          if (isValidToken(res.data.access)) {
-            setToken(res.data.access);
-            setRefreshToken(res.data.refresh);
-            state.auth = res.data.access;
-            navigate("/register-add-details");
-          }
-        }
+        setSuccessBox(true);
+        navigate("/");
       }
     } catch (error) {
-      console.log(error);
+      error.response.status === 400 && setErrorMsg(true);
     }
   };
 
@@ -191,7 +182,15 @@ export default function SecondaryRegister() {
                   </Field>
 
                   <Field type="checkbox" name="check" component={Checkbox} />
-
+                  {errorMsg && (
+                    <p className={errorMsgClass}>
+                      Error occurred. Try again later.
+                      <br /> If you already have a user try to{" "}
+                      <a className="underline text-blue" href="/login">
+                        login
+                      </a>
+                    </p>
+                  )}
                   <div className="border-b border-black w-full my-4"></div>
                   <div className="flex justify-start w-full gap-4 items-center">
                     <button

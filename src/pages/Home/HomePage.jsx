@@ -14,8 +14,11 @@ import Footer from "../../components/Footer";
 import brain from "../../assets/images/XwW4T0UQ.jpeg";
 import mobileBrain from "../../assets/images/mobile-brain.jpeg";
 import { isMoblile } from "../../Utils/HardCoded";
+import { useSnapshot } from "valtio";
+import { state } from "../../state";
 
 export default function HomePage() {
+  const snap = useSnapshot(state);
   const navigate = useNavigate();
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
@@ -49,9 +52,11 @@ export default function HomePage() {
           </WhiteButton>
           <div className="flex items-center gap-2">
             <Profile />
-            <Text className="underline" bold color="white">
+            <a
+              className="underline text-white font-bold"
+              href={snap.auth ? "/upload-new-paper" : "/register"}>
               Register & Contribute
-            </Text>
+            </a>
           </div>
         </div>
       </div>

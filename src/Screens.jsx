@@ -37,7 +37,7 @@ const Screens = () => {
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/register-add-details" element={<SecondaryRegister />} />
+        <Route path="/profile" element={<SecondaryRegister />} />
         <Route
           path="/upload-new-paper"
           element={

@@ -22,10 +22,9 @@ export default function Navbar() {
 
   const page = window.location.pathname;
   const snap = useSnapshot(state);
-
   const { data: userData, isSuccess: userSuccess } = useQuery([`user`], () => {
-    if (snap.auth && snap.user.username) {
-      return getUser;
+    if (snap.auth && page !== "/profile") {
+      return getUser();
     } else {
       return null;
     }
@@ -43,7 +42,6 @@ export default function Navbar() {
     state.user = {};
   };
 
-  console.log(snap);
   return (
     <div>
       {isMoblile ? (
