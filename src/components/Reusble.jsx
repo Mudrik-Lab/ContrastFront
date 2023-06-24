@@ -4,10 +4,14 @@ import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
+import { ReactComponent as AddPaper } from "../assets/icons/add-paper-icon.svg";
+
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
 import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
+import { useSnapshot } from "valtio";
+import { state } from "../state";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -42,7 +46,7 @@ export const Button = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         className={classNames(
-          `${extraClass} text-white text-md leading-4 font-bold ${
+          `${extraClass} text-white text-base leading-4 font-bold ${
             black ? "bg-black" : "bg-blue border-[3px] border-blue"
           } hover:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
         )}
@@ -52,11 +56,19 @@ export const Button = ({
     </div>
   );
 };
-export const ButtonReversed = ({ children, extraClass, ...config }) => {
+export const ButtonReversed = ({
+  children,
+  extraClass,
+
+  isChosen,
+  ...config
+}) => {
   return (
     <button
       className={classNames(
-        ` ${extraClass} text-blue hover:text-white text-md leading-4 font-bold bg-white hover:bg-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        ` ${extraClass} ${
+          isChosen ? "text-blue bg-white" : "bg-blue text-white"
+        } text-blue text-md leading-4 font-bold bg-white border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap hover:opacity-40`
       )}
       {...config}>
       {children}
@@ -83,6 +95,7 @@ export const Text = ({
   xl,
   lg,
   xs,
+  xl3,
   center,
   color,
   flexed,
@@ -97,9 +110,9 @@ export const Text = ({
       className={classNames(
         `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
-        } font-${weight ? weight : "medium"} ${
-          className ? className : ""
-        } text-${xl ? "xl" : lg ? "lg" : xs ? "xs" : "base"}`
+        } font-${weight ? weight : "medium"} text-${
+          xl3 ? "3xl" : xl ? "xl" : lg ? "lg" : xs ? "xs" : "base"
+        } ${className ? className : ""}`
       )}
       style={{
         textAlign: center && "center",
@@ -225,8 +238,8 @@ export const RangeInput = ({ number, setNumber }) => {
         />
         <span
           style={{
-            left: label * 0.9 + (label < 10 ? 4 : label < 55 ? 2 : 0) + "%",
-            top: 1,
+            left: label * 0.9 + (label < 10 ? 4 : 2) + "%",
+            top: 4,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
           {label}
@@ -241,24 +254,46 @@ export const RangeInput = ({ number, setNumber }) => {
   );
 };
 
-export const SideControl = ({ children, headline }) => {
+export const SideControl = ({ children, headline, isUploadPaper = false }) => {
   const isMoblile = screenWidth < 600;
 
   return (
     <div
-      className="side-filter-box p-2 flex flex-col items-center "
+      className={classNames(
+        `side-filter-box p-2 flex flex-col items-center  ${
+          isUploadPaper ? "pt-0 h-full relative" : ""
+        }`
+      )}
       style={{
-        width: isMoblile ? "100%" : sideWidth,
+        width: "100%",
         maxHeight: isMoblile ? "400px" : "100vh",
       }}>
-      <div className="p-4">
-        <Text className="text-3xl" weight="bold" color="blue" center>
-          {headline}
-        </Text>
-      </div>
+      {isUploadPaper ? (
+        <div className=" w-full">{headline}</div>
+      ) : (
+        <div className="p-4 ">
+          <Text className="text-3xl" weight="bold" color="blue" center>
+            {headline}
+          </Text>
+        </div>
+      )}
 
-      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-20 ">
+      <div
+        className={classNames(
+          `shadow-xl w-full mt-6 rounded-md bg-white flex flex-col  gap-2 px-4 py-2 overflow-y-scroll z-20 ${
+            isUploadPaper ? "items-start h-full " : "items-center"
+          }`
+        )}>
+        {isUploadPaper && <h2 className="text-3xl">Papers</h2>}
+
         {children}
+        {isUploadPaper && (
+          <div className="absolute bottom-10 left-0 w-full">
+            <Button extraClass="mx-auto font-normal">
+              <AddPaper /> Add new paper
+            </Button>
+          </div>
+        )}
         <Spacer height={20} />
       </div>
     </div>
@@ -422,5 +457,26 @@ export const Checkbox = ({ field }) => {
       />
       <span>I want to get updates from ConTraSt website</span>
     </label>
+  );
+};
+export const TopSideUserBox = () => {
+  const snap = useSnapshot(state);
+  return (
+    <div className="w-full bg-grayLight p-4 rounded-md">
+      <h2 className="text-2xl text-black font-normal">
+        {snap.user.username}’s workspace
+      </h2>
+      <Text lg weight={"bold"} color={"blue"}>
+        {snap.user.email}
+      </Text>
+      <div className="flex gap-2">
+        <a className="underline text-xs" href="">
+          edit my profile
+        </a>
+        <a className="underline text-xs" href="">
+          logout
+        </a>
+      </div>
+    </div>
   );
 };

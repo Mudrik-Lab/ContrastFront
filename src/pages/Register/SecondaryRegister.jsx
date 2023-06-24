@@ -8,7 +8,6 @@ import Navbar from "../../components/Navbar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
-import { format } from "date-fns";
 import { Checkbox } from "../../components/Reusble";
 import { useNavigate } from "react-router-dom";
 

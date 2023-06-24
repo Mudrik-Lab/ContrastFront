@@ -135,12 +135,14 @@ export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
 // }
 
 export const enlargeFont = () => {
-  document.getElementsByClassName("text-xxs").className = "text-base";
-  const base = document.querySelectorAll("text-base");
-  console.log(base);
-  document.getElementsByClassName("text-sm").className = "text-lg";
-  document.getElementsByClassName("text-base").className = "text-xl";
+  document.getElementsByClassName("text-4xl").className = "text-6xl";
+  document.getElementsByClassName("text-3xl").className = "text-5xl";
+  document.getElementsByClassName("text-2xl").className = "text-4xl";
+  document.getElementsByClassName("text-xl").className = "text-3xl";
   document.getElementsByClassName("text-lg").className = "text-2xl";
+  document.getElementsByClassName("text-base").className = "text-xl";
+  document.getElementsByClassName("text-sm").className = "text-lg";
+  document.getElementsByClassName("text-xxs").className = "text-base";
 };
 
 function updateClass(classToFind, newClass) {

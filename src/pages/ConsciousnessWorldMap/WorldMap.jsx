@@ -276,6 +276,7 @@ export default function WorldMap() {
                 </Text>
 
                 <Select
+                  className="text-lg w-[300px]"
                   aria-label="theories"
                   closeMenuOnSelect={true}
                   isMulti={true}

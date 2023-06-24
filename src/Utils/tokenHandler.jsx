@@ -2,7 +2,7 @@ import Cookies from "js-cookie";
 import jwt_decode from "jwt-decode";
 
 export const setToken = (token) => {
-  Cookies.set("token", token, { expires: 120 });
+  Cookies.set("token", token, { expires: 29 });
 
   console.log("Set Cookie to: " + Cookies.get("token"));
   return token;
@@ -28,7 +28,6 @@ export const isValidToken = (token) => {
   if (!token) {
     return false;
   }
-
   // check the date of the token
   const decoded = jwt_decode(token);
 

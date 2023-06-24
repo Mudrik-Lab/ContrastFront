@@ -207,6 +207,7 @@ export default function Timings() {
             </Text>
             <div className={sideSectionClass}>
               <Select
+                className="text-lg w-[300px]"
                 aria-label="theory family"
                 closeMenuOnSelect={true}
                 isMulti={false}
@@ -225,6 +226,7 @@ export default function Timings() {
             <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
+                  className="text-lg w-[300px]"
                   aria-label="techniques"
                   closeMenuOnSelect={true}
                   isMulti={true}
@@ -249,6 +251,7 @@ export default function Timings() {
             <div className={sideSectionClass}>
               {configSuccess && (
                 <Select
+                  className="text-lg w-[300px]"
                   aria-label="tags"
                   closeMenuOnSelect={true}
                   isMulti={true}

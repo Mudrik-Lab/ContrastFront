@@ -8,11 +8,7 @@ export default function CommunityBox() {
     <div className="w-144 bg-grayLight mx-auto p-8 flex ">
       <div className="flex flex-col justify-between pr-8 border-r border-black">
         <div>
-          <Text
-            color="black"
-            weight="bold"
-            className="text-3xl"
-            center={isMoblile}>
+          <Text color="black" weight="bold" xl3 center={isMoblile}>
             Join the ConTraSt community
           </Text>
         </div>

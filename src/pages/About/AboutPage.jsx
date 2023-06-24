@@ -70,10 +70,7 @@ export default function AboutPage() {
           <div className="px-4 sm:px-0">
             <div className=" openSource-box max-w-[815px] bg-grayLight sm:flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
               <div className="sm:w-[165px] ">
-                <Text
-                  className={"sm:leading-8 text-[30px]"}
-                  weight="bold"
-                  center={isMoblile}>
+                <Text className={" text-3xl"} weight="bold" center={isMoblile}>
                   We Are{isMoblile ? " " : <br />} Open Source
                 </Text>
               </div>
@@ -94,10 +91,10 @@ export default function AboutPage() {
                   license
                 </Text>
               </div>
-              <div className="h-4  sm:border-r border-black sm:h-24"></div>
+              <div className="h-4  sm:border-r border-black sm:h-28"></div>
               <div className=" flex flex-row justify-center ">
                 <Button
-                  style={{ fontSize: "14px" }}
+                  extraClass="text-sm"
                   black
                   onClick={() =>
                     window.open(

@@ -153,13 +153,13 @@ export default function FreeQueriesBar() {
   const theories = configSuccess
     ? configuration?.data.available_parent_theories.map((tag, index) => {
         return {
-          value: index,
+          value: index + 1,
           label: tag,
           id: index,
         };
       })
     : [];
-
+  configSuccess & console.log(theories);
   const interpretationsArr = [
     { value: "challenges", label: "Challenges" },
     { value: "pro", label: "Support" },
@@ -351,12 +351,10 @@ export default function FreeQueriesBar() {
       updateMultiFilterState(setMeasures, "measures", measuresArr);
     }
     if (configSuccess) {
-      const selectedValues = queryParams.getAll("interpretation_theories");
-      setTheoryFamilies(
-        selectedValues.map((item) => ({
-          value: item,
-          label: decodeURIComponent(item),
-        }))
+      updateMultiFilterState(
+        setTheoryFamilies,
+        "interpretation_theories",
+        theories
       );
     }
     navigate({ search: queryParams.toString() });
@@ -379,7 +377,7 @@ export default function FreeQueriesBar() {
               />
               <div className={sideSectionClass}>
                 <Select
-                  styles={selectStyles}
+                  className="text-lg w-[300px]"
                   aria-label="Parameter of interest"
                   closeMenuOnSelect={true}
                   isMulti={false}
@@ -415,7 +413,7 @@ export default function FreeQueriesBar() {
                 <>
                   <div className={sideSectionClass}>
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={selectedTechniques}
@@ -432,7 +430,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={paradigmFamilies}
@@ -449,7 +447,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={paradigms}
@@ -467,7 +465,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={stimuliCategories}
@@ -484,7 +482,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={stimuliModalities}
@@ -502,7 +500,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={tasks}
@@ -519,7 +517,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={populations}
@@ -536,7 +534,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={consciousnessMeasureTypes}
@@ -553,7 +551,7 @@ export default function FreeQueriesBar() {
                       }}
                     />
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={consciousnessMeasurePhases}
@@ -571,7 +569,7 @@ export default function FreeQueriesBar() {
                     />
                     <Select
                       menuPlacement="top"
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={measures}
@@ -589,7 +587,7 @@ export default function FreeQueriesBar() {
                     />
 
                     <Select
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={tagsFamilies}
@@ -608,7 +606,7 @@ export default function FreeQueriesBar() {
 
                     <Select
                       menuPlacement="top"
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={tagsTypes}
@@ -626,7 +624,7 @@ export default function FreeQueriesBar() {
                     />
                     <Select
                       menuPlacement="top"
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={theoryDriven}
@@ -647,7 +645,7 @@ export default function FreeQueriesBar() {
                     <Select
                       closeMenuOnSelect={true}
                       isMulti={true}
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       value={theoryFamilies}
                       options={theories}
                       placeholder="Theories"
@@ -665,7 +663,7 @@ export default function FreeQueriesBar() {
                       isDisabled={theoryFamilies.length === 0}
                       closeMenuOnSelect={true}
                       isMulti={true}
-                      styles={selectStyles}
+                      className="text-lg w-[300px]"
                       value={interpretations}
                       options={interpretationsArr}
                       placeholder="interpretations"
@@ -680,7 +678,10 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                    <FilterExplanation text="Interpretations" tooltip="" />
+                    <FilterExplanation
+                      text="Interpretations"
+                      tooltip='In order to use this filter please choose a theory in "Theries" field and then choose interpretation for that theory'
+                    />
                   </div>
                 </>
               )}{" "}

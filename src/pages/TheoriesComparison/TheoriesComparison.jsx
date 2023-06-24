@@ -155,6 +155,7 @@ export default function ParametersDistributionTheoriesComparison() {
           />
           <div className={sideSectionClass}>
             <Select
+              className="text-lg w-[300px]"
               closeMenuOnSelect={true}
               isMulti={false}
               isClearable={false}

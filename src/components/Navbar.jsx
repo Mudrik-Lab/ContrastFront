@@ -153,7 +153,7 @@ export default function Navbar() {
               <ul className="flex flex-row text-black space-x-12">
                 <li className="flex items-center relative">
                   <button
-                    className="flex items-center text-black border-0 gap-1 "
+                    className="flex items-center text-black border-0 gap-1 text-base "
                     onClick={() => setGraphMenue(!graphMenue)}>
                     Explore
                     <Arrow />
@@ -192,23 +192,38 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    className={page === "/about" ? "text-blue font-bold" : ""}
+                    className={
+                      page === "/about"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
                     href="about">
                     About
                   </a>
                 </li>
 
                 <li>
-                  {/* <a
-                    className={page === "/contact" ? "text-blue font-bold" : ""}
+                  <a
+                    className={
+                      page === "/contact"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
                     href="contact"
                     aria-current="page">
                     Contact
-                  </a> */}
-                  <Temporary>Contact</Temporary>
+                  </a>
+                  {/* <Temporary extraClass={"text-base"}>Contact</Temporary> */}
                 </li>
                 <li>
-                  <a href="/upload-new-paper" aria-current="page">
+                  <a
+                    href="/upload-new-paper"
+                    className={
+                      page === "/upload-new-paper"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
+                    aria-current="page">
                     Upload New Paper
                   </a>
                 </li>
@@ -221,7 +236,7 @@ export default function Navbar() {
                     {" "}
                     <ProfileIcon /> {snap.user?.username || snap.tempUsername}
                   </Button>
-                  <a href="/" onClick={handleLogout}>
+                  <a href="/" className="text-base" onClick={handleLogout}>
                     Logout
                   </a>
                 </>
