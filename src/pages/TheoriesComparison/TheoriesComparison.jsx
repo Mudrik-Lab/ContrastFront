@@ -144,7 +144,7 @@ export default function ParametersDistributionTheoriesComparison() {
     <PageTemplate
       control={
         <SideControl headline={"Theories Comparison"}>
-          <Text md weight="bold">
+          <Text lg weight="bold">
             Axis Controls
           </Text>
           <RangeInput
@@ -155,16 +155,18 @@ export default function ParametersDistributionTheoriesComparison() {
           />
           <div className={sideSectionClass}>
             <Select
+              className="text-lg w-[300px]"
               closeMenuOnSelect={true}
               isMulti={false}
               isClearable={false}
               options={parametersOptions}
               value={selected}
+              aria-label=" Parameter of interest"
               onChange={(e) => {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
             />
-            <Text size={14} flexed>
+            <Text className="text-sm" flexed>
               Parameter of interest
               <FilterExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>

@@ -21,8 +21,4 @@ body{
   
   input[type="radio"]:checked {
     background-color: #66BFF1;
-  }
-
-  .bigger-text {
-    font-size: 1.5rem; /* Adjust the desired font size here */
-  }
+  } 

@@ -175,7 +175,7 @@ export default function TheoryDriven() {
     <PageTemplate
       control={
         <SideControl headline="Theory Driven Distribution Pie">
-          <Text md weight="bold">
+          <Text lg weight="bold">
             Axis Controls
           </Text>
           <RangeInput

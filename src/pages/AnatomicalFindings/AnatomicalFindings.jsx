@@ -25,7 +25,7 @@ export default function AnatomicalFindings() {
             legendLine={graphsHeaders[8].legendLine}
           />
           <Spacer height={50} />
-          <Text size={28} weight="bold" color="blue" center>
+          <Text className="text-3xl" weight="bold" color="blue" center>
             Anatomical Findings
           </Text>
           <Spacer height={50} />

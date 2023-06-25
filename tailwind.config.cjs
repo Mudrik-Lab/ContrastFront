@@ -2,6 +2,11 @@
 module.exports = {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", 'node_modules/flowbite-react/**/*.{js,jsx,ts,tsx}'],
   theme: {
+    // fontSize:{
+    //   xxs: '0.625rem',
+      
+    // },
+
     extend: {
       boxShadow: {
         '3xl': '0px 11px 44px rgba(0, 0, 0, 0.1);',

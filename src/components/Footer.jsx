@@ -15,7 +15,7 @@ export default function Footer({ isFixed }) {
       <div className="flex gap-3 items-center ">
         <img src={Logo} alt="" />
         <div className=" border-r border-white h-10 "></div>
-        <Text sm color="white">
+        <Text xs color="white">
           High Level <br /> Cognition Lab
         </Text>
       </div>

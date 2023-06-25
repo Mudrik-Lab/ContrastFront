@@ -133,3 +133,51 @@ export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
 //   link.click();
 //   URL.revokeObjectURL(url);
 // }
+
+export const enlargeFont = () => {
+  document.getElementsByClassName("text-4xl").className = "text-6xl";
+  document.getElementsByClassName("text-3xl").className = "text-5xl";
+  document.getElementsByClassName("text-2xl").className = "text-4xl";
+  document.getElementsByClassName("text-xl").className = "text-3xl";
+  document.getElementsByClassName("text-lg").className = "text-2xl";
+  document.getElementsByClassName("text-base").className = "text-xl";
+  document.getElementsByClassName("text-sm").className = "text-lg";
+  document.getElementsByClassName("text-xxs").className = "text-base";
+};
+
+function updateClass(classToFind, newClass) {
+  const elements = document.querySelectorAll(`[class*="${classToFind}"]`);
+
+  elements.forEach((element) => {
+    const classes = element.getAttribute("class").split(" ");
+    const updatedClasses = classes.map((className) => {
+      if (className.includes(classToFind)) {
+        return className.replace(new RegExp(classToFind, "g"), newClass);
+      }
+      return className;
+    });
+    element.setAttribute("class", updatedClasses.join(" "));
+  });
+}
+export function updateTextClass() {
+  updateClass("text-5xl", "text-7xl");
+  updateClass("text-4xl", "text-6xl");
+  updateClass("text-3xl", "text-5xl");
+  updateClass("text-xl", "text-3xl");
+  updateClass("text-lg", "text-3xl");
+  updateClass("text-base", "text-2xl");
+  updateClass("text-sm", "text-xl");
+  updateClass("text-xs", "text-lg");
+}
+export const generateSelectOptions = (start, end) => {
+  const options = [];
+  for (let i = start; i <= end; i++) {
+    const value = i.toString().padStart(2, "0");
+    options.push(
+      <option key={i} value={value}>
+        {value}
+      </option>
+    );
+  }
+  return options;
+};

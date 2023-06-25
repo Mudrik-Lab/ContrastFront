@@ -7,10 +7,10 @@ export default function ModesOfGoverance() {
   return (
     <div>
       <Navbar />
-      <div className="mt-24 mb-20 w-[80%] sm:px-20 mx-auto text-lg ">
-        <Text size={28} weight="bold" color="blue" center>
-          ModesOfGoverance
-        </Text>
+      <div className="mt-24 mb-20 w-[80%] sm:px-20 mx-auto text-base ">
+        <h1 className="text-2xl text-center text-blue font-bold mb-2">
+          Modes Of Goverance
+        </h1>
         <div className="mt-4 bg-blue p-8">
           The ConTraSt database website is an open access interactive website,
           featuring the Consciousness Theories Studies (ConTraSt) database. The

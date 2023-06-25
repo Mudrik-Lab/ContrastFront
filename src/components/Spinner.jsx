@@ -15,7 +15,7 @@ const Spinner = () => {
 
   return (
     <div className=" h-screen w-screen fixed top-0 left-0 z-10 ">
-      <div className="h-full flex items-center justify-center z-60 border">
+      <div className="h-full flex items-center justify-center z-50 border">
         <Plot
           data={[
             {

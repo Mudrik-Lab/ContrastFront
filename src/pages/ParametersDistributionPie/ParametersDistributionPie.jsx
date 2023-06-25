@@ -216,7 +216,7 @@ export default function ParametersDistributionPie() {
     <PageTemplate
       control={
         <SideControl headline={" Parameters Distribution Pie"}>
-          <Text md weight="bold">
+          <Text lg weight="bold">
             Axis Controls
           </Text>
           <RangeInput
@@ -227,6 +227,7 @@ export default function ParametersDistributionPie() {
           />
           <div className={sideSectionClass}>
             <Select
+              className="text-lg w-[300px]"
               closeMenuOnSelect={true}
               isMulti={false}
               isClearable={false}
@@ -236,7 +237,7 @@ export default function ParametersDistributionPie() {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
             />
-            <Text size={14} flexed>
+            <Text className="text-sm" flexed>
               Parameter of interest
               <FilterExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>

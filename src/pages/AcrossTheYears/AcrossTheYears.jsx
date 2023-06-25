@@ -110,9 +110,9 @@ export default function AcrossTheYears() {
       <PageTemplate
         control={
           <SideControl headline={"Trends over time"}>
-            <Text color="blue" weight="bold" size={30}></Text>
+            <Text color="blue" weight="bold" className="text-3xl"></Text>
 
-            <Text weight="bold" md>
+            <Text weight="bold" lg>
               Axis Controls
             </Text>
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
@@ -126,6 +126,8 @@ export default function AcrossTheYears() {
 
             <div className={sideSectionClass}>
               <Select
+                className="text-lg w-[300px]"
+                aria-label="parameter of interest"
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}
@@ -135,7 +137,7 @@ export default function AcrossTheYears() {
                   buildUrl(pageName, "breakdown", e.value, navigate);
                 }}
               />
-              <Text size={14} flexed>
+              <Text className="text-sm" flexed>
                 Parameter of interest
                 <FilterExplanation tooltip="Choose the dependent variable to be queried." />
               </Text>

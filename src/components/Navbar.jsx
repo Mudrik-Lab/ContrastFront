@@ -1,16 +1,19 @@
-import React from "react";
+import React, { useEffect } from "react";
 import classNames from "classnames";
 import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
-import { ReactComponent as Profile } from "../assets/profile-circle.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
-
+import { useQuery } from "@tanstack/react-query";
 import { Button, Temporary, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";
+import { useSnapshot } from "valtio";
+import { state } from "../state";
+import { removeToken } from "../Utils/tokenHandler";
+import getUser from "../apiHooks/getUser";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -18,6 +21,26 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const page = window.location.pathname;
+  const snap = useSnapshot(state);
+  const { data: userData, isSuccess: userSuccess } = useQuery([`user`], () => {
+    if (snap.auth && page !== "/profile") {
+      return getUser();
+    } else {
+      return null;
+    }
+  });
+
+  useEffect(() => {
+    if (userData?.data) {
+      state.user = userData?.data;
+    }
+  }, [userSuccess]);
+
+  const handleLogout = async () => {
+    await removeToken();
+    state.auth = null;
+    state.user = {};
+  };
 
   return (
     <div>
@@ -29,7 +52,7 @@ export default function Navbar() {
               onClick={() => navigate("/")}>
               <img src={Logo} alt="" />
               <div className=" border-r border-black h-10 "></div>
-              <Text sm color="grayHeavy">
+              <Text xs color="grayHeavy">
                 {" "}
                 High Level <br /> Cognition Lab
               </Text>
@@ -101,10 +124,10 @@ export default function Navbar() {
                     <Temporary>Contact</Temporary>
                   </li>
                   <li>
-                    {/* <a href="/upload-new-paper" aria-current="page">
-                    Upload New Paper
-                  </a> */}
-                    <Temporary>Upload New Paper</Temporary>
+                    <a href="/upload-new-paper" aria-current="page">
+                      Upload New Paper
+                    </a>
+                    {/* <Temporary>Upload New Paper</Temporary> */}
                   </li>
                 </ul>
               </div>
@@ -112,7 +135,7 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-20 top-0 left-0 shadow-lg ">
+        <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-30 top-0 left-0 shadow-lg ">
           <div className=" flex flex-wrap items-center justify-between w-full ">
             <div className="flex items-center justify-between">
               <div
@@ -120,7 +143,7 @@ export default function Navbar() {
                 onClick={() => navigate("/")}>
                 <img src={Logo} alt="" />
                 <div className=" border-r border-black h-10 "></div>
-                <Text sm color="grayHeavy">
+                <Text xs color="grayHeavy">
                   {" "}
                   High Level <br /> Cognition Lab{" "}
                 </Text>
@@ -130,7 +153,7 @@ export default function Navbar() {
               <ul className="flex flex-row text-black space-x-12">
                 <li className="flex items-center relative">
                   <button
-                    className="flex items-center text-black border-0 gap-1 "
+                    className="flex items-center text-black border-0 gap-1 text-base "
                     onClick={() => setGraphMenue(!graphMenue)}>
                     Explore
                     <Arrow />
@@ -169,38 +192,67 @@ export default function Navbar() {
                 </li>
                 <li>
                   <a
-                    className={page === "/about" ? "text-blue font-bold" : ""}
+                    className={
+                      page === "/about"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
                     href="about">
                     About
                   </a>
                 </li>
 
                 <li>
-                  {/* <a
-                    className={page === "/contact" ? "text-blue font-bold" : ""}
+                  <a
+                    className={
+                      page === "/contact"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
                     href="contact"
                     aria-current="page">
                     Contact
-                  </a> */}
-                  <Temporary>Contact</Temporary>
+                  </a>
+                  {/* <Temporary extraClass={"text-base"}>Contact</Temporary> */}
                 </li>
                 <li>
-                  {/* <a href="/upload-new-paper" aria-current="page">
+                  <a
+                    href="/upload-new-paper"
+                    className={
+                      page === "/upload-new-paper"
+                        ? "text-blue font-bold text-base"
+                        : "text-base"
+                    }
+                    aria-current="page">
                     Upload New Paper
-                  </a> */}
-                  <Temporary>Upload New Paper</Temporary>
+                  </a>
                 </li>
               </ul>
             </div>
             <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
-              <Temporary>
-                <Profile />
-              </Temporary>
-              <Temporary>Login</Temporary>
-              <Button type="button" isCommingSoon>
-                {" "}
-                <ProfileIcon /> Register
-              </Button>
+              {snap.auth ? (
+                <>
+                  <Button type="button" onClick={() => navigate("/register")}>
+                    {" "}
+                    <ProfileIcon /> {snap.user?.username || snap.tempUsername}
+                  </Button>
+                  <a href="/" className="text-base" onClick={handleLogout}>
+                    Logout
+                  </a>
+                </>
+              ) : (
+                <>
+                  <Button type="button" onClick={() => navigate("/register")}>
+                    {" "}
+                    <ProfileIcon /> Register now
+                  </Button>
+                  <a
+                    className={page === "/login" ? "text-blue font-bold" : ""}
+                    href="login">
+                    Login
+                  </a>
+                </>
+              )}
             </div>
           </div>
         </nav>

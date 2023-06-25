@@ -28,7 +28,9 @@ export default function PapersIconsMenu() {
                 <div className="flex flex-col justify-start items-center gap-3">
                   {" "}
                   {paper.icon}
-                  <p className="text-center leading-5">{paper.text}</p>
+                  <p className="text-center text-base leading-5">
+                    {paper.text}
+                  </p>
                 </div>
               </Tooltip>
             </div>

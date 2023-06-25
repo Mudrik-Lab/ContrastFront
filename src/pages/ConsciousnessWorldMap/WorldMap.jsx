@@ -16,12 +16,7 @@ import {
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
-import {
-  isMoblile,
-  plotConfig,
-  screenHeight,
-  screenWidth,
-} from "../../Utils/HardCoded";
+import { isMoblile, plotConfig } from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
@@ -265,7 +260,7 @@ export default function WorldMap() {
         <PageTemplate
           control={
             <SideControl headline={"Nations of Consciousness"}>
-              <Text md weight="bold">
+              <Text lg weight="bold">
                 Axis Controls
               </Text>
               <RangeInput
@@ -275,12 +270,14 @@ export default function WorldMap() {
                 }}
               />
               <div className={sectionClass}>
-                <Text flexed md weight="bold">
+                <Text flexed lg weight="bold">
                   Theory Family
                   <FilterExplanation tooltip="few more words about Theories" />
                 </Text>
 
                 <Select
+                  className="text-lg w-[300px]"
+                  aria-label="theories"
                   closeMenuOnSelect={true}
                   isMulti={true}
                   value={theoryFamilies}

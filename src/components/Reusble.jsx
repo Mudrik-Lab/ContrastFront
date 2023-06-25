@@ -4,10 +4,15 @@ import classNames from "classnames";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
+import { ReactComponent as AddPaper } from "../assets/icons/add-paper-icon.svg";
+
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
 import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
+import { useSnapshot } from "valtio";
+import { state } from "../state";
+import { ErrorMessage, Field } from "formik";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -42,7 +47,7 @@ export const Button = ({
         onMouseEnter={() => setHover(true)}
         onMouseLeave={() => setHover(false)}
         className={classNames(
-          `${extraClass} text-white text-md leading-4 font-bold ${
+          `${extraClass} text-white text-base leading-4 font-bold ${
             black ? "bg-black" : "bg-blue border-[3px] border-blue"
           } hover:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
         )}
@@ -52,11 +57,19 @@ export const Button = ({
     </div>
   );
 };
-export const ButtonReversed = ({ children, extraClass, ...config }) => {
+export const ButtonReversed = ({
+  children,
+  extraClass,
+
+  isChosen,
+  ...config
+}) => {
   return (
     <button
       className={classNames(
-        ` ${extraClass} text-blue hover:text-white text-md leading-4 font-bold bg-white hover:bg-blue border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+        ` ${extraClass} ${
+          isChosen ? "text-blue bg-white" : "bg-blue text-white"
+        } text-blue text-md leading-4 font-bold bg-white border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap hover:opacity-40`
       )}
       {...config}>
       {children}
@@ -80,35 +93,33 @@ export const Spacer = ({ height }) => {
 export const Text = ({
   weight,
   children,
-  size,
+  xl,
   lg,
-  md,
-  sm,
+  xs,
+  xl3,
   center,
   color,
   flexed,
   onClick,
   className,
-  lineHeight,
   id,
 }) => {
   return (
-    <div
+    <p
       id={id}
       onClick={onClick}
       className={classNames(
         `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
-        } font-${weight ? weight : "medium"} ${
-          className ? className : ""
-        } leading-${lineHeight}`
+        } font-${weight ? weight : "medium"} text-${
+          xl3 ? "3xl" : xl ? "xl" : lg ? "lg" : xs ? "xs" : "base"
+        } ${className ? className : ""}`
       )}
       style={{
-        fontSize: lg ? "20px" : md ? "18px" : sm ? "12px" : size,
         textAlign: center && "center",
       }}>
       {children}
-    </div>
+    </p>
   );
 };
 
@@ -135,7 +146,7 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
     <div
       className={classNames(
         `flex flex-wrap justify-between items-center ${
-          isFlat ? "text-sm gap-4" : "px-10"
+          isFlat ? "text-sm gap-4" : "text-base px-8"
         }`
       )}
       id={name}>
@@ -185,7 +196,9 @@ export const FilterExplanation = ({ text, tooltip }) => {
   return (
     <div className="flex gap-2 mt-1">
       <Tooltip content={tooltip} trigger="click">
-        <button className="flex justify-center items-center gap-2 text-sm">
+        <button
+          className="flex justify-center items-center gap-2 text-sm"
+          aria-label={tooltip}>
           {text} <QuestionMark />{" "}
         </button>
       </Tooltip>
@@ -218,14 +231,15 @@ export const RangeInput = ({ number, setNumber }) => {
           onTouchEnd={(e) => setNumber(e.target.value)}
           min={0}
           defaultValue={0}
-          max={100}
+          max={99}
           step={1}
           className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
           id="numOfExperiments"
+          aria-label="number of experiments range input"
         />
         <span
           style={{
-            left: label * 0.9 + (label < 10 ? 5 : label < 70 ? 2 : 0) + "%",
+            left: label * 0.9 + (label < 10 ? 4 : 2) + "%",
             top: 4,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
@@ -241,24 +255,46 @@ export const RangeInput = ({ number, setNumber }) => {
   );
 };
 
-export const SideControl = ({ children, headline }) => {
+export const SideControl = ({ children, headline, isUploadPaper = false }) => {
   const isMoblile = screenWidth < 600;
 
   return (
     <div
-      className="side-filter-box p-2 flex flex-col items-center "
+      className={classNames(
+        `side-filter-box p-2 flex flex-col items-center  ${
+          isUploadPaper ? "pt-0 h-full relative" : ""
+        }`
+      )}
       style={{
-        width: isMoblile ? "100%" : sideWidth,
+        width: "100%",
         maxHeight: isMoblile ? "400px" : "100vh",
       }}>
-      <div className="p-4">
-        <Text size={28} weight="bold" color="blue" center>
-          {headline}
-        </Text>
-      </div>
+      {isUploadPaper ? (
+        <div className=" w-full">{headline}</div>
+      ) : (
+        <div className="p-4 ">
+          <Text className="text-3xl" weight="bold" color="blue" center>
+            {headline}
+          </Text>
+        </div>
+      )}
 
-      <div className="shadow-xl mt-6 rounded-md bg-white flex flex-col items-center gap-2 px-4 py-2 overflow-y-scroll z-30 ">
+      <div
+        className={classNames(
+          `shadow-xl w-full mt-6 rounded-md bg-white flex flex-col  gap-2 px-4 py-2 overflow-y-scroll z-20 ${
+            isUploadPaper ? "items-start h-full " : "items-center"
+          }`
+        )}>
+        {isUploadPaper && <h2 className="text-3xl">Papers</h2>}
+
         {children}
+        {isUploadPaper && (
+          <div className="absolute bottom-10 left-0 w-full">
+            <Button extraClass="mx-auto font-normal">
+              <AddPaper /> Add new paper
+            </Button>
+          </div>
+        )}
         <Spacer height={20} />
       </div>
     </div>
@@ -402,9 +438,84 @@ export const Temporary = ({ extraClass, children }) => {
 
 export const BigButton = ({ extraClass, icon, text, ...config }) => {
   return (
-    <button className="h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md">
+    <button
+      className={classNames(
+        `${extraClass} h-full w-full border-4 border-darkBlue flex flex-col justify-center items-center p-2 text-darkBlue font-bold text-md`
+      )}
+      {...config}>
       {icon}
       {text}
     </button>
+  );
+};
+export const Checkbox = ({ field }) => {
+  return (
+    <label className="flex gap-2 items-center text-sm">
+      <input
+        {...field}
+        className="text-blue focus:outline-none"
+        type="checkbox"
+      />
+      <span>I want to get updates from ConTraSt website</span>
+    </label>
+  );
+};
+export const TopSideUserBox = () => {
+  const snap = useSnapshot(state);
+  return (
+    <div className="w-full bg-grayLight p-4 rounded-md">
+      <h2 className="text-2xl text-black font-normal">
+        {snap.user.username}’s workspace
+      </h2>
+      <Text lg weight={"bold"} color={"blue"}>
+        {snap.user.email}
+      </Text>
+      <div className="flex gap-2">
+        <a className="underline text-xs" href="">
+          edit my profile
+        </a>
+        <a className="underline text-xs" href="">
+          logout
+        </a>
+      </div>
+    </div>
+  );
+};
+export const RadioFeedback = ({ label1, label2, name, headline, question }) => {
+  const radioLabelClass = "flex flex-col items-start gap-1";
+  return (
+    <div>
+      <h1 className="text-xl text-blue font-bold ">{headline}</h1>
+      <p className="text-base mb-4">{question}</p>
+      <div className="w-full flex gap-4 justify-center p-4 bg-grayLight mb-2">
+        <label className="text-lg font-semibold text-right ">{label1}</label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"1"} />1
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"2"} />2
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"3"} />3
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"4"} />4
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"5"} />5
+        </label>
+
+        <label className="text-lg font-semibold">{label2}</label>
+        <ErrorMessage name={name} component="div" />
+      </div>
+    </div>
+  );
+};
+export const ToastBox = ({ headline, text }) => {
+  return (
+    <div className="h-40 w-full flex flex-col items-center justify-center">
+      <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+      <p className="text-lg mx-auto">{text}</p>
+    </div>
   );
 };

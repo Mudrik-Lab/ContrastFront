@@ -1,52 +1,52 @@
 import { useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
-import { Login } from "./pages/Login";
-
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
-import AcrossTheYears from "./pages/Across the years/AcrossTheYears";
+import AcrossTheYears from "./pages/AcrossTheYears/AcrossTheYears";
 import FreeQueriesPage from "./pages/FreeQueries/FreeQueriesBar";
-import ParametersDistributionBar from "./pages/Parameters Distribution Bar/ParametersDistributionBar";
+import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar";
 import ContactPage from "./pages/ContactPage/ContactPage";
 import Frequencies from "./pages/Frequencies/Frequencies";
 import Journals from "./pages/Journals/Journals";
 import Timing from "./pages/Timing/Timings";
-import ParametersDistributionPie from "./pages/Parameters Distribution Pie/ParametersDistributionPie";
-import ParametersDistributionTheoriesComparison from "./pages/Theories Comparison/TheoriesComparison";
-import TheoryDriven from "./pages/Theory Driven/TheoryDriven";
-import getConfiguration from "./apiHooks/getConfiguration";
-import getExtraConfig from "./apiHooks/getExtraConfig";
-import WorldMap from "./pages/Consciousness World Map/WorldMap";
-import UploadNewPaper from "./pages/Upload New Paper/UploadNewPaper";
-import TermOfUse from "./pages/Terms Of Use/TermsOfUse";
-import PageTemplate from "./components/PageTemplate";
-import AnatomicalFindings from "./pages/Anatomical Findings/AnatomicalFindings";
+import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie";
+import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison";
+import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
+
+import WorldMap from "./pages/ConsciousnessWorldMap/WorldMap";
+import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaper";
+import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
+import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
 import { isMoblile } from "./Utils/HardCoded";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
+import Register from "./pages/Register/Register";
+import Login from "./pages/Login/Login";
+import ProtectedRoute from "./Utils/ProtectedRoute";
+import SecondaryRegister from "./pages/Register/SecondaryRegister";
 
 const Screens = () => {
-  const { data: configuration, isSuccess: configurationSuccess } = useQuery(
-    [`parent_theories`],
-    getConfiguration
-  );
-
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
-    getExtraConfig
-  );
-
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/upload-new-paper" element={<UploadNewPaper />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
         <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/profile" element={<SecondaryRegister />} />
+        <Route
+          path="/upload-new-paper"
+          element={
+            <ProtectedRoute
+              path="/upload-new-paper"
+              element={<UploadNewPaper />}
+            />
+          }
+        />
         <Route
           path="/parameter-distribution-free-queries"
           element={isMoblile ? <MobileScreen /> : <FreeQueriesPage />}

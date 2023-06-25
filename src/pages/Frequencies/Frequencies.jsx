@@ -173,12 +173,14 @@ export default function Frequencies() {
           <PageTemplate
             control={
               <SideControl headline={"Frequencies"}>
-                <Text md weight="bold">
+                <Text lg weight="bold">
                   Axis Controls
                 </Text>
 
                 <div className={sideSectionClass}>
                   <Select
+                    className="text-lg w-[300px]"
+                    aria-label="theory family"
                     closeMenuOnSelect={true}
                     isMulti={false}
                     isClearable={true}
@@ -188,13 +190,15 @@ export default function Frequencies() {
                       buildUrl(pageName, "theory", e?.value, navigate);
                     }}
                   />
-                  <Text flexed size={14}>
+                  <Text className="text-sm">
                     Theory Family
                     <FilterExplanation tooltip="few more words about Thory" />
                   </Text>
                 </div>
                 <div className={sideSectionClass}>
                   <Select
+                    className="text-lg w-[300px]"
+                    aria-label="Techniques"
                     closeMenuOnSelect={true}
                     isMulti={true}
                     value={selectedTechniques}
@@ -210,7 +214,7 @@ export default function Frequencies() {
                     }}
                   />
 
-                  <Text flexed size={14}>
+                  <Text flexed className="text-sm">
                     Technique
                     <FilterExplanation tooltip="few more words about techniques" />
                   </Text>
