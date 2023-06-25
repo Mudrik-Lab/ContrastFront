@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import sendContactUs from "../../apiHooks/sendContactUs";
+import { toast } from "react-toastify";
+import { ToastBox } from "../../components/Reusble";
 
 export default function ContactUs() {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -23,9 +26,25 @@ export default function ContactUs() {
       .required("Email is required"),
     message: Yup.string(),
   });
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
       console.log(values);
+      const res = await sendContactUs({
+        email: values.email,
+        subject: values.subject,
+        message: values.message,
+        confirm: values.confirm,
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Feedback was sent successfully"}
+            text={"Thank you for your feedback!"}
+          />
+        );
+        resetForm();
+        setTimeout(() => navigate("/contact"), 2000);
+      }
     } catch (error) {
       error.response.status === 400 && setErrorMsg(true);
     }
@@ -45,7 +64,6 @@ export default function ContactUs() {
               <div className="flex gap-4">
                 <div className="flex flex-col ">
                   <label
-                    onClick={console.log(isValid)}
                     className="text-lg font-bold text-blue mb-2"
                     htmlFor="name">
                     Your e-mail:

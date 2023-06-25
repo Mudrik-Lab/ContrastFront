@@ -8,6 +8,7 @@ import { useState } from "react";
 import ContactUs from "./ContactUs";
 import SuggestingNewQueries from "./SuggestingNewQueries";
 import VettingPaper from "./VettingPaper";
+import Feedback from "./Feedback";
 
 export default function ContactPage() {
   const [chosen, setChosen] = useState("contact-us");
@@ -138,6 +139,8 @@ export default function ContactPage() {
         <SuggestingNewQueries />
       ) : chosen === "vet-a-paper" ? (
         <VettingPaper />
+      ) : chosen === "feedback" ? (
+        <Feedback />
       ) : (
         <></>
       )}

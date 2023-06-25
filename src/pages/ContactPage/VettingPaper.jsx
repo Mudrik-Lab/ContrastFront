@@ -3,6 +3,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import sendVetAPaper from "../../apiHooks/sendVetAPaper";
+import { toast } from "react-toastify";
+import { ToastBox } from "../../components/Reusble";
 
 export default function VettingPaper() {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -10,7 +13,7 @@ export default function VettingPaper() {
   const initialValues = {
     email: "",
     DOI: "",
-    comment: "",
+    comments: "",
     isAuthor: "Yes",
   };
 
@@ -24,11 +27,26 @@ export default function VettingPaper() {
         "Please enter a valid DOI."
       )
       .required("DOI is required."),
-    comment: Yup.string(),
+    comments: Yup.string(),
   });
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
+      const res = await sendVetAPaper({
+        email: values.email,
+        DOI: values.DOI,
+        comments: values.comments,
+        is_author: values.isAuthor,
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Feedback was sent successfully"}
+            text={"Thank you for your feedback!"}
+          />
+        );
+        resetForm();
+        setTimeout(() => navigate("/contact"), 2000);
+      }
     } catch (error) {
       error.response.status === 400 && setErrorMsg(true);
     }
@@ -84,19 +102,19 @@ export default function VettingPaper() {
               <div className="flex flex-col ">
                 <label
                   className="text-lg font-bold text-blue mb-2"
-                  htmlFor="comment">
+                  htmlFor="comments">
                   Your Comment:
                 </label>
                 <Field
                   as="textarea"
                   placeholder={"Please write specific as possible"}
-                  id="comment"
-                  name="comment"
+                  id="comments"
+                  name="comments"
                   className="border border-gray-300 rounded-sm p-2 h-40 w-full"
                 />
 
                 <ErrorMessage
-                  name="comment"
+                  name="comments"
                   component="div"
                   className={errorMsgClass}
                 />
@@ -119,7 +137,6 @@ export default function VettingPaper() {
 
               <div className="flex flex-col ">
                 <label
-                  onClick={console.log(isValid)}
                   className="text-lg font-bold text-blue mb-2"
                   htmlFor="name">
                   Your Email:

@@ -12,6 +12,7 @@ import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
+import { ErrorMessage, Field } from "formik";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -477,6 +478,44 @@ export const TopSideUserBox = () => {
           logout
         </a>
       </div>
+    </div>
+  );
+};
+export const RadioFeedback = ({ label1, label2, name, headline, question }) => {
+  const radioLabelClass = "flex flex-col items-start gap-1";
+  return (
+    <div>
+      <h1 className="text-xl text-blue font-bold ">{headline}</h1>
+      <p className="text-base mb-4">{question}</p>
+      <div className="w-full flex gap-4 justify-center p-4 bg-grayLight mb-2">
+        <label className="text-lg font-semibold text-right ">{label1}</label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"1"} />1
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"2"} />2
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"3"} />3
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"4"} />4
+        </label>
+        <label className={radioLabelClass}>
+          <Field type="radio" name={name} value={"5"} />5
+        </label>
+
+        <label className="text-lg font-semibold">{label2}</label>
+        <ErrorMessage name={name} component="div" />
+      </div>
+    </div>
+  );
+};
+export const ToastBox = ({ headline, text }) => {
+  return (
+    <div className="h-40 w-full flex flex-col items-center justify-center">
+      <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+      <p className="text-lg mx-auto">{text}</p>
     </div>
   );
 };

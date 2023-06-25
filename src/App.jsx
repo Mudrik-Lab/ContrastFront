@@ -10,6 +10,8 @@ import { BigButton, Button } from "./components/Reusble";
 import { updateTextClass } from "./Utils/functions";
 import classNames from "classnames";
 import useAuth from "./apiHooks/useAuth";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
   const [open, setOpen] = React.useState(false);
@@ -38,6 +40,18 @@ function App() {
           <div className="text-blue text-3xl">Loading...</div>
         ) : (
           <QueryClientProvider client={client}>
+            <ToastContainer
+              position="top-center"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              rtl={false}
+              pauseOnFocusLoss
+              draggable
+              pauseOnHover
+              theme="light"
+            />
             <Screens />
           </QueryClientProvider>
         )}

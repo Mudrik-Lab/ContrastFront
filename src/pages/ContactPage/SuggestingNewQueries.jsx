@@ -3,24 +3,40 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import sendSuggestNewQuery from "../../apiHooks/sendSuggestNewQuery";
+import { toast } from "react-toastify";
+import { ToastBox } from "../../components/Reusble";
 
 export default function SuggestingNewQueries() {
   const [errorMsg, setErrorMsg] = useState(false);
   const navigate = useNavigate();
   const initialValues = {
     email: "",
-    message: "",
+    suggestions: "",
   };
 
   const validationSchema = Yup.object({
     email: Yup.string()
       .email("Invalid email address")
       .required("Email is required"),
-    message: Yup.string(),
+    suggestions: Yup.string(),
   });
-  const handleSubmit = async (values) => {
+  const handleSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
+      const res = await sendSuggestNewQuery({
+        email: values.email,
+        suggestions: values.suggestions,
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Feedback was sent successfully"}
+            text={"Thank you for your feedback!"}
+          />
+        );
+        resetForm();
+        setTimeout(() => navigate("/contact"), 2000);
+      }
     } catch (error) {
       error.response.status === 400 && setErrorMsg(true);
     }
@@ -63,19 +79,19 @@ export default function SuggestingNewQueries() {
               <div className="flex flex-col ">
                 <label
                   className="text-lg font-bold text-blue mb-2"
-                  htmlFor="message">
+                  htmlFor="suggestions">
                   Your Suggestion:
                 </label>
                 <Field
                   as="textarea"
                   placeholder={"Thank you for your ideas!"}
-                  id="message"
-                  name="message"
+                  id="suggestions"
+                  name="suggestions"
                   className="border border-gray-300 rounded-sm p-2 h-40 w-full"
                 />
 
                 <ErrorMessage
-                  name="message"
+                  name="suggestions"
                   component="div"
                   className={errorMsgClass}
                 />
