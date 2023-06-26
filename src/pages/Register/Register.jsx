@@ -6,7 +6,7 @@ import Footer from "../../components/Footer";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
-import createRegitration from "../../apiHooks/createRegistration";
+import createRegistration from "../../apiHooks/createRegistration";
 import useLogin from "../../apiHooks/loginApi";
 import {
   isValidToken,
@@ -38,7 +38,7 @@ export default function RegisterComponent() {
 
   const handleSubmit = async (values) => {
     try {
-      const result = await createRegitration({
+      const result = await createRegistration({
         email: values.email,
         password: values.password,
         username: values.name,
