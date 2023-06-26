@@ -24,12 +24,14 @@ import Register from "./pages/Register/Register";
 import Login from "./pages/Login/Login";
 import ProtectedRoute from "./Utils/ProtectedRoute";
 import SecondaryRegister from "./pages/Register/SecondaryRegister";
+import RecoverPassword from "./pages/Login/RecoverPassword";
 
 const Screens = () => {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
+        <Route path="/recover-password" element={<RecoverPassword />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />

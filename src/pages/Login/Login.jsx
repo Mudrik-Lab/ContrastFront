@@ -74,10 +74,14 @@ export default function Login() {
                       name="password"
                       className={fieldClass}
                     />
-                    <FilterExplanation
-                      text={"did you forget your password? "}
-                      tooltip={""}
-                    />
+
+                    <a
+                      href="/recover-password"
+                      className="text-blue text-center underline">
+                      {" "}
+                      Forgot your password?
+                    </a>
+
                     <ErrorMessage
                       name="password"
                       component="div"
