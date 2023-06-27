@@ -10,6 +10,7 @@ import { state } from "../../state";
 import SideStatus from "../../components/SideStatus";
 import { useQuery } from "@tanstack/react-query";
 import { getMySubmittedStudies } from "../../apiHooks/getStudies";
+import NewPaperForm from "./NewPaperForm";
 
 export default function UploadNewPaper() {
   const navigate = useNavigate();
@@ -52,7 +53,11 @@ export default function UploadNewPaper() {
             </div>
           </SideControl>
         }
-        graph={<div className="overflow-x-scroll h-full"></div>}
+        graph={
+          <div className="overflow-x-scroll h-full">
+            <NewPaperForm />{" "}
+          </div>
+        }
       />
     </div>
   );

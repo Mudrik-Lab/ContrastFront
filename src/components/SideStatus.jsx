@@ -1,24 +1,34 @@
 import classNames from "classnames";
 import react, { useState } from "react";
 
-export default function SideStatus({ number, status }) {
+export default function SideStatus({ number, status, disabled }) {
   const [open, setOpen] = useState(false);
-  const color =
+  let color =
     status === "Complete"
+      ? "green-500"
+      : status === "Submitted"
       ? "green-500"
       : status === "Awaiting Review"
       ? "grayHeavy"
       : status === "In Progress"
       ? "blue"
       : "";
-  const fill =
+  let fill =
     status === "Complete"
+      ? "#088515"
+      : status === "Submitted"
       ? "#088515"
       : status === "Awaiting Review"
       ? "#6D6D6D"
       : status === "In Progress"
       ? "#159DEA"
       : "";
+  if (disabled) {
+    color = "grayHeavy";
+  }
+  if (disabled) {
+    fill = "#6D6D6D";
+  }
 
   return (
     <div
