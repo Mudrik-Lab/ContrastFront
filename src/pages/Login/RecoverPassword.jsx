@@ -1,6 +1,5 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { state } from "../../state";
 import * as Yup from "yup";
 
 import Navbar from "../../components/Navbar";
@@ -8,13 +7,6 @@ import Footer from "../../components/Footer";
 import { FilterExplanation, ToastBox } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
-import useLogin from "../../apiHooks/loginApi";
-import {
-  isValidToken,
-  setRefreshToken,
-  setToken,
-} from "../../Utils/tokenHandler";
-import getRecoveredPassword from "../../apiHooks/recoverPassword";
 import recoverPassword from "../../apiHooks/recoverPassword";
 import { toast } from "react-toastify";
 

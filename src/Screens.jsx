@@ -25,6 +25,7 @@ import Login from "./pages/Login/Login";
 import ProtectedRoute from "./Utils/ProtectedRoute";
 import SecondaryRegister from "./pages/Register/SecondaryRegister";
 import RecoverPassword from "./pages/Login/RecoverPassword";
+import ResetPassword from "./pages/Login/ResetPassword";
 
 const Screens = () => {
   return (
@@ -32,6 +33,7 @@ const Screens = () => {
       <Routes>
         <Route path="/login" element={<Login />} />
         <Route path="/recover-password" element={<RecoverPassword />} />
+        <Route path="/reset_password" element={<ResetPassword />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
