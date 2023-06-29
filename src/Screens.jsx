@@ -32,7 +32,10 @@ const Screens = () => {
     <BrowserRouter>
       <Routes>
         <Route path="/login" element={<Login />} />
-        <Route path="/recover-password" element={<RecoverPassword />} />
+        <Route
+          path="/request-password-recovery"
+          element={<RecoverPassword />}
+        />
         <Route path="/reset_password" element={<ResetPassword />} />
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<AboutPage />} />

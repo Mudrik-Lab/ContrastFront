@@ -40,7 +40,7 @@ export default function UploadNewPaper() {
             <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
               <FilterExplanation
                 tooltip={"Papers we aprroved"}
-                text={"Your approved papers"}
+                text={"Papers you’ve submitted for review"}
               />
             </div>
 
@@ -48,7 +48,7 @@ export default function UploadNewPaper() {
             <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
               <FilterExplanation
                 tooltip={"Papers we aprroved"}
-                text={"Your approved papers"}
+                text={"Papers still in process of submission"}
               />
             </div>
           </SideControl>
