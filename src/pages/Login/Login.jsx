@@ -51,7 +51,7 @@ export default function Login() {
                 <div className="flex flex-col items-center gap-5 px-4">
                   <div className="flex flex-col items-center">
                     <Field
-                      type="text"
+                      placeHolder="User Name"
                       id="name"
                       name="name"
                       className={fieldClass}
@@ -70,14 +70,19 @@ export default function Login() {
                   <div className="flex flex-col items-center">
                     <Field
                       type="password"
+                      placeHolder="Password"
                       id="password"
                       name="password"
                       className={fieldClass}
                     />
-                    <FilterExplanation
-                      text={"did you forget your password? "}
-                      tooltip={""}
-                    />
+
+                    <a
+                      href="/recover-password"
+                      className="text-blue text-center underline">
+                      {" "}
+                      Forgot your password?
+                    </a>
+
                     <ErrorMessage
                       name="password"
                       component="div"
