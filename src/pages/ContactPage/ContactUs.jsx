@@ -14,7 +14,7 @@ export default function ContactUs() {
     subject: "",
     email: "",
     message: "",
-    confirm: "",
+    confirm_updates: "",
   };
 
   const validationSchema = Yup.object({
@@ -33,7 +33,7 @@ export default function ContactUs() {
         email: values.email,
         subject: values.subject,
         message: values.message,
-        confirm: values.confirm,
+        confirm_updates: values.confirm_updates,
       });
       if (res.status === 201) {
         toast.success(
@@ -124,15 +124,15 @@ export default function ContactUs() {
               <div className="flex items-center gap-2 mt-2 ">
                 <Field
                   type="checkbox"
-                  id="confirm"
-                  name="confirm"
+                  id="confirm_updates"
+                  name="confirm_updates"
                   className="text-blue "
                 />
-                <label htmlFor="confirm">
+                <label htmlFor="confirm_updates">
                   I am interested in receiving news & updates from ConTraSt by
                   email
                 </label>
-                <ErrorMessage name="confirm" component="div" />
+                <ErrorMessage name="confirm_updates" component="div" />
               </div>
               {errorMsg && (
                 <p className={errorMsgClass}>

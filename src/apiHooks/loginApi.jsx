@@ -1,7 +1,7 @@
 import { queryApi } from "../Utils/api";
 async function loginApi({ data }) {
   return await queryApi({
-    url: `http://localhost:8080/api-token-auth/`,
+    url: `api-token-auth/`,
     method: "POST",
     data,
   })
