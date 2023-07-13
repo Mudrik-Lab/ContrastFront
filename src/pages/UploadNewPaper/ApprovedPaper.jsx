@@ -48,7 +48,9 @@ export default function ApprovedPaper({ paperId }) {
                     Authors
                   </Text>
                   {study.authors.map((author) => (
-                    <span key={author.name}>{author.name}, </span>
+                    <span className="text-base" key={author.name}>
+                      {author.name},{" "}
+                    </span>
                   ))}
                 </div>
                 <div>

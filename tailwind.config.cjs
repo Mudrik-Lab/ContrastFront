@@ -29,6 +29,8 @@ module.exports = {
         lightGreen:"#72CC7C",
         lightTeal: "#5FB8A5",
         lightGreen: "#72CC7C",
+        flourishRed: "#ED5252",
+        revoltingGreen: "#088515"
 
       },
       gridTemplateRows: {
@@ -51,7 +53,7 @@ module.exports = {
 ]
 ,
 safelist: [{
-  pattern: /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen)/
+  pattern: /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen|flourishRed|revoltingGreen)/
 }
 
 ]

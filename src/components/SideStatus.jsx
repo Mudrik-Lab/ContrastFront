@@ -15,9 +15,9 @@ export default function SideStatus({
     status === "Complete"
       ? "green-500"
       : status === "Rejected"
-      ? "red-500"
+      ? "flourishRed"
       : status === "Submitted"
-      ? "green-500"
+      ? "revoltingGreen"
       : status === "Awaiting Review"
       ? "grayHeavy"
       : status === "Uncompleted submissions"
@@ -44,10 +44,10 @@ export default function SideStatus({
   return (
     <div
       className={classNames(
-        `border-2 border-${color}  text-${color} rounded-md p-2  w-full`
+        `border-2 border-${color} text-${color} rounded-md p-2  w-full`
       )}>
       <div
-        className="flex justify-between font-bold cursor-pointer"
+        className="flex justify-between font-bold cursor-pointer text-base"
         onClick={() => setOpen(!open)}>
         <span>{status}</span>
 
@@ -76,7 +76,7 @@ export default function SideStatus({
             <div
               key={index}
               className={classNames(
-                `flex my-2 justify-between border-b border-${color}`
+                `flex my-2 justify-between text-base border-b border-${color}`
               )}>
               <div className="flex items-center gap-2">
                 <svg
