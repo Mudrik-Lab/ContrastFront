@@ -82,6 +82,14 @@ export default function Login() {
                       {" "}
                       Forgot your password?
                     </a>
+                    <span>
+                      Don’t have a username? register{" "}
+                      <a
+                        className="text-blue text-center underline"
+                        href="/register">
+                        here
+                      </a>{" "}
+                    </span>
 
                     <ErrorMessage
                       name="password"

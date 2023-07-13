@@ -7,7 +7,6 @@ export default function ProtectedRoute(props) {
   const { element: Comp, path } = props;
   const snap = useSnapshot(state);
   const location = useLocation().pathname;
-  console.log(location);
 
   return (
     <>

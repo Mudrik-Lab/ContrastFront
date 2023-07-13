@@ -2,7 +2,7 @@ import React from "react";
 
 export default function ProgressComponent({ status, paperNmae }) {
   return (
-    <div className="px-6 py-12 border-b-2 border-black">
+    <div className="px-6 py-10 h-28 bg-grayLight">
       <div className="flex w-full justify-start items-center gap-2">
         <span>{status}</span>
         <span>

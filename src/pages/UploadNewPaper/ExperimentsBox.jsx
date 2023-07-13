@@ -2,7 +2,12 @@ import classNames from "classnames";
 import React from "react";
 import SideStatus from "../../components/SideStatus";
 
-export default function ExperimentsBox({ disabled }) {
+export default function ExperimentsBox({
+  disabled,
+  completedStudy,
+  experiments,
+  setPaperToShow,
+}) {
   return (
     <div
       className={classNames(
@@ -12,8 +17,22 @@ export default function ExperimentsBox({ disabled }) {
       )}>
       <h3 className="text-2xl">Experiments</h3>
       <div className="flex flex-col gap-2">
-        <SideStatus number={0} status={"Submitted"} disabled={disabled} />
-        <SideStatus number={0} status={"In Progress"} disabled={disabled} />
+        <SideStatus
+          isExperiment
+          completedStudy={completedStudy}
+          number={experiments.length}
+          status={"Submitted"}
+          disabled={disabled}
+          papers={experiments}
+          setPaperToShow={setPaperToShow}
+        />
+        {!completedStudy && (
+          <SideStatus
+            number={0}
+            status={"Uncompleted submissions"}
+            disabled={disabled}
+          />
+        )}
       </div>
     </div>
   );
