@@ -97,6 +97,7 @@ export const Text = ({
   xl,
   lg,
   xs,
+  sm,
   xl3,
   center,
   color,
@@ -113,7 +114,7 @@ export const Text = ({
         `${flexed ? "flex justify-center items-center gap-2" : ""} text-${
           color ? color : "black"
         } font-${weight ? weight : "medium"} text-${
-          xl3 ? "3xl" : xl ? "xl" : lg ? "lg" : xs ? "xs" : "base"
+          xl3 ? "3xl" : xl ? "xl" : lg ? "lg" : xs ? "xs" : sm ? "sm" : "base"
         } ${className ? className : ""}`
       )}
       style={{
@@ -464,7 +465,7 @@ export const Checkbox = ({ field }) => {
 export const TopSideUserBox = () => {
   const snap = useSnapshot(state);
   return (
-    <div className="w-full bg-grayLight p-4 rounded-md">
+    <div className="w-full bg-grayLight p-4 h-28">
       <h2 className="text-2xl text-black font-normal">
         {snap.user.username}’s workspace
       </h2>
@@ -517,6 +518,36 @@ export const ToastBox = ({ headline, text }) => {
     <div className="h-40 w-full flex flex-col items-center justify-center">
       <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
       <p className="text-lg mx-auto">{text}</p>
+    </div>
+  );
+};
+
+export const ExpandingBox = ({ children, headline }) => {
+  const [open, setOpen] = useState(false);
+  return (
+    <div className="px-2 py-1 border-2 border-blue rounded-md ">
+      <div
+        className="flex justify-between py-1 px-2"
+        onClick={() => setOpen(!open)}>
+        {" "}
+        <Text weight={"bold"}>{headline}</Text>
+        <svg
+          width="24"
+          height="25"
+          viewBox="0 0 24 25"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg">
+          <path
+            d={
+              open
+                ? "M17 14.8297L15.9917 15.9738L12 12.9018L7.93354 15.9738L7 14.8297L12 10.9738L17 14.8297Z"
+                : "M7 11.1179L8.00833 9.97381L12 13.0458L16.0665 9.97379L17 11.1179L12 14.9738L7 11.1179Z"
+            }
+            fill="#66bff1"
+          />
+        </svg>
+      </div>
+      {open && <div className="flex flex-col gap-2">{children}</div>}
     </div>
   );
 };

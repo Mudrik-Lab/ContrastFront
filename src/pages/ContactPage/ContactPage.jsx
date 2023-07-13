@@ -17,7 +17,43 @@ export default function ContactPage() {
       <Navbar />
       <Spacer height={navHeight + 20} />
       <h1 className="text-blue text-center text-6xl  mb-8">Contact ConTraSt</h1>
-
+      <div className="w-[658px] mx-auto text-base">
+        <p>
+          Here you can{" "}
+          <a className="underline font-bold " href="">
+            suggest new queries
+          </a>{" "}
+          you think we should add to the website, suggest{" "}
+          <a className="underline font-bold " href="">
+            corrections to classifications
+          </a>{" "}
+          done in one of our entries, give us feedback about your experience
+          using the website, or{" "}
+          <a className="underline font-bold " href="">
+            just write to us
+          </a>{" "}
+          and let us know what’s on your mind.
+          <br />
+          <br />
+          There’s more:
+          <li>
+            If you would like to add a study to our database, please{" "}
+            <a className="underline font-bold " href="">
+              follow this link
+            </a>
+          </li>
+          <li>
+            If you want to find out if a paper is included in the database, so
+            to know if you should add it, or to double-check our
+            classifications, you can{" "}
+            <a className="underline font-bold " href="">
+              download a CSV
+            </a>{" "}
+            with the list of all included experiments.
+          </li>
+        </p>
+      </div>
+      <Spacer height={20} />
       <div className="mx-auto py-4 px-8 w-fit  bg-black mb-4 flex flex-col items-center gap-4 rounded-md">
         <h3 className="text-2xl font-bold text-blue ">
           We would love to hear from you!
@@ -96,43 +132,7 @@ export default function ContactPage() {
           </ButtonReversed>
         </div>
       </div>
-      <div className="w-[658px] mx-auto text-base">
-        <p>
-          Here you can{" "}
-          <a className="underline font-bold " href="">
-            suggest new queries
-          </a>{" "}
-          you think we should add to the website, suggest{" "}
-          <a className="underline font-bold " href="">
-            corrections to classifications
-          </a>{" "}
-          done in one of our entries, give us feedback about your experience
-          using the website, or{" "}
-          <a className="underline font-bold " href="">
-            just write to us
-          </a>{" "}
-          and let us know what’s on your mind.
-          <br />
-          <br />
-          There’s more:
-          <li>
-            If you would like to add a study to our database, please{" "}
-            <a className="underline font-bold " href="">
-              follow this link
-            </a>
-          </li>
-          <li>
-            If you want to find out if a paper is included in the database, so
-            to know if you should add it, or to double-check our
-            classifications, you can{" "}
-            <a className="underline font-bold " href="">
-              download a CSV
-            </a>{" "}
-            with the list of all included experiments.
-          </li>
-        </p>
-      </div>
-      <Spacer height={20} />
+
       {chosen === "contact-us" ? (
         <ContactUs />
       ) : chosen === "new-query" ? (

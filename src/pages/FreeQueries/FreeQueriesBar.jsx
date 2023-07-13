@@ -167,7 +167,7 @@ export default function FreeQueriesBar() {
   ];
 
   const theoriesArr = configSuccess ? extraConfig?.data.available_theories : [];
-  console.log(theoriesArr);
+  console.log(populationsArr);
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${

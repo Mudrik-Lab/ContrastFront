@@ -14,7 +14,7 @@ import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
 
 import WorldMap from "./pages/ConsciousnessWorldMap/WorldMap";
-import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaper";
+import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
