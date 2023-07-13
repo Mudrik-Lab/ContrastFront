@@ -94,11 +94,13 @@ export default function SideStatus({
                 </svg>
                 <span
                   className="cursor-pointer"
-                  onClick={() =>
-                    isExperiment
-                      ? setPaperToShow(paper)
-                      : setPaperToShow(paper.id)
-                  }>
+                  onClick={() => {
+                    if (isExperiment) {
+                      setPaperToShow(paper);
+                    } else {
+                      setPaperToShow(paper.id);
+                    }
+                  }}>
                   {paper.title.slice(0, 20)}...
                 </span>
               </div>

@@ -17,13 +17,15 @@ export default function ApprovedPaper({ paperId }) {
     () => getStudy({ id })
   );
   const study = data?.data;
+  console.log(paperToShow);
   return (
     <div className="px-2 h-full">
       {isSuccess && (
         <div>
           <ProgressComponent
             status={"Completed"}
-            paperNmae={study.title.slice(0, 25) + "..."}
+            paperNmae={study.title.slice(0, 30) + "..."}
+            experiment={paperToShow?.title}
           />
           <Spacer height={10} />
           <div className="flex justify-between">

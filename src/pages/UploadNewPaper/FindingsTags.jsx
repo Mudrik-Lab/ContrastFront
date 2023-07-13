@@ -2,6 +2,21 @@ import React from "react";
 import { Text } from "../../components/Reusble";
 
 export default function FindingsTags({ experiment }) {
+  const Element = ({ headline, text }) => {
+    return (
+      <div className="flex gap-2">
+        <div className="w-1/2">
+          <Text weight={"bold"} color={"grayReg"}>
+            {headline}
+          </Text>
+        </div>
+
+        <div className="w-1/2">
+          <Text>{text}</Text>
+        </div>
+      </div>
+    );
+  };
   return (
     <div className="flex flex-wrap justify-between gap-y-2 ">
       {experiment.finding_tags.map((tag, index) => {
@@ -16,86 +31,41 @@ export default function FindingsTags({ experiment }) {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className=" w-full ">
-                <div className="flex gap-2">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Technique
-                  </Text>
-                  <Text>{tag.technique}</Text>
-                </div>
-                <div className="flex gap-2">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Type
-                  </Text>
-                  <Text>{tag.type}</Text>
-                </div>
-                <div className="flex gap-2">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Family
-                  </Text>
-                  <Text>{tag.family}</Text>
-                </div>
-                <div className="flex gap-2">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Notes
-                  </Text>
-                  <Text>{tag.notes}</Text>
-                </div>
-                <div className="flex gap-2">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Type
-                  </Text>
-                  <Text>{tag.type}</Text>
-                </div>
+                <Element headline={"Technique"} text={tag.technique} />
+                <Element headline={"Type"} text={tag.type} />
+                <Element headline={"Family"} text={tag.family} />
+                <Element headline={"Notes"} text={tag.notes} />
+
                 {tag.family === "Temporal" ? (
                   <div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Onset
-                      </Text>
-                      <Text>{tag.onset}</Text>
-                    </div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Offset
-                      </Text>
-                      <Text>{tag.offset}</Text>
-                    </div>
+                    <Element headline={"Onset"} text={tag.onset} />
+                    <Element headline={"Offset"} text={tag.offset} />
                   </div>
                 ) : tag.family === "Frequency" ? (
                   <div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Correlation sign
-                      </Text>
-                      <Text>{tag.correlation_sign}</Text>
-                    </div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Band lower bound
-                      </Text>
-                      <Text>{tag.band_lower_bound}</Text>
-                    </div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Band hiegher bound
-                      </Text>
-                      <Text>{tag.band_higher_bound}</Text>
-                    </div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Analysis type
-                      </Text>
-                      <Text>{tag.analysis_type}</Text>
-                    </div>
+                    <Element
+                      headline={"Correlation sign"}
+                      text={tag.correlation_sign}
+                    />
+                    <Element
+                      headline={" Band lower bound"}
+                      text={tag.band_lower_bound}
+                    />
+                    <Element
+                      headline={"Band hiegher bound"}
+                      text={tag.band_higher_bound}
+                    />
+                    <Element
+                      headline={"Analysis type"}
+                      text={tag.analysis_type}
+                    />
                   </div>
                 ) : tag.family === "Spatial Areas" ? (
                   <div>
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        AAL_atlas_tag
-                      </Text>
-                      <Text>{tag.AAL_atlas_tag}</Text>
-                    </div>
+                    <Element
+                      headline={" AAL atlas tag"}
+                      text={tag.AAL_atlas_tag}
+                    />
                   </div>
                 ) : (
                   <></>

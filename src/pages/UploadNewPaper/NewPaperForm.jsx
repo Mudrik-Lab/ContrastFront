@@ -48,6 +48,7 @@ export default function NewPaperForm() {
       <ProgressComponent
         status={"Uncompleted submissions"}
         paperNmae={nameSubmitted}
+        experiment={experiment}
       />
       <Spacer height={10} />
       <div className="pl-2 w-1/2">

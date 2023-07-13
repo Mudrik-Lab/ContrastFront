@@ -2,7 +2,6 @@ import React, { useState } from "react";
 import { ExpandingBox, Spacer, Text } from "../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
-import { available_populations } from "../../Utils/HardCoded";
 import { rawTextToShow } from "../../Utils/functions";
 import FindingsTags from "./FindingsTags";
 
