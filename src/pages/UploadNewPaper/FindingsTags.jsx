@@ -34,7 +34,6 @@ export default function FindingsTags({ experiment }) {
                 <Element headline={"Technique"} text={tag.technique} />
                 <Element headline={"Type"} text={tag.type} />
                 <Element headline={"Family"} text={tag.family} />
-                <Element headline={"Notes"} text={tag.notes} />
 
                 {tag.family === "Temporal" ? (
                   <div>
@@ -67,6 +66,8 @@ export default function FindingsTags({ experiment }) {
                       text={tag.AAL_atlas_tag}
                     />
                   </div>
+                ) : tag.family === "Miscellaneous" ? (
+                  <Element headline={"Notes"} text={tag.notes} />
                 ) : (
                   <></>
                 )}

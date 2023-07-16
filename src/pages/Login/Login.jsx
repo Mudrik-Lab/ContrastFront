@@ -77,7 +77,7 @@ export default function Login() {
                     />
 
                     <a
-                      href="/recover-password"
+                      href="/request-password-recovery"
                       className="text-blue text-center underline">
                       {" "}
                       Forgot your password?
