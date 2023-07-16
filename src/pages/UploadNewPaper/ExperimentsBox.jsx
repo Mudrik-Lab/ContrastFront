@@ -20,7 +20,7 @@ export default function ExperimentsBox({
         <SideStatus
           isExperiment
           completedStudy={completedStudy}
-          number={experiments.length}
+          number={experiments?.length}
           status={"Submitted"}
           disabled={disabled}
           papers={experiments}

@@ -22,3 +22,25 @@ export async function getStudy({ id }) {
     isProtected: true,
   });
 }
+
+export async function EditUncompletedStudy({
+  id,
+  authors,
+  DOI,
+  title,
+  source_title,
+  countries,
+}) {
+  return await queryApi({
+    url: `studies/submitted_studies/${id}/`,
+    method: "PUT",
+    isProtected: true,
+    data: {
+      authors,
+      DOI,
+      title,
+      source_title,
+      countries,
+    },
+  });
+}

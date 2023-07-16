@@ -60,7 +60,9 @@ export default function VettingPaper() {
       <div className="border-b border-black w-full"></div>
       <p className="text-sm">
         To find out if a paper is included in the database, you can{" "}
-        <a className="underline font-bold" href="">
+        <a
+          className="underline font-bold"
+          href="parameter-distribution-free-queries">
           download a CSV
         </a>{" "}
         with the list of experiments included.{" "}

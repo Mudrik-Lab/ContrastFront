@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
 import {
+  Button,
   FilterExplanation,
   SideControl,
+  Spacer,
   TopSideUserBox,
 } from "../../components/Reusble";
 import PageTemplate from "../../components/PageTemplate";
@@ -10,12 +12,14 @@ import { state } from "../../state";
 import SideStatus from "../../components/SideStatus";
 import { useQuery } from "@tanstack/react-query";
 import { getMySubmittedStudies } from "../../apiHooks/getStudies";
-import NewPaperForm from "./NewPaperForm";
-import ApprovedPaper from "./ApprovedPaper";
+import PaperSection from "./PaperSection";
 import React, { useState } from "react";
+import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.svg";
+import NewPaperForm from "./NewPaperForm";
 
 export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
+  const [addNewPaper, setAddNewPaper] = useState(false);
 
   const navigate = useNavigate();
   const pageName = "upload-new-paper";
@@ -30,73 +34,101 @@ export default function UploadNewPaper() {
       {isSuccess && (
         <PageTemplate
           control={
-            <SideControl isUploadPaper headline={<TopSideUserBox />}>
-              <SideStatus
-                status={"Complete"}
-                completedStudy
-                setPaperToShow={setPaperToShow}
-                number={
-                  data.data.filter((paper) => paper.approval_status == 1).length
-                }
-                papers={[
-                  ...data.data.filter((paper) => paper.approval_status == 1),
-                ]}
-              />
-              <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                <FilterExplanation
-                  tooltip={"Papers we approved"}
-                  text={"Your approved papers"}
+            <div>
+              <SideControl isUploadPaper headline={<TopSideUserBox />}>
+                <SideStatus
+                  status={"Complete"}
+                  completedStudy
+                  setPaperToShow={setPaperToShow}
+                  number={
+                    data.data.filter((paper) => paper.approval_status == 1)
+                      .length
+                  }
+                  papers={[
+                    ...data.data.filter((paper) => paper.approval_status == 1),
+                  ]}
                 />
-              </div>
-              <SideStatus
-                status={"Rejected"}
-                completedStudy
-                setPaperToShow={setPaperToShow}
-                number={
-                  data.data.filter((paper) => paper.approval_status == 2).length
-                }
-                papers={data.data.filter((paper) => paper.approval_status == 2)}
-              />
-              <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                <FilterExplanation
-                  tooltip={"Papers we approved"}
-                  text={"Your approved papers"}
+                <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
+                  <FilterExplanation
+                    tooltip={"Papers we approved"}
+                    text={"Your approved papers"}
+                  />
+                </div>
+                <SideStatus
+                  status={"Rejected"}
+                  completedStudy
+                  setPaperToShow={setPaperToShow}
+                  number={
+                    data.data.filter((paper) => paper.approval_status == 2)
+                      .length
+                  }
+                  papers={data.data.filter(
+                    (paper) => paper.approval_status == 2
+                  )}
                 />
-              </div>
+                <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
+                  <FilterExplanation
+                    tooltip={"Papers we approved"}
+                    text={"Your approved papers"}
+                  />
+                </div>
 
-              <SideStatus
-                status={"Awaiting Review"}
-                number={
-                  data.data.filter((paper) => paper.approval_status == 3).length
-                }
-                papers={data.data.filter((paper) => paper.approval_status == 3)}
-              />
-              <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                <FilterExplanation
-                  tooltip={"Papers we aprroved"}
-                  text={"Papers you’ve submitted for review"}
+                <SideStatus
+                  status={"Awaiting Review"}
+                  setPaperToShow={setPaperToShow}
+                  number={
+                    data.data.filter((paper) => paper.approval_status == 3)
+                      .length
+                  }
+                  papers={data.data.filter(
+                    (paper) => paper.approval_status == 3
+                  )}
                 />
-              </div>
+                <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
+                  <FilterExplanation
+                    tooltip={"Papers we aprroved"}
+                    text={"Papers you’ve submitted for review"}
+                  />
+                </div>
 
-              <SideStatus
-                status={"Uncompleted submissions"}
-                number={
-                  data.data.filter((paper) => paper.approval_status == 0).length
-                }
-                papers={data.data.filter((paper) => paper.approval_status == 0)}
-              />
-              <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                <FilterExplanation
-                  tooltip={"Papers we aprroved"}
-                  text={"Papers still in process of submission"}
+                <SideStatus
+                  status={"Uncompleted submissions"}
+                  setPaperToShow={setPaperToShow}
+                  number={
+                    data.data.filter((paper) => paper.approval_status == 0)
+                      .length
+                  }
+                  papers={data.data.filter(
+                    (paper) => paper.approval_status == 0
+                  )}
                 />
-              </div>
-            </SideControl>
+                <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
+                  <FilterExplanation
+                    tooltip={"Papers we aprroved"}
+                    text={"Papers still in process of submission"}
+                  />
+                </div>
+
+                <div className="flex flex-col items-center w-full">
+                  <Spacer height={30} />
+
+                  <Button
+                    onClick={() => setAddNewPaper(true)}
+                    disabled={addNewPaper}
+                    extraClass="mx-auto font-normal">
+                    <AddPaper /> Add new paper
+                  </Button>
+                </div>
+              </SideControl>
+            </div>
           }
           graph={
             <div className="overflow-x-scroll h-full">
-              {/* <NewPaperForm /> */}
-              {paperToShow && <ApprovedPaper paperId={paperToShow} />}
+              {addNewPaper ? (
+                <NewPaperForm />
+              ) : (
+                paperToShow && <PaperSection paperId={paperToShow} />
+              )}
             </div>
           }
         />

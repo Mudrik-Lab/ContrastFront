@@ -8,8 +8,9 @@ import { countries } from "countries-list";
 import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentDetails";
+import UncompletedPaper from "./UncompletedPaper";
 
-export default function ApprovedPaper({ paperId }) {
+export default function PaperSection({ paperId }) {
   const [paperToShow, setPaperToShow] = useState();
   const id = paperId;
   const { data, isSuccess } = useQuery(
@@ -17,14 +18,23 @@ export default function ApprovedPaper({ paperId }) {
     () => getStudy({ id })
   );
   const study = data?.data;
-  console.log(paperToShow);
+  console.log(study);
+  let status = "";
+  status =
+    study?.approval_status === 1
+      ? "Approved"
+      : study?.approval_status === 2
+      ? "Rejected"
+      : study?.approval_status === 0
+      ? "Uncompleted submissions"
+      : "Awaiting Review";
   return (
     <div className="px-2 h-full">
-      {isSuccess && (
+      {isSuccess && study.approval_status !== 0 && (
         <div>
           <ProgressComponent
-            status={"Completed"}
-            paperNmae={study.title.slice(0, 30) + "..."}
+            status={status}
+            paperNmae={study.title.slice(0, 40) + "..."}
             experiment={paperToShow?.title}
           />
           <Spacer height={10} />
@@ -87,6 +97,13 @@ export default function ApprovedPaper({ paperId }) {
             )}
           </div>
         </div>
+      )}
+      {isSuccess && study.approval_status === 0 && (
+        <UncompletedPaper
+          study={study}
+          paperToShow={paperToShow}
+          setPaperToShow={setPaperToShow}
+        />
       )}
     </div>
   );

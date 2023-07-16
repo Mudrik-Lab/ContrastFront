@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import ProgressComponent from "./ProgressComponent";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { Button, FilterExplanation, Spacer } from "../../components/Reusble";
+import { Text, FilterExplanation, Spacer } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
 import MultiSelect from "../../components/SelectField";
@@ -10,11 +10,23 @@ import classNames from "classnames";
 import ExperimentsBox from "./ExperimentsBox";
 import countryList from "react-select-country-list";
 import CreatableSelect from "react-select/creatable";
+import Select from "react-select";
+import { useQuery } from "@tanstack/react-query";
+import getExtraConfig from "../../apiHooks/getExtraConfig";
 
 export default function NewPaperForm() {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const navigate = useNavigate();
+  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+    [`more_configurations`],
+    getExtraConfig
+  );
+  const authorsList = extraConfig?.data.available_authors.map((author) => ({
+    value: author.name,
+    label: author.name,
+  }));
+
   const initialValues = {
     DOI: "",
     authors: [],
@@ -23,7 +35,7 @@ export default function NewPaperForm() {
   };
   const validationSchema = Yup.object().shape({
     authors: Yup.array().min(1, "Please select at least one author"),
-    source_title: Yup.string.required("Please select at least one journal"),
+    source_title: Yup.string().required("Please select at least one journal"),
     countries: Yup.array().min(1, "Please select at least one country"),
     DOI: Yup.string()
       .matches(
@@ -31,33 +43,28 @@ export default function NewPaperForm() {
         "Please enter a valid DOI."
       )
       .required("DOI is required."),
-    affiliations: Yup.string().required("Affiliations field is required"),
   });
-  const authorsList = [
-    { value: "ory", label: "ory" },
-    { value: "amit", label: "amit" },
-  ];
 
   const handleSubmit = (values) => {
     console.log(values);
   };
   const countryOption = useMemo(() => countryList().getData(), []);
-
+  console.log(countryOption);
   return (
     <div className="p-4 pt-0 pl-0 ">
       <ProgressComponent
-        status={"Uncompleted submissions"}
+        status={"New Paper"}
         paperNmae={nameSubmitted}
-        experiment={experiment}
+        // experiment={experiment}
       />
       <Spacer height={10} />
       <div className="pl-2 w-1/2">
-        <div className="flex items-center gap-2 mb-6 ">
+        <div className="flex items-center gap-2 my-4 ">
           <input
             type="text"
             placeholder="Enter New Paper Title"
             className={classNames(
-              ` p-2 w-full text-2xl rounded-md 
+              ` p-2 w-full text-3xl rounded-md 
                   ${nameSubmitted ? "border-none" : "border border-gray-400"}`
             )}
             defaultValue={title}
@@ -75,68 +82,90 @@ export default function NewPaperForm() {
           validationSchema={validationSchema}>
           {({ isSubmitting, dirty, isValid, values, setFieldValue }) => (
             <Form>
-              <div className="flex flex-col gap-6">
-                <div className="flex items-center gap-2">
-                  <Field
-                    name="DOI"
-                    id="DOI"
-                    placeholder="Enter your DOI identifier"
-                    className="border border-gray-400 p-2 w-full text-base rounded-md"
-                  />
+              <div className="flex flex-col gap-4">
+                <div>
+                  <Text weight={"bold"} color={"grayReg"}>
+                    DOI
+                  </Text>
+                  <div className="flex items-center gap-2">
+                    <Field
+                      name="DOI"
+                      id="DOI"
+                      placeholder="Enter your DOI identifier"
+                      className="border border-grayFrame p-2 w-full text-base rounded-md"
+                    />
 
-                  <FilterExplanation text={""} tooltip={""} />
+                    <FilterExplanation text={""} tooltip={""} />
+                  </div>
                   <ErrorMessage
                     name="paperName"
                     component="div"
                     className={errorMsgClass}
                   />
                 </div>
-                <div className="flex items-center gap-2">
-                  <CreatableSelect
-                    name="authors"
-                    id="authors"
-                    isMulti={true}
-                    value={values.authors}
-                    onChange={(v) => setFieldValue("authors", v)}
-                    placeholder="Add Authors"
-                    isClearable
-                    options={authorsList}
-                  />
-
-                  <FilterExplanation text={""} tooltip={""} />
+                <div>
+                  <Text weight={"bold"} color={"grayReg"}>
+                    Authors
+                  </Text>
+                  <div className="flex items-center gap-2">
+                    <CreatableSelect
+                      name="authors"
+                      id="authors"
+                      isMulti={true}
+                      value={values.authors}
+                      onChange={(v) => setFieldValue("authors", v)}
+                      placeholder="Add Authors"
+                      isClearable
+                      options={authorsList}
+                    />
+                    <FilterExplanation text={""} tooltip={""} />{" "}
+                  </div>
                   <ErrorMessage
                     name="paperName"
                     component="div"
                     className={errorMsgClass}
                   />
                 </div>
-                <div className="flex items-center gap-2">
-                  <Field
-                    name="source_title"
-                    id="source_title"
-                    placeholder="Select Journals"
-                    options={countryOption}
-                  />
+                <div>
+                  <Text weight={"bold"} color={"grayReg"}>
+                    Journals
+                  </Text>
+                  <div className="flex items-center gap-2">
+                    <Field
+                      name="source_title"
+                      id="source_title"
+                      placeholder="Select Journals"
+                      className={
+                        "border border-grayFrame p-2 w-full text-base rounded-md"
+                      }
+                    />
 
-                  <FilterExplanation text={""} tooltip={""} />
+                    <FilterExplanation text={""} tooltip={""} />
+                  </div>
                   <ErrorMessage
                     name="source_title"
                     component="div"
                     className={errorMsgClass}
                   />
                 </div>
+                <div>
+                  <Text weight={"bold"} color={"grayReg"}>
+                    Countries
+                  </Text>
+                  <div className="flex items-center gap-2">
+                    <Select
+                      name="countries"
+                      isClearable
+                      value={values.countries}
+                      onChange={(v) => setFieldValue("countries", v)}
+                      placeholder="Add Countries"
+                      isMulti={true}
+                      component={MultiSelect}
+                      options={countryOption}
+                    />
 
-                <div className="flex items-center gap-2">
-                  <Field
-                    name="countries"
-                    id="countries"
-                    placeholder="Add Countries"
-                    isMulti={true}
-                    component={MultiSelect}
-                    options={countryOption}
-                  />
-
-                  <FilterExplanation text={""} tooltip={""} />
+                    <FilterExplanation text={""} tooltip={""} />
+                  </div>{" "}
                   <ErrorMessage
                     name="countries"
                     component="div"
@@ -145,13 +174,11 @@ export default function NewPaperForm() {
                 </div>
               </div>
               <Spacer height={20} />
-              <ExperimentsBox disabled={false} />
-              <Spacer height={20} />
 
               <div className="flex gap-2">
                 <button
                   type="submit"
-                  disabled={!(isValid && isSubmitting)}
+                  //   disabled={!(isSubmitting && isValid)}
                   className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
                   <svg
                     width="16"
