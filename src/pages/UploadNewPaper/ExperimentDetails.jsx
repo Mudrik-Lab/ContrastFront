@@ -81,96 +81,6 @@ export default function ExperimentDetails({ experiment, study }) {
             </div>
           ))}
         </ExpandingBox>
-        <ExpandingBox headline={"Techniques"}>
-          {experiment.techniques.map((technique, index) => (
-            <div
-              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
-              key={technique}>
-              <div className="w-4">
-                <Text weight={"bold"} color={"blue"}>
-                  {index + 1}
-                </Text>
-              </div>
-              <div className="w-1/2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Technique
-                </Text>
-                <Text>{technique}</Text>
-              </div>
-            </div>
-          ))}
-        </ExpandingBox>
-        <ExpandingBox headline={"Stimulus"}>
-          {experiment.stimuli.map((stimulus, index) => (
-            <div
-              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
-              key={index}>
-              <div className="w-4">
-                <Text weight={"bold"} color={"blue"}>
-                  {index + 1}
-                </Text>
-              </div>
-              <div className="flex w-full justify-between ">
-                <div>
-                  <Text sm weight={"bold"} color={"grayReg"}>
-                    Category
-                  </Text>
-                  <Text sm>{stimulus.category}</Text>
-                </div>
-                <div>
-                  <Text sm weight={"bold"} color={"grayReg"}>
-                    Sub-category
-                  </Text>
-                  <Text sm>{stimulus.sub_category}</Text>
-                </div>
-                <div>
-                  <Text sm weight={"bold"} color={"grayReg"}>
-                    Modality
-                  </Text>
-                  <Text sm>{stimulus.modality}</Text>
-                </div>
-                {/* <div>
-                  <Text sm weight={"bold"} color={"grayReg"}>
-                    Description
-                  </Text>
-                  <Text sm>{stimulus.description}</Text>
-                </div> */}
-                <div>
-                  <Text sm weight={"bold"} color={"grayReg"}>
-                    Duration
-                  </Text>
-                  <Text sm>{Number(stimulus.duration).toFixed()}</Text>
-                </div>
-              </div>
-            </div>
-          ))}
-        </ExpandingBox>
-        <ExpandingBox headline={"Measures"}>
-          {experiment.measures.map((measure, index) => (
-            <div
-              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
-              key={index}>
-              <div className="w-4">
-                <Text weight={"bold"} color={"blue"}>
-                  {index + 1}
-                </Text>
-              </div>
-
-              <div className="w-1/2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Measures type
-                </Text>
-                <Text>{measure.type}</Text>
-              </div>
-              <div className="w-1/2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{measure.notes}</Text>
-              </div>
-            </div>
-          ))}
-        </ExpandingBox>
         <ExpandingBox headline={"Samples"}>
           {experiment.samples.map((sample, index) => (
             <div
@@ -232,7 +142,96 @@ export default function ExperimentDetails({ experiment, study }) {
             </div>
           ))}
         </ExpandingBox>
-        <ExpandingBox headline={"Consciousness Measures"}>
+        <ExpandingBox headline={"Stimuli"}>
+          {experiment.stimuli.map((stimulus, index) => (
+            <div
+              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
+              key={index}>
+              <div className="w-4">
+                <Text weight={"bold"} color={"blue"}>
+                  {index + 1}
+                </Text>
+              </div>
+              <div className="flex w-full justify-between ">
+                <div>
+                  <Text sm weight={"bold"} color={"grayReg"}>
+                    Category
+                  </Text>
+                  <Text sm>{stimulus.category}</Text>
+                </div>
+                <div>
+                  <Text sm weight={"bold"} color={"grayReg"}>
+                    Sub-category
+                  </Text>
+                  <Text sm>{stimulus.sub_category}</Text>
+                </div>
+                <div>
+                  <Text sm weight={"bold"} color={"grayReg"}>
+                    Modality
+                  </Text>
+                  <Text sm>{stimulus.modality}</Text>
+                </div>
+
+                <div>
+                  <Text sm weight={"bold"} color={"grayReg"}>
+                    Duration
+                  </Text>
+                  <Text sm>
+                    {Number(stimulus.duration).toFixed() + " (ms)"}
+                  </Text>
+                </div>
+              </div>
+            </div>
+          ))}
+        </ExpandingBox>
+        <ExpandingBox headline={"Techniques"}>
+          {experiment.techniques.map((technique, index) => (
+            <div
+              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
+              key={technique}>
+              <div className="w-4">
+                <Text weight={"bold"} color={"blue"}>
+                  {index + 1}
+                </Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Technique
+                </Text>
+                <Text>{technique}</Text>
+              </div>
+            </div>
+          ))}
+        </ExpandingBox>
+
+        <ExpandingBox headline={"Measures"}>
+          {experiment.measures.map((measure, index) => (
+            <div
+              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
+              key={index}>
+              <div className="w-4">
+                <Text weight={"bold"} color={"blue"}>
+                  {index + 1}
+                </Text>
+              </div>
+
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Measures type
+                </Text>
+                <Text>{measure.type}</Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Notes
+                </Text>
+                <Text>{measure.notes}</Text>
+              </div>
+            </div>
+          ))}
+        </ExpandingBox>
+
+        <ExpandingBox headline={"Analysis Measures"}>
           {experiment.consciousness_measures.map((cm, index) => (
             <div
               className="flex items-start border border-blue border-x-4 p-2 rounded-md"
