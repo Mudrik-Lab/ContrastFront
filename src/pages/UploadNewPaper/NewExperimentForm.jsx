@@ -15,6 +15,7 @@ import { errorMsgClass } from "../../Utils/HardCoded";
 
 export default function NewExperimentForm({ study }) {
   const [open, setOpen] = useState(false);
+  const [paradigmValues, setParadigmValues] = useState([1]);
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -22,6 +23,12 @@ export default function NewExperimentForm({ study }) {
   console.log(extraConfig?.data);
   const handleSubmit = (values) => {
     console.log(values);
+  };
+  const handleAddParadigmField = () => {
+    setParadigmValues([...paradigmValues, ""]);
+  };
+  const handleDeleteParadigmField = () => {
+    setParadigmValues(paradigmValues.slice(0, -1));
   };
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.id, label: family.name })
@@ -32,8 +39,6 @@ export default function NewExperimentForm({ study }) {
     type_of_consciousness: "",
     report: "",
     theory_driven: "",
-    paradigms_families: "",
-    paradigms: "",
   };
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
@@ -127,57 +132,92 @@ export default function NewExperimentForm({ study }) {
                 </div>
               </ExpandingBox>
               <ExpandingBox headline={"Paradigms"}>
-                // need to make this field duplicateble so user can add more
-                than one paradign line
-                <div className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                  <div className="w-4">
-                    <Text weight={"bold"} color={"blue"}>
-                      1
-                    </Text>
-                  </div>
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Main Paradigm
-                    </Text>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        id="paradigms_families"
-                        name="paradigms_families"
-                        onChange={(v) => setFieldValue("paradigms_families", v)}
-                        placeholder="Select paradigm family "
-                        options={paradigmsFamilies}
-                      />
-                      <FilterExplanation text={""} tooltip={""} />
+                {paradigmValues.map((_, index) => (
+                  <div
+                    key={index}
+                    className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
+                    <div className="w-4">
+                      <Text weight={"bold"} color={"blue"}>
+                        {index + 1}
+                      </Text>
                     </div>
-                  </div>
+                    <div className="w-full">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Main Paradigm
+                      </Text>
+                      <div className="flex items-center gap-2">
+                        <Select
+                          id={`paradigms_families${index}`}
+                          name={`paradigms_families${index}`}
+                          onChange={(v) =>
+                            setFieldValue(`paradigms_families${index}`, v)
+                          }
+                          placeholder="Select paradigm family "
+                          options={paradigmsFamilies}
+                        />
+                      </div>
+                    </div>
 
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Specific Paradigm
-                    </Text>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        isDisabled={values.paradigms_families === ""}
-                        id="paradigms"
-                        name="paradigms"
-                        onChange={(v) => setFieldValue("paradigms", v)}
-                        placeholder="Select specific paradigm  "
-                        options={paradigms
-                          .filter(
-                            (paradigm) =>
-                              paradigm.parent ===
-                              values.paradigms_families.label
-                          )
-                          .map((item) => ({
-                            label: item.name,
-                            value: item.id,
-                          }))}
-                      />
-                      <FilterExplanation text={""} tooltip={""} />
+                    <div className="w-full">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Specific Paradigm
+                      </Text>
+                      <div className="flex items-center gap-2">
+                        <Select
+                          isDisabled={
+                            !values[`paradigms_families${index}`]?.label
+                          }
+                          id={`paradigms${index}`}
+                          name={`paradigms${index}`}
+                          onChange={(v) => {
+                            setFieldValue(`paradigms${index}`, v);
+                          }}
+                          placeholder="Select specific paradigm  "
+                          options={paradigms
+                            .filter(
+                              (paradigm) =>
+                                paradigm.parent ===
+                                values[`paradigms_families${index}`]?.label
+                            )
+                            .map((item) => ({
+                              label: item.name,
+                              value: item.id,
+                            }))}
+                        />
+
+                        {index === paradigmValues.length - 1 && (
+                          <button
+                            type="button"
+                            onClick={handleDeleteParadigmField}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="16"
+                              height="16"
+                              fill="currentColor"
+                              class="bi bi-trash"
+                              viewBox="0 0 16 16">
+                              {" "}
+                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />{" "}
+                              <path
+                                fill-rule="evenodd"
+                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
+                              />{" "}
+                            </svg>
+                          </button>
+                        )}
+                      </div>
                     </div>
                   </div>
-                </div>
+                ))}
+                <Button type="button" onClick={handleAddParadigmField}>
+                  Add paradigm
+                </Button>
               </ExpandingBox>
+              <div className="w-full flex justify-center">
+                <Button type="submit" onClick={handleSubmit}>
+                  Submit Experiment
+                </Button>
+              </div>
             </Form>
           )}
         </Formik>
@@ -368,14 +408,14 @@ export default function NewExperimentForm({ study }) {
           ))}
         </ExpandingBox> */}
       </div>
-      <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
+      {/* <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
         <Text color="grayReg" weight={"bold"}>
           Findings
         </Text>
-        {/* <ExpandingBox headline={"Findings"}>
+        <ExpandingBox headline={"Findings"}>
           <FindingsTags experiment={experiment} />
-        </ExpandingBox> */}
-      </div>
+        </ExpandingBox>
+      </div> */}
     </div>
   );
 }
