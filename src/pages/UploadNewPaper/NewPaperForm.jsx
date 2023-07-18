@@ -13,17 +13,25 @@ import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
+import getFormConfig from "../../apiHooks/getFormConfiguration";
+import { submitStudy } from "../../apiHooks/getStudies";
 
 export default function NewPaperForm() {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
+  const [addExperiments, setAddExperiments] = useState(false);
   const navigate = useNavigate();
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
+  const journals = extraConfig?.data.existing_journals.map((journal) => ({
+    value: journal,
+    label: journal,
+  }));
+
   const authorsList = extraConfig?.data.available_authors.map((author) => ({
-    value: author.name,
+    value: author.id,
     label: author.name,
   }));
 
@@ -32,10 +40,12 @@ export default function NewPaperForm() {
     authors: [],
     source_title: "",
     countries: [],
+    authors_key_words: [],
+    year: "",
   };
   const validationSchema = Yup.object().shape({
     authors: Yup.array().min(1, "Please select at least one author"),
-    source_title: Yup.string().required("Please select at least one journal"),
+    source_title: Yup.object().required("Please select or add source title"),
     countries: Yup.array().min(1, "Please select at least one country"),
     DOI: Yup.string()
       .matches(
@@ -45,11 +55,25 @@ export default function NewPaperForm() {
       .required("DOI is required."),
   });
 
-  const handleSubmit = (values) => {
-    console.log(values);
+  const handleSubmit = async (values) => {
+    try {
+      const res = await submitStudy({
+        title,
+        year: values.year,
+        authors_key_words: ["akko", "crusaders"],
+        authors: values.authors?.map((author) => author.value),
+        countries: values.countries.map((country) => country.value),
+        DOI: values.DOI,
+        source_title: values.source_title.value,
+      });
+      console.log(res);
+      res.status === 201 && setAddExperiments(true);
+    } catch (e) {
+      console.log(e);
+    }
   };
   const countryOption = useMemo(() => countryList().getData(), []);
-  console.log(countryOption);
+
   return (
     <div className="p-4 pt-0 pl-0 ">
       <ProgressComponent
@@ -98,7 +122,27 @@ export default function NewPaperForm() {
                     <FilterExplanation text={""} tooltip={""} />
                   </div>
                   <ErrorMessage
-                    name="paperName"
+                    name="DOI"
+                    component="div"
+                    className={errorMsgClass}
+                  />
+                </div>
+                <div>
+                  <Text weight={"bold"} color={"grayReg"}>
+                    Year
+                  </Text>
+                  <div className="flex items-center gap-2">
+                    <Field
+                      name="year"
+                      id="year"
+                      placeholder="Enter year"
+                      className="border border-grayFrame p-2 w-full text-base rounded-md"
+                    />
+
+                    <FilterExplanation text={""} tooltip={""} />
+                  </div>
+                  <ErrorMessage
+                    name="year"
                     component="div"
                     className={errorMsgClass}
                   />
@@ -121,23 +165,25 @@ export default function NewPaperForm() {
                     <FilterExplanation text={""} tooltip={""} />{" "}
                   </div>
                   <ErrorMessage
-                    name="paperName"
+                    name="authors"
                     component="div"
                     className={errorMsgClass}
                   />
                 </div>
                 <div>
                   <Text weight={"bold"} color={"grayReg"}>
-                    Journals
+                    Journal
                   </Text>
                   <div className="flex items-center gap-2">
-                    <Field
+                    <CreatableSelect
                       name="source_title"
                       id="source_title"
-                      placeholder="Select Journals"
-                      className={
-                        "border border-grayFrame p-2 w-full text-base rounded-md"
-                      }
+                      isMulti={false}
+                      value={values.source_title}
+                      onChange={(v) => setFieldValue("source_title", v)}
+                      placeholder="Select or add journal"
+                      isClearable
+                      options={journals}
                     />
 
                     <FilterExplanation text={""} tooltip={""} />
@@ -200,6 +246,7 @@ export default function NewPaperForm() {
             </Form>
           )}
         </Formik>
+        {addExperiments && <div>Experiments</div>}
       </div>
     </div>
   );

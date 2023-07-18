@@ -16,6 +16,7 @@ import MultiSelect from "../../components/SelectField";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../apiHooks/getStudies";
+import NewExperimentForm from "./NewExperimentForm";
 
 export default function UncompletedPaper({
   study,
@@ -24,6 +25,7 @@ export default function UncompletedPaper({
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
+  const [newPaper, setNewPaper] = useState(false);
   const countryOption = useMemo(() => countryList().getData(), []);
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
@@ -31,7 +33,7 @@ export default function UncompletedPaper({
     getExtraConfig
   );
   const authorsList = extraConfig?.data.available_authors.map((author) => ({
-    value: author.name,
+    value: author.id,
     label: author.name,
   }));
 
@@ -41,8 +43,10 @@ export default function UncompletedPaper({
 
   const initialValues = {
     DOI: study.DOI || "",
+    authors_key_words: study.authors_key_words || [],
+    year: study.year,
     authors: study.authors.map((author) => ({
-      value: author.name,
+      value: author.id,
       label: author.name,
     })),
     source_title: study.source_title || "",
@@ -65,23 +69,19 @@ export default function UncompletedPaper({
 
   const handleSubmit = async (values) => {
     // e.preventDefault();
-    console.log({
-      title,
-      id: study.id,
-      authors: values.authors?.map((author) => ({ name: author.value })),
-      countries: values.countries.map((country) => country.value),
-      DOI: values.DOI,
-      source_title: values.source_title,
-    });
+
     try {
-      const res = EditUncompletedStudy({
+      const res = await EditUncompletedStudy({
         title,
         id: study.id,
-        authors: values.authors?.map((author) => ({ name: author.value })),
+        year: values.year,
+        authors_key_words: values.authors_key_words,
+        authors: values.authors?.map((author) => author.value),
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
         source_title: values.source_title,
       });
+      console.log(res);
     } catch (e) {
       console.log(e);
     }
@@ -92,7 +92,11 @@ export default function UncompletedPaper({
         <div>
           <ProgressComponent
             status={"Uncompleted submissins"}
-            paperNmae={study.title.slice(0, 35) + "..."}
+            paperNmae={
+              study.title.length > 35
+                ? study.title.slice(0, 35) + "..."
+                : study.title
+            }
             experiment={paperToShow?.title}
           />
           <Spacer height={10} />
@@ -150,6 +154,26 @@ export default function UncompletedPaper({
                           </div>
                           <ErrorMessage
                             name="paperName"
+                            component="div"
+                            className={errorMsgClass}
+                          />
+                        </div>
+                        <div>
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Year
+                          </Text>
+                          <div className="flex items-center gap-2">
+                            <Field
+                              name="year"
+                              id="year"
+                              placeholder="Enter year"
+                              className="border border-grayFrame p-2 w-full text-base rounded-md"
+                            />
+
+                            <FilterExplanation text={""} tooltip={""} />
+                          </div>
+                          <ErrorMessage
+                            name="year"
                             component="div"
                             className={errorMsgClass}
                           />
@@ -258,6 +282,7 @@ export default function UncompletedPaper({
               <Spacer height={20} />
               <ExperimentsBox
                 disabled={false}
+                setNewPaper={setNewPaper}
                 setPaperToShow={setPaperToShow}
                 experiments={study?.experiments.map((experiment, index) => ({
                   ...experiment,
@@ -266,7 +291,8 @@ export default function UncompletedPaper({
               />
               <Spacer height={20} />
             </div>
-            {paperToShow && (
+            {newPaper && <NewExperimentForm study={study} />}
+            {paperToShow && !newPaper && (
               <ExperimentDetails experiment={paperToShow} study={study} />
             )}
           </div>

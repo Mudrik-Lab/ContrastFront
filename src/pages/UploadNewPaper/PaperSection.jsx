@@ -12,13 +12,16 @@ import UncompletedPaper from "./UncompletedPaper";
 
 export default function PaperSection({ paperId }) {
   const [paperToShow, setPaperToShow] = useState();
+
   const id = paperId;
-  const { data, isSuccess } = useQuery(
-    [`submitted_studies-${paperId.toString()}`],
-    () => getStudy({ id })
-  );
+
+  const { data, isSuccess } = useQuery({
+    queryKey: [`submitted_study`, id],
+    queryFn: () => getStudy({ id }),
+  });
+
   const study = data?.data;
-  console.log(study);
+
   let status = "";
   status =
     study?.approval_status === 1

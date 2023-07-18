@@ -9,6 +9,7 @@ export default function SideStatus({
   isExperiment,
   completedStudy,
   setPaperToShow,
+  setNewPaper,
 }) {
   const [open, setOpen] = useState(false);
   let color =
@@ -101,22 +102,27 @@ export default function SideStatus({
                       setPaperToShow(paper.id);
                     }
                   }}>
-                  {paper.title.slice(0, 20)}...
+                  {paper.title.length > 20
+                    ? paper.title.slice(0, 20) + "..."
+                    : paper.title}
                 </span>
               </div>
               {!completedStudy && (
                 <div className="flex gap-1 items-center text-xs">
                   <span>edit</span>
                   <span>|</span>
-                  <span>submit</span>
-                  <span>|</span>
+
                   <span>delete</span>
                 </div>
               )}
             </div>
           ))}
           {!completedStudy && (
-            <span className="font-bold text-xs">+ Add new paper</span>
+            <span
+              className="font-bold text-xs cursor-pointer"
+              onClick={() => setNewPaper(true)}>
+              + Add new {isExperiment ? "experiment" : "paper"}
+            </span>
           )}
         </div>
       )}

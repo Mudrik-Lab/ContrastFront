@@ -34,8 +34,11 @@ export default function UploadNewPaper() {
       {isSuccess && (
         <PageTemplate
           control={
-            <div>
+            <div className="relative ">
               <SideControl isUploadPaper headline={<TopSideUserBox />}>
+                {addNewPaper && (
+                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60"></div>
+                )}
                 <SideStatus
                   status={"Complete"}
                   completedStudy
@@ -101,6 +104,7 @@ export default function UploadNewPaper() {
                   papers={data.data.filter(
                     (paper) => paper.approval_status == 0
                   )}
+                  addNew={() => setAddNewPaper(true)}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
                   <FilterExplanation
