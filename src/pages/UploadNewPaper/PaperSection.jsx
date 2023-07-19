@@ -7,7 +7,7 @@ import { countries } from "countries-list";
 
 import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
-import ExperimentDetails from "./ExperimentDetails";
+import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 
 export default function PaperSection({ paperId }) {

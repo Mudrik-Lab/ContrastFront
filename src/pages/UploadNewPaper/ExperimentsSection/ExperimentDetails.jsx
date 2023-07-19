@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ExpandingBox, Spacer, Text } from "../../components/Reusble";
+import { ExpandingBox, Spacer, Text } from "../../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import { rawTextToShow } from "../../Utils/functions";
-import FindingsTags from "./FindingsTags";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import { rawTextToShow } from "../../../Utils/functions";
+import FindingsTags from "../FindingsTags";
 
 export default function ExperimentDetails({ experiment, study }) {
   const [open, setOpen] = useState(false);

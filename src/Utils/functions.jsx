@@ -110,29 +110,6 @@ export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
   });
   navigate(`?${queryParams.toString()}`);
 }
-// export function eliminateSmallSlices(data) {
-//   const innerCircleValues = data?.map((row) => row.value);
-//   const total = innerCircleValues?.reduce((a, b) => a + b, 0);
-//   if (total && innerCircleValues) {
-//     return data?.filter((row) => row.value > total / 200);
-//   } else {
-//     return data;
-//   }
-// }
-
-// export function handleDownloadSVG() {
-//   const graphDiv =
-//     document.getElementsByClassName("svg-container")[0].childNodes[0];
-//   console.log(graphDiv);
-//   const svgData = graphDiv.outerHTML;
-//   const blob = new Blob([svgData], { type: "image/svg+xml" });
-//   const url = URL.createObjectURL(blob);
-//   const link = document.createElement("a");
-//   link.href = url;
-//   link.download = "element.svg";
-//   link.click();
-//   URL.revokeObjectURL(url);
-// }
 
 export const enlargeFont = () => {
   document.getElementsByClassName("text-4xl").className = "text-6xl";

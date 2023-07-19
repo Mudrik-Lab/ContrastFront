@@ -1,8 +1,13 @@
 import React, { useEffect, useMemo, useState } from "react";
 import ProgressComponent from "./ProgressComponent";
-import { FilterExplanation, Spacer, Text } from "../../components/Reusble";
+import {
+  Button,
+  FilterExplanation,
+  Spacer,
+  Text,
+} from "../../components/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
-import ExperimentDetails from "./ExperimentDetails";
+import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import { countries } from "countries-list";
 import countryList from "react-select-country-list";
 
@@ -16,7 +21,7 @@ import MultiSelect from "../../components/SelectField";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../apiHooks/getStudies";
-import NewExperimentForm from "./NewExperimentForm";
+import NewExperimentForm from "./ExperimentsSection/NewExperimentForm";
 
 export default function UncompletedPaper({
   study,
@@ -251,10 +256,13 @@ export default function UncompletedPaper({
                       <Spacer height={20} />
 
                       <div className="flex gap-2">
-                        <button
+                        <Button
                           type="submit"
-                          //   disabled={!(isSubmitting && isValid)}
-                          className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
+                          disabled={!(isSubmitting && isValid)}
+                          // className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy"
+                          extraClass={
+                            " disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none"
+                          }>
                           <svg
                             width="16"
                             height="17"
@@ -269,7 +277,7 @@ export default function UncompletedPaper({
                             </g>
                           </svg>
                           Submit Paper
-                        </button>
+                        </Button>
                         <button className="font-bold text-lg">
                           {" "}
                           Save& Exit

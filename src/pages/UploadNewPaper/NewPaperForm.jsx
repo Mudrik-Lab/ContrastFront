@@ -2,7 +2,12 @@ import React, { useMemo, useState } from "react";
 import ProgressComponent from "./ProgressComponent";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
-import { Text, FilterExplanation, Spacer } from "../../components/Reusble";
+import {
+  Text,
+  Button,
+  FilterExplanation,
+  Spacer,
+} from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
 import MultiSelect from "../../components/SelectField";
@@ -222,7 +227,7 @@ export default function NewPaperForm() {
               <Spacer height={20} />
 
               <div className="flex gap-2">
-                <button
+                <Button
                   type="submit"
                   //   disabled={!(isSubmitting && isValid)}
                   className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
@@ -240,7 +245,7 @@ export default function NewPaperForm() {
                     </g>
                   </svg>
                   Submit Paper
-                </button>
+                </Button>
                 <button className="font-bold text-lg"> Save& Exit</button>
               </div>
             </Form>

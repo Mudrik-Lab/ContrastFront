@@ -5,17 +5,23 @@ import {
   Spacer,
   Text,
   Button,
-} from "../../components/Reusble";
+} from "../../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import FindingsTags from "./FindingsTags";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import FindingsTags from "../FindingsTags";
 import Select from "react-select";
 import { ErrorMessage, Form, Formik } from "formik";
-import { errorMsgClass } from "../../Utils/HardCoded";
+import { errorMsgClass } from "../../../Utils/HardCoded";
+import BasicClassification from "./BasicClassification";
+import ParadigmsComponent from "./ParadigmsComponent";
+import SamplesComponent from "./SamplesComponent";
+import { rawTextToShow } from "../../../Utils/functions";
 
 export default function NewExperimentForm({ study }) {
   const [open, setOpen] = useState(false);
   const [paradigmValues, setParadigmValues] = useState([1]);
+  const [samplesValues, setSamplesValues] = useState([1]);
+
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -24,14 +30,12 @@ export default function NewExperimentForm({ study }) {
   const handleSubmit = (values) => {
     console.log(values);
   };
-  const handleAddParadigmField = () => {
-    setParadigmValues([...paradigmValues, ""]);
-  };
-  const handleDeleteParadigmField = () => {
-    setParadigmValues(paradigmValues.slice(0, -1));
-  };
+
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.id, label: family.name })
+  );
+  const populations = extraConfig?.data.available_populations_types.map(
+    (population) => ({ value: population, label: rawTextToShow(population) })
   );
   const paradigms = extraConfig?.data.available_paradigms;
 
@@ -64,157 +68,38 @@ export default function NewExperimentForm({ study }) {
             setFieldValue,
           }) => (
             <Form className="flex flex-col gap-2">
-              <ExpandingBox headline={"Basic"}>
-                <div className=" flex flex-col gap-4 border border-blue border-x-4 p-2 rounded-md">
-                  <div>
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type of consciousness
-                    </Text>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        id="type_of_consciousness"
-                        name="type_of_consciousness"
-                        onChange={(v) =>
-                          setFieldValue("type_of_consciousness", v)
-                        }
-                        placeholder="Select Type of Consciousness"
-                        options={[
-                          { vlaue: null, label: "" },
-                          { value: "state", label: "State" },
-                          { value: "content", label: "Content" },
-                        ]}
-                      />
-
-                      <FilterExplanation text={""} tooltip={""} />
-                    </div>{" "}
-                  </div>
-                  <div>
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Report/No report
-                    </Text>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        id="report"
-                        name="report"
-                        onChange={(v) => setFieldValue("report", v)}
-                        placeholder="Select"
-                        options={[
-                          { vlaue: null, label: "" },
-                          { value: "report", label: "Report" },
-                          { value: "no-report", label: "No Report" },
-                        ]}
-                      />
-
-                      <FilterExplanation text={""} tooltip={""} />
-                    </div>{" "}
-                  </div>
-                  <div>
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Theory driven
-                    </Text>
-                    <div className="flex items-center gap-2">
-                      <Select
-                        id="theory_driven"
-                        name="theory_driven"
-                        onChange={(v) => setFieldValue("theory_driven", v)}
-                        placeholder="Select Theory "
-                        options={[
-                          { vlaue: null, label: "" },
-                          { value: "driven", label: "Driven" },
-                          { value: "mentioning", label: "Mentioning" },
-                          { value: "post-hoc", label: "Post Hoc" },
-                        ]}
-                      />
-                      <FilterExplanation text={""} tooltip={""} />
-                    </div>
-                  </div>
-                  {/* <Button type="submit">Submit this level</Button> */}
-                </div>
-              </ExpandingBox>
-              <ExpandingBox headline={"Paradigms"}>
-                {paradigmValues.map((_, index) => (
-                  <div
-                    key={index}
-                    className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                    <div className="w-4">
-                      <Text weight={"bold"} color={"blue"}>
-                        {index + 1}
-                      </Text>
-                    </div>
-                    <div className="w-full">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Main Paradigm
-                      </Text>
-                      <div className="flex items-center gap-2">
-                        <Select
-                          id={`paradigms_families${index}`}
-                          name={`paradigms_families${index}`}
-                          onChange={(v) =>
-                            setFieldValue(`paradigms_families${index}`, v)
-                          }
-                          placeholder="Select paradigm family "
-                          options={paradigmsFamilies}
-                        />
-                      </div>
-                    </div>
-
-                    <div className="w-full">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Specific Paradigm
-                      </Text>
-                      <div className="flex items-center gap-2">
-                        <Select
-                          isDisabled={
-                            !values[`paradigms_families${index}`]?.label
-                          }
-                          id={`paradigms${index}`}
-                          name={`paradigms${index}`}
-                          onChange={(v) => {
-                            setFieldValue(`paradigms${index}`, v);
-                          }}
-                          placeholder="Select specific paradigm  "
-                          options={paradigms
-                            .filter(
-                              (paradigm) =>
-                                paradigm.parent ===
-                                values[`paradigms_families${index}`]?.label
-                            )
-                            .map((item) => ({
-                              label: item.name,
-                              value: item.id,
-                            }))}
-                        />
-
-                        {index === paradigmValues.length - 1 && (
-                          <button
-                            type="button"
-                            onClick={handleDeleteParadigmField}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="16"
-                              height="16"
-                              fill="currentColor"
-                              class="bi bi-trash"
-                              viewBox="0 0 16 16">
-                              {" "}
-                              <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />{" "}
-                              <path
-                                fill-rule="evenodd"
-                                d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                              />{" "}
-                            </svg>
-                          </button>
-                        )}
-                      </div>
-                    </div>
-                  </div>
-                ))}
-                <Button type="button" onClick={handleAddParadigmField}>
-                  Add paradigm
-                </Button>
-              </ExpandingBox>
+              <BasicClassification setFieldValue={setFieldValue} />
+              <ParadigmsComponent
+                setFieldValue={setFieldValue}
+                paradigmsFamilies={paradigmsFamilies}
+                values={values}
+                paradigms={paradigms}
+                paradigmValues={paradigmValues}
+                setParadigmValues={setParadigmValues}
+              />
+              <SamplesComponent
+                setFieldValue={setFieldValue}
+                paradigmsFamilies={populations}
+                values={values}
+                populations={populations}
+                samplesValues={samplesValues}
+                setSamplesValues={setSamplesValues}
+              />
               <div className="w-full flex justify-center">
                 <Button type="submit" onClick={handleSubmit}>
+                  <svg
+                    width="16"
+                    height="17"
+                    viewBox="0 0 16 17"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg">
+                    <g clipPath="url(#clip0_1221_7195)">
+                      <path
+                        d="M10.7533 5.34351L7.45445 9.54666L5.56082 7.65212L5.56093 7.65201L5.55443 7.64596C5.36486 7.46932 5.11413 7.37315 4.85507 7.37772C4.596 7.38229 4.34882 7.48724 4.1656 7.67046C3.98238 7.85368 3.87743 8.10086 3.87286 8.35993C3.86829 8.61899 3.96446 8.86972 4.1411 9.05929L4.14098 9.0594L4.14719 9.0656L6.79319 11.7126L6.79338 11.7128C6.88843 11.8077 7.0016 11.8824 7.12616 11.9326C7.25072 11.9828 7.38411 12.0074 7.51838 12.0049C7.65264 12.0024 7.78503 11.9729 7.90765 11.9181C8.03026 11.8634 8.14059 11.7845 8.23205 11.6861L8.2384 11.6793L8.24422 11.672L12.2296 6.6903C12.4057 6.50263 12.5028 6.25412 12.5004 5.99644C12.4979 5.73468 12.3929 5.48434 12.2079 5.29916L12.1346 5.22586H12.1248C12.0487 5.16502 11.9639 5.11551 11.873 5.07906C11.7483 5.02898 11.6147 5.00458 11.4802 5.00732C11.3458 5.01006 11.2133 5.03988 11.0907 5.095C10.968 5.15012 10.8578 5.2294 10.7665 5.32811L10.7596 5.33554L10.7533 5.34351ZM15.75 8.50586C15.75 10.5613 14.9335 12.5325 13.4801 13.9859C12.0267 15.4393 10.0554 16.2559 8 16.2559C5.94457 16.2559 3.97333 15.4393 2.51992 13.9859C1.06652 12.5325 0.25 10.5613 0.25 8.50586C0.25 6.45043 1.06652 4.47919 2.51992 3.02578C3.97333 1.57238 5.94457 0.755859 8 0.755859C10.0554 0.755859 12.0267 1.57238 13.4801 3.02578C14.9335 4.47919 15.75 6.45043 15.75 8.50586Z"
+                        fill="white"
+                      />
+                    </g>
+                  </svg>
                   Submit Experiment
                 </Button>
               </div>
@@ -419,6 +304,7 @@ export default function NewExperimentForm({ study }) {
     </div>
   );
 }
+
 // available_properties_by_family = {
 //     "Temporal": ["onset", "offset"],
 //     "Frequency": ["onset", "offset", "correlation_sign", "band_lower_bound", "band_higher_bound", "analysis_type"],
