@@ -5,18 +5,22 @@ import {
   Spacer,
   Text,
   Button,
+  ButtonReversed,
+  WhiteButton,
 } from "../../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import FindingsTags from "../FindingsTags";
 import Select from "react-select";
-import { ErrorMessage, Form, Formik } from "formik";
+import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import { errorMsgClass } from "../../../Utils/HardCoded";
 import BasicClassification from "./BasicClassification";
 import ParadigmsComponent from "./ParadigmsComponent";
 import SamplesComponent from "./SamplesComponent";
 import { rawTextToShow } from "../../../Utils/functions";
 import createExperiments from "../../../apiHooks/createExperiment";
+import TasksComponent from "./TasksComponent";
+import Samples from "./Samples";
 
 export default function NewExperimentForm({ study }) {
   const [open, setOpen] = useState(false);
@@ -60,6 +64,10 @@ export default function NewExperimentForm({ study }) {
   const populations = extraConfig?.data.available_populations_types.map(
     (population) => ({ value: population, label: rawTextToShow(population) })
   );
+  const tasks = extraConfig?.data.available_tasks_types.map((task) => ({
+    value: task.id,
+    label: task.name,
+  }));
   const paradigms = extraConfig?.data.available_paradigms;
 
   const initialValues = {
@@ -67,6 +75,7 @@ export default function NewExperimentForm({ study }) {
     report: "",
     theory_driven: "",
   };
+
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
       <div>
@@ -81,7 +90,11 @@ export default function NewExperimentForm({ study }) {
         <Text color="grayReg" weight={"bold"}>
           Experiment Classifications
         </Text>
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          initialValues={{
+            sampels: [{ type: "", total: "", included: "" }],
+          }}
+          onSubmit={handleSubmit}>
           {({
             onSubmit,
             isSubmitting,
@@ -92,7 +105,7 @@ export default function NewExperimentForm({ study }) {
           }) => (
             <Form className="flex flex-col gap-2">
               <BasicClassification setFieldValue={setFieldValue} />
-              <ParadigmsComponent
+              {/*<ParadigmsComponent
                 setFieldValue={setFieldValue}
                 paradigmsFamilies={paradigmsFamilies}
                 values={values}
@@ -100,7 +113,7 @@ export default function NewExperimentForm({ study }) {
                 paradigmValues={paradigmValues}
                 setParadigmValues={setParadigmValues}
               />
-              <SamplesComponent
+               <SamplesComponent
                 setFieldValue={setFieldValue}
                 paradigmsFamilies={populations}
                 values={values}
@@ -108,7 +121,23 @@ export default function NewExperimentForm({ study }) {
                 samplesValues={samplesValues}
                 setSamplesValues={setSamplesValues}
               />
-              <div className="w-full flex justify-center">
+              <TasksComponent
+                setFieldValue={setFieldValue}
+                paradigmsFamilies={populations}
+                values={values}
+                tasks={tasks}
+                samplesValues={samplesValues}
+                setSamplesValues={setSamplesValues}
+              /> */}
+
+              <Samples
+                values={values}
+                setFieldValue={setFieldValue}
+                populations={populations}
+              />
+              <Button type="submit">Submit</Button>
+
+              {/* <div className="w-full flex justify-center">
                 <Button type="submit" onClick={handleSubmit}>
                   <svg
                     width="16"
@@ -125,7 +154,7 @@ export default function NewExperimentForm({ study }) {
                   </svg>
                   Submit Experiment
                 </Button>
-              </div>
+              </div> */}
             </Form>
           )}
         </Formik>
