@@ -16,6 +16,7 @@ import BasicClassification from "./BasicClassification";
 import ParadigmsComponent from "./ParadigmsComponent";
 import SamplesComponent from "./SamplesComponent";
 import { rawTextToShow } from "../../../Utils/functions";
+import createExperiments from "../../../apiHooks/createExperiment";
 
 export default function NewExperimentForm({ study }) {
   const [open, setOpen] = useState(false);
@@ -27,8 +28,30 @@ export default function NewExperimentForm({ study }) {
     getExtraConfig
   );
   console.log(extraConfig?.data);
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
     console.log(values);
+    try {
+      const res = await createExperiments({
+        consciousness_measures: {},
+        finding_description: "",
+        interpretations: {},
+        is_reporting: "",
+        measures: {},
+        notes: "",
+        paradigms: [],
+        samples: {},
+        stimuli: {},
+        tasks: {},
+        techniques: [],
+        theory_driven: "",
+        theory_driven_theories: [],
+        finding_tags: {},
+        type: 12,
+        study_pk: study.id,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
