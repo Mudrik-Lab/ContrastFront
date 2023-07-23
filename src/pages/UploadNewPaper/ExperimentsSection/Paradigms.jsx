@@ -3,14 +3,20 @@ import { ExpandingBox, Text } from "../../../components/Reusble";
 import Select from "react-select";
 import { useState } from "react";
 
-export default function Samples({ values, setFieldValue, populations }) {
+export default function Paradigms({
+  values,
+  setFieldValue,
+  optionalParadigms,
+  optionalParadigmsFamilies,
+}) {
   const [count, setCount] = useState(0);
+
   return (
-    <ExpandingBox headline={"Samples"}>
-      <FieldArray name="sampels">
+    <ExpandingBox headline={"Paradigms"}>
+      <FieldArray name="paradigms">
         {({ push, remove }) => (
           <>
-            {values.sampels.map((_, index) => (
+            {values.paradigms.map((_, index) => (
               <div
                 key={index}
                 className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
@@ -21,41 +27,42 @@ export default function Samples({ values, setFieldValue, populations }) {
                 </div>
                 <div className="w-full">
                   <Text weight={"bold"} color={"grayReg"}>
-                    Type
+                    Main Paradim
                   </Text>
                   <Select
-                    id={`sampels[${index}].type`}
-                    name={`sampels[${index}].type`}
-                    onChange={(v) =>
-                      setFieldValue(`sampels[${index}].type`, v.value)
-                    }
-                    options={populations}
+                    id={`paradigms[${index}].main`}
+                    name={`paradigms[${index}].main`}
+                    onChange={(v) => {
+                      setFieldValue(`paradigms[${index}].main`, v.value);
+                    }}
+                    options={optionalParadigmsFamilies}
                   />
                 </div>
-                <div>
+
+                <div className="w-full">
                   <Text weight={"bold"} color={"grayReg"}>
-                    Included
-                  </Text>
-                  <Field
-                    type="number"
-                    id={`sampels[${index}].included`}
-                    name={`sampels[${index}].included`}
-                    className="border border-gray-300 rounded-md p-2 h-10 w-20"
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Total
+                    Specific Paradigm
                   </Text>
 
                   <div className="flex gap-2">
-                    <Field
-                      type="number"
-                      id={`sampels[${index}].total`}
-                      name={`sampels[${index}].total`}
-                      className="border border-gray-300 rounded-md p-2 h-10 w-20"
+                    <Select
+                      isDisabled={values.paradigms[index].main === ""}
+                      id={`paradigms[${index}].specific`}
+                      name={`paradigms[${index}].specific`}
+                      onChange={(v) =>
+                        setFieldValue(`paradigms[${index}].specific`, v.value)
+                      }
+                      options={optionalParadigms
+                        .filter(
+                          (paradigm) =>
+                            paradigm.parent === values.paradigms[index].main
+                        )
+                        .map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
                     />
-                    {index === values.sampels.length - 1 && index !== 0 && (
+                    {index === values.paradigms.length - 1 && index !== 0 && (
                       <button
                         type="button"
                         disabled={count === 0}
@@ -85,12 +92,7 @@ export default function Samples({ values, setFieldValue, populations }) {
             <div className="w-full flex  justify-center">
               <button
                 type="button"
-                disabled={
-                  !values.sampels[count] ||
-                  values.sampels[count]?.type === "" ||
-                  values.sampels[count]?.included === "" ||
-                  values.sampels[count]?.total === ""
-                }
+                disabled={values.paradigms[count].specific === ""}
                 onClick={() => {
                   console.log(count);
                   setCount(count + 1);

@@ -3,14 +3,15 @@ import { ExpandingBox, Text } from "../../../components/Reusble";
 import Select from "react-select";
 import { useState } from "react";
 
-export default function Samples({ values, setFieldValue, populations }) {
+export default function Tasks({ values, setFieldValue, tasksOptions }) {
   const [count, setCount] = useState(0);
+
   return (
-    <ExpandingBox headline={"Samples"}>
-      <FieldArray name="sampels">
+    <ExpandingBox headline={"Tasks"}>
+      <FieldArray name="tasks">
         {({ push, remove }) => (
           <>
-            {values.sampels.map((_, index) => (
+            {values.tasks.map((_, index) => (
               <div
                 key={index}
                 className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
@@ -24,38 +25,30 @@ export default function Samples({ values, setFieldValue, populations }) {
                     Type
                   </Text>
                   <Select
-                    id={`sampels[${index}].type`}
-                    name={`sampels[${index}].type`}
-                    onChange={(v) =>
-                      setFieldValue(`sampels[${index}].type`, v.value)
-                    }
-                    options={populations}
+                    id={`tasks[${index}].type`}
+                    name={`tasks[${index}].type`}
+                    onChange={(v) => {
+                      setFieldValue(`tasks[${index}].type`, v.value);
+                      console.log(v.value);
+                    }}
+                    options={tasksOptions}
                   />
                 </div>
-                <div>
+
+                <div className="w-full">
                   <Text weight={"bold"} color={"grayReg"}>
-                    Included
-                  </Text>
-                  <Field
-                    type="number"
-                    id={`sampels[${index}].included`}
-                    name={`sampels[${index}].included`}
-                    className="border border-gray-300 rounded-md p-2 h-10 w-20"
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Total
+                    Description
                   </Text>
 
                   <div className="flex gap-2">
                     <Field
-                      type="number"
-                      id={`sampels[${index}].total`}
-                      name={`sampels[${index}].total`}
-                      className="border border-gray-300 rounded-md p-2 h-10 w-20"
+                      as="textarea"
+                      rows={4}
+                      id={`tasks[${index}].description`}
+                      name={`tasks[${index}].description`}
+                      className="border w-full border-gray-300 rounded-md p-2  "
                     />
-                    {index === values.sampels.length - 1 && index !== 0 && (
+                    {index === values.tasks.length - 1 && index !== 0 && (
                       <button
                         type="button"
                         disabled={count === 0}
@@ -85,12 +78,7 @@ export default function Samples({ values, setFieldValue, populations }) {
             <div className="w-full flex  justify-center">
               <button
                 type="button"
-                disabled={
-                  !values.sampels[count] ||
-                  values.sampels[count]?.type === "" ||
-                  values.sampels[count]?.included === "" ||
-                  values.sampels[count]?.total === ""
-                }
+                disabled={false}
                 onClick={() => {
                   console.log(count);
                   setCount(count + 1);

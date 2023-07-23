@@ -15,12 +15,13 @@ import Select from "react-select";
 import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
 import { errorMsgClass } from "../../../Utils/HardCoded";
 import BasicClassification from "./BasicClassification";
-import ParadigmsComponent from "./ParadigmsComponent";
-import SamplesComponent from "./SamplesComponent";
 import { rawTextToShow } from "../../../Utils/functions";
 import createExperiments from "../../../apiHooks/createExperiment";
-import TasksComponent from "./TasksComponent";
 import Samples from "./Samples";
+import Paradigms from "./Paradigms";
+import Tasks from "./Tasks";
+import Stimulus from "./Stimulus";
+import Techniques from "./Techniques";
 
 export default function NewExperimentForm({ study }) {
   const [open, setOpen] = useState(false);
@@ -59,7 +60,7 @@ export default function NewExperimentForm({ study }) {
   };
 
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
-    (family) => ({ value: family.id, label: family.name })
+    (family) => ({ value: family.name, label: family.name })
   );
   const populations = extraConfig?.data.available_populations_types.map(
     (population) => ({ value: population, label: rawTextToShow(population) })
@@ -69,11 +70,43 @@ export default function NewExperimentForm({ study }) {
     label: task.name,
   }));
   const paradigms = extraConfig?.data.available_paradigms;
+  const stimulusCategories =
+    extraConfig?.data.available_stimulus_category_type.map((cat) => ({
+      value: cat.id,
+      label: cat.name,
+    })); // name,id
+  const stimulusSubCategories =
+    extraConfig?.data.available_stimulus_sub_category_type; //name, id, parent(by id number)
+  const stimulusModalities =
+    extraConfig?.data.available_stimulus_modality_type.map((modality) => ({
+      value: modality.id,
+      label: modality.name,
+    })); // name, id
+  const techniquesOptions = extraConfig?.data.available_techniques.map(
+    (tech) => ({
+      value: tech.id,
+      label: tech.name,
+    })
+  ); // name,id
 
+  console.log(techniquesOptions);
   const initialValues = {
     type_of_consciousness: "",
     report: "",
     theory_driven: "",
+    sampels: [{ type: "", total: "", included: "" }],
+    paradigms: [{ main: "", specific: "" }],
+    tasks: [{ type: "", description: "" }],
+    techniques: [""],
+    stimulus: [
+      {
+        category: "",
+        sub_category: "",
+        modality: "",
+        description: "",
+        duration: "",
+      },
+    ],
   };
 
   return (
@@ -90,11 +123,7 @@ export default function NewExperimentForm({ study }) {
         <Text color="grayReg" weight={"bold"}>
           Experiment Classifications
         </Text>
-        <Formik
-          initialValues={{
-            sampels: [{ type: "", total: "", included: "" }],
-          }}
-          onSubmit={handleSubmit}>
+        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
           {({
             onSubmit,
             isSubmitting,
@@ -105,35 +134,34 @@ export default function NewExperimentForm({ study }) {
           }) => (
             <Form className="flex flex-col gap-2">
               <BasicClassification setFieldValue={setFieldValue} />
-              {/*<ParadigmsComponent
-                setFieldValue={setFieldValue}
-                paradigmsFamilies={paradigmsFamilies}
-                values={values}
-                paradigms={paradigms}
-                paradigmValues={paradigmValues}
-                setParadigmValues={setParadigmValues}
-              />
-               <SamplesComponent
-                setFieldValue={setFieldValue}
-                paradigmsFamilies={populations}
-                values={values}
-                populations={populations}
-                samplesValues={samplesValues}
-                setSamplesValues={setSamplesValues}
-              />
-              <TasksComponent
-                setFieldValue={setFieldValue}
-                paradigmsFamilies={populations}
-                values={values}
-                tasks={tasks}
-                samplesValues={samplesValues}
-                setSamplesValues={setSamplesValues}
-              /> */}
 
+              <Tasks
+                values={values}
+                setFieldValue={setFieldValue}
+                tasksOptions={tasks}
+              />
               <Samples
                 values={values}
                 setFieldValue={setFieldValue}
                 populations={populations}
+              />
+              <Paradigms
+                values={values}
+                setFieldValue={setFieldValue}
+                optionalParadigmsFamilies={paradigmsFamilies}
+                optionalParadigms={paradigms}
+              />
+              <Stimulus
+                values={values}
+                setFieldValue={setFieldValue}
+                modalities={stimulusModalities}
+                categories={stimulusCategories}
+                subCaotegories={stimulusSubCategories}
+              />
+              <Techniques
+                values={values}
+                setFieldValue={setFieldValue}
+                techniquesOptions={techniquesOptions}
               />
               <Button type="submit">Submit</Button>
 
