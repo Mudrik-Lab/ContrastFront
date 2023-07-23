@@ -81,6 +81,31 @@ export default function ExperimentDetails({ experiment, study }) {
             </div>
           ))}
         </ExpandingBox>
+        <ExpandingBox headline={"Interpretations"}>
+          {experiment.interpretations.map((interpretation, index) => (
+            <div
+              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
+              key={index + 1}>
+              <div className="w-4">
+                <Text weight={"bold"} color={"blue"}>
+                  {index + 1}
+                </Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Theory
+                </Text>
+                <Text>{interpretation.theory.name}</Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Type
+                </Text>
+                <Text>{interpretation.type}</Text>
+              </div>
+            </div>
+          ))}
+        </ExpandingBox>
         <ExpandingBox headline={"Samples"}>
           {experiment.samples.map((sample, index) => (
             <div

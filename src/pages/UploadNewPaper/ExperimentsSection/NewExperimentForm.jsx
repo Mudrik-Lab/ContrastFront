@@ -22,16 +22,37 @@ import Paradigms from "./Paradigms";
 import Tasks from "./Tasks";
 import Stimulus from "./Stimulus";
 import Techniques from "./Techniques";
+import Measures from "./Measures";
+import AnalysisMeasures from "./AnalysisMeasures";
+import Interpretations from "./Interpretations";
 
 export default function NewExperimentForm({ study }) {
-  const [open, setOpen] = useState(false);
-  const [paradigmValues, setParadigmValues] = useState([1]);
-  const [samplesValues, setSamplesValues] = useState([1]);
-
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
+
+  const initialValues = {
+    type_of_consciousness: "",
+    report: "",
+    theory_driven: "",
+    sampels: [{ type: "", total: "", included: "" }],
+    paradigms: [{ main: "", specific: "" }],
+    tasks: [{ type: "", description: "" }],
+    techniques: [""],
+    measures: [{ type: "", notes: "" }],
+    stimulus: [
+      {
+        category: "",
+        sub_category: "",
+        modality: "",
+        description: "",
+        duration: "",
+      },
+    ],
+    analysis_measures: [{ type: "", pahse: "", description: "" }],
+    interpretations: [{ type: "", theory: "" }],
+  };
   console.log(extraConfig?.data);
   const handleSubmit = async (values) => {
     console.log(values);
@@ -87,28 +108,32 @@ export default function NewExperimentForm({ study }) {
       value: tech.id,
       label: tech.name,
     })
-  ); // name,id
+  );
+  const measuresOptions = extraConfig?.data.available_measure_types?.map(
+    (measure) => ({
+      value: measure.id,
+      label: measure.name,
+    })
+  );
 
-  console.log(techniquesOptions);
-  const initialValues = {
-    type_of_consciousness: "",
-    report: "",
-    theory_driven: "",
-    sampels: [{ type: "", total: "", included: "" }],
-    paradigms: [{ main: "", specific: "" }],
-    tasks: [{ type: "", description: "" }],
-    techniques: [""],
-    stimulus: [
-      {
-        category: "",
-        sub_category: "",
-        modality: "",
-        description: "",
-        duration: "",
-      },
-    ],
-  };
+  const analysisPhaseOptions =
+    extraConfig?.data.available_consciousness_measure_phase_type?.map(
+      (measure) => ({
+        value: measure.id,
+        label: measure.name,
+      })
+    );
+  const analysisMeasuresOptions =
+    extraConfig?.data.available_consciousness_measure_type?.map((measure) => ({
+      value: measure.id,
+      label: measure.name,
+    }));
 
+  const theories = extraConfig?.data.available_theories?.map((theory) => ({
+    value: theory.name,
+    label: theory.name,
+  }));
+  console.log(theories);
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
       <div>
@@ -134,22 +159,26 @@ export default function NewExperimentForm({ study }) {
           }) => (
             <Form className="flex flex-col gap-2">
               <BasicClassification setFieldValue={setFieldValue} />
-
-              <Tasks
+              <Paradigms
                 values={values}
                 setFieldValue={setFieldValue}
-                tasksOptions={tasks}
+                optionalParadigmsFamilies={paradigmsFamilies}
+                optionalParadigms={paradigms}
+              />
+              <Interpretations
+                values={values}
+                setFieldValue={setFieldValue}
+                theories={theories}
               />
               <Samples
                 values={values}
                 setFieldValue={setFieldValue}
                 populations={populations}
               />
-              <Paradigms
+              <Tasks
                 values={values}
                 setFieldValue={setFieldValue}
-                optionalParadigmsFamilies={paradigmsFamilies}
-                optionalParadigms={paradigms}
+                tasksOptions={tasks}
               />
               <Stimulus
                 values={values}
@@ -163,6 +192,18 @@ export default function NewExperimentForm({ study }) {
                 setFieldValue={setFieldValue}
                 techniquesOptions={techniquesOptions}
               />
+              <Measures
+                values={values}
+                setFieldValue={setFieldValue}
+                measuresOptions={measuresOptions}
+              />
+              <AnalysisMeasures
+                values={values}
+                setFieldValue={setFieldValue}
+                analysisMeasuresOptions={analysisMeasuresOptions}
+                analysisPhaseOptions={analysisPhaseOptions}
+              />
+
               <Button type="submit">Submit</Button>
 
               {/* <div className="w-full flex justify-center">
