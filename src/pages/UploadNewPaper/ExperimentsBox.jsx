@@ -1,5 +1,5 @@
 import classNames from "classnames";
-import React from "react";
+import React, { useState } from "react";
 import SideStatus from "../../components/SideStatus";
 
 export default function ExperimentsBox({
@@ -7,6 +7,7 @@ export default function ExperimentsBox({
   completedStudy,
   experiments,
   setPaperToShow,
+  setNewPaper,
 }) {
   return (
     <div
@@ -19,8 +20,8 @@ export default function ExperimentsBox({
       <div className="flex flex-col gap-2">
         <SideStatus
           isExperiment
-          completedStudy={completedStudy}
-          number={experiments.length}
+          completedStudy={true}
+          number={experiments?.length}
           status={"Submitted"}
           disabled={disabled}
           papers={experiments}
@@ -28,6 +29,8 @@ export default function ExperimentsBox({
         />
         {!completedStudy && (
           <SideStatus
+            setNewPaper={setNewPaper}
+            isExperiment
             number={0}
             status={"Uncompleted submissions"}
             disabled={disabled}

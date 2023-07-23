@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { ExpandingBox, Spacer, Text } from "../../components/Reusble";
+import { ExpandingBox, Spacer, Text } from "../../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import { rawTextToShow } from "../../Utils/functions";
-import FindingsTags from "./FindingsTags";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import { rawTextToShow } from "../../../Utils/functions";
+import FindingsTags from "../FindingsTags";
 
 export default function ExperimentDetails({ experiment, study }) {
   const [open, setOpen] = useState(false);
@@ -77,6 +77,31 @@ export default function ExperimentDetails({ experiment, study }) {
                   Specific Paradigm
                 </Text>
                 <Text>{paradigm}</Text>
+              </div>
+            </div>
+          ))}
+        </ExpandingBox>
+        <ExpandingBox headline={"Interpretations"}>
+          {experiment.interpretations.map((interpretation, index) => (
+            <div
+              className="flex items-start border border-blue border-x-4 p-2 rounded-md"
+              key={index + 1}>
+              <div className="w-4">
+                <Text weight={"bold"} color={"blue"}>
+                  {index + 1}
+                </Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Theory
+                </Text>
+                <Text>{interpretation.theory.name}</Text>
+              </div>
+              <div className="w-1/2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Type
+                </Text>
+                <Text>{interpretation.type}</Text>
               </div>
             </div>
           ))}

@@ -5,7 +5,6 @@ import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg"
 RessetIcon;
 
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
-import { ReactComponent as AddPaper } from "../assets/icons/add-paper-icon.svg";
 
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
@@ -199,6 +198,7 @@ export const FilterExplanation = ({ text, tooltip }) => {
     <div className="flex gap-2 mt-1">
       <Tooltip content={tooltip} trigger="click">
         <button
+          type="button"
           className="flex justify-center items-center gap-2 text-sm"
           aria-label={tooltip}>
           {text} <QuestionMark />{" "}
@@ -288,15 +288,7 @@ export const SideControl = ({ children, headline, isUploadPaper = false }) => {
           }`
         )}>
         {isUploadPaper && <h2 className="text-3xl">Papers</h2>}
-
         {children}
-        {isUploadPaper && (
-          <div className="absolute bottom-10 left-0 w-full">
-            <Button extraClass="mx-auto font-normal">
-              <AddPaper /> Add new paper
-            </Button>
-          </div>
-        )}
         <Spacer height={20} />
       </div>
     </div>

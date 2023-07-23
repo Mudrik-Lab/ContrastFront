@@ -9,9 +9,11 @@ import ContactUs from "./ContactUs";
 import SuggestingNewQueries from "./SuggestingNewQueries";
 import VettingPaper from "./VettingPaper";
 import Feedback from "./Feedback";
+import { useNavigate } from "react-router-dom";
 
 export default function ContactPage() {
   const [chosen, setChosen] = useState("contact-us");
+  const navigate = useNavigate();
   return (
     <div>
       <Navbar />
@@ -20,25 +22,46 @@ export default function ContactPage() {
       <div className="w-[658px] mx-auto text-base">
         <p>
           Here you can{" "}
-          <a className="underline font-bold " href="">
+          <span
+            className="underline font-bold cursor-pointer"
+            onClick={() => {
+              setChosen("new-query");
+              window.location.href = "#contact-forms";
+            }}
+            href="#contact-forms">
             suggest new queries
-          </a>{" "}
+          </span>{" "}
           you think we should add to the website, suggest{" "}
           <a className="underline font-bold " href="">
             corrections to classifications
           </a>{" "}
-          done in one of our entries, give us feedback about your experience
-          using the website, or{" "}
-          <a className="underline font-bold " href="">
+          done in one of our entries,{" "}
+          <span
+            className="underline font-bold cursor-pointer"
+            onClick={() => {
+              setChosen("feedback");
+              window.location.href = "#contact-forms";
+            }}
+            href="#contact-forms">
+            give us feedback
+          </span>{" "}
+          about your experience using the website, or{" "}
+          <span
+            className="underline font-bold cursor-pointer"
+            onClick={() => {
+              setChosen("contact-us");
+              window.location.href = "#contact-forms";
+            }}
+            href="#contact-forms">
             just write to us
-          </a>{" "}
+          </span>{" "}
           and let us know what’s on your mind.
           <br />
           <br />
           There’s more:
           <li>
             If you would like to add a study to our database, please{" "}
-            <a className="underline font-bold " href="">
+            <a className="underline font-bold " href="upload-new-paper">
               follow this link
             </a>
           </li>
@@ -46,7 +69,9 @@ export default function ContactPage() {
             If you want to find out if a paper is included in the database, so
             to know if you should add it, or to double-check our
             classifications, you can{" "}
-            <a className="underline font-bold " href="">
+            <a
+              className="underline font-bold "
+              href="parameter-distribution-free-queries">
               download a CSV
             </a>{" "}
             with the list of all included experiments.
@@ -132,18 +157,20 @@ export default function ContactPage() {
           </ButtonReversed>
         </div>
       </div>
-
-      {chosen === "contact-us" ? (
-        <ContactUs />
-      ) : chosen === "new-query" ? (
-        <SuggestingNewQueries />
-      ) : chosen === "vet-a-paper" ? (
-        <VettingPaper />
-      ) : chosen === "feedback" ? (
-        <Feedback />
-      ) : (
-        <></>
-      )}
+      <Spacer height={10} />
+      <div id="contact-forms">
+        {chosen === "contact-us" ? (
+          <ContactUs />
+        ) : chosen === "new-query" ? (
+          <SuggestingNewQueries />
+        ) : chosen === "vet-a-paper" ? (
+          <VettingPaper />
+        ) : chosen === "feedback" ? (
+          <Feedback />
+        ) : (
+          <></>
+        )}
+      </div>
       <Spacer height={30} />
       <CommunityBox />
       <Spacer height={100} />

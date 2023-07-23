@@ -17,6 +17,7 @@ module.exports = {
         grayHeavy: "#6D6D6D",
         grayReg: "#999999",
         grayLight: "#E9E9E9",
+        grayFrame:"#CCCCCC",
         yellow: "#D2CC7F",
         orange: "#D7A77F",
         pink:"#DB7C82",
@@ -53,7 +54,7 @@ module.exports = {
 ]
 ,
 safelist: [{
-  pattern: /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen|flourishRed|revoltingGreen)/
+  pattern: /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|grayFrame|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen|flourishRed|revoltingGreen)/
 }
 
 ]
