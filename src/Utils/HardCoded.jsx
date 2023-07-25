@@ -3,6 +3,8 @@ export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
 export const fieldClass = "border border-gray-300 rounded-sm p-2 h-10 w-72";
+export const numericFieldClass =
+  "border border-gray-300 rounded-[4px] p-2 h-[39.2px] w-20";
 export const sideSectionClass =
   "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 export const errorMsgClass = "text-red-500 text-sm mt-1 text-center";
