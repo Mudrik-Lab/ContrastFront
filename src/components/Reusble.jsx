@@ -514,13 +514,19 @@ export const ToastBox = ({ headline, text }) => {
   );
 };
 
-export const ExpandingBox = ({ children, headline }) => {
+export const ExpandingBox = ({ children, headline, disabled }) => {
   const [open, setOpen] = useState(false);
+  console.log(disabled);
   return (
-    <div className="px-2 py-1 border-2 border-blue rounded-md ">
+    <div
+      className={classNames(
+        `px-2 py-1 border-2 border-blue rounded-md ${
+          disabled ? "bg-slate-300" : "bg-white"
+        }`
+      )}>
       <div
         className="flex justify-between py-1 px-2"
-        onClick={() => setOpen(!open)}>
+        onClick={!disabled ? () => setOpen(!open) : null}>
         {" "}
         <Text weight={"bold"}>{headline}</Text>
         <svg

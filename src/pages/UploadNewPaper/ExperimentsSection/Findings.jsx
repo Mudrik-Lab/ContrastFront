@@ -12,7 +12,7 @@ export default function Findings({ options }) {
   const handleSubmit = () => {
     console.log("first");
   };
-  console.log(options.findingTagsFamilies);
+
   return (
     <ExpandingBox headline={"Findings"}>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
