@@ -25,10 +25,9 @@ import Measures from "./Measures";
 import AnalysisMeasures from "./AnalysisMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
-import { createExperiments } from "../../../apiHooks/createExperiment";
 
 export default function NewExperimentForm({ study }) {
-  const [experimentID, setExperimentID] = useState(undefined);
+  const [experimentID, setExperimentID] = useState();
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
@@ -100,48 +99,7 @@ export default function NewExperimentForm({ study }) {
       value: type.id,
       label: type.name,
     }));
-  const initialValues = {
-    type_of_consciousness: "",
-    experiment_type: "",
-    report: "",
-    finding_description: "",
-    theory_driven: "",
-    sampels: [{ type: "", total: "", included: "" }],
-    paradigms: [{ main: "", specific: "" }],
-    tasks: [{ type: "", description: "" }],
-    techniques: [""],
-    measures: [{ type: "", notes: "" }],
-    stimulus: [
-      {
-        category: "",
-        sub_category: "",
-        modality: "",
-        description: "",
-        duration: "",
-      },
-    ],
-    analysis_measures: [{ type: "", pahse: "", description: "" }],
-    interpretations: [{ type: "", theory: "" }],
-    findings: [{ technique: "", type: "", family: "" }],
-  };
-  console.log(experimentID);
-  const handleSubmit = async (values) => {
-    console.log(values);
-    try {
-      const res = await createExperiments({
-        type_of_consciousness: values.type_of_consciousness,
-        finding_description: values.finding_description,
-        is_reporting: values.report,
-        theory_driven: values.theory_driven,
-        experiment_type: values.experiment_type,
-        study_pk: study.id,
-      });
-      console.log(res);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
+  //
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
       <div>
@@ -164,18 +122,20 @@ export default function NewExperimentForm({ study }) {
         />
 
         <Paradigms
+          study_pk={study.id}
           disabled={!experimentID}
           experiment_pk={experimentID}
           optionalParadigmsFamilies={paradigmsFamilies}
           optionalParadigms={paradigms}
         />
 
-        {/* <Interpretations
-                values={values}
-                setFieldValue={setFieldValue}
-                theories={theories}
-              />
-              <Samples
+        <Interpretations
+          study_id={study.id}
+          disabled={!experimentID}
+          experiment_pk={experimentID}
+          theories={theories}
+        />
+        {/*  <Samples
                 values={values}
                 setFieldValue={setFieldValue}
                 populations={populations}
@@ -227,3 +187,27 @@ export default function NewExperimentForm({ study }) {
 //     "Frequency": ["onset", "offset", "correlation_sign", "band_lower_bound", "band_higher_bound", "analysis_type"],
 //     "Spatial Areas": ["AAL_atlas_tag"]
 // }
+// const initialValues = {
+//   type_of_consciousness: "",
+//   experiment_type: "",
+//   report: "",
+//   finding_description: "",
+//   theory_driven: "",
+//   sampels: [{ type: "", total: "", included: "" }],
+//   paradigms: [{ main: "", specific: "" }],
+//   tasks: [{ type: "", description: "" }],
+//   techniques: [""],
+//   measures: [{ type: "", notes: "" }],
+//   stimulus: [
+//     {
+//       category: "",
+//       sub_category: "",
+//       modality: "",
+//       description: "",
+//       duration: "",
+//     },
+//   ],
+//   analysis_measures: [{ type: "", pahse: "", description: "" }],
+//   interpretations: [{ type: "", theory: "" }],
+//   findings: [{ technique: "", type: "", family: "" }],
+// };

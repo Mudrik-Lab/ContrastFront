@@ -1,5 +1,6 @@
 import classNames from "classnames";
 import react, { useState } from "react";
+import { deleteExperiment } from "../apiHooks/deleteExperiment";
 
 export default function SideStatus({
   number,
@@ -12,6 +13,17 @@ export default function SideStatus({
   setNewPaper,
 }) {
   const [open, setOpen] = useState(false);
+  const handleDelete = async (paper, experiment) => {
+    const experiment_pk = paper.id;
+    const study_pk = paper.study;
+    try {
+      const res = await deleteExperiment({ experiment_pk, study_pk });
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+    console.log(paper.id, paper.study);
+  };
   let color =
     status === "Complete"
       ? "green-500"
@@ -93,26 +105,41 @@ export default function SideStatus({
                     />
                   </g>
                 </svg>
-                <span
-                  className="cursor-pointer"
-                  onClick={() => {
-                    if (isExperiment) {
-                      setPaperToShow(paper);
-                    } else {
-                      setPaperToShow(paper.id);
-                    }
-                  }}>
+                <span>
                   {paper.title.length > 20
                     ? paper.title.slice(0, 20) + "..."
                     : paper.title}
                 </span>
               </div>
               {!completedStudy && (
-                <div className="flex gap-1 items-center text-xs">
-                  <span>edit</span>
+                <div
+                  className={classNames(
+                    `flex gap-1 items-center ${
+                      isExperiment ? "text-base" : "text-xs"
+                    }`
+                  )}>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (isExperiment) {
+                        setPaperToShow(paper);
+                      } else {
+                        setPaperToShow(paper.id);
+                      }
+                    }}>
+                    edit
+                  </span>
                   <span>|</span>
 
-                  <span>delete</span>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (isExperiment) {
+                        handleDelete(paper);
+                      }
+                    }}>
+                    delete
+                  </span>
                 </div>
               )}
             </div>

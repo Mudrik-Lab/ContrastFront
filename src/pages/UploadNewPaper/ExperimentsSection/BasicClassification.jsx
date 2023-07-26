@@ -8,7 +8,6 @@ import {
 } from "../../../components/Reusble";
 import Select from "react-select";
 import { createExperiments } from "../../../apiHooks/createExperiment";
-import { useState } from "react";
 
 export default function BasicClassification({
   study_id,

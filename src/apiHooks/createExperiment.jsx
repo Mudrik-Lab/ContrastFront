@@ -13,7 +13,7 @@ export async function createExperiments({
     is_reporting,
     type_of_consciousness,
     theory_driven,
-    experiment_type,
+    type: experiment_type,
   };
 
   return await queryApi({
@@ -21,6 +21,31 @@ export async function createExperiments({
     method: "POST",
     isProtected: true,
     data: requestData,
+  });
+}
+export async function createExperimentsInterpretations({
+  interpretations,
+  study_pk,
+  experiment_id,
+}) {
+  return await queryApi({
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_id}/interpretations/${id}/`,
+    method: "POST",
+    isProtected: true,
+    data: interpretations,
+  });
+}
+
+export async function addParadigmToexperiment({
+  paradigm,
+  study_pk,
+  experiment_pk,
+}) {
+  return await queryApi({
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_paradigm/`,
+    method: "POST",
+    isProtected: true,
+    data: { id: paradigm },
   });
 }
 

@@ -7,6 +7,7 @@ import {
   Button,
   FilterExplanation,
   Spacer,
+  ToastBox,
 } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
@@ -20,6 +21,7 @@ import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFormConfig from "../../apiHooks/getFormConfiguration";
 import { submitStudy } from "../../apiHooks/getStudies";
+import { toast } from "react-toastify";
 
 export default function NewPaperForm() {
   const [title, setTitle] = useState("");
@@ -72,9 +74,18 @@ export default function NewPaperForm() {
         source_title: values.source_title.value,
       });
       console.log(res);
-      res.status === 201 && setAddExperiments(true);
+      if (res.status === 201) {
+        setAddExperiments(true);
+        toast.success(
+          <ToastBox
+            headline={"New experiment was created successfully"}
+            text={"You can add the experiments details now"}
+          />
+        );
+      }
     } catch (e) {
       console.log(e);
+      toast.error(e.message);
     }
   };
   const countryOption = useMemo(() => countryList().getData(), []);
@@ -246,7 +257,6 @@ export default function NewPaperForm() {
                   </svg>
                   Submit Paper
                 </Button>
-                <button className="font-bold text-lg"> Save& Exit</button>
               </div>
             </Form>
           )}
