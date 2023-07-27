@@ -58,7 +58,10 @@ export default function Paradigms({
   return (
     <ExpandingBox disabled={disabled} headline={"Paradigms"}>
       {paradigmValues.map((_, index) => (
-        <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+        <Formik
+          key={index}
+          initialValues={initialValues}
+          onSubmit={handleSubmit}>
           {({
             onSubmit,
             isSubmitting,

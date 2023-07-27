@@ -105,6 +105,7 @@ export default function PaperSection({ paperId, showEditble, setNewPaper }) {
       )}
       {isSuccess && study.approval_status === 0 && showEditble && (
         <UncompletedPaper
+          showEditble={showEditble}
           study={study}
           paperToShow={paperToShow}
           setPaperToShow={setPaperToShow}

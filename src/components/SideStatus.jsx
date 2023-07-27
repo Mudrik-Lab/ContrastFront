@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import react, { useState } from "react";
 import { deleteExperiment } from "../apiHooks/deleteExperiment";
+import { showTextToRaw } from "../Utils/functions";
 
 export default function SideStatus({
   number,
@@ -12,6 +13,8 @@ export default function SideStatus({
   setPaperToShow,
   setNewPaper,
   setShowEditble,
+  showEditble,
+  setAddNewExperiment,
 }) {
   const [open, setOpen] = useState(false);
   const handleDelete = async (paper, experiment) => {
@@ -55,6 +58,7 @@ export default function SideStatus({
   if (disabled) {
     fill = "#6D6D6D";
   }
+
   return (
     <div
       className={classNames(
@@ -132,6 +136,7 @@ export default function SideStatus({
                     onClick={() => {
                       if (isExperiment) {
                         setPaperToShow(paper);
+                        console.log(paper);
                       } else {
                         setPaperToShow(paper.id);
                         if (paper.approval_status === 0) {
@@ -157,10 +162,13 @@ export default function SideStatus({
               )}
             </div>
           ))}
-          {!completedStudy && (
+          {!completedStudy && showEditble && (
             <span
               className="font-bold text-xs cursor-pointer"
-              onClick={() => setNewPaper(true)}>
+              onClick={() => {
+                setNewPaper(true);
+                setAddNewExperiment(true);
+              }}>
               + Add new {isExperiment ? "experiment" : "paper"}
             </span>
           )}

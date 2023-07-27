@@ -8,7 +8,9 @@ export default function ExperimentsBox({
   experiments,
   setPaperToShow,
   setNewPaper,
+  showEditble,
   study,
+  setAddNewExperiment,
 }) {
   return (
     <div
@@ -26,7 +28,9 @@ export default function ExperimentsBox({
           disabled={disabled}
           papers={experiments}
           setPaperToShow={setPaperToShow}
+          showEditble={showEditble}
           setNewPaper={setNewPaper}
+          setAddNewExperiment={setAddNewExperiment}
         />
       </div>
     </div>
