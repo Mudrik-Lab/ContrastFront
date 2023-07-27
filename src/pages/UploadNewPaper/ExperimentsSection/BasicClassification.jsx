@@ -110,7 +110,7 @@ export default function BasicClassification({
                     options={[
                       { vlaue: null, label: "" },
                       { value: "report", label: "Report" },
-                      { value: "no-report", label: "No Report" },
+                      { value: "no_report", label: "No Report" },
                     ]}
                   />
 

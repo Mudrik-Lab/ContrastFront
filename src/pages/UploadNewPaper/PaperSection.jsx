@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 
-export default function PaperSection({ paperId, showEditble }) {
+export default function PaperSection({ paperId, showEditble, setNewPaper }) {
   const [paperToShow, setPaperToShow] = useState();
 
   const id = paperId;
@@ -86,6 +86,7 @@ export default function PaperSection({ paperId, showEditble }) {
               </div>
               <Spacer height={20} />
               <ExperimentsBox
+                setNewPaper={setNewPaper}
                 disabled={false}
                 completedStudy
                 setPaperToShow={setPaperToShow}
