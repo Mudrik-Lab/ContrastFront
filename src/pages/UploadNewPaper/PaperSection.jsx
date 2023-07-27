@@ -10,7 +10,7 @@ import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 
-export default function PaperSection({ paperId }) {
+export default function PaperSection({ paperId, showEditble }) {
   const [paperToShow, setPaperToShow] = useState();
 
   const id = paperId;
@@ -33,7 +33,8 @@ export default function PaperSection({ paperId }) {
       : "Awaiting Review";
   return (
     <div className="px-2 h-full">
-      {isSuccess && study.approval_status !== 0 && (
+      {isSuccess && (!showEditble || study.approval_status !== 0) && (
+        // study.approval_status !== 0 &&
         <div>
           <ProgressComponent
             status={status}
@@ -101,7 +102,7 @@ export default function PaperSection({ paperId }) {
           </div>
         </div>
       )}
-      {isSuccess && study.approval_status === 0 && (
+      {isSuccess && study.approval_status === 0 && showEditble && (
         <UncompletedPaper
           study={study}
           paperToShow={paperToShow}

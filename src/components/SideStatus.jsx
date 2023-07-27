@@ -11,6 +11,7 @@ export default function SideStatus({
   completedStudy,
   setPaperToShow,
   setNewPaper,
+  setShowEditble,
 }) {
   const [open, setOpen] = useState(false);
   const handleDelete = async (paper, experiment) => {
@@ -62,7 +63,7 @@ export default function SideStatus({
       <div
         className="flex justify-between font-bold cursor-pointer text-base"
         onClick={() => setOpen(!open)}>
-        <span>{status}</span>
+        <span>{isExperiment ? "Submitted Experiments" : status}</span>
 
         <div className="flex items-center gap-1">
           <span>({number})</span>
@@ -105,7 +106,15 @@ export default function SideStatus({
                     />
                   </g>
                 </svg>
-                <span>
+                <span
+                  className="cursor-pointer"
+                  onClick={() => {
+                    if (isExperiment) {
+                      setPaperToShow(paper);
+                    } else {
+                      setPaperToShow(paper.id);
+                    }
+                  }}>
                   {paper.title.length > 20
                     ? paper.title.slice(0, 20) + "..."
                     : paper.title}
@@ -125,6 +134,10 @@ export default function SideStatus({
                         setPaperToShow(paper);
                       } else {
                         setPaperToShow(paper.id);
+                        if (paper.approval_status === 0) {
+                          console.log(paper);
+                          setShowEditble(true);
+                        }
                       }
                     }}>
                     edit

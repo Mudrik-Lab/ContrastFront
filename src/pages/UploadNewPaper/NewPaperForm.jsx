@@ -23,7 +23,7 @@ import getFormConfig from "../../apiHooks/getFormConfiguration";
 import { submitStudy } from "../../apiHooks/getStudies";
 import { toast } from "react-toastify";
 
-export default function NewPaperForm() {
+export default function NewPaperForm({ setAddNewPaper }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [addExperiments, setAddExperiments] = useState(false);
@@ -237,7 +237,7 @@ export default function NewPaperForm() {
               </div>
               <Spacer height={20} />
 
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <Button
                   type="submit"
                   //   disabled={!(isSubmitting && isValid)}
@@ -257,11 +257,21 @@ export default function NewPaperForm() {
                   </svg>
                   Submit Paper
                 </Button>
+                <button
+                  onClick={() => setAddNewPaper(false)}
+                  className="font-bold">
+                  Abort & Exit
+                </button>
               </div>
             </Form>
           )}
         </Formik>
-        {addExperiments && <div>Experiments</div>}
+        <Spacer height={20} />
+        {addExperiments && (
+          <div>
+            <ExperimentsBox />
+          </div>
+        )}
       </div>
     </div>
   );
