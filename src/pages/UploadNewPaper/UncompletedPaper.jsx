@@ -28,6 +28,7 @@ export default function UncompletedPaper({
   paperToShow,
   setPaperToShow,
   showEditble,
+  refetch,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
@@ -306,6 +307,7 @@ export default function UncompletedPaper({
               </div>
               <Spacer height={20} />
               <ExperimentsBox
+                refetch={refetch}
                 completedStudy={false}
                 disabled={false}
                 setNewPaper={setNewPaper}
@@ -320,7 +322,13 @@ export default function UncompletedPaper({
               />
               <Spacer height={20} />
             </div>
-            {newPaper && <NewExperimentForm study={study} />}
+            {addNewExperiment && (
+              <NewExperimentForm
+                study={study}
+                setAddNewExperiment={setAddNewExperiment}
+                refetch={refetch}
+              />
+            )}
             {paperToShow && !newPaper && (
               <ExperimentDetails experiment={paperToShow} study={study} />
             )}

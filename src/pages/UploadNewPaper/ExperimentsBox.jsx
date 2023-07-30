@@ -4,12 +4,11 @@ import SideStatus from "../../components/SideStatus";
 
 export default function ExperimentsBox({
   disabled,
-  completedStudy,
   experiments,
   setPaperToShow,
   setNewPaper,
   showEditble,
-  study,
+  refetch,
   setAddNewExperiment,
 }) {
   return (
@@ -22,6 +21,7 @@ export default function ExperimentsBox({
       <h3 className="text-2xl">Experiments</h3>
       <div className="flex flex-col gap-2">
         <SideStatus
+          refetch={refetch}
           isExperiment
           number={experiments?.length}
           status={"Submitted"}

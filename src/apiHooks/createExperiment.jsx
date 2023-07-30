@@ -15,7 +15,6 @@ export async function createExperiments({
     theory_driven,
     type: experiment_type,
   };
-
   return await queryApi({
     url: `studies/submitted_studies/${study_pk}/experiments/`,
     method: "POST",
@@ -23,6 +22,32 @@ export async function createExperiments({
     data: requestData,
   });
 }
+
+export async function editExperiments({
+  finding_description,
+  is_reporting,
+  type_of_consciousness,
+  theory_driven,
+  experiment_type,
+  study_pk,
+  id,
+}) {
+  const requestData = {
+    study: study_pk,
+    finding_description,
+    is_reporting,
+    type_of_consciousness,
+    theory_driven,
+    type: experiment_type,
+  };
+  return await queryApi({
+    url: `studies/submitted_studies/${study_pk}/experiments/${id}/`,
+    method: "PUT",
+    isProtected: true,
+    data: requestData,
+  });
+}
+
 export async function createExperimentsInterpretations({
   interpretations,
   study_pk,

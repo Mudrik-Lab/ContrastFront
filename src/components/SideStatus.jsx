@@ -2,6 +2,8 @@ import classNames from "classnames";
 import react, { useState } from "react";
 import { deleteExperiment } from "../apiHooks/deleteExperiment";
 import { showTextToRaw } from "../Utils/functions";
+import { toast } from "react-toastify";
+import { ToastBox } from "./Reusble";
 
 export default function SideStatus({
   number,
@@ -15,6 +17,7 @@ export default function SideStatus({
   setShowEditble,
   showEditble,
   setAddNewExperiment,
+  refetch,
 }) {
   const [open, setOpen] = useState(false);
   const handleDelete = async (paper, experiment) => {
@@ -22,11 +25,16 @@ export default function SideStatus({
     const study_pk = paper.study;
     try {
       const res = await deleteExperiment({ experiment_pk, study_pk });
+      if (res.status === 204) {
+        toast.success(
+          <ToastBox headline={"experiment was deleted successfully"} />
+        );
+        refetch();
+      }
       console.log(res);
     } catch (e) {
       console.log(e);
     }
-    console.log(paper.id, paper.study);
   };
   let color =
     status === "Complete"
@@ -136,11 +144,12 @@ export default function SideStatus({
                     onClick={() => {
                       if (isExperiment) {
                         setPaperToShow(paper);
-                        console.log(paper);
+                        setNewPaper(false);
+                        console.log(paper, "op1");
                       } else {
                         setPaperToShow(paper.id);
                         if (paper.approval_status === 0) {
-                          console.log(paper);
+                          console.log(paper, "op2");
                           setShowEditble(true);
                         }
                       }

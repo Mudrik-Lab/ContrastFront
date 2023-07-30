@@ -49,7 +49,7 @@ export const Button = ({
         className={classNames(
           `${extraClass} text-white text-base leading-4 font-bold ${
             black ? "bg-black" : "bg-blue border-[3px] border-blue"
-          } hover:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
+          } hover:opacity-40 disabled:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
         )}
         {...config}>
         {children}

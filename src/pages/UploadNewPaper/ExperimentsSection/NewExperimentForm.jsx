@@ -26,7 +26,11 @@ import AnalysisMeasures from "./AnalysisMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 
-export default function NewExperimentForm({ study }) {
+export default function NewExperimentForm({
+  study,
+  setAddNewExperiment,
+  refetch,
+}) {
   const [experimentID, setExperimentID] = useState();
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
@@ -178,6 +182,15 @@ export default function NewExperimentForm({ study }) {
           options={{ techniquesOptions, findingTagsFamilies, findingTypes }}
         />
       </div>
+
+      <button
+        className="font-bold my-2"
+        onClick={() => {
+          refetch();
+          setAddNewExperiment(false);
+        }}>
+        Abort & Exit
+      </button>
     </div>
   );
 }

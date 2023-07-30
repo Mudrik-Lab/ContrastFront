@@ -75,7 +75,11 @@ export default function Login() {
                       name="password"
                       className={fieldClass}
                     />
-
+                    <ErrorMessage
+                      name="password"
+                      component="div"
+                      className={errorMsgClass}
+                    />
                     <a
                       href="/request-password-recovery"
                       className="text-blue text-center underline">
@@ -90,12 +94,6 @@ export default function Login() {
                         here
                       </a>{" "}
                     </span>
-
-                    <ErrorMessage
-                      name="password"
-                      component="div"
-                      className={errorMsgClass}
-                    />
                   </div>
                   <div className="border-b border-black w-full my-4"></div>
                   {serverError && (
