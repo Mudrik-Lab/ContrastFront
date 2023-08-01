@@ -11,7 +11,8 @@ export default function ExperimentDetails({ experiment, study }) {
     [`more_configurations`],
     getExtraConfig
   );
-
+  const tasks = extraConfig?.data.available_tasks_types;
+  console.log(tasks.find((x) => x.id === 4).name);
   const paradigmsWithFamily = extraConfig?.data.available_paradigms;
 
   return (
@@ -154,7 +155,7 @@ export default function ExperimentDetails({ experiment, study }) {
                   <Text weight={"bold"} color={"grayReg"}>
                     Type
                   </Text>
-                  <Text>{task.type}</Text>
+                  <Text>{tasks.find((x) => x.id === task.type)?.name}</Text>
                 </div>
 
                 <div>

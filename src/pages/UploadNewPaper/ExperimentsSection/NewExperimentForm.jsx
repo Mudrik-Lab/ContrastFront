@@ -150,6 +150,11 @@ export default function NewExperimentForm({
           experiment_pk={experimentID}
           study_pk={study.id}
           disabled={!experimentID}
+          values={{
+            type: "",
+            description: "",
+            key: Math.round(Math.random() * 10),
+          }}
         />
         {/*     <Stimulus
                 values={values}

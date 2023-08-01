@@ -570,3 +570,47 @@ export const SubmitButton = ({ disabled, submit }) => {
     </div>
   );
 };
+export const YoavSelect = ({ options, value, onChange, disabled }) => {
+  const customStyles = {
+    control: (provided, state) => ({
+      ...provided,
+      border: state.isFocused ? "2px solid #6366F1" : "2px solid #E5E7EB",
+      boxShadow: "none",
+      "&:hover": {
+        border: state.isFocused ? "2px solid #6366F1" : "2px solid #E5E7EB",
+      },
+    }),
+    option: (provided, state) => ({
+      ...provided,
+      backgroundColor: state.isSelected
+        ? "#6366F1"
+        : state.isFocused
+        ? "#E5E7EB"
+        : "white",
+      color: state.isSelected ? "white" : "#4B5563",
+      "&:hover": {
+        backgroundColor: state.isSelected ? "#6366F1" : "#E5E7EB",
+      },
+    }),
+  };
+
+  return (
+    <select
+      disabled={disabled}
+      placeholder="Select..."
+      // className="bg-gray-50 border border-gray-300 text-base text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
+      className="block text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+      value={value}
+      onChange={(e) => {
+        onChange(e.currentTarget.value);
+      }}>
+      {options.map((opt) => {
+        return (
+          <option className="p-10 text-xl" key={opt.value} value={opt.value}>
+            {opt.label}
+          </option>
+        );
+      })}
+    </select>
+  );
+};
