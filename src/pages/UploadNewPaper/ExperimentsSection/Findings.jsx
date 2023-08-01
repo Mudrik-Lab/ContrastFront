@@ -4,7 +4,7 @@ import Select from "react-select";
 import { useState } from "react";
 import { fieldClass, numericFieldClass } from "../../../Utils/HardCoded";
 
-export default function Findings({ options }) {
+export default function Findings({ options, disabled }) {
   const [count, setCount] = useState(0);
   const initialValues = {
     findings: [{ technique: "", type: "", family: "" }],
@@ -14,7 +14,7 @@ export default function Findings({ options }) {
   };
 
   return (
-    <ExpandingBox headline={"Findings"}>
+    <ExpandingBox disabled={disabled} headline={"Findings"}>
       <Formik initialValues={initialValues} onSubmit={handleSubmit}>
         {({
           onSubmit,

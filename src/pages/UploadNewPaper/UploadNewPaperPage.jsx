@@ -17,7 +17,7 @@ import React, { useState } from "react";
 import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.svg";
 import NewPaperForm from "./NewPaperForm";
 
-export default function UploadNewPaper({ setNewPaper }) {
+export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
   const [showEditble, setShowEditble] = useState(false);
   const [addNewPaper, setAddNewPaper] = useState(false);

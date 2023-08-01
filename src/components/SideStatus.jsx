@@ -4,6 +4,7 @@ import { deleteExperiment } from "../apiHooks/deleteExperiment";
 import { showTextToRaw } from "../Utils/functions";
 import { toast } from "react-toastify";
 import { ToastBox } from "./Reusble";
+import ConfirmModal from "./ConfirmModal";
 
 export default function SideStatus({
   number,
@@ -20,21 +21,27 @@ export default function SideStatus({
   refetch,
 }) {
   const [open, setOpen] = useState(false);
+
   const handleDelete = async (paper, experiment) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
-    try {
-      const res = await deleteExperiment({ experiment_pk, study_pk });
-      if (res.status === 204) {
-        toast.success(
-          <ToastBox headline={"experiment was deleted successfully"} />
-        );
-        refetch();
+    const confirmed = window.confirm(`Would you like to delete ${paper.title}`);
+    if (confirmed) {
+      try {
+        const res = await deleteExperiment({ experiment_pk, study_pk });
+        if (res.status === 204) {
+          setPaperToShow();
+          toast.success(
+            <ToastBox headline={"experiment was deleted successfully"} />
+          );
+          refetch();
+        }
+        console.log(res);
+      } catch (e) {
+        console.log(e);
       }
-      console.log(res);
-    } catch (e) {
-      console.log(e);
     }
+    // })
   };
   let color =
     status === "Complete"

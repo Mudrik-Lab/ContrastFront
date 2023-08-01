@@ -520,7 +520,7 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
     <div
       className={classNames(
         `px-2 py-1 border-2 border-blue rounded-md ${
-          disabled ? "bg-slate-300" : "bg-white"
+          disabled ? "bg-[#F2F2F2] border-gray-600" : "bg-white"
         }`
       )}>
       <div
@@ -540,7 +540,7 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
                 ? "M17 14.8297L15.9917 15.9738L12 12.9018L7.93354 15.9738L7 14.8297L12 10.9738L17 14.8297Z"
                 : "M7 11.1179L8.00833 9.97381L12 13.0458L16.0665 9.97379L17 11.1179L12 14.9738L7 11.1179Z"
             }
-            fill="#66bff1"
+            fill={disabled ? "black" : "#66bff1"}
           />
         </svg>
       </div>
@@ -549,10 +549,10 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
   );
 };
 
-export const SubmitButton = ({ disabled }) => {
+export const SubmitButton = ({ disabled, submit }) => {
   return (
     <div className="w-full flex justify-center">
-      <button type="submit" disabled={disabled}>
+      <button type="button" disabled={disabled} onClick={submit}>
         <svg
           width="20"
           height="20"

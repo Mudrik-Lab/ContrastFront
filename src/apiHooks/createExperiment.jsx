@@ -74,6 +74,20 @@ export async function addParadigmToexperiment({
   });
 }
 
+export async function addFieldToexperiment({
+  field,
+  study_pk,
+  experiment_pk,
+  field_name,
+}) {
+  return await queryApi({
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${field_name}/`,
+    method: "POST",
+    isProtected: true,
+    data: field,
+  });
+}
+
 // export async function createExperimentsssss({ measures }) {
 //   const requestData = {
 //     consciousness_measures,

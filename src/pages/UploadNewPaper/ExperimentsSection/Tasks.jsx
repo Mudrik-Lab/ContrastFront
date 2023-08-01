@@ -1,104 +1,173 @@
-import { Field, FieldArray } from "formik";
-import { ExpandingBox, Text } from "../../../components/Reusble";
+import { Field, FieldArray, Form, Formik } from "formik";
+import { ExpandingBox, SubmitButton, Text } from "../../../components/Reusble";
 import Select from "react-select";
 import { useState } from "react";
+import { addFieldToexperiment } from "../../../apiHooks/createExperiment";
+import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
+import { deleteFieldFromExperiments } from "../../../apiHooks/deleteExperiment";
+import { toast } from "react-toastify";
 
-export default function Tasks({ values, setFieldValue, tasksOptions }) {
+export default function Tasks({
+  tasksOptions,
+  disabled,
+  experiment_pk,
+  study_pk,
+}) {
   const [count, setCount] = useState(0);
 
+  const initialValues = [{ type: "", description: "" }];
+  const [taskValues, setTaskValues] = useState(initialValues);
+
+  const handleSubmit = async (values, index) => {
+    try {
+      const res = await addFieldToexperiment({
+        field: values[index],
+        study_pk,
+        experiment_pk,
+        field_name: "tasks",
+      });
+      if (res.status === 201) {
+        console.log(res.data);
+        const newArr = [...taskValues];
+        newArr[index] = res.data;
+        setTaskValues(newArr);
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDelete = async (values, index, resetForm) => {
+    try {
+      const res = await deleteFieldFromExperiments({
+        study_pk,
+        experiment_pk,
+        field_name: "tasks",
+        id: taskValues[index].id,
+      });
+
+      if (res.status === 204) {
+        console.log(taskValues);
+        if (taskValues.length !== 1) {
+          const newArr = taskValues.filter(
+            (taskValue) => taskValue.id !== taskValues[index].id
+          );
+          // newArr.splice(index, 1);
+          console.log(newArr);
+          setTaskValues(newArr);
+        } else {
+          resetForm();
+          setTaskValues([{ type: "", description: "" }]);
+        }
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
   return (
-    <ExpandingBox headline={"Tasks"}>
-      <FieldArray name="tasks">
-        {({ push, remove }) => (
-          <>
-            {values.tasks.map((_, index) => (
-              <div
-                key={index}
-                className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                <div className="w-4">
-                  <Text weight={"bold"} color={"blue"}>
-                    {index + 1}
-                  </Text>
-                </div>
-                <div className="w-full">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Type
-                  </Text>
-                  <Select
-                    id={`tasks[${index}].type`}
-                    name={`tasks[${index}].type`}
-                    onChange={(v) => {
-                      setFieldValue(`tasks[${index}].type`, v.value);
-                      console.log(v.value);
-                    }}
-                    options={tasksOptions}
-                  />
-                </div>
-
-                <div className="w-full">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Description
-                  </Text>
-
-                  <div className="flex gap-2">
-                    <Field
-                      as="textarea"
-                      rows={4}
-                      id={`tasks[${index}].description`}
-                      name={`tasks[${index}].description`}
-                      className="border w-full border-gray-300 rounded-md p-2  "
+    <ExpandingBox disabled={disabled} headline={"Tasks"}>
+      {taskValues.map((taskValue, index) => (
+        <div id={`tasks${index}`} key={index}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({ values, setFieldValue, resetForm }) => (
+              <Form className="flex flex-col gap-2">
+                <div
+                  key={index}
+                  className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
+                  <div className="w-4">
+                    <Text weight={"bold"} color={"blue"}>
+                      {index + 1}
+                    </Text>
+                  </div>
+                  <div className="w-full">
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Type
+                    </Text>
+                    <Select
+                      isDisabled={taskValues[index].id}
+                      defaultInputValue={taskValue.type}
+                      id={`[${index}].type`}
+                      name={`[${index}].type`}
+                      onChange={(v) => {
+                        setFieldValue(`[${index}].type`, v.value);
+                      }}
+                      options={tasksOptions}
                     />
-                    {index === values.tasks.length - 1 && index !== 0 && (
-                      <button
-                        type="button"
-                        disabled={count === 0}
-                        onClick={() => {
-                          count > 0 && setCount(count - 1);
-                          remove(index);
-                        }}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16">
-                          {" "}
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />{" "}
-                          <path
-                            fillRule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                          />{" "}
-                        </svg>
-                      </button>
-                    )}
+                  </div>
+
+                  <div className="w-full">
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Description
+                    </Text>
+
+                    <div className="flex gap-2">
+                      <Field
+                        disabled={taskValues[index].id}
+                        as="textarea"
+                        defaultValue={taskValue.description}
+                        rows={4}
+                        id={`[${index}].description`}
+                        name={`[${index}].description`}
+                        className={`border w-full border-gray-300 rounded-md p-2 ${
+                          taskValues[index].id && "bg-[#F2F2F2] text-gray-400"
+                        } `}
+                      />
+                      <div className="flex gap-2">
+                        <button
+                          type="button"
+                          disabled={!taskValues[index].id}
+                          onClick={() => {
+                            console.log(values[index].description);
+                            handleDelete(values, index, resetForm);
+                            console.log(taskValues);
+                          }}>
+                          <Trash />
+                        </button>
+
+                        <SubmitButton
+                          submit={() => {
+                            console.log(values[index]);
+                            handleSubmit(values, index);
+                          }}
+                          disabled={
+                            !(
+                              values[index]?.description && values[index]?.type
+                            ) || taskValues[index].id
+                          }
+                        />
+                      </div>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-            <div className="w-full flex  justify-center">
-              <button
-                type="button"
-                disabled={false}
-                onClick={() => {
-                  console.log(count);
-                  setCount(count + 1);
-                  push("");
-                }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  id="add"
-                  fill={"#66BFF1"}
-                  width="25"
-                  height="25">
-                  <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
-                  <path d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"></path>
-                </svg>{" "}
-              </button>
-            </div>
-          </>
-        )}
-      </FieldArray>
+
+                <div className="w-full flex  justify-center">
+                  <button
+                    id="add"
+                    type="button"
+                    disabled={!taskValues[index].id}
+                    onClick={() => {
+                      setTaskValues([
+                        ...taskValues,
+                        { type: "", description: "" },
+                      ]);
+                    }}>
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      viewBox="0 0 32 32"
+                      fill={taskValues[index].id ? "#66BFF1" : "#999999"}
+                      width="25"
+                      height="25">
+                      <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
+                      <path d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"></path>
+                    </svg>{" "}
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      ))}
     </ExpandingBox>
   );
 }

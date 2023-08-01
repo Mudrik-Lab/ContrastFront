@@ -28,12 +28,6 @@ export default function Paradigms({
 
   const initialValues = { paradigm: { main: "", specific: "" } };
 
-  // const { data, isSuccess } = useQuery(
-  //   [`get_experiment`, experiment_pk, study_pk],
-  //   () => experiment_pk && getExperiment({ study_pk, experiment_pk })
-  // );
-  // isSuccess && console.log(data);
-
   const handleSubmit = async (values) => {
     try {
       const res = await addParadigmToexperiment({
@@ -43,6 +37,7 @@ export default function Paradigms({
       });
       if (res.status === 201) {
         setSubmittedParadigm(res.data);
+        console.log(res.data);
         toast.success(
           <ToastBox
             headline={"Success"}
@@ -51,7 +46,6 @@ export default function Paradigms({
             }
           />
         );
-        // resetForm();
       }
       console.log(res);
     } catch (e) {
@@ -60,6 +54,7 @@ export default function Paradigms({
   };
 
   const handleDeleteParadigmField = async (values, index) => {
+    console.log(index);
     try {
       const res = await deleteExperimentsParadigm({
         study_pk,
@@ -67,8 +62,6 @@ export default function Paradigms({
         paradigm: values.paradigm.specific,
       });
       if (res.status === 204) {
-        console.log(res);
-        setParadigmValues(paradigmValues.slice(0, -1));
         toast.success(
           <ToastBox headline={"Success"} text={"Paradigm was deleted"} />
         );
@@ -83,83 +76,81 @@ export default function Paradigms({
   };
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Paradigms"}>
+    <ExpandingBox id="paradigm-box" disabled={disabled} headline={"Paradigms"}>
       {paradigmValues.map((_, index) => (
-        <Formik
-          key={index}
-          initialValues={initialValues}
-          onSubmit={handleSubmit}>
-          {({
-            onSubmit,
-            isSubmitting,
-            dirty,
-            isValid,
-            values,
-            setFieldValue,
-          }) => (
-            <Form className="flex flex-col gap-2">
-              <>
-                <div className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                  <div className="w-4">
-                    <Text weight={"bold"} color={"blue"}>
-                      {index + 1}
-                    </Text>
-                  </div>
-                  <div className="w-1/2">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Main Paradim
-                    </Text>
-                    <Select
-                      id={`paradigm.main`}
-                      name={`paradigm.main`}
-                      onChange={(v) => {
-                        setFieldValue(`paradigm.main`, v.value);
-                      }}
-                      options={optionalParadigmsFamilies}
-                    />
-                  </div>
-
-                  <div className="w-1/2">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Specific Paradigm
-                    </Text>
-
-                    <div className="flex  gap-3">
+        <div id={`paradigm${index}`} key={index}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({
+              onSubmit,
+              isSubmitting,
+              dirty,
+              isValid,
+              values,
+              setFieldValue,
+            }) => (
+              <Form className="flex flex-col gap-2">
+                <>
+                  <div className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
+                    <div className="w-4">
+                      <Text weight={"bold"} color={"blue"}>
+                        {index + 1}
+                      </Text>
+                    </div>
+                    <div className="w-1/2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Main Paradim
+                      </Text>
                       <Select
-                        isDisabled={values.paradigm.main === ""}
-                        id={`paradigm.specific`}
-                        name={`paradigm.specific`}
-                        options={optionalParadigms
-                          .filter(
-                            (paradigm) =>
-                              paradigm.parent === values.paradigm.main
-                          )
-                          .map((item) => ({
-                            label: item.name,
-                            value: item.id,
-                          }))}
-                        value={optionalParadigms.find(
-                          (option) => option.value === values.paradigm.specific
-                        )}
-                        onChange={async (selectedOption) => {
-                          const paradigmExists = values.paradigm.specific;
-
-                          if (paradigmExists) {
-                            // delete the current paradigm
-                            await handleDeleteParadigmField(values);
-                          }
-                          //post new papradigm
-                          setFieldValue(
-                            `paradigm.specific`,
-                            selectedOption.value
-                          );
-
-                          handleSubmit(selectedOption.value);
+                        id={`paradigm.main`}
+                        name={`paradigm.main`}
+                        onChange={(v) => {
+                          setFieldValue(`paradigm.main`, v.value);
                         }}
+                        options={optionalParadigmsFamilies}
                       />
+                    </div>
 
-                      <div id="delete_field" className="flex gap-2">
-                        {paradigmValues.length - 1 === index && (
+                    <div className="w-1/2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Specific Paradigm
+                      </Text>
+
+                      <div className="flex  gap-3">
+                        <Select
+                          isDisabled={values.paradigm.main === ""}
+                          id={`paradigm.specific`}
+                          name={`paradigm.specific`}
+                          options={optionalParadigms
+                            .filter(
+                              (paradigm) =>
+                                paradigm.parent === values.paradigm.main
+                            )
+                            .map((item) => ({
+                              label: item.name,
+                              value: item.id,
+                            }))}
+                          value={optionalParadigms.find(
+                            (option) =>
+                              option.value === values.paradigm.specific
+                          )}
+                          onChange={async (selectedOption) => {
+                            const paradigmExists = values.paradigm.specific;
+
+                            if (paradigmExists) {
+                              // delete the current paradigm
+                              await handleDeleteParadigmField(values);
+                            }
+                            //post new papradigm
+                            setFieldValue(
+                              `paradigm.specific`,
+                              selectedOption.value
+                            );
+
+                            handleSubmit(selectedOption.value);
+                          }}
+                        />
+
+                        <div id="delete_field" className="flex gap-2">
                           <button
                             disabled={!submittedParadigm}
                             type="button"
@@ -168,15 +159,15 @@ export default function Paradigms({
                             }}>
                             <Trash />
                           </button>
-                        )}
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              </>
-            </Form>
-          )}
-        </Formik>
+                </>
+              </Form>
+            )}
+          </Formik>
+        </div>
       ))}
       <div className="w-full flex  justify-center">
         <button type="button" disabled={false} onClick={handleAddParadigmField}>

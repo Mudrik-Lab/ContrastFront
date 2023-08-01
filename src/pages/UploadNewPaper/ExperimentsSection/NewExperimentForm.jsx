@@ -139,17 +139,19 @@ export default function NewExperimentForm({
           experiment_pk={experimentID}
           theories={theories}
         />
-        {/*  <Samples
-                values={values}
-                setFieldValue={setFieldValue}
-                populations={populations}
-              />
-              <Tasks
-                values={values}
-                setFieldValue={setFieldValue}
-                tasksOptions={tasks}
-              />
-              <Stimulus
+        <Samples
+          populations={populations}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+        />
+        <Tasks
+          tasksOptions={tasks}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+        />
+        {/*     <Stimulus
                 values={values}
                 setFieldValue={setFieldValue}
                 modalities={stimulusModalities}
@@ -179,7 +181,12 @@ export default function NewExperimentForm({
         </Text>
 
         <Findings
-          options={{ techniquesOptions, findingTagsFamilies, findingTypes }}
+          disabled={!experimentID}
+          options={{
+            techniquesOptions,
+            findingTagsFamilies,
+            findingTypes,
+          }}
         />
       </div>
 
@@ -189,7 +196,7 @@ export default function NewExperimentForm({
           refetch();
           setAddNewExperiment(false);
         }}>
-        Abort & Exit
+        Exit
       </button>
     </div>
   );
