@@ -126,7 +126,7 @@ export default function NewExperimentForm({
           setExperimentID={setExperimentID}
         />
 
-        <Paradigms
+        {/* <Paradigms
           study_pk={study.id}
           disabled={!experimentID}
           experiment_pk={experimentID}
@@ -145,7 +145,7 @@ export default function NewExperimentForm({
           experiment_pk={experimentID}
           study_pk={study.id}
           disabled={!experimentID}
-        />
+        /> */}
         <Classification
           tasksOptions={tasks}
           experiment_pk={experimentID}
