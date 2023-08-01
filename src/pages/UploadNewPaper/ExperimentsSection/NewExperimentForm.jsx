@@ -18,13 +18,14 @@ import BasicClassification from "./BasicClassification";
 import { rawTextToShow } from "../../../Utils/functions";
 import Samples from "./Samples";
 import Paradigms from "./Paradigms";
-import Tasks from "./Tasks";
+import Tasks from "./Classification";
 import Stimulus from "./Stimulus";
 import Techniques from "./Techniques";
 import Measures from "./Measures";
 import AnalysisMeasures from "./AnalysisMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
+import Classification from "./Classification";
 
 export default function NewExperimentForm({
   study,
@@ -145,7 +146,7 @@ export default function NewExperimentForm({
           study_pk={study.id}
           disabled={!experimentID}
         />
-        <Tasks
+        <Classification
           tasksOptions={tasks}
           experiment_pk={experimentID}
           study_pk={study.id}
