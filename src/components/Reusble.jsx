@@ -1,9 +1,10 @@
 /** @format */
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
+import { ReactComponent as Trash } from "../assets/icons/trash.svg";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
-
+import { v4 as uuid } from "uuid";
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
 
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
@@ -549,6 +550,51 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
   );
 };
 
+export function TrashButton({ handleDelete, fieldValues, index }) {
+  return (
+    <button
+      type="button"
+      disabled={!fieldValues[index].id}
+      onClick={() => {
+        handleDelete(fieldValues, index);
+      }}>
+      <Trash />
+    </button>
+  );
+}
+
+export function AddFieldButton({ fieldValues, setFieldValues }) {
+  return (
+    <div className="w-full flex  justify-center">
+      <button
+        id="add"
+        type="button"
+        disabled={!fieldValues[fieldValues.length - 1].id}
+        onClick={() => {
+          setFieldValues([
+            ...fieldValues,
+            {
+              type: "",
+              description: "",
+              key: Math.round(Math.random() * 150),
+            },
+          ]);
+        }}>
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 32 32"
+          // fill={taskValues[index].id ? "#66BFF1" : "#999999"}
+          fill={"#66BFF1"}
+          width="25"
+          height="25">
+          <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
+          <path d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"></path>
+        </svg>{" "}
+      </button>
+    </div>
+  );
+}
+
 export const SubmitButton = ({ disabled, submit }) => {
   return (
     <div className="w-full flex justify-center">
@@ -604,9 +650,10 @@ export const YoavSelect = ({ options, value, onChange, disabled }) => {
       onChange={(e) => {
         onChange(e.currentTarget.value);
       }}>
+      <option key={uuid()}></option>
       {options.map((opt) => {
         return (
-          <option className="p-10 text-xl" key={opt.value} value={opt.value}>
+          <option key={uuid()} value={opt.value}>
             {opt.label}
           </option>
         );

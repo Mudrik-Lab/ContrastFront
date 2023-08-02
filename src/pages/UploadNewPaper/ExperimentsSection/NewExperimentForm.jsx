@@ -17,15 +17,14 @@ import { errorMsgClass } from "../../../Utils/HardCoded";
 import BasicClassification from "./BasicClassification";
 import { rawTextToShow } from "../../../Utils/functions";
 import Samples from "./Samples";
-import Paradigms from "./Paradigms";
-import Tasks from "./Classification";
 import Stimulus from "./Stimulus";
 import Techniques from "./Techniques";
 import Measures from "./Measures";
 import AnalysisMeasures from "./AnalysisMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
-import Classification from "./Classification";
+import Tasks from "./Tasks";
+import Paradigms from "./Paradigmss";
 
 export default function NewExperimentForm({
   study,
@@ -33,7 +32,7 @@ export default function NewExperimentForm({
   refetch,
 }) {
   const [experimentID, setExperimentID] = useState();
-
+  const randomKey = Math.round(Math.random() * 100);
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -56,7 +55,13 @@ export default function NewExperimentForm({
       label: cat.name,
     })); // name,id
   const stimulusSubCategories =
-    extraConfig?.data.available_stimulus_sub_category_type; //name, id, parent(by id number)
+    extraConfig?.data.available_stimulus_sub_category_type.map(
+      (subCategory) => ({
+        value: subCategory.id,
+        label: subCategory.name,
+        parent: subCategory.parent,
+      })
+    ); //name, id, parent(by id number)
   const stimulusModalities =
     extraConfig?.data.available_stimulus_modality_type.map((modality) => ({
       value: modality.id,
@@ -89,7 +94,7 @@ export default function NewExperimentForm({
     }));
 
   const theories = extraConfig?.data.available_theories?.map((theory) => ({
-    value: theory.name,
+    value: theory.id,
     label: theory.name,
   }));
   const findingTypes = extraConfig?.data.available_finding_tags_types?.map(
@@ -104,7 +109,6 @@ export default function NewExperimentForm({
       value: type.id,
       label: type.name,
     }));
-  //
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
       <div>
@@ -132,54 +136,98 @@ export default function NewExperimentForm({
           experiment_pk={experimentID}
           optionalParadigmsFamilies={paradigmsFamilies}
           optionalParadigms={paradigms}
-        />
-
-        <Interpretations
-          study_id={study.id}
-          disabled={!experimentID}
-          experiment_pk={experimentID}
-          theories={theories}
-        />
-        <Samples
-          populations={populations}
+        /> */}
+        <Paradigms
+          filedOptions={paradigmsFamilies}
+          optionalParadigms={paradigms}
           experiment_pk={experimentID}
           study_pk={study.id}
           disabled={!experimentID}
-        /> */}
-        <Classification
-          tasksOptions={tasks}
+          values={{
+            main: "",
+            specific: "",
+          }}
+        />
+        <Samples
+          filedOptions={populations}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+          values={{
+            type: "",
+            size_included: "",
+            total_size: "",
+            key: randomKey,
+          }}
+        />
+        <Tasks
+          filedOptions={tasks}
           experiment_pk={experimentID}
           study_pk={study.id}
           disabled={!experimentID}
           values={{
             type: "",
             description: "",
-            key: Math.round(Math.random() * 10),
+            key: randomKey,
           }}
         />
-        {/*     <Stimulus
-                values={values}
-                setFieldValue={setFieldValue}
-                modalities={stimulusModalities}
-                categories={stimulusCategories}
-                subCaotegories={stimulusSubCategories}
-              />
+        <Measures
+          filedOptions={measuresOptions}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+          values={{
+            type_id: "",
+            notes: "",
+          }}
+        />
+        <Interpretations
+          filedOptions={theories}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+          values={{
+            theory: "",
+            type: "",
+            key: randomKey,
+          }}
+        />
+        <Stimulus
+          filedOptions={stimulusCategories}
+          subCategories={stimulusSubCategories}
+          modalities={stimulusModalities}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+          values={{
+            category: "",
+            sub_category: "",
+            modality: "",
+            description: "",
+            duration: "",
+          }}
+        />
+        <AnalysisMeasures
+          filedOptions={analysisMeasuresOptions}
+          analysisPhaseOptions={analysisPhaseOptions}
+          experiment_pk={experimentID}
+          study_pk={study.id}
+          disabled={!experimentID}
+          values={{
+            type: "",
+            phase: "",
+            description: "",
+          }}
+        />
+
+        {/*     
               <Techniques
                 values={values}
                 setFieldValue={setFieldValue}
                 techniquesOptions={techniquesOptions}
               />
-              <Measures
-                values={values}
-                setFieldValue={setFieldValue}
-                measuresOptions={measuresOptions}
-              />
-              <AnalysisMeasures
-                values={values}
-                setFieldValue={setFieldValue}
-                analysisMeasuresOptions={analysisMeasuresOptions}
-                analysisPhaseOptions={analysisPhaseOptions}
-              /> */}
+              
+             */}
       </div>
       <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
         <Text color="grayReg" weight={"bold"}>

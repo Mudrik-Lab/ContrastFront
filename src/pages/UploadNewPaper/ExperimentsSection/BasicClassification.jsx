@@ -194,7 +194,7 @@ export default function BasicClassification({
             </div>
             <div className="w-full flex justify-center">
               <Button
-                type="button"
+                type={!submitted ? "submit" : "button"}
                 disabled={!(isValid && dirty)}
                 onClick={() => submitted && handleEdit(values)}>
                 <Vicon />

@@ -1,3 +1,14 @@
+import { toast } from "react-toastify";
+import { ToastBox } from "../components/Reusble";
+import {
+  addFieldToexperiment,
+  addPropertyToexperiment,
+} from "../apiHooks/createExperiment";
+import {
+  deleteFieldFromExperiments,
+  deletePropertyFromExperiment,
+} from "../apiHooks/deleteExperiment";
+
 export function blueToYellow(numColors) {
   const colors = [];
 
@@ -158,3 +169,134 @@ export const generateSelectOptions = (start, end) => {
   }
   return options;
 };
+
+export function SubmitClassificationField(
+  study_pk,
+  experiment_pk,
+  classificationName,
+  fieldValues,
+  setFieldValues
+) {
+  return async (values, index) => {
+    console.log(values);
+    if (
+      classificationName === "paradigm" &&
+      classificationName === "technique"
+    ) {
+      try {
+        const res = await addFieldToexperiment({
+          field: values[index],
+          study_pk,
+          experiment_pk,
+          field_name: classificationName,
+        });
+        if (res.status === 201) {
+          console.log(res);
+          toast.success(
+            <ToastBox
+              headline={"Success"}
+              text={`Added ${classificationName.slice(0, -1)} classification`}
+            />
+          );
+          const newArr = [...fieldValues];
+          newArr[index] = res.data;
+          setFieldValues(newArr);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      try {
+        const res = await addPropertyToexperiment({
+          experiment_pk,
+          study_pk,
+          paradigm_id: values,
+          classificationName,
+        });
+        if (res.status === 201) {
+          console.log(res);
+          toast.success(
+            <ToastBox
+              headline={"Success"}
+              text={`Added ${classificationName.slice(0, -1)} classification`}
+            />
+          );
+          const newArr = [...fieldValues];
+          newArr[index].id = res.data.id;
+          setFieldValues(newArr);
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+}
+export function DeleteClassificationField(
+  study_pk,
+  experiment_pk,
+  classificationName,
+  fieldValues,
+  setFieldValues
+) {
+  return async (values, index) => {
+    if (
+      classificationName === "paradigm" &&
+      classificationName === "technique"
+    ) {
+      try {
+        const res = await deleteFieldFromExperiments({
+          study_pk,
+          experiment_pk,
+          field_name: classificationName,
+          paradigm_id: values,
+        });
+        console.log(index);
+        if (res.status === 201) {
+          if (fieldValues.length !== 1) {
+            const newArr = [...fieldValues];
+            newArr.splice(index, 1);
+            setFieldValues(newArr);
+          } else {
+            setFieldValues([
+              {
+                type: "",
+                description: "",
+                key: Math.round(Math.random() * 101),
+              },
+            ]);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      console.log(values);
+      try {
+        const res = await deletePropertyFromExperiment({
+          study_pk,
+          experiment_pk,
+          classificationName,
+          paradigm_id: values[index].id,
+        });
+        console.log(index);
+        if (res.status === 204) {
+          if (fieldValues.length !== 1) {
+            const newArr = [...fieldValues];
+            newArr.splice(index, 1);
+            setFieldValues(newArr);
+          } else {
+            setFieldValues([
+              {
+                type: "",
+                description: "",
+                key: Math.round(Math.random() * 101),
+              },
+            ]);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+}

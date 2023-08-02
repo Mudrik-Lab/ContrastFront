@@ -13,15 +13,16 @@ import {
   rawTextToShow,
 } from "../../../Utils/functions";
 
-export default function Interpretations({
+export default function Paradigms({
   filedOptions,
+  optionalParadigms,
   disabled,
   experiment_pk,
   study_pk,
   values,
 }) {
   const [fieldValues, setFieldValues] = useState([values]);
-  const classificationName = "interpretations";
+  const classificationName = "paradigm";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
@@ -38,11 +39,7 @@ export default function Interpretations({
     fieldValues,
     setFieldValues
   );
-  const interpretationTypes = [
-    { label: "Supports", value: "pro" },
-    { label: "Challenges", value: "challenges" },
-    { label: "Nuetral", value: "nuetral" },
-  ];
+
   return (
     <ExpandingBox
       disabled={disabled}
@@ -58,42 +55,57 @@ export default function Interpretations({
                   </Text>
                 </div>
 
-                <div className="w-full flex gap-2 items-start">
+                <div className="flex gap-2 items-start">
                   <div id="field1" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Theory
+                    <Text
+                      weight={"bold"}
+                      color={"grayReg"}
+                      className={"whitespace-nowrap "}>
+                      Main paradigm
                     </Text>
                     <YoavSelect
                       disabled={fieldValue.id}
-                      value={fieldValue.theory}
+                      value={fieldValue.main}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
-                        newArray[index].theory = value;
+                        newArray[index].main = value;
                         setFieldValues(newArray);
                       }}
                       options={filedOptions}
                     />
                   </div>
-
-                  <div id="field2" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
+                  <div id="field1" className="w-full">
+                    <Text
+                      weight={"bold"}
+                      color={"grayReg"}
+                      className={"whitespace-nowrap"}>
+                      Specigic paradigm
                     </Text>
-
                     <YoavSelect
                       disabled={fieldValue.id}
-                      value={fieldValue.type}
+                      //   value={optionalParadigms.find(
+                      //     (option) => option.value === fieldValues[index].specific
+                      //   )}
+                      value={fieldValue.specific}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
-                        newArray[index].type = value;
+                        newArray[index].specific = value;
                         setFieldValues(newArray);
                       }}
-                      options={interpretationTypes}
+                      options={optionalParadigms
+                        .filter(
+                          (paradigm) =>
+                            paradigm.parent === fieldValues[index]?.main
+                        )
+                        .map((item) => ({
+                          label: item.name,
+                          value: item.id,
+                        }))}
                     />
                   </div>
                 </div>
 
-                <div id="trash+submit" className=" flex gap-2">
+                <div id="trash+submit" className="flex gap-2">
                   <TrashButton
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
@@ -101,11 +113,9 @@ export default function Interpretations({
                   />
                   <SubmitButton
                     submit={() => {
-                      handleSubmit(fieldValues, index);
+                      handleSubmit(fieldValues[index].specific, index);
                     }}
-                    disabled={
-                      !(fieldValue?.theory && fieldValue?.type) || fieldValue.id
-                    }
+                    disabled={!fieldValue?.specific || fieldValue.id}
                   />
                 </div>
               </div>

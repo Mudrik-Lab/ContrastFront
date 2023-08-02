@@ -47,16 +47,17 @@ export async function editExperiments({
   });
 }
 
-export async function addParadigmToexperiment({
-  paradigm,
+export async function addPropertyToexperiment({
+  paradigm_id,
   study_pk,
   experiment_pk,
+  classificationName,
 }) {
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_paradigm/`,
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName}/`,
     method: "POST",
     isProtected: true,
-    data: { id: paradigm },
+    data: { id: paradigm_id },
   });
 }
 
