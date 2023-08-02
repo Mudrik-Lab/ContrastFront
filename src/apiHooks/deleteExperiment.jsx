@@ -12,13 +12,13 @@ export async function deletePropertyFromExperiment({
   classificationName,
   study_pk,
   experiment_pk,
-  paradigm_id,
+  property_id,
 }) {
   return await queryApi({
     url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/remove_${classificationName}/`,
     method: "POST",
     isProtected: true,
-    data: { id: paradigm_id },
+    data: { id: property_id },
   });
 }
 

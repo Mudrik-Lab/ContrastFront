@@ -6,6 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
+import { v4 as uuid } from "uuid";
 import { useState } from "react";
 import {
   DeleteClassificationField,
@@ -45,7 +46,7 @@ export default function Measures({
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={fieldValue.key || fieldValue.id}>
+          <div key={uuid()}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">

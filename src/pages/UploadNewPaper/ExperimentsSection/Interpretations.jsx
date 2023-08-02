@@ -7,6 +7,8 @@ import {
   YoavSelect,
 } from "../../../components/Reusble";
 import { useState } from "react";
+import { v4 as uuid } from "uuid";
+
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -49,7 +51,7 @@ export default function Interpretations({
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={fieldValue.key || fieldValue.id}>
+          <div key={uuid()}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">

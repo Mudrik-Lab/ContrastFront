@@ -33,7 +33,7 @@ export default function NewExperimentForm({
 }) {
   const [experimentID, setExperimentID] = useState();
   const randomKey = Math.round(Math.random() * 100);
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+  const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
@@ -109,118 +109,122 @@ export default function NewExperimentForm({
       value: type.id,
       label: type.name,
     }));
+
   return (
-    <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
-      <div>
-        <Text weight={"bold"} color={"grayReg"}>
-          {study.title.slice(0, 20)}...
-        </Text>
-        <Text weight={"bold"} lg>
-          {`Experiment#${study.experiments.length + 1}`}
-        </Text>
-      </div>
-      <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
-        <Text color="grayReg" weight={"bold"}>
-          Experiment Classifications
-        </Text>
+    <>
+      {isSuccess && (
+        <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
+          <div>
+            <Text weight={"bold"} color={"grayReg"}>
+              {study.title.slice(0, 20)}...
+            </Text>
+            <Text weight={"bold"} lg>
+              {`Experiment#${study.experiments.length + 1}`}
+            </Text>
+          </div>
 
-        <BasicClassification
-          disabled={false}
-          study_id={study.id}
-          setExperimentID={setExperimentID}
-        />
+          <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
+            <Text color="grayReg" weight={"bold"}>
+              Experiment Classifications
+            </Text>
 
-        {/* <Paradigms
+            <BasicClassification
+              disabled={false}
+              study_id={study.id}
+              setExperimentID={setExperimentID}
+            />
+
+            {/* <Paradigms
           study_pk={study.id}
           disabled={!experimentID}
           experiment_pk={experimentID}
           optionalParadigmsFamilies={paradigmsFamilies}
           optionalParadigms={paradigms}
         /> */}
-        <Paradigms
-          filedOptions={paradigmsFamilies}
-          optionalParadigms={paradigms}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            main: "",
-            specific: "",
-          }}
-        />
-        <Samples
-          filedOptions={populations}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            type: "",
-            size_included: "",
-            total_size: "",
-            key: randomKey,
-          }}
-        />
-        <Tasks
-          filedOptions={tasks}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            type: "",
-            description: "",
-            key: randomKey,
-          }}
-        />
-        <Measures
-          filedOptions={measuresOptions}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            type_id: "",
-            notes: "",
-          }}
-        />
-        <Interpretations
-          filedOptions={theories}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            theory: "",
-            type: "",
-            key: randomKey,
-          }}
-        />
-        <Stimulus
-          filedOptions={stimulusCategories}
-          subCategories={stimulusSubCategories}
-          modalities={stimulusModalities}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            category: "",
-            sub_category: "",
-            modality: "",
-            description: "",
-            duration: "",
-          }}
-        />
-        <AnalysisMeasures
-          filedOptions={analysisMeasuresOptions}
-          analysisPhaseOptions={analysisPhaseOptions}
-          experiment_pk={experimentID}
-          study_pk={study.id}
-          disabled={!experimentID}
-          values={{
-            type: "",
-            phase: "",
-            description: "",
-          }}
-        />
+            <Paradigms
+              filedOptions={paradigmsFamilies}
+              optionalParadigms={paradigms}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                main: "",
+                specific: "",
+              }}
+            />
+            <Samples
+              filedOptions={populations}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                type: "",
+                size_included: "",
+                total_size: "",
+                key: randomKey,
+              }}
+            />
+            <Tasks
+              filedOptions={tasks}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                type: "",
+                description: "",
+                key: randomKey,
+              }}
+            />
+            <Measures
+              filedOptions={measuresOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                type_id: "",
+                notes: "",
+              }}
+            />
+            <Interpretations
+              filedOptions={theories}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                theory: "",
+                type: "",
+                key: randomKey,
+              }}
+            />
+            <Stimulus
+              filedOptions={stimulusCategories}
+              subCategories={stimulusSubCategories}
+              modalities={stimulusModalities}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                category: "",
+                sub_category: "",
+                modality: "",
+                description: "",
+                duration: "",
+              }}
+            />
+            <AnalysisMeasures
+              filedOptions={analysisMeasuresOptions}
+              analysisPhaseOptions={analysisPhaseOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                type: "",
+                phase: "",
+                description: "",
+              }}
+            />
 
-        {/*     
+            {/*     
               <Techniques
                 values={values}
                 setFieldValue={setFieldValue}
@@ -228,31 +232,33 @@ export default function NewExperimentForm({
               />
               
              */}
-      </div>
-      <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
-        <Text color="grayReg" weight={"bold"}>
-          Findings
-        </Text>
+          </div>
+          <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
+            <Text color="grayReg" weight={"bold"}>
+              Findings
+            </Text>
 
-        <Findings
-          disabled={!experimentID}
-          options={{
-            techniquesOptions,
-            findingTagsFamilies,
-            findingTypes,
-          }}
-        />
-      </div>
+            <Findings
+              disabled={!experimentID}
+              options={{
+                techniquesOptions,
+                findingTagsFamilies,
+                findingTypes,
+              }}
+            />
+          </div>
 
-      <button
-        className="font-bold my-2"
-        onClick={() => {
-          refetch();
-          setAddNewExperiment(false);
-        }}>
-        Exit
-      </button>
-    </div>
+          <button
+            className="font-bold my-2"
+            onClick={() => {
+              refetch();
+              setAddNewExperiment(false);
+            }}>
+            Exit
+          </button>
+        </div>
+      )}
+    </>
   );
 }
 

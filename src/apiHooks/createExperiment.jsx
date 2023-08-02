@@ -48,7 +48,7 @@ export async function editExperiments({
 }
 
 export async function addPropertyToexperiment({
-  paradigm_id,
+  property_id,
   study_pk,
   experiment_pk,
   classificationName,
@@ -57,7 +57,7 @@ export async function addPropertyToexperiment({
     url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName}/`,
     method: "POST",
     isProtected: true,
-    data: { id: paradigm_id },
+    data: { id: property_id },
   });
 }
 

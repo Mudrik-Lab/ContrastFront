@@ -180,8 +180,8 @@ export function SubmitClassificationField(
   return async (values, index) => {
     console.log(values);
     if (
-      classificationName === "paradigm" &&
-      classificationName === "technique"
+      classificationName !== "paradigm" &&
+      classificationName !== "technique"
     ) {
       try {
         const res = await addFieldToexperiment({
@@ -210,7 +210,7 @@ export function SubmitClassificationField(
         const res = await addPropertyToexperiment({
           experiment_pk,
           study_pk,
-          paradigm_id: values,
+          property_id: values,
           classificationName,
         });
         if (res.status === 201) {
@@ -240,18 +240,17 @@ export function DeleteClassificationField(
 ) {
   return async (values, index) => {
     if (
-      classificationName === "paradigm" &&
-      classificationName === "technique"
+      classificationName !== "paradigm" &&
+      classificationName !== "technique"
     ) {
       try {
         const res = await deleteFieldFromExperiments({
           study_pk,
           experiment_pk,
           field_name: classificationName,
-          paradigm_id: values,
+          id: values[index].id,
         });
-        console.log(index);
-        if (res.status === 201) {
+        if (res.status === 204) {
           if (fieldValues.length !== 1) {
             const newArr = [...fieldValues];
             newArr.splice(index, 1);
@@ -270,13 +269,14 @@ export function DeleteClassificationField(
         console.log(e);
       }
     } else {
-      console.log(values);
+      console.log(classificationName);
+
       try {
         const res = await deletePropertyFromExperiment({
           study_pk,
           experiment_pk,
           classificationName,
-          paradigm_id: values[index].id,
+          property_id: values[index].id,
         });
         console.log(index);
         if (res.status === 204) {
