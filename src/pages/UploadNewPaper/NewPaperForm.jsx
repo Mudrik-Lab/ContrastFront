@@ -260,7 +260,7 @@ export default function NewPaperForm({ setAddNewPaper }) {
                 <button
                   onClick={() => setAddNewPaper(false)}
                   className="font-bold">
-                  Abort & Exit
+                  Exit
                 </button>
               </div>
             </Form>

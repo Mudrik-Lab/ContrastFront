@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ReactComponent as AddField } from "../../../assets/icons/add-field-icon.svg";
 import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 import { addFieldToexperiment } from "../../../apiHooks/createExperiment";
-import { deleteExperimentsSample } from "../../../apiHooks/deleteExperiment";
+import { deleteFieldFromExperiments } from "../../../apiHooks/deleteExperiment";
 
 export default function Samples({
   populations,
@@ -42,8 +42,9 @@ export default function Samples({
     const id = sampleId.find((x) => x.index === index).sample_id;
     console.log(id);
     try {
-      const res = await deleteExperimentsSample({
+      const res = await deleteFieldFromExperiments({
         study_pk,
+        field_name: "samples",
         experiment_pk,
         id: id,
       });
