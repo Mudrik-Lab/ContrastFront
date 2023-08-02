@@ -1,5 +1,10 @@
 import classNames from "classnames";
 import react, { useState } from "react";
+import { deleteExperiment } from "../apiHooks/deleteExperiment";
+import { showTextToRaw } from "../Utils/functions";
+import { toast } from "react-toastify";
+import { ToastBox } from "./Reusble";
+import ConfirmModal from "./ConfirmModal";
 
 export default function SideStatus({
   number,
@@ -10,8 +15,34 @@ export default function SideStatus({
   completedStudy,
   setPaperToShow,
   setNewPaper,
+  setShowEditble,
+  showEditble,
+  setAddNewExperiment,
+  refetch,
 }) {
   const [open, setOpen] = useState(false);
+
+  const handleDelete = async (paper, experiment) => {
+    const experiment_pk = paper.id;
+    const study_pk = paper.study;
+    const confirmed = window.confirm(`Would you like to delete ${paper.title}`);
+    if (confirmed) {
+      try {
+        const res = await deleteExperiment({ experiment_pk, study_pk });
+        if (res.status === 204) {
+          setPaperToShow();
+          toast.success(
+            <ToastBox headline={"experiment was deleted successfully"} />
+          );
+          refetch();
+        }
+        console.log(res);
+      } catch (e) {
+        console.log(e);
+      }
+    }
+    // })
+  };
   let color =
     status === "Complete"
       ? "green-500"
@@ -42,6 +73,7 @@ export default function SideStatus({
   if (disabled) {
     fill = "#6D6D6D";
   }
+
   return (
     <div
       className={classNames(
@@ -50,7 +82,7 @@ export default function SideStatus({
       <div
         className="flex justify-between font-bold cursor-pointer text-base"
         onClick={() => setOpen(!open)}>
-        <span>{status}</span>
+        <span>{isExperiment ? "Submitted Experiments" : status}</span>
 
         <div className="flex items-center gap-1">
           <span>({number})</span>
@@ -108,19 +140,51 @@ export default function SideStatus({
                 </span>
               </div>
               {!completedStudy && (
-                <div className="flex gap-1 items-center text-xs">
-                  <span>edit</span>
+                <div
+                  className={classNames(
+                    `flex gap-1 items-center ${
+                      isExperiment ? "text-base" : "text-xs"
+                    }`
+                  )}>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (isExperiment) {
+                        setPaperToShow(paper);
+                        setNewPaper(false);
+                        console.log(paper, "op1");
+                      } else {
+                        setPaperToShow(paper.id);
+                        if (paper.approval_status === 0) {
+                          console.log(paper, "op2");
+                          setShowEditble(true);
+                        }
+                      }
+                    }}>
+                    edit
+                  </span>
                   <span>|</span>
 
-                  <span>delete</span>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (isExperiment) {
+                        handleDelete(paper);
+                      }
+                    }}>
+                    delete
+                  </span>
                 </div>
               )}
             </div>
           ))}
-          {!completedStudy && (
+          {!completedStudy && showEditble && (
             <span
               className="font-bold text-xs cursor-pointer"
-              onClick={() => setNewPaper(true)}>
+              onClick={() => {
+                setNewPaper(true);
+                setAddNewExperiment(true);
+              }}>
               + Add new {isExperiment ? "experiment" : "paper"}
             </span>
           )}

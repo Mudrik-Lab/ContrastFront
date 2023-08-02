@@ -1,118 +1,179 @@
-import { Field, FieldArray } from "formik";
-import { ExpandingBox, Text } from "../../../components/Reusble";
+import { Field, FieldArray, Formik, Form } from "formik";
+import {
+  Button,
+  ExpandingBox,
+  SubmitButton,
+  Text,
+  ToastBox,
+} from "../../../components/Reusble";
 import Select from "react-select";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { addParadigmToexperiment } from "../../../apiHooks/createExperiment";
+import { toast } from "react-toastify";
+import { deleteExperimentsParadigm } from "../../../apiHooks/deleteExperiment";
+import { useQuery } from "@tanstack/react-query";
+import { getExperiment } from "../../../apiHooks/getExperiment";
+import { ReactComponent as AddField } from "../../../assets/icons/add-field-icon.svg";
+import { ReactComponent as Trash } from "../../../assets/icons/trash.svg";
 
 export default function Paradigms({
-  values,
-  setFieldValue,
   optionalParadigms,
   optionalParadigmsFamilies,
+  experiment_pk,
+  study_pk,
+  disabled,
 }) {
-  const [count, setCount] = useState(0);
+  const [submittedParadigm, setSubmittedParadigm] = useState(false);
+  const [paradigmValues, setParadigmValues] = useState([1]);
+
+  const initialValues = { paradigm: { main: "", specific: "" } };
+
+  const handleSubmit = async (values) => {
+    try {
+      const res = await addParadigmToexperiment({
+        experiment_pk: experiment_pk,
+        study_pk,
+        paradigm: values,
+      });
+      if (res.status === 201) {
+        setSubmittedParadigm(res.data);
+        console.log(res.data);
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={
+              "Paradigm was successfully added to experiment's classifications"
+            }
+          />
+        );
+      }
+      console.log(res);
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleDeleteParadigmField = async (values, index) => {
+    console.log(index);
+    try {
+      const res = await deleteExperimentsParadigm({
+        study_pk,
+        experiment_pk,
+        paradigm: values.paradigm.specific,
+      });
+      if (res.status === 204) {
+        toast.success(
+          <ToastBox headline={"Success"} text={"Paradigm was deleted"} />
+        );
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  };
+
+  const handleAddParadigmField = () => {
+    setParadigmValues([...paradigmValues, ""]);
+  };
 
   return (
-    <ExpandingBox headline={"Paradigms"}>
-      <FieldArray name="paradigms">
-        {({ push, remove }) => (
-          <>
-            {values.paradigms.map((_, index) => (
-              <div
-                key={index}
-                className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                <div className="w-4">
-                  <Text weight={"bold"} color={"blue"}>
-                    {index + 1}
-                  </Text>
-                </div>
-                <div className="w-full">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Main Paradim
-                  </Text>
-                  <Select
-                    id={`paradigms[${index}].main`}
-                    name={`paradigms[${index}].main`}
-                    onChange={(v) => {
-                      setFieldValue(`paradigms[${index}].main`, v.value);
-                    }}
-                    options={optionalParadigmsFamilies}
-                  />
-                </div>
+    <ExpandingBox id="paradigm-box" disabled={disabled} headline={"Paradigms"}>
+      {paradigmValues.map((_, index) => (
+        <div id={`paradigm${index}`} key={index}>
+          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+            {({
+              onSubmit,
+              isSubmitting,
+              dirty,
+              isValid,
+              values,
+              setFieldValue,
+            }) => (
+              <Form className="flex flex-col gap-2">
+                <>
+                  <div className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
+                    <div className="w-4">
+                      <Text weight={"bold"} color={"blue"}>
+                        {index + 1}
+                      </Text>
+                    </div>
+                    <div className="w-1/2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Main Paradim
+                      </Text>
+                      <Select
+                        id={`paradigm.main`}
+                        name={`paradigm.main`}
+                        onChange={(v) => {
+                          setFieldValue(`paradigm.main`, v.value);
+                        }}
+                        options={optionalParadigmsFamilies}
+                      />
+                    </div>
 
-                <div className="w-full">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Specific Paradigm
-                  </Text>
+                    <div className="w-1/2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Specific Paradigm
+                      </Text>
 
-                  <div className="flex gap-2">
-                    <Select
-                      isDisabled={values.paradigms[index].main === ""}
-                      id={`paradigms[${index}].specific`}
-                      name={`paradigms[${index}].specific`}
-                      onChange={(v) =>
-                        setFieldValue(`paradigms[${index}].specific`, v.value)
-                      }
-                      options={optionalParadigms
-                        .filter(
-                          (paradigm) =>
-                            paradigm.parent === values.paradigms[index].main
-                        )
-                        .map((item) => ({
-                          label: item.name,
-                          value: item.id,
-                        }))}
-                    />
-                    {index === values.paradigms.length - 1 && index !== 0 && (
-                      <button
-                        type="button"
-                        disabled={count === 0}
-                        onClick={() => {
-                          count > 0 && setCount(count - 1);
-                          remove(index);
-                        }}>
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="16"
-                          height="16"
-                          fill="currentColor"
-                          viewBox="0 0 16 16">
-                          {" "}
-                          <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />{" "}
-                          <path
-                            fillRule="evenodd"
-                            d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                          />{" "}
-                        </svg>
-                      </button>
-                    )}
+                      <div className="flex  gap-3">
+                        <Select
+                          isDisabled={values.paradigm.main === ""}
+                          id={`paradigm.specific`}
+                          name={`paradigm.specific`}
+                          options={optionalParadigms
+                            .filter(
+                              (paradigm) =>
+                                paradigm.parent === values.paradigm.main
+                            )
+                            .map((item) => ({
+                              label: item.name,
+                              value: item.id,
+                            }))}
+                          value={optionalParadigms.find(
+                            (option) =>
+                              option.value === values.paradigm.specific
+                          )}
+                          onChange={async (selectedOption) => {
+                            const paradigmExists = values.paradigm.specific;
+
+                            if (paradigmExists) {
+                              // delete the current paradigm
+                              await handleDeleteParadigmField(values);
+                            }
+                            //post new papradigm
+                            setFieldValue(
+                              `paradigm.specific`,
+                              selectedOption.value
+                            );
+
+                            handleSubmit(selectedOption.value);
+                          }}
+                        />
+
+                        <div id="delete_field" className="flex gap-2">
+                          <button
+                            disabled={!submittedParadigm}
+                            type="button"
+                            onClick={async () => {
+                              await handleDeleteParadigmField(values, index);
+                            }}>
+                            <Trash />
+                          </button>
+                        </div>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-            ))}
-            <div className="w-full flex  justify-center">
-              <button
-                type="button"
-                disabled={values.paradigms[count].specific === ""}
-                onClick={() => {
-                  console.log(count);
-                  setCount(count + 1);
-                  push("");
-                }}>
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  viewBox="0 0 32 32"
-                  id="add"
-                  fill={"#66BFF1"}
-                  width="25"
-                  height="25">
-                  <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
-                  <path d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"></path>
-                </svg>{" "}
-              </button>
-            </div>
-          </>
-        )}
-      </FieldArray>
+                </>
+              </Form>
+            )}
+          </Formik>
+        </div>
+      ))}
+      <div className="w-full flex  justify-center">
+        <button type="button" disabled={false} onClick={handleAddParadigmField}>
+          <AddField />{" "}
+        </button>
+      </div>
     </ExpandingBox>
   );
 }

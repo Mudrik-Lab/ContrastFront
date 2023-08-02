@@ -7,6 +7,7 @@ import {
   Button,
   FilterExplanation,
   Spacer,
+  ToastBox,
 } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
@@ -20,8 +21,9 @@ import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFormConfig from "../../apiHooks/getFormConfiguration";
 import { submitStudy } from "../../apiHooks/getStudies";
+import { toast } from "react-toastify";
 
-export default function NewPaperForm() {
+export default function NewPaperForm({ setAddNewPaper }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [addExperiments, setAddExperiments] = useState(false);
@@ -72,9 +74,18 @@ export default function NewPaperForm() {
         source_title: values.source_title.value,
       });
       console.log(res);
-      res.status === 201 && setAddExperiments(true);
+      if (res.status === 201) {
+        setAddExperiments(true);
+        toast.success(
+          <ToastBox
+            headline={"New experiment was created successfully"}
+            text={"You can add the experiments details now"}
+          />
+        );
+      }
     } catch (e) {
       console.log(e);
+      toast.error(e.message);
     }
   };
   const countryOption = useMemo(() => countryList().getData(), []);
@@ -226,7 +237,7 @@ export default function NewPaperForm() {
               </div>
               <Spacer height={20} />
 
-              <div className="flex gap-2">
+              <div className="flex gap-4">
                 <Button
                   type="submit"
                   //   disabled={!(isSubmitting && isValid)}
@@ -246,12 +257,21 @@ export default function NewPaperForm() {
                   </svg>
                   Submit Paper
                 </Button>
-                <button className="font-bold text-lg"> Save& Exit</button>
+                <button
+                  onClick={() => setAddNewPaper(false)}
+                  className="font-bold">
+                  Exit
+                </button>
               </div>
             </Form>
           )}
         </Formik>
-        {addExperiments && <div>Experiments</div>}
+        <Spacer height={20} />
+        {addExperiments && (
+          <div>
+            <ExperimentsBox />
+          </div>
+        )}
       </div>
     </div>
   );

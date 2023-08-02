@@ -27,9 +27,12 @@ export default function UncompletedPaper({
   study,
   paperToShow,
   setPaperToShow,
+  showEditble,
+  refetch,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
+  const [addNewExperiment, setAddNewExperiment] = useState(false);
   const [newPaper, setNewPaper] = useState(false);
   const countryOption = useMemo(() => countryList().getData(), []);
 
@@ -40,6 +43,10 @@ export default function UncompletedPaper({
   const authorsList = extraConfig?.data.available_authors.map((author) => ({
     value: author.id,
     label: author.name,
+  }));
+  const journalsList = extraConfig?.data.existing_journals.map((journal) => ({
+    value: journal,
+    label: journal,
   }));
 
   useEffect(() => {
@@ -54,7 +61,7 @@ export default function UncompletedPaper({
       value: author.id,
       label: author.name,
     })),
-    source_title: study.source_title || "",
+    source_title: study.source_title,
     countries: study.countries.map((country) => ({
       value: country,
       label: countries[country].name,
@@ -91,6 +98,7 @@ export default function UncompletedPaper({
       console.log(e);
     }
   };
+
   return (
     <div>
       {study && (
@@ -106,7 +114,10 @@ export default function UncompletedPaper({
           />
           <Spacer height={10} />
           <div className="flex justify-between">
-            <div className="p-2 h-full w-[49%] shadow-3xl">
+            <div className="p-2 h-full w-[49%] shadow-3xl relative">
+              {addNewExperiment && (
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-30"></div>
+              )}
               <div className="flex flex-col gap-4">
                 <div>
                   <Text weight={"bold"} color={"grayReg"}>
@@ -132,7 +143,8 @@ export default function UncompletedPaper({
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  validationSchema={validationSchema}>
+                  // validationSchema={validationSchema}
+                >
                   {({
                     onSubmit,
                     isSubmitting,
@@ -211,13 +223,23 @@ export default function UncompletedPaper({
                             Journals
                           </Text>
                           <div className="flex items-center gap-2">
-                            <Field
+                            {/* <Field
                               name="source_title"
                               id="source_title"
                               placeholder="Select Journals"
                               className={
                                 "border border-grayFrame p-2 w-full text-base rounded-md"
                               }
+                            /> */}
+                            <Select
+                              name={"source_title"}
+                              id={"source_title"}
+                              defaultInputValue={values.source_title}
+                              onChange={(v) => {
+                                console.log(values.source_title),
+                                  setFieldValue("source_title", v.value);
+                              }}
+                              options={journalsList}
                             />
 
                             <FilterExplanation text={""} tooltip={""} />
@@ -258,7 +280,7 @@ export default function UncompletedPaper({
                       <div className="flex gap-2">
                         <Button
                           type="submit"
-                          disabled={!(isSubmitting && isValid)}
+                          disabled={isSubmitting && !isValid}
                           // className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy"
                           extraClass={
                             " disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none"
@@ -276,12 +298,8 @@ export default function UncompletedPaper({
                               />
                             </g>
                           </svg>
-                          Submit Paper
+                          Update Paper
                         </Button>
-                        <button className="font-bold text-lg">
-                          {" "}
-                          Save& Exit
-                        </button>
                       </div>
                     </Form>
                   )}
@@ -289,9 +307,14 @@ export default function UncompletedPaper({
               </div>
               <Spacer height={20} />
               <ExperimentsBox
+                refetch={refetch}
+                completedStudy={false}
                 disabled={false}
                 setNewPaper={setNewPaper}
                 setPaperToShow={setPaperToShow}
+                study={study}
+                setAddNewExperiment={setAddNewExperiment}
+                showEditble={showEditble}
                 experiments={study?.experiments.map((experiment, index) => ({
                   ...experiment,
                   title: `Experiment #${index + 1}`,
@@ -299,7 +322,13 @@ export default function UncompletedPaper({
               />
               <Spacer height={20} />
             </div>
-            {newPaper && <NewExperimentForm study={study} />}
+            {addNewExperiment && (
+              <NewExperimentForm
+                study={study}
+                setAddNewExperiment={setAddNewExperiment}
+                refetch={refetch}
+              />
+            )}
             {paperToShow && !newPaper && (
               <ExperimentDetails experiment={paperToShow} study={study} />
             )}

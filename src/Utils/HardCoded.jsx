@@ -3,6 +3,8 @@ export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
 export const fieldClass = "border border-gray-300 rounded-sm p-2 h-10 w-72";
+export const numericFieldClass =
+  "border border-gray-300 rounded-[4px] p-2 h-[39.2px] w-20";
 export const sideSectionClass =
   "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
 export const errorMsgClass = "text-red-500 text-sm mt-1 text-center";
@@ -15,21 +17,31 @@ export const plotConfig = {
     filename: `${window.location.href}`,
     scale: 1, // Multiply title/legend/axis/canvas sizes by this factor
   },
-  // modeBarButtonsToAdd: [
-  //   {
-  //     name: "Download plot as svg",
-  //     icon: {
-  //       width: 20,
-  //       height: 20,
-  //       path: "M12 22L3 13h5V3h8v10h5l-9 9z",
-  //     },
-  //     click: handleDownloadSVG,
-  //   },
-  // ],
   displaylogo: false,
 };
 export const isMoblile = screenWidth < 600;
-
+export const experimentTypeOptions = [
+  { vlaue: null, label: "" },
+  { value: "1", label: "1" },
+  { value: "2", label: "2" },
+  { value: "3", label: "3" },
+];
+export const concsiousnessOptions = [
+  { vlaue: null, label: "" },
+  { value: "state", label: "State" },
+  { value: "content", label: "Content" },
+];
+export const reportOptions = [
+  { vlaue: null, label: "" },
+  { value: "report", label: "Report" },
+  { value: "no_report", label: "No Report" },
+];
+export const theoryDrivenOptions = [
+  { vlaue: null, label: "" },
+  { value: "driven", label: "Driven" },
+  { value: "mentioning", label: "Mentioning" },
+  { value: "post-hoc", label: "Post Hoc" },
+];
 export const parametersOptions = [
   {
     value: "paradigm_family",

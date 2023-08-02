@@ -11,9 +11,9 @@ export default function ExperimentDetails({ experiment, study }) {
     [`more_configurations`],
     getExtraConfig
   );
-
+  const tasks = extraConfig?.data.available_tasks_types;
+  console.log(tasks.find((x) => x.id === 4).name);
   const paradigmsWithFamily = extraConfig?.data.available_paradigms;
-  console.log(experiment);
 
   return (
     <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
@@ -68,7 +68,8 @@ export default function ExperimentDetails({ experiment, study }) {
                 <Text>
                   {" "}
                   {
-                    paradigmsWithFamily?.find((x) => x.name === paradigm).parent
+                    paradigmsWithFamily?.find((x) => x.name === paradigm.name)
+                      .parent
                   }{" "}
                 </Text>
               </div>
@@ -76,7 +77,7 @@ export default function ExperimentDetails({ experiment, study }) {
                 <Text weight={"bold"} color={"grayReg"}>
                   Specific Paradigm
                 </Text>
-                <Text>{paradigm}</Text>
+                <Text>{paradigm.name}</Text>
               </div>
             </div>
           ))}
@@ -154,7 +155,7 @@ export default function ExperimentDetails({ experiment, study }) {
                   <Text weight={"bold"} color={"grayReg"}>
                     Type
                   </Text>
-                  <Text>{task.type}</Text>
+                  <Text>{tasks.find((x) => x.id === task.type)?.name}</Text>
                 </div>
 
                 <div>

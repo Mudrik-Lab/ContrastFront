@@ -19,6 +19,7 @@ import NewPaperForm from "./NewPaperForm";
 
 export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
+  const [showEditble, setShowEditble] = useState(false);
   const [addNewPaper, setAddNewPaper] = useState(false);
 
   const navigate = useNavigate();
@@ -97,6 +98,7 @@ export default function UploadNewPaper() {
                 <SideStatus
                   status={"Uncompleted submissions"}
                   setPaperToShow={setPaperToShow}
+                  setShowEditble={setShowEditble}
                   number={
                     data.data.filter((paper) => paper.approval_status == 0)
                       .length
@@ -129,9 +131,14 @@ export default function UploadNewPaper() {
           graph={
             <div className="overflow-x-scroll h-full">
               {addNewPaper ? (
-                <NewPaperForm />
+                <NewPaperForm setAddNewPaper={setAddNewPaper} />
               ) : (
-                paperToShow && <PaperSection paperId={paperToShow} />
+                paperToShow && (
+                  <PaperSection
+                    showEditble={showEditble}
+                    paperId={paperToShow}
+                  />
+                )
               )}
             </div>
           }

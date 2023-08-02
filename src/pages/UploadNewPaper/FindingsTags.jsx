@@ -30,18 +30,18 @@ export default function FindingsTags({ experiment }) {
               </Text>
             </div>
             <div className="flex flex-col gap-2 w-full">
-              <div className=" w-full ">
+              <div className=" w-full flex flex-col gap-2">
                 <Element headline={"Technique"} text={tag.technique} />
                 <Element headline={"Type"} text={tag.type} />
                 <Element headline={"Family"} text={tag.family} />
 
                 {tag.family === "Temporal" ? (
-                  <div>
+                  <div className=" w-full flex flex-col gap-2">
                     <Element headline={"Onset"} text={tag.onset} />
                     <Element headline={"Offset"} text={tag.offset} />
                   </div>
                 ) : tag.family === "Frequency" ? (
-                  <div>
+                  <div className=" w-full flex flex-col gap-2">
                     <Element
                       headline={"Correlation sign"}
                       text={tag.correlation_sign}
@@ -60,7 +60,7 @@ export default function FindingsTags({ experiment }) {
                     />
                   </div>
                 ) : tag.family === "Spatial Areas" ? (
-                  <div>
+                  <div className=" w-full flex flex-col gap-2">
                     <Element
                       headline={" AAL atlas tag"}
                       text={tag.AAL_atlas_tag}
