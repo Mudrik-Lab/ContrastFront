@@ -134,13 +134,6 @@ export default function NewExperimentForm({
               setExperimentID={setExperimentID}
             />
 
-            {/* <Paradigms
-          study_pk={study.id}
-          disabled={!experimentID}
-          experiment_pk={experimentID}
-          optionalParadigmsFamilies={paradigmsFamilies}
-          optionalParadigms={paradigms}
-        /> */}
             <Paradigms
               filedOptions={paradigmsFamilies}
               optionalParadigms={paradigms}
@@ -150,6 +143,15 @@ export default function NewExperimentForm({
               values={{
                 main: "",
                 specific: "",
+              }}
+            />
+            <Techniques
+              filedOptions={techniquesOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                technique: "",
               }}
             />
             <Samples
@@ -223,15 +225,6 @@ export default function NewExperimentForm({
                 description: "",
               }}
             />
-
-            {/*     
-              <Techniques
-                values={values}
-                setFieldValue={setFieldValue}
-                techniquesOptions={techniquesOptions}
-              />
-              
-             */}
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
             <Text color="grayReg" weight={"bold"}>
@@ -239,11 +232,25 @@ export default function NewExperimentForm({
             </Text>
 
             <Findings
-              disabled={!experimentID}
-              options={{
+              filedOptions={{
                 techniquesOptions,
                 findingTagsFamilies,
                 findingTypes,
+              }}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                family: "",
+                type: "",
+                onset: "",
+                offset: "",
+                band_lower_bound: "",
+                band_higher_bound: "",
+                AAL_atlas_tag: "",
+                notes: "",
+                analysis_type: "",
+                technique: "",
               }}
             />
           </div>
