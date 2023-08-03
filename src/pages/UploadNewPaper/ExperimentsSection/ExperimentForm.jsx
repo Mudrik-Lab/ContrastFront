@@ -147,13 +147,15 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.paradigms}
             />
-            <Techniques
-              filedOptions={techniquesOptions}
+            <Interpretations
+              filedOptions={theories}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={{
-                technique: "",
+                theory: "",
+                type: "",
+                key: randomKey,
               }}
             />
             <Samples
@@ -179,27 +181,6 @@ export default function ExperimentForm({
                 key: randomKey,
               }}
             />
-            <Measures
-              filedOptions={measuresOptions}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={{
-                type_id: "",
-                notes: "",
-              }}
-            />
-            <Interpretations
-              filedOptions={theories}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={{
-                theory: "",
-                type: "",
-                key: randomKey,
-              }}
-            />
             <Stimulus
               filedOptions={stimulusCategories}
               subCategories={stimulusSubCategories}
@@ -215,6 +196,27 @@ export default function ExperimentForm({
                 duration: "",
               }}
             />
+            <Techniques
+              filedOptions={techniquesOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                technique: "",
+              }}
+            />
+
+            <Measures
+              filedOptions={measuresOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={{
+                type_id: "",
+                notes: "",
+              }}
+            />
+
             <AnalysisMeasures
               filedOptions={analysisMeasuresOptions}
               analysisPhaseOptions={analysisPhaseOptions}
@@ -260,8 +262,9 @@ export default function ExperimentForm({
           <button
             className="font-bold my-2"
             onClick={() => {
-              refetch();
               setPaperToEdit(false);
+              setAddNewExperiment(false);
+              refetch();
               // !isEditMode && setAddNewExperiment(false);
             }}>
             Exit

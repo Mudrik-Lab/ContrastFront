@@ -327,6 +327,7 @@ export default function UncompletedPaper({
             </div>
             {addNewExperiment && (
               <ExperimentForm
+                setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 refetch={refetch}

@@ -120,7 +120,11 @@ export default function PaperSection({
                   <Spacer height={20} />
                 </div>
                 {paperToShow && (
-                  <ExperimentDetails experiment={paperToShow} study={study} />
+                  <ExperimentDetails
+                    setPaperToShow={setPaperToShow}
+                    experiment={paperToShow}
+                    study={study}
+                  />
                 )}
               </div>
             </div>
