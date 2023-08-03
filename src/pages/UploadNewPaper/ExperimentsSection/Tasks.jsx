@@ -45,16 +45,16 @@ export default function Tasks({
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={fieldValue.key || fieldValue.id}>
-            <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
+          <div key={`${classificationName}-${index}`}>
+            <form className=" flex flex-col gap-2">
+              <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">
                   <Text weight={"bold"} color={"blue"}>
-                    {fieldValue.id || index + 1}
+                    {index + 1}
                   </Text>
                 </div>
 
-                <div className="flex gap-2 items-start">
+                <div className="w-full flex gap-2 items-start">
                   <div id="field1" className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
                       Type
@@ -71,7 +71,7 @@ export default function Tasks({
                     />
                   </div>
 
-                  <div id="field2" className="w-full">
+                  <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
                       Description
                     </Text>

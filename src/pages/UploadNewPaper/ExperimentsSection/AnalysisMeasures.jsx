@@ -50,7 +50,7 @@ export default function AnalysisMeasures({
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">
                   <Text weight={"bold"} color={"blue"}>
-                    {fieldValue.id || index + 1}
+                    {index + 1}
                   </Text>
                 </div>
                 <div className="flex gap-2 items-start">

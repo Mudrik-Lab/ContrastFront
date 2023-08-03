@@ -1,19 +1,8 @@
 import React, { useState } from "react";
-import {
-  ExpandingBox,
-  FilterExplanation,
-  Spacer,
-  Text,
-  Button,
-  ButtonReversed,
-  WhiteButton,
-} from "../../../components/Reusble";
+import { Text } from "../../../components/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
-import FindingsTags from "../FindingsTags";
-import Select from "react-select";
-import { ErrorMessage, Field, FieldArray, Form, Formik } from "formik";
-import { errorMsgClass } from "../../../Utils/HardCoded";
+
 import BasicClassification from "./BasicClassification";
 import { rawTextToShow } from "../../../Utils/functions";
 import Samples from "./Samples";
@@ -24,7 +13,7 @@ import AnalysisMeasures from "./AnalysisMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
-import Paradigms from "./Paradigmss";
+import Paradigms from "./Paradigms";
 
 export default function NewExperimentForm({
   study,

@@ -22,7 +22,6 @@ export default function Findings({
   values,
 }) {
   const [fieldValues, setFieldValues] = useState([values]);
-  const [family, setFamily] = useState([values]);
   const classificationName = "finding_tags";
 
   const handleSubmit = SubmitClassificationField(
@@ -44,7 +43,7 @@ export default function Findings({
     <ExpandingBox disabled={disabled} headline={"Findings"}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={uuid()}>
+          <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">
@@ -107,7 +106,6 @@ export default function Findings({
                             const newArray = [...fieldValues];
                             newArray[index].family = value;
                             setFieldValues(newArray);
-                            setFamily(value);
                           }}
                           options={filedOptions.findingTagsFamilies}
                         />
@@ -115,7 +113,7 @@ export default function Findings({
                     </div>
                   </div>
                   <div className="w-1/2">
-                    {family == 1 ? (
+                    {fieldValue.family == 1 ? (
                       <div className="flex flex-col gap-2">
                         <div className="flex gap-2 ">
                           <div className="w-1/4">
@@ -126,8 +124,8 @@ export default function Findings({
                           <div className="w-1/3">
                             <input
                               disabled={fieldValues[index].id}
-                              min={0}
                               type="number"
+                              name="onset"
                               value={fieldValue.onset}
                               onChange={(e) => {
                                 setFieldValues((prev) =>
@@ -153,10 +151,9 @@ export default function Findings({
                           </div>
                           <div className="w-1/3">
                             <input
-                              min={0}
                               disabled={fieldValues[index].id}
                               type="number"
-                              value={fieldValue.offset}
+                              defaultValue={fieldValue.offset}
                               onChange={(e) => {
                                 setFieldValues((prev) =>
                                   prev.map((item, i) =>
@@ -174,7 +171,7 @@ export default function Findings({
                           </div>
                         </div>
                       </div>
-                    ) : family == 2 ? (
+                    ) : fieldValue.family == 2 ? (
                       <div className="flex gap-2 w-full">
                         <div className="w-1/2">
                           <Text weight={"bold"} color={"grayReg"}>
@@ -202,7 +199,7 @@ export default function Findings({
                           />
                         </div>
                       </div>
-                    ) : family == 3 ? (
+                    ) : fieldValue.family == 3 ? (
                       <div className="flex flex-col gap-2">
                         <div className="flex gap-2 w-full">
                           <div className="w-1/2">
@@ -295,7 +292,7 @@ export default function Findings({
                           </div>
                         </div>
                       </div>
-                    ) : family == 4 ? (
+                    ) : fieldValue.family == 4 ? (
                       <div>
                         <Text weight={"bold"} color={"grayReg"}>
                           Notes
