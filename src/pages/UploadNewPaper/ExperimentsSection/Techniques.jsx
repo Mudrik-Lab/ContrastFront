@@ -16,7 +16,6 @@ import {
 
 export default function Techniques({
   filedOptions,
-  optionalParadigms,
   disabled,
   experiment_pk,
   study_pk,
