@@ -13,7 +13,7 @@ import {
   editExperiments,
 } from "../../../apiHooks/createExperiment";
 import { toast } from "react-toastify";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { ReactComponent as Vicon } from "../../../assets/icons/v-icon.svg";
 import {
   concsiousnessOptions,
@@ -25,19 +25,22 @@ import {
 export default function BasicClassification({
   study_id,
   disabled,
-  experimentID,
+  experimentData,
   setExperimentID,
 }) {
-  const [submitted, setSubmitted] = useState(false);
+  const [submitted, setSubmitted] = useState(experimentData);
   const [experiment, setExperiment] = useState(false);
 
+  console.log(experimentData?.finding_description);
+
   const initialValues = {
-    type_of_consciousness: "",
-    experiment_type: "",
-    report: "",
-    finding_description: "",
-    theory_driven: "",
+    type_of_consciousness: experimentData?.type_of_consciousness || "",
+    experiment_type: experimentData?.type || "",
+    report: experimentData?.is_reporting || "",
+    finding_description: experimentData?.finding_description || "",
+    theory_driven: experimentData?.theory_driven || "",
   };
+
   const validationSchema = Yup.object().shape({
     type_of_consciousness: Yup.string().required(
       "Please select type of consciousness"
@@ -49,6 +52,7 @@ export default function BasicClassification({
     ),
     theory_driven: Yup.string().required("Please select type of theory driven"),
   });
+
   const handleSubmit = async (values) => {
     try {
       const res = await createExperiments({
@@ -86,8 +90,9 @@ export default function BasicClassification({
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
         study_pk: study_id,
-        id: experiment.id,
+        id: experiment.id || experimentData.id,
       });
+      console.log(res);
     } catch (e) {
       console.log(e);
     }
@@ -99,14 +104,7 @@ export default function BasicClassification({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}>
-        {({
-          onSubmit,
-          isSubmitting,
-          dirty,
-          isValid,
-          values,
-          setFieldValue,
-        }) => (
+        {({ dirty, isValid, values, setFieldValue }) => (
           <Form className="flex flex-col gap-2">
             <div className=" flex flex-col gap-4 border border-blue border-x-4 p-2 rounded-md">
               <div className="flex items-center gap-2 w-full">
@@ -116,13 +114,18 @@ export default function BasicClassification({
                   className={"whitespace-nowrap"}>
                   Experiment type
                 </Text>
-                <div className="w-28">
-                  <Select
+                <div className="w-full">
+                  <Field
+                    as="select"
                     id="experiment_type"
                     name="experiment_type"
-                    onChange={(v) => setFieldValue("experiment_type", v.value)}
-                    options={experimentTypeOptions}
-                  />
+                    className="text-base w-20 bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    {experimentTypeOptions.map((type) => (
+                      <option key={`type-${type.value}`} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </Field>
                 </div>
 
                 <FilterExplanation text={""} tooltip={""} />
@@ -132,15 +135,19 @@ export default function BasicClassification({
                   Type of consciousness
                 </Text>
                 <div className="flex items-center gap-2">
-                  <Select
+                  <Field
+                    as="select"
                     id="type_of_consciousness"
                     name="type_of_consciousness"
-                    onChange={(v) =>
-                      setFieldValue("type_of_consciousness", v.value)
-                    }
-                    placeholder="Select Type of Consciousness"
-                    options={concsiousnessOptions}
-                  />
+                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    {concsiousnessOptions.map((type) => (
+                      <option
+                        key={`concsiousness-${type.value}`}
+                        value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </Field>
 
                   <FilterExplanation text={""} tooltip={""} />
                 </div>{" "}
@@ -150,14 +157,17 @@ export default function BasicClassification({
                   Report/No report
                 </Text>
                 <div className="flex items-center gap-2">
-                  <Select
+                  <Field
+                    as="select"
                     id="report"
                     name="report"
-                    onChange={(v) => setFieldValue("report", v.value)}
-                    placeholder="Select"
-                    options={reportOptions}
-                  />
-
+                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    {reportOptions.map((type) => (
+                      <option key={`report-${type.value}`} value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </Field>
                   <FilterExplanation text={""} tooltip={""} />
                 </div>{" "}
               </div>
@@ -166,13 +176,20 @@ export default function BasicClassification({
                   Theory driven
                 </Text>
                 <div className="flex items-center gap-2">
-                  <Select
+                  <Field
+                    as="select"
                     id="theory_driven"
                     name="theory_driven"
-                    onChange={(v) => setFieldValue("theory_driven", v.value)}
                     placeholder="Select Theory "
-                    options={theoryDrivenOptions}
-                  />
+                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    {theoryDrivenOptions.map((type) => (
+                      <option
+                        key={`theory_driven-${type.value}`}
+                        value={type.value}>
+                        {type.label}
+                      </option>
+                    ))}
+                  </Field>
                   <FilterExplanation text={""} tooltip={""} />
                 </div>
               </div>
@@ -195,7 +212,7 @@ export default function BasicClassification({
             <div className="w-full flex justify-center">
               <Button
                 type={!submitted ? "submit" : "button"}
-                disabled={!(isValid && dirty)}
+                disabled={!dirty && submitted}
                 onClick={() => submitted && handleEdit(values)}>
                 <Vicon />
                 {!submitted ? "Submit Experiment" : "Edit Basic classification"}

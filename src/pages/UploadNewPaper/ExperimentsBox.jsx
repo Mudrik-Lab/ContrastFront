@@ -7,6 +7,7 @@ export default function ExperimentsBox({
   experiments,
   setPaperToShow,
   setNewPaper,
+  setPaperToEdit,
   showEditble,
   refetch,
   setAddNewExperiment,
@@ -28,6 +29,7 @@ export default function ExperimentsBox({
           disabled={disabled}
           papers={experiments}
           setPaperToShow={setPaperToShow}
+          setPaperToEdit={setPaperToEdit}
           showEditble={showEditble}
           setNewPaper={setNewPaper}
           setAddNewExperiment={setAddNewExperiment}

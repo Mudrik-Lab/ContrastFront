@@ -21,12 +21,14 @@ import MultiSelect from "../../components/SelectField";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../apiHooks/getStudies";
-import NewExperimentForm from "./ExperimentsSection/NewExperimentForm";
+import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 
 export default function UncompletedPaper({
   study,
   paperToShow,
   setPaperToShow,
+  paperToEdit,
+  setPaperToEdit,
   showEditble,
   refetch,
 }) {
@@ -312,6 +314,7 @@ export default function UncompletedPaper({
                 disabled={false}
                 setNewPaper={setNewPaper}
                 setPaperToShow={setPaperToShow}
+                setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 showEditble={showEditble}
@@ -323,14 +326,28 @@ export default function UncompletedPaper({
               <Spacer height={20} />
             </div>
             {addNewExperiment && (
-              <NewExperimentForm
+              <ExperimentForm
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 refetch={refetch}
               />
             )}
             {paperToShow && !newPaper && (
-              <ExperimentDetails experiment={paperToShow} study={study} />
+              <ExperimentDetails
+                experiment={paperToShow}
+                study={study}
+                setPaperToShow={setPaperToShow}
+              />
+            )}
+            {paperToEdit && !newPaper && (
+              <ExperimentForm
+                experimentData={paperToEdit}
+                setAddNewExperiment={setAddNewExperiment}
+                setPaperToEdit={setPaperToEdit}
+                refetch={refetch}
+                study={study}
+                isEditMode={true}
+              />
             )}
           </div>
         </div>

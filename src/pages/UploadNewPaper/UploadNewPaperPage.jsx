@@ -99,6 +99,7 @@ export default function UploadNewPaper() {
                   status={"Uncompleted submissions"}
                   setPaperToShow={setPaperToShow}
                   setShowEditble={setShowEditble}
+                  showEditble={true}
                   number={
                     data.data.filter((paper) => paper.approval_status == 0)
                       .length

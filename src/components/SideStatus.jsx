@@ -19,6 +19,7 @@ export default function SideStatus({
   showEditble,
   setAddNewExperiment,
   refetch,
+  setPaperToEdit,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -130,55 +131,65 @@ export default function SideStatus({
                   onClick={() => {
                     if (isExperiment) {
                       setPaperToShow(paper);
+                      console.log(paper);
+                      setPaperToEdit(false);
                     } else {
                       setPaperToShow(paper.id);
+                      setShowEditble(false);
                     }
                   }}>
+                  {/* Title */}
                   {paper.title.length > 20
                     ? paper.title.slice(0, 20) + "..."
                     : paper.title}
                 </span>
               </div>
-              {!completedStudy && (
-                <div
-                  className={classNames(
-                    `flex gap-1 items-center ${
-                      isExperiment ? "text-base" : "text-xs"
-                    }`
-                  )}>
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => {
-                      if (isExperiment) {
-                        setPaperToShow(paper);
-                        setNewPaper(false);
-                        console.log(paper, "op1");
-                      } else {
-                        setPaperToShow(paper.id);
-                        if (paper.approval_status === 0) {
-                          console.log(paper, "op2");
-                          setShowEditble(true);
-                        }
-                      }
-                    }}>
-                    edit
-                  </span>
-                  <span>|</span>
 
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => {
-                      if (isExperiment) {
-                        handleDelete(paper);
-                      }
-                    }}>
-                    delete
-                  </span>
-                </div>
-              )}
+              {
+                // !completedStudy &&
+                showEditble && (
+                  <div
+                    className={classNames(
+                      `flex gap-1 items-center ${
+                        isExperiment ? "text-base" : "text-xs"
+                      }`
+                    )}>
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (isExperiment) {
+                          console.log(paper, "its experiment");
+
+                          // setPaperToShow(paper);
+                          setPaperToEdit(paper);
+                          setPaperToShow(false);
+                        } else {
+                          setPaperToShow(paper.id);
+                          if (paper.approval_status === 0) {
+                            setShowEditble(true);
+                          }
+                        }
+                      }}>
+                      edit
+                    </span>
+                    <span>|</span>
+
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (isExperiment) {
+                          handleDelete(paper);
+                        }
+                      }}>
+                      delete
+                    </span>
+                  </div>
+                )
+              }
             </div>
           ))}
-          {!completedStudy && showEditble && (
+
+          {isExperiment && showEditble && (
             <span
               className="font-bold text-xs cursor-pointer"
               onClick={() => {

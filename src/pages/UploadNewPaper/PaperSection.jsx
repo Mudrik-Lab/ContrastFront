@@ -9,9 +9,17 @@ import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
+import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 
-export default function PaperSection({ paperId, showEditble, setNewPaper }) {
+export default function PaperSection({
+  paperId,
+  showEditble,
+  setNewPaper,
+  experimentIndex,
+  setAddNewExperiment,
+}) {
   const [paperToShow, setPaperToShow] = useState();
+  const [paperToEdit, setPaperToEdit] = useState();
 
   const id = paperId;
 
@@ -37,6 +45,8 @@ export default function PaperSection({ paperId, showEditble, setNewPaper }) {
       : study?.approval_status === statusNumber.onProccess
       ? "Uncompleted submissions"
       : "Awaiting Review";
+
+  console.log(paperToEdit);
   return (
     <div className="px-2 h-full">
       {
@@ -98,8 +108,10 @@ export default function PaperSection({ paperId, showEditble, setNewPaper }) {
                     setNewPaper={setNewPaper}
                     disabled={false}
                     completedStudy
+                    showEditble={false}
                     refetch={handleRefetch}
                     setPaperToShow={setPaperToShow}
+                    setPaperToEdit={setPaperToEdit}
                     experiments={study.experiments.map((experiment, index) => ({
                       ...experiment,
                       title: `Experiment #${index + 1}`,
@@ -125,6 +137,8 @@ export default function PaperSection({ paperId, showEditble, setNewPaper }) {
               study={study}
               paperToShow={paperToShow}
               setPaperToShow={setPaperToShow}
+              paperToEdit={paperToEdit}
+              setPaperToEdit={setPaperToEdit}
             />
           )
       }

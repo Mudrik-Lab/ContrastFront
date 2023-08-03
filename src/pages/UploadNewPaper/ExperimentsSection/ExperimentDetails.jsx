@@ -5,8 +5,11 @@ import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import { rawTextToShow } from "../../../Utils/functions";
 import FindingsTags from "../FindingsTags";
 
-export default function ExperimentDetails({ experiment, study }) {
-  const [open, setOpen] = useState(false);
+export default function ExperimentDetails({
+  experiment,
+  study,
+  setPaperToShow,
+}) {
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -303,6 +306,14 @@ export default function ExperimentDetails({ experiment, study }) {
               <FindingsTags experiment={experiment} />
             </ExpandingBox>
           </div>
+          <button
+            className="font-bold my-2"
+            onClick={() => {
+              setPaperToShow(false);
+              // !isEditMode && setAddNewExperiment(false);
+            }}>
+            Exit
+          </button>
         </div>
       )}
     </>

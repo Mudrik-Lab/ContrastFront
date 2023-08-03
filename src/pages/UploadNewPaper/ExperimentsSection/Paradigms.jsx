@@ -22,7 +22,20 @@ export default function Paradigms({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  console.log(values);
+  let paradigmValues;
+  if (!values) {
+    paradigmValues = {
+      main: "",
+      specific: "",
+    };
+  } else {
+    paradigmValues = values.map((row) => {
+      return { main: row.parent.id, specific: row.id };
+    });
+  }
+  console.log(paradigmValues);
+  const [fieldValues, setFieldValues] = useState([paradigmValues]);
   const classificationName = "paradigm";
 
   const handleSubmit = SubmitClassificationField(

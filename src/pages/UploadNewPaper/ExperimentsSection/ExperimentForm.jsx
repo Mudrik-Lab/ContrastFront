@@ -14,14 +14,27 @@ import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
+import { getExperiment } from "../../../apiHooks/getExperiment";
 
-export default function NewExperimentForm({
+export default function ExperimentForm({
   study,
   setAddNewExperiment,
   refetch,
+  setPaperToEdit,
+  experimentData,
+  isEditMode,
 }) {
-  const [experimentID, setExperimentID] = useState();
+  const [experimentID, setExperimentID] = useState(experimentData?.id);
   const randomKey = Math.round(Math.random() * 100);
+
+  // const { data: experimentData, isSuccess: experimentSuccess } = useQuery(
+  //   [`experiment`, `${study.id}`, `${experimentID}`],
+  //   () =>
+  //     experimentID &&
+  //     getExperiment({ study_pk: study.id, experiment_pk: experimentID })
+  // );
+  console.log(experimentData);
+
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -108,7 +121,9 @@ export default function NewExperimentForm({
               {study.title.slice(0, 20)}...
             </Text>
             <Text weight={"bold"} lg>
-              {`Experiment#${study.experiments.length + 1}`}
+              {isEditMode
+                ? experimentData.title
+                : `Experiment#${study.experiments.length + 1}`}
             </Text>
           </div>
 
@@ -118,9 +133,10 @@ export default function NewExperimentForm({
             </Text>
 
             <BasicClassification
-              disabled={false}
+              experimentData={experimentData}
               study_id={study.id}
               setExperimentID={setExperimentID}
+              isEditMode={isEditMode}
             />
 
             <Paradigms
@@ -129,10 +145,7 @@ export default function NewExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                main: "",
-                specific: "",
-              }}
+              values={experimentData?.paradigms}
             />
             <Techniques
               filedOptions={techniquesOptions}
@@ -248,7 +261,8 @@ export default function NewExperimentForm({
             className="font-bold my-2"
             onClick={() => {
               refetch();
-              setAddNewExperiment(false);
+              setPaperToEdit(false);
+              // !isEditMode && setAddNewExperiment(false);
             }}>
             Exit
           </button>

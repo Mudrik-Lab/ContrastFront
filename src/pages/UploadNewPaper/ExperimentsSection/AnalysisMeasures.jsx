@@ -45,7 +45,7 @@ export default function AnalysisMeasures({
     <ExpandingBox disabled={disabled} headline={"Analysis Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={fieldValue.key || fieldValue.id}>
+          <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">

@@ -22,6 +22,7 @@ export default function Techniques({
   study_pk,
   values,
 }) {
+  console.log(values);
   const [fieldValues, setFieldValues] = useState([values]);
   const classificationName = "technique";
 
