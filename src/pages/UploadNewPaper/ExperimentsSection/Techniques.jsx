@@ -7,7 +7,7 @@ import {
   YoavSelect,
 } from "../../../components/Reusble";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -21,8 +21,11 @@ export default function Techniques({
   study_pk,
   values,
 }) {
-  console.log(values);
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      technique: "",
+    },
+  ]);
   const classificationName = "technique";
 
   const handleSubmit = SubmitClassificationField(
@@ -40,6 +43,19 @@ export default function Techniques({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            technique: row.id,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
 
   return (
     <ExpandingBox

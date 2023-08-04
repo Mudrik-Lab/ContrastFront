@@ -6,8 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { useState } from "react";
-import { v4 as uuid } from "uuid";
+import { useEffect, useState } from "react";
 
 import {
   DeleteClassificationField,
@@ -22,7 +21,12 @@ export default function Interpretations({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      theory: "",
+      type: "",
+    },
+  ]);
   const classificationName = "interpretations";
 
   const handleSubmit = SubmitClassificationField(
@@ -43,15 +47,30 @@ export default function Interpretations({
   const interpretationTypes = [
     { label: "Supports", value: "pro" },
     { label: "Challenges", value: "challenges" },
-    { label: "Nuetral", value: "nuetral" },
+    { label: "Neutral", value: "neutral" },
   ];
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            theory: row.theory.id,
+            type: row.type,
+            id: row.id, //TODO: id is undefind now
+          };
+        })
+      );
+    }
+  }, []);
+
   return (
     <ExpandingBox
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={fieldValue.key || fieldValue.id}>
+          <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <div id="index" className="w-4">

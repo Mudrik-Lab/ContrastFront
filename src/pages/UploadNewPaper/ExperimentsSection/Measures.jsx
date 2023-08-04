@@ -7,7 +7,7 @@ import {
   YoavSelect,
 } from "../../../components/Reusble";
 import { v4 as uuid } from "uuid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -21,7 +21,12 @@ export default function Measures({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      type: "",
+      notes: "",
+    },
+  ]);
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -39,7 +44,19 @@ export default function Measures({
     fieldValues,
     setFieldValues
   );
-
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            type: row.type,
+            notes: row.notes,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
   return (
     <ExpandingBox
       disabled={disabled}
@@ -62,10 +79,10 @@ export default function Measures({
                     </Text>
                     <YoavSelect
                       disabled={fieldValue.id}
-                      value={fieldValue.type_id}
+                      value={fieldValue.type}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
-                        newArray[index].type_id = value;
+                        newArray[index].type = value;
                         setFieldValues(newArray);
                       }}
                       options={filedOptions}
@@ -111,8 +128,7 @@ export default function Measures({
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={
-                      !(fieldValue?.notes && fieldValue?.type_id) ||
-                      fieldValue.id
+                      !(fieldValue?.notes && fieldValue?.type) || fieldValue.id
                     }
                   />
                 </div>

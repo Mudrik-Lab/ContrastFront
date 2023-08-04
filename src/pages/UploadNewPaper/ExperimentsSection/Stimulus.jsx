@@ -6,7 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -22,7 +22,15 @@ export default function Stimulus({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      category: "",
+      sub_category: "",
+      modality: "",
+      description: "",
+      duration: "",
+    },
+  ]);
   const classificationName = "stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -40,6 +48,24 @@ export default function Stimulus({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            category: row.category,
+            sub_category: row.sub_category,
+            modality: row.modality,
+            description: row.description,
+            duration: row.duration,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
+
   return (
     <ExpandingBox
       disabled={disabled}

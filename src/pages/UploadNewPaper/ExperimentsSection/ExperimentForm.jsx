@@ -111,7 +111,7 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
-
+  console.log(experimentData);
   return (
     <>
       {isSuccess && (
@@ -152,34 +152,21 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                theory: "",
-                type: "",
-                key: randomKey,
-              }}
+              values={experimentData?.interpretations}
             />
             <Samples
               filedOptions={populations}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                type: "",
-                size_included: "",
-                total_size: "",
-                key: randomKey,
-              }}
+              values={experimentData?.samples}
             />
             <Tasks
               filedOptions={tasks}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                type: "",
-                description: "",
-                key: randomKey,
-              }}
+              values={experimentData?.tasks}
             />
             <Stimulus
               filedOptions={stimulusCategories}
@@ -188,22 +175,14 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                category: "",
-                sub_category: "",
-                modality: "",
-                description: "",
-                duration: "",
-              }}
+              values={experimentData?.stimuli}
             />
             <Techniques
               filedOptions={techniquesOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                technique: "",
-              }}
+              values={experimentData?.techniques}
             />
 
             <Measures
@@ -211,10 +190,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                type_id: "",
-                notes: "",
-              }}
+              values={experimentData?.measures}
             />
 
             <AnalysisMeasures
@@ -223,11 +199,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                type: "",
-                phase: "",
-                description: "",
-              }}
+              values={experimentData?.consciousness_measures}
             />
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
@@ -244,18 +216,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={{
-                family: "",
-                type: "",
-                onset: "",
-                offset: "",
-                band_lower_bound: "",
-                band_higher_bound: "",
-                AAL_atlas_tag: "",
-                notes: "",
-                analysis_type: "",
-                technique: "",
-              }}
+              values={experimentData?.finding_tags}
             />
           </div>
 

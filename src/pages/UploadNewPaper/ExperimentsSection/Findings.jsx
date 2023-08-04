@@ -6,7 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -21,7 +21,21 @@ export default function Findings({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      family: "",
+      type: "",
+      onset: "",
+      offset: "",
+      correlation_sign: "",
+      band_lower_bound: "",
+      band_higher_bound: "",
+      AAL_atlas_tag: "",
+      notes: "",
+      analysis_type: "",
+      technique: "",
+    },
+  ]);
   const classificationName = "finding_tags";
 
   const handleSubmit = SubmitClassificationField(
@@ -39,6 +53,31 @@ export default function Findings({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          console.log(row);
+          return {
+            family: row.family,
+            type: row.type,
+            technique: row.technique,
+            onset: row.onset || "",
+            offset: row.offset || "",
+            correlation_sign: row.correlation_sign || "",
+            band_lower_bound: row.band_lower_bound,
+            band_higher_bound: row.band_higher_bound,
+            AAL_atlas_tag: row.AAL_atlas_tag,
+            notes: row.notes,
+            analysis_type: row.analysis_type,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
+
   return (
     <ExpandingBox disabled={disabled} headline={"Findings"}>
       {fieldValues.map((fieldValue, index) => {
@@ -204,7 +243,7 @@ export default function Findings({
                         <div className="flex gap-2 w-full">
                           <div className="w-1/2">
                             <Text weight={"bold"} color={"grayReg"}>
-                              correlation_sign
+                              Correlation sign
                             </Text>
                           </div>
                           <div className="w-1/2">
@@ -234,7 +273,7 @@ export default function Findings({
                         <div className="flex gap-2 w-full">
                           <div className="w-1/2">
                             <Text weight={"bold"} color={"grayReg"}>
-                              band_lower_bound
+                              Band lower bound
                             </Text>
                           </div>
                           <div className="w-1/2">
@@ -264,7 +303,7 @@ export default function Findings({
                         <div className="flex gap-2 w-full">
                           <div className="w-1/2">
                             <Text weight={"bold"} color={"grayReg"}>
-                              band_higher_bound
+                              Band higher bound
                             </Text>
                           </div>
                           <div className="w-1/2">
@@ -352,122 +391,4 @@ export default function Findings({
       />
     </ExpandingBox>
   );
-}
-
-{
-  /* <div className="column-3  w-full">
-  {values.findings[index].family === 1 ? (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 w-full">
-        <div className="w-1/3">
-          <Text weight={"bold"} color={"grayReg"}>
-            Onset
-          </Text>
-        </div>
-        <div className="w-2/3">
-          <Field
-            type="number"
-            id={`findings[${index}].onset`}
-            name={`findings[${index}].onset`}
-            className={numericFieldClass}
-          />
-        </div>
-      </div>
-      <div className="flex gap-2 w-full">
-        <div className="w-1/3">
-          <Text weight={"bold"} color={"grayReg"}>
-            Offset
-          </Text>
-        </div>
-        <div className="w-2/3">
-          <Field
-            type="number"
-            id={`findings[${index}].onffet`}
-            name={`findings[${index}].onffet`}
-            className={numericFieldClass}
-          />
-        </div>
-      </div>
-    </div>
-  ) : values.findings[index].family === 2 ? (
-    <div className="flex gap-2 w-full">
-      <div className="w-1/3">
-        <Text weight={"bold"} color={"grayReg"}>
-          AAL atlas tag
-        </Text>
-      </div>
-      <div className="w-2/3">
-        <Field
-          type="number"
-          id={`findings[${index}].AAL_atlas_tag`}
-          name={`findings[${index}].AAL_atlas_tag`}
-          className={numericFieldClass}
-        />
-      </div>
-    </div>
-  ) : values.findings[index].family === 3 ? (
-    <div className="flex flex-col gap-2">
-      <div className="flex gap-2 w-full">
-        <div className="w-1/3">
-          <Text weight={"bold"} color={"grayReg"}>
-            correlation_sign
-          </Text>
-        </div>
-        <div className="w-2/3">
-          <Field
-            type="number"
-            id={`findings[${index}].correlation_sign`}
-            name={`findings[${index}].correlation_sign`}
-            className={numericFieldClass}
-          />
-        </div>
-      </div>
-      <div className="flex gap-2 w-full">
-        <div className="w-1/3">
-          <Text weight={"bold"} color={"grayReg"}>
-            band_lower_bound
-          </Text>
-        </div>
-        <div className="w-2/3">
-          <Field
-            type="number"
-            id={`findings[${index}].band_lower_bound`}
-            name={`findings[${index}].band_lower_bound`}
-            className={numericFieldClass}
-          />
-        </div>
-      </div>
-      <div className="flex gap-2 w-full">
-        <div className="w-1/3">
-          <Text weight={"bold"} color={"grayReg"}>
-            band_higher_bound
-          </Text>
-        </div>
-        <div className="w-2/3">
-          <Field
-            type="number"
-            id={`findings[${index}].band_higher_bound`}
-            name={`findings[${index}].band_higher_bound`}
-            className={numericFieldClass}
-          />
-        </div>
-      </div>
-    </div>
-  ) : values.findings[index].family === 4 ? (
-    <div>
-      <Text weight={"bold"} color={"grayReg"}>
-        Notes
-      </Text>
-      <Field
-        as="textarea"
-        rows={4}
-        id={`findings[${index}].notes`}
-        name={`findings[${index}].notes`}
-        className="border border-gray-300 w-full rounded-[4px] p-2 "
-      />
-    </div>
-  ) : (
-    <div>{values.findings[index].family}</div>
-  )}
-</div> */
 }

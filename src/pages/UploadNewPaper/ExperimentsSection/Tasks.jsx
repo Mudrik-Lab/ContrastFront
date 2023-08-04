@@ -6,7 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -20,7 +20,12 @@ export default function Tasks({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      type: "",
+      description: "",
+    },
+  ]);
   const classificationName = "tasks";
 
   const handleSubmit = SubmitClassificationField(
@@ -38,7 +43,19 @@ export default function Tasks({
     fieldValues,
     setFieldValues
   );
-
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            type: row.type,
+            description: row.description,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
   return (
     <ExpandingBox
       disabled={disabled}

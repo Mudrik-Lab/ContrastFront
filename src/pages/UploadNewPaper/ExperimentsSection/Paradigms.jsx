@@ -6,7 +6,6 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
@@ -50,7 +49,7 @@ export default function Paradigms({
     if (values && values.length > 0) {
       setFieldValues(
         values.map((row) => {
-          return { main: row.parent.name, specific: row.name, id: row.id };
+          return { main: row.parent.name, specific: row.id, id: row.id };
         })
       );
     }
@@ -62,7 +61,6 @@ export default function Paradigms({
         disabled={disabled}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
-          console.log(fieldValues);
           return (
             <div key={`${classificationName}-${index}`}>
               <form className="flex flex-col gap-2">
@@ -101,9 +99,6 @@ export default function Paradigms({
                       </Text>
                       <YoavSelect
                         disabled={fieldValue.id}
-                        //   value={optionalParadigms.find(
-                        //     (option) => option.value === fieldValues[index].specific
-                        //   )}
                         value={fieldValue.specific}
                         onChange={(value) => {
                           const newArray = [...fieldValues];

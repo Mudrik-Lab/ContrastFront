@@ -6,7 +6,7 @@ import {
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -22,7 +22,13 @@ export default function AnalysisMeasures({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([values]);
+  const [fieldValues, setFieldValues] = useState([
+    {
+      type: "",
+      phase: "",
+      description: "",
+    },
+  ]);
   const classificationName = "consciousness_measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -40,6 +46,22 @@ export default function AnalysisMeasures({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          console.log(row);
+          return {
+            type: row.type,
+            phase: row.phase,
+            description: row.description,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
 
   return (
     <ExpandingBox disabled={disabled} headline={"Analysis Measures"}>
