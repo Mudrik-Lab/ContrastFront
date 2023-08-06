@@ -19,12 +19,20 @@ export default function Footer({ isFixed }) {
           High Level <br /> Cognition Lab
         </Text>
       </div>
+
       <div className="flex flex-col items-center sm:flex-row sm:gap-14 my-6 sm:my-0">
         <Text color="white">
           <a href="/terms-of-use">Terms of Use</a>
         </Text>
         <Text color="white">
           <a href="/modes-of-governance">Modes of Governance</a>{" "}
+        </Text>
+        <Text color="white">
+          <a
+            href="https://english.tau.ac.il/accessibility_statement"
+            target="_blank">
+            Accessibilty Statement
+          </a>
         </Text>
       </div>
       <div className=" sm:mr-10">
