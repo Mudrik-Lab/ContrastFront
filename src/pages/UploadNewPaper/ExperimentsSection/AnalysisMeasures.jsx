@@ -52,7 +52,6 @@ export default function AnalysisMeasures({
     if (values && values.length > 0) {
       setFieldValues(
         values.map((row) => {
-          console.log(row);
           return {
             type: row.type,
             phase: row.phase,

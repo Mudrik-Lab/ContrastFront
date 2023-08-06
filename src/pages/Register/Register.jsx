@@ -43,7 +43,6 @@ export default function RegisterComponent() {
         password: values.password,
         username: values.name,
       });
-      console.log(result);
       if (result.status === 201) {
         state.tempUsername = values.name;
         const res = await useLogin(values.name, values.password);

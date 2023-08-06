@@ -57,7 +57,6 @@ export default function SuggestingNewQueries() {
             <div className="flex flex-col gap-4">
               <div className="flex flex-col ">
                 <label
-                  onClick={console.log(isValid)}
                   className="text-lg font-bold text-blue mb-2"
                   htmlFor="name">
                   Your Email:

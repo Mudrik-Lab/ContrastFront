@@ -33,7 +33,6 @@ export default function ExperimentForm({
   //     experimentID &&
   //     getExperiment({ study_pk: study.id, experiment_pk: experimentID })
   // );
-  console.log(experimentData);
 
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
@@ -111,7 +110,6 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
-  console.log(experimentData);
   return (
     <>
       {isSuccess && (

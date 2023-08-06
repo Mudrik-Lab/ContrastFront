@@ -520,7 +520,15 @@ export const RadioFeedback = ({ label1, label2, name, headline, question }) => {
 export const ToastBox = ({ headline, text }) => {
   return (
     <div className="h-40 w-full flex flex-col items-center justify-center">
-      <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+      {Array.isArray(headline) ? (
+        headline.map((item) => (
+          <h2 key={item} className="text-2xl text-blue mx-auto">
+            {item}
+          </h2>
+        ))
+      ) : (
+        <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+      )}
       <p className="text-lg mx-auto">{text}</p>
     </div>
   );

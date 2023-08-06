@@ -98,7 +98,6 @@ export default function UncompletedPaper({
         DOI: values.DOI,
         source_title: values.source_title,
       });
-      console.log(res);
     } catch (e) {
       console.log(e);
     }
@@ -255,8 +254,7 @@ export default function UncompletedPaper({
                               id={"source_title"}
                               defaultInputValue={values.source_title}
                               onChange={(v) => {
-                                console.log(values.source_title),
-                                  setFieldValue("source_title", v.value);
+                                setFieldValue("source_title", v.value);
                               }}
                               options={journalsList}
                             />

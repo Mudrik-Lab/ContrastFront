@@ -77,6 +77,7 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
       console.log(res);
       if (res.status === 201) {
         setAddExperiments(true);
+
         refetch();
         toast.success(
           <ToastBox
@@ -86,8 +87,8 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
         );
       }
     } catch (e) {
-      console.log(e);
-      toast.error(e.message);
+      const errors = Object.values(e.response.data);
+      toast.error(<ToastBox text={e.message} headline={errors} />);
     }
   };
   const countryOption = useMemo(() => countryList().getData(), []);

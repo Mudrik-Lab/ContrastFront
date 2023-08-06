@@ -25,7 +25,6 @@ export default function Feedback() {
   });
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
       const res = await sendFeedback({
         queries_score: values.q1,
         experience_score: values.q2,

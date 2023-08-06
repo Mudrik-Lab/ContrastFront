@@ -28,7 +28,6 @@ export default function ContactUs() {
   });
   const handleSubmit = async (values, { resetForm }) => {
     try {
-      console.log(values);
       const res = await sendContactUs({
         email: values.email,
         subject: values.subject,

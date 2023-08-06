@@ -61,7 +61,6 @@ export default function BasicClassification({
         experiment_type: values.experiment_type,
         study_pk: study_id,
       });
-      console.log(res);
       if (res.status === 201) {
         setExperimentID(res.data.id);
         setExperiment(res.data);
@@ -79,7 +78,6 @@ export default function BasicClassification({
   };
 
   const handleEdit = async (values) => {
-    console.log(values);
     try {
       const res = await editExperiments({
         type_of_consciousness: values.type_of_consciousness,
@@ -90,7 +88,6 @@ export default function BasicClassification({
         study_pk: study_id,
         id: experiment.id || experimentData.id,
       });
-      console.log(res);
     } catch (e) {
       console.log(e);
     }

@@ -178,7 +178,6 @@ export function SubmitClassificationField(
   setFieldValues
 ) {
   return async (values, index) => {
-    console.log(values);
     if (
       classificationName !== "paradigm" &&
       classificationName !== "technique"
@@ -203,7 +202,8 @@ export function SubmitClassificationField(
           setFieldValues(newArr);
         }
       } catch (e) {
-        console.log(e);
+        const errors = Object.values(e.response.data);
+        toast.error(<ToastBox text={e.message} headline={errors} />);
       }
     } else {
       try {
@@ -214,7 +214,6 @@ export function SubmitClassificationField(
           classificationName,
         });
         if (res.status === 201) {
-          console.log(res);
           toast.success(
             <ToastBox
               headline={"Success"}
@@ -226,7 +225,8 @@ export function SubmitClassificationField(
           setFieldValues(newArr);
         }
       } catch (e) {
-        console.log(e);
+        const errors = Object.values(e.response.data);
+        toast.error(<ToastBox text={e.message} headline={errors} />);
       }
     }
   };
@@ -278,7 +278,6 @@ export function DeleteClassificationField(
           classificationName,
           property_id: values[index].id,
         });
-        console.log(index);
         if (res.status === 204) {
           if (fieldValues.length !== 1) {
             const newArr = [...fieldValues];

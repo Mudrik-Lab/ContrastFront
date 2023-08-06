@@ -159,7 +159,6 @@ export default function FreeQueriesBar() {
         };
       })
     : [];
-  configSuccess & console.log(theories);
   const interpretationsArr = [
     { value: "challenges", label: "Challenges" },
     { value: "pro", label: "Support" },
@@ -167,7 +166,6 @@ export default function FreeQueriesBar() {
   ];
 
   const theoriesArr = configSuccess ? extraConfig?.data.available_theories : [];
-  console.log(populationsArr);
   const { data, isLoading } = useQuery(
     [
       `parameters_distribution_free_queries${
@@ -279,7 +277,6 @@ export default function FreeQueriesBar() {
         })
       );
     }
-    console.log(extraConfig?.data);
 
     queryParams.get("is_reporting")
       ? setIsReporting(queryParams.get("is_reporting"))

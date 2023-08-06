@@ -45,7 +45,6 @@ export default function SecondaryRegister() {
 
   const handleSubmit = async (values) => {
     try {
-      console.log(values);
       const result = await createProfile({
         date_of_birth: `${values.year}-${values.month}-${values.day}`,
 
@@ -55,7 +54,6 @@ export default function SecondaryRegister() {
         academic_stage: values.academicStage,
         check: values.check,
       });
-      console.log(result);
       if (result.status === 201) {
         setSuccessBox(true);
         navigate("/");
