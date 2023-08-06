@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -73,9 +74,13 @@ export default function Tasks({
 
                 <div className="w-full flex gap-2 items-start">
                   <div id="field1" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
-                    </Text>
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Enter the type of tasks used in the experiment. Enter 'No Task' if no task was used."
+                      }
+                      text={"Type"}
+                    />
                     <YoavSelect
                       disabled={fieldValue.id}
                       value={fieldValue.type}

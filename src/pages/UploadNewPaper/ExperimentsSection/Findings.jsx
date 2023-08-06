@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -79,7 +80,17 @@ export default function Findings({
   }, []);
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Findings"}>
+    <ExpandingBox
+      disabled={disabled}
+      headline={
+        <TooltipExplanation
+          blackHeadline
+          text={"Experiment's Findings"}
+          tooltip={
+            "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
+          }
+        />
+      }>
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>

@@ -23,7 +23,7 @@ export default function FindingsTags({ experiment }) {
         return (
           <div
             className="flex w-[49%] items-start border border-blue border-x-4 p-2 rounded-md overflow-hidden"
-            key={tag.family + index}>
+            key={tag.type * index}>
             <div className="w-4">
               <Text weight={"bold"} color={"blue"}>
                 {index + 1}

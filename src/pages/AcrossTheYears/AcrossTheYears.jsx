@@ -5,7 +5,7 @@ import Select from "react-select";
 import {
   ButtonReversed,
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -139,7 +139,7 @@ export default function AcrossTheYears() {
               />
               <Text className="text-sm" flexed>
                 Parameter of interest
-                <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
               </Text>
             </div>
             <TypeOfConsciousnessFilter

@@ -1,7 +1,7 @@
 import { Field, Form, Formik } from "formik";
 import {
   ExpandingBox,
-  FilterExplanation,
+  TooltipExplanation,
   Text,
   Button,
   ToastBox,
@@ -30,8 +30,6 @@ export default function BasicClassification({
 }) {
   const [submitted, setSubmitted] = useState(experimentData);
   const [experiment, setExperiment] = useState(false);
-
-  console.log(experimentData?.finding_description);
 
   const initialValues = {
     type_of_consciousness: experimentData?.type_of_consciousness || "",
@@ -128,7 +126,12 @@ export default function BasicClassification({
                   </Field>
                 </div>
 
-                <FilterExplanation text={""} tooltip={""} />
+                <TooltipExplanation
+                  text={""}
+                  tooltip={
+                    "Was this experiment aimed at obtaining a neuroscientific result, a behavioral one, or both?"
+                  }
+                />
               </div>
               <div>
                 <Text weight={"bold"} color={"grayReg"}>
@@ -149,7 +152,11 @@ export default function BasicClassification({
                     ))}
                   </Field>
 
-                  <FilterExplanation text={""} tooltip={""} />
+                  <TooltipExplanation
+                    tooltip={
+                      "Did this experiment study the state, content, or both types of consciousness?"
+                    }
+                  />
                 </div>{" "}
               </div>
               <div>
@@ -168,7 +175,12 @@ export default function BasicClassification({
                       </option>
                     ))}
                   </Field>
-                  <FilterExplanation text={""} tooltip={""} />
+                  <TooltipExplanation
+                    text={""}
+                    tooltip={
+                      "Did this experiment have a report paradigm, a no-report paradigm, or both?"
+                    }
+                  />
                 </div>{" "}
               </div>
               <div>
@@ -190,7 +202,12 @@ export default function BasicClassification({
                       </option>
                     ))}
                   </Field>
-                  <FilterExplanation text={""} tooltip={""} />
+                  <TooltipExplanation
+                    text={""}
+                    tooltip={
+                      "Indicate if this study was theory driven? Theory-driven experiments should explicitly examine a hypothesis of at least one of the theories in their introduction. Experiments that mention the theories in the introduction without referring to a specific hypothesis tested in the experiment should be classified as “mentioning”. Experiments that only post-hoc interpreted the results according to one or more of the theories in the discussion should be classified as “post hoc”."
+                    }
+                  />
                 </div>
               </div>
               <div>
@@ -205,7 +222,11 @@ export default function BasicClassification({
                     rows={4}
                     className="border border-gray-300 w-full rounded-[4px] p-2 "
                   />
-                  <FilterExplanation text={""} tooltip={""} />
+                  <TooltipExplanation
+                    tooltip={
+                      "You can add here any additional comments you have, including dilemmas you had while classifying the paper"
+                    }
+                  />
                 </div>
               </div>
             </div>

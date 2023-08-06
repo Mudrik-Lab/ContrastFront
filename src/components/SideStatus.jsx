@@ -5,6 +5,7 @@ import { showTextToRaw } from "../Utils/functions";
 import { toast } from "react-toastify";
 import { ToastBox } from "./Reusble";
 import ConfirmModal from "./ConfirmModal";
+import { deleteStudy } from "../apiHooks/deleteStudy";
 
 export default function SideStatus({
   number,
@@ -23,23 +24,41 @@ export default function SideStatus({
 }) {
   const [open, setOpen] = useState(false);
 
-  const handleDelete = async (paper, experiment) => {
+  const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
     const confirmed = window.confirm(`Would you like to delete ${paper.title}`);
     if (confirmed) {
-      try {
-        const res = await deleteExperiment({ experiment_pk, study_pk });
-        if (res.status === 204) {
-          setPaperToShow();
-          toast.success(
-            <ToastBox headline={"experiment was deleted successfully"} />
-          );
-          refetch();
+      if (isExperiment) {
+        try {
+          const res = await deleteExperiment({ experiment_pk, study_pk });
+          if (res.status === 204) {
+            setPaperToShow();
+            toast.success(
+              <ToastBox headline={"Experiment was deleted successfully"} />
+            );
+
+            refetch();
+          }
+          console.log(res);
+        } catch (e) {
+          console.log(e);
         }
-        console.log(res);
-      } catch (e) {
-        console.log(e);
+      } else {
+        try {
+          const study_pk = paper.id;
+          const res = await deleteStudy({ study_pk });
+          if (res.status === 204) {
+            setPaperToShow();
+            toast.success(
+              <ToastBox headline={"Study was deleted successfully"} />
+            );
+            refetch();
+          }
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
     // })
@@ -177,9 +196,8 @@ export default function SideStatus({
                     <span
                       className="cursor-pointer"
                       onClick={() => {
-                        if (isExperiment) {
-                          handleDelete(paper);
-                        }
+                        console.log(paper);
+                        handleDelete(paper);
                       }}>
                       delete
                     </span>

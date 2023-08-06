@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -77,9 +78,13 @@ export default function Samples({
 
                 <div className="w-full flex gap-2 items-start">
                   <div id="field1" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
-                    </Text>
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Choose the type of population/s used in the experiment."
+                      }
+                      text={"Type"}
+                    />
                     <YoavSelect
                       disabled={fieldValue.id}
                       value={fieldValue.type}
@@ -93,9 +98,13 @@ export default function Samples({
                   </div>
 
                   <div id="field2" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Included
-                    </Text>
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Enter the number of participants from the specified population who were included in the analysis."
+                      }
+                      text={"Included"}
+                    />
 
                     <div className="flex gap-2">
                       <input
@@ -118,9 +127,13 @@ export default function Samples({
                     </div>
                   </div>
                   <div id="field2" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Total
-                    </Text>
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Enter the number of individuals from the specified population who participated in the experiment."
+                      }
+                      text={"Total"}
+                    />
 
                     <div className="flex gap-2">
                       <input

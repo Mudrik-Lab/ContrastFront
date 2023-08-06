@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import {
   Button,
-  FilterExplanation,
+  TooltipExplanation,
   SideControl,
   Spacer,
   TopSideUserBox,
@@ -26,10 +26,15 @@ export default function UploadNewPaper() {
   const pageName = "upload-new-paper";
   const snap = useSnapshot(state);
 
-  const { data, isSuccess } = useQuery(
+  const { data, isSuccess, refetch } = useQuery(
     ["submitted_studies"],
     getMySubmittedStudies
   );
+
+  const handleRefetch = () => {
+    console.log("did refetch");
+    refetch();
+  };
   return (
     <div className="h-full">
       {isSuccess && (
@@ -38,7 +43,7 @@ export default function UploadNewPaper() {
             <div className="relative ">
               <SideControl isUploadPaper headline={<TopSideUserBox />}>
                 {addNewPaper && (
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60"></div>
+                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-30"></div>
                 )}
                 <SideStatus
                   status={"Complete"}
@@ -53,9 +58,9 @@ export default function UploadNewPaper() {
                   ]}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                  <FilterExplanation
-                    tooltip={"Papers we approved"}
-                    text={"Your approved papers"}
+                  <TooltipExplanation
+                    text={"Papers we approved"}
+                    tooltip={"View completed submissions to check their status"}
                   />
                 </div>
                 <SideStatus
@@ -71,9 +76,9 @@ export default function UploadNewPaper() {
                   )}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                  <FilterExplanation
-                    tooltip={"Papers we approved"}
-                    text={"Your approved papers"}
+                  <TooltipExplanation
+                    text={"Your rejected papers"}
+                    tooltip={"Your rejected papers"}
                   />
                 </div>
 
@@ -89,13 +94,14 @@ export default function UploadNewPaper() {
                   )}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                  <FilterExplanation
-                    tooltip={"Papers we aprroved"}
-                    text={"Papers you’ve submitted for review"}
+                  <TooltipExplanation
+                    text={"Awaiting"}
+                    tooltip={"View submissions awaiting review"}
                   />
                 </div>
 
                 <SideStatus
+                  refetch={handleRefetch}
                   status={"Uncompleted submissions"}
                   setPaperToShow={setPaperToShow}
                   setShowEditble={setShowEditble}
@@ -110,9 +116,9 @@ export default function UploadNewPaper() {
                   addNew={() => setAddNewPaper(true)}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
-                  <FilterExplanation
-                    tooltip={"Papers we aprroved"}
-                    text={"Papers still in process of submission"}
+                  <TooltipExplanation
+                    text={"Uncompleted submissions"}
+                    tooltip={"View submissions in progress and complete them!"}
                   />
                 </div>
 
@@ -132,11 +138,16 @@ export default function UploadNewPaper() {
           graph={
             <div className="overflow-x-scroll h-full">
               {addNewPaper ? (
-                <NewPaperForm setAddNewPaper={setAddNewPaper} />
+                <NewPaperForm
+                  setAddNewPaper={setAddNewPaper}
+                  refetch={handleRefetch}
+                />
               ) : (
                 paperToShow && (
                   <PaperSection
+                    setAddNewPaper={setAddNewPaper}
                     showEditble={showEditble}
+                    setShowEditble={setShowEditble}
                     paperId={paperToShow}
                   />
                 )

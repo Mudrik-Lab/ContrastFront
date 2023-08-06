@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -79,9 +80,13 @@ export default function AnalysisMeasures({
                   <div className="flex flex-col gap-2 ">
                     <div className="flex gap-2">
                       <div id="field1" className="w-full">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Type
-                        </Text>
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            "Indicate what type of consciousness measure was taken."
+                          }
+                          text={"Type"}
+                        />
                         <YoavSelect
                           disabled={fieldValue.id}
                           value={fieldValue.type}
@@ -94,9 +99,13 @@ export default function AnalysisMeasures({
                         />
                       </div>
                       <div id="field2" className="w-full">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Phase
-                        </Text>
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            "Indicate at which stage of the experiment the consciousness measure is taken."
+                          }
+                          text={"Phase"}
+                        />
                         <YoavSelect
                           disabled={fieldValue.id}
                           value={fieldValue.phase}

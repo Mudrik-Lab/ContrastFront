@@ -2,7 +2,7 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   SideControl,
@@ -193,7 +193,7 @@ export default function ParametersDistributionBar() {
                 />
                 <Text className="text-sm" flexed>
                   Theory Family
-                  <FilterExplanation tooltip="few more words about Theory" />
+                  <TooltipExplanation tooltip="few more words about Theory" />
                 </Text>
               </div>
               <div className={sideSectionClass}>
@@ -211,7 +211,7 @@ export default function ParametersDistributionBar() {
                 />
                 <Text className="text-sm" flexed>
                   Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                  <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
               </div>
 
@@ -229,7 +229,7 @@ export default function ParametersDistributionBar() {
                     setChecked={() => setIsStacked(!isStacked)}
                   />
                   <Text>Stacked</Text>
-                  <FilterExplanation
+                  <TooltipExplanation
                     text=""
                     tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
                   />

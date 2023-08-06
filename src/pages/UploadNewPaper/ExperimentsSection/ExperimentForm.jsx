@@ -235,33 +235,3 @@ export default function ExperimentForm({
     </>
   );
 }
-
-// available_properties_by_family = {
-//     "Temporal": ["onset", "offset"],
-//     "Frequency": ["onset", "offset", "correlation_sign", "band_lower_bound", "band_higher_bound", "analysis_type"],
-//     "Spatial Areas": ["AAL_atlas_tag"]
-// }
-// const initialValues = {
-//   type_of_consciousness: "",
-//   experiment_type: "",
-//   report: "",
-//   finding_description: "",
-//   theory_driven: "",
-//   sampels: [{ type: "", total: "", included: "" }],
-//   paradigms: [{ main: "", specific: "" }],
-//   tasks: [{ type: "", description: "" }],
-//   techniques: [""],
-//   measures: [{ type: "", notes: "" }],
-//   stimulus: [
-//     {
-//       category: "",
-//       sub_category: "",
-//       modality: "",
-//       description: "",
-//       duration: "",
-//     },
-//   ],
-//   analysis_measures: [{ type: "", pahse: "", description: "" }],
-//   interpretations: [{ type: "", theory: "" }],
-//   findings: [{ technique: "", type: "", family: "" }],
-// };

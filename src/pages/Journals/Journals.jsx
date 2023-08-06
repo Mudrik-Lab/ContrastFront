@@ -5,7 +5,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   ButtonReversed,
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -147,7 +147,7 @@ export default function Journals() {
               />
               <Text flexed className="text-sm">
                 Theory Family
-                <FilterExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
+                <TooltipExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
               </Text>
             </div>
 

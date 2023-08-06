@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -74,9 +75,13 @@ export default function Measures({
 
                 <div className="w-full flex gap-2 items-start">
                   <div id="field1" className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
-                    </Text>
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Choose all of the measures and analyses that were used to measure effects that are related to consciousness. For example, for an experiment testing for BOLD signal effects chose 'BOLD'."
+                      }
+                      text={"Type"}
+                    />
                     <YoavSelect
                       disabled={fieldValue.id}
                       value={fieldValue.type}

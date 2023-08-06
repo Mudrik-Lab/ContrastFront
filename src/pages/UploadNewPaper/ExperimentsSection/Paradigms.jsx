@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -73,12 +74,14 @@ export default function Paradigms({
 
                   <div className="flex gap-2 items-start">
                     <div id="field1" className="w-full">
-                      <Text
-                        weight={"bold"}
-                        color={"grayReg"}
-                        className={"whitespace-nowrap "}>
-                        Main paradigm
-                      </Text>
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          "Indicate which class of paradigms/manipulations were used in the experiment using the dropdown menu. Then, choose the more specific paradigm/manipulation used, under the specified class of paradigms/manipulations. You can choose several paradigms/manipulations if more than one was used."
+                        }
+                        text={"Main paradigm"}
+                      />
+
                       <YoavSelect
                         disabled={fieldValue.id}
                         value={fieldValue.main}
@@ -90,13 +93,16 @@ export default function Paradigms({
                         options={filedOptions}
                       />
                     </div>
-                    <div id="field1" className="w-full">
-                      <Text
-                        weight={"bold"}
-                        color={"grayReg"}
-                        className={"whitespace-nowrap"}>
-                        Specigic paradigm
-                      </Text>
+
+                    <div id="field2" className="w-full">
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          'Choose a specific paradigm used in the experiment under the relevant paradigm class. For example, for an experiment that used backward masking, select "Masking" as the main paradigm, and then select Backward Masking as the specific paradigm.'
+                        }
+                        text={"Specigic paradigm"}
+                      />
+
                       <YoavSelect
                         disabled={fieldValue.id}
                         value={fieldValue.specific}

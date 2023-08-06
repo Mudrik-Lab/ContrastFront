@@ -3,7 +3,7 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -272,7 +272,7 @@ export default function WorldMap() {
               <div className={sectionClass}>
                 <Text flexed lg weight="bold">
                   Theory Family
-                  <FilterExplanation tooltip="few more words about Theories" />
+                  <TooltipExplanation tooltip="few more words about Theories" />
                 </Text>
 
                 <Select

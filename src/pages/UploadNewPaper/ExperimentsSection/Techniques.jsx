@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -73,12 +74,13 @@ export default function Techniques({
                 </div>
 
                 <div id="field1" className="w-full">
-                  <Text
-                    weight={"bold"}
-                    color={"grayReg"}
-                    className={"whitespace-nowrap "}>
-                    Technique
-                  </Text>
+                  <TooltipExplanation
+                    isHeadline
+                    tooltip={
+                      "Choose the neuroscientific techniques used in the experiment. If this was a behavioral experiment, simply choose ‘behavior’."
+                    }
+                    text={"Technique"}
+                  />
                   <YoavSelect
                     disabled={fieldValue.id}
                     value={fieldValue.technique}

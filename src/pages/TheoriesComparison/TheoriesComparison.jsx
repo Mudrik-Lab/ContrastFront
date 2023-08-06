@@ -10,7 +10,7 @@ import {
 } from "../../Utils/HardCoded";
 import {
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -168,7 +168,7 @@ export default function ParametersDistributionTheoriesComparison() {
             />
             <Text className="text-sm" flexed>
               Parameter of interest
-              <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+              <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
             </Text>
           </div>
           <div className={sideSectionClass}>
@@ -182,7 +182,7 @@ export default function ParametersDistributionTheoriesComparison() {
               />
               <Text>Challenges</Text>
             </div>
-            <FilterExplanation
+            <TooltipExplanation
               text="Interpretation"
               tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
             />

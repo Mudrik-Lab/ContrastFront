@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import ProgressComponent from "./ProgressComponent";
-import { useNavigate } from "react-router-dom";
 import { Spacer, Text } from "../../components/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import { countries } from "countries-list";
@@ -9,14 +8,13 @@ import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
-import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 
 export default function PaperSection({
   paperId,
   showEditble,
   setNewPaper,
-  experimentIndex,
-  setAddNewExperiment,
+  setAddNewPaper,
+  setShowEditble,
 }) {
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
@@ -46,7 +44,6 @@ export default function PaperSection({
       ? "Uncompleted submissions"
       : "Awaiting Review";
 
-  console.log(paperToEdit);
   return (
     <div className="px-2 h-full">
       {
@@ -136,9 +133,11 @@ export default function PaperSection({
           study.approval_status === statusNumber.onProccess &&
           showEditble && (
             <UncompletedPaper
+              setAddNewPaper={setAddNewPaper}
               refetch={handleRefetch}
               showEditble={showEditble}
               study={study}
+              setShowEditble={setShowEditble}
               paperToShow={paperToShow}
               setPaperToShow={setPaperToShow}
               paperToEdit={paperToEdit}

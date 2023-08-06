@@ -194,20 +194,30 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
   );
 };
 
-export const FilterExplanation = ({ text, tooltip }) => {
+export const TooltipExplanation = ({
+  text,
+  tooltip,
+  isHeadline,
+  blackHeadline,
+}) => {
   return (
-    <div className="flex gap-2 mt-1">
+    <div className="flex  gap-2 mt-1 z-20">
       <Tooltip content={tooltip} trigger="click">
         <button
           type="button"
-          className="flex justify-center items-center gap-2 text-sm"
+          className={classNames(
+            `flex justify-center items-center gap-2 text-sm ${
+              blackHeadline && "text-base"
+            } ${isHeadline && "font-bold text-grayReg text-base"} `
+          )}
           aria-label={tooltip}>
-          {text} <QuestionMark />{" "}
+          {text} <QuestionMark />
         </button>
       </Tooltip>
     </div>
   );
 };
+
 export const Label = ({ children }) => {
   return (
     <label
@@ -249,9 +259,10 @@ export const RangeInput = ({ number, setNumber }) => {
           {label}
         </span>
       </div>
-      <FilterExplanation
+      <TooltipExplanation
         text="Minimum number of experiments"
-        tooltip="You can determine the minimum number of experiments in each category of the chosen parameter (i.e., filter out categories with very few entries).
+        tooltip="You can determine the minimum number of experiments in
+         each category of the chosen parameter (i.e., filter out categories with very few entries).
         "
       />
     </div>
@@ -310,7 +321,7 @@ export const TypeOfConsciousnessFilter = ({ checked, setChecked }) => {
         checked={checked}
         setChecked={setChecked}
       />
-      <FilterExplanation
+      <TooltipExplanation
         text="Type of consciousness"
         tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
       />
@@ -332,7 +343,7 @@ export const ReportFilter = ({ checked, setChecked }) => {
         checked={checked}
         setChecked={setChecked}
       />
-      <FilterExplanation
+      <TooltipExplanation
         text="Report"
         tooltip="You can use this to filter the results by experiments that use Report, No-Report techniques. Both techniques in the same experiment (an AND operator), or either (show all experiments that used either report or content consciousness; an OR operator)."
       />
@@ -354,7 +365,7 @@ export const TheoryDrivenFilter = ({ checked, setChecked }) => {
         checked={checked}
         setChecked={setChecked}
       />{" "}
-      <FilterExplanation
+      <TooltipExplanation
         text="Theory Driven"
         tooltip="You can choose to filter the results by experiments that were aimed at testing at least one prediction made by the theories, experiments that only mention the theories in the introduction, experiments that post-hoc interpret their findings with respect to the theories, or experiments that do any one of these options (an OR operator)."
       />

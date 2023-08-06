@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import { state } from "../../state";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { FilterExplanation } from "../../components/Reusble";
+import { TooltipExplanation } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
@@ -56,7 +56,7 @@ export default function Login() {
                       name="name"
                       className={fieldClass}
                     />
-                    <FilterExplanation
+                    <TooltipExplanation
                       text={"Your user name for ConTraSt "}
                       tooltip={""}
                     />

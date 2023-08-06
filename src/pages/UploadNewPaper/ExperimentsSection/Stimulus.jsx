@@ -3,6 +3,7 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  TooltipExplanation,
   TrashButton,
   YoavSelect,
 } from "../../../components/Reusble";
@@ -84,9 +85,13 @@ export default function Stimulus({
                   <div className="flex items-start gap-2">
                     <div className="w-full flex gap-2 items-start">
                       <div id="field1" className="w-full">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Category
-                        </Text>
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            "Choose the category of stimuli used in the experiment."
+                          }
+                          text={"Category"}
+                        />
                         <YoavSelect
                           disabled={fieldValue.id}
                           value={fieldValue.category}
@@ -117,9 +122,13 @@ export default function Stimulus({
                         />
                       </div>
                       <div id="field3" className="w-full">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Modality
-                        </Text>
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            "Indicate in which modality the stimuli were presented."
+                          }
+                          text={"Modality"}
+                        />
                         <YoavSelect
                           disabled={fieldValue.id}
                           value={fieldValue.modality}
@@ -135,9 +144,13 @@ export default function Stimulus({
                   </div>
                   <div className="flex items-start gap-2">
                     <div id="field4" className="w-20">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Duration
-                      </Text>
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          "Enter the presentation duration of the critical stimulus in ms. If this information is not available, enter NA."
+                        }
+                        text={"Duration"}
+                      />
 
                       <div className="flex gap-2">
                         <input

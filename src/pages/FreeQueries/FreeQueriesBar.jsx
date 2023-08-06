@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -390,7 +390,7 @@ export default function FreeQueriesBar() {
                 />
                 <Text className="text-sm" flexed>
                   Parameter of interest
-                  <FilterExplanation tooltip="Choose the dependent variable to be queried." />
+                  <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
                 </Text>
               </div>
               <TypeOfConsciousnessFilter
@@ -407,7 +407,7 @@ export default function FreeQueriesBar() {
               />
               <Text flexed lg weight="bold">
                 Filter by
-                <FilterExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
+                <TooltipExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
               </Text>
               {extraConfigSuccess && (
                 <>
@@ -678,7 +678,7 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                    <FilterExplanation
+                    <TooltipExplanation
                       text="Interpretations"
                       tooltip='In order to use this filter please choose a theory in "Theries" field and then choose interpretation for that theory'
                     />
