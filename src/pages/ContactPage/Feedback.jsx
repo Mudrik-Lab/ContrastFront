@@ -16,10 +16,12 @@ export default function Feedback() {
     q2: "",
     q3: "",
     q4: "",
+    email: "",
   };
 
   const validationSchema = Yup.object({
     message: Yup.string(),
+    email: Yup.string().email("Invalid email address"),
   });
   const handleSubmit = async (values, { resetForm }) => {
     try {
@@ -30,6 +32,7 @@ export default function Feedback() {
         completeness_score: values.q3,
         paper_uploading_score: values.q4,
         comments: values.message,
+        email: values.email,
       });
 
       if (res.status === 201) {
@@ -44,11 +47,10 @@ export default function Feedback() {
       }
     } catch (error) {
       console.log(error);
-      // error.response.status === 400 && setErrorMsg(true);
     }
   };
   return (
-    <div className="mx-auto w-[658px] py-4 px-8  flex flex-col items-center gap-4 rounded-md shadow-3xl">
+    <div className="mx-auto w-full py-4 px-8  flex flex-col items-center gap-4 rounded-md shadow-3xl">
       <h3 className="text-2xl font-bold text-grayReg ">Feedback </h3>
       <div className="border-b border-black w-full"></div>
 
@@ -127,6 +129,28 @@ export default function Feedback() {
 
                 <ErrorMessage
                   name="message"
+                  component="div"
+                  className={errorMsgClass}
+                />
+              </div>
+              <div className="flex flex-col ">
+                <label
+                  className="text-lg font-bold text-blue "
+                  htmlFor="message">
+                  Your Email Address
+                </label>
+                <p className="text-sm">
+                  So we can contact you for clarifications.
+                </p>
+                <Field
+                  id="eamil"
+                  placeholder="Email (Optional)"
+                  name="eamil"
+                  className="border border-gray-300 rounded-sm p-2 w-1/2"
+                />
+
+                <ErrorMessage
+                  name="eamil"
                   component="div"
                   className={errorMsgClass}
                 />
