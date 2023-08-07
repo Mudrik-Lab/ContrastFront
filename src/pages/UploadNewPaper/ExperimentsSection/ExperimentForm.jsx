@@ -6,7 +6,7 @@ import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import BasicClassification from "./BasicClassification";
 import { rawTextToShow } from "../../../Utils/functions";
 import Samples from "./Samples";
-import Stimulus from "./Stimulus";
+import Stimuli from "./Stimuli";
 import Techniques from "./Techniques";
 import Measures from "./Measures";
 import AnalysisMeasures from "./AnalysisMeasures";
@@ -25,14 +25,6 @@ export default function ExperimentForm({
   isEditMode,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
-  const randomKey = Math.round(Math.random() * 100);
-
-  // const { data: experimentData, isSuccess: experimentSuccess } = useQuery(
-  //   [`experiment`, `${study.id}`, `${experimentID}`],
-  //   () =>
-  //     experimentID &&
-  //     getExperiment({ study_pk: study.id, experiment_pk: experimentID })
-  // );
 
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
@@ -166,7 +158,7 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.tasks}
             />
-            <Stimulus
+            <Stimuli
               filedOptions={stimulusCategories}
               subCategories={stimulusSubCategories}
               modalities={stimulusModalities}
