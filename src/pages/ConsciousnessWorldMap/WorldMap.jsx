@@ -16,7 +16,7 @@ import {
 import Plot from "react-plotly.js";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
-import { isMoblile, plotConfig } from "../../Utils/HardCoded";
+import { azure, grayReg, isMoblile, plotConfig } from "../../Utils/HardCoded";
 import getNations from "../../apiHooks/getNations";
 import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
@@ -193,10 +193,10 @@ export default function WorldMap() {
       showcountries: true,
       showland: true,
       showocean: true,
-      oceancolor: "#C2E1F2",
-      countrycolor: "#C2E1F2",
-      bordercolor: "#C2E1F2",
-      landcolor: "#999999",
+      oceancolor: azure,
+      countrycolor: azure,
+      bordercolor: azure,
+      landcolor: grayReg,
       projection: {
         type: "equirectangular",
         scale: 1.5,

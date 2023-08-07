@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -14,7 +14,7 @@ import {
   rawTextToShow,
 } from "../../../Utils/functions";
 
-export default function Stimulus({
+export default function Stimuli({
   filedOptions,
   subCategories,
   modalities,
@@ -84,7 +84,7 @@ export default function Stimulus({
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start gap-2">
                     <div className="w-full flex gap-2 items-start">
-                      <div id="field1" className="w-full">
+                      <div className="w-full">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
@@ -92,7 +92,7 @@ export default function Stimulus({
                           }
                           text={"Category"}
                         />
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.category}
                           onChange={(value) => {
@@ -103,14 +103,14 @@ export default function Stimulus({
                           options={filedOptions}
                         />
                       </div>
-                      <div id="field2" className="w-full">
+                      <div className="w-full">
                         <Text
                           weight={"bold"}
                           color={"grayReg"}
                           className={"whitespace-nowrap "}>
                           Sub-category
                         </Text>
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.sub_category}
                           onChange={(value) => {
@@ -121,7 +121,7 @@ export default function Stimulus({
                           options={subCategories}
                         />
                       </div>
-                      <div id="field3" className="w-full">
+                      <div className="w-full">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
@@ -129,7 +129,7 @@ export default function Stimulus({
                           }
                           text={"Modality"}
                         />
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.modality}
                           onChange={(value) => {
@@ -143,7 +143,7 @@ export default function Stimulus({
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div id="field4" className="w-20">
+                    <div className="w-20">
                       <TooltipExplanation
                         isHeadline
                         tooltip={
@@ -169,12 +169,12 @@ export default function Stimulus({
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
-                            "bg-[#F2F2F2] text-gray-400"
+                            "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
                     </div>
-                    <div id="field5" className="w-full">
+                    <div className="w-full">
                       <Text weight={"bold"} color={"grayReg"}>
                         Description
                       </Text>
@@ -196,7 +196,7 @@ export default function Stimulus({
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
-                            "bg-[#F2F2F2] text-gray-400"
+                            "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>

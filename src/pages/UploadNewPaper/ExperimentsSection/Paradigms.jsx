@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -73,7 +73,7 @@ export default function Paradigms({
                   </div>
 
                   <div className="flex gap-2 items-start">
-                    <div id="field1" className="w-full">
+                    <div className="w-full">
                       <TooltipExplanation
                         isHeadline
                         tooltip={
@@ -82,7 +82,7 @@ export default function Paradigms({
                         text={"Main paradigm"}
                       />
 
-                      <YoavSelect
+                      <CustomSelect
                         disabled={fieldValue.id}
                         value={fieldValue.main}
                         onChange={(value) => {
@@ -94,16 +94,16 @@ export default function Paradigms({
                       />
                     </div>
 
-                    <div id="field2" className="w-full">
+                    <div className="w-full">
                       <TooltipExplanation
                         isHeadline
                         tooltip={
                           'Choose a specific paradigm used in the experiment under the relevant paradigm class. For example, for an experiment that used backward masking, select "Masking" as the main paradigm, and then select Backward Masking as the specific paradigm.'
                         }
-                        text={"Specigic paradigm"}
+                        text={"Specific paradigm"}
                       />
 
-                      <YoavSelect
+                      <CustomSelect
                         disabled={fieldValue.id}
                         value={fieldValue.specific}
                         onChange={(value) => {

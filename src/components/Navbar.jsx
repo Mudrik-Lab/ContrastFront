@@ -6,7 +6,7 @@ import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Temporary, Text } from "./Reusble";
+import { Button, Text } from "./Reusble";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";
@@ -115,19 +115,19 @@ export default function Navbar() {
                   </li>
 
                   <li>
-                    {/* <a
-                    className={page === "/contact" ? "text-blue font-bold" : ""}
-                    href="contact"
-                    aria-current="page">
-                    Contact
-                  </a> */}
-                    <Temporary>Contact</Temporary>
+                    <a
+                      className={
+                        page === "/contact" ? "text-blue font-bold" : ""
+                      }
+                      href="contact"
+                      aria-current="page">
+                      Contact
+                    </a>
                   </li>
                   <li>
                     <a href="/upload-new-paper" aria-current="page">
                       Upload New Paper
                     </a>
-                    {/* <Temporary>Upload New Paper</Temporary> */}
                   </li>
                 </ul>
               </div>
@@ -213,7 +213,6 @@ export default function Navbar() {
                     aria-current="page">
                     Contact
                   </a>
-                  {/* <Temporary extraClass={"text-base"}>Contact</Temporary> */}
                 </li>
                 <li>
                   <a

@@ -114,7 +114,7 @@ export default function BasicClassification({
                     as="select"
                     id="experiment_type"
                     name="experiment_type"
-                    className="text-base w-20 bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    className="text-base w-20 bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
                     {experimentTypeOptions.map((type) => (
                       <option key={`type-${type.value}`} value={type.value}>
                         {type.label}
@@ -139,7 +139,7 @@ export default function BasicClassification({
                     as="select"
                     id="type_of_consciousness"
                     name="type_of_consciousness"
-                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
                     {concsiousnessOptions.map((type) => (
                       <option
                         key={`concsiousness-${type.value}`}
@@ -165,7 +165,7 @@ export default function BasicClassification({
                     as="select"
                     id="report"
                     name="report"
-                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
                     {reportOptions.map((type) => (
                       <option key={`report-${type.value}`} value={type.value}>
                         {type.label}
@@ -190,7 +190,7 @@ export default function BasicClassification({
                     id="theory_driven"
                     name="theory_driven"
                     placeholder="Select Theory "
-                    className="text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
                     {theoryDrivenOptions.map((type) => (
                       <option
                         key={`theory_driven-${type.value}`}

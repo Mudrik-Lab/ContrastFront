@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
@@ -73,7 +73,7 @@ export default function Techniques({
                   </Text>
                 </div>
 
-                <div id="field1" className="w-full">
+                <div className="w-full">
                   <TooltipExplanation
                     isHeadline
                     tooltip={
@@ -81,7 +81,7 @@ export default function Techniques({
                     }
                     text={"Technique"}
                   />
-                  <YoavSelect
+                  <CustomSelect
                     disabled={fieldValue.id}
                     value={fieldValue.technique}
                     onChange={(value) => {

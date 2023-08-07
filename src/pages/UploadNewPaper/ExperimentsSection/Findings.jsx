@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -103,14 +103,14 @@ export default function Findings({
                 </div>
                 <div className="w-full flex items-start gap-4">
                   <div className="w-1/2 flex flex-col gap-2 items-start">
-                    <div id="field1" className="w-full flex">
+                    <div className="w-full flex">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
                           Technique
                         </Text>
                       </div>
                       <div className="w-2/3">
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue?.id}
                           value={fieldValue.technique}
                           onChange={(value) => {
@@ -123,14 +123,14 @@ export default function Findings({
                       </div>
                     </div>
 
-                    <div id="field2" className="w-full flex">
+                    <div className="w-full flex">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
                           Type
                         </Text>
                       </div>
                       <div className="w-2/3">
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue?.id}
                           value={fieldValue.type}
                           onChange={(value) => {
@@ -142,14 +142,14 @@ export default function Findings({
                         />
                       </div>
                     </div>
-                    <div id="field3" className="w-full flex">
+                    <div className="w-full flex">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
                           Family
                         </Text>
                       </div>
                       <div className="w-2/3">
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue?.id}
                           value={fieldValue.family}
                           onChange={(value) => {
@@ -188,7 +188,7 @@ export default function Findings({
                               }}
                               className={`border w-full border-gray-300 rounded-md p-2 ${
                                 fieldValues[index].id &&
-                                "bg-[#F2F2F2] text-gray-400"
+                                "bg-grayDisable text-gray-400"
                               } `}
                             />
                           </div>
@@ -215,7 +215,7 @@ export default function Findings({
                               }}
                               className={`border w-full border-gray-300 rounded-md p-2 ${
                                 fieldValues[index].id &&
-                                "bg-[#F2F2F2] text-gray-400"
+                                "bg-grayDisable text-gray-400"
                               } `}
                             />
                           </div>
@@ -244,7 +244,7 @@ export default function Findings({
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
                               fieldValues[index].id &&
-                              "bg-[#F2F2F2] text-gray-400"
+                              "bg-grayDisable text-gray-400"
                             } `}
                           />
                         </div>
@@ -276,7 +276,7 @@ export default function Findings({
                               }}
                               className={`border w-full border-gray-300 rounded-md p-2 ${
                                 fieldValues[index].id &&
-                                "bg-[#F2F2F2] text-gray-400"
+                                "bg-grayDisable text-gray-400"
                               } `}
                             />
                           </div>
@@ -306,7 +306,7 @@ export default function Findings({
                               }}
                               className={`border w-full border-gray-300 rounded-md p-2 ${
                                 fieldValues[index].id &&
-                                "bg-[#F2F2F2] text-gray-400"
+                                "bg-grayDisable text-gray-400"
                               } `}
                             />
                           </div>
@@ -336,7 +336,7 @@ export default function Findings({
                               }}
                               className={`border w-full border-gray-300 rounded-md p-2 ${
                                 fieldValues[index].id &&
-                                "bg-[#F2F2F2] text-gray-400"
+                                "bg-grayDisable text-gray-400"
                               } `}
                             />
                           </div>
@@ -363,7 +363,7 @@ export default function Findings({
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
-                            "bg-[#F2F2F2] text-gray-400"
+                            "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>

@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
@@ -74,7 +74,7 @@ export default function Measures({
                 </div>
 
                 <div className="w-full flex gap-2 items-start">
-                  <div id="field1" className="w-full">
+                  <div className="w-full">
                     <TooltipExplanation
                       isHeadline
                       tooltip={
@@ -82,7 +82,7 @@ export default function Measures({
                       }
                       text={"Type"}
                     />
-                    <YoavSelect
+                    <CustomSelect
                       disabled={fieldValue.id}
                       value={fieldValue.type}
                       onChange={(value) => {
@@ -115,7 +115,8 @@ export default function Measures({
                           );
                         }}
                         className={`border w-full border-gray-300 rounded-md p-2 ${
-                          fieldValues[index].id && "bg-[#F2F2F2] text-gray-400"
+                          fieldValues[index].id &&
+                          "bg-grayDisable text-gray-400"
                         } `}
                       />
                     </div>

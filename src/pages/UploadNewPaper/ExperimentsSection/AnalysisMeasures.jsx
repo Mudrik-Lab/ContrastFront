@@ -5,7 +5,7 @@ import {
   Text,
   TooltipExplanation,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -78,7 +78,7 @@ export default function AnalysisMeasures({
                 <div className="flex gap-2 items-start">
                   <div className="flex flex-col gap-2 ">
                     <div className="flex gap-2">
-                      <div id="field1" className="w-full">
+                      <div className="w-full">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
@@ -86,7 +86,7 @@ export default function AnalysisMeasures({
                           }
                           text={"Type"}
                         />
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.type}
                           onChange={(value) => {
@@ -97,7 +97,7 @@ export default function AnalysisMeasures({
                           options={filedOptions}
                         />
                       </div>
-                      <div id="field2" className="w-full">
+                      <div className="w-full">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
@@ -105,7 +105,7 @@ export default function AnalysisMeasures({
                           }
                           text={"Phase"}
                         />
-                        <YoavSelect
+                        <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.phase}
                           onChange={(value) => {
@@ -117,7 +117,7 @@ export default function AnalysisMeasures({
                         />
                       </div>
                     </div>
-                    <div id="field3" className="w-full">
+                    <div className="w-full">
                       <Text weight={"bold"} color={"grayReg"}>
                         Description
                       </Text>
@@ -139,7 +139,7 @@ export default function AnalysisMeasures({
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
-                            "bg-[#F2F2F2] text-gray-400"
+                            "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>

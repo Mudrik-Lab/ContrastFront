@@ -9,7 +9,13 @@ import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
 
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
-import { screenWidth, sideSectionClass, sideWidth } from "../Utils/HardCoded";
+import {
+  commonBlue,
+  grayReg,
+  screenWidth,
+  sideSectionClass,
+  sideWidth,
+} from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
@@ -201,8 +207,8 @@ export const TooltipExplanation = ({
   blackHeadline,
 }) => {
   return (
-    <div className="flex  gap-2 mt-1 z-20">
-      <Tooltip content={tooltip} trigger="click">
+    <div className="flex gap-2 mt-1 ">
+      <Tooltip animation width={50} content={tooltip} trigger="click">
         <button
           type="button"
           className={classNames(
@@ -418,29 +424,6 @@ export const Reset = ({ pageName, setInterpretation }) => {
     </div>
   );
 };
-export const Temporary = ({ extraClass, children }) => {
-  const [hover, setHover] = React.useState(false);
-  return (
-    <div className="relative">
-      {hover && (
-        <p
-          className="bg-indigo-900 text-white p-1 min-w-full z-50 "
-          style={{
-            position: "absolute",
-            top: "calc(50% - 16px)",
-          }}>
-          Comming soon
-        </p>
-      )}
-      <p
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        className={classNames(`${extraClass}`)}>
-        {children}
-      </p>
-    </div>
-  );
-};
 
 export const BigButton = ({ extraClass, icon, text, ...config }) => {
   return (
@@ -540,14 +523,14 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
     <div
       className={classNames(
         `px-2 py-1 border-2 border-blue rounded-md ${
-          disabled ? "bg-[#F2F2F2] border-gray-600" : "bg-white"
+          disabled ? "bg-grayDisable border-gray-600" : "bg-white"
         }`
       )}>
       <div
         className="flex justify-between py-1 px-2"
         onClick={!disabled ? () => setOpen(!open) : null}>
         {" "}
-        <Text weight={"bold"}>{headline}</Text>
+        <div className="font-bold">{headline}</div>
         <svg
           width="24"
           height="25"
@@ -560,7 +543,7 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
                 ? "M17 14.8297L15.9917 15.9738L12 12.9018L7.93354 15.9738L7 14.8297L12 10.9738L17 14.8297Z"
                 : "M7 11.1179L8.00833 9.97381L12 13.0458L16.0665 9.97379L17 11.1179L12 14.9738L7 11.1179Z"
             }
-            fill={disabled ? "black" : "#66bff1"}
+            fill={disabled ? "black" : commonBlue}
           />
         </svg>
       </div>
@@ -603,8 +586,7 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
           <svg
             xmlns="http://www.w3.org/2000/svg"
             viewBox="0 0 32 32"
-            // fill={taskValues[index].id ? "#66BFF1" : "#999999"}
-            fill={"#66BFF1"}
+            fill={commonBlue}
             width="25"
             height="25">
             <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
@@ -629,7 +611,7 @@ export const SubmitButton = ({ disabled, submit }) => {
           <g clipPath="url(#clip0_1221_7195)">
             <path
               d="M10.7533 5.34351L7.45445 9.54666L5.56082 7.65212L5.56093 7.65201L5.55443 7.64596C5.36486 7.46932 5.11413 7.37315 4.85507 7.37772C4.596 7.38229 4.34882 7.48724 4.1656 7.67046C3.98238 7.85368 3.87743 8.10086 3.87286 8.35993C3.86829 8.61899 3.96446 8.86972 4.1411 9.05929L4.14098 9.0594L4.14719 9.0656L6.79319 11.7126L6.79338 11.7128C6.88843 11.8077 7.0016 11.8824 7.12616 11.9326C7.25072 11.9828 7.38411 12.0074 7.51838 12.0049C7.65264 12.0024 7.78503 11.9729 7.90765 11.9181C8.03026 11.8634 8.14059 11.7845 8.23205 11.6861L8.2384 11.6793L8.24422 11.672L12.2296 6.6903C12.4057 6.50263 12.5028 6.25412 12.5004 5.99644C12.4979 5.73468 12.3929 5.48434 12.2079 5.29916L12.1346 5.22586H12.1248C12.0487 5.16502 11.9639 5.11551 11.873 5.07906C11.7483 5.02898 11.6147 5.00458 11.4802 5.00732C11.3458 5.01006 11.2133 5.03988 11.0907 5.095C10.968 5.15012 10.8578 5.2294 10.7665 5.32811L10.7596 5.33554L10.7533 5.34351ZM15.75 8.50586C15.75 10.5613 14.9335 12.5325 13.4801 13.9859C12.0267 15.4393 10.0554 16.2559 8 16.2559C5.94457 16.2559 3.97333 15.4393 2.51992 13.9859C1.06652 12.5325 0.25 10.5613 0.25 8.50586C0.25 6.45043 1.06652 4.47919 2.51992 3.02578C3.97333 1.57238 5.94457 0.755859 8 0.755859C10.0554 0.755859 12.0267 1.57238 13.4801 3.02578C14.9335 4.47919 15.75 6.45043 15.75 8.50586Z"
-              fill={disabled ? "#999999" : "#66BFF1"}
+              fill={disabled ? grayReg : commonBlue}
             />
           </g>
         </svg>
@@ -637,7 +619,7 @@ export const SubmitButton = ({ disabled, submit }) => {
     </div>
   );
 };
-export const YoavSelect = ({ options, value, onChange, disabled }) => {
+export const CustomSelect = ({ options, value, onChange, disabled }) => {
   const customStyles = {
     control: (provided, state) => ({
       ...provided,
@@ -666,15 +648,15 @@ export const YoavSelect = ({ options, value, onChange, disabled }) => {
       disabled={disabled}
       placeholder="Select..."
       // className="bg-gray-50 border border-gray-300 text-base text-gray-900  rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5  "
-      className="block text-base w-full bg-white disabled:bg-[#F2F2F2] border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+      className="block text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
       value={value}
       onChange={(e) => {
         onChange(e.currentTarget.value);
       }}>
-      <option key={uuid()}></option>
+      <option></option>
       {options.map((opt) => {
         return (
-          <option key={uuid()} value={opt.value}>
+          <option key={opt.value} value={opt.value}>
             {opt.label}
           </option>
         );

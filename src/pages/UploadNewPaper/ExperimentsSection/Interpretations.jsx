@@ -4,7 +4,7 @@ import {
   SubmitButton,
   Text,
   TrashButton,
-  YoavSelect,
+  CustomSelect,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 
@@ -57,7 +57,7 @@ export default function Interpretations({
           return {
             theory: row.theory.id,
             type: row.type,
-            id: row.id, //TODO: id is undefind now
+            id: row.id,
           };
         })
       );
@@ -80,11 +80,11 @@ export default function Interpretations({
                 </div>
 
                 <div className="w-full flex gap-2 items-start">
-                  <div id="field1" className="w-full">
+                  <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
                       Theory
                     </Text>
-                    <YoavSelect
+                    <CustomSelect
                       disabled={fieldValue.id}
                       value={fieldValue.theory}
                       onChange={(value) => {
@@ -96,12 +96,12 @@ export default function Interpretations({
                     />
                   </div>
 
-                  <div id="field2" className="w-full">
+                  <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
                       Type
                     </Text>
 
-                    <YoavSelect
+                    <CustomSelect
                       disabled={fieldValue.id}
                       value={fieldValue.type}
                       onChange={(value) => {
