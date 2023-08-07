@@ -6,6 +6,13 @@ import { toast } from "react-toastify";
 import { ToastBox } from "./Reusble";
 import ConfirmModal from "./ConfirmModal";
 import { deleteStudy } from "../apiHooks/deleteStudy";
+import {
+  commonBlue,
+  flourishRed,
+  grayHeavy,
+  revoltingGreen,
+  statusNumber,
+} from "../Utils/HardCoded";
 
 export default function SideStatus({
   number,
@@ -65,7 +72,7 @@ export default function SideStatus({
   };
   let color =
     status === "Complete"
-      ? "green-500"
+      ? "revoltingGreen"
       : status === "Rejected"
       ? "flourishRed"
       : status === "Submitted"
@@ -77,21 +84,21 @@ export default function SideStatus({
       : "";
   let fill =
     status === "Complete"
-      ? "#088515"
+      ? revoltingGreen
       : status === "Rejected"
-      ? "#ED5252"
+      ? flourishRed
       : status === "Submitted"
-      ? "#088515"
+      ? revoltingGreen
       : status === "Awaiting Review"
-      ? "#6D6D6D"
+      ? grayHeavy
       : status === "Uncompleted submissions"
-      ? "#159DEA"
+      ? commonBlue
       : "";
   if (disabled) {
-    color = "grayHeavy";
+    color = "grayDisable";
   }
   if (disabled) {
-    fill = "#6D6D6D";
+    fill = grayDisable;
   }
 
   return (
