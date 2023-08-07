@@ -28,7 +28,7 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [addExperiments, setAddExperiments] = useState(false);
-  const navigate = useNavigate();
+
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -53,6 +53,12 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
   };
   const validationSchema = Yup.object().shape({
     authors: Yup.array().min(1, "Please select at least one author"),
+    year: Yup.date()
+      .max(
+        new Date().getFullYear(),
+        "Year must be current year or less than current year"
+      )
+      .required("Publication year is required."),
     source_title: Yup.object().required("Please select or add source title"),
     countries: Yup.array().min(1, "Please select at least one country"),
     DOI: Yup.string()
@@ -68,22 +74,18 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
       const res = await submitStudy({
         title,
         year: values.year,
-        authors_key_words: ["akko", "crusaders"],
         authors: values.authors?.map((author) => author.value),
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
         source_title: values.source_title.value,
       });
-      console.log(res);
+
       if (res.status === 201) {
         setAddExperiments(true);
 
         refetch();
         toast.success(
-          <ToastBox
-            headline={"New experiment was created successfully"}
-            text={"You can add the experiments details now"}
-          />
+          <ToastBox headline={"You can now add the experiments details "} />
         );
       }
     } catch (e) {
@@ -259,16 +261,27 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
 
               <div className="flex gap-4">
                 <Button
+                  // type="submit"
                   type="submit"
-                  //   disabled={!(isSubmitting && isValid)}
+                  // disabled={!(isValid && dirty)}
+                  disabled={!(isValid && dirty) || addExperiments}
                   className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
                   <V />
                   Submit Paper
                 </Button>
                 <button
+                  type="button"
                   onClick={() => {
-                    setAddNewPaper(false);
-                    refetch();
+                    const confirmed = addExperiments
+                      ? null
+                      : window.confirm(
+                          `The data you entered is not saved yet. Are you sure you want to exit? `
+                        );
+
+                    if (confirmed || addExperiments) {
+                      setAddNewPaper(false);
+                      refetch();
+                    }
                   }}
                   className="font-bold">
                   Exit
@@ -280,7 +293,10 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
         <Spacer height={20} />
         {addExperiments && (
           <div>
-            <ExperimentsBox />
+            <ExperimentsBox
+              setNewPaper={setNewPaper}
+              isExperiment={addExperiments}
+            />
           </div>
         )}
       </div>
