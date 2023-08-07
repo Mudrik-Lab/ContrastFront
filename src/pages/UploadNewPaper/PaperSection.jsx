@@ -8,6 +8,7 @@ import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
+import { statusNumber } from "../../Utils/HardCoded";
 
 export default function PaperSection({
   paperId,
@@ -32,15 +33,15 @@ export default function PaperSection({
   };
   const study = data?.data;
   const headlineLenghtToShow = 40; //chars
-  const statusNumber = { onProccess: 0, approved: 1, rejected: 2 };
+
   let status = "";
 
   status =
-    study?.approval_status === statusNumber.approved
+    study?.approval_status === statusNumber.APPROVED
       ? "Approved"
-      : study?.approval_status === statusNumber.rejected
+      : study?.approval_status === statusNumber.REJECTED
       ? "Rejected"
-      : study?.approval_status === statusNumber.onProccess
+      : study?.approval_status === statusNumber.ON_PROCCESS
       ? "Uncompleted submissions"
       : "Awaiting Review";
 
@@ -50,7 +51,7 @@ export default function PaperSection({
         // for case of watching paper (no edit)
         isSuccess &&
           (!showEditble ||
-            study.approval_status !== statusNumber.onProccess) && (
+            study.approval_status !== statusNumber.ON_PROCCESS) && (
             <div>
               <ProgressComponent
                 status={status}
@@ -130,13 +131,14 @@ export default function PaperSection({
       {
         // in case of opening the paper to edit
         isSuccess &&
-          study.approval_status === statusNumber.onProccess &&
+          study.approval_status === statusNumber.ON_PROCCESS &&
           showEditble && (
             <UncompletedPaper
               setAddNewPaper={setAddNewPaper}
               refetch={handleRefetch}
               showEditble={showEditble}
               study={study}
+              setNewPaper={setNewPaper}
               setShowEditble={setShowEditble}
               paperToShow={paperToShow}
               setPaperToShow={setPaperToShow}

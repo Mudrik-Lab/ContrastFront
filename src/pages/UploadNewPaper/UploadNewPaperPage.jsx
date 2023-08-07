@@ -16,15 +16,12 @@ import PaperSection from "./PaperSection";
 import React, { useState } from "react";
 import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.svg";
 import NewPaperForm from "./NewPaperForm";
+import { statusNumber } from "../../Utils/HardCoded";
 
 export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
   const [showEditble, setShowEditble] = useState(false);
   const [addNewPaper, setAddNewPaper] = useState(false);
-
-  const navigate = useNavigate();
-  const pageName = "upload-new-paper";
-  const snap = useSnapshot(state);
 
   const { data, isSuccess, refetch } = useQuery(
     ["submitted_studies"],
@@ -43,18 +40,21 @@ export default function UploadNewPaper() {
             <div className="relative ">
               <SideControl isUploadPaper headline={<TopSideUserBox />}>
                 {addNewPaper && (
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-30"></div>
+                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
                 )}
                 <SideStatus
                   status={"Complete"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
                   number={
-                    data.data.filter((paper) => paper.approval_status == 1)
-                      .length
+                    data.data.filter(
+                      (paper) => paper.approval_status == statusNumber.APPROVED
+                    ).length
                   }
                   papers={[
-                    ...data.data.filter((paper) => paper.approval_status == 1),
+                    ...data.data.filter(
+                      (paper) => paper.approval_status == statusNumber.APPROVED
+                    ),
                   ]}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
@@ -68,11 +68,12 @@ export default function UploadNewPaper() {
                   completedStudy
                   setPaperToShow={setPaperToShow}
                   number={
-                    data.data.filter((paper) => paper.approval_status == 2)
-                      .length
+                    data.data.filter(
+                      (paper) => paper.approval_status == statusNumber.REJECTED
+                    ).length
                   }
                   papers={data.data.filter(
-                    (paper) => paper.approval_status == 2
+                    (paper) => paper.approval_status == statusNumber.REJECTED
                   )}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
@@ -86,11 +87,12 @@ export default function UploadNewPaper() {
                   status={"Awaiting Review"}
                   setPaperToShow={setPaperToShow}
                   number={
-                    data.data.filter((paper) => paper.approval_status == 3)
-                      .length
+                    data.data.filter(
+                      (paper) => paper.approval_status == statusNumber.AWAITING
+                    ).length
                   }
                   papers={data.data.filter(
-                    (paper) => paper.approval_status == 3
+                    (paper) => paper.approval_status == statusNumber.AWAITING
                   )}
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
@@ -107,11 +109,13 @@ export default function UploadNewPaper() {
                   setShowEditble={setShowEditble}
                   showEditble={true}
                   number={
-                    data.data.filter((paper) => paper.approval_status == 0)
-                      .length
+                    data.data.filter(
+                      (paper) =>
+                        paper.approval_status == statusNumber.ON_PROCCESS
+                    ).length
                   }
                   papers={data.data.filter(
-                    (paper) => paper.approval_status == 0
+                    (paper) => paper.approval_status == statusNumber.ON_PROCCESS
                   )}
                   addNew={() => setAddNewPaper(true)}
                 />

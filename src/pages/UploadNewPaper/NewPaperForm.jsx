@@ -293,10 +293,7 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
         <Spacer height={20} />
         {addExperiments && (
           <div>
-            <ExperimentsBox
-              setNewPaper={setNewPaper}
-              isExperiment={addExperiments}
-            />
+            <ExperimentsBox isExperiment={addExperiments} />
           </div>
         )}
       </div>

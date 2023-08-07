@@ -120,7 +120,7 @@ export default function UncompletedPaper({
           <div className="flex justify-between">
             <div className="p-2 h-full w-[49%] shadow-3xl relative">
               {addNewExperiment && (
-                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-30"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
               )}
               <div className="flex flex-col gap-4">
                 <div>
