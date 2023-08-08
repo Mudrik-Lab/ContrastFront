@@ -10,7 +10,7 @@ import {
 import {
   ButtonReversed,
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
@@ -207,7 +207,7 @@ export default function TheoryDriven() {
               />{" "}
               <Text>Challenges</Text>
             </div>
-            <FilterExplanation
+            <TooltipExplanation
               text="Interpretation"
               tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
             />

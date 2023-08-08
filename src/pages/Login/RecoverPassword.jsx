@@ -4,7 +4,7 @@ import * as Yup from "yup";
 
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { FilterExplanation, ToastBox } from "../../components/Reusble";
+import { TooltipExplanation, ToastBox } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import recoverPassword from "../../apiHooks/recoverPassword";
@@ -61,7 +61,7 @@ export default function RecoverPassword() {
                       name="email"
                       className={fieldClass}
                     />
-                    <FilterExplanation
+                    <TooltipExplanation
                       text={"Your registered email address "}
                       tooltip={""}
                     />

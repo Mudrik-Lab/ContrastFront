@@ -1,50 +1,120 @@
-import { Field, FieldArray } from "formik";
-import { ExpandingBox, Text } from "../../../components/Reusble";
-import Select from "react-select";
-import { useState } from "react";
+import {
+  AddFieldButton,
+  ExpandingBox,
+  SubmitButton,
+  Text,
+  TooltipExplanation,
+  TrashButton,
+  CustomSelect,
+} from "../../../components/Reusble";
+import { v4 as uuid } from "uuid";
+import { useEffect, useState } from "react";
+import {
+  DeleteClassificationField,
+  SubmitClassificationField,
+  rawTextToShow,
+} from "../../../Utils/functions";
 
 export default function Techniques({
+  filedOptions,
+  disabled,
+  experiment_pk,
+  study_pk,
   values,
-  setFieldValue,
-  techniquesOptions,
 }) {
+  const [fieldValues, setFieldValues] = useState([
+    {
+      technique: "",
+    },
+  ]);
+  const classificationName = "technique";
+
+  const handleSubmit = SubmitClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+
+  const handleDelete = DeleteClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          return {
+            technique: row.id,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
+
   return (
-    <ExpandingBox headline={"Techniques"}>
-      <FieldArray name="techniques">
-        {({ push, remove }) => (
-          <>
-            {values.tasks.map((_, index) => (
-              <div
-                key={index}
-                className="flex gap-2 items-start  border border-blue border-x-4 p-2 rounded-md">
-                <div className="w-4">
+    <ExpandingBox
+      disabled={disabled}
+      headline={rawTextToShow(classificationName)}>
+      {fieldValues.map((fieldValue, index) => {
+        return (
+          <div key={`${classificationName}-${index}`}>
+            <form className="flex flex-col gap-2">
+              <div className="flex gap-4 items-center  border border-blue border-x-4 p-2 rounded-md">
+                <div id="index" className="w-4">
                   <Text weight={"bold"} color={"blue"}>
                     {index + 1}
                   </Text>
                 </div>
+
                 <div className="w-full">
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Techniques
-                  </Text>
-                  <Select
-                    isMulti={true}
-                    id={`techniques[${index}]`}
-                    name={`techniques[${index}]`}
-                    onChange={(v) => {
-                      setFieldValue(
-                        `techniques`,
-                        v.map((x) => x.value)
-                      );
-                      console.log("");
+                  <TooltipExplanation
+                    isHeadline
+                    tooltip={
+                      "Choose the neuroscientific techniques used in the experiment. If this was a behavioral experiment, simply choose ‘behavior’."
+                    }
+                    text={"Technique"}
+                  />
+                  <CustomSelect
+                    disabled={fieldValue.id}
+                    value={fieldValue.technique}
+                    onChange={(value) => {
+                      const newArray = [...fieldValues];
+                      newArray[index].technique = value;
+                      setFieldValues(newArray);
                     }}
-                    options={techniquesOptions}
+                    options={filedOptions}
+                  />
+                </div>
+
+                <div id="trash+submit" className="flex gap-2">
+                  <TrashButton
+                    handleDelete={handleDelete}
+                    fieldValues={fieldValues}
+                    index={index}
+                  />
+                  <SubmitButton
+                    submit={() => {
+                      handleSubmit(fieldValues[index].technique, index);
+                    }}
+                    disabled={!fieldValue?.technique || fieldValue.id}
                   />
                 </div>
               </div>
-            ))}
-          </>
-        )}
-      </FieldArray>
+            </form>
+          </div>
+        );
+      })}
+      <AddFieldButton
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }

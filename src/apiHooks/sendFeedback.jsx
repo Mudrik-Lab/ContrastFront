@@ -1,6 +1,7 @@
 import { queryApi } from "../Utils/api";
 
 export default async function sendFeedback({
+  email,
   queries_score,
   experience_score,
   completeness_score,
@@ -11,6 +12,7 @@ export default async function sendFeedback({
     url: `profiles/feedbacks/site_feedback/`,
     method: "POST",
     data: {
+      email,
       queries_score,
       experience_score,
       completeness_score,

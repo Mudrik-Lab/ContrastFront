@@ -53,7 +53,7 @@ export default function VettingPaper() {
   };
 
   return (
-    <div className="mx-auto w-[658px] py-4 px-8  flex flex-col items-center gap-4 rounded-md shadow-3xl">
+    <div className="mx-auto w-full py-4 px-8  flex flex-col items-center gap-4 rounded-md shadow-3xl">
       <h3 className="text-2xl font-bold text-grayReg ">
         Vetting a paper in our database
       </h3>

@@ -4,7 +4,7 @@ import Select from "react-select";
 import {
   ButtonReversed,
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   ReportFilter,
   Reset,
   SideControl,
@@ -192,7 +192,7 @@ export default function Frequencies() {
                   />
                   <Text className="text-sm">
                     Theory Family
-                    <FilterExplanation tooltip="few more words about Thory" />
+                    <TooltipExplanation tooltip="few more words about Thory" />
                   </Text>
                 </div>
                 <div className={sideSectionClass}>
@@ -216,7 +216,7 @@ export default function Frequencies() {
 
                   <Text flexed className="text-sm">
                     Technique
-                    <FilterExplanation tooltip="few more words about techniques" />
+                    <TooltipExplanation tooltip="few more words about techniques" />
                   </Text>
                 </div>
                 <TypeOfConsciousnessFilter

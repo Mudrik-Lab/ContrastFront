@@ -26,15 +26,23 @@ export const experimentTypeOptions = [
   { value: "2", label: "2" },
   { value: "3", label: "3" },
 ];
+
+export const interpretationTypes = [
+  { label: "Supports", value: "pro" },
+  { label: "Challenges", value: "challenges" },
+  { label: "Neutral", value: "neutral" },
+];
 export const concsiousnessOptions = [
   { vlaue: null, label: "" },
   { value: "state", label: "State" },
   { value: "content", label: "Content" },
+  { value: "both", label: "Both" },
 ];
 export const reportOptions = [
   { vlaue: null, label: "" },
   { value: "report", label: "Report" },
   { value: "no_report", label: "No Report" },
+  { value: "both", label: "Both" },
 ];
 export const theoryDrivenOptions = [
   { vlaue: null, label: "" },
@@ -42,6 +50,13 @@ export const theoryDrivenOptions = [
   { value: "mentioning", label: "Mentioning" },
   { value: "post-hoc", label: "Post Hoc" },
 ];
+
+export const statusNumber = {
+  ON_PROCCESS: 0,
+  APPROVED: 1,
+  REJECTED: 2,
+  AWAITING: 3,
+};
 export const parametersOptions = [
   {
     value: "paradigm_family",
@@ -139,3 +154,10 @@ export const available_populations = [
     label: "Computer",
   },
 ];
+export const commonBlue = "#66BFF1";
+export const grayReg = "#999999";
+export const azure = "#C2E1F2";
+export const flourishRed = "#ED5252";
+export const revoltingGreen = "#088515";
+export const grayHeavy = "#6D6D6D";
+export const grayDisable = "#F2F2F2";

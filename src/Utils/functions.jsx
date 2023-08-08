@@ -1,3 +1,14 @@
+import { toast } from "react-toastify";
+import { ToastBox } from "../components/Reusble";
+import {
+  addFieldToexperiment,
+  addPropertyToexperiment,
+} from "../apiHooks/createExperiment";
+import {
+  deleteFieldFromExperiments,
+  deletePropertyFromExperiment,
+} from "../apiHooks/deleteExperiment";
+
 export function blueToYellow(numColors) {
   const colors = [];
 
@@ -158,3 +169,133 @@ export const generateSelectOptions = (start, end) => {
   }
   return options;
 };
+
+export function SubmitClassificationField(
+  study_pk,
+  experiment_pk,
+  classificationName,
+  fieldValues,
+  setFieldValues
+) {
+  return async (values, index) => {
+    if (
+      classificationName !== "paradigm" &&
+      classificationName !== "technique"
+    ) {
+      try {
+        const res = await addFieldToexperiment({
+          field: values[index],
+          study_pk,
+          experiment_pk,
+          field_name: classificationName,
+        });
+        if (res.status === 201) {
+          console.log(res);
+          toast.success(
+            <ToastBox
+              headline={"Success"}
+              text={`Added ${classificationName.slice(0, -1)} classification`}
+            />
+          );
+          const newArr = [...fieldValues];
+          newArr[index] = res.data;
+          setFieldValues(newArr);
+        }
+      } catch (e) {
+        const errors = Object.values(e.response.data);
+        toast.error(<ToastBox text={e.message} headline={errors} />);
+      }
+    } else {
+      try {
+        const res = await addPropertyToexperiment({
+          experiment_pk,
+          study_pk,
+          property_id: values,
+          classificationName,
+        });
+        if (res.status === 201) {
+          toast.success(
+            <ToastBox
+              headline={"Success"}
+              text={`Added ${classificationName.slice(0, -1)} classification`}
+            />
+          );
+          const newArr = [...fieldValues];
+          newArr[index].id = res.data.id;
+          setFieldValues(newArr);
+        }
+      } catch (e) {
+        const errors = Object.values(e.response.data);
+        toast.error(<ToastBox text={e.message} headline={errors} />);
+      }
+    }
+  };
+}
+export function DeleteClassificationField(
+  study_pk,
+  experiment_pk,
+  classificationName,
+  fieldValues,
+  setFieldValues
+) {
+  return async (values, index) => {
+    if (
+      classificationName !== "paradigm" &&
+      classificationName !== "technique"
+    ) {
+      try {
+        const res = await deleteFieldFromExperiments({
+          study_pk,
+          experiment_pk,
+          field_name: classificationName,
+          id: values[index].id,
+        });
+        if (res.status === 204) {
+          if (fieldValues.length !== 1) {
+            const newArr = [...fieldValues];
+            newArr.splice(index, 1);
+            setFieldValues(newArr);
+          } else {
+            setFieldValues([
+              {
+                type: "",
+                description: "",
+                key: Math.round(Math.random() * 101),
+              },
+            ]);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    } else {
+      console.log(classificationName);
+
+      try {
+        const res = await deletePropertyFromExperiment({
+          study_pk,
+          experiment_pk,
+          classificationName,
+          property_id: values[index].id,
+        });
+        if (res.status === 204) {
+          if (fieldValues.length !== 1) {
+            const newArr = [...fieldValues];
+            newArr.splice(index, 1);
+            setFieldValues(newArr);
+          } else {
+            setFieldValues([
+              {
+                type: "",
+                description: "",
+                key: Math.round(Math.random() * 101),
+              },
+            ]);
+          }
+        }
+      } catch (e) {
+        console.log(e);
+      }
+    }
+  };
+}

@@ -4,7 +4,7 @@ import Select from "react-select";
 import {
   ButtonReversed,
   CSV,
-  FilterExplanation,
+  TooltipExplanation,
   ReportFilter,
   Reset,
   SideControl,
@@ -220,7 +220,7 @@ export default function Timings() {
               />
               <Text flexed className="text-sm">
                 Theory Family
-                <FilterExplanation tooltip="few more words about Thory" />
+                <TooltipExplanation tooltip="few more words about Thory" />
               </Text>
             </div>
             <div className={sideSectionClass}>
@@ -245,7 +245,7 @@ export default function Timings() {
               )}
               <Text flexed className="text-sm">
                 Technique
-                <FilterExplanation tooltip="few more words about techniques" />
+                <TooltipExplanation tooltip="few more words about techniques" />
               </Text>
             </div>
             <div className={sideSectionClass}>
@@ -270,7 +270,7 @@ export default function Timings() {
               )}
               <Text flexed className="text-sm">
                 Components
-                <FilterExplanation tooltip="few more words about Finding Tags" />
+                <TooltipExplanation tooltip="few more words about Finding Tags" />
               </Text>
             </div>
             <TypeOfConsciousnessFilter

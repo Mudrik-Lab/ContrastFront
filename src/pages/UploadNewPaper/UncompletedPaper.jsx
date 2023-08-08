@@ -2,9 +2,10 @@ import React, { useEffect, useMemo, useState } from "react";
 import ProgressComponent from "./ProgressComponent";
 import {
   Button,
-  FilterExplanation,
+  TooltipExplanation,
   Spacer,
   Text,
+  ToastBox,
 } from "../../components/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
@@ -21,19 +22,28 @@ import MultiSelect from "../../components/SelectField";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../apiHooks/getStudies";
-import NewExperimentForm from "./ExperimentsSection/NewExperimentForm";
+import ExperimentForm from "./ExperimentsSection/ExperimentForm";
+import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
+import { toast } from "react-toastify";
 
 export default function UncompletedPaper({
   study,
   paperToShow,
   setPaperToShow,
+  paperToEdit,
+  setPaperToEdit,
   showEditble,
   refetch,
+  setAddNewPaper,
+  setShowEditble,
+  newPaper,
+  setNewPaper,
+  addNewExperiment,
+  setAddNewExperiment,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
-  const [addNewExperiment, setAddNewExperiment] = useState(false);
-  const [newPaper, setNewPaper] = useState(false);
+
   const countryOption = useMemo(() => countryList().getData(), []);
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
@@ -80,8 +90,7 @@ export default function UncompletedPaper({
   });
 
   const handleSubmit = async (values) => {
-    // e.preventDefault();
-
+    console.log(values);
     try {
       const res = await EditUncompletedStudy({
         title,
@@ -94,6 +103,14 @@ export default function UncompletedPaper({
         source_title: values.source_title,
       });
       console.log(res);
+      if (res.status === 200) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Study's details were updated"}
+          />
+        );
+      }
     } catch (e) {
       console.log(e);
     }
@@ -116,7 +133,7 @@ export default function UncompletedPaper({
           <div className="flex justify-between">
             <div className="p-2 h-full w-[49%] shadow-3xl relative">
               {addNewExperiment && (
-                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-30"></div>
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
               )}
               <div className="flex flex-col gap-4">
                 <div>
@@ -137,7 +154,10 @@ export default function UncompletedPaper({
                         e.key === "Enter" && setNameSubmitted(e.target.value)
                       }
                     />
-                    <FilterExplanation text={""} tooltip={""} />
+                    <TooltipExplanation
+                      text={""}
+                      tooltip={"Copy the paper’s title here"}
+                    />
                   </div>
                 </div>
                 <Formik
@@ -146,7 +166,6 @@ export default function UncompletedPaper({
                   // validationSchema={validationSchema}
                 >
                   {({
-                    onSubmit,
                     isSubmitting,
                     dirty,
                     isValid,
@@ -167,7 +186,10 @@ export default function UncompletedPaper({
                               className="border border-grayFrame p-2 w-full text-base rounded-md"
                             />
 
-                            <FilterExplanation text={""} tooltip={""} />
+                            <TooltipExplanation
+                              text={""}
+                              tooltip={"Enter the valid DOI of your study"}
+                            />
                           </div>
                           <ErrorMessage
                             name="paperName"
@@ -187,7 +209,10 @@ export default function UncompletedPaper({
                               className="border border-grayFrame p-2 w-full text-base rounded-md"
                             />
 
-                            <FilterExplanation text={""} tooltip={""} />
+                            <TooltipExplanation
+                              text={""}
+                              tooltip={"Enter year of formal publication"}
+                            />
                           </div>
                           <ErrorMessage
                             name="year"
@@ -210,7 +235,12 @@ export default function UncompletedPaper({
                               isClearable
                               options={authorsList}
                             />
-                            <FilterExplanation text={""} tooltip={""} />{" "}
+                            <TooltipExplanation
+                              text={""}
+                              tooltip={
+                                "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                              }
+                            />{" "}
                           </div>
                           <ErrorMessage
                             name="paperName"
@@ -220,29 +250,24 @@ export default function UncompletedPaper({
                         </div>
                         <div>
                           <Text weight={"bold"} color={"grayReg"}>
-                            Journals
+                            Journal
                           </Text>
                           <div className="flex items-center gap-2">
-                            {/* <Field
-                              name="source_title"
-                              id="source_title"
-                              placeholder="Select Journals"
-                              className={
-                                "border border-grayFrame p-2 w-full text-base rounded-md"
-                              }
-                            /> */}
-                            <Select
+                            <CreatableSelect
                               name={"source_title"}
                               id={"source_title"}
+                              isClearable
                               defaultInputValue={values.source_title}
                               onChange={(v) => {
-                                console.log(values.source_title),
-                                  setFieldValue("source_title", v.value);
+                                setFieldValue("source_title", v.value);
                               }}
                               options={journalsList}
                             />
 
-                            <FilterExplanation text={""} tooltip={""} />
+                            <TooltipExplanation
+                              text={""}
+                              tooltip={"Select one abbreviated journal name"}
+                            />
                           </div>
                           <ErrorMessage
                             name="source_title"
@@ -266,7 +291,7 @@ export default function UncompletedPaper({
                               options={countryOption}
                             />
 
-                            <FilterExplanation text={""} tooltip={""} />
+                            <TooltipExplanation text={""} tooltip={""} />
                           </div>{" "}
                           <ErrorMessage
                             name="countries"
@@ -281,25 +306,24 @@ export default function UncompletedPaper({
                         <Button
                           type="submit"
                           disabled={isSubmitting && !isValid}
-                          // className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy"
                           extraClass={
                             " disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none"
                           }>
-                          <svg
-                            width="16"
-                            height="17"
-                            viewBox="0 0 16 17"
-                            fill="none"
-                            xmlns="http://www.w3.org/2000/svg">
-                            <g clipPath="url(#clip0_1221_7195)">
-                              <path
-                                d="M10.7533 5.34351L7.45445 9.54666L5.56082 7.65212L5.56093 7.65201L5.55443 7.64596C5.36486 7.46932 5.11413 7.37315 4.85507 7.37772C4.596 7.38229 4.34882 7.48724 4.1656 7.67046C3.98238 7.85368 3.87743 8.10086 3.87286 8.35993C3.86829 8.61899 3.96446 8.86972 4.1411 9.05929L4.14098 9.0594L4.14719 9.0656L6.79319 11.7126L6.79338 11.7128C6.88843 11.8077 7.0016 11.8824 7.12616 11.9326C7.25072 11.9828 7.38411 12.0074 7.51838 12.0049C7.65264 12.0024 7.78503 11.9729 7.90765 11.9181C8.03026 11.8634 8.14059 11.7845 8.23205 11.6861L8.2384 11.6793L8.24422 11.672L12.2296 6.6903C12.4057 6.50263 12.5028 6.25412 12.5004 5.99644C12.4979 5.73468 12.3929 5.48434 12.2079 5.29916L12.1346 5.22586H12.1248C12.0487 5.16502 11.9639 5.11551 11.873 5.07906C11.7483 5.02898 11.6147 5.00458 11.4802 5.00732C11.3458 5.01006 11.2133 5.03988 11.0907 5.095C10.968 5.15012 10.8578 5.2294 10.7665 5.32811L10.7596 5.33554L10.7533 5.34351ZM15.75 8.50586C15.75 10.5613 14.9335 12.5325 13.4801 13.9859C12.0267 15.4393 10.0554 16.2559 8 16.2559C5.94457 16.2559 3.97333 15.4393 2.51992 13.9859C1.06652 12.5325 0.25 10.5613 0.25 8.50586C0.25 6.45043 1.06652 4.47919 2.51992 3.02578C3.97333 1.57238 5.94457 0.755859 8 0.755859C10.0554 0.755859 12.0267 1.57238 13.4801 3.02578C14.9335 4.47919 15.75 6.45043 15.75 8.50586Z"
-                                fill="white"
-                              />
-                            </g>
-                          </svg>
+                          <V />
                           Update Paper
                         </Button>
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAddNewPaper(false);
+                            setPaperToShow(false);
+                            setPaperToEdit(false);
+                            setShowEditble(false);
+                            refetch();
+                          }}
+                          className="font-bold">
+                          Exit
+                        </button>
                       </div>
                     </Form>
                   )}
@@ -312,6 +336,7 @@ export default function UncompletedPaper({
                 disabled={false}
                 setNewPaper={setNewPaper}
                 setPaperToShow={setPaperToShow}
+                setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 showEditble={showEditble}
@@ -323,14 +348,29 @@ export default function UncompletedPaper({
               <Spacer height={20} />
             </div>
             {addNewExperiment && (
-              <NewExperimentForm
+              <ExperimentForm
+                setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 refetch={refetch}
               />
             )}
             {paperToShow && !newPaper && (
-              <ExperimentDetails experiment={paperToShow} study={study} />
+              <ExperimentDetails
+                experiment={paperToShow}
+                study={study}
+                setPaperToShow={setPaperToShow}
+              />
+            )}
+            {paperToEdit && !newPaper && (
+              <ExperimentForm
+                experimentData={paperToEdit}
+                setAddNewExperiment={setAddNewExperiment}
+                setPaperToEdit={setPaperToEdit}
+                refetch={refetch}
+                study={study}
+                isEditMode={true}
+              />
             )}
           </div>
         </div>

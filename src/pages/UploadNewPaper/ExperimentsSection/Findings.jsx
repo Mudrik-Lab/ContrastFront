@@ -1,279 +1,405 @@
-import { Field, FieldArray, Form, Formik } from "formik";
-import { ExpandingBox, Text } from "../../../components/Reusble";
-import Select from "react-select";
-import { useState } from "react";
-import { fieldClass, numericFieldClass } from "../../../Utils/HardCoded";
+import {
+  AddFieldButton,
+  ExpandingBox,
+  SubmitButton,
+  Text,
+  TooltipExplanation,
+  TrashButton,
+  CustomSelect,
+} from "../../../components/Reusble";
+import { useEffect, useState } from "react";
+import {
+  DeleteClassificationField,
+  SubmitClassificationField,
+  rawTextToShow,
+} from "../../../Utils/functions";
+import { v4 as uuid } from "uuid";
 
-export default function Findings({ options, disabled }) {
-  const [count, setCount] = useState(0);
-  const initialValues = {
-    findings: [{ technique: "", type: "", family: "" }],
-  };
-  const handleSubmit = () => {
-    console.log("first");
-  };
+export default function Findings({
+  filedOptions,
+  disabled,
+  experiment_pk,
+  study_pk,
+  values,
+}) {
+  const [fieldValues, setFieldValues] = useState([
+    {
+      family: "",
+      type: "",
+      onset: "",
+      offset: "",
+      correlation_sign: "",
+      band_lower_bound: "",
+      band_higher_bound: "",
+      AAL_atlas_tag: "",
+      notes: "",
+      analysis_type: "",
+      technique: "",
+    },
+  ]);
+  const classificationName = "finding_tags";
+
+  const handleSubmit = SubmitClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+
+  const handleDelete = DeleteClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+
+  useEffect(() => {
+    if (values && values.length > 0) {
+      setFieldValues(
+        values.map((row) => {
+          console.log(row);
+          return {
+            family: row.family,
+            type: row.type,
+            technique: row.technique,
+            onset: row.onset || "",
+            offset: row.offset || "",
+            correlation_sign: row.correlation_sign || "",
+            band_lower_bound: row.band_lower_bound,
+            band_higher_bound: row.band_higher_bound,
+            AAL_atlas_tag: row.AAL_atlas_tag,
+            notes: row.notes,
+            analysis_type: row.analysis_type,
+            id: row.id,
+          };
+        })
+      );
+    }
+  }, []);
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Findings"}>
-      <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-        {({
-          onSubmit,
-          isSubmitting,
-          dirty,
-          isValid,
-          values,
-          setFieldValue,
-        }) => (
-          <Form>
-            <FieldArray name="findings">
-              {({ push, remove }) => (
-                <>
-                  {values.findings.map((_, index) => (
-                    <div
-                      key={index}
-                      className=" flex gap-4 items-stretch border border-blue border-x-4 p-2 rounded-md">
-                      <div className="column-1 w-4 ">
-                        <Text weight={"bold"} color={"blue"}>
-                          {index + 1}
+    <ExpandingBox
+      disabled={disabled}
+      headline={
+        <TooltipExplanation
+          blackHeadline
+          text={"Experiment's Findings"}
+          tooltip={
+            "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
+          }
+        />
+      }>
+      {fieldValues.map((fieldValue, index) => {
+        return (
+          <div key={`${classificationName}-${index}`}>
+            <form className="flex flex-col gap-2">
+              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
+                <div id="index" className="w-4">
+                  <Text weight={"bold"} color={"blue"}>
+                    {index + 1}
+                  </Text>
+                </div>
+                <div className="w-full flex items-start gap-4">
+                  <div className="w-1/2 flex flex-col gap-2 items-start">
+                    <div className="w-full flex">
+                      <div className="w-1/3">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Technique
                         </Text>
                       </div>
-
-                      <div className=" column-2 flex flex-col w-full gap-2">
-                        <div className="flex gap-2 w-full">
-                          <div className="w-1/3">
-                            <Text weight={"bold"} color={"grayReg"}>
-                              Technique
-                            </Text>
-                          </div>
-                          <div className="w-2/3">
-                            <Select
-                              id={`findings[${index}].technique`}
-                              name={`findings[${index}].technique`}
-                              onChange={(v) =>
-                                setFieldValue(
-                                  `findings[${index}].technique`,
-                                  v.value
-                                )
-                              }
-                              options={options.techniquesOptions}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex gap-2 w-full">
-                          <div className="w-1/3">
-                            <Text weight={"bold"} color={"grayReg"}>
-                              Type
-                            </Text>
-                          </div>
-                          <div className="w-2/3">
-                            <Select
-                              id={`findings[${index}].type`}
-                              name={`findings[${index}].type`}
-                              onChange={(v) =>
-                                setFieldValue(
-                                  `findings[${index}].type`,
-                                  v.value
-                                )
-                              }
-                              options={options.findingTypes}
-                              styles={{ width: "300px" }}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex gap-2 w-full">
-                          {" "}
-                          <div className="w-1/3">
-                            <Text weight={"bold"} color={"grayReg"}>
-                              Family
-                            </Text>
-                          </div>
-                          <div className="w-2/3">
-                            <Select
-                              id={`findings[${index}].family`}
-                              name={`findings[${index}].family`}
-                              onChange={(v) => {
-                                setFieldValue(
-                                  `findings[${index}].family`,
-                                  v.value
-                                );
-                                console.log(values);
-                              }}
-                              options={options.findingTagsFamilies}
-                            />
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="column-3  w-full">
-                        {values.findings[index].family === 1 ? (
-                          <div className="flex flex-col gap-2">
-                            <div className="flex gap-2 w-full">
-                              <div className="w-1/3">
-                                <Text weight={"bold"} color={"grayReg"}>
-                                  Onset
-                                </Text>
-                              </div>
-                              <div className="w-2/3">
-                                <Field
-                                  type="number"
-                                  id={`findings[${index}].onset`}
-                                  name={`findings[${index}].onset`}
-                                  className={numericFieldClass}
-                                />
-                              </div>
-                            </div>
-                            <div className="flex gap-2 w-full">
-                              <div className="w-1/3">
-                                <Text weight={"bold"} color={"grayReg"}>
-                                  Offset
-                                </Text>
-                              </div>
-                              <div className="w-2/3">
-                                <Field
-                                  type="number"
-                                  id={`findings[${index}].onffet`}
-                                  name={`findings[${index}].onffet`}
-                                  className={numericFieldClass}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ) : values.findings[index].family === 2 ? (
-                          <div className="flex gap-2 w-full">
-                            <div className="w-1/3">
-                              <Text weight={"bold"} color={"grayReg"}>
-                                AAL atlas tag
-                              </Text>
-                            </div>
-                            <div className="w-2/3">
-                              <Field
-                                type="number"
-                                id={`findings[${index}].AAL_atlas_tag`}
-                                name={`findings[${index}].AAL_atlas_tag`}
-                                className={numericFieldClass}
-                              />
-                            </div>
-                          </div>
-                        ) : values.findings[index].family === 3 ? (
-                          <div className="flex flex-col gap-2">
-                            <div className="flex gap-2 w-full">
-                              <div className="w-1/3">
-                                <Text weight={"bold"} color={"grayReg"}>
-                                  correlation_sign
-                                </Text>
-                              </div>
-                              <div className="w-2/3">
-                                <Field
-                                  type="number"
-                                  id={`findings[${index}].correlation_sign`}
-                                  name={`findings[${index}].correlation_sign`}
-                                  className={numericFieldClass}
-                                />
-                              </div>
-                            </div>
-                            <div className="flex gap-2 w-full">
-                              <div className="w-1/3">
-                                <Text weight={"bold"} color={"grayReg"}>
-                                  band_lower_bound
-                                </Text>
-                              </div>
-                              <div className="w-2/3">
-                                <Field
-                                  type="number"
-                                  id={`findings[${index}].band_lower_bound`}
-                                  name={`findings[${index}].band_lower_bound`}
-                                  className={numericFieldClass}
-                                />
-                              </div>
-                            </div>
-                            <div className="flex gap-2 w-full">
-                              <div className="w-1/3">
-                                <Text weight={"bold"} color={"grayReg"}>
-                                  band_higher_bound
-                                </Text>
-                              </div>
-                              <div className="w-2/3">
-                                <Field
-                                  type="number"
-                                  id={`findings[${index}].band_higher_bound`}
-                                  name={`findings[${index}].band_higher_bound`}
-                                  className={numericFieldClass}
-                                />
-                              </div>
-                            </div>
-                          </div>
-                        ) : values.findings[index].family === 4 ? (
-                          <div>
-                            <Text weight={"bold"} color={"grayReg"}>
-                              Notes
-                            </Text>
-                            <Field
-                              as="textarea"
-                              rows={4}
-                              id={`findings[${index}].notes`}
-                              name={`findings[${index}].notes`}
-                              className="border border-gray-300 w-full rounded-[4px] p-2 "
-                            />
-                          </div>
-                        ) : (
-                          <div>{values.findings[index].family}</div>
-                        )}
-                      </div>
-                      <div className="column-4 w-4 flex clex-col items-center ">
-                        {index === values.findings.length - 1 &&
-                          index !== 0 && (
-                            <button
-                              type="button"
-                              disabled={count === 0}
-                              onClick={() => {
-                                count > 0 && setCount(count - 1);
-                                remove(index);
-                              }}>
-                              <svg
-                                xmlns="http://www.w3.org/2000/svg"
-                                width="16"
-                                height="16"
-                                fill="currentColor"
-                                viewBox="0 0 16 16">
-                                {" "}
-                                <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />{" "}
-                                <path
-                                  fillRule="evenodd"
-                                  d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"
-                                />{" "}
-                              </svg>
-                            </button>
-                          )}
+                      <div className="w-2/3">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.technique}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].technique = value;
+                            setFieldValues(newArray);
+                          }}
+                          options={filedOptions.techniquesOptions}
+                        />
                       </div>
                     </div>
-                  ))}
-                  <div className="w-full flex  justify-center">
-                    <button
-                      type="button"
-                      disabled={false}
-                      onClick={() => {
-                        console.log(count);
-                        setCount(count + 1);
-                        push("");
-                      }}>
-                      <svg
-                        xmlns="http://www.w3.org/2000/svg"
-                        viewBox="0 0 32 32"
-                        id="add"
-                        fill={"#66BFF1"}
-                        width="25"
-                        height="25">
-                        <path d="M17 9h-2v6H9v2h6v6h2v-6h6v-2h-6z"></path>
-                        <path d="M16 2C8.269 2 2 8.269 2 16s6.269 14 14 14 14-6.269 14-14S23.731 2 16 2zm0 26C9.383 28 4 22.617 4 16S9.383 4 16 4s12 5.383 12 12-5.383 12-12 12z"></path>
-                      </svg>{" "}
-                    </button>
+
+                    <div className="w-full flex">
+                      <div className="w-1/3">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Type
+                        </Text>
+                      </div>
+                      <div className="w-2/3">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.type}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].type = value;
+                            setFieldValues(newArray);
+                          }}
+                          options={filedOptions.findingTypes}
+                        />
+                      </div>
+                    </div>
+                    <div className="w-full flex">
+                      <div className="w-1/3">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Family
+                        </Text>
+                      </div>
+                      <div className="w-2/3">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.family}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].family = value;
+                            setFieldValues(newArray);
+                          }}
+                          options={filedOptions.findingTagsFamilies}
+                        />
+                      </div>
+                    </div>
                   </div>
-                </>
-              )}
-            </FieldArray>
-          </Form>
-        )}
-      </Formik>
+                  <div className="w-1/2">
+                    {fieldValue.family == 1 ? (
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-2 ">
+                          <div className="w-1/4">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Onset
+                            </Text>
+                          </div>
+                          <div className="w-1/3">
+                            <input
+                              disabled={fieldValues[index].id}
+                              type="number"
+                              name="onset"
+                              value={fieldValue.onset}
+                              onChange={(e) => {
+                                setFieldValues((prev) =>
+                                  prev.map((item, i) =>
+                                    i === index
+                                      ? { ...item, onset: e.target.value }
+                                      : item
+                                  )
+                                );
+                              }}
+                              className={`border w-full border-gray-300 rounded-md p-2 ${
+                                fieldValues[index].id &&
+                                "bg-grayDisable text-gray-400"
+                              } `}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <div className="w-1/4">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Offset
+                            </Text>
+                          </div>
+                          <div className="w-1/3">
+                            <input
+                              disabled={fieldValues[index].id}
+                              type="number"
+                              defaultValue={fieldValue.offset}
+                              onChange={(e) => {
+                                setFieldValues((prev) =>
+                                  prev.map((item, i) =>
+                                    i === index
+                                      ? { ...item, offset: e.target.value }
+                                      : item
+                                  )
+                                );
+                              }}
+                              className={`border w-full border-gray-300 rounded-md p-2 ${
+                                fieldValues[index].id &&
+                                "bg-grayDisable text-gray-400"
+                              } `}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : fieldValue.family == 2 ? (
+                      <div className="flex gap-2 w-full">
+                        <div className="w-1/2">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            AAL atlas tag
+                          </Text>
+                        </div>
+                        <div className="w-1/2">
+                          <input
+                            disabled={fieldValues[index].id}
+                            type="number"
+                            defaultValue={fieldValue.AAL_atlas_tag}
+                            onChange={(e) => {
+                              setFieldValues((prev) =>
+                                prev.map((item, i) =>
+                                  i === index
+                                    ? { ...item, AAL_atlas_tag: e.target.value }
+                                    : item
+                                )
+                              );
+                            }}
+                            className={`border w-full border-gray-300 rounded-md p-2 ${
+                              fieldValues[index].id &&
+                              "bg-grayDisable text-gray-400"
+                            } `}
+                          />
+                        </div>
+                      </div>
+                    ) : fieldValue.family == 3 ? (
+                      <div className="flex flex-col gap-2">
+                        <div className="flex gap-2 w-full">
+                          <div className="w-1/2">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Correlation sign
+                            </Text>
+                          </div>
+                          <div className="w-1/2">
+                            <input
+                              disabled={fieldValues[index].id}
+                              type="number"
+                              defaultValue={fieldValue.correlation_sign}
+                              onChange={(e) => {
+                                setFieldValues((prev) =>
+                                  prev.map((item, i) =>
+                                    i === index
+                                      ? {
+                                          ...item,
+                                          correlation_sign: e.target.value,
+                                        }
+                                      : item
+                                  )
+                                );
+                              }}
+                              className={`border w-full border-gray-300 rounded-md p-2 ${
+                                fieldValues[index].id &&
+                                "bg-grayDisable text-gray-400"
+                              } `}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <div className="w-1/2">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Band lower bound
+                            </Text>
+                          </div>
+                          <div className="w-1/2">
+                            <input
+                              disabled={fieldValues[index].id}
+                              type="number"
+                              defaultValue={fieldValue.band_lower_bound}
+                              onChange={(e) => {
+                                setFieldValues((prev) =>
+                                  prev.map((item, i) =>
+                                    i === index
+                                      ? {
+                                          ...item,
+                                          band_lower_bound: e.target.value,
+                                        }
+                                      : item
+                                  )
+                                );
+                              }}
+                              className={`border w-full border-gray-300 rounded-md p-2 ${
+                                fieldValues[index].id &&
+                                "bg-grayDisable text-gray-400"
+                              } `}
+                            />
+                          </div>
+                        </div>
+                        <div className="flex gap-2 w-full">
+                          <div className="w-1/2">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Band higher bound
+                            </Text>
+                          </div>
+                          <div className="w-1/2">
+                            <input
+                              disabled={fieldValues[index].id}
+                              type="number"
+                              defaultValue={fieldValue.band_higher_bound}
+                              onChange={(e) => {
+                                setFieldValues((prev) =>
+                                  prev.map((item, i) =>
+                                    i === index
+                                      ? {
+                                          ...item,
+                                          band_higher_bound: e.target.value,
+                                        }
+                                      : item
+                                  )
+                                );
+                              }}
+                              className={`border w-full border-gray-300 rounded-md p-2 ${
+                                fieldValues[index].id &&
+                                "bg-grayDisable text-gray-400"
+                              } `}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    ) : fieldValue.family == 4 ? (
+                      <div>
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Notes
+                        </Text>
+                        <textarea
+                          disabled={fieldValues[index].id}
+                          type="textarea"
+                          defaultValue={fieldValue.notes}
+                          rows={4}
+                          onChange={(e) => {
+                            setFieldValues((prev) =>
+                              prev.map((item, i) =>
+                                i === index
+                                  ? { ...item, notes: e.target.value }
+                                  : item
+                              )
+                            );
+                          }}
+                          className={`border w-full border-gray-300 rounded-md p-2 ${
+                            fieldValues[index].id &&
+                            "bg-grayDisable text-gray-400"
+                          } `}
+                        />
+                      </div>
+                    ) : (
+                      <div></div>
+                    )}
+                  </div>
+                </div>
+                <div id="trash+submit" className=" flex gap-2">
+                  <TrashButton
+                    handleDelete={handleDelete}
+                    fieldValues={fieldValues}
+                    index={index}
+                  />
+                  <SubmitButton
+                    submit={() => {
+                      handleSubmit(fieldValues, index);
+                    }}
+                    disabled={
+                      !(
+                        fieldValue?.type &&
+                        fieldValue?.technique &&
+                        fieldValue?.family
+                      ) || fieldValue.id
+                    }
+                  />
+                </div>
+              </div>
+            </form>
+          </div>
+        );
+      })}
+      <AddFieldButton
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }

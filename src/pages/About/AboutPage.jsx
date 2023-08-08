@@ -34,7 +34,7 @@ export default function AboutPage() {
               theories of consciousness have been studied and conduct your own
               queries on the data. Here, we focus on four leading families of
               theories: Global Workspace theories, Integrated Information
-              Theories, Higher Order Thought theories and First order &
+              Theories, Higher Order Theories theories and First order &
               predictive processing theories. We provide analytics on papers
               that interpret their findings in light of these theories, aiming
               at identifying trends in methodological choices, interpretations,

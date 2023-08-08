@@ -5,6 +5,14 @@ import { showTextToRaw } from "../Utils/functions";
 import { toast } from "react-toastify";
 import { ToastBox } from "./Reusble";
 import ConfirmModal from "./ConfirmModal";
+import { deleteStudy } from "../apiHooks/deleteStudy";
+import {
+  commonBlue,
+  flourishRed,
+  grayHeavy,
+  revoltingGreen,
+  statusNumber,
+} from "../Utils/HardCoded";
 
 export default function SideStatus({
   number,
@@ -19,33 +27,52 @@ export default function SideStatus({
   showEditble,
   setAddNewExperiment,
   refetch,
+  setPaperToEdit,
 }) {
   const [open, setOpen] = useState(false);
 
-  const handleDelete = async (paper, experiment) => {
+  const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
     const confirmed = window.confirm(`Would you like to delete ${paper.title}`);
     if (confirmed) {
-      try {
-        const res = await deleteExperiment({ experiment_pk, study_pk });
-        if (res.status === 204) {
-          setPaperToShow();
-          toast.success(
-            <ToastBox headline={"experiment was deleted successfully"} />
-          );
-          refetch();
+      if (isExperiment) {
+        try {
+          const res = await deleteExperiment({ experiment_pk, study_pk });
+          if (res.status === 204) {
+            setPaperToShow();
+            toast.success(
+              <ToastBox headline={"Experiment was deleted successfully"} />
+            );
+
+            refetch();
+          }
+          console.log(res);
+        } catch (e) {
+          console.log(e);
         }
-        console.log(res);
-      } catch (e) {
-        console.log(e);
+      } else {
+        try {
+          const study_pk = paper.id;
+          const res = await deleteStudy({ study_pk });
+          if (res.status === 204) {
+            setPaperToShow();
+            toast.success(
+              <ToastBox headline={"Study was deleted successfully"} />
+            );
+            refetch();
+          }
+          console.log(res);
+        } catch (e) {
+          console.log(e);
+        }
       }
     }
     // })
   };
   let color =
     status === "Complete"
-      ? "green-500"
+      ? "revoltingGreen"
       : status === "Rejected"
       ? "flourishRed"
       : status === "Submitted"
@@ -57,21 +84,21 @@ export default function SideStatus({
       : "";
   let fill =
     status === "Complete"
-      ? "#088515"
+      ? revoltingGreen
       : status === "Rejected"
-      ? "#ED5252"
+      ? flourishRed
       : status === "Submitted"
-      ? "#088515"
+      ? revoltingGreen
       : status === "Awaiting Review"
-      ? "#6D6D6D"
+      ? grayHeavy
       : status === "Uncompleted submissions"
-      ? "#159DEA"
+      ? commonBlue
       : "";
   if (disabled) {
-    color = "grayHeavy";
+    color = "grayDisable";
   }
   if (disabled) {
-    fill = "#6D6D6D";
+    fill = grayDisable;
   }
 
   return (
@@ -130,62 +157,71 @@ export default function SideStatus({
                   onClick={() => {
                     if (isExperiment) {
                       setPaperToShow(paper);
+                      console.log(paper);
+                      setPaperToEdit(false);
                     } else {
                       setPaperToShow(paper.id);
+                      setShowEditble(false);
                     }
                   }}>
+                  {/* Title */}
                   {paper.title.length > 20
                     ? paper.title.slice(0, 20) + "..."
                     : paper.title}
                 </span>
               </div>
-              {!completedStudy && (
-                <div
-                  className={classNames(
-                    `flex gap-1 items-center ${
-                      isExperiment ? "text-base" : "text-xs"
-                    }`
-                  )}>
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => {
-                      if (isExperiment) {
-                        setPaperToShow(paper);
-                        setNewPaper(false);
-                        console.log(paper, "op1");
-                      } else {
-                        setPaperToShow(paper.id);
-                        if (paper.approval_status === 0) {
-                          console.log(paper, "op2");
-                          setShowEditble(true);
-                        }
-                      }
-                    }}>
-                    edit
-                  </span>
-                  <span>|</span>
 
-                  <span
-                    className="cursor-pointer"
-                    onClick={() => {
-                      if (isExperiment) {
+              {
+                // !completedStudy &&
+                showEditble && (
+                  <div
+                    className={classNames(
+                      `flex gap-1 items-center ${
+                        isExperiment ? "text-base" : "text-xs"
+                      }`
+                    )}>
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        if (isExperiment) {
+                          console.log(paper, "its experiment");
+
+                          // setPaperToShow(paper);
+                          setPaperToEdit(paper);
+                          setPaperToShow(false);
+                        } else {
+                          setPaperToShow(paper.id);
+                          if (paper.approval_status === 0) {
+                            setShowEditble(true);
+                          }
+                        }
+                      }}>
+                      edit
+                    </span>
+                    <span>|</span>
+
+                    <span
+                      className="cursor-pointer"
+                      onClick={() => {
+                        console.log(paper);
                         handleDelete(paper);
-                      }
-                    }}>
-                    delete
-                  </span>
-                </div>
-              )}
+                      }}>
+                      delete
+                    </span>
+                  </div>
+                )
+              }
             </div>
           ))}
-          {!completedStudy && showEditble && (
+
+          {isExperiment && showEditble && (
             <span
               className="font-bold text-xs cursor-pointer"
               onClick={() => {
                 setNewPaper(true);
                 setAddNewExperiment(true);
               }}>
-              + Add new {isExperiment ? "experiment" : "paper"}
+              + Add new experiment
             </span>
           )}
         </div>

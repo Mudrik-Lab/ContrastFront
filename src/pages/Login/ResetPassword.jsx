@@ -3,7 +3,7 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { FilterExplanation, ToastBox } from "../../components/Reusble";
+import { TooltipExplanation, ToastBox } from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -78,7 +78,7 @@ export default function ResetPassword() {
                       name="password"
                       className={fieldClass}
                     />
-                    <FilterExplanation
+                    <TooltipExplanation
                       text={"8 characters or more with at least one digit"}
                       tooltip={""}
                     />
