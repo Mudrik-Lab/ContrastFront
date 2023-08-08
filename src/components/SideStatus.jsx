@@ -221,7 +221,7 @@ export default function SideStatus({
                 setNewPaper(true);
                 setAddNewExperiment(true);
               }}>
-              + Add new {isExperiment ? "experiment" : "paper"}
+              + Add new experiment
             </span>
           )}
         </div>

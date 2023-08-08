@@ -13,9 +13,12 @@ import { statusNumber } from "../../Utils/HardCoded";
 export default function PaperSection({
   paperId,
   showEditble,
-  setNewPaper,
   setAddNewPaper,
   setShowEditble,
+  newPaper,
+  setNewPaper,
+  addNewExperiment,
+  setAddNewExperiment,
 }) {
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
@@ -134,10 +137,13 @@ export default function PaperSection({
           study.approval_status === statusNumber.ON_PROCCESS &&
           showEditble && (
             <UncompletedPaper
+              addNewExperiment={addNewExperiment}
+              setAddNewExperiment={setAddNewExperiment}
               setAddNewPaper={setAddNewPaper}
               refetch={handleRefetch}
               showEditble={showEditble}
               study={study}
+              newPaper={newPaper}
               setNewPaper={setNewPaper}
               setShowEditble={setShowEditble}
               paperToShow={paperToShow}

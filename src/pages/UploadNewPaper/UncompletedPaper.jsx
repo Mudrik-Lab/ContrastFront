@@ -36,11 +36,14 @@ export default function UncompletedPaper({
   refetch,
   setAddNewPaper,
   setShowEditble,
+  newPaper,
+  setNewPaper,
+  addNewExperiment,
+  setAddNewExperiment,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
-  const [addNewExperiment, setAddNewExperiment] = useState(false);
-  const [newPaper, setNewPaper] = useState(false);
+
   const countryOption = useMemo(() => countryList().getData(), []);
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(

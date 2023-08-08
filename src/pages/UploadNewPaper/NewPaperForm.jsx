@@ -23,11 +23,19 @@ import getFormConfig from "../../apiHooks/getFormConfiguration";
 import { submitStudy } from "../../apiHooks/getStudies";
 import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
+import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 
-export default function NewPaperForm({ setAddNewPaper, refetch }) {
+export default function NewPaperForm({
+  setAddNewPaper,
+  refetch,
+  setNewPaper,
+  addNewExperiment,
+  setAddNewExperiment,
+}) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [addExperiments, setAddExperiments] = useState(false);
+  const [study, setStudy] = useState(false);
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
@@ -82,14 +90,14 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
 
       if (res.status === 201) {
         setAddExperiments(true);
-
+        setStudy(res.data);
         refetch();
         toast.success(
           <ToastBox headline={"You can now add the experiments details "} />
         );
       }
     } catch (e) {
-      const errors = Object.values(e.response.data);
+      const errors = Object.values(e.response?.data);
       toast.error(<ToastBox text={e.message} headline={errors} />);
     }
   };
@@ -103,198 +111,215 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
         // experiment={experiment}
       />
       <Spacer height={10} />
-      <div className="pl-2 w-1/2">
-        <div className="flex items-center gap-2 my-4 ">
-          <input
-            type="text"
-            placeholder="Enter New Paper Title"
-            className={classNames(
-              ` p-2 w-full text-3xl rounded-md 
+      <div className="flex justify-between">
+        <div className="pl-2 w-1/2">
+          <div className="flex items-center gap-2 my-4 ">
+            <input
+              type="text"
+              placeholder="Enter New Paper Title"
+              className={classNames(
+                ` p-2 w-full text-3xl rounded-md 
                   ${nameSubmitted ? "border-none" : "border border-gray-400"}`
-            )}
-            defaultValue={title}
-            onChange={(e) => setTitle(e.target.value)}
-            onBlur={(e) => setNameSubmitted(e.target.value)}
-            onKeyUp={(e) =>
-              e.key === "Enter" && setNameSubmitted(e.target.value)
-            }
-          />
-          <TooltipExplanation
-            text={""}
-            tooltip={"Copy the paper’s title here"}
-          />
-        </div>
-        <Formik
-          initialValues={initialValues}
-          onSubmit={handleSubmit}
-          validationSchema={validationSchema}>
-          {({ isSubmitting, dirty, isValid, values, setFieldValue }) => (
-            <Form>
-              <div className="flex flex-col gap-4">
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    DOI
-                  </Text>
-                  <div className="flex items-center gap-2">
-                    <Field
-                      name="DOI"
-                      id="DOI"
-                      placeholder="Enter your DOI identifier"
-                      className="border border-grayFrame p-2 w-full text-base rounded-md"
-                    />
-
-                    <TooltipExplanation
-                      text={""}
-                      tooltip={"Enter the valid DOI of your study"}
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="DOI"
-                    component="div"
-                    className={errorMsgClass}
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Year
-                  </Text>
-                  <div className="flex items-center gap-2">
-                    <Field
-                      name="year"
-                      id="year"
-                      placeholder="Enter year"
-                      className="border border-grayFrame p-2 w-full text-base rounded-md"
-                    />
-
-                    <TooltipExplanation
-                      text={""}
-                      tooltip={"Enter year of formal publication"}
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="year"
-                    component="div"
-                    className={errorMsgClass}
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Authors
-                  </Text>
-                  <div className="flex items-center gap-2">
-                    <CreatableSelect
-                      name="authors"
-                      id="authors"
-                      isMulti={true}
-                      value={values.authors}
-                      onChange={(v) => setFieldValue("authors", v)}
-                      placeholder="Select or Add Authors"
-                      isClearable
-                      options={authorsList}
-                    />
-                    <TooltipExplanation
-                      text={""}
-                      tooltip={
-                        "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
-                      }
-                    />{" "}
-                  </div>
-                  <ErrorMessage
-                    name="authors"
-                    component="div"
-                    className={errorMsgClass}
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Journal
-                  </Text>
-                  <div className="flex items-center gap-2">
-                    <CreatableSelect
-                      name="source_title"
-                      id="source_title"
-                      isMulti={false}
-                      value={values.source_title}
-                      onChange={(v) => setFieldValue("source_title", v)}
-                      placeholder="Select journal"
-                      isClearable={true}
-                      options={journals}
-                    />
-
-                    <TooltipExplanation
-                      text={""}
-                      tooltip={"Select one abbreviated journal name"}
-                    />
-                  </div>
-                  <ErrorMessage
-                    name="source_title"
-                    component="div"
-                    className={errorMsgClass}
-                  />
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Countries
-                  </Text>
-                  <div className="flex items-center gap-2">
-                    <Select
-                      name="countries"
-                      isClearable
-                      value={values.countries}
-                      onChange={(v) => setFieldValue("countries", v)}
-                      placeholder="Add Countries"
-                      isMulti={true}
-                      component={MultiSelect}
-                      options={countryOption}
-                    />
-
-                    <TooltipExplanation text={""} tooltip={""} />
-                  </div>{" "}
-                  <ErrorMessage
-                    name="countries"
-                    component="div"
-                    className={errorMsgClass}
-                  />
-                </div>
-              </div>
-              <Spacer height={20} />
-
-              <div className="flex gap-4">
-                <Button
-                  type="submit"
-                  onClick={handleSubmit}
-                  // disabled={!(isValid && dirty)}
-                  disabled={!(isValid && dirty) || addExperiments}
-                  className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
-                  <V />
-                  Save Paper
-                </Button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    const confirmed = addExperiments
-                      ? null
-                      : window.confirm(
-                          `The data you entered is not saved yet. Are you sure you want to exit? `
-                        );
-
-                    if (confirmed || addExperiments) {
-                      setAddNewPaper(false);
-                      refetch();
-                    }
-                  }}
-                  className="font-bold">
-                  Exit
-                </button>
-              </div>
-            </Form>
-          )}
-        </Formik>
-        <Spacer height={20} />
-        {addExperiments && (
-          <div>
-            <ExperimentsBox isExperiment={addExperiments} />
+              )}
+              defaultValue={title}
+              onChange={(e) => setTitle(e.target.value)}
+              onBlur={(e) => setNameSubmitted(e.target.value)}
+              onKeyUp={(e) =>
+                e.key === "Enter" && setNameSubmitted(e.target.value)
+              }
+            />
+            <TooltipExplanation
+              text={""}
+              tooltip={"Copy the paper’s title here"}
+            />
           </div>
+          <Formik
+            initialValues={initialValues}
+            onSubmit={handleSubmit}
+            validationSchema={validationSchema}>
+            {({ isSubmitting, dirty, isValid, values, setFieldValue }) => (
+              <Form>
+                <div className="flex flex-col gap-4">
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      DOI
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <Field
+                        name="DOI"
+                        id="DOI"
+                        placeholder="Enter your DOI identifier"
+                        className="border border-grayFrame p-2 w-full text-base rounded-md"
+                      />
+
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={"Enter the valid DOI of your study"}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="DOI"
+                      component="div"
+                      className={errorMsgClass}
+                    />
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Year
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <Field
+                        name="year"
+                        id="year"
+                        placeholder="Enter year"
+                        className="border border-grayFrame p-2 w-full text-base rounded-md"
+                      />
+
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={"Enter year of formal publication"}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="year"
+                      component="div"
+                      className={errorMsgClass}
+                    />
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Authors
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <CreatableSelect
+                        name="authors"
+                        id="authors"
+                        isMulti={true}
+                        value={values.authors}
+                        onChange={(v) => setFieldValue("authors", v)}
+                        placeholder="Select or Add Authors"
+                        isClearable
+                        options={authorsList}
+                      />
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={
+                          "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                        }
+                      />{" "}
+                    </div>
+                    <ErrorMessage
+                      name="authors"
+                      component="div"
+                      className={errorMsgClass}
+                    />
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Journal
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <CreatableSelect
+                        name="source_title"
+                        id="source_title"
+                        isMulti={false}
+                        value={values.source_title}
+                        onChange={(v) => setFieldValue("source_title", v)}
+                        placeholder="Select journal"
+                        isClearable={true}
+                        options={journals}
+                      />
+
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={"Select one abbreviated journal name"}
+                      />
+                    </div>
+                    <ErrorMessage
+                      name="source_title"
+                      component="div"
+                      className={errorMsgClass}
+                    />
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Countries
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <Select
+                        name="countries"
+                        isClearable
+                        value={values.countries}
+                        onChange={(v) => setFieldValue("countries", v)}
+                        placeholder="Add Countries"
+                        isMulti={true}
+                        component={MultiSelect}
+                        options={countryOption}
+                      />
+
+                      <TooltipExplanation text={""} tooltip={""} />
+                    </div>{" "}
+                    <ErrorMessage
+                      name="countries"
+                      component="div"
+                      className={errorMsgClass}
+                    />
+                  </div>
+                </div>
+                <Spacer height={20} />
+
+                <div className="flex gap-4">
+                  <Button
+                    type="submit"
+                    onClick={handleSubmit}
+                    // disabled={!(isValid && dirty)}
+                    disabled={!(isValid && dirty) || addExperiments}
+                    className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
+                    <V />
+                    Save Paper
+                  </Button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const confirmed = addExperiments
+                        ? null
+                        : window.confirm(
+                            `The data you entered is not saved yet. Are you sure you want to exit? `
+                          );
+
+                      if (confirmed || addExperiments) {
+                        setAddNewPaper(false);
+                        refetch();
+                      }
+                    }}
+                    className="font-bold">
+                    Exit
+                  </button>
+                </div>
+              </Form>
+            )}
+          </Formik>
+          <Spacer height={20} />
+          {addExperiments && (
+            <div>
+              <ExperimentsBox
+                isExperiment={true}
+                showEditble={true}
+                setNewPaper={setNewPaper}
+                addNewExperiment={addNewExperiment}
+                setAddNewExperiment={setAddNewExperiment}
+              />
+            </div>
+          )}
+        </div>
+
+        {addNewExperiment && (
+          <ExperimentForm
+            setPaperToEdit={setStudy}
+            study={study}
+            setAddNewExperiment={setAddNewExperiment}
+            refetch={refetch}
+          />
         )}
       </div>
     </div>

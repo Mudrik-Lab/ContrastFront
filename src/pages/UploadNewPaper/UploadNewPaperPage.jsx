@@ -22,6 +22,8 @@ export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
   const [showEditble, setShowEditble] = useState(false);
   const [addNewPaper, setAddNewPaper] = useState(false);
+  const [newPaper, setNewPaper] = useState(false);
+  const [addNewExperiment, setAddNewExperiment] = useState(false);
 
   const { data, isSuccess, refetch } = useQuery(
     ["submitted_studies"],
@@ -145,14 +147,21 @@ export default function UploadNewPaper() {
                 <NewPaperForm
                   setAddNewPaper={setAddNewPaper}
                   refetch={handleRefetch}
+                  setNewPaper={setNewPaper}
+                  addNewExperiment={addNewExperiment}
+                  setAddNewExperiment={setAddNewExperiment}
                 />
               ) : (
                 paperToShow && (
                   <PaperSection
+                    newPaper={newPaper}
+                    setNewPaper={setNewPaper}
                     setAddNewPaper={setAddNewPaper}
                     showEditble={showEditble}
                     setShowEditble={setShowEditble}
                     paperId={paperToShow}
+                    addNewExperiment={addNewExperiment}
+                    setAddNewExperiment={setAddNewExperiment}
                   />
                 )
               )}
