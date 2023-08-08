@@ -26,15 +26,23 @@ export const experimentTypeOptions = [
   { value: "2", label: "2" },
   { value: "3", label: "3" },
 ];
+
+export const interpretationTypes = [
+  { label: "Supports", value: "pro" },
+  { label: "Challenges", value: "challenges" },
+  { label: "Neutral", value: "neutral" },
+];
 export const concsiousnessOptions = [
   { vlaue: null, label: "" },
   { value: "state", label: "State" },
   { value: "content", label: "Content" },
+  { value: "both", label: "Both" },
 ];
 export const reportOptions = [
   { vlaue: null, label: "" },
   { value: "report", label: "Report" },
   { value: "no_report", label: "No Report" },
+  { value: "both", label: "Both" },
 ];
 export const theoryDrivenOptions = [
   { vlaue: null, label: "" },

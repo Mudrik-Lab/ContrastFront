@@ -15,7 +15,7 @@ import {
 } from "../../../Utils/functions";
 import { concsiousnessOptions } from "../../../Utils/HardCoded";
 
-export default function AnalysisMeasures({
+export default function ConsciousnessMeasures({
   filedOptions,
   analysisPhaseOptions,
   disabled,
@@ -64,7 +64,7 @@ export default function AnalysisMeasures({
   }, []);
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Analysis Measures"}>
+    <ExpandingBox disabled={disabled} headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>

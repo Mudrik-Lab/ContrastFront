@@ -88,7 +88,7 @@ export default function PaperSection({
                     </div>
                     <div>
                       <Text weight={"bold"} color={"grayReg"}>
-                        Journals Name
+                        Journal Name
                       </Text>
                       <Text lg>{study?.source_title}</Text>
                     </div>

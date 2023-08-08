@@ -216,14 +216,14 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
                       isMulti={false}
                       value={values.source_title}
                       onChange={(v) => setFieldValue("source_title", v)}
-                      placeholder="Select or add journal"
-                      isClearable
+                      placeholder="Select journal"
+                      isClearable={true}
                       options={journals}
                     />
 
                     <TooltipExplanation
                       text={""}
-                      tooltip={"Select one abbreviated source title"}
+                      tooltip={"Select one abbreviated journal name"}
                     />
                   </div>
                   <ErrorMessage
@@ -261,13 +261,13 @@ export default function NewPaperForm({ setAddNewPaper, refetch }) {
 
               <div className="flex gap-4">
                 <Button
-                  // type="submit"
                   type="submit"
+                  onClick={handleSubmit}
                   // disabled={!(isValid && dirty)}
                   disabled={!(isValid && dirty) || addExperiments}
                   className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
                   <V />
-                  Submit Paper
+                  Save Paper
                 </Button>
                 <button
                   type="button"

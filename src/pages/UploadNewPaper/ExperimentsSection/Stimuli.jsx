@@ -152,7 +152,7 @@ export default function Stimuli({
                         text={"Duration"}
                       />
 
-                      <div className="flex gap-2">
+                      <div className="flex flex-col items-center">
                         <input
                           min={0}
                           disabled={fieldValues[index].id}
@@ -172,6 +172,9 @@ export default function Stimuli({
                             "bg-grayDisable text-gray-400"
                           } `}
                         />
+                        <Text xs weight={"bold"} color={"grayReg"}>
+                          (ms)
+                        </Text>
                       </div>
                     </div>
                     <div className="w-full">
@@ -184,7 +187,7 @@ export default function Stimuli({
                           disabled={fieldValues[index].id}
                           type="textarea"
                           defaultValue={fieldValue.description}
-                          rows={2}
+                          rows={3}
                           onChange={(e) => {
                             setFieldValues((prev) =>
                               prev.map((item, i) =>

@@ -9,7 +9,7 @@ import Samples from "./Samples";
 import Stimuli from "./Stimuli";
 import Techniques from "./Techniques";
 import Measures from "./Measures";
-import AnalysisMeasures from "./AnalysisMeasures";
+import ConsciousnessMeasures from "./ConsciousnessMeasures";
 import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
@@ -102,6 +102,9 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
+
+  console.log(extraConfig?.data);
+
   return (
     <>
       {isSuccess && (
@@ -167,6 +170,14 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.stimuli}
             />
+            <ConsciousnessMeasures
+              filedOptions={analysisMeasuresOptions}
+              analysisPhaseOptions={analysisPhaseOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.consciousness_measures}
+            />
             <Techniques
               filedOptions={techniquesOptions}
               experiment_pk={experimentID}
@@ -181,15 +192,6 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.measures}
-            />
-
-            <AnalysisMeasures
-              filedOptions={analysisMeasuresOptions}
-              analysisPhaseOptions={analysisPhaseOptions}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={experimentData?.consciousness_measures}
             />
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">

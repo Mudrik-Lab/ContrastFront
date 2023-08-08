@@ -1,7 +1,7 @@
 import React from "react";
 import { Text } from "../../components/Reusble";
 
-export default function FindingsTags({ experiment }) {
+export default function FindingsTags({ experiment, findingOptions }) {
   const Element = ({ headline, text }) => {
     return (
       <div className="flex gap-2">
@@ -31,9 +31,28 @@ export default function FindingsTags({ experiment }) {
             </div>
             <div className="flex flex-col gap-2 w-full">
               <div className=" w-full flex flex-col gap-2">
-                <Element headline={"Technique"} text={tag.technique} />
-                <Element headline={"Type"} text={tag.type} />
-                <Element headline={"Family"} text={tag.family} />
+                <Element
+                  headline={"Technique"}
+                  text={
+                    findingOptions.techniques.find(
+                      (row) => row.id === tag.technique
+                    )?.name
+                  }
+                />
+                <Element
+                  headline={"Family"}
+                  text={
+                    findingOptions.families.find((row) => row.id === tag.family)
+                      ?.name
+                  }
+                />
+                <Element
+                  headline={"Type"}
+                  text={
+                    findingOptions.types.find((row) => row.id === tag.type)
+                      ?.name
+                  }
+                />
 
                 {tag.family === "Temporal" ? (
                   <div className=" w-full flex flex-col gap-2">

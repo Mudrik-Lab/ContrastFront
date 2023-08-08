@@ -35,7 +35,7 @@ export default function BasicClassification({
     type_of_consciousness: experimentData?.type_of_consciousness || "",
     experiment_type: experimentData?.type || "",
     report: experimentData?.is_reporting || "",
-    finding_description: experimentData?.finding_description || "",
+    // finding_description: experimentData?.finding_description || "",
     theory_driven: experimentData?.theory_driven || "",
   };
 
@@ -45,9 +45,9 @@ export default function BasicClassification({
     ),
     experiment_type: Yup.string().required("Please select an experiment type"),
     report: Yup.string().required("Please select : 'Report'/'No Report'"),
-    finding_description: Yup.string().required(
-      "Please add finding descriptions"
-    ),
+    // finding_description: Yup.string().required(
+    //   "Please add finding descriptions"
+    // ),
     theory_driven: Yup.string().required("Please select type of theory driven"),
   });
 
@@ -55,7 +55,7 @@ export default function BasicClassification({
     try {
       const res = await createExperiments({
         type_of_consciousness: values.type_of_consciousness,
-        finding_description: values.finding_description,
+        // finding_description: values.finding_description,
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
@@ -81,20 +81,29 @@ export default function BasicClassification({
     try {
       const res = await editExperiments({
         type_of_consciousness: values.type_of_consciousness,
-        finding_description: values.finding_description,
+        // finding_description: values.finding_description,
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
         study_pk: study_id,
         id: experiment.id || experimentData.id,
       });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Experiment's basic classifications were updated "}
+          />
+        );
+      }
+      console.log(res);
     } catch (e) {
       console.log(e);
     }
   };
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Basic"}>
+    <ExpandingBox disabled={disabled} headline={"Basic Classifications"}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -207,7 +216,7 @@ export default function BasicClassification({
                   />
                 </div>
               </div>
-              <div>
+              {/* <div>
                 <Text weight={"bold"} color={"grayReg"}>
                   Finding description
                 </Text>
@@ -225,7 +234,7 @@ export default function BasicClassification({
                     }
                   />
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="w-full flex justify-center">
               <Button
@@ -233,7 +242,7 @@ export default function BasicClassification({
                 disabled={!dirty && submitted}
                 onClick={() => submitted && handleEdit(values)}>
                 <Vicon />
-                {!submitted ? "Submit Experiment" : "Edit Basic classification"}
+                {!submitted ? "Save Experiment" : "Save edit"}
               </Button>
             </div>
           </Form>

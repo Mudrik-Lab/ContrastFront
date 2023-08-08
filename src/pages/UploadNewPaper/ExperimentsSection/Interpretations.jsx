@@ -13,6 +13,7 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
+import { interpretationTypes } from "../../../Utils/HardCoded";
 
 export default function Interpretations({
   filedOptions,
@@ -44,11 +45,6 @@ export default function Interpretations({
     fieldValues,
     setFieldValues
   );
-  const interpretationTypes = [
-    { label: "Supports", value: "pro" },
-    { label: "Challenges", value: "challenges" },
-    { label: "Neutral", value: "neutral" },
-  ];
 
   useEffect(() => {
     if (values && values.length > 0) {

@@ -5,6 +5,7 @@ import {
   TooltipExplanation,
   Spacer,
   Text,
+  ToastBox,
 } from "../../components/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
@@ -23,6 +24,7 @@ import getExtraConfig from "../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../apiHooks/getStudies";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
+import { toast } from "react-toastify";
 
 export default function UncompletedPaper({
   study,
@@ -85,8 +87,7 @@ export default function UncompletedPaper({
   });
 
   const handleSubmit = async (values) => {
-    // e.preventDefault();
-
+    console.log(values);
     try {
       const res = await EditUncompletedStudy({
         title,
@@ -98,6 +99,15 @@ export default function UncompletedPaper({
         DOI: values.DOI,
         source_title: values.source_title,
       });
+      console.log(res);
+      if (res.status === 200) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Study's details were updated"}
+          />
+        );
+      }
     } catch (e) {
       console.log(e);
     }
@@ -153,7 +163,6 @@ export default function UncompletedPaper({
                   // validationSchema={validationSchema}
                 >
                   {({
-                    onSubmit,
                     isSubmitting,
                     dirty,
                     isValid,
@@ -238,20 +247,13 @@ export default function UncompletedPaper({
                         </div>
                         <div>
                           <Text weight={"bold"} color={"grayReg"}>
-                            Journals
+                            Journal
                           </Text>
                           <div className="flex items-center gap-2">
-                            {/* <Field
-                              name="source_title"
-                              id="source_title"
-                              placeholder="Select Journals"
-                              className={
-                                "border border-grayFrame p-2 w-full text-base rounded-md"
-                              }
-                            /> */}
-                            <Select
+                            <CreatableSelect
                               name={"source_title"}
                               id={"source_title"}
+                              isClearable
                               defaultInputValue={values.source_title}
                               onChange={(v) => {
                                 setFieldValue("source_title", v.value);
@@ -261,7 +263,7 @@ export default function UncompletedPaper({
 
                             <TooltipExplanation
                               text={""}
-                              tooltip={"Select one abbreviated source title"}
+                              tooltip={"Select one abbreviated journal name"}
                             />
                           </div>
                           <ErrorMessage
