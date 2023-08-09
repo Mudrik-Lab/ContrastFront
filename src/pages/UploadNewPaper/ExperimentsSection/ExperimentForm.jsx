@@ -45,7 +45,6 @@ export default function ExperimentForm({
   const handleRefetch = () => {
     console.log("refetch");
     studyRefetch();
-    setPaperToEdit(data?.data);
   };
 
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
@@ -233,7 +232,7 @@ export default function ExperimentForm({
               setPaperToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
-              // handleRefetch();
+              handleRefetch();
               // refetch();
 
               // !isEditMode && setAddNewExperiment(false);
