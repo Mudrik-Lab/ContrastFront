@@ -15,21 +15,38 @@ import Findings from "./Findings";
 import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
 import { getExperiment } from "../../../apiHooks/getExperiment";
+import { getStudy } from "../../../apiHooks/getStudies";
 
 export default function ExperimentForm({
   study,
   setAddNewExperiment,
-  refetch,
   setPaperToEdit,
   experimentData,
   isEditMode,
+  refetch,
+  setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
 
-  const { data: extraConfig, isSuccess } = useQuery(
+  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
+
+  const {
+    data,
+    isSuccess,
+    refetch: studyRefetch,
+  } = useQuery({
+    queryKey: [`submitted_study`, study.id],
+    queryFn: () => study && getStudy({ id: study.id }),
+  });
+
+  const handleRefetch = () => {
+    console.log("refetch");
+    studyRefetch();
+    setPaperToEdit(data?.data);
+  };
 
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.name, label: family.name })
@@ -103,20 +120,18 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
-  console.log(extraConfig?.data);
-
   return (
     <>
-      {isSuccess && (
+      {extraConfigSuccess && setAddNewExperiment && (
         <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
           <div>
             <Text weight={"bold"} color={"grayReg"}>
-              {study.title.slice(0, 20)}...
+              {study.title?.slice(0, 20)}...
             </Text>
             <Text weight={"bold"} lg>
               {isEditMode
                 ? experimentData.title
-                : `Experiment#${study.experiments.length + 1}`}
+                : `Experiment#${study?.experiments?.length + 1}`}
             </Text>
           </div>
 
@@ -217,7 +232,10 @@ export default function ExperimentForm({
             onClick={() => {
               setPaperToEdit(false);
               setAddNewExperiment(false);
-              refetch();
+              setNewPaper(false);
+              // handleRefetch();
+              // refetch();
+
               // !isEditMode && setAddNewExperiment(false);
             }}>
             Exit

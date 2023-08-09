@@ -157,7 +157,6 @@ export default function SideStatus({
                   onClick={() => {
                     if (isExperiment) {
                       setPaperToShow(paper);
-                      console.log(paper);
                       setPaperToEdit(false);
                     } else {
                       setPaperToShow(paper.id);
@@ -184,8 +183,6 @@ export default function SideStatus({
                       className="cursor-pointer"
                       onClick={() => {
                         if (isExperiment) {
-                          console.log(paper, "its experiment");
-
                           // setPaperToShow(paper);
                           setPaperToEdit(paper);
                           setPaperToShow(false);
@@ -203,7 +200,6 @@ export default function SideStatus({
                     <span
                       className="cursor-pointer"
                       onClick={() => {
-                        console.log(paper);
                         handleDelete(paper);
                       }}>
                       delete

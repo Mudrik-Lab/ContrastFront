@@ -208,7 +208,7 @@ export const TooltipExplanation = ({
 }) => {
   return (
     <div className="flex gap-2 mt-1 ">
-      <Tooltip animation width={50} content={tooltip} trigger="click">
+      <Tooltip animation content={tooltip} trigger="click" className="w-60">
         <button
           type="button"
           className={classNames(
@@ -224,6 +224,30 @@ export const TooltipExplanation = ({
   );
 };
 
+// export const TooltipExplanation = ({
+//   text,
+//   tooltip,
+//   isHeadline,
+//   blackHeadline,
+// }) => {
+//   return (
+//     <p
+//       className={classNames(
+//         `flex justify-center items-center gap-2 text-sm ${
+//           blackHeadline && "text-base"
+//         } ${isHeadline && "font-bold text-grayReg text-base"} `
+//       )}>
+//       {text} <QuestionMark />
+//       <a
+//         href="#"
+//         class="transititext-primary text-primary transition duration-150 ease-in-out hover:text-primary-600 focus:text-primary-600 active:text-primary-700 dark:text-primary-400 dark:hover:text-primary-500 dark:focus:text-primary-500 dark:active:text-primary-600"
+//         data-te-toggle="tooltip"
+//         >
+//         {tooltip}
+//       </a>
+//     </p>
+//   );
+// };
 export const Label = ({ children }) => {
   return (
     <label

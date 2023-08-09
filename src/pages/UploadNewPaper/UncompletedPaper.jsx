@@ -41,6 +41,21 @@ export default function UncompletedPaper({
   addNewExperiment,
   setAddNewExperiment,
 }) {
+  console.log({
+    study,
+    paperToShow,
+    setPaperToShow,
+    paperToEdit,
+    setPaperToEdit,
+    showEditble,
+    refetch,
+    setAddNewPaper,
+    setShowEditble,
+    newPaper,
+    setNewPaper,
+    addNewExperiment,
+    setAddNewExperiment,
+  });
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
 
@@ -349,6 +364,7 @@ export default function UncompletedPaper({
             </div>
             {addNewExperiment && (
               <ExperimentForm
+                setNewPaper={setNewPaper}
                 setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
@@ -362,8 +378,9 @@ export default function UncompletedPaper({
                 setPaperToShow={setPaperToShow}
               />
             )}
-            {paperToEdit && !newPaper && (
+            {paperToEdit && (
               <ExperimentForm
+                setNewPaper={setNewPaper}
                 experimentData={paperToEdit}
                 setAddNewExperiment={setAddNewExperiment}
                 setPaperToEdit={setPaperToEdit}

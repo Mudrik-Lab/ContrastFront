@@ -10,6 +10,7 @@ export default function ExperimentsBox({
   setPaperToEdit,
   showEditble,
   refetch,
+
   setAddNewExperiment,
 }) {
   return (
@@ -23,7 +24,7 @@ export default function ExperimentsBox({
       <div className="flex flex-col gap-2">
         <SideStatus
           refetch={refetch}
-          isExperiment
+          isExperiment={true}
           number={experiments?.length}
           status={"Submitted"}
           disabled={disabled}

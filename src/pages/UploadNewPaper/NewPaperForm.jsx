@@ -9,7 +9,7 @@ import {
   Spacer,
   ToastBox,
 } from "../../components/Reusble";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import { errorMsgClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
 import MultiSelect from "../../components/SelectField";
 import classNames from "classnames";
@@ -19,7 +19,6 @@ import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
-import getFormConfig from "../../apiHooks/getFormConfiguration";
 import { submitStudy } from "../../apiHooks/getStudies";
 import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
@@ -27,10 +26,10 @@ import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 
 export default function NewPaperForm({
   setAddNewPaper,
-  refetch,
   setNewPaper,
   addNewExperiment,
   setAddNewExperiment,
+  refetch,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
@@ -78,27 +77,30 @@ export default function NewPaperForm({
   });
 
   const handleSubmit = async (values) => {
-    try {
-      const res = await submitStudy({
-        title,
-        year: values.year,
-        authors: values.authors?.map((author) => author.value),
-        countries: values.countries.map((country) => country.value),
-        DOI: values.DOI,
-        source_title: values.source_title.value,
-      });
+    if (values.source_title?.value) {
+      try {
+        const res = await submitStudy({
+          title,
+          year: values.year,
+          authors: values.authors,
+          countries: values.countries,
+          DOI: values.DOI,
+          source_title: values.source_title?.value,
+        });
 
-      if (res.status === 201) {
-        setAddExperiments(true);
-        setStudy(res.data);
-        refetch();
-        toast.success(
-          <ToastBox headline={"You can now add the experiments details "} />
-        );
+        if (res.status === 201) {
+          setAddExperiments(true);
+          setStudy(res.data);
+          refetch();
+          toast.success(
+            <ToastBox headline={"You can now add the experiments details "} />
+          );
+        }
+      } catch (e) {
+        console.log(e);
+        const errors = Object.values(e?.response?.data);
+        toast.error(<ToastBox text={e?.message} headline={errors} />);
       }
-    } catch (e) {
-      const errors = Object.values(e.response?.data);
-      toast.error(<ToastBox text={e.message} headline={errors} />);
     }
   };
   const countryOption = useMemo(() => countryList().getData(), []);
@@ -111,8 +113,11 @@ export default function NewPaperForm({
         // experiment={experiment}
       />
       <Spacer height={10} />
-      <div className="flex justify-between">
-        <div className="pl-2 w-1/2">
+      <div className="flex justify-between ">
+        <div className="pl-2 w-1/2 relative">
+          {addNewExperiment && (
+            <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
+          )}
           <div className="flex items-center gap-2 my-4 ">
             <input
               type="text"
@@ -187,16 +192,18 @@ export default function NewPaperForm({
                     />
                   </div>
                   <div>
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Authors
-                    </Text>
+                    <Text weight={"bold"} color={"grayReg"}></Text>Authors
                     <div className="flex items-center gap-2">
                       <CreatableSelect
                         name="authors"
                         id="authors"
                         isMulti={true}
-                        value={values.authors}
-                        onChange={(v) => setFieldValue("authors", v)}
+                        onChange={(v) => {
+                          setFieldValue(
+                            "authors",
+                            v.map((author) => author.value)
+                          );
+                        }}
                         placeholder="Select or Add Authors"
                         isClearable
                         options={authorsList}
@@ -223,7 +230,6 @@ export default function NewPaperForm({
                         name="source_title"
                         id="source_title"
                         isMulti={false}
-                        value={values.source_title}
                         onChange={(v) => setFieldValue("source_title", v)}
                         placeholder="Select journal"
                         isClearable={true}
@@ -249,8 +255,13 @@ export default function NewPaperForm({
                       <Select
                         name="countries"
                         isClearable
-                        value={values.countries}
-                        onChange={(v) => setFieldValue("countries", v)}
+                        // value={values.countries}
+                        onChange={(v) => {
+                          setFieldValue(
+                            "countries",
+                            v.map((country) => country.value)
+                          );
+                        }}
                         placeholder="Add Countries"
                         isMulti={true}
                         component={MultiSelect}
@@ -303,6 +314,10 @@ export default function NewPaperForm({
           {addExperiments && (
             <div>
               <ExperimentsBox
+                experiments={study?.experiments?.map((experiment, index) => ({
+                  ...experiment,
+                  title: `Experiment #${index + 1}`,
+                }))}
                 isExperiment={true}
                 showEditble={true}
                 setNewPaper={setNewPaper}
@@ -313,8 +328,9 @@ export default function NewPaperForm({
           )}
         </div>
 
-        {addNewExperiment && (
+        {addNewExperiment && study && (
           <ExperimentForm
+            setNewPaper={setNewPaper}
             setPaperToEdit={setStudy}
             study={study}
             setAddNewExperiment={setAddNewExperiment}
