@@ -517,7 +517,7 @@ export const ToastBox = ({ headline, text }) => {
   );
 };
 
-export const ExpandingBox = ({ children, headline, disabled }) => {
+export const ExpandingBox = ({ children, headline, disabled, number }) => {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -527,10 +527,16 @@ export const ExpandingBox = ({ children, headline, disabled }) => {
         }`
       )}>
       <div
-        className="flex justify-between py-1 px-2"
+        className="w-full flex justify-between py-1 px-2"
         onClick={!disabled ? () => setOpen(!open) : null}>
         {" "}
-        <div className="font-bold">{headline}</div>
+        <div className="font-bold flex w-full justify-between">{headline}</div>
+        <span
+          className={classNames(
+            `font-bold ${disabled ? "text-gray-600" : "text-blue"}`
+          )}>
+          ({number || 0})
+        </span>
         <svg
           width="24"
           height="25"
@@ -556,7 +562,7 @@ export function TrashButton({ handleDelete, fieldValues, index }) {
   return (
     <button
       type="button"
-      disabled={!fieldValues[index].id}
+      // disabled={!fieldValues[index].id}
       onClick={() => {
         handleDelete(fieldValues, index);
       }}>

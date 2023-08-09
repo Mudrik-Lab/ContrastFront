@@ -64,7 +64,14 @@ export default function ConsciousnessMeasures({
   }, []);
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Consciousness Measures"}>
+    <ExpandingBox
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
+      disabled={disabled}
+      headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>

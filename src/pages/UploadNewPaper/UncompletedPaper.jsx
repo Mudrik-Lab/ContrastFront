@@ -41,21 +41,6 @@ export default function UncompletedPaper({
   addNewExperiment,
   setAddNewExperiment,
 }) {
-  console.log({
-    study,
-    paperToShow,
-    setPaperToShow,
-    paperToEdit,
-    setPaperToEdit,
-    showEditble,
-    refetch,
-    setAddNewPaper,
-    setShowEditble,
-    newPaper,
-    setNewPaper,
-    addNewExperiment,
-    setAddNewExperiment,
-  });
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
 
@@ -148,6 +133,9 @@ export default function UncompletedPaper({
           <div className="flex justify-between">
             <div className="p-2 h-full w-[49%] shadow-3xl relative">
               {addNewExperiment && (
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
+              )}
+              {paperToEdit && (
                 <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
               )}
               <div className="flex flex-col gap-4">

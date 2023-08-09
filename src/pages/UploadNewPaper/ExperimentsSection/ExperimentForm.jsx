@@ -42,11 +42,6 @@ export default function ExperimentForm({
     queryFn: () => study && getStudy({ id: study.id }),
   });
 
-  const handleRefetch = () => {
-    console.log("refetch");
-    studyRefetch();
-  };
-
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.name, label: family.name })
   );
@@ -232,10 +227,7 @@ export default function ExperimentForm({
               setPaperToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
-              handleRefetch();
-              // refetch();
-
-              // !isEditMode && setAddNewExperiment(false);
+              studyRefetch();
             }}>
             Exit
           </button>

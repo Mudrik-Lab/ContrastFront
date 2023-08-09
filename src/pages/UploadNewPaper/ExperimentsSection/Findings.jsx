@@ -24,17 +24,17 @@ export default function Findings({
 }) {
   const [fieldValues, setFieldValues] = useState([
     {
+      technique: "",
       family: "",
       type: "",
       onset: "",
       offset: "",
-      correlation_sign: "",
-      band_lower_bound: "",
-      band_higher_bound: "",
-      AAL_atlas_tag: "",
-      notes: "",
-      analysis_type: "",
-      technique: "",
+      // correlation_sign: "",
+      // band_lower_bound: "",
+      // band_higher_bound: "",
+      // AAL_atlas_tag: "",
+      // notes: "",
+      // analysis_type: "",
     },
   ]);
   const classificationName = "finding_tags";
@@ -59,14 +59,13 @@ export default function Findings({
     if (values && values.length > 0) {
       setFieldValues(
         values.map((row) => {
-          console.log(row);
           return {
             family: row.family,
             type: row.type,
             technique: row.technique,
-            onset: row.onset || "",
-            offset: row.offset || "",
-            correlation_sign: row.correlation_sign || "",
+            onset: row.onset,
+            offset: row.offset,
+            correlation_sign: row.correlation_sign,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -81,6 +80,11 @@ export default function Findings({
 
   return (
     <ExpandingBox
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={
         <TooltipExplanation
