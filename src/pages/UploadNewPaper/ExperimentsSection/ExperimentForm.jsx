@@ -16,6 +16,10 @@ import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
 import { getExperiment } from "../../../apiHooks/getExperiment";
 import { getStudy } from "../../../apiHooks/getStudies";
+import {
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../../Utils/HardCoded";
 
 export default function ExperimentForm({
   study,
@@ -117,7 +121,13 @@ export default function ExperimentForm({
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
-        <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
+        <div
+          className="p-2 w-1/2 shadow-3xl flex flex-col gap-2 overflow-y-scroll"
+          style={{
+            height: `calc(100vh - ${
+              uploadPaperUsedHeight + upladPaperPageTopSection + 10
+            }px)`,
+          }}>
           <div>
             <Text weight={"bold"} color={"grayReg"}>
               {study.title?.slice(0, 20)}...

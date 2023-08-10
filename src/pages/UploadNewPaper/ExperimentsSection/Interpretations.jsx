@@ -22,12 +22,14 @@ export default function Interpretations({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      theory: "",
-      type: "",
-    },
-  ]);
+  const [fieldValues, setFieldValues] = useState(
+    filedOptions.map((filedOption) => {
+      return {
+        theory: filedOption.value,
+        type: "",
+      };
+    })
+  );
   const classificationName = "interpretations";
 
   const handleSubmit = SubmitClassificationField(
@@ -85,15 +87,14 @@ export default function Interpretations({
                     <Text weight={"bold"} color={"grayReg"}>
                       Theory
                     </Text>
-                    <CustomSelect
-                      disabled={fieldValue.id}
-                      value={fieldValue.theory}
-                      onChange={(value) => {
-                        const newArray = [...fieldValues];
-                        newArray[index].theory = value;
-                        setFieldValues(newArray);
-                      }}
-                      options={filedOptions}
+                    <input
+                      readOnly
+                      className="p-2 text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                      value={
+                        filedOptions.find(
+                          (option) => option.value === fieldValue.theory
+                        ).label
+                      }
                     />
                   </div>
 
@@ -103,7 +104,6 @@ export default function Interpretations({
                     </Text>
 
                     <CustomSelect
-                      disabled={fieldValue.id}
                       value={fieldValue.type}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
@@ -116,18 +116,11 @@ export default function Interpretations({
                 </div>
 
                 <div id="trash+submit" className=" flex gap-2">
-                  <TrashButton
-                    handleDelete={handleDelete}
-                    fieldValues={fieldValues}
-                    index={index}
-                  />
                   <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
-                    disabled={
-                      !(fieldValue?.theory && fieldValue?.type) || fieldValue.id
-                    }
+                    disabled={!(fieldValue?.theory && fieldValue?.type)}
                   />
                 </div>
               </div>
@@ -135,10 +128,6 @@ export default function Interpretations({
           </div>
         );
       })}
-      <AddFieldButton
-        fieldValues={fieldValues}
-        setFieldValues={setFieldValues}
-      />
     </ExpandingBox>
   );
 }

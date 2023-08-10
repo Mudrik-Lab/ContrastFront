@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { ToastBox } from "../components/Reusble";
+import { ToastBox, ToastErrorBox } from "../components/Reusble";
 import {
   addFieldToexperiment,
   addPropertyToexperiment,
@@ -202,9 +202,7 @@ export function SubmitClassificationField(
           setFieldValues(newArr);
         }
       } catch (e) {
-        console.log(Object.entries(e.response.data));
-        const errors = Object.entries(e.response.data);
-        toast.error(<ToastBox text={e.message} headline={errors} />);
+        toast.error(<ToastErrorBox errors={e.response.data} />);
       }
     } else {
       try {

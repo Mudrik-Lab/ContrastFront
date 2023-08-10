@@ -15,7 +15,14 @@ import countryList from "react-select-country-list";
 import classNames from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import {
+  errorMsgClass,
+  fieldClass,
+  footerHeight,
+  navHeight,
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../Utils/HardCoded";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import MultiSelect from "../../components/SelectField";
@@ -117,9 +124,9 @@ export default function UncompletedPaper({
   };
 
   return (
-    <div>
+    <div className="h-full ">
       {study && (
-        <div>
+        <div className="h-full">
           <ProgressComponent
             status={"Uncompleted submissins"}
             paperNmae={
@@ -130,16 +137,22 @@ export default function UncompletedPaper({
             experiment={paperToShow?.title}
           />
           <Spacer height={10} />
-          <div className="flex justify-between">
-            <div className="p-2 h-full w-[49%] shadow-3xl relative">
+          <div className="flex justify-between relative">
+            <div
+              className="p-2 w-1/2 shadow-3xl overflow-y-scroll"
+              style={{
+                height: `calc(100vh - ${
+                  uploadPaperUsedHeight + upladPaperPageTopSection + 10
+                }px)`,
+              }}>
               {addNewExperiment && (
-                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
+                <div className="absolute top-0 left-0 w-1/2 h-full bg-white opacity-60 z-50"></div>
               )}
               {paperToEdit && (
-                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
+                <div className="absolute top-0 left-0 w-1/2 h-full bg-white opacity-60 z-50"></div>
               )}
               <div className="flex flex-col gap-4">
-                <div>
+                <div className="h-full w-full">
                   <Text weight={"bold"} color={"grayReg"}>
                     Paper Title
                   </Text>
@@ -166,8 +179,7 @@ export default function UncompletedPaper({
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  // validationSchema={validationSchema}
-                >
+                  validationSchema={validationSchema}>
                   {({
                     isSubmitting,
                     dirty,

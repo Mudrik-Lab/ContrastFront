@@ -3,7 +3,7 @@ import react, { useState } from "react";
 import { deleteExperiment } from "../apiHooks/deleteExperiment";
 import { showTextToRaw } from "../Utils/functions";
 import { toast } from "react-toastify";
-import { ToastBox } from "./Reusble";
+import { ToastBox, ToastErrorBox } from "./Reusble";
 import ConfirmModal from "./ConfirmModal";
 import { deleteStudy } from "../apiHooks/deleteStudy";
 import {
@@ -49,7 +49,7 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          console.log(e);
+          toast.error(<ToastErrorBox errors={e.response.data} />);
         }
       } else {
         try {
@@ -65,6 +65,7 @@ export default function SideStatus({
           console.log(res);
         } catch (e) {
           console.log(e);
+          toast.error(<ToastErrorBox errors={e?.response?.data} />);
         }
       }
     }

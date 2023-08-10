@@ -70,7 +70,7 @@ export default function Paradigms({
           return (
             <div key={`${classificationName}-${index}`}>
               <form className="flex flex-col gap-2">
-                <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
+                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <div id="index" className="w-4">
                     <Text weight={"bold"} color={"blue"}>
                       {index + 1}
@@ -129,7 +129,9 @@ export default function Paradigms({
                     </div>
                   </div>
 
-                  <div id="trash+submit" className="flex gap-2">
+                  <div
+                    id="trash+submit"
+                    className="flex items-center flex-col gap-2">
                     <TrashButton
                       handleDelete={handleDelete}
                       fieldValues={fieldValues}

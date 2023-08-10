@@ -4,7 +4,11 @@ import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import { rawTextToShow } from "../../../Utils/functions";
 import FindingsTags from "../FindingsTags";
-import { interpretationTypes } from "../../../Utils/HardCoded";
+import {
+  interpretationTypes,
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../../Utils/HardCoded";
 
 export default function ExperimentDetails({
   experiment,
@@ -35,7 +39,13 @@ export default function ExperimentDetails({
   return (
     <>
       {isSuccess && (
-        <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
+        <div
+          className="p-2 h-full w-[50%] shadow-3xl flex flex-col gap-2 overflow-y-scroll"
+          style={{
+            height: `calc(100vh - ${
+              uploadPaperUsedHeight + upladPaperPageTopSection + 10
+            }px)`,
+          }}>
           <div>
             <Text weight={"bold"} color={"grayReg"}>
               {study.title.slice(0, 20)}...

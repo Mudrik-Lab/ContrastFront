@@ -106,15 +106,15 @@ export default function NewPaperForm({
   const countryOption = useMemo(() => countryList().getData(), []);
 
   return (
-    <div className="p-4 pt-0 pl-0 ">
+    <div>
       <ProgressComponent
         status={"New Paper"}
         paperNmae={nameSubmitted}
         // experiment={experiment}
       />
       <Spacer height={10} />
-      <div className="flex justify-between ">
-        <div className="pl-2 w-1/2 relative">
+      <div className="flex justify-between h-full ">
+        <div className="pl-2 w-1/2 relative h-full">
           {addNewExperiment && (
             <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
           )}
