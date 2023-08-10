@@ -13,6 +13,7 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
+import { ErrorMessage } from "formik";
 
 export default function Samples({
   filedOptions,
@@ -46,6 +47,17 @@ export default function Samples({
     setFieldValues
   );
 
+  // const errorsMsg = [{}];
+  // fieldValues.map((fieldValue, index) => {
+  //   if (fieldValue.size_included <= 0) {
+  //     errorsMsg[index].size_included = "Number can't be smaller than 0";
+  //   }
+  //   if (fieldValue.total_size < fieldValue.size_included) {
+  //     errorsMsg[index].size_included =
+  //       "Total size can't be smaller than included size";
+  //   }
+  // });
+
   useEffect(() => {
     if (values && values.length > 0) {
       setFieldValues(
@@ -63,6 +75,11 @@ export default function Samples({
 
   return (
     <ExpandingBox
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -110,6 +127,7 @@ export default function Samples({
                       <input
                         disabled={fieldValues[index].id}
                         type="number"
+                        min={0}
                         defaultValue={fieldValue.size_included}
                         onChange={(e) => {
                           setFieldValues((prev) =>
@@ -126,6 +144,12 @@ export default function Samples({
                         } `}
                       />
                     </div>
+                    {fieldValue.size_included &&
+                      fieldValue.size_included < 0 && (
+                        <span className="text-flourishRed ">
+                          No negative numbers
+                        </span>
+                      )}
                   </div>
                   <div className="w-full">
                     <TooltipExplanation
@@ -157,6 +181,11 @@ export default function Samples({
                         } `}
                       />
                     </div>
+                    {fieldValue.size_included > fieldValue.total_size && (
+                      <span className="text-flourishRed ">
+                        Smaller than included
+                      </span>
+                    )}
                   </div>
                 </div>
 
@@ -174,6 +203,7 @@ export default function Samples({
                       !(
                         fieldValue?.total_size &&
                         fieldValue?.size_included &&
+                        fieldValue.size_included <= fieldValue.total_size &&
                         fieldValue?.type
                       ) || fieldValue.id
                     }

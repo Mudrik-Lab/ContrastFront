@@ -135,6 +135,9 @@ export default function UncompletedPaper({
               {addNewExperiment && (
                 <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
               )}
+              {paperToEdit && (
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-50"></div>
+              )}
               <div className="flex flex-col gap-4">
                 <div>
                   <Text weight={"bold"} color={"grayReg"}>
@@ -349,6 +352,7 @@ export default function UncompletedPaper({
             </div>
             {addNewExperiment && (
               <ExperimentForm
+                setNewPaper={setNewPaper}
                 setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
@@ -362,8 +366,9 @@ export default function UncompletedPaper({
                 setPaperToShow={setPaperToShow}
               />
             )}
-            {paperToEdit && !newPaper && (
+            {paperToEdit && (
               <ExperimentForm
+                setNewPaper={setNewPaper}
                 experimentData={paperToEdit}
                 setAddNewExperiment={setAddNewExperiment}
                 setPaperToEdit={setPaperToEdit}

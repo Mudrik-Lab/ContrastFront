@@ -202,7 +202,8 @@ export function SubmitClassificationField(
           setFieldValues(newArr);
         }
       } catch (e) {
-        const errors = Object.values(e.response.data);
+        console.log(Object.entries(e.response.data));
+        const errors = Object.entries(e.response.data);
         toast.error(<ToastBox text={e.message} headline={errors} />);
       }
     } else {
@@ -239,6 +240,15 @@ export function DeleteClassificationField(
   setFieldValues
 ) {
   return async (values, index) => {
+    if (!values[index].id) {
+      if (fieldValues.length !== 1) {
+        const newArr = [...fieldValues];
+        newArr.splice(index, 1);
+        setFieldValues(newArr);
+      }
+      return;
+    }
+
     if (
       classificationName !== "paradigm" &&
       classificationName !== "technique"

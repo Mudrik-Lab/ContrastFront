@@ -59,6 +59,11 @@ export default function Paradigms({
   return (
     <>
       <ExpandingBox
+        number={
+          Object.values(fieldValues[0])[0] === ""
+            ? fieldValues.length - 1
+            : fieldValues.length
+        }
         disabled={disabled}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
