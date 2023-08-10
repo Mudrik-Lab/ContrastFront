@@ -16,7 +16,7 @@ import {
 } from "../../../Utils/functions";
 
 export default function Techniques({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
@@ -94,7 +94,7 @@ export default function Techniques({
                       newArray[index].technique = value;
                       setFieldValues(newArray);
                     }}
-                    options={filedOptions}
+                    options={fieldOptions}
                   />
                 </div>
 

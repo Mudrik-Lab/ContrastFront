@@ -16,14 +16,14 @@ import {
 import { interpretationTypes } from "../../../Utils/HardCoded";
 
 export default function Interpretations({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
   values,
 }) {
   const [fieldValues, setFieldValues] = useState(
-    filedOptions.map((filedOption) => {
+    fieldOptions.map((filedOption) => {
       return {
         theory: filedOption.value,
         type: "",
@@ -64,11 +64,7 @@ export default function Interpretations({
 
   return (
     <ExpandingBox
-      number={
-        Object.values(fieldValues[0])[0] === ""
-          ? fieldValues.length - 1
-          : fieldValues.length
-      }
+      number={4}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -91,7 +87,7 @@ export default function Interpretations({
                       readOnly
                       className="p-2 text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
                       value={
-                        filedOptions.find(
+                        fieldOptions.find(
                           (option) => option.value === fieldValue.theory
                         ).label
                       }

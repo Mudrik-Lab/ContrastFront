@@ -15,7 +15,7 @@ import {
 } from "../../../Utils/functions";
 
 export default function Stimuli({
-  filedOptions,
+  fieldOptions,
   subCategories,
   modalities,
   disabled,
@@ -69,6 +69,11 @@ export default function Stimuli({
 
   return (
     <ExpandingBox
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -100,7 +105,7 @@ export default function Stimuli({
                             newArray[index].category = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions}
+                          options={fieldOptions}
                         />
                       </div>
                       <div className="w-full">

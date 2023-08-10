@@ -19,6 +19,7 @@ export default function ExperimentDetails({
     [`more_configurations`],
     getExtraConfig
   );
+  console.log(extraConfig?.data);
   const tasks = extraConfig?.data.available_tasks_types;
   const stimuliCategories = extraConfig?.data.available_stimulus_category_type;
   const stimuliModality = extraConfig?.data.available_stimulus_modality_type;
@@ -36,6 +37,8 @@ export default function ExperimentDetails({
     families: extraConfig?.data.available_finding_tags_families,
   };
   const paradigmsWithFamily = extraConfig?.data.available_paradigms;
+  const experimentTypeOptions = extraConfig?.data.available_experiment_types;
+  console.log(experimentTypeOptions);
   return (
     <>
       {isSuccess && (
@@ -58,29 +61,49 @@ export default function ExperimentDetails({
             <Text color="grayReg" weight={"bold"}>
               Experiment Classifications
             </Text>
-            <ExpandingBox headline={"Basic Classifications"}>
-              <div className="flex items-start justify-between border border-blue border-x-4 p-2 rounded-md">
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Type of consciousness
-                  </Text>
-                  <Text lg>{experiment.type_of_consciousness}</Text>
+            <ExpandingBox headline={"Basic Classifications"} number={1}>
+              <div className="flex  border border-blue border-x-4 p-2 rounded-md">
+                <div className="w-4"></div>
+                <div className="w-1/2 flex flex-col items-start gap-2 ">
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Experiment's Type
+                    </Text>
+                    <Text lg>
+                      {
+                        experimentTypeOptions.find(
+                          (option) => option.value === experiment.type
+                        ).name
+                      }
+                    </Text>
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Type of consciousness
+                    </Text>
+                    <Text lg>{experiment.type_of_consciousness}</Text>
+                  </div>
                 </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Report/No report
-                  </Text>
-                  <Text lg>{experiment.is_reporting}</Text>
-                </div>
-                <div>
-                  <Text weight={"bold"} color={"grayReg"}>
-                    Theory driven
-                  </Text>
-                  <Text lg>{experiment.theory_driven}</Text>
+
+                <div className="w-1/2 flex flex-col items-start gap-2 ">
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Report/No report
+                    </Text>
+                    <Text lg>{experiment.is_reporting}</Text>
+                  </div>
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Theory driven
+                    </Text>
+                    <Text lg>{experiment.theory_driven}</Text>
+                  </div>
                 </div>
               </div>
             </ExpandingBox>
-            <ExpandingBox headline={"Paradigms"}>
+            <ExpandingBox
+              headline={"Paradigms"}
+              number={experiment.paradigms.length}>
               {experiment.paradigms.map((paradigm, index) => {
                 console.log(paradigm);
                 return (
@@ -115,7 +138,9 @@ export default function ExperimentDetails({
                 );
               })}
             </ExpandingBox>
-            <ExpandingBox headline={"Interpretations"}>
+            <ExpandingBox
+              headline={"Interpretations"}
+              number={experiment.interpretations.length}>
               {experiment.interpretations.map((interpretation, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -146,7 +171,9 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox headline={"Samples"}>
+            <ExpandingBox
+              headline={"Samples"}
+              number={experiment.samples.length}>
               {experiment.samples.map((sample, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -179,7 +206,7 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox headline={"Tasks"}>
+            <ExpandingBox headline={"Tasks"} number={experiment.tasks.length}>
               {experiment.tasks.map((task, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -207,7 +234,9 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox headline={"Stimuli"}>
+            <ExpandingBox
+              headline={"Stimuli"}
+              number={experiment.stimuli.length}>
               {experiment.stimuli.map((stimulus, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -265,7 +294,9 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox headline={"Consciousness Measures"}>
+            <ExpandingBox
+              headline={"Consciousness Measures"}
+              number={experiment.consciousness_measures.length}>
               {experiment.consciousness_measures.map((cm, index) => (
                 <div
                   className=" border border-blue border-x-4 p-2 rounded-md"
@@ -315,7 +346,9 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox headline={"Techniques"}>
+            <ExpandingBox
+              headline={"Techniques"}
+              number={experiment.techniques.length}>
               {experiment.techniques.map((technique, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -335,7 +368,9 @@ export default function ExperimentDetails({
               ))}
             </ExpandingBox>
 
-            <ExpandingBox headline={"Measures"}>
+            <ExpandingBox
+              headline={"Measures"}
+              number={experiment.measures.length}>
               {experiment.measures.map((measure, index) => (
                 <div
                   className="flex items-start border border-blue border-x-4 p-2 rounded-md"
@@ -369,7 +404,9 @@ export default function ExperimentDetails({
             <Text color="grayReg" weight={"bold"}>
               Findings
             </Text>
-            <ExpandingBox headline={"Experiment's Findings"}>
+            <ExpandingBox
+              headline={"Experiment's Findings"}
+              number={experiment.finding_tags.length}>
               <FindingsTags
                 experiment={experiment}
                 findingOptions={findingOptions}

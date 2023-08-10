@@ -15,7 +15,7 @@ import {
 } from "../../../Utils/functions";
 
 export default function Paradigms({
-  filedOptions,
+  fieldOptions,
   optionalParadigms,
   disabled,
   experiment_pk,
@@ -95,7 +95,7 @@ export default function Paradigms({
                           newArray[index].main = value;
                           setFieldValues(newArray);
                         }}
-                        options={filedOptions}
+                        options={fieldOptions}
                       />
                     </div>
 

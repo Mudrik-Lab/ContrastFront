@@ -16,7 +16,7 @@ import {
 import { v4 as uuid } from "uuid";
 
 export default function Findings({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
@@ -114,7 +114,7 @@ export default function Findings({
                             newArray[index].technique = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions.techniquesOptions}
+                          options={fieldOptions.techniquesOptions}
                         />
                       </div>
                     </div>
@@ -134,7 +134,7 @@ export default function Findings({
                             newArray[index].family = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions.findingTagsFamilies}
+                          options={fieldOptions.findingTagsFamilies}
                         />
                       </div>
                     </div>
@@ -154,7 +154,7 @@ export default function Findings({
                             newArray[index].type = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions.findingTypes}
+                          options={fieldOptions.findingTypes}
                         />
                       </div>
                     </div>

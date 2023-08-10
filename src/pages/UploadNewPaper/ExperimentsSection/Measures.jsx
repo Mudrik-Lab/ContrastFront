@@ -16,7 +16,7 @@ import {
 } from "../../../Utils/functions";
 
 export default function Measures({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
@@ -95,7 +95,7 @@ export default function Measures({
                         newArray[index].type = value;
                         setFieldValues(newArray);
                       }}
-                      options={filedOptions}
+                      options={fieldOptions}
                     />
                   </div>
 
