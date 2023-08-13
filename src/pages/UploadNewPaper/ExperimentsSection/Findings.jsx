@@ -16,7 +16,7 @@ import {
 import { v4 as uuid } from "uuid";
 
 export default function Findings({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
@@ -27,14 +27,6 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
-      onset: "",
-      offset: "",
-      // correlation_sign: "",
-      // band_lower_bound: "",
-      // band_higher_bound: "",
-      // AAL_atlas_tag: "",
-      // notes: "",
-      // analysis_type: "",
     },
   ]);
   const classificationName = "finding_tags";
@@ -122,7 +114,27 @@ export default function Findings({
                             newArray[index].technique = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions.techniquesOptions}
+                          options={fieldOptions.techniquesOptions}
+                        />
+                      </div>
+                    </div>
+
+                    <div className="w-full flex">
+                      <div className="w-1/3">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Family
+                        </Text>
+                      </div>
+                      <div className="w-2/3">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.family}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].family = value;
+                            setFieldValues(newArray);
+                          }}
+                          options={fieldOptions.findingTagsFamilies}
                         />
                       </div>
                     </div>
@@ -142,26 +154,7 @@ export default function Findings({
                             newArray[index].type = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions.findingTypes}
-                        />
-                      </div>
-                    </div>
-                    <div className="w-full flex">
-                      <div className="w-1/3">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Family
-                        </Text>
-                      </div>
-                      <div className="w-2/3">
-                        <CustomSelect
-                          disabled={fieldValue?.id}
-                          value={fieldValue.family}
-                          onChange={(value) => {
-                            const newArray = [...fieldValues];
-                            newArray[index].family = value;
-                            setFieldValues(newArray);
-                          }}
-                          options={filedOptions.findingTagsFamilies}
+                          options={fieldOptions.findingTypes}
                         />
                       </div>
                     </div>

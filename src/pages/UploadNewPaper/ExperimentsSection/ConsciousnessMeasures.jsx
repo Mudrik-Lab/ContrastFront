@@ -16,7 +16,7 @@ import {
 import { concsiousnessOptions } from "../../../Utils/HardCoded";
 
 export default function ConsciousnessMeasures({
-  filedOptions,
+  fieldOptions,
   analysisPhaseOptions,
   disabled,
   experiment_pk,
@@ -101,7 +101,7 @@ export default function ConsciousnessMeasures({
                             newArray[index].type = value;
                             setFieldValues(newArray);
                           }}
-                          options={filedOptions}
+                          options={fieldOptions}
                         />
                       </div>
                       <div className="w-full">

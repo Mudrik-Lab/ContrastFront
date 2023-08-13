@@ -7,7 +7,7 @@ export default function PageTemplate({ graph, control }) {
   const containerStyle = {
     display: "grid",
     gridTemplateColumns: isMoblile ? "1fr" : "370px 1fr",
-    gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "80px 1fr 81px",
+    gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "70px 1fr 81px",
     gridTemplateAreas: isMoblile
       ? `
     "navbar "

@@ -1,4 +1,6 @@
 import React from "react";
+import { upladPaperPageTopSection } from "../../Utils/HardCoded";
+import classNames from "classnames";
 
 export default function ProgressComponent({ status, paperNmae, experiment }) {
   const Arrow = (
@@ -15,7 +17,10 @@ export default function ProgressComponent({ status, paperNmae, experiment }) {
     </svg>
   );
   return (
-    <div className="px-6 py-10 h-28 bg-grayLight">
+    <div
+      className={classNames(
+        `px-6 h-[${upladPaperPageTopSection}px] bg-grayLight flex items-center`
+      )}>
       <div className="flex w-full justify-start items-center gap-2 text-lg">
         <span>{status}</span>
         {Arrow} <span>{paperNmae} </span>

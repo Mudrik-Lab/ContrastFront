@@ -5,6 +5,7 @@ import {
   SideControl,
   Spacer,
   TopSideUserBox,
+  Text,
 } from "../../components/Reusble";
 import PageTemplate from "../../components/PageTemplate";
 import { useSnapshot } from "valtio";
@@ -16,7 +17,11 @@ import PaperSection from "./PaperSection";
 import React, { useState } from "react";
 import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.svg";
 import NewPaperForm from "./NewPaperForm";
-import { statusNumber } from "../../Utils/HardCoded";
+import {
+  statusNumber,
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../Utils/HardCoded";
 
 export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();
@@ -39,11 +44,22 @@ export default function UploadNewPaper() {
       {isSuccess && (
         <PageTemplate
           control={
-            <div className="relative ">
-              <SideControl isUploadPaper headline={<TopSideUserBox />}>
-                {addNewPaper && (
-                  <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
-                )}
+            <div className="relative p-2 ">
+              <TopSideUserBox />
+              {addNewPaper && (
+                <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
+              )}
+              <div
+                className="p-4 shadow-3xl mt-2 overflow-y-scroll"
+                style={{
+                  height: `calc(100vh - ${
+                    uploadPaperUsedHeight + upladPaperPageTopSection
+                  }px)`,
+                }}>
+                <Text weight={"bold"} color={"grayHeavy"}>
+                  My Papers
+                </Text>
+                <Spacer height={20} />
                 <SideStatus
                   status={"Complete"}
                   completedStudy
@@ -128,21 +144,25 @@ export default function UploadNewPaper() {
                   />
                 </div>
 
-                <div className="flex flex-col items-center w-full">
+                <div className="flex flex-col items-center w-full ">
                   <Spacer height={30} />
 
                   <Button
                     onClick={() => setAddNewPaper(true)}
                     disabled={addNewPaper}
-                    extraClass="mx-auto font-normal">
+                    extraClass="mx-auto font-normal ">
                     <AddPaper /> Add new paper
                   </Button>
                 </div>
-              </SideControl>
+              </div>
             </div>
           }
           graph={
-            <div className="overflow-x-scroll h-full">
+            <div
+              className=" shadow-3xl mt-2 overflow-y-scroll h-full"
+              style={{
+                height: `calc(100vh - ${uploadPaperUsedHeight + 10}px)`,
+              }}>
               {addNewPaper ? (
                 <NewPaperForm
                   setAddNewPaper={setAddNewPaper}

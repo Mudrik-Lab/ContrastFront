@@ -16,6 +16,10 @@ import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
 import { getExperiment } from "../../../apiHooks/getExperiment";
 import { getStudy } from "../../../apiHooks/getStudies";
+import {
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../../Utils/HardCoded";
 
 export default function ExperimentForm({
   study,
@@ -114,10 +118,18 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
+  const experimentTypeOptions = extraConfig?.data.available_experiment_types;
+  console.log(experimentTypeOptions);
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
-        <div className="p-2 h-full w-[49%] shadow-3xl flex flex-col gap-2">
+        <div
+          className="p-2 w-1/2 shadow-3xl flex flex-col gap-2 overflow-y-scroll"
+          style={{
+            height: `calc(100vh - ${
+              uploadPaperUsedHeight + upladPaperPageTopSection + 10
+            }px)`,
+          }}>
           <div>
             <Text weight={"bold"} color={"grayReg"}>
               {study.title?.slice(0, 20)}...
@@ -135,6 +147,7 @@ export default function ExperimentForm({
             </Text>
 
             <BasicClassification
+              fieldOptions={experimentTypeOptions}
               experimentData={experimentData}
               study_id={study.id}
               setExperimentID={setExperimentID}
@@ -142,7 +155,7 @@ export default function ExperimentForm({
             />
 
             <Paradigms
-              filedOptions={paradigmsFamilies}
+              fieldOptions={paradigmsFamilies}
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -150,28 +163,28 @@ export default function ExperimentForm({
               values={experimentData?.paradigms}
             />
             <Interpretations
-              filedOptions={theories}
+              fieldOptions={theories}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.interpretations}
             />
             <Samples
-              filedOptions={populations}
+              fieldOptions={populations}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.samples}
             />
             <Tasks
-              filedOptions={tasks}
+              fieldOptions={tasks}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.tasks}
             />
             <Stimuli
-              filedOptions={stimulusCategories}
+              fieldOptions={stimulusCategories}
               subCategories={stimulusSubCategories}
               modalities={stimulusModalities}
               experiment_pk={experimentID}
@@ -180,7 +193,7 @@ export default function ExperimentForm({
               values={experimentData?.stimuli}
             />
             <ConsciousnessMeasures
-              filedOptions={analysisMeasuresOptions}
+              fieldOptions={analysisMeasuresOptions}
               analysisPhaseOptions={analysisPhaseOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -188,7 +201,7 @@ export default function ExperimentForm({
               values={experimentData?.consciousness_measures}
             />
             <Techniques
-              filedOptions={techniquesOptions}
+              fieldOptions={techniquesOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
@@ -196,7 +209,7 @@ export default function ExperimentForm({
             />
 
             <Measures
-              filedOptions={measuresOptions}
+              fieldOptions={measuresOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
@@ -209,7 +222,7 @@ export default function ExperimentForm({
             </Text>
 
             <Findings
-              filedOptions={{
+              fieldOptions={{
                 techniquesOptions,
                 findingTagsFamilies,
                 findingTypes,

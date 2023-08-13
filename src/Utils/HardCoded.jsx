@@ -2,6 +2,10 @@ export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
+export const footerHeight = 81;
+export const upladPaperPageTopSection = 112; //h-28
+export const uploadPaperUsedHeight = footerHeight + navHeight + 20;
+
 export const fieldClass = "border border-gray-300 rounded-sm p-2 h-10 w-72";
 export const numericFieldClass =
   "border border-gray-300 rounded-[4px] p-2 h-[39.2px] w-20";
@@ -20,12 +24,6 @@ export const plotConfig = {
   displaylogo: false,
 };
 export const isMoblile = screenWidth < 600;
-export const experimentTypeOptions = [
-  { vlaue: null, label: "" },
-  { value: "1", label: "1" },
-  { value: "2", label: "2" },
-  { value: "3", label: "3" },
-];
 
 export const interpretationTypes = [
   { label: "Supports", value: "pro" },

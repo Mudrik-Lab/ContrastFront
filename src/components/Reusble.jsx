@@ -4,7 +4,6 @@ import classNames from "classnames";
 import { ReactComponent as Trash } from "../assets/icons/trash.svg";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
-import { v4 as uuid } from "uuid";
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
 
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
@@ -15,11 +14,13 @@ import {
   screenWidth,
   sideSectionClass,
   sideWidth,
+  upladPaperPageTopSection,
 } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
 import { state } from "../state";
 import { ErrorMessage, Field } from "formik";
+import { rawTextToShow } from "../Utils/functions";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -199,7 +200,7 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
     </div>
   );
 };
-
+Tooltip;
 export const TooltipExplanation = ({
   text,
   tooltip,
@@ -305,7 +306,9 @@ export const SideControl = ({ children, headline, isUploadPaper = false }) => {
             isUploadPaper ? "items-start h-full " : "items-center"
           }`
         )}>
-        {isUploadPaper && <h2 className="text-3xl">Papers</h2>}
+        {isUploadPaper && (
+          <h2 className=" text-grayReg font-bold text-base ">My Papers</h2>
+        )}
         {children}
         <Spacer height={20} />
       </div>
@@ -452,7 +455,10 @@ export const Checkbox = ({ field }) => {
 export const TopSideUserBox = () => {
   const snap = useSnapshot(state);
   return (
-    <div className="w-full bg-grayLight p-4 h-28">
+    <div
+      className={classNames(
+        `w-full bg-grayLight p-4 h-[${upladPaperPageTopSection}px]`
+      )}>
       <h2 className="text-2xl text-black font-normal">
         {snap.user.username}’s workspace
       </h2>
@@ -500,19 +506,35 @@ export const RadioFeedback = ({ label1, label2, name, headline, question }) => {
     </div>
   );
 };
+
 export const ToastBox = ({ headline, text }) => {
   return (
     <div className="h-40 w-full flex flex-col items-center justify-center">
-      {Array.isArray(headline) ? (
-        headline.map((item) => (
-          <h2 key={item} className="text-2xl text-blue mx-auto">
-            {item}
-          </h2>
-        ))
-      ) : (
-        <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
-      )}
+      <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+      <Spacer height={10} />
       <p className="text-lg mx-auto">{text}</p>
+    </div>
+  );
+};
+
+export const ToastErrorBox = ({ errors }) => {
+  return (
+    <div className="h-40 w-full flex flex-col items-center justify-center">
+      <h1 className="text-3xl text-blue mx-auto">Error</h1>
+      <ul>
+        {typeof errors === "object" ? (
+          Object.entries(errors).map(([key, mssg]) => (
+            <li className="text-flourishRed text-lg my-1 " key={key}>
+              {" "}
+              {rawTextToShow(key)}
+              {": "}
+              {Array.isArray(mssg) ? mssg[0] : mssg}
+            </li>
+          ))
+        ) : (
+          <li className="text-flourishRed text-lg my-1 ">{errors}</li>
+        )}
+      </ul>
     </div>
   );
 };
@@ -606,7 +628,11 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
 
 export const SubmitButton = ({ disabled, submit }) => {
   return (
-    <div className="w-full flex justify-center">
+    <Tooltip
+      animation
+      content={
+        disabled ? "Must fill all field in order to save" : "Click to save"
+      }>
       <button type="button" disabled={disabled} onClick={submit}>
         <svg
           width="20"
@@ -622,33 +648,10 @@ export const SubmitButton = ({ disabled, submit }) => {
           </g>
         </svg>
       </button>
-    </div>
+    </Tooltip>
   );
 };
 export const CustomSelect = ({ options, value, onChange, disabled }) => {
-  const customStyles = {
-    control: (provided, state) => ({
-      ...provided,
-      border: state.isFocused ? "2px solid #6366F1" : "2px solid #E5E7EB",
-      boxShadow: "none",
-      "&:hover": {
-        border: state.isFocused ? "2px solid #6366F1" : "2px solid #E5E7EB",
-      },
-    }),
-    option: (provided, state) => ({
-      ...provided,
-      backgroundColor: state.isSelected
-        ? "#6366F1"
-        : state.isFocused
-        ? "#E5E7EB"
-        : "white",
-      color: state.isSelected ? "white" : "#4B5563",
-      "&:hover": {
-        backgroundColor: state.isSelected ? "#6366F1" : "#E5E7EB",
-      },
-    }),
-  };
-
   return (
     <select
       disabled={disabled}
@@ -660,7 +663,7 @@ export const CustomSelect = ({ options, value, onChange, disabled }) => {
         onChange(e.currentTarget.value);
       }}>
       <option></option>
-      {options.map((opt) => {
+      {options?.map((opt) => {
         return (
           <option key={opt.value} value={opt.value}>
             {opt.label}

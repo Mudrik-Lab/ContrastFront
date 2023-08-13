@@ -8,7 +8,13 @@ import { getStudy } from "../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
-import { statusNumber } from "../../Utils/HardCoded";
+import {
+  footerHeight,
+  navHeight,
+  statusNumber,
+  upladPaperPageTopSection,
+  uploadPaperUsedHeight,
+} from "../../Utils/HardCoded";
 
 export default function PaperSection({
   paperId,
@@ -49,22 +55,28 @@ export default function PaperSection({
       : "Awaiting Review";
 
   return (
-    <div className="px-2 h-full">
+    <div className="bg-white h-full">
       {
         // for case of watching paper (no edit)
         isSuccess &&
           (!showEditble ||
             study.approval_status !== statusNumber.ON_PROCCESS) && (
-            <div>
+            <div className="h-full">
               <ProgressComponent
                 status={status}
                 paperNmae={study.title.slice(0, headlineLenghtToShow) + "..."}
                 experiment={paperToShow?.title}
               />
               <Spacer height={10} />
-              <div className="flex justify-between">
-                <div className="p-2 h-full w-[49%] shadow-3xl">
-                  <div className="flex flex-col gap-6">
+              <div className="flex justify-between ">
+                <div
+                  className="p-2 w-[49%] shadow-3xl overflow-y-scrol"
+                  style={{
+                    height: `calc(100vh - ${
+                      uploadPaperUsedHeight + upladPaperPageTopSection + 10
+                    }px)`,
+                  }}>
+                  <div className="flex flex-col gap-6 ">
                     <div>
                       <Text weight={"bold"} color={"grayReg"}>
                         Paper Title

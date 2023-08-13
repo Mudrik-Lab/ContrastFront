@@ -16,7 +16,7 @@ import {
 import { ErrorMessage } from "formik";
 
 export default function Samples({
-  filedOptions,
+  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
@@ -46,17 +46,6 @@ export default function Samples({
     fieldValues,
     setFieldValues
   );
-
-  // const errorsMsg = [{}];
-  // fieldValues.map((fieldValue, index) => {
-  //   if (fieldValue.size_included <= 0) {
-  //     errorsMsg[index].size_included = "Number can't be smaller than 0";
-  //   }
-  //   if (fieldValue.total_size < fieldValue.size_included) {
-  //     errorsMsg[index].size_included =
-  //       "Total size can't be smaller than included size";
-  //   }
-  // });
 
   useEffect(() => {
     if (values && values.length > 0) {
@@ -110,7 +99,7 @@ export default function Samples({
                         newArray[index].type = value;
                         setFieldValues(newArray);
                       }}
-                      options={filedOptions}
+                      options={fieldOptions}
                     />
                   </div>
 

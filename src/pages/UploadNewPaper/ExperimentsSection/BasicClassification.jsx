@@ -17,7 +17,6 @@ import { useEffect, useState } from "react";
 import { ReactComponent as Vicon } from "../../../assets/icons/v-icon.svg";
 import {
   concsiousnessOptions,
-  experimentTypeOptions,
   reportOptions,
   theoryDrivenOptions,
 } from "../../../Utils/HardCoded";
@@ -25,6 +24,7 @@ import {
 export default function BasicClassification({
   study_id,
   disabled,
+  fieldOptions,
   experimentData,
   setExperimentID,
 }) {
@@ -103,7 +103,10 @@ export default function BasicClassification({
   };
 
   return (
-    <ExpandingBox disabled={disabled} headline={"Basic Classifications"}>
+    <ExpandingBox
+      disabled={disabled}
+      headline={"Basic Classifications"}
+      number={experimentData?.id ? 1 : 0}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}
@@ -111,33 +114,32 @@ export default function BasicClassification({
         {({ dirty, isValid, values, setFieldValue }) => (
           <Form className="flex flex-col gap-2">
             <div className=" flex flex-col gap-4 border border-blue border-x-4 p-2 rounded-md">
-              <div className="flex items-center gap-2 w-full">
+              <div className="flex flex-col gap-2 w-full">
                 <Text
                   weight={"bold"}
                   color={"grayReg"}
                   className={"whitespace-nowrap"}>
                   Experiment type
                 </Text>
-                <div className="w-full">
+                <div className="flex gap-2 items-center w-full">
                   <Field
                     as="select"
                     id="experiment_type"
                     name="experiment_type"
-                    className="text-base w-20 bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
-                    {experimentTypeOptions.map((type) => (
+                    className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    {fieldOptions.map((type) => (
                       <option key={`type-${type.value}`} value={type.value}>
-                        {type.label}
+                        {type.name}
                       </option>
                     ))}
                   </Field>
+                  <TooltipExplanation
+                    text={""}
+                    tooltip={
+                      "Was this experiment aimed at obtaining a neuroscientific result, a behavioral one, or both?"
+                    }
+                  />
                 </div>
-
-                <TooltipExplanation
-                  text={""}
-                  tooltip={
-                    "Was this experiment aimed at obtaining a neuroscientific result, a behavioral one, or both?"
-                  }
-                />
               </div>
               <div>
                 <Text weight={"bold"} color={"grayReg"}>
