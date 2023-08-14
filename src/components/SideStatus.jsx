@@ -75,7 +75,7 @@ export default function SideStatus({
     status === "Complete"
       ? "revoltingGreen"
       : status === "Rejected"
-      ? "purple"
+      ? "black"
       : status === "Submitted"
       ? "revoltingGreen"
       : status === "Awaiting Review"
@@ -87,7 +87,7 @@ export default function SideStatus({
     status === "Complete"
       ? revoltingGreen
       : status === "Rejected"
-      ? "purple"
+      ? "black"
       : status === "Submitted"
       ? revoltingGreen
       : status === "Awaiting Review"
