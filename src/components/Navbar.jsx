@@ -14,6 +14,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../state";
 import { removeToken } from "../Utils/tokenHandler";
 import getUser from "../apiHooks/getUser";
+import { Tooltip } from "flowbite-react";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
@@ -125,7 +126,12 @@ export default function Navbar() {
                     </a>
                   </li>
                   <li>
-                    <a href="/upload-new-paper" aria-current="page">
+                    <a
+                      href="/upload-new-paper"
+                      aria-current="page"
+                      className={classNames(
+                        `${!snap.auth && " pointer-events-none opacity-50"}`
+                      )}>
                       Upload New Paper
                     </a>
                   </li>
@@ -215,16 +221,27 @@ export default function Navbar() {
                   </a>
                 </li>
                 <li>
-                  <a
-                    href="/upload-new-paper"
-                    className={
-                      page === "/upload-new-paper"
-                        ? "text-blue font-bold text-base"
-                        : "text-base"
-                    }
-                    aria-current="page">
-                    Upload New Paper
-                  </a>
+                  <Tooltip
+                    placement="left"
+                    content={
+                      !snap.auth &&
+                      "Registration is needed before uploading study"
+                    }>
+                    <a
+                      href="/upload-new-paper"
+                      className={classNames(
+                        `${
+                          page === "/upload-new-paper"
+                            ? "text-blue font-bold text-base"
+                            : "text-base"
+                        } ${`${
+                          !snap.auth && " pointer-events-none opacity-50"
+                        }`}`
+                      )}
+                      aria-current="page">
+                      Upload New Paper
+                    </a>
+                  </Tooltip>
                 </li>
               </ul>
             </div>
