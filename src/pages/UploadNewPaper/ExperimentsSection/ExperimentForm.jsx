@@ -119,7 +119,7 @@ export default function ExperimentForm({
     }));
 
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
-  console.log(experimentTypeOptions);
+  console.log(experimentData);
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (

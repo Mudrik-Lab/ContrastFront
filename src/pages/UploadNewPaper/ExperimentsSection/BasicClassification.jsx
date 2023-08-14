@@ -127,6 +127,7 @@ export default function BasicClassification({
                     id="experiment_type"
                     name="experiment_type"
                     className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
+                    <option></option>
                     {fieldOptions.map((type) => (
                       <option key={`type-${type.value}`} value={type.value}>
                         {type.name}
