@@ -79,7 +79,7 @@ export default function RegisterComponent() {
                 <div className="flex flex-col items-center gap-5 px-4">
                   <div className=" flex flex-col items-center ">
                     <Field
-                      placeHolder="User Name"
+                      placeholder="User Name"
                       id="name"
                       name="name"
                       className={fieldClass}
@@ -97,7 +97,7 @@ export default function RegisterComponent() {
                   <div className="flex flex-col items-center">
                     <Field
                       type="email"
-                      placeHolder="Email address"
+                      placeholder="Email address"
                       id="email"
                       name="email"
                       className={fieldClass}
@@ -116,7 +116,7 @@ export default function RegisterComponent() {
                   <div className="flex flex-col items-center">
                     <Field
                       type="password"
-                      placeHolder="New Password"
+                      placeholder="New Password"
                       id="password"
                       name="password"
                       className={fieldClass}
