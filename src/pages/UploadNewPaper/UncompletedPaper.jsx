@@ -137,7 +137,7 @@ export default function UncompletedPaper({
             experiment={paperToShow?.title}
           />
           <Spacer height={10} />
-          <div className="flex justify-between relative">
+          <div className="flex justify-between relative ">
             <div
               className="p-2 w-1/2 shadow-3xl overflow-y-scroll"
               style={{
@@ -337,7 +337,7 @@ export default function UncompletedPaper({
                             refetch();
                           }}
                           className="font-bold">
-                          Exit
+                          Close Paper
                         </button>
                       </div>
                     </Form>

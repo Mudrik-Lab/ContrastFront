@@ -40,7 +40,7 @@ export default function UploadNewPaper() {
     refetch();
   };
   return (
-    <div className="h-full">
+    <div className=" h-full">
       {isSuccess && (
         <PageTemplate
           control={
@@ -161,7 +161,7 @@ export default function UploadNewPaper() {
             <div
               className=" shadow-3xl mt-2 overflow-y-scroll h-full"
               style={{
-                height: `calc(100vh - ${uploadPaperUsedHeight + 10}px)`,
+                height: `calc(100vh - ${uploadPaperUsedHeight}px)`,
               }}>
               {addNewPaper ? (
                 <NewPaperForm

@@ -9,8 +9,6 @@ import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 import {
-  footerHeight,
-  navHeight,
   statusNumber,
   upladPaperPageTopSection,
   uploadPaperUsedHeight,
@@ -55,7 +53,7 @@ export default function PaperSection({
       : "Awaiting Review";
 
   return (
-    <div className="bg-white h-full">
+    <div className=" h-full">
       {
         // for case of watching paper (no edit)
         isSuccess &&
@@ -70,7 +68,7 @@ export default function PaperSection({
               <Spacer height={10} />
               <div className="flex justify-between ">
                 <div
-                  className="p-2 w-[49%] shadow-3xl overflow-y-scrol"
+                  className="p-2 w-1/2 shadow-3xl overflow-y-scrol"
                   style={{
                     height: `calc(100vh - ${
                       uploadPaperUsedHeight + upladPaperPageTopSection + 10

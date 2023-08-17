@@ -6,6 +6,7 @@ import {
   TooltipExplanation,
   TrashButton,
   CustomSelect,
+  CircledIndex,
 } from "../../../components/Reusble";
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
@@ -72,11 +73,7 @@ export default function Techniques({
           <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-4 items-center  border border-blue border-x-4 p-2 rounded-md">
-                <div id="index" className="w-4">
-                  <Text weight={"bold"} color={"blue"}>
-                    {index + 1}
-                  </Text>
-                </div>
+                <CircledIndex index={index} />
 
                 <div className="w-full">
                   <TooltipExplanation
@@ -97,8 +94,8 @@ export default function Techniques({
                     options={fieldOptions}
                   />
                 </div>
-
-                <div id="trash+submit" className="flex gap-2">
+                <div className="border-r-2 border-blue h-14"></div>
+                <div id="trash+submit">
                   <TrashButton
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}

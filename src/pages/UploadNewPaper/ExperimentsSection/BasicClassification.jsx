@@ -105,8 +105,8 @@ export default function BasicClassification({
   return (
     <ExpandingBox
       disabled={disabled}
-      headline={"Basic Classifications"}
-      number={experimentData?.id ? 1 : 0}>
+      noNumber
+      headline={"Basic Classifications"}>
       <Formik
         initialValues={initialValues}
         onSubmit={handleSubmit}

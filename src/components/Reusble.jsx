@@ -539,7 +539,13 @@ export const ToastErrorBox = ({ errors }) => {
   );
 };
 
-export const ExpandingBox = ({ children, headline, disabled, number }) => {
+export const ExpandingBox = ({
+  children,
+  headline,
+  disabled,
+  number,
+  noNumber,
+}) => {
   const [open, setOpen] = useState(false);
   return (
     <div
@@ -553,12 +559,14 @@ export const ExpandingBox = ({ children, headline, disabled, number }) => {
         onClick={!disabled ? () => setOpen(!open) : null}>
         {" "}
         <div className="font-bold flex w-full justify-between">{headline}</div>
-        <span
-          className={classNames(
-            `font-bold ${disabled ? "text-gray-600" : "text-blue"}`
-          )}>
-          ({number || 0})
-        </span>
+        {!noNumber && (
+          <span
+            className={classNames(
+              `font-bold ${disabled ? "text-gray-600" : "text-blue"}`
+            )}>
+            ({number || 0})
+          </span>
+        )}
         <svg
           width="24"
           height="25"
@@ -671,5 +679,18 @@ export const CustomSelect = ({ options, value, onChange, disabled }) => {
         );
       })}
     </select>
+  );
+};
+
+export const CircledIndex = ({ index }) => {
+  return (
+    <div className="w-6">
+      <div
+        id="index"
+        className="bg-blue rounded-full h-5 w-5 flex items-center justify-center">
+        {" "}
+        <span className="text-white font-bold text-xs">{index + 1}</span>
+      </div>
+    </div>
   );
 };

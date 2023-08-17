@@ -118,8 +118,9 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
+  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types;
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
-  console.log(experimentData);
+
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -226,6 +227,7 @@ export default function ExperimentForm({
                 techniquesOptions,
                 findingTagsFamilies,
                 findingTypes,
+                AALOptions,
               }}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -242,7 +244,7 @@ export default function ExperimentForm({
               setNewPaper(false);
               studyRefetch();
             }}>
-            Exit
+            Close Experiment
           </button>
         </div>
       )}

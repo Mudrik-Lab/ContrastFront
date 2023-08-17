@@ -304,7 +304,7 @@ export default function NewPaperForm({
                       }
                     }}
                     className="font-bold">
-                    Exit
+                    {addExperiments ? "Close Paper" : "Exit"}
                   </button>
                 </div>
               </Form>
