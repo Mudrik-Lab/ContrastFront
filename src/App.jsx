@@ -41,6 +41,10 @@ function App() {
         ) : (
           <QueryClientProvider client={client}>
             <ToastContainer
+              style={{
+                width: 450,
+                height: 200,
+              }}
               position="top-center"
               autoClose={5000}
               hideProgressBar={false}

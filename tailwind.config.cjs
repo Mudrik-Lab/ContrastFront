@@ -21,6 +21,7 @@ module.exports = {
         grayDisable:"#F2F2F2",
         yellow: "#D2CC7F",
         orange: "#D7A77F",
+        green:"#07BC0C",
         pink:"#DB7C82",
         lilac: "#BD7DB2",
         purple: "#9379BB",

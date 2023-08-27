@@ -1,15 +1,12 @@
-import { useNavigate } from "react-router-dom";
 import {
   Button,
   TooltipExplanation,
-  SideControl,
   Spacer,
   TopSideUserBox,
   Text,
 } from "../../components/Reusble";
 import PageTemplate from "../../components/PageTemplate";
-import { useSnapshot } from "valtio";
-import { state } from "../../state";
+
 import SideStatus from "../../components/SideStatus";
 import { useQuery } from "@tanstack/react-query";
 import { getMySubmittedStudies } from "../../apiHooks/getStudies";

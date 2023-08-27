@@ -8,6 +8,7 @@ import {
   deleteFieldFromExperiments,
   deletePropertyFromExperiment,
 } from "../apiHooks/deleteExperiment";
+import { confirmAlert } from "react-confirm-alert";
 
 export function blueToYellow(numColors) {
   const colors = [];
@@ -306,4 +307,53 @@ export function DeleteClassificationField(
       }
     }
   };
+}
+
+export function confirmFunction({
+  paperName,
+  clickDelete,
+  question,
+  confirmButton,
+}) {
+  confirmAlert({
+    customUI: ({ onClose }) => {
+      return (
+        <div className="fixed top-0 left-0 z-30 bg-[rgba(255,255,255,0.8)] bg-white h-screen w-screen">
+          <div
+            className="absolute top-10 opacity-100 bg-white w-[450px] p-4 rounded-lg shadow-lg border-b-8 border-blue"
+            style={{ left: "calc(50% - 225px)" }}>
+            <div className="px-2 flex gap-4 items-center">
+              <svg
+                width="20"
+                height="20"
+                viewBox="0 0 32 33"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg">
+                <path
+                  d="M32 16.5C32 20.7435 30.3143 24.8131 27.3137 27.8137C24.3131 30.8143 20.2435 32.5 16 32.5C11.7565 32.5 7.68687 30.8143 4.68629 27.8137C1.68571 24.8131 0 20.7435 0 16.5C0 12.2565 1.68571 8.18687 4.68629 5.18629C7.68687 2.18571 11.7565 0.5 16 0.5C20.2435 0.5 24.3131 2.18571 27.3137 5.18629C30.3143 8.18687 32 12.2565 32 16.5ZM10.992 12.566H12.642C12.918 12.566 13.138 12.34 13.174 12.066C13.354 10.754 14.254 9.798 15.858 9.798C17.23 9.798 18.486 10.484 18.486 12.134C18.486 13.404 17.738 13.988 16.556 14.876C15.21 15.854 14.144 16.996 14.22 18.85L14.226 19.284C14.2281 19.4152 14.2817 19.5403 14.3752 19.6324C14.4688 19.7244 14.5948 19.776 14.726 19.776H16.348C16.4806 19.776 16.6078 19.7233 16.7016 19.6296C16.7953 19.5358 16.848 19.4086 16.848 19.276V19.066C16.848 17.63 17.394 17.212 18.868 16.094C20.086 15.168 21.356 14.14 21.356 11.982C21.356 8.96 18.804 7.5 16.01 7.5C13.476 7.5 10.7 8.68 10.51 12.072C10.5073 12.1366 10.5178 12.2011 10.5409 12.2614C10.564 12.3218 10.5992 12.3768 10.6443 12.4231C10.6895 12.4694 10.7436 12.5059 10.8034 12.5305C10.8632 12.5551 10.9274 12.5671 10.992 12.566ZM15.642 25.452C16.862 25.452 17.7 24.664 17.7 23.598C17.7 22.494 16.86 21.718 15.642 21.718C14.474 21.718 13.624 22.494 13.624 23.598C13.624 24.664 14.472 25.452 15.642 25.452Z"
+                  fill="#66BFF1"
+                />
+              </svg>
+              <div>
+                <h1 className=" text-blue text-2xl mb-2">Are you sure ?</h1>
+                <p className="text-gray-600 text-lg">
+                  {question} {paperName}
+                </p>
+                <div className="mt-4 flex justify-start gap-2">
+                  <button
+                    onClick={() => clickDelete(onClose)}
+                    className="bg-blue text-white font-bold p-2 rounded-full">
+                    {confirmButton}
+                  </button>
+                  <button className="text-grayHeavy" onClick={onClose}>
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      );
+    },
+  });
 }

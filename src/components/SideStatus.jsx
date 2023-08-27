@@ -1,18 +1,11 @@
 import classNames from "classnames";
 import react, { useState } from "react";
 import { deleteExperiment } from "../apiHooks/deleteExperiment";
-import { showTextToRaw } from "../Utils/functions";
 import { toast } from "react-toastify";
-import { ToastBox, ToastErrorBox } from "./Reusble";
-import ConfirmModal from "./ConfirmModal";
+import { Button, ToastBox, ToastErrorBox } from "./Reusble";
 import { deleteStudy } from "../apiHooks/deleteStudy";
-import {
-  commonBlue,
-  flourishRed,
-  grayHeavy,
-  revoltingGreen,
-  statusNumber,
-} from "../Utils/HardCoded";
+import { commonBlue, grayHeavy, revoltingGreen } from "../Utils/HardCoded";
+import { confirmFunction } from "../Utils/functions";
 
 export default function SideStatus({
   number,
@@ -20,7 +13,6 @@ export default function SideStatus({
   disabled,
   papers,
   isExperiment,
-  completedStudy,
   setPaperToShow,
   setNewPaper,
   setShowEditble,
@@ -30,15 +22,18 @@ export default function SideStatus({
   setPaperToEdit,
 }) {
   const [open, setOpen] = useState(false);
+  const [confirmed, setConfirmed] = useState(false);
 
   const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
-    const confirmed = window.confirm(`Would you like to delete ${paper.title}`);
-    if (confirmed) {
+    async function clickDelete(onClose) {
       if (isExperiment) {
         try {
-          const res = await deleteExperiment({ experiment_pk, study_pk });
+          const res = await deleteExperiment({
+            experiment_pk,
+            study_pk,
+          });
           if (res.status === 204) {
             setPaperToShow();
             toast.success(
@@ -68,9 +63,16 @@ export default function SideStatus({
           toast.error(<ToastErrorBox errors={e?.response?.data} />);
         }
       }
+      onClose();
     }
-    // })
+    confirmFunction({
+      paperName: paper.title,
+      clickDelete,
+      question: "By clicking ‘confirm’ you will delete",
+      confirmButton: "Yes' Delete it!",
+    });
   };
+
   let color =
     status === "Complete"
       ? "revoltingGreen"

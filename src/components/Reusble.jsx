@@ -509,8 +509,8 @@ export const RadioFeedback = ({ label1, label2, name, headline, question }) => {
 
 export const ToastBox = ({ headline, text }) => {
   return (
-    <div className="h-40 w-full flex flex-col items-center justify-center">
-      <h1 className="text-3xl text-blue mx-auto">{headline}</h1>
+    <div className=" w-full h-40 flex flex-col items-center justify-center ">
+      <h1 className="text-2xl text-blue mx-auto">{headline}</h1>
       <Spacer height={10} />
       <p className="text-lg mx-auto">{text}</p>
     </div>
