@@ -524,11 +524,12 @@ export const ToastErrorBox = ({ errors }) => {
       <ul>
         {typeof errors === "object" ? (
           Object.entries(errors).map(([key, msg]) => (
-            <li className="text-flourishRed text-lg my-1 " key={key}>
-              {" "}
-              {rawTextToShow(key)}
-              {": "}
-              {Array.isArray(msg) ? msg[0] : msg}
+            <li key={key}>
+              <span className="text-flourishRed text-lg my-1 font-bold ">
+                {rawTextToShow(key)}
+                {": "}
+              </span>
+              <span> {Array.isArray(msg) ? msg[0] : msg}</span>
             </li>
           ))
         ) : (

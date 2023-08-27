@@ -5,4 +5,5 @@ export const state = proxy({
   path: "/",
   user: {},
   tempUsername: null,
+  serverError: false,
 });

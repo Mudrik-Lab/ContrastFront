@@ -14,7 +14,6 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
-import { v4 as uuid } from "uuid";
 
 export default function Findings({
   fieldOptions,
@@ -220,7 +219,7 @@ export default function Findings({
                         </div>
                       </div>
                     </div>
-                  ) : fieldValue.family == 2 ? (
+                  ) : fieldValue.family == 2 && fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
                     <div className="flex gap-2 w-full">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
@@ -249,26 +248,18 @@ export default function Findings({
                           </Text>
                         </div>
                         <div className="w-2/3">
-                          <input
+                          <CustomSelect
                             disabled={fieldValues[index].id}
-                            type="number"
-                            defaultValue={fieldValue.correlation_sign}
-                            onChange={(e) => {
-                              setFieldValues((prev) =>
-                                prev.map((item, i) =>
-                                  i === index
-                                    ? {
-                                        ...item,
-                                        correlation_sign: e.target.value,
-                                      }
-                                    : item
-                                )
-                              );
+                            value={fieldValue.correlation_sign}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].correlation_sign = value;
+                              setFieldValues(newArray);
                             }}
-                            className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
-                            } `}
+                            options={[
+                              { value: "positive", label: "Positive" },
+                              { value: "negative", label: "Negative" },
+                            ]}
                           />
                         </div>
                       </div>
@@ -330,6 +321,68 @@ export default function Findings({
                               "bg-grayDisable text-gray-400"
                             } `}
                           />
+                        </div>
+                      </div>
+
+                      <div className="flex gap-2 w-full items-center">
+                        <div className="w-1/3">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Onset
+                          </Text>
+                        </div>
+                        <div className="w-2/3 flex gap-1 items-center">
+                          <input
+                            disabled={fieldValues[index].id}
+                            type="number"
+                            name="onset"
+                            value={fieldValue.onset}
+                            onChange={(e) => {
+                              setFieldValues((prev) =>
+                                prev.map((item, i) =>
+                                  i === index
+                                    ? { ...item, onset: e.target.value }
+                                    : item
+                                )
+                              );
+                            }}
+                            className={`border w-full border-gray-300 rounded-md p-2 ${
+                              fieldValues[index].id &&
+                              "bg-grayDisable text-gray-400"
+                            } `}
+                          />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (ms)
+                          </Text>
+                        </div>
+                      </div>
+                      <div className="flex gap-2 w-full items-center">
+                        <div className="w-1/3">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Offset
+                          </Text>
+                        </div>
+                        <div className="w-2/3 flex gap-1 items-center">
+                          <input
+                            disabled={fieldValues[index].id}
+                            type="number"
+                            defaultValue={fieldValue.offset}
+                            onChange={(e) => {
+                              setFieldValues((prev) =>
+                                prev.map((item, i) =>
+                                  i === index
+                                    ? { ...item, offset: e.target.value }
+                                    : item
+                                )
+                              );
+                            }}
+                            className={`border w-full border-gray-300 rounded-md p-2 ${
+                              fieldValues[index].id &&
+                              "bg-grayDisable text-gray-400"
+                            } `}
+                          />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (ms)
+                          </Text>
                         </div>
                       </div>
                     </div>

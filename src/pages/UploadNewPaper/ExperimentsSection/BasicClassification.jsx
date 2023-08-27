@@ -35,7 +35,7 @@ export default function BasicClassification({
     type_of_consciousness: experimentData?.type_of_consciousness || "",
     experiment_type: experimentData?.type || "",
     report: experimentData?.is_reporting || "",
-    finding_description: experimentData?.finding_description || "",
+
     theory_driven: experimentData?.theory_driven || "",
   };
 
@@ -45,9 +45,7 @@ export default function BasicClassification({
     ),
     experiment_type: Yup.string().required("Please select an experiment type"),
     report: Yup.string().required("Please select : 'Report'/'No Report'"),
-    finding_description: Yup.string().required(
-      "Please add finding descriptions"
-    ),
+
     theory_driven: Yup.string().required("Please select type of theory driven"),
   });
 
@@ -55,7 +53,7 @@ export default function BasicClassification({
     try {
       const res = await createExperiments({
         type_of_consciousness: values.type_of_consciousness,
-        finding_description: values.finding_description,
+
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
@@ -81,7 +79,7 @@ export default function BasicClassification({
     try {
       const res = await editExperiments({
         type_of_consciousness: values.type_of_consciousness,
-        finding_description: values.finding_description,
+
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
@@ -215,25 +213,6 @@ export default function BasicClassification({
                     text={""}
                     tooltip={
                       "Indicate if this study was theory driven? Theory-driven experiments should explicitly examine a hypothesis of at least one of the theories in their introduction. Experiments that mention the theories in the introduction without referring to a specific hypothesis tested in the experiment should be classified as “mentioning”. Experiments that only post-hoc interpreted the results according to one or more of the theories in the discussion should be classified as “post hoc”."
-                    }
-                  />
-                </div>
-              </div>
-              <div>
-                <Text weight={"bold"} color={"grayReg"}>
-                  Finding description
-                </Text>
-                <div className="flex items-center gap-2">
-                  <Field
-                    id="finding_description"
-                    name="finding_description"
-                    as="textarea"
-                    rows={4}
-                    className="border border-gray-300 w-full rounded-[4px] p-2 "
-                  />
-                  <TooltipExplanation
-                    tooltip={
-                      "You can add here any additional comments you have, including dilemmas you had while classifying the paper"
                     }
                   />
                 </div>
