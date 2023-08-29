@@ -212,17 +212,6 @@ export default function SideStatus({
               }
             </div>
           ))}
-
-          {isExperiment && showEditble && (
-            <span
-              className="font-bold text-xs cursor-pointer"
-              onClick={() => {
-                setNewPaper(true);
-                setAddNewExperiment(true);
-              }}>
-              + Add new experiment
-            </span>
-          )}
         </div>
       )}
     </div>

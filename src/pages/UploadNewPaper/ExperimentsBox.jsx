@@ -1,6 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import SideStatus from "../../components/SideStatus";
+import { Spacer } from "../../components/Reusble";
 
 export default function ExperimentsBox({
   disabled,
@@ -36,6 +37,17 @@ export default function ExperimentsBox({
           setAddNewExperiment={setAddNewExperiment}
         />
       </div>
+      <Spacer height={10} />
+      {showEditble && (
+        <span
+          className="ml-1 font-bold text-base cursor-pointer text-revoltingGreen"
+          onClick={() => {
+            setNewPaper(true);
+            setAddNewExperiment(true);
+          }}>
+          + Add new experiment
+        </span>
+      )}
     </div>
   );
 }
