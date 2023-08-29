@@ -51,7 +51,7 @@ export default function Login() {
                 <div className="flex flex-col items-center gap-5 px-4">
                   <div className="flex flex-col items-center">
                     <Field
-                      placeHolder="User Name"
+                      placeholder="User Name"
                       id="name"
                       name="name"
                       className={fieldClass}
@@ -70,7 +70,7 @@ export default function Login() {
                   <div className="flex flex-col items-center">
                     <Field
                       type="password"
-                      placeHolder="Password"
+                      placeholder="Password"
                       id="password"
                       name="password"
                       className={fieldClass}

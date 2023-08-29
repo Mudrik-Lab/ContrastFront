@@ -1,7 +1,6 @@
 import { queryApi } from "../Utils/api";
 
 export async function createExperiments({
-  finding_description,
   is_reporting,
   type_of_consciousness,
   theory_driven,
@@ -9,7 +8,6 @@ export async function createExperiments({
   study_pk,
 }) {
   const requestData = {
-    finding_description,
     is_reporting,
     type_of_consciousness,
     theory_driven,
@@ -24,7 +22,6 @@ export async function createExperiments({
 }
 
 export async function editExperiments({
-  finding_description,
   is_reporting,
   type_of_consciousness,
   theory_driven,
@@ -33,7 +30,6 @@ export async function editExperiments({
   id,
 }) {
   const requestData = {
-    finding_description,
     is_reporting,
     type_of_consciousness,
     theory_driven,
@@ -74,31 +70,3 @@ export async function addFieldToexperiment({
     data: field,
   });
 }
-
-// export async function createExperimentsssss({ measures }) {
-//   const requestData = {
-//     consciousness_measures,
-//     finding_description,
-//     interpretations,
-//     is_reporting,
-//     measures,
-//     notes,
-//     paradigms,
-//     samples,
-//     stimuli,
-//     tasks,
-//     techniques,
-//     theory_driven,
-//     theory_driven_theories,
-//     finding_tags,
-//     type,
-//     study_pk,
-//   };
-
-//   return await queryApi({
-//     url: `studies/submitted_studies/${study_pk}/experiments`,
-//     method: "POST",
-//     isProtected: true,
-//     data: requestData,
-//   });
-// }

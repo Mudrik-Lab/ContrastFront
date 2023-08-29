@@ -1,13 +1,15 @@
 import React from "react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
-import { isMoblile } from "../Utils/HardCoded";
+import { footerHeight, isMoblile, navHeight } from "../Utils/HardCoded";
 
 export default function PageTemplate({ graph, control }) {
   const containerStyle = {
     display: "grid",
     gridTemplateColumns: isMoblile ? "1fr" : "370px 1fr",
-    gridTemplateRows: isMoblile ? "160px 400px 1fr 100px" : "70px 1fr 81px",
+    gridTemplateRows: isMoblile
+      ? "160px 400px 1fr 100px"
+      : `${navHeight}px 1fr ${footerHeight}px`,
     gridTemplateAreas: isMoblile
       ? `
     "navbar "
@@ -30,7 +32,6 @@ export default function PageTemplate({ graph, control }) {
 
   const sidebarStyle = {
     gridArea: "sidebar",
-    // overflow: isMoblile ? "scroll" : "auto",
   };
 
   const mainStyle = {

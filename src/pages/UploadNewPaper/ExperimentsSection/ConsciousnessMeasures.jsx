@@ -6,6 +6,7 @@ import {
   TooltipExplanation,
   TrashButton,
   CustomSelect,
+  CircledIndex,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -76,14 +77,10 @@ export default function ConsciousnessMeasures({
         return (
           <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
-                <div id="index" className="w-4">
-                  <Text weight={"bold"} color={"blue"}>
-                    {index + 1}
-                  </Text>
-                </div>
-                <div className="flex gap-2 items-start">
-                  <div className="flex flex-col gap-2 ">
+              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                <CircledIndex index={index} />
+                <div className="flex gap-2 items-start w-full">
+                  <div className="flex flex-col gap-2 w-full">
                     <div className="flex gap-2">
                       <div className="w-full">
                         <TooltipExplanation
@@ -153,7 +150,8 @@ export default function ConsciousnessMeasures({
                     </div>
                   </div>
                 </div>
-                <div id="trash+submit" className="flex gap-2">
+                <div className="border-r-2 border-blue h-24"></div>
+                <div id="trash+submit">
                   <TrashButton
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}

@@ -23,6 +23,7 @@ import { submitStudy } from "../../apiHooks/getStudies";
 import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
+import { confirmFunction } from "../../Utils/functions";
 
 export default function NewPaperForm({
   setAddNewPaper,
@@ -93,7 +94,10 @@ export default function NewPaperForm({
           setStudy(res.data);
           refetch();
           toast.success(
-            <ToastBox headline={"You can now add the experiments details "} />
+            <ToastBox
+              headline={"Success"}
+              text={"You can now add the experiments details "}
+            />
           );
         }
       } catch (e) {
@@ -294,9 +298,7 @@ export default function NewPaperForm({
                     onClick={() => {
                       const confirmed = addExperiments
                         ? null
-                        : window.confirm(
-                            `The data you entered is not saved yet. Are you sure you want to exit? `
-                          );
+                        : confirmFunction(paperNmae);
 
                       if (confirmed || addExperiments) {
                         setAddNewPaper(false);
@@ -304,7 +306,7 @@ export default function NewPaperForm({
                       }
                     }}
                     className="font-bold">
-                    Exit
+                    {addExperiments ? "Close Paper" : "Exit"}
                   </button>
                 </div>
               </Form>

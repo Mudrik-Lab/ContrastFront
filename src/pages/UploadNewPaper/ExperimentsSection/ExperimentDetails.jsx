@@ -419,7 +419,7 @@ export default function ExperimentDetails({
               setPaperToShow(false);
               // !isEditMode && setAddNewExperiment(false);
             }}>
-            Exit
+            Close Experiment
           </button>
         </div>
       )}

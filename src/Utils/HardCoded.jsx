@@ -152,7 +152,7 @@ export const available_populations = [
     label: "Computer",
   },
 ];
-export const commonBlue = "#66BFF1";
+export const commonBlue = "#159DEA";
 export const grayReg = "#999999";
 export const azure = "#C2E1F2";
 export const flourishRed = "#ED5252";

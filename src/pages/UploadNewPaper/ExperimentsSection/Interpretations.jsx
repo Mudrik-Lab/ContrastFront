@@ -5,6 +5,7 @@ import {
   Text,
   TrashButton,
   CustomSelect,
+  CircledIndex,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 
@@ -71,13 +72,8 @@ export default function Interpretations({
         return (
           <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
-                <div id="index" className="w-4">
-                  <Text weight={"bold"} color={"blue"}>
-                    {index + 1}
-                  </Text>
-                </div>
-
+              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                <CircledIndex index={index} />
                 <div className="w-full flex gap-2 items-start">
                   <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
@@ -110,7 +106,6 @@ export default function Interpretations({
                     />
                   </div>
                 </div>
-
                 <div id="trash+submit" className=" flex gap-2">
                   <SubmitButton
                     submit={() => {

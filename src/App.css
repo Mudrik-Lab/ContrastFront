@@ -1,24 +1,23 @@
-@import url('https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=PT+Sans:ital,wght@0,400;0,700;1,400&display=swap");
 
-body{
-  font-family: 'PT Sans', sans-serif !important;
-  
+body {
+  font-family: "PT Sans", sans-serif !important;
+
 }
 
 ::-webkit-scrollbar {
-    height: 6px;    
-    width: 6px;        
-   
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background-color: #66BFF1;
-  }
+  height: 6px;
+  width: 6px;
+}
 
-  ::-webkit-scrollbar-track {
-    background-color: #f1f1f1;
-  }
-  
-  input[type="radio"]:checked {
-    background-color: #66BFF1;
-  } 
+::-webkit-scrollbar-thumb {
+  background-color: #159dea;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #f1f1f1;
+}
+
+input[type="radio"]:checked {
+  background-color: #159dea;
+}

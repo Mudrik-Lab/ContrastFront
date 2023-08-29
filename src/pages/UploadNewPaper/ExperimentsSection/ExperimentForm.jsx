@@ -75,7 +75,7 @@ export default function ExperimentForm({
       value: modality.id,
       label: modality.name,
     })); // name, id
-  const techniquesOptions = extraConfig?.data.available_techniques.map(
+  let techniquesOptions = extraConfig?.data.available_techniques.map(
     (tech) => ({
       value: tech.id,
       label: tech.name,
@@ -118,8 +118,11 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
+  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types;
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
-  console.log(experimentTypeOptions);
+
+  console.log(experimentData);
+
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -162,13 +165,7 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.paradigms}
             />
-            <Interpretations
-              fieldOptions={theories}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={experimentData?.interpretations}
-            />
+
             <Samples
               fieldOptions={populations}
               experiment_pk={experimentID}
@@ -223,14 +220,26 @@ export default function ExperimentForm({
 
             <Findings
               fieldOptions={{
-                techniquesOptions,
+                techniquesOptions:
+                  experimentData?.techniques.map((tech) => ({
+                    value: tech.id,
+                    label: tech.name,
+                  })) || techniquesOptions,
                 findingTagsFamilies,
                 findingTypes,
+                AALOptions,
               }}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.finding_tags}
+            />
+            <Interpretations
+              fieldOptions={theories}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.interpretations}
             />
           </div>
 
@@ -242,7 +251,7 @@ export default function ExperimentForm({
               setNewPaper(false);
               studyRefetch();
             }}>
-            Exit
+            Close Experiment
           </button>
         </div>
       )}
