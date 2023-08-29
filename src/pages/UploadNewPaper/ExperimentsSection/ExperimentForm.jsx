@@ -119,10 +119,13 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
-  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types;
+  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
+    (type) => ({
+      value: type,
+      label: type,
+    })
+  );
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
-
-  console.log(experimentData);
 
   return (
     <>

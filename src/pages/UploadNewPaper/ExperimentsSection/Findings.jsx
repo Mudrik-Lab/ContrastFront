@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
+  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
 
@@ -110,7 +111,9 @@ export default function Findings({
                           newArray[index].technique = value;
                           setFieldValues(newArray);
                         }}
-                        options={fieldOptions.techniquesOptions}
+                        options={alphabetizeByLabels(
+                          fieldOptions.techniquesOptions
+                        )}
                       />
                     </div>
                   </div>
@@ -150,7 +153,7 @@ export default function Findings({
                           newArray[index].type = value;
                           setFieldValues(newArray);
                         }}
-                        options={fieldOptions.findingTypes}
+                        options={alphabetizeByLabels(fieldOptions.findingTypes)}
                       />
                     </div>
                   </div>
@@ -235,7 +238,7 @@ export default function Findings({
                             newArray[index].AAL_atlas_tag = value;
                             setFieldValues(newArray);
                           }}
-                          options={fieldOptions.findingTypes}
+                          options={alphabetizeByLabels(fieldOptions.AALOptions)}
                         />
                       </div>
                     </div>
