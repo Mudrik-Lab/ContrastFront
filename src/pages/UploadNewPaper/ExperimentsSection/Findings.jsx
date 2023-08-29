@@ -323,7 +323,36 @@ export default function Findings({
                           />
                         </div>
                       </div>
-
+                      <div className="flex gap-2 w-full">
+                        <div className="w-1/3">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Analysis Type
+                          </Text>
+                        </div>
+                        <div className="w-2/3">
+                          <input
+                            disabled={fieldValues[index].id}
+                            type="text"
+                            defaultValue={fieldValue.analysis_type}
+                            onChange={(e) => {
+                              setFieldValues((prev) =>
+                                prev.map((item, i) =>
+                                  i === index
+                                    ? {
+                                        ...item,
+                                        analysis_type: e.target.value,
+                                      }
+                                    : item
+                                )
+                              );
+                            }}
+                            className={`border w-full border-gray-300 rounded-md p-2 ${
+                              fieldValues[index].id &&
+                              "bg-grayDisable text-gray-400"
+                            } `}
+                          />
+                        </div>
+                      </div>
                       <div className="flex gap-2 w-full items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>

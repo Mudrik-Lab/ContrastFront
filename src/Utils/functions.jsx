@@ -357,3 +357,15 @@ export function confirmFunction({
     },
   });
 }
+export function alphabetizeByLabels(selectFieldOptions) {
+  const sortedOptionListByLabels = selectFieldOptions.sort((a, b) => {
+    if (a.label < b.label) {
+      return -1;
+    }
+    if (a.label > b.label) {
+      return 1;
+    }
+    return 0;
+  });
+  return sortedOptionListByLabels;
+}

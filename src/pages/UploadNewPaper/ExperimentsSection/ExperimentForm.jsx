@@ -20,6 +20,7 @@ import {
   upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
+import ResultsSummery from "./ResultsSummery";
 
 export default function ExperimentForm({
   study,
@@ -235,6 +236,13 @@ export default function ExperimentForm({
               values={experimentData?.finding_tags}
             />
             <Interpretations
+              fieldOptions={theories}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.interpretations}
+            />
+            <ResultsSummery
               fieldOptions={theories}
               experiment_pk={experimentID}
               study_pk={study.id}

@@ -16,7 +16,7 @@ import {
 } from "../../../Utils/functions";
 import { interpretationTypes } from "../../../Utils/HardCoded";
 
-export default function Interpretations({
+export default function ResultsSummery({
   fieldOptions,
   disabled,
   experiment_pk,
@@ -31,7 +31,7 @@ export default function Interpretations({
       };
     })
   );
-  const classificationName = "interpretations";
+  const classificationName = "Results Summery";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
@@ -65,7 +65,7 @@ export default function Interpretations({
 
   return (
     <ExpandingBox
-      number={fieldOptions.length}
+      number={4}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {

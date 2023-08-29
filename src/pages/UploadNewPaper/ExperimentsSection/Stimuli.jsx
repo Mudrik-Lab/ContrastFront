@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
+  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
 
@@ -120,7 +121,7 @@ export default function Stimuli({
                             newArray[index].sub_category = value;
                             setFieldValues(newArray);
                           }}
-                          options={subCategories}
+                          options={alphabetizeByLabels(subCategories)}
                         />
                       </div>
                       <div className="w-full">

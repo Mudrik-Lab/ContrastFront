@@ -12,6 +12,7 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
+  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
 
@@ -91,7 +92,7 @@ export default function Tasks({
                         newArray[index].type = value;
                         setFieldValues(newArray);
                       }}
-                      options={fieldOptions}
+                      options={alphabetizeByLabels(fieldOptions)}
                     />
                   </div>
 
