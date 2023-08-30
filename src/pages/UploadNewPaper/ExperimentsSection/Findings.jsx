@@ -15,6 +15,7 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
+import Toggle from "../../../components/Toggle";
 
 export default function Findings({
   fieldOptions,
@@ -28,6 +29,7 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
+      correlation_sign: true,
     },
   ]);
   const classificationName = "finding_tags";
@@ -250,20 +252,24 @@ export default function Findings({
                             Correlation sign
                           </Text>
                         </div>
-                        <div className="w-2/3">
-                          <CustomSelect
-                            disabled={fieldValues[index].id}
-                            value={fieldValue.correlation_sign}
-                            onChange={(value) => {
-                              const newArray = [...fieldValues];
-                              newArray[index].correlation_sign = value;
-                              setFieldValues(newArray);
-                            }}
-                            options={[
-                              { value: "positive", label: "Positive" },
-                              { value: "negative", label: "Negative" },
-                            ]}
-                          />
+                        <div className="w-2/3 flex justify-center">
+                          <Text>Positive</Text>
+                          <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                            <input
+                              aria-label="toggle input"
+                              type="checkbox"
+                              value={fieldValues[index].correlation_sign}
+                              className="sr-only peer"
+                              onChange={(e) => {
+                                const newArray = [...fieldValues];
+                                newArray[index].correlation_sign =
+                                  !e.target.value;
+                                setFieldValues(newArray);
+                              }}
+                            />
+                            <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue"></div>
+                          </label>
+                          <Text>Negative</Text>
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
