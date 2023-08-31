@@ -224,8 +224,9 @@ export default function Navbar() {
                   <Tooltip
                     placement="left"
                     content={
-                      !snap.auth &&
-                      "Registration is needed before uploading study"
+                      !snap.auth
+                        ? "Registration is needed before uploading study"
+                        : "Add your paper to site's data"
                     }>
                     <a
                       href="/upload-new-paper"
