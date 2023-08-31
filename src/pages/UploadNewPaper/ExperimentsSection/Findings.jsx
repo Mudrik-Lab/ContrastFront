@@ -16,6 +16,7 @@ import {
   rawTextToShow,
 } from "../../../Utils/functions";
 import Toggle from "../../../components/Toggle";
+import classNames from "classnames";
 
 export default function Findings({
   fieldOptions,
@@ -171,7 +172,7 @@ export default function Findings({
                         Is NCC
                       </Text>
                     </div>
-                    <div className="w-2/3 flex justify-center">
+                    <div className="w-2/3 flex justify-between">
                       <Text>False</Text>
                       <label className="relative inline-flex items-center mx-2 cursor-pointer">
                         <input
@@ -186,7 +187,12 @@ export default function Findings({
                             setFieldValues(newArray);
                           }}
                         />
-                        <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue disabled:bg-grayReg"></div>
+                        <div
+                          className={classNames(
+                            ` ${
+                              fieldValues[index].id ? "bg-grayReg" : "bg-blue"
+                            } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                          )}></div>
                       </label>
                       <Text>True</Text>
                     </div>
@@ -284,7 +290,7 @@ export default function Findings({
                             Direction
                           </Text>
                         </div>
-                        <div className="w-2/3 flex justify-center">
+                        <div className="w-2/3 flex justify-between">
                           <Text>Negative</Text>
                           <label className="relative inline-flex items-center mx-2 cursor-pointer">
                             <input
@@ -299,7 +305,14 @@ export default function Findings({
                                 setFieldValues(newArray);
                               }}
                             />
-                            <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue disabled:bg-grayReg"></div>
+                            <div
+                              className={classNames(
+                                ` ${
+                                  fieldValues[index].id
+                                    ? "bg-grayReg"
+                                    : "bg-blue"
+                                } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                              )}></div>
                           </label>
                           <Text>Positive</Text>
                         </div>

@@ -195,12 +195,15 @@ export function SubmitClassificationField(
           toast.success(
             <ToastBox
               headline={"Success"}
-              text={`Added ${classificationName.slice(0, -1)} classification`}
+              text={`Added ${rawTextToShow(
+                classificationName.slice(0, -1)
+              )} classification`}
             />
           );
           const newArr = [...fieldValues];
           newArr[index] = res.data;
           setFieldValues(newArr);
+          return true;
         }
       } catch (e) {
         toast.error(<ToastErrorBox errors={e.response.data} />);
@@ -223,6 +226,7 @@ export function SubmitClassificationField(
           const newArr = [...fieldValues];
           newArr[index].id = res.data.id;
           setFieldValues(newArr);
+          return true;
         }
       } catch (e) {
         const errors = Object.values(e.response.data);
