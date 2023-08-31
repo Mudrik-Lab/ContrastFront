@@ -192,7 +192,7 @@ export default function ExperimentDetails({
                     </div>
                     <div className="flex flex-col ">
                       <Text weight={"bold"} color={"grayReg"}>
-                        Toatal
+                        Total
                       </Text>
                       <Text>{sample.total_size}</Text>
                     </div>
