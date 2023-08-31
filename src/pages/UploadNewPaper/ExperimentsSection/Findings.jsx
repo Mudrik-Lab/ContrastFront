@@ -29,7 +29,8 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
-      correlation_sign: true,
+      isNNC: true,
+      direction: true,
     },
   ]);
   const classificationName = "finding_tags";
@@ -60,7 +61,7 @@ export default function Findings({
             technique: row.technique,
             onset: row.onset,
             offset: row.offset,
-            correlation_sign: row.correlation_sign,
+            direction: row.direction ? "positive" : "negative",
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -93,11 +94,11 @@ export default function Findings({
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>
-            <form className="flex flex-col gap-2">
+            <form className="flex flex-col gap-2 w-full">
               <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full">
                   <div className="w-full gap-2 flex">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
@@ -131,6 +132,7 @@ export default function Findings({
                         disabled={fieldValue?.id}
                         value={fieldValue.family}
                         onChange={(value) => {
+                          console.log(value);
                           const newArray = [...fieldValues];
                           newArray[index].family = value;
                           setFieldValues(newArray);
@@ -155,8 +157,38 @@ export default function Findings({
                           newArray[index].type = value;
                           setFieldValues(newArray);
                         }}
-                        options={alphabetizeByLabels(fieldOptions.findingTypes)}
+                        // options={alphabetizeByLabels(fieldOptions.findingTypes)}
+                        options={fieldOptions.findingTypes.filter(
+                          (type) => type.family == fieldValues[index]?.family
+                        )}
                       />
+                    </div>
+                  </div>
+
+                  <div className="w-full gap-2 flex">
+                    <div className="w-1/3">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Is NCC
+                      </Text>
+                    </div>
+                    <div className="w-2/3 flex justify-center">
+                      <Text>False</Text>
+                      <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                        <input
+                          aria-label="toggle input"
+                          type="checkbox"
+                          disabled={fieldValues[index].id}
+                          value={fieldValues[index].isNNC}
+                          className="sr-only peer"
+                          onChange={(e) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].isNNC = !e.target.value;
+                            setFieldValues(newArray);
+                          }}
+                        />
+                        <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue disabled:bg-grayReg"></div>
+                      </label>
+                      <Text>True</Text>
                     </div>
                   </div>
 
@@ -249,27 +281,27 @@ export default function Findings({
                       <div className="flex gap-2 w-full">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
-                            Correlation sign
+                            Direction
                           </Text>
                         </div>
                         <div className="w-2/3 flex justify-center">
-                          <Text>Positive</Text>
+                          <Text>Negative</Text>
                           <label className="relative inline-flex items-center mx-2 cursor-pointer">
                             <input
                               aria-label="toggle input"
                               type="checkbox"
-                              value={fieldValues[index].correlation_sign}
+                              disabled={fieldValues[index].id}
+                              value={fieldValues[index].direction}
                               className="sr-only peer"
                               onChange={(e) => {
                                 const newArray = [...fieldValues];
-                                newArray[index].correlation_sign =
-                                  !e.target.value;
+                                newArray[index].direction = !e.target.value;
                                 setFieldValues(newArray);
                               }}
                             />
-                            <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue"></div>
+                            <div className="w-11 h-6 bg-blue rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue disabled:bg-grayReg"></div>
                           </label>
-                          <Text>Negative</Text>
+                          <Text>Positive</Text>
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -339,26 +371,17 @@ export default function Findings({
                           </Text>
                         </div>
                         <div className="w-2/3">
-                          <input
+                          <CustomSelect
                             disabled={fieldValues[index].id}
-                            type="text"
-                            defaultValue={fieldValue.analysis_type}
-                            onChange={(e) => {
-                              setFieldValues((prev) =>
-                                prev.map((item, i) =>
-                                  i === index
-                                    ? {
-                                        ...item,
-                                        analysis_type: e.target.value,
-                                      }
-                                    : item
-                                )
-                              );
+                            value={fieldValue.analysis_type}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].analysis_type = value;
+                              setFieldValues(newArray);
                             }}
-                            className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
-                            } `}
+                            options={alphabetizeByLabels(
+                              fieldOptions.analysisTypeOptions
+                            )}
                           />
                         </div>
                       </div>
