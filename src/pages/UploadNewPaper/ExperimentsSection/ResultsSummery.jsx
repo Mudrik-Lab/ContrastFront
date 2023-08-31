@@ -4,7 +4,6 @@ import {
   SubmitButton,
   Text,
   TrashButton,
-  CustomSelect,
   CircledIndex,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
@@ -14,23 +13,14 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
-import { interpretationTypes } from "../../../Utils/HardCoded";
 
 export default function ResultsSummery({
-  fieldOptions,
   disabled,
   experiment_pk,
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState(
-    fieldOptions.map((filedOption) => {
-      return {
-        theory: filedOption.value,
-        type: "",
-      };
-    })
-  );
+  const [fieldValues, setFieldValues] = useState([{ notes: "" }]);
   const classificationName = "Results Summery";
 
   const handleSubmit = SubmitClassificationField(
@@ -54,18 +44,15 @@ export default function ResultsSummery({
       setFieldValues(
         values.map((row) => {
           return {
-            theory: row.theory.id,
-            type: row.type,
-            id: row.id,
+            notes: row.notes,
           };
         })
       );
     }
   }, []);
-
   return (
     <ExpandingBox
-      number={4}
+      number={fieldValues.length}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -77,41 +64,40 @@ export default function ResultsSummery({
                 <div className="w-full flex gap-2 items-start">
                   <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
-                      Theory
+                      Notes
                     </Text>
-                    <input
-                      readOnly
-                      className="p-2 text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
-                      value={
-                        fieldOptions.find(
-                          (option) => option.value === fieldValue.theory
-                        ).label
-                      }
-                    />
-                  </div>
-
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
-                    </Text>
-
-                    <CustomSelect
-                      value={fieldValue.type}
-                      onChange={(value) => {
-                        const newArray = [...fieldValues];
-                        newArray[index].type = value;
-                        setFieldValues(newArray);
+                    <textarea
+                      disabled={fieldValues[index].id}
+                      type="textarea"
+                      defaultValue={fieldValue.notes}
+                      rows={4}
+                      onChange={(e) => {
+                        setFieldValues((prev) =>
+                          prev.map((item, i) =>
+                            i === index
+                              ? { ...item, notes: e.target.value }
+                              : item
+                          )
+                        );
                       }}
-                      options={interpretationTypes}
+                      className={`border w-full border-gray-300 rounded-md p-2 ${
+                        fieldValues[index].id && "bg-grayDisable text-gray-400"
+                      } `}
                     />
                   </div>
                 </div>
+
                 <div id="trash+submit" className=" flex gap-2">
+                  <TrashButton
+                    handleDelete={handleDelete}
+                    fieldValues={fieldValues}
+                    index={index}
+                  />
                   <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
-                    disabled={!(fieldValue?.theory && fieldValue?.type)}
+                    disabled={!(fieldValue?.notes !== "")}
                   />
                 </div>
               </div>
@@ -119,6 +105,10 @@ export default function ResultsSummery({
           </div>
         );
       })}
+      <AddFieldButton
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }
