@@ -12,8 +12,11 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
+  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
+import Toggle from "../../../components/Toggle";
+import classNames from "classnames";
 
 export default function Findings({
   fieldOptions,
@@ -27,6 +30,8 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
+      isNNC: true,
+      direction: true,
     },
   ]);
   const classificationName = "finding_tags";
@@ -57,7 +62,7 @@ export default function Findings({
             technique: row.technique,
             onset: row.onset,
             offset: row.offset,
-            correlation_sign: row.correlation_sign,
+            direction: row.direction ? "positive" : "negative",
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -90,11 +95,11 @@ export default function Findings({
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>
-            <form className="flex flex-col gap-2">
+            <form className="flex flex-col gap-2 w-full">
               <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
 
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full">
                   <div className="w-full gap-2 flex">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
@@ -110,7 +115,9 @@ export default function Findings({
                           newArray[index].technique = value;
                           setFieldValues(newArray);
                         }}
-                        options={fieldOptions.techniquesOptions}
+                        options={alphabetizeByLabels(
+                          fieldOptions.techniquesOptions
+                        )}
                       />
                     </div>
                   </div>
@@ -126,6 +133,7 @@ export default function Findings({
                         disabled={fieldValue?.id}
                         value={fieldValue.family}
                         onChange={(value) => {
+                          console.log(value);
                           const newArray = [...fieldValues];
                           newArray[index].family = value;
                           setFieldValues(newArray);
@@ -150,8 +158,43 @@ export default function Findings({
                           newArray[index].type = value;
                           setFieldValues(newArray);
                         }}
-                        options={fieldOptions.findingTypes}
+                        // options={alphabetizeByLabels(fieldOptions.findingTypes)}
+                        options={fieldOptions.findingTypes.filter(
+                          (type) => type.family == fieldValues[index]?.family
+                        )}
                       />
+                    </div>
+                  </div>
+
+                  <div className="w-full gap-2 flex">
+                    <div className="w-1/3">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Is NCC
+                      </Text>
+                    </div>
+                    <div className="w-2/3 flex justify-between">
+                      <Text>False</Text>
+                      <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                        <input
+                          aria-label="toggle input"
+                          type="checkbox"
+                          disabled={fieldValues[index].id}
+                          value={fieldValues[index].isNNC}
+                          className="sr-only peer"
+                          onChange={(e) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].isNNC = !e.target.value;
+                            setFieldValues(newArray);
+                          }}
+                        />
+                        <div
+                          className={classNames(
+                            ` ${
+                              fieldValues[index].id ? "bg-grayReg" : "bg-blue"
+                            } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                          )}></div>
+                      </label>
+                      <Text>True</Text>
                     </div>
                   </div>
 
@@ -235,7 +278,7 @@ export default function Findings({
                             newArray[index].AAL_atlas_tag = value;
                             setFieldValues(newArray);
                           }}
-                          options={fieldOptions.findingTypes}
+                          options={alphabetizeByLabels(fieldOptions.AALOptions)}
                         />
                       </div>
                     </div>
@@ -244,23 +287,34 @@ export default function Findings({
                       <div className="flex gap-2 w-full">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
-                            Correlation sign
+                            Direction
                           </Text>
                         </div>
-                        <div className="w-2/3">
-                          <CustomSelect
-                            disabled={fieldValues[index].id}
-                            value={fieldValue.correlation_sign}
-                            onChange={(value) => {
-                              const newArray = [...fieldValues];
-                              newArray[index].correlation_sign = value;
-                              setFieldValues(newArray);
-                            }}
-                            options={[
-                              { value: "positive", label: "Positive" },
-                              { value: "negative", label: "Negative" },
-                            ]}
-                          />
+                        <div className="w-2/3 flex justify-between">
+                          <Text>Negative</Text>
+                          <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                            <input
+                              aria-label="toggle input"
+                              type="checkbox"
+                              disabled={fieldValues[index].id}
+                              value={fieldValues[index].direction}
+                              className="sr-only peer"
+                              onChange={(e) => {
+                                const newArray = [...fieldValues];
+                                newArray[index].direction = !e.target.value;
+                                setFieldValues(newArray);
+                              }}
+                            />
+                            <div
+                              className={classNames(
+                                ` ${
+                                  fieldValues[index].id
+                                    ? "bg-grayReg"
+                                    : "bg-blue"
+                                } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                              )}></div>
+                          </label>
+                          <Text>Positive</Text>
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -323,7 +377,27 @@ export default function Findings({
                           />
                         </div>
                       </div>
-
+                      <div className="flex gap-2 w-full">
+                        <div className="w-1/3">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Analysis Type
+                          </Text>
+                        </div>
+                        <div className="w-2/3">
+                          <CustomSelect
+                            disabled={fieldValues[index].id}
+                            value={fieldValue.analysis_type}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].analysis_type = value;
+                              setFieldValues(newArray);
+                            }}
+                            options={alphabetizeByLabels(
+                              fieldOptions.analysisTypeOptions
+                            )}
+                          />
+                        </div>
+                      </div>
                       <div className="flex gap-2 w-full items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>

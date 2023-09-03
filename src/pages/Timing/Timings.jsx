@@ -173,6 +173,7 @@ export default function Timings() {
         selectedTagValues.map((item) => ({ value: item, label: item }))
       );
     }
+    navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
   useEffect(() => {
@@ -181,16 +182,18 @@ export default function Timings() {
     const tagsOnURL = queryParams.getAll("tags_types");
 
     if (configSuccess) {
-      techniquesOnURL.length === 0
-        ? buildUrlForMultiSelect(
-            techniques,
-            "techniques",
-            searchParams,
-            navigate
-          )
-        : setSelectedTechniques(
-            techniquesOnURL.map((x) => ({ value: x, label: x }))
-          );
+      if (techniquesOnURL.length === 0) {
+        buildUrlForMultiSelect(
+          techniques,
+          "techniques",
+          searchParams,
+          navigate
+        );
+      } else {
+        setSelectedTechniques(
+          techniquesOnURL.map((x) => ({ value: x, label: x }))
+        );
+      }
       tagsOnURL.length === 0
         ? buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate)
         : setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));

@@ -20,6 +20,7 @@ import {
   upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
+import ResultsSummery from "./ResultsSummery";
 
 export default function ExperimentForm({
   study,
@@ -31,6 +32,7 @@ export default function ExperimentForm({
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
+  const [techniques, setTechniques] = useState(experimentData?.techniques);
 
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
@@ -118,10 +120,21 @@ export default function ExperimentForm({
       label: type.name,
     }));
 
-  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types;
-  const experimentTypeOptions = extraConfig?.data.available_experiment_types;
+  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
+    (type) => ({
+      value: type,
+      label: type,
+    })
+  );
 
-  console.log(experimentData);
+  const experimentTypeOptions = extraConfig?.data.available_experiment_types;
+  const analysisTypeOptions =
+    extraConfig?.data.available_analysis_type_choices.map((type) => ({
+      value: type,
+      label: rawTextToShow(type),
+    }));
+
+  console.log(techniques);
 
   return (
     <>
@@ -203,6 +216,7 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.techniques}
+              setTechniques={setTechniques}
             />
 
             <Measures
@@ -221,13 +235,14 @@ export default function ExperimentForm({
             <Findings
               fieldOptions={{
                 techniquesOptions:
-                  experimentData?.techniques.map((tech) => ({
+                  techniques.map((tech) => ({
                     value: tech.id,
                     label: tech.name,
                   })) || techniquesOptions,
                 findingTagsFamilies,
                 findingTypes,
                 AALOptions,
+                analysisTypeOptions,
               }}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -240,6 +255,12 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.interpretations}
+            />
+            <ResultsSummery
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.notes}
             />
           </div>
 

@@ -11,6 +11,7 @@ import { Tooltip } from "flowbite-react";
 import {
   commonBlue,
   grayReg,
+  revoltingGreen,
   screenWidth,
   sideSectionClass,
   sideWidth,
@@ -294,7 +295,7 @@ export const SideControl = ({ children, headline, isUploadPaper = false }) => {
         <div className=" w-full">{headline}</div>
       ) : (
         <div className="p-4 ">
-          <Text className="text-3xl" weight="bold" color="blue" center>
+          <Text xl3 weight="bold" color="blue" center>
             {headline}
           </Text>
         </div>
@@ -551,7 +552,9 @@ export const ExpandingBox = ({
   return (
     <div
       className={classNames(
-        `px-2 py-1 border-2 border-blue rounded-md ${
+        `px-2 py-1 border-2 ${
+          number > 0 ? "border-revoltingGreen" : "border-blue"
+        } rounded-md ${
           disabled ? "bg-grayDisable border-gray-600" : "bg-white"
         }`
       )}>
@@ -563,7 +566,13 @@ export const ExpandingBox = ({
         {!noNumber && (
           <span
             className={classNames(
-              `font-bold ${disabled ? "text-gray-600" : "text-blue"}`
+              `font-bold ${
+                disabled
+                  ? "text-gray-600"
+                  : number > 0
+                  ? "text-revoltingGreen"
+                  : "text-blue"
+              }`
             )}>
             ({number || 0})
           </span>
@@ -580,7 +589,7 @@ export const ExpandingBox = ({
                 ? "M17 14.8297L15.9917 15.9738L12 12.9018L7.93354 15.9738L7 14.8297L12 10.9738L17 14.8297Z"
                 : "M7 11.1179L8.00833 9.97381L12 13.0458L16.0665 9.97379L17 11.1179L12 14.9738L7 11.1179Z"
             }
-            fill={disabled ? "black" : commonBlue}
+            fill={disabled ? "black" : number > 0 ? revoltingGreen : commonBlue}
           />
         </svg>
       </div>

@@ -104,6 +104,42 @@ export default function Samples({
                     <TooltipExplanation
                       isHeadline
                       tooltip={
+                        "Enter the number of individuals from the specified population who participated in the experiment."
+                      }
+                      text={"Total"}
+                    />
+
+                    <div className="flex gap-2">
+                      <input
+                        min={0}
+                        disabled={fieldValues[index].id}
+                        type="number"
+                        defaultValue={fieldValue.total_size}
+                        onChange={(e) => {
+                          setFieldValues((prev) =>
+                            prev.map((item, i) =>
+                              i === index
+                                ? { ...item, total_size: e.target.value }
+                                : item
+                            )
+                          );
+                        }}
+                        className={`border w-full border-gray-300 rounded-md p-2 ${
+                          fieldValues[index].id &&
+                          "bg-grayDisable text-gray-400"
+                        } `}
+                      />
+                    </div>
+                    {fieldValue.size_included > fieldValue.total_size && (
+                      <span className="text-flourishRed ">
+                        Smaller than included
+                      </span>
+                    )}
+                  </div>
+                  <div className="w-full">
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
                         "Enter the number of participants from the specified population who were included in the analysis."
                       }
                       text={"Included"}
@@ -136,42 +172,6 @@ export default function Samples({
                           No negative numbers
                         </span>
                       )}
-                  </div>
-                  <div className="w-full">
-                    <TooltipExplanation
-                      isHeadline
-                      tooltip={
-                        "Enter the number of individuals from the specified population who participated in the experiment."
-                      }
-                      text={"Total"}
-                    />
-
-                    <div className="flex gap-2">
-                      <input
-                        min={0}
-                        disabled={fieldValues[index].id}
-                        type="number"
-                        defaultValue={fieldValue.total_size}
-                        onChange={(e) => {
-                          setFieldValues((prev) =>
-                            prev.map((item, i) =>
-                              i === index
-                                ? { ...item, total_size: e.target.value }
-                                : item
-                            )
-                          );
-                        }}
-                        className={`border w-full border-gray-300 rounded-md p-2 ${
-                          fieldValues[index].id &&
-                          "bg-grayDisable text-gray-400"
-                        } `}
-                      />
-                    </div>
-                    {fieldValue.size_included > fieldValue.total_size && (
-                      <span className="text-flourishRed ">
-                        Smaller than included
-                      </span>
-                    )}
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-14"></div>

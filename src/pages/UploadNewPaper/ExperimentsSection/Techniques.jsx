@@ -22,6 +22,7 @@ export default function Techniques({
   experiment_pk,
   study_pk,
   values,
+  setTechniques,
 }) {
   const [fieldValues, setFieldValues] = useState([
     {
@@ -58,7 +59,6 @@ export default function Techniques({
       );
     }
   }, []);
-
   return (
     <ExpandingBox
       number={
@@ -102,8 +102,22 @@ export default function Techniques({
                     index={index}
                   />
                   <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues[index].technique, index);
+                    submit={async () => {
+                      console.log(fieldValues[index].technique, {
+                        fieldOptions,
+                      });
+                      const res = await handleSubmit(
+                        fieldValues[index].technique,
+                        index
+                      );
+                      res &&
+                        setTechniques((prev) => [
+                          ...prev,
+                          fieldOptions.find(
+                            (option) =>
+                              option.value == fieldValues[index].technique
+                          ),
+                        ]);
                     }}
                     disabled={!fieldValue?.technique || fieldValue.id}
                   />
