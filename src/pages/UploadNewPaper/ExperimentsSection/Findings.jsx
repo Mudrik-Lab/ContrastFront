@@ -13,9 +13,7 @@ import {
   DeleteClassificationField,
   SubmitClassificationField,
   alphabetizeByLabels,
-  rawTextToShow,
 } from "../../../Utils/functions";
-import Toggle from "../../../components/Toggle";
 import classNames from "classnames";
 
 export default function Findings({
@@ -323,7 +321,7 @@ export default function Findings({
                             Band lower bound
                           </Text>
                         </div>
-                        <div className="w-2/3">
+                        <div className="w-2/3 flex gap-1 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -345,6 +343,9 @@ export default function Findings({
                               "bg-grayDisable text-gray-400"
                             } `}
                           />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (Hz)
+                          </Text>
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -353,7 +354,7 @@ export default function Findings({
                             Band higher bound
                           </Text>
                         </div>
-                        <div className="w-2/3">
+                        <div className="w-2/3 flex gap-1 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -375,6 +376,9 @@ export default function Findings({
                               "bg-grayDisable text-gray-400"
                             } `}
                           />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (Hz)
+                          </Text>
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">

@@ -62,63 +62,72 @@ export default function Interpretations({
       );
     }
   }, []);
-
+  console.log(fieldValues);
+  console.log(fieldOptions);
   return (
     <ExpandingBox
       number={fieldOptions.length}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
-      {fieldValues.map((fieldValue, index) => {
-        return (
-          <div key={`${classificationName}-${index}`}>
-            <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                <CircledIndex index={index} />
-                <div className="w-full flex gap-2 items-start">
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Theory
-                    </Text>
-                    <input
-                      readOnly
-                      className="p-2 text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
-                      value={
-                        fieldOptions.find(
-                          (option) => option.value === fieldValue.theory
-                        ).label
-                      }
-                    />
+      {fieldValues
+        .sort((a, b) => {
+          if (a.theory > b.theory) {
+            return 1;
+          } else {
+            return -1;
+          }
+        })
+        .map((fieldValue, index) => {
+          return (
+            <div key={`${classificationName}-${index}`}>
+              <form className="flex flex-col gap-2">
+                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="w-full flex gap-2 items-start">
+                    <div className="w-full">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Theory
+                      </Text>
+                      <input
+                        readOnly
+                        className="p-2 text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                        value={
+                          fieldOptions.find(
+                            (option) => option.value === fieldValue.theory
+                          ).label
+                        }
+                      />
+                    </div>
+
+                    <div className="w-full">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Type
+                      </Text>
+
+                      <CustomSelect
+                        value={fieldValue.type}
+                        onChange={(value) => {
+                          const newArray = [...fieldValues];
+                          newArray[index].type = value;
+                          setFieldValues(newArray);
+                        }}
+                        options={interpretationTypes}
+                      />
+                    </div>
                   </div>
-
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Type
-                    </Text>
-
-                    <CustomSelect
-                      value={fieldValue.type}
-                      onChange={(value) => {
-                        const newArray = [...fieldValues];
-                        newArray[index].type = value;
-                        setFieldValues(newArray);
+                  <div id="trash+submit" className=" flex gap-2">
+                    <SubmitButton
+                      submit={() => {
+                        handleSubmit(fieldValues, index);
                       }}
-                      options={interpretationTypes}
+                      disabled={!(fieldValue?.theory && fieldValue?.type)}
                     />
                   </div>
                 </div>
-                <div id="trash+submit" className=" flex gap-2">
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={!(fieldValue?.theory && fieldValue?.type)}
-                  />
-                </div>
-              </div>
-            </form>
-          </div>
-        );
-      })}
+              </form>
+            </div>
+          );
+        })}
     </ExpandingBox>
   );
 }

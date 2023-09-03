@@ -5,6 +5,7 @@ import {
   Text,
   Button,
   ToastBox,
+  ToastErrorBox,
 } from "../../../components/Reusble";
 import * as Yup from "yup";
 import Select from "react-select";
@@ -71,7 +72,7 @@ export default function BasicClassification({
         );
       }
     } catch (e) {
-      console.log(e);
+      toast.error(<ToastErrorBox errors={e?.response?.data} />);
     }
   };
 
@@ -96,7 +97,7 @@ export default function BasicClassification({
       }
       console.log(res);
     } catch (e) {
-      console.log(e);
+      toast.error(<ToastErrorBox errors={e?.response?.data} />);
     }
   };
 

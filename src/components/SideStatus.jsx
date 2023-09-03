@@ -59,7 +59,6 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          console.log(e);
           toast.error(<ToastErrorBox errors={e?.response?.data} />);
         }
       }
@@ -74,9 +73,9 @@ export default function SideStatus({
   };
 
   let color =
-    status === "Complete"
+    status === "Approved Submissions"
       ? "revoltingGreen"
-      : status === "Rejected"
+      : status === "Rejected Submissions"
       ? "black"
       : status === "Submitted"
       ? "revoltingGreen"
@@ -86,9 +85,9 @@ export default function SideStatus({
       ? "blue"
       : "";
   let fill =
-    status === "Complete"
+    status === "Approved Submissions"
       ? revoltingGreen
-      : status === "Rejected"
+      : status === "Rejected Submissions"
       ? "black"
       : status === "Submitted"
       ? revoltingGreen

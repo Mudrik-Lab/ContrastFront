@@ -134,8 +134,6 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
 
-  console.log(techniques);
-
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -235,7 +233,7 @@ export default function ExperimentForm({
             <Findings
               fieldOptions={{
                 techniquesOptions:
-                  techniques.map((tech) => ({
+                  techniques?.map((tech) => ({
                     value: tech.id,
                     label: tech.name,
                   })) || techniquesOptions,

@@ -8,6 +8,7 @@ import {
   TooltipExplanation,
   Spacer,
   ToastBox,
+  ToastErrorBox,
 } from "../../components/Reusble";
 import { errorMsgClass } from "../../Utils/HardCoded";
 import * as Yup from "yup";
@@ -24,6 +25,8 @@ import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { confirmFunction } from "../../Utils/functions";
+import { sendStudyToReview } from "../../apiHooks/sendStudyToReview";
+import FinalSubmit from "../../components/FinalSubmit";
 
 export default function NewPaperForm({
   setAddNewPaper,
@@ -101,9 +104,7 @@ export default function NewPaperForm({
           );
         }
       } catch (e) {
-        console.log(e);
-        const errors = Object.values(e?.response?.data);
-        toast.error(<ToastBox text={e?.message} headline={errors} />);
+        toast.error(<ToastErrorBox errors={e?.response?.data} />);
       }
     }
   };
@@ -296,14 +297,19 @@ export default function NewPaperForm({
                   <button
                     type="button"
                     onClick={() => {
-                      const confirmed = addExperiments
-                        ? null
-                        : confirmFunction(paperNmae);
-
-                      if (confirmed || addExperiments) {
-                        setAddNewPaper(false);
-                        refetch();
-                      }
+                      addExperiments
+                        ? setAddNewPaper(false)
+                        : confirmFunction({
+                            paperName: title,
+                            clickDelete: (onClose) => {
+                              setAddNewPaper(false);
+                              refetch();
+                              onClose();
+                            },
+                            question:
+                              "Would you like to Exit this screen before saving the study",
+                            confirmButton: "Yes, Exit!",
+                          });
                     }}
                     className="font-bold">
                     {addExperiments ? "Close Paper" : "Exit"}
@@ -327,6 +333,13 @@ export default function NewPaperForm({
                 setAddNewExperiment={setAddNewExperiment}
               />
             </div>
+          )}
+          {study && (
+            <FinalSubmit
+              study={study}
+              refetch={refetch}
+              onClose={() => setAddNewPaper(false)}
+            />
           )}
         </div>
 
