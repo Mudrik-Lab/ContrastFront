@@ -27,7 +27,7 @@ export default function SideStatus({
   const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
-    async function clickDelete(onClose) {
+    async function clickDelete() {
       if (isExperiment) {
         try {
           const res = await deleteExperiment({
@@ -62,7 +62,6 @@ export default function SideStatus({
           toast.error(<ToastErrorBox errors={e?.response?.data} />);
         }
       }
-      onClose();
     }
     confirmFunction({
       paperName: paper.title,

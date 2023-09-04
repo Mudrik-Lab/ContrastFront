@@ -344,7 +344,10 @@ export function confirmFunction({
                 </p>
                 <div className="mt-4 flex justify-start gap-2">
                   <button
-                    onClick={() => clickDelete(onClose)}
+                    onClick={() => {
+                      clickDelete();
+                      onClose();
+                    }}
                     className="bg-blue text-white font-bold p-2 rounded-full">
                     {confirmButton}
                   </button>
