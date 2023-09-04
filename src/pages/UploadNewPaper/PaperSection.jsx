@@ -23,6 +23,7 @@ export default function PaperSection({
   setNewPaper,
   addNewExperiment,
   setAddNewExperiment,
+  allStudiesRefetch,
 }) {
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();

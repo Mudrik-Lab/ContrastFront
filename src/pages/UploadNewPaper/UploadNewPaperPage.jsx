@@ -101,6 +101,7 @@ export default function UploadNewPaper() {
                 <SideStatus
                   status={"Awaiting Review"}
                   setPaperToShow={setPaperToShow}
+                  setShowEditble={setShowEditble}
                   number={
                     data.data.filter(
                       (paper) => paper.approval_status == statusNumber.AWAITING

@@ -367,7 +367,7 @@ export default function UncompletedPaper({
               <FinalSubmit
                 study={study}
                 refetch={allStudiesRefetch}
-                onClose={() => setAddNewPaper(false)}
+                onClose={() => setShowEditble(false)}
               />
             </div>
             {addNewExperiment && (
