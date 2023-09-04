@@ -88,13 +88,18 @@ export default function Stimuli({
                   <div className="flex items-start gap-2">
                     <div className="w-full flex gap-2 items-start">
                       <div className="w-full">
-                        <TooltipExplanation
-                          isHeadline
-                          tooltip={
-                            "Choose the category of stimuli used in the experiment."
-                          }
-                          text={"Category"}
-                        />
+                        <div className="flex gap-1 items-center">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Category
+                          </Text>
+                          <TooltipExplanation
+                            isHeadline
+                            tooltip={
+                              "Choose the category of stimuli used in the experiment."
+                            }
+                          />
+                        </div>
+
                         <CustomSelect
                           disabled={fieldValue.id}
                           value={fieldValue.category}
@@ -124,28 +129,28 @@ export default function Stimuli({
                           options={alphabetizeByLabels(subCategories)}
                         />
                       </div>
-                      <div className="w-full">
-                        <TooltipExplanation
-                          isHeadline
-                          tooltip={
-                            "Indicate in which modality the stimuli were presented."
-                          }
-                          text={"Modality"}
-                        />
-                        <CustomSelect
-                          disabled={fieldValue.id}
-                          value={fieldValue.modality}
-                          onChange={(value) => {
-                            const newArray = [...fieldValues];
-                            newArray[index].modality = value;
-                            setFieldValues(newArray);
-                          }}
-                          options={modalities}
-                        />
-                      </div>
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
+                    <div className="w-full">
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          "Indicate in which modality the stimuli were presented."
+                        }
+                        text={"Modality"}
+                      />
+                      <CustomSelect
+                        disabled={fieldValue.id}
+                        value={fieldValue.modality}
+                        onChange={(value) => {
+                          const newArray = [...fieldValues];
+                          newArray[index].modality = value;
+                          setFieldValues(newArray);
+                        }}
+                        options={modalities}
+                      />
+                    </div>
                     <div className="w-20">
                       <TooltipExplanation
                         isHeadline
@@ -180,32 +185,32 @@ export default function Stimuli({
                         </Text>
                       </div>
                     </div>
-                    <div className="w-full">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Description
-                      </Text>
+                  </div>
+                  <div className="w-full">
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Description
+                    </Text>
 
-                      <div className="flex gap-2">
-                        <textarea
-                          disabled={fieldValues[index].id}
-                          type="textarea"
-                          defaultValue={fieldValue.description}
-                          rows={3}
-                          onChange={(e) => {
-                            setFieldValues((prev) =>
-                              prev.map((item, i) =>
-                                i === index
-                                  ? { ...item, description: e.target.value }
-                                  : item
-                              )
-                            );
-                          }}
-                          className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
-                          } `}
-                        />
-                      </div>
+                    <div className="flex gap-2">
+                      <textarea
+                        disabled={fieldValues[index].id}
+                        type="textarea"
+                        defaultValue={fieldValue.description}
+                        rows={2}
+                        onChange={(e) => {
+                          setFieldValues((prev) =>
+                            prev.map((item, i) =>
+                              i === index
+                                ? { ...item, description: e.target.value }
+                                : item
+                            )
+                          );
+                        }}
+                        className={`border w-full border-gray-300 rounded-md p-2 ${
+                          fieldValues[index].id &&
+                          "bg-grayDisable text-gray-400"
+                        } `}
+                      />
                     </div>
                   </div>
                 </div>
