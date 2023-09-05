@@ -110,7 +110,6 @@ export default function NewPaperForm({
   });
 
   const handleSubmit = async (values) => {
-    console.log(value.length);
     if (!value.length) {
       setAuthorsError("Please select at least one author");
       return;
