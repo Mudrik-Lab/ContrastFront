@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import ProgressComponent from "./ProgressComponent";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import { useNavigate } from "react-router-dom";
@@ -27,6 +27,7 @@ import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { confirmFunction } from "../../Utils/functions";
 import { sendStudyToReview } from "../../apiHooks/sendStudyToReview";
 import FinalSubmit from "../../components/FinalSubmit";
+import { craeteNewAuthor } from "../../apiHooks/createNewAuthor";
 
 export default function NewPaperForm({
   setAddNewPaper,
@@ -39,11 +40,16 @@ export default function NewPaperForm({
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [addExperiments, setAddExperiments] = useState(false);
   const [study, setStudy] = useState(false);
+  const [authorsOptions, setAuthorOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState([]);
+  const [authorsError, setAuthorsError] = useState(false);
 
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
-    getExtraConfig
-  );
+  const {
+    data: extraConfig,
+    isSuccess: extraConfigSuccess,
+    refetch: extraConfigRefetch,
+  } = useQuery([`more_configurations`], getExtraConfig);
   const journals = extraConfig?.data.existing_journals.map((journal) => ({
     value: journal,
     label: journal,
@@ -53,17 +59,40 @@ export default function NewPaperForm({
     value: author.id,
     label: author.name,
   }));
+  useEffect(() => {
+    setAuthorOptions(authorsList);
+  }, [extraConfig]);
+
+  const handleNewAuthor = async (authorName) => {
+    try {
+      setIsLoading(true);
+      const res = await craeteNewAuthor(authorName);
+      if (res.status === 201) {
+        console.log(res.data);
+        setAuthorOptions((prev) => [
+          ...prev,
+          { label: res.data.name, value: res.data.id },
+        ]);
+        setValue((prev) => [
+          ...prev,
+          { label: res.data.name, value: res.data.id },
+        ]);
+        setIsLoading(false);
+      }
+    } catch (e) {
+      toast.error(<ToastErrorBox errors={e.response.data} />);
+    }
+  };
 
   const initialValues = {
     DOI: "",
-    authors: [],
     source_title: "",
     countries: [],
     authors_key_words: [],
     year: "",
   };
   const validationSchema = Yup.object().shape({
-    authors: Yup.array().min(1, "Please select at least one author"),
+    // authors: Yup.array().min(1, "Please select at least one author"),
     year: Yup.date()
       .max(
         new Date().getFullYear(),
@@ -81,12 +110,19 @@ export default function NewPaperForm({
   });
 
   const handleSubmit = async (values) => {
+    console.log(value.length);
+    if (!value.length) {
+      setAuthorsError("Please select at least one author");
+      return;
+    } else {
+      setAuthorsError(false);
+    }
     if (values.source_title?.value) {
       try {
         const res = await submitStudy({
           title,
           year: values.year,
-          authors: values.authors,
+          authors: value.map((author) => author.value),
           countries: values.countries,
           DOI: values.DOI,
           source_title: values.source_title?.value,
@@ -147,7 +183,7 @@ export default function NewPaperForm({
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}>
-            {({ isSubmitting, dirty, isValid, values, setFieldValue }) => (
+            {({ dirty, isValid, setFieldValue }) => (
               <Form>
                 <div className="flex flex-col gap-4">
                   <div>
@@ -197,21 +233,20 @@ export default function NewPaperForm({
                     />
                   </div>
                   <div>
-                    <Text weight={"bold"} color={"grayReg"}></Text>Authors
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Authors
+                    </Text>
                     <div className="flex items-center gap-2">
                       <CreatableSelect
-                        name="authors"
-                        id="authors"
-                        isMulti={true}
-                        onChange={(v) => {
-                          setFieldValue(
-                            "authors",
-                            v.map((author) => author.value)
-                          );
-                        }}
-                        placeholder="Select or Add Authors"
+                        isMulti
                         isClearable
-                        options={authorsList}
+                        isDisabled={isLoading}
+                        isLoading={isLoading}
+                        onCreateOption={handleNewAuthor}
+                        onChange={(v) => setValue(v)}
+                        placeholder="Select or Add Authors"
+                        options={authorsOptions}
+                        value={value}
                       />
                       <TooltipExplanation
                         text={""}
@@ -220,11 +255,9 @@ export default function NewPaperForm({
                         }
                       />{" "}
                     </div>
-                    <ErrorMessage
-                      name="authors"
-                      component="div"
-                      className={errorMsgClass}
-                    />
+                    {authorsError && (
+                      <Text className={errorMsgClass}>{authorsError}</Text>
+                    )}
                   </div>
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
@@ -288,7 +321,6 @@ export default function NewPaperForm({
                   <Button
                     type="submit"
                     onClick={handleSubmit}
-                    // disabled={!(isValid && dirty)}
                     disabled={!(isValid && dirty) || addExperiments}
                     className="bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy">
                     <V />
@@ -317,6 +349,7 @@ export default function NewPaperForm({
               </Form>
             )}
           </Formik>
+
           <Spacer height={20} />
           {addExperiments && (
             <div>

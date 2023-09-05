@@ -21,6 +21,7 @@ import {
   reportOptions,
   theoryDrivenOptions,
 } from "../../../Utils/HardCoded";
+import MultiSelect from "../../../components/SelectField";
 
 export default function BasicClassification({
   study_id,
@@ -28,6 +29,7 @@ export default function BasicClassification({
   fieldOptions,
   experimentData,
   setExperimentID,
+  theories,
 }) {
   const [submitted, setSubmitted] = useState(experimentData);
   const [experiment, setExperiment] = useState(false);
@@ -36,8 +38,11 @@ export default function BasicClassification({
     type_of_consciousness: experimentData?.type_of_consciousness || "",
     experiment_type: experimentData?.type || "",
     report: experimentData?.is_reporting || "",
-
     theory_driven: experimentData?.theory_driven || "",
+    theories: experimentData?.theory_driven_theories.map((theory) => ({
+      values: theory,
+      label: theory,
+    })),
   };
 
   const validationSchema = Yup.object().shape({
@@ -54,7 +59,7 @@ export default function BasicClassification({
     try {
       const res = await createExperiments({
         type_of_consciousness: values.type_of_consciousness,
-
+        theory_driven_theories: values.theories,
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
@@ -80,10 +85,10 @@ export default function BasicClassification({
     try {
       const res = await editExperiments({
         type_of_consciousness: values.type_of_consciousness,
-
         is_reporting: values.report,
         theory_driven: values.theory_driven,
         experiment_type: values.experiment_type,
+        theory_driven_theories: values.theories,
         study_pk: study_id,
         id: experiment.id || experimentData.id,
       });
@@ -218,6 +223,33 @@ export default function BasicClassification({
                   />
                 </div>
               </div>
+              {values.theory_driven === "mentioning" ||
+                (values.theory_driven === "driven" && (
+                  <div>
+                    <Text weight={"bold"} color={"grayReg"}>
+                      Theories
+                    </Text>
+                    <div className="flex items-center gap-2">
+                      <Select
+                        name="theories"
+                        isClearable
+                        value={values.theories}
+                        onChange={(v) => setFieldValue("theories", v)}
+                        placeholder="Theories"
+                        isMulti={true}
+                        component={MultiSelect}
+                        options={theories}
+                      />
+
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={
+                          "Indicate if this study was theory driven? Theory-driven experiments should explicitly examine a hypothesis of at least one of the theories in their introduction. Experiments that mention the theories in the introduction without referring to a specific hypothesis tested in the experiment should be classified as “mentioning”. Experiments that only post-hoc interpreted the results according to one or more of the theories in the discussion should be classified as “post hoc”."
+                        }
+                      />
+                    </div>
+                  </div>
+                ))}
             </div>
             <div className="w-full flex justify-center">
               <Button

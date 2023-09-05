@@ -38,10 +38,7 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-  extraConfigSuccess &&
-    console.log(
-      extraConfig.data.available_paradigms_families.map((x) => x.sub_type)
-    );
+  extraConfigSuccess && console.log(extraConfig.data);
   const {
     data,
     isSuccess,
@@ -137,7 +134,7 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
 
-  console.log(extraConfig?.data.available_theories);
+  console.log(paradigms.map((x) => x.sub_type));
 
   return (
     <>
@@ -166,6 +163,7 @@ export default function ExperimentForm({
             </Text>
 
             <BasicClassification
+              theories={theories}
               fieldOptions={experimentTypeOptions}
               experimentData={experimentData}
               study_id={study.id}
