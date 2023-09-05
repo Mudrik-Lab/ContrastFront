@@ -14,14 +14,14 @@ import {
   rawTextToShow,
 } from "../../../Utils/functions";
 
-export default function ResultsSummery({
+export default function ResultsSummary({
   disabled,
   experiment_pk,
   study_pk,
   values,
 }) {
   const [fieldValues, setFieldValues] = useState([{ notes: "" }]);
-  const classificationName = "Results Summery";
+  const classificationName = "Results Summary";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,

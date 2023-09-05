@@ -301,10 +301,9 @@ export default function NewPaperForm({
                         ? setAddNewPaper(false)
                         : confirmFunction({
                             paperName: title,
-                            clickDelete: (onClose) => {
+                            clickDelete: () => {
                               setAddNewPaper(false);
                               refetch();
-                              onClose();
                             },
                             question:
                               "Would you like to Exit this screen before saving the study",

@@ -20,7 +20,7 @@ import {
   upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
-import ResultsSummery from "./ResultsSummery";
+import ResultsSummary from "./ResultsSummary";
 
 export default function ExperimentForm({
   study,
@@ -38,7 +38,10 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-
+  extraConfigSuccess &&
+    console.log(
+      extraConfig.data.available_paradigms_families.map((x) => x.sub_type)
+    );
   const {
     data,
     isSuccess,
@@ -133,6 +136,8 @@ export default function ExperimentForm({
       value: type,
       label: rawTextToShow(type),
     }));
+
+  console.log(extraConfig?.data.available_theories);
 
   return (
     <>
@@ -254,7 +259,7 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.interpretations}
             />
-            <ResultsSummery
+            <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
