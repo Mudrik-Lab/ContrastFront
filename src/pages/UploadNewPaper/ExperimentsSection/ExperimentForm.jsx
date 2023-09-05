@@ -134,8 +134,6 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
 
-  console.log(paradigms.map((x) => x.sub_type));
-
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
