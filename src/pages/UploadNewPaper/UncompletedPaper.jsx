@@ -105,7 +105,9 @@ export default function UncompletedPaper({
       }
     } catch (e) {
       console.log(e);
-      toast.error(<ToastErrorBox errors={e.response.data} />);
+      toast.error(
+        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+      );
     }
   };
 

@@ -80,7 +80,9 @@ export default function NewPaperForm({
         setIsLoading(false);
       }
     } catch (e) {
-      toast.error(<ToastErrorBox errors={e.response.data} />);
+      toast.error(
+        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+      );
     }
   };
 
@@ -145,6 +147,27 @@ export default function NewPaperForm({
   };
   const countryOption = useMemo(() => countryList().getData(), []);
 
+  const exitThruoghConfirm = (
+    addExperiments,
+    setAddNewPaper,
+    title,
+    refetch
+  ) => {
+    return () => {
+      addExperiments
+        ? setAddNewPaper(false)
+        : confirmFunction({
+            paperName: title,
+            clickDelete: () => {
+              setAddNewPaper(false);
+              refetch();
+            },
+            question:
+              "Would you like to Exit this screen before saving the study",
+            confirmButton: "Yes, Exit!",
+          });
+    };
+  };
   return (
     <div>
       <ProgressComponent
@@ -327,20 +350,12 @@ export default function NewPaperForm({
                   </Button>
                   <button
                     type="button"
-                    onClick={() => {
-                      addExperiments
-                        ? setAddNewPaper(false)
-                        : confirmFunction({
-                            paperName: title,
-                            clickDelete: () => {
-                              setAddNewPaper(false);
-                              refetch();
-                            },
-                            question:
-                              "Would you like to Exit this screen before saving the study",
-                            confirmButton: "Yes, Exit!",
-                          });
-                    }}
+                    onClick={exitThruoghConfirm(
+                      addExperiments,
+                      setAddNewPaper,
+                      title,
+                      refetch
+                    )}
                     className="font-bold">
                     {addExperiments ? "Close Paper" : "Exit"}
                   </button>

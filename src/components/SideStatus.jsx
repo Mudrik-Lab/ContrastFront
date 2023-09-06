@@ -44,7 +44,9 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          toast.error(<ToastErrorBox errors={e.response.data} />);
+          toast.error(
+            <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+          );
         }
       } else {
         try {
