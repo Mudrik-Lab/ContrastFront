@@ -6,6 +6,7 @@ import {
   Spacer,
   Text,
   ToastBox,
+  ToastErrorBox,
 } from "../../components/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
@@ -33,6 +34,7 @@ import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import { toast } from "react-toastify";
 import FinalSubmit from "../../components/FinalSubmit";
+import { createNewAuthor } from "../../apiHooks/createNewAuthor";
 
 export default function UncompletedPaper({
   study,
@@ -52,6 +54,15 @@ export default function UncompletedPaper({
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
+  const [authorsOptions, setAuthorOptions] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [value, setValue] = useState(
+    study.authors.map((author) => ({
+      value: author.id,
+      label: author.name,
+    })) || []
+  );
+  const [authorsError, setAuthorsError] = useState(false);
 
   const countryOption = useMemo(() => countryList().getData(), []);
 
@@ -72,14 +83,39 @@ export default function UncompletedPaper({
     setTitle(study.title);
   }, []);
 
+  useEffect(() => {
+    setAuthorOptions(authorsList);
+  }, [extraConfig]);
+
+  const handleNewAuthor = async (authorName) => {
+    try {
+      setIsLoading(true);
+      const res = await createNewAuthor(authorName);
+      if (res.status === 201) {
+        console.log(res.data);
+        setAuthorOptions((prev) => [
+          ...prev,
+          { label: res.data.name, value: res.data.id },
+        ]);
+        setValue((prev) => [
+          ...prev,
+          { label: res.data.name, value: res.data.id },
+        ]);
+        setIsLoading(false);
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(
+        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+      );
+    }
+  };
+
   const initialValues = {
     DOI: study.DOI || "",
     authors_key_words: study.authors_key_words || [],
     year: study.year,
-    authors: study.authors.map((author) => ({
-      value: author.id,
-      label: author.name,
-    })),
+
     source_title: study.source_title,
     countries: study.countries.map((country) => ({
       value: country,
@@ -87,7 +123,7 @@ export default function UncompletedPaper({
     })),
   };
   const validationSchema = Yup.object().shape({
-    authors: Yup.array().min(1, "Please select at least one author"),
+    // authors: Yup.array().min(1, "Please select at least one author"),
     source_title: Yup.string().required("Please select at least one journal"),
     countries: Yup.array().min(1, "Please select at least one country"),
     DOI: Yup.string()
@@ -99,14 +135,20 @@ export default function UncompletedPaper({
   });
 
   const handleSubmit = async (values) => {
-    console.log(values);
+    console.log(value.length);
+    if (!value.length) {
+      setAuthorsError("Please select at least one author");
+      return;
+    } else {
+      setAuthorsError(false);
+    }
     try {
       const res = await EditUncompletedStudy({
         title,
         id: study.id,
         year: values.year,
         authors_key_words: values.authors_key_words,
-        authors: values.authors?.map((author) => author.value),
+        authors: value.map((author) => author.value),
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
         source_title: values.source_title,
@@ -243,14 +285,15 @@ export default function UncompletedPaper({
                           </Text>
                           <div className="flex items-center gap-2">
                             <CreatableSelect
-                              name="authors"
-                              id="authors"
-                              isMulti={true}
-                              value={values.authors}
-                              onChange={(v) => setFieldValue("authors", v)}
-                              placeholder="Add Authors"
+                              isMulti
                               isClearable
-                              options={authorsList}
+                              isDisabled={isLoading}
+                              isLoading={isLoading}
+                              onCreateOption={handleNewAuthor}
+                              onChange={(v) => setValue(v)}
+                              placeholder="Select or Add Authors"
+                              options={authorsOptions}
+                              value={value}
                             />
                             <TooltipExplanation
                               text={""}
@@ -259,11 +302,11 @@ export default function UncompletedPaper({
                               }
                             />{" "}
                           </div>
-                          <ErrorMessage
-                            name="paperName"
-                            component="div"
-                            className={errorMsgClass}
-                          />
+                          {authorsError && (
+                            <Text className={errorMsgClass}>
+                              {authorsError}
+                            </Text>
+                          )}
                         </div>
                         <div>
                           <Text weight={"bold"} color={"grayReg"}>

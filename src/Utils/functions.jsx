@@ -206,7 +206,9 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e.response.data} />);
+        toast.error(
+          <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+        );
       }
     } else {
       try {
@@ -229,7 +231,9 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e.response.data} />);
+        toast.error(
+          <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+        );
       }
     }
   };

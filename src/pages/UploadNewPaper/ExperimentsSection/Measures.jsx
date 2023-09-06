@@ -59,6 +59,7 @@ export default function Measures({
       );
     }
   }, []);
+
   return (
     <ExpandingBox
       number={
@@ -91,6 +92,9 @@ export default function Measures({
                         const newArray = [...fieldValues];
                         newArray[index].type = value;
                         setFieldValues(newArray);
+                        fieldValue?.notes &&
+                          fieldValue?.type &&
+                          handleSubmit(fieldValues, index);
                       }}
                       options={fieldOptions}
                     />
@@ -116,6 +120,17 @@ export default function Measures({
                             )
                           );
                         }}
+                        onBlur={() =>
+                          fieldValue?.notes &&
+                          fieldValue?.type &&
+                          handleSubmit(fieldValues, index)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" &&
+                          fieldValue?.notes &&
+                          fieldValue?.type &&
+                          handleSubmit(fieldValues, index)
+                        }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"
@@ -131,14 +146,14 @@ export default function Measures({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={
                       !(fieldValue?.notes && fieldValue?.type) || fieldValue.id
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

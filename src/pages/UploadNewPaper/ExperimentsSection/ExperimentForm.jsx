@@ -20,7 +20,7 @@ import {
   upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
-import ResultsSummery from "./ResultsSummery";
+import ResultsSummary from "./ResultsSummary";
 
 export default function ExperimentForm({
   study,
@@ -38,7 +38,7 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-
+  extraConfigSuccess && console.log(extraConfig.data);
   const {
     data,
     isSuccess,
@@ -161,6 +161,7 @@ export default function ExperimentForm({
             </Text>
 
             <BasicClassification
+              theories={theories}
               fieldOptions={experimentTypeOptions}
               experimentData={experimentData}
               study_id={study.id}
@@ -189,7 +190,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData?.tasks}
+              values={experimentData}
             />
             <Stimuli
               fieldOptions={stimulusCategories}
@@ -254,11 +255,11 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.interpretations}
             />
-            <ResultsSummery
+            <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData?.notes}
+              values={experimentData.results_summary}
             />
           </div>
 
