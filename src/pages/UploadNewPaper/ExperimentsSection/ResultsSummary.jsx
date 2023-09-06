@@ -3,16 +3,15 @@ import {
   ExpandingBox,
   SubmitButton,
   Text,
+  ToastBox,
+  ToastErrorBox,
   TrashButton,
-  CircledIndex,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 
-import {
-  DeleteClassificationField,
-  SubmitClassificationField,
-  rawTextToShow,
-} from "../../../Utils/functions";
+import { rawTextToShow } from "../../../Utils/functions";
+import { setNotes } from "../../../apiHooks/setNotes";
+import { toast } from "react-toastify";
 
 export default function ResultsSummary({
   disabled,
@@ -20,95 +19,71 @@ export default function ResultsSummary({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([{ notes: "" }]);
+  const [fieldValues, setFieldValues] = useState(values || "");
   const classificationName = "Results Summary";
 
-  const handleSubmit = SubmitClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
-  const handleDelete = DeleteClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
-  useEffect(() => {
-    if (values && values.length > 0) {
-      setFieldValues(
-        values.map((row) => {
-          return {
-            notes: row.notes,
-          };
-        })
+  const handleSubmit = async () => {
+    try {
+      const res = await setNotes({
+        study_pk,
+        experiment_pk,
+        note: fieldValues,
+        classification: "set_results_summary",
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Resuls summary's notes were added successfully"}
+          />
+        );
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(
+        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
       );
     }
-  }, []);
+  };
+
+  console.log(values);
   return (
     <ExpandingBox
-      number={fieldValues.length}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
-      {fieldValues.map((fieldValue, index) => {
-        return (
-          <div key={`${classificationName}-${index}`}>
-            <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                <CircledIndex index={index} />
-                <div className="w-full flex gap-2 items-start">
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Notes
-                    </Text>
-                    <textarea
-                      disabled={fieldValues[index].id}
-                      type="textarea"
-                      defaultValue={fieldValue.notes}
-                      rows={4}
-                      onChange={(e) => {
-                        setFieldValues((prev) =>
-                          prev.map((item, i) =>
-                            i === index
-                              ? { ...item, notes: e.target.value }
-                              : item
-                          )
-                        );
-                      }}
-                      className={`border w-full border-gray-300 rounded-md p-2 ${
-                        fieldValues[index].id && "bg-grayDisable text-gray-400"
-                      } `}
-                    />
-                  </div>
-                </div>
-
-                <div id="trash+submit" className=" flex gap-2">
-                  <TrashButton
-                    handleDelete={handleDelete}
-                    fieldValues={fieldValues}
-                    index={index}
-                  />
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={!(fieldValue?.notes !== "")}
-                  />
-                </div>
+      <div>
+        <form className="flex flex-col gap-2">
+          <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+            <div className="w-full flex gap-2 items-start">
+              <div className="w-full">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Notes
+                </Text>
+                <textarea
+                  defaultValue={fieldValues}
+                  rows={4}
+                  onChange={(e) => {
+                    setFieldValues(e.target.value);
+                  }}
+                  className="border w-full border-gray-300 rounded-md p-2"
+                />
               </div>
-            </form>
+            </div>
+
+            <div id="trash+submit" className=" flex gap-2">
+              {/* <TrashButton
+                handleDelete={handleDelete}
+                fieldValues={fieldValues}
+                index={index}
+              /> */}
+              <SubmitButton
+                submit={handleSubmit}
+                disabled={!(fieldValues?.notes !== "")}
+              />
+            </div>
           </div>
-        );
-      })}
-      <AddFieldButton
-        fieldValues={fieldValues}
-        setFieldValues={setFieldValues}
-      />
+        </form>
+      </div>
     </ExpandingBox>
   );
 }

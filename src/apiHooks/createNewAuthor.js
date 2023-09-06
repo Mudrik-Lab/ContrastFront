@@ -1,6 +1,6 @@
 import { queryApi } from "../Utils/api";
 
-export async function craeteNewAuthor(
+export async function createNewAuthor(
    name
   ) {
     return await queryApi({

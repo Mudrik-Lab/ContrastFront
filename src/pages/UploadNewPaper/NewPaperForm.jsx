@@ -27,7 +27,7 @@ import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { confirmFunction } from "../../Utils/functions";
 import { sendStudyToReview } from "../../apiHooks/sendStudyToReview";
 import FinalSubmit from "../../components/FinalSubmit";
-import { craeteNewAuthor } from "../../apiHooks/createNewAuthor";
+import { createNewAuthor } from "../../apiHooks/createNewAuthor";
 
 export default function NewPaperForm({
   setAddNewPaper,
@@ -66,7 +66,7 @@ export default function NewPaperForm({
   const handleNewAuthor = async (authorName) => {
     try {
       setIsLoading(true);
-      const res = await craeteNewAuthor(authorName);
+      const res = await createNewAuthor(authorName);
       if (res.status === 201) {
         console.log(res.data);
         setAuthorOptions((prev) => [

@@ -190,7 +190,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData?.tasks}
+              values={experimentData}
             />
             <Stimuli
               fieldOptions={stimulusCategories}
@@ -259,7 +259,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData?.notes}
+              values={experimentData.results_summary}
             />
           </div>
 

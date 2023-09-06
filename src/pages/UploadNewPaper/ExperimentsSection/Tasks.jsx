@@ -7,6 +7,8 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  ToastBox,
+  ToastErrorBox,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -15,6 +17,8 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
+import { setNotes } from "../../../apiHooks/setNotes";
+import { toast } from "react-toastify";
 
 export default function Tasks({
   fieldOptions,
@@ -23,14 +27,15 @@ export default function Tasks({
   study_pk,
   values,
 }) {
+  const [description, setDescription] = useState(values.tasks_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       type: "",
-      description: "",
     },
   ]);
   const classificationName = "tasks";
 
+  console.log(values);
   const handleSubmit = SubmitClassificationField(
     study_pk,
     experiment_pk,
@@ -46,13 +51,36 @@ export default function Tasks({
     fieldValues,
     setFieldValues
   );
+  const handleNotes = async () => {
+    try {
+      const res = await setNotes({
+        study_pk,
+        experiment_pk,
+        note: description,
+        classification: "set_tasks_notes",
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Task's notes were added successfully"}
+          />
+        );
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(
+        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+      );
+    }
+  };
+
   useEffect(() => {
-    if (values && values.length > 0) {
+    if (values.tasks && values.tasks.length > 0) {
       setFieldValues(
-        values.map((row) => {
+        values.tasks.map((row) => {
           return {
             type: row.type,
-            description: row.description,
             id: row.id,
           };
         })
@@ -95,34 +123,6 @@ export default function Tasks({
                       options={alphabetizeByLabels(fieldOptions)}
                     />
                   </div>
-
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Description
-                    </Text>
-
-                    <div className="flex gap-2">
-                      <textarea
-                        disabled={fieldValues[index].id}
-                        type="textarea"
-                        defaultValue={fieldValue.description}
-                        rows={4}
-                        onChange={(e) => {
-                          setFieldValues((prev) =>
-                            prev.map((item, i) =>
-                              i === index
-                                ? { ...item, description: e.target.value }
-                                : item
-                            )
-                          );
-                        }}
-                        className={`border w-full border-gray-300 rounded-md p-2 ${
-                          fieldValues[index].id &&
-                          "bg-grayDisable text-gray-400"
-                        } `}
-                      />
-                    </div>
-                  </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
                 <div id="trash+submit">
@@ -131,25 +131,42 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={
-                      !(fieldValue?.description && fieldValue?.type) ||
-                      fieldValue.id
-                    }
-                  />
+                  <SubmitButton submit={handleNotes} />
                 </div>
               </div>
             </form>
           </div>
         );
       })}
+
       <AddFieldButton
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
+      <form action="submit">
+        <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+          <div className="w-full">
+            <Text weight={"bold"} color={"grayReg"}>
+              Notes
+            </Text>
+
+            <div className="flex gap-2">
+              <textarea
+                defaultValue={description}
+                rows={2}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                className={`border w-full border-gray-300 rounded-md p-2 `}
+              />
+            </div>
+          </div>
+          <div className="border-r-2 border-blue h-24"></div>
+          <div id="trash+submit">
+            <SubmitButton submit={handleNotes} />
+          </div>
+        </div>
+      </form>
     </ExpandingBox>
   );
 }

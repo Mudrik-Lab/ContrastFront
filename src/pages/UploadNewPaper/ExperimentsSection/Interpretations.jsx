@@ -62,7 +62,7 @@ export default function Interpretations({
       );
     }
   }, []);
-
+  console.log(fieldValues);
   return (
     <ExpandingBox
       number={fieldOptions.length}
