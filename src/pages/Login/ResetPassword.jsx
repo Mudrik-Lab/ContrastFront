@@ -3,7 +3,11 @@ import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { TooltipExplanation, ToastBox } from "../../components/Reusble";
+import {
+  TooltipExplanation,
+  ToastBox,
+  ToastErrorBox,
+} from "../../components/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
@@ -52,8 +56,8 @@ export default function ResetPassword() {
       if (res.error) {
         setServerError(res.error.message);
       }
-    } catch (error) {
-      console.log(error);
+    } catch (e) {
+      toast.error(<ToastErrorBox errors={e?.response?.data} />);
     }
   };
   return (

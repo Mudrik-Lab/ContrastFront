@@ -33,7 +33,7 @@ export default function UploadNewPaper() {
   );
 
   const handleRefetch = () => {
-    console.log("did refetch");
+    console.log("did refetch to all studies");
     refetch();
   };
   return (
@@ -47,7 +47,7 @@ export default function UploadNewPaper() {
                 <div className="absolute top-0 left-0 w-full h-full bg-white opacity-60 z-20"></div>
               )}
               <div
-                className="p-4 shadow-3xl mt-2 overflow-y-scroll"
+                className="p-4 shadow-3xl mt-2 overflow-y-scroll "
                 style={{
                   height: `calc(100vh - ${
                     uploadPaperUsedHeight + upladPaperPageTopSection
@@ -58,7 +58,7 @@ export default function UploadNewPaper() {
                 </Text>
                 <Spacer height={20} />
                 <SideStatus
-                  status={"Complete"}
+                  status={"Approved Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
                   number={
@@ -79,7 +79,7 @@ export default function UploadNewPaper() {
                   />
                 </div>
                 <SideStatus
-                  status={"Rejected"}
+                  status={"Rejected Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
                   number={
@@ -101,6 +101,7 @@ export default function UploadNewPaper() {
                 <SideStatus
                   status={"Awaiting Review"}
                   setPaperToShow={setPaperToShow}
+                  setShowEditble={setShowEditble}
                   number={
                     data.data.filter(
                       (paper) => paper.approval_status == statusNumber.AWAITING
@@ -147,7 +148,7 @@ export default function UploadNewPaper() {
                   <Button
                     onClick={() => setAddNewPaper(true)}
                     disabled={addNewPaper}
-                    extraClass="mx-auto font-normal ">
+                    extraClass="mx-auto  ">
                     <AddPaper /> Add new paper
                   </Button>
                 </div>
@@ -155,11 +156,7 @@ export default function UploadNewPaper() {
             </div>
           }
           graph={
-            <div
-              className=" shadow-3xl mt-2 overflow-y-scroll h-full"
-              style={{
-                height: `calc(100vh - ${uploadPaperUsedHeight}px)`,
-              }}>
+            <div className=" shadow-3xl mt-2 overflow-y-scroll h-full">
               {addNewPaper ? (
                 <NewPaperForm
                   setAddNewPaper={setAddNewPaper}
@@ -171,6 +168,7 @@ export default function UploadNewPaper() {
               ) : (
                 paperToShow && (
                   <PaperSection
+                    allStudiesRefetch={refetch}
                     newPaper={newPaper}
                     setNewPaper={setNewPaper}
                     setAddNewPaper={setAddNewPaper}

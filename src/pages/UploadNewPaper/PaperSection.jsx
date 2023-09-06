@@ -23,6 +23,7 @@ export default function PaperSection({
   setNewPaper,
   addNewExperiment,
   setAddNewExperiment,
+  allStudiesRefetch,
 }) {
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
@@ -47,7 +48,7 @@ export default function PaperSection({
     study?.approval_status === statusNumber.APPROVED
       ? "Approved"
       : study?.approval_status === statusNumber.REJECTED
-      ? "Rejected"
+      ? "Rejected Submissions"
       : study?.approval_status === statusNumber.ON_PROCCESS
       ? "Uncompleted submissions"
       : "Awaiting Review";
@@ -151,6 +152,7 @@ export default function PaperSection({
               setAddNewExperiment={setAddNewExperiment}
               setAddNewPaper={setAddNewPaper}
               refetch={handleRefetch}
+              allStudiesRefetch={allStudiesRefetch}
               showEditble={showEditble}
               study={study}
               newPaper={newPaper}

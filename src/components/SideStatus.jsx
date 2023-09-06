@@ -27,7 +27,7 @@ export default function SideStatus({
   const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
     const study_pk = paper.study;
-    async function clickDelete(onClose) {
+    async function clickDelete() {
       if (isExperiment) {
         try {
           const res = await deleteExperiment({
@@ -59,11 +59,9 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          console.log(e);
           toast.error(<ToastErrorBox errors={e?.response?.data} />);
         }
       }
-      onClose();
     }
     confirmFunction({
       paperName: paper.title,
@@ -74,9 +72,9 @@ export default function SideStatus({
   };
 
   let color =
-    status === "Complete"
+    status === "Approved Submissions"
       ? "revoltingGreen"
-      : status === "Rejected"
+      : status === "Rejected Submissions"
       ? "black"
       : status === "Submitted"
       ? "revoltingGreen"
@@ -86,9 +84,9 @@ export default function SideStatus({
       ? "blue"
       : "";
   let fill =
-    status === "Complete"
+    status === "Approved Submissions"
       ? revoltingGreen
-      : status === "Rejected"
+      : status === "Rejected Submissions"
       ? "black"
       : status === "Submitted"
       ? revoltingGreen

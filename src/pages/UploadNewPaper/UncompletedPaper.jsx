@@ -32,6 +32,7 @@ import { EditUncompletedStudy } from "../../apiHooks/getStudies";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import { toast } from "react-toastify";
+import FinalSubmit from "../../components/FinalSubmit";
 
 export default function UncompletedPaper({
   study,
@@ -47,6 +48,7 @@ export default function UncompletedPaper({
   setNewPaper,
   addNewExperiment,
   setAddNewExperiment,
+  allStudiesRefetch,
 }) {
   const [title, setTitle] = useState("");
   const [nameSubmitted, setNameSubmitted] = useState(false);
@@ -361,6 +363,12 @@ export default function UncompletedPaper({
                 }))}
               />
               <Spacer height={20} />
+
+              <FinalSubmit
+                study={study}
+                refetch={allStudiesRefetch}
+                onClose={() => setShowEditble(false)}
+              />
             </div>
             {addNewExperiment && (
               <ExperimentForm

@@ -18,9 +18,8 @@ export default function ProgressComponent({ status, paperNmae, experiment }) {
   );
   return (
     <div
-      className={classNames(
-        `px-6 h-[${upladPaperPageTopSection}px] bg-grayLight flex items-center`
-      )}>
+      style={{ height: upladPaperPageTopSection }}
+      className={`px-6  bg-grayLight flex items-center`}>
       <div className="flex w-full justify-start items-center gap-2 text-lg">
         <span>{status}</span>
         {Arrow} <span>{paperNmae} </span>

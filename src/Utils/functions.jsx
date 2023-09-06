@@ -229,8 +229,7 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        const errors = Object.values(e.response.data);
-        toast.error(<ToastBox text={e.message} headline={errors} />);
+        toast.error(<ToastErrorBox errors={e.response.data} />);
       }
     }
   };
@@ -279,7 +278,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        console.log(e);
+        toast.error(<ToastErrorBox errors={e?.response?.data} />);
       }
     } else {
       console.log(classificationName);
@@ -307,7 +306,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        console.log(e);
+        toast.error(<ToastErrorBox errors={e?.response?.data} />);
       }
     }
   };
@@ -345,7 +344,10 @@ export function confirmFunction({
                 </p>
                 <div className="mt-4 flex justify-start gap-2">
                   <button
-                    onClick={() => clickDelete(onClose)}
+                    onClick={() => {
+                      clickDelete();
+                      onClose();
+                    }}
                     className="bg-blue text-white font-bold p-2 rounded-full">
                     {confirmButton}
                   </button>
