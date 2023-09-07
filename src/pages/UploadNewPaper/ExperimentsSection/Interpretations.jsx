@@ -24,9 +24,9 @@ export default function Interpretations({
   values,
 }) {
   const [fieldValues, setFieldValues] = useState(
-    fieldOptions.map((filedOption) => {
+    fieldOptions.map((fieldOption) => {
       return {
-        theory: filedOption.value,
+        theory: fieldOption.value,
         type: "",
       };
     })
