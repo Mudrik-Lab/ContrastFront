@@ -19,6 +19,7 @@ import {
 } from "../../../Utils/functions";
 import { toast } from "react-toastify";
 import { setNotes } from "../../../apiHooks/setNotes";
+import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Stimuli({
   fieldOptions,
@@ -29,7 +30,6 @@ export default function Stimuli({
   study_pk,
   values,
 }) {
-  console.log(values);
   const [description, setDescription] = useState(values.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
@@ -56,30 +56,6 @@ export default function Stimuli({
     fieldValues,
     setFieldValues
   );
-
-  const handleNotes = async () => {
-    try {
-      const res = await setNotes({
-        study_pk,
-        experiment_pk,
-        note: description,
-        classification: "set_stimuli_notes",
-      });
-      if (res.status === 201) {
-        toast.success(
-          <ToastBox
-            headline={"Success"}
-            text={"Stimuli's notes were added successfully"}
-          />
-        );
-      }
-    } catch (e) {
-      console.log(e);
-      toast.error(
-        <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
-      );
-    }
-  };
 
   useEffect(() => {
     if (values && values.stimuli.length > 0) {
@@ -245,30 +221,13 @@ export default function Stimuli({
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
-      <form action="submit">
-        <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-          <div className="w-full">
-            <Text weight={"bold"} color={"grayReg"}>
-              Notes
-            </Text>
-
-            <div className="flex gap-2">
-              <textarea
-                defaultValue={description}
-                rows={2}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-                className={`border w-full border-gray-300 rounded-md p-2 `}
-              />
-            </div>
-          </div>
-          <div className="border-r-2 border-blue h-24"></div>
-          <div id="trash+submit">
-            <SubmitButton submit={handleNotes} />
-          </div>
-        </div>
-      </form>
+      <ExternalNotes
+        description={description}
+        setDescription={setDescription}
+        classification={classificationName}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
+      />
     </ExpandingBox>
   );
 }

@@ -2,13 +2,10 @@ import {
   AddFieldButton,
   ExpandingBox,
   SubmitButton,
-  Text,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
   CircledIndex,
-  ToastBox,
-  ToastErrorBox,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -17,8 +14,7 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
-import { setNotes } from "../../../apiHooks/setNotes";
-import { toast } from "react-toastify";
+import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Tasks({
   fieldOptions,
@@ -35,7 +31,6 @@ export default function Tasks({
   ]);
   const classificationName = "tasks";
 
-  console.log(values);
   const handleSubmit = SubmitClassificationField(
     study_pk,
     experiment_pk,
@@ -52,30 +47,6 @@ export default function Tasks({
     setFieldValues
   );
 
-  const handleNotes = async () => {
-    try {
-      const res = await setNotes({
-        study_pk,
-        experiment_pk,
-        note: description,
-        classification: "set_tasks_notes",
-      });
-      if (res.status === 201) {
-        toast.success(
-          <ToastBox
-            headline={"Success"}
-            text={"Task's notes were added successfully"}
-          />
-        );
-      }
-    } catch (e) {
-      console.log(e);
-      toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-      );
-    }
-  };
-
   useEffect(() => {
     if (values.tasks && values.tasks.length > 0) {
       setFieldValues(
@@ -88,6 +59,7 @@ export default function Tasks({
       );
     }
   }, []);
+
   return (
     <ExpandingBox
       number={
@@ -144,30 +116,13 @@ export default function Tasks({
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
-      <form action="submit">
-        <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-          <div className="w-full">
-            <Text weight={"bold"} color={"grayReg"}>
-              Notes
-            </Text>
-
-            <div className="flex gap-2">
-              <textarea
-                defaultValue={description}
-                rows={2}
-                onChange={(e) => {
-                  setDescription(e.target.value);
-                }}
-                className={`border w-full border-gray-300 rounded-md p-2 `}
-              />
-            </div>
-          </div>
-          <div className="border-r-2 border-blue h-24"></div>
-          <div id="trash+submit">
-            <SubmitButton submit={handleNotes} />
-          </div>
-        </div>
-      </form>
+      <ExternalNotes
+        description={description}
+        setDescription={setDescription}
+        classification={classificationName}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
+      />
     </ExpandingBox>
   );
 }

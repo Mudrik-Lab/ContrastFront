@@ -15,6 +15,7 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
+import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Paradigms({
   fieldOptions,
@@ -24,6 +25,7 @@ export default function Paradigms({
   study_pk,
   values,
 }) {
+  const [description, setDescription] = useState(values.paradigms || "");
   const [fieldValues, setFieldValues] = useState([
     {
       main: "",
@@ -31,7 +33,7 @@ export default function Paradigms({
       sub_type: "",
     },
   ]);
-  const classificationName = "paradigm";
+  const classificationName = "paradigms";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
@@ -72,7 +74,6 @@ export default function Paradigms({
     ),
   ];
 
-  console.log(values);
   return (
     <>
       <ExpandingBox
@@ -204,6 +205,13 @@ export default function Paradigms({
         <AddFieldButton
           fieldValues={fieldValues}
           setFieldValues={setFieldValues}
+        />
+        <ExternalNotes
+          description={description}
+          setDescription={setDescription}
+          classification={classificationName}
+          study_pk={study_pk}
+          experiment_pk={experiment_pk}
         />
       </ExpandingBox>
     </>

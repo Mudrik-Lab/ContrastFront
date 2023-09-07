@@ -7,7 +7,7 @@ export async function setNotes({
   classification,
 }) {
   return await queryApi({
-    url: `/studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classification}/`,
+    url: `/studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/set_${classification}_notes/`,
     method: "POST",
     isProtected: true,
     data: { note },
