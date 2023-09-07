@@ -41,14 +41,6 @@ export default function Interpretations({
     setFieldValues
   );
 
-  const handleDelete = DeleteClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
   useEffect(() => {
     if (values && values.length > 0) {
       setFieldValues(
@@ -57,12 +49,12 @@ export default function Interpretations({
             theory: row.theory.id,
             type: row.type,
             id: row.id,
+            parentTheoryId: row.theory.parent.id,
           };
         })
       );
     }
   }, []);
-  console.log(fieldValues);
   return (
     <ExpandingBox
       number={fieldOptions.length}
@@ -70,7 +62,7 @@ export default function Interpretations({
       headline={rawTextToShow(classificationName)}>
       {fieldValues
         .sort((a, b) => {
-          if (a.theory > b.theory) {
+          if (a.parentTheoryId > b.parentTheoryId) {
             return 1;
           } else {
             return -1;

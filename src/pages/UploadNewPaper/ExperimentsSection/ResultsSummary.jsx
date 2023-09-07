@@ -20,7 +20,6 @@ export default function ResultsSummary({
   study_pk,
   values,
 }) {
-  console.log(values);
   const [description, setDescription] = useState(values.tasks_notes || "");
   const [fieldValues, setFieldValues] = useState(values || "");
   const classificationName = "results_summary";

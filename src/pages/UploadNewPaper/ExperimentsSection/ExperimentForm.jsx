@@ -38,7 +38,6 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-  extraConfigSuccess && console.log(extraConfig.data);
   const {
     data,
     isSuccess,
@@ -106,6 +105,7 @@ export default function ExperimentForm({
   const theories = extraConfig?.data.available_theories?.map((theory) => ({
     value: theory.id,
     label: theory.name,
+    parentId: theory.parent_id,
   }));
   const findingTypes = extraConfig?.data.available_finding_tags_types?.map(
     (type) => ({
