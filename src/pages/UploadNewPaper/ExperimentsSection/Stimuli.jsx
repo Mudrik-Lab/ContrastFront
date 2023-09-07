@@ -7,6 +7,8 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  ToastBox,
+  ToastErrorBox,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -15,6 +17,8 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
+import { toast } from "react-toastify";
+import { setNotes } from "../../../apiHooks/setNotes";
 
 export default function Stimuli({
   fieldOptions,
@@ -25,12 +29,13 @@ export default function Stimuli({
   study_pk,
   values,
 }) {
+  console.log(values);
+  const [description, setDescription] = useState(values.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       category: "",
       sub_category: "",
       modality: "",
-      description: "",
       duration: "",
     },
   ]);
@@ -52,15 +57,38 @@ export default function Stimuli({
     setFieldValues
   );
 
+  const handleNotes = async () => {
+    try {
+      const res = await setNotes({
+        study_pk,
+        experiment_pk,
+        note: description,
+        classification: "set_stimuli_notes",
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Stimuli's notes were added successfully"}
+          />
+        );
+      }
+    } catch (e) {
+      console.log(e);
+      toast.error(
+        <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
+      );
+    }
+  };
+
   useEffect(() => {
-    if (values && values.length > 0) {
+    if (values && values.stimuli.length > 0) {
       setFieldValues(
-        values.map((row) => {
+        values.stimuli.map((row) => {
           return {
             category: row.category,
             sub_category: row.sub_category,
             modality: row.modality,
-            description: row.description,
             duration: row.duration,
             id: row.id,
           };
@@ -186,33 +214,6 @@ export default function Stimuli({
                       </div>
                     </div>
                   </div>
-                  <div className="w-full">
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Description
-                    </Text>
-
-                    <div className="flex gap-2">
-                      <textarea
-                        disabled={fieldValues[index].id}
-                        type="textarea"
-                        defaultValue={fieldValue.description}
-                        rows={2}
-                        onChange={(e) => {
-                          setFieldValues((prev) =>
-                            prev.map((item, i) =>
-                              i === index
-                                ? { ...item, description: e.target.value }
-                                : item
-                            )
-                          );
-                        }}
-                        className={`border w-full border-gray-300 rounded-md p-2 ${
-                          fieldValues[index].id &&
-                          "bg-grayDisable text-gray-400"
-                        } `}
-                      />
-                    </div>
-                  </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
                 <div id="trash+submit">
@@ -229,7 +230,6 @@ export default function Stimuli({
                       !(
                         fieldValue?.category &&
                         fieldValue?.sub_category &&
-                        fieldValue?.description &&
                         fieldValue?.duration &&
                         fieldValue?.modality
                       ) || fieldValue.id
@@ -245,6 +245,30 @@ export default function Stimuli({
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
+      <form action="submit">
+        <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+          <div className="w-full">
+            <Text weight={"bold"} color={"grayReg"}>
+              Notes
+            </Text>
+
+            <div className="flex gap-2">
+              <textarea
+                defaultValue={description}
+                rows={2}
+                onChange={(e) => {
+                  setDescription(e.target.value);
+                }}
+                className={`border w-full border-gray-300 rounded-md p-2 `}
+              />
+            </div>
+          </div>
+          <div className="border-r-2 border-blue h-24"></div>
+          <div id="trash+submit">
+            <SubmitButton submit={handleNotes} />
+          </div>
+        </div>
+      </form>
     </ExpandingBox>
   );
 }

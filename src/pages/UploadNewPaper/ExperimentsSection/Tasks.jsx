@@ -51,6 +51,7 @@ export default function Tasks({
     fieldValues,
     setFieldValues
   );
+
   const handleNotes = async () => {
     try {
       const res = await setNotes({
@@ -131,7 +132,7 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton submit={handleNotes} />
+                  <SubmitButton submit={handleSubmit} />
                 </div>
               </div>
             </form>

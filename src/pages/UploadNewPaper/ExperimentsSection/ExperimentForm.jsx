@@ -199,7 +199,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData?.stimuli}
+              values={experimentData}
             />
             <ConsciousnessMeasures
               fieldOptions={analysisMeasuresOptions}
