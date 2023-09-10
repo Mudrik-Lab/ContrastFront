@@ -38,9 +38,9 @@ export default function ExternalNotes({
   };
   return (
     <form action="submit">
-      <div className=" flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+      <div className=" flex gap-2 items-center p-2 bg-grayLight rounded-md">
         <div className="w-full">
-          <Text weight={"bold"} color={"grayReg"}>
+          <Text weight={"bold"} color={"blue"}>
             Notes
           </Text>
 
@@ -55,7 +55,7 @@ export default function ExternalNotes({
             />
           </div>
         </div>
-        <div className="border-r-2 border-blue h-24"></div>
+
         <div id="trash+submit">
           <SubmitButton submit={handleNotes} />
         </div>

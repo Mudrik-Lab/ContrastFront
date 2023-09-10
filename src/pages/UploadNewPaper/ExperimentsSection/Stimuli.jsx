@@ -30,7 +30,7 @@ export default function Stimuli({
   study_pk,
   values,
 }) {
-  const [description, setDescription] = useState(values.stimuli_notes || "");
+  const [description, setDescription] = useState(values?.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       category: "",

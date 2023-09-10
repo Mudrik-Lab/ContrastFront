@@ -25,7 +25,7 @@ export default function Paradigms({
   study_pk,
   values,
 }) {
-  const [description, setDescription] = useState(values.paradigms || "");
+  const [description, setDescription] = useState(values?.paradigms || "");
   const [fieldValues, setFieldValues] = useState([
     {
       main: "",
@@ -56,7 +56,7 @@ export default function Paradigms({
       setFieldValues(
         values.map((row) => {
           return {
-            main: row.parent.name,
+            main: row.parent?.name,
             specific: row.name,
             sub_type: row.sub_type,
             id: row.id,

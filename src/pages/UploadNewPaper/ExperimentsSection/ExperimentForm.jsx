@@ -259,7 +259,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
-              values={experimentData.results_summary}
+              values={experimentData?.results_summary}
             />
           </div>
 
