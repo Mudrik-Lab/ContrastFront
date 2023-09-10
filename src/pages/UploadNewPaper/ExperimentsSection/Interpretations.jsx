@@ -24,9 +24,9 @@ export default function Interpretations({
   values,
 }) {
   const [fieldValues, setFieldValues] = useState(
-    fieldOptions.map((filedOption) => {
+    fieldOptions.map((fieldOption) => {
       return {
-        theory: filedOption.value,
+        theory: fieldOption.value,
         type: "",
       };
     })
@@ -34,14 +34,6 @@ export default function Interpretations({
   const classificationName = "interpretations";
 
   const handleSubmit = SubmitClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
-  const handleDelete = DeleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
@@ -57,12 +49,12 @@ export default function Interpretations({
             theory: row.theory.id,
             type: row.type,
             id: row.id,
+            parentTheoryId: row.theory.parent.id,
           };
         })
       );
     }
   }, []);
-  console.log(fieldValues);
   return (
     <ExpandingBox
       number={fieldOptions.length}
@@ -70,7 +62,7 @@ export default function Interpretations({
       headline={rawTextToShow(classificationName)}>
       {fieldValues
         .sort((a, b) => {
-          if (a.theory > b.theory) {
+          if (a.parentTheoryId > b.parentTheoryId) {
             return 1;
           } else {
             return -1;

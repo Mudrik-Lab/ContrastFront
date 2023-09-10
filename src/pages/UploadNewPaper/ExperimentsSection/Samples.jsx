@@ -2,7 +2,6 @@ import {
   AddFieldButton,
   ExpandingBox,
   SubmitButton,
-  Text,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
@@ -14,7 +13,7 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
-import { ErrorMessage } from "formik";
+import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Samples({
   fieldOptions,
@@ -23,6 +22,7 @@ export default function Samples({
   study_pk,
   values,
 }) {
+  const [description, setDescription] = useState(values.samples_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       type: "",
@@ -49,9 +49,9 @@ export default function Samples({
   );
 
   useEffect(() => {
-    if (values && values.length > 0) {
+    if (values?.samples && values.samples.length > 0) {
       setFieldValues(
-        values.map((row) => {
+        values.samples.map((row) => {
           return {
             type: row.type,
             size_included: row.size_included,
@@ -203,6 +203,14 @@ export default function Samples({
       <AddFieldButton
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
+      />
+
+      <ExternalNotes
+        description={description}
+        setDescription={setDescription}
+        classification={classificationName}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );

@@ -2,7 +2,6 @@ import {
   AddFieldButton,
   ExpandingBox,
   SubmitButton,
-  Text,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
@@ -12,9 +11,8 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
-  rawTextToShow,
 } from "../../../Utils/functions";
-import { concsiousnessOptions } from "../../../Utils/HardCoded";
+import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function ConsciousnessMeasures({
   fieldOptions,
@@ -24,6 +22,9 @@ export default function ConsciousnessMeasures({
   study_pk,
   values,
 }) {
+  const [description, setDescription] = useState(
+    values.consciousness_measures_notes || ""
+  );
   const [fieldValues, setFieldValues] = useState([
     {
       type: "",
@@ -50,13 +51,12 @@ export default function ConsciousnessMeasures({
   );
 
   useEffect(() => {
-    if (values && values.length > 0) {
+    if (values && values.consciousness_measures.length > 0) {
       setFieldValues(
-        values.map((row) => {
+        values.consciousness_measures.map((row) => {
           return {
             type: row.type,
             phase: row.phase,
-            description: row.description,
             id: row.id,
           };
         })
@@ -121,33 +121,6 @@ export default function ConsciousnessMeasures({
                         />
                       </div>
                     </div>
-                    <div className="w-full">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Description
-                      </Text>
-
-                      <div className="flex gap-2">
-                        <textarea
-                          disabled={fieldValues[index].id}
-                          type="textarea"
-                          defaultValue={fieldValue.description}
-                          rows={4}
-                          onChange={(e) => {
-                            setFieldValues((prev) =>
-                              prev.map((item, i) =>
-                                i === index
-                                  ? { ...item, description: e.target.value }
-                                  : item
-                              )
-                            );
-                          }}
-                          className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
-                          } `}
-                        />
-                      </div>
-                    </div>
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
@@ -162,11 +135,7 @@ export default function ConsciousnessMeasures({
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={
-                      !(
-                        fieldValue?.description &&
-                        fieldValue?.phase &&
-                        fieldValue?.type
-                      ) || fieldValue.id
+                      !(fieldValue?.phase && fieldValue?.type) || fieldValue.id
                     }
                   />
                 </div>
@@ -178,6 +147,13 @@ export default function ConsciousnessMeasures({
       <AddFieldButton
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
+      />
+      <ExternalNotes
+        description={description}
+        setDescription={setDescription}
+        classification={classificationName}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );
