@@ -221,10 +221,11 @@ export default function Timings() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed className="text-sm">
-                Theory Family
-                <TooltipExplanation tooltip="few more words about Thory" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Theory Family"}
+                tooltip="few more words about Thory"
+              />
             </div>
             <div className={sideSectionClass}>
               {configSuccess && (
@@ -246,10 +247,11 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed className="text-sm">
-                Technique
-                <TooltipExplanation tooltip="few more words about techniques" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Technique"}
+                tooltip="few more words about techniques"
+              />
             </div>
             <div className={sideSectionClass}>
               {configSuccess && (
@@ -271,10 +273,11 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed className="text-sm">
-                Components
-                <TooltipExplanation tooltip="few more words about Finding Tags" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Components"}
+                tooltip="few more words about Finding Tags"
+              />
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}

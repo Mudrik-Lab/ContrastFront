@@ -270,7 +270,9 @@ export default function FreeQueriesBar() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
     function updateMultiFilterState(setState, queryName, optionsArr) {
+      console.log(queryParams.getAll(queryName));
       setState(
         queryParams.getAll(queryName).map((item) => {
           return {
@@ -280,7 +282,6 @@ export default function FreeQueriesBar() {
         })
       );
     }
-
     queryParams.get("is_reporting")
       ? setIsReporting(queryParams.get("is_reporting"))
       : setIsReporting("either");
@@ -358,15 +359,13 @@ export default function FreeQueriesBar() {
       );
     }
     navigate({ search: queryParams.toString() });
-  }, [searchParams]);
+  }, [searchParams, extraConfigSuccess]);
 
   const referrerUrl = document.referrer;
   const csvRef = useRef(null);
 
   useEffect(() => {
-    console.log(csvRef.current && referrerUrl.endsWith("/contact"));
     if (csvRef.current && referrerUrl.endsWith("/contact")) {
-      console.log("download");
       csvRef.current?.click();
     }
   }, [csvRef.current]);
@@ -399,10 +398,11 @@ export default function FreeQueriesBar() {
                     buildUrl(pageName, "breakdown", e.value, navigate);
                   }}
                 />
-                <Text className="text-sm" flexed>
-                  Parameter of interest
-                  <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
-                </Text>
+
+                <TooltipExplanation
+                  text={"Parameter of interest"}
+                  tooltip="Choose the dependent variable to be queried."
+                />
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}
@@ -416,10 +416,10 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-              <Text flexed lg weight="bold">
-                Filter by
-                <TooltipExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
-              </Text>
+              <TooltipExplanation
+                text={"Filter by"}
+                tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters."
+              />
               {extraConfigSuccess && (
                 <>
                   <div className={sideSectionClass}>

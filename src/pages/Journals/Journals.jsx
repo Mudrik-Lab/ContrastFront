@@ -145,10 +145,11 @@ export default function Journals() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed className="text-sm">
-                Theory Family
-                <TooltipExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
-              </Text>
+
+              <TooltipExplanation
+                text={"Theory Family"}
+                tooltip="You can use this to filter the result by a specific theory family or select none to not filter."
+              />
             </div>
 
             <TypeOfConsciousnessFilter

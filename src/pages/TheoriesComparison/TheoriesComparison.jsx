@@ -166,10 +166,10 @@ export default function ParametersDistributionTheoriesComparison() {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
             />
-            <Text className="text-sm" flexed>
-              Parameter of interest
-              <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
-            </Text>
+            <TooltipExplanation
+              text={"Parameter of interest"}
+              tooltip="Choose the dependent variable to be queried."
+            />
           </div>
           <div className={sideSectionClass}>
             <div className="flex justify-center items-center gap-3 mt-3">

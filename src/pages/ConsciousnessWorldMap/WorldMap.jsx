@@ -270,10 +270,10 @@ export default function WorldMap() {
                 }}
               />
               <div className={sectionClass}>
-                <Text flexed lg weight="bold">
-                  Theory Family
-                  <TooltipExplanation tooltip="few more words about Theories" />
-                </Text>
+                <TooltipExplanation
+                  text={"Theory Family"}
+                  tooltip="few more words about Theories"
+                />
 
                 <Select
                   className="text-lg w-[300px]"

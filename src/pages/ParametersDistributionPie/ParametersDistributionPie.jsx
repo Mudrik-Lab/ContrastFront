@@ -237,10 +237,10 @@ export default function ParametersDistributionPie() {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
             />
-            <Text className="text-sm" flexed>
-              Parameter of interest
-              <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
-            </Text>
+            <TooltipExplanation
+              text={"Parameter of interest"}
+              tooltip="Choose the dependent variable to be queried."
+            />
           </div>
           <TypeOfConsciousnessFilter
             checked={consciousness}

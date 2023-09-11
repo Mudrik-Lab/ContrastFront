@@ -190,10 +190,11 @@ export default function Frequencies() {
                       buildUrl(pageName, "theory", e?.value, navigate);
                     }}
                   />
-                  <Text className="text-sm">
-                    Theory Family
-                    <TooltipExplanation tooltip="few more words about Thory" />
-                  </Text>
+
+                  <TooltipExplanation
+                    text={"Theory Family"}
+                    tooltip="few more words about Thory"
+                  />
                 </div>
                 <div className={sideSectionClass}>
                   <Select
@@ -214,10 +215,10 @@ export default function Frequencies() {
                     }}
                   />
 
-                  <Text flexed className="text-sm">
-                    Technique
-                    <TooltipExplanation tooltip="few more words about techniques" />
-                  </Text>
+                  <TooltipExplanation
+                    text={"Technique"}
+                    tooltip="few more words about techniques"
+                  />
                 </div>
                 <TypeOfConsciousnessFilter
                   checked={consciousness}
