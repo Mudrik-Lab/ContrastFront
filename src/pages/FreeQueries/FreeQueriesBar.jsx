@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import {
   CSV,
@@ -11,6 +11,7 @@ import {
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
+  Button,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import {
@@ -27,12 +28,15 @@ import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ReactComponent as CsvIcon } from "../../assets/icons/csv-file.svg";
+
 import {
   buildUrl,
   buildUrlForMultiSelect,
   rawTextToShow,
 } from "../../Utils/functions";
 import getConfiguration from "../../apiHooks/getConfiguration";
+import NoResults from "../../components/NoResults";
 
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -233,7 +237,6 @@ export default function FreeQueriesBar() {
       })
   );
   const X1 = data?.data.map((row) => row.value).reverse();
-
   const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 
   var trace1 = {
@@ -358,15 +361,15 @@ export default function FreeQueriesBar() {
   }, [searchParams]);
 
   const referrerUrl = document.referrer;
-  const CsvButton = document.getElementById("download_csv");
+  const csvRef = useRef(null);
 
   useEffect(() => {
-    console.log(CsvButton && referrerUrl.endsWith("/contact"));
-    if (CsvButton && referrerUrl.endsWith("/contact")) {
+    console.log(csvRef.current && referrerUrl.endsWith("/contact"));
+    if (csvRef.current && referrerUrl.endsWith("/contact")) {
       console.log("download");
-      CsvButton.click();
+      csvRef.current?.click();
     }
-  }, [CsvButton]);
+  }, [csvRef.current]);
 
   return (
     <div>
@@ -694,46 +697,58 @@ export default function FreeQueriesBar() {
                 </>
               )}{" "}
               <div className="w-full flex items-center justify-between my-4">
-                <CSV data={data} />
+                <a
+                  href={data?.request.responseURL + "&is_csv=true"}
+                  id="download_csv"
+                  ref={csvRef}>
+                  <Button extraClass={"px-3 py-1.5 "}>
+                    <CsvIcon />
+                    Download
+                  </Button>
+                </a>
                 <Reset pageName={pageName} />
               </div>
             </SideControl>
           }
           graph={
-            <div>
+            <div className="h-full w-full">
               <TopGraphText
                 text={graphsHeaders[0].figureText}
                 firstLine={graphsHeaders[0].figureLine}
               />
-              <Plot
-                data={[trace1]}
-                config={plotConfig}
-                layout={{
-                  width: isMoblile ? screenWidth : screenWidth - 400,
-                  height: 35 * Y?.length + 250,
-                  margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 90 },
-                  xaxis: {
-                    title: "Number of experiments",
-                    zeroline: true,
-                    side: "top",
-                    tickfont: {
-                      size: 16,
-                      standoff: 50,
+              {X1?.length ? (
+                <Plot
+                  data={[trace1]}
+                  config={plotConfig}
+                  layout={{
+                    width: isMoblile ? screenWidth : screenWidth - 400,
+                    height: 35 * Y?.length + 250,
+                    margin: { autoexpand: true, l: 20 },
+                    legend: { itemwidth: 90 },
+                    xaxis: {
+                      title: "Number of experiments",
+                      zeroline: true,
+                      side: "top",
+                      tickfont: {
+                        size: 16,
+                        standoff: 50,
+                      },
                     },
-                  },
-                  yaxis: {
-                    automargin: true,
+                    yaxis: {
+                      automargin: true,
 
-                    ticks: "outside",
-                    tickangle: 315,
-                    tickfont: {
-                      size: 12,
-                      standoff: 50,
+                      ticks: "outside",
+                      tickangle: 315,
+                      tickfont: {
+                        size: 12,
+                        standoff: 50,
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
+              ) : (
+                <NoResults />
+              )}
             </div>
           }
         />

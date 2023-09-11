@@ -1,6 +1,5 @@
 import React from "react";
 import { CircledIndex, Text } from "../../components/Reusble";
-import { ENUM } from "../../Utils/HardCoded";
 
 export default function FindingsTags({ experiment, findingOptions }) {
   const Element = ({ headline, text }) => {
@@ -18,6 +17,11 @@ export default function FindingsTags({ experiment, findingOptions }) {
       </div>
     );
   };
+  const families = findingOptions?.families.reduce((result, item) => {
+    result[item.name] = item.id;
+    return result;
+  }, {});
+  console.log(families);
   return (
     <div className="flex flex-wrap justify-between gap-y-2 ">
       {experiment.finding_tags.map((tag, index) => {
@@ -53,12 +57,12 @@ export default function FindingsTags({ experiment, findingOptions }) {
                   }
                 />
 
-                {tag.family == ENUM.Temporal ? (
+                {tag.family == families["Temporal"] ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element headline={"Onset"} text={tag.onset} />
                     <Element headline={"Offset"} text={tag.offset} />
                   </div>
-                ) : tag.family == ENUM.Frequency ? (
+                ) : tag.family == families["Frequency"] ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element headline={"Direction"} text={tag.direction} />
                     <Element
@@ -74,14 +78,14 @@ export default function FindingsTags({ experiment, findingOptions }) {
                       text={tag.analysis_type}
                     />
                   </div>
-                ) : tag.family == ENUM.SpatialAreas ? (
+                ) : tag.family == families["SpatialAreas"] ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element
                       headline={" AAL atlas tag"}
                       text={tag.AAL_atlas_tag}
                     />
                   </div>
-                ) : tag.family == ENUM.Miscellaneous ? (
+                ) : tag.family == families["Miscellaneous"] ? (
                   <Element headline={"Notes"} text={tag.notes} />
                 ) : (
                   <></>

@@ -72,6 +72,10 @@ export default function Findings({
       );
     }
   }, []);
+  const families = fieldOptions.findingTagsFamilies.reduce((result, item) => {
+    result[item.label] = item.value;
+    return result;
+  }, {});
 
   return (
     <ExpandingBox
@@ -196,7 +200,7 @@ export default function Findings({
                     </div>
                   </div>
 
-                  {fieldValue.family == 1 ? (
+                  {fieldValue.family == families["Temporal"] ? (
                     <div className="flex gap-4 ">
                       <div className="flex gap-1 items-center">
                         <div className="w-1/3">
@@ -260,7 +264,8 @@ export default function Findings({
                         </div>
                       </div>
                     </div>
-                  ) : fieldValue.family == 2 && fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
+                  ) : fieldValue.family == families["Spatial Areas"] &&
+                    fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
                     <div className="flex gap-2 w-full">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
@@ -280,7 +285,7 @@ export default function Findings({
                         />
                       </div>
                     </div>
-                  ) : fieldValue.family == 3 ? (
+                  ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
                       <div className="flex gap-2 w-full">
                         <div className="w-1/3">
@@ -464,7 +469,7 @@ export default function Findings({
                         </div>
                       </div>
                     </div>
-                  ) : fieldValue.family == 4 ? (
+                  ) : fieldValue.family == families["miscellaneous"] ? (
                     <div></div>
                   ) : (
                     <div></div>

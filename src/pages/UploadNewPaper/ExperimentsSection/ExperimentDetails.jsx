@@ -43,7 +43,7 @@ export default function ExperimentDetails({
   };
   const paradigmsWithFamily = extraConfig?.data.available_paradigms;
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
-  console.log(experiment);
+
   return (
     <>
       {isSuccess && (

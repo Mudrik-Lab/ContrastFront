@@ -55,7 +55,6 @@ export default async function getFreeQueries({
   const interpretationTheoriesArr = interpretation_theories?.map(
     (item) => "&interpretation_theories=" + item.value
   );
-  console.log(interpretation_theories);
   const interpretationsArr = interpretations?.map(
     (item) => "&interpretations_types=" + item.value
   );

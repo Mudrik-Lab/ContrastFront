@@ -44,7 +44,7 @@ export default function ParametersDistributionBar() {
     [`parent_theories`],
     getConfiguration
   );
-
+  console.log(configuration?.data);
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
       value: parentTheory,

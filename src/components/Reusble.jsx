@@ -404,10 +404,10 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
     </div>
   );
 };
-export const CSV = ({ data }) => {
+export const CSV = ({ data, ref }) => {
   return (
     <a href={data?.request.responseURL + "&is_csv=true"} id="download_csv">
-      <Button extraClass={"px-3 py-1.5 "}>
+      <Button extraClass={"px-3 py-1.5 "} ref={ref}>
         <CsvIcon />
         Download
       </Button>
