@@ -35,6 +35,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import NoResults from "../../components/NoResults";
 
 export default function ParametersDistributionPie() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -212,6 +213,7 @@ export default function ParametersDistributionPie() {
     }
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+
   return (
     <PageTemplate
       control={
@@ -267,7 +269,7 @@ export default function ParametersDistributionPie() {
         </SideControl>
       }
       graph={
-        <div>
+        <div className="h-full">
           <TopGraphText
             text={graphsHeaders[3].figureText}
             legendLine={graphsHeaders[3].legendLine}
@@ -275,7 +277,7 @@ export default function ParametersDistributionPie() {
           />
           {isLoading ? (
             <Spinner />
-          ) : (
+          ) : data?.data.length ? (
             graphData.length && (
               <div>
                 {graphData[0].name !== "drilled" ? (
@@ -309,6 +311,8 @@ export default function ParametersDistributionPie() {
                 )}
               </div>
             )
+          ) : (
+            <NoResults />
           )}
         </div>
       }

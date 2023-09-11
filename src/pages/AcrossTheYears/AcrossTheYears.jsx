@@ -22,6 +22,7 @@ import {
   screenHeight,
   screenWidth,
   sideSectionClass,
+  sideWidth,
 } from "../../Utils/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
@@ -29,6 +30,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
+import NoResults from "../../components/NoResults";
 
 export default function AcrossTheYears() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -162,14 +164,14 @@ export default function AcrossTheYears() {
           </SideControl>
         }
         graph={
-          <div>
+          <div className="h-full">
             <TopGraphText
               text={graphsHeaders[4].figureText}
               firstLine={graphsHeaders[4].figureLine}
             />
             {isLoading ? (
               <Spinner />
-            ) : (
+            ) : graphsData.length ? (
               <Plot
                 data={graphsData}
                 config={plotConfig}
@@ -201,10 +203,12 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: isMoblile ? screenWidth : screenWidth - 370,
-                  height: screenHeight - 200,
+                  width: screenWidth,
+                  height: screenHeight,
                 }}
               />
+            ) : (
+              <NoResults />
             )}
           </div>
         }

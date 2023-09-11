@@ -28,6 +28,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
+import NoResults from "../../components/NoResults";
 
 export default function Frequencies() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -254,6 +255,8 @@ export default function Frequencies() {
 
                 {isLoading ? (
                   <Spinner />
+                ) : !traces.length ? (
+                  <NoResults />
                 ) : (
                   <div className="h-full flex gap-4 items-center">
                     <Plot

@@ -2,7 +2,9 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import {
+  footerHeight,
   isMoblile,
+  navHeight,
   parametersOptions,
   plotConfig,
   screenWidth,
@@ -30,6 +32,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import NoResults from "../../components/NoResults";
 
 export default function ParametersDistributionTheoriesComparison() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -212,17 +215,15 @@ export default function ParametersDistributionTheoriesComparison() {
         </SideControl>
       }
       graph={
-        <div>
+        <div style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
           <TopGraphText
             text={graphsHeaders[1].figureText}
             firstLine={graphsHeaders[1].figureLine}
           />
-          <div className="four-wheels mx-auto max-w-[1800px] ">
+          <div className="four-wheels mx-auto max-w-[1800px] h-full ">
             {isLoading ? (
               <Spinner />
-            ) : (
-              keysColors &&
-              isSuccess &&
+            ) : keysColors && isSuccess && chartsData.length ? (
               chartsData?.map((chart) => (
                 <Plot
                   key={chart.series_name}
@@ -268,6 +269,8 @@ export default function ParametersDistributionTheoriesComparison() {
                   }}
                 />
               ))
+            ) : (
+              <NoResults />
             )}
           </div>
         </div>

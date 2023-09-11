@@ -16,7 +16,9 @@ import {
 import Plot from "react-plotly.js";
 import {
   available_populations,
+  footerHeight,
   isMoblile,
+  navHeight,
   parametersOptions,
   plotConfig,
   screenWidth,
@@ -711,7 +713,8 @@ export default function FreeQueriesBar() {
             </SideControl>
           }
           graph={
-            <div className="h-full w-full">
+            <div
+              style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
               <TopGraphText
                 text={graphsHeaders[0].figureText}
                 firstLine={graphsHeaders[0].figureLine}
