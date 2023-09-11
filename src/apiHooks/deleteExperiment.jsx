@@ -15,7 +15,10 @@ export async function deletePropertyFromExperiment({
   property_id,
 }) {
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/remove_${classificationName}/`,
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/remove_${classificationName.slice(
+      0,
+      classificationName.length - 1
+    )}/`,
     method: "POST",
     isProtected: true,
     data: { id: property_id },
@@ -25,11 +28,11 @@ export async function deletePropertyFromExperiment({
 export async function deleteFieldFromExperiments({
   study_pk,
   experiment_pk,
-  field_name,
+  classificationName,
   id,
 }) {
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${field_name}/${id}/`,
+    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classificationName}/${id}/`,
     method: "DELETE",
     isProtected: true,
   });

@@ -1,5 +1,6 @@
 import React from "react";
-import { Text } from "../../components/Reusble";
+import { CircledIndex, Text } from "../../components/Reusble";
+import { ENUM } from "../../Utils/HardCoded";
 
 export default function FindingsTags({ experiment, findingOptions }) {
   const Element = ({ headline, text }) => {
@@ -23,13 +24,11 @@ export default function FindingsTags({ experiment, findingOptions }) {
         return (
           <div
             className="flex w-[49%] items-start border border-blue border-x-4 p-2 rounded-md overflow-hidden"
-            key={tag.type * index}>
-            <div className="w-4">
-              <Text weight={"bold"} color={"blue"}>
-                {index + 1}
-              </Text>
+            key={tag.type + index}>
+            <div className="h-full flex items-center">
+              <CircledIndex index={index} />
             </div>
-            <div className="flex flex-col gap-2 w-full">
+            <div className="flex flex-col gap-2 w-full ">
               <div className=" w-full flex flex-col gap-2">
                 <Element
                   headline={"Technique"}
@@ -54,17 +53,14 @@ export default function FindingsTags({ experiment, findingOptions }) {
                   }
                 />
 
-                {tag.family === "Temporal" ? (
+                {tag.family == ENUM.Temporal ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element headline={"Onset"} text={tag.onset} />
                     <Element headline={"Offset"} text={tag.offset} />
                   </div>
-                ) : tag.family === "Frequency" ? (
+                ) : tag.family == ENUM.Frequency ? (
                   <div className=" w-full flex flex-col gap-2">
-                    <Element
-                      headline={"Correlation sign"}
-                      text={tag.correlation_sign}
-                    />
+                    <Element headline={"Direction"} text={tag.direction} />
                     <Element
                       headline={" Band lower bound"}
                       text={tag.band_lower_bound}
@@ -78,14 +74,14 @@ export default function FindingsTags({ experiment, findingOptions }) {
                       text={tag.analysis_type}
                     />
                   </div>
-                ) : tag.family === "Spatial Areas" ? (
+                ) : tag.family == ENUM.SpatialAreas ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element
                       headline={" AAL atlas tag"}
                       text={tag.AAL_atlas_tag}
                     />
                   </div>
-                ) : tag.family === "Miscellaneous" ? (
+                ) : tag.family == ENUM.Miscellaneous ? (
                   <Element headline={"Notes"} text={tag.notes} />
                 ) : (
                   <></>

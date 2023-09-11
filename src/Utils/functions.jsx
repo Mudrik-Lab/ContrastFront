@@ -179,9 +179,10 @@ export function SubmitClassificationField(
   setFieldValues
 ) {
   return async (values, index) => {
+    console.log({ values, index });
     if (
-      classificationName !== "paradigm" &&
-      classificationName !== "technique"
+      classificationName !== "paradigms" &&
+      classificationName !== "techniques"
     ) {
       try {
         const res = await addFieldToexperiment({
@@ -190,8 +191,8 @@ export function SubmitClassificationField(
           experiment_pk,
           field_name: classificationName,
         });
+
         if (res.status === 201) {
-          console.log(res);
           toast.success(
             <ToastBox
               headline={"Success"}
@@ -207,7 +208,7 @@ export function SubmitClassificationField(
         }
       } catch (e) {
         toast.error(
-          <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+          <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
         );
       }
     } else {
@@ -256,14 +257,14 @@ export function DeleteClassificationField(
     }
 
     if (
-      classificationName !== "paradigm" &&
-      classificationName !== "technique"
+      classificationName !== "paradigms" &&
+      classificationName !== "techniques"
     ) {
       try {
         const res = await deleteFieldFromExperiments({
           study_pk,
           experiment_pk,
-          field_name: classificationName,
+          classificationName,
           id: values[index].id,
         });
         if (res.status === 204) {

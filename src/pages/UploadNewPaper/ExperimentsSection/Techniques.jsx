@@ -29,7 +29,7 @@ export default function Techniques({
       technique: "",
     },
   ]);
-  const classificationName = "technique";
+  const classificationName = "techniques";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,

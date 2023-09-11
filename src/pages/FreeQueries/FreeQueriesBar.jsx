@@ -357,6 +357,17 @@ export default function FreeQueriesBar() {
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
+  const referrerUrl = document.referrer;
+  const CsvButton = document.getElementById("download_csv");
+
+  useEffect(() => {
+    console.log(CsvButton && referrerUrl.endsWith("/contact"));
+    if (CsvButton && referrerUrl.endsWith("/contact")) {
+      console.log("download");
+      CsvButton.click();
+    }
+  }, [CsvButton]);
+
   return (
     <div>
       {extraConfigSuccess && (

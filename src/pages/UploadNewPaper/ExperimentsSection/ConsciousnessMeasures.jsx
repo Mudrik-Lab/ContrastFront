@@ -23,7 +23,7 @@ export default function ConsciousnessMeasures({
   values,
 }) {
   const [description, setDescription] = useState(
-    values.consciousness_measures_notes || ""
+    values?.consciousness_measures_notes || ""
   );
   const [fieldValues, setFieldValues] = useState([
     {

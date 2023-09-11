@@ -23,7 +23,7 @@ export default function Tasks({
   study_pk,
   values,
 }) {
-  const [description, setDescription] = useState(values.tasks_notes || "");
+  const [description, setDescription] = useState(values?.tasks_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       type: "",
@@ -48,7 +48,7 @@ export default function Tasks({
   );
 
   useEffect(() => {
-    if (values.tasks && values.tasks.length > 0) {
+    if (values?.tasks && values.tasks.length > 0) {
       setFieldValues(
         values.tasks.map((row) => {
           return {
@@ -104,7 +104,11 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton submit={handleSubmit} />
+                  <SubmitButton
+                    submit={() => {
+                      handleSubmit(fieldValues, index);
+                    }}
+                  />
                 </div>
               </div>
             </form>

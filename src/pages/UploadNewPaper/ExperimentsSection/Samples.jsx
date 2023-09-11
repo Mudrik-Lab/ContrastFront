@@ -22,7 +22,7 @@ export default function Samples({
   study_pk,
   values,
 }) {
-  const [description, setDescription] = useState(values.samples_notes || "");
+  const [description, setDescription] = useState(values?.samples_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       type: "",

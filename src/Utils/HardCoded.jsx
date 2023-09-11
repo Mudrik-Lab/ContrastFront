@@ -24,7 +24,12 @@ export const plotConfig = {
   displaylogo: false,
 };
 export const isMoblile = screenWidth < 600;
-
+export const ENUM = {
+  Temporal: 1,
+  SpatialAreas: 2,
+  Frequency: 3,
+  Miscellaneous: 4,
+};
 export const interpretationTypes = [
   { label: "Supports", value: "pro" },
   { label: "Challenges", value: "challenges" },
