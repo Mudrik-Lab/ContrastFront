@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import {
   CSV,
@@ -11,11 +11,14 @@ import {
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
+  Button,
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import {
   available_populations,
+  footerHeight,
   isMoblile,
+  navHeight,
   parametersOptions,
   plotConfig,
   screenWidth,
@@ -27,12 +30,15 @@ import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { ReactComponent as CsvIcon } from "../../assets/icons/csv-file.svg";
+
 import {
   buildUrl,
   buildUrlForMultiSelect,
   rawTextToShow,
 } from "../../Utils/functions";
 import getConfiguration from "../../apiHooks/getConfiguration";
+import NoResults from "../../components/NoResults";
 
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -233,7 +239,6 @@ export default function FreeQueriesBar() {
       })
   );
   const X1 = data?.data.map((row) => row.value).reverse();
-
   const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 
   var trace1 = {
@@ -267,7 +272,9 @@ export default function FreeQueriesBar() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
     function updateMultiFilterState(setState, queryName, optionsArr) {
+      console.log(queryParams.getAll(queryName));
       setState(
         queryParams.getAll(queryName).map((item) => {
           return {
@@ -277,7 +284,6 @@ export default function FreeQueriesBar() {
         })
       );
     }
-
     queryParams.get("is_reporting")
       ? setIsReporting(queryParams.get("is_reporting"))
       : setIsReporting("either");
@@ -355,18 +361,16 @@ export default function FreeQueriesBar() {
       );
     }
     navigate({ search: queryParams.toString() });
-  }, [searchParams]);
+  }, [searchParams, extraConfigSuccess]);
 
   const referrerUrl = document.referrer;
-  const CsvButton = document.getElementById("download_csv");
+  const csvRef = useRef(null);
 
   useEffect(() => {
-    console.log(CsvButton && referrerUrl.endsWith("/contact"));
-    if (CsvButton && referrerUrl.endsWith("/contact")) {
-      console.log("download");
-      CsvButton.click();
+    if (csvRef.current && referrerUrl.endsWith("/contact")) {
+      csvRef.current?.click();
     }
-  }, [CsvButton]);
+  }, [csvRef.current]);
 
   return (
     <div>
@@ -396,10 +400,11 @@ export default function FreeQueriesBar() {
                     buildUrl(pageName, "breakdown", e.value, navigate);
                   }}
                 />
-                <Text className="text-sm" flexed>
-                  Parameter of interest
-                  <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
-                </Text>
+
+                <TooltipExplanation
+                  text={"Parameter of interest"}
+                  tooltip="Choose the dependent variable to be queried."
+                />
               </div>
               <TypeOfConsciousnessFilter
                 checked={consciousness}
@@ -413,10 +418,10 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "is_reporting", e, navigate);
                 }}
               />
-              <Text flexed lg weight="bold">
-                Filter by
-                <TooltipExplanation tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters." />
-              </Text>
+              <TooltipExplanation
+                text={"Filter by"}
+                tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters."
+              />
               {extraConfigSuccess && (
                 <>
                   <div className={sideSectionClass}>
@@ -694,46 +699,59 @@ export default function FreeQueriesBar() {
                 </>
               )}{" "}
               <div className="w-full flex items-center justify-between my-4">
-                <CSV data={data} />
+                <a
+                  href={data?.request.responseURL + "&is_csv=true"}
+                  id="download_csv"
+                  ref={csvRef}>
+                  <Button extraClass={"px-3 py-1.5 "}>
+                    <CsvIcon />
+                    Download
+                  </Button>
+                </a>
                 <Reset pageName={pageName} />
               </div>
             </SideControl>
           }
           graph={
-            <div>
+            <div
+              style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
               <TopGraphText
                 text={graphsHeaders[0].figureText}
                 firstLine={graphsHeaders[0].figureLine}
               />
-              <Plot
-                data={[trace1]}
-                config={plotConfig}
-                layout={{
-                  width: isMoblile ? screenWidth : screenWidth - 400,
-                  height: 35 * Y?.length + 250,
-                  margin: { autoexpand: true, l: 20 },
-                  legend: { itemwidth: 90 },
-                  xaxis: {
-                    title: "Number of experiments",
-                    zeroline: true,
-                    side: "top",
-                    tickfont: {
-                      size: 16,
-                      standoff: 50,
+              {X1?.length ? (
+                <Plot
+                  data={[trace1]}
+                  config={plotConfig}
+                  layout={{
+                    width: isMoblile ? screenWidth : screenWidth - 400,
+                    height: 35 * Y?.length + 250,
+                    margin: { autoexpand: true, l: 20 },
+                    legend: { itemwidth: 90 },
+                    xaxis: {
+                      title: "Number of experiments",
+                      zeroline: true,
+                      side: "top",
+                      tickfont: {
+                        size: 16,
+                        standoff: 50,
+                      },
                     },
-                  },
-                  yaxis: {
-                    automargin: true,
+                    yaxis: {
+                      automargin: true,
 
-                    ticks: "outside",
-                    tickangle: 315,
-                    tickfont: {
-                      size: 12,
-                      standoff: 50,
+                      ticks: "outside",
+                      tickangle: 315,
+                      tickfont: {
+                        size: 12,
+                        standoff: 50,
+                      },
                     },
-                  },
-                }}
-              />
+                  }}
+                />
+              ) : (
+                <NoResults />
+              )}
             </div>
           }
         />

@@ -28,6 +28,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
+import NoResults from "../../components/NoResults";
 
 export default function Frequencies() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -190,10 +191,11 @@ export default function Frequencies() {
                       buildUrl(pageName, "theory", e?.value, navigate);
                     }}
                   />
-                  <Text className="text-sm">
-                    Theory Family
-                    <TooltipExplanation tooltip="few more words about Thory" />
-                  </Text>
+
+                  <TooltipExplanation
+                    text={"Theory Family"}
+                    tooltip="few more words about Thory"
+                  />
                 </div>
                 <div className={sideSectionClass}>
                   <Select
@@ -214,10 +216,10 @@ export default function Frequencies() {
                     }}
                   />
 
-                  <Text flexed className="text-sm">
-                    Technique
-                    <TooltipExplanation tooltip="few more words about techniques" />
-                  </Text>
+                  <TooltipExplanation
+                    text={"Technique"}
+                    tooltip="few more words about techniques"
+                  />
                 </div>
                 <TypeOfConsciousnessFilter
                   checked={consciousness}
@@ -253,6 +255,8 @@ export default function Frequencies() {
 
                 {isLoading ? (
                   <Spinner />
+                ) : !traces.length ? (
+                  <NoResults />
                 ) : (
                   <div className="h-full flex gap-4 items-center">
                     <Plot

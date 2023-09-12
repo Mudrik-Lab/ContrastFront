@@ -29,6 +29,7 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import PageTemplate from "../../components/PageTemplate";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
+import NoResults from "../../components/NoResults";
 
 export default function Timings() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -221,10 +222,11 @@ export default function Timings() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed className="text-sm">
-                Theory Family
-                <TooltipExplanation tooltip="few more words about Thory" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Theory Family"}
+                tooltip="few more words about Thory"
+              />
             </div>
             <div className={sideSectionClass}>
               {configSuccess && (
@@ -246,10 +248,11 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed className="text-sm">
-                Technique
-                <TooltipExplanation tooltip="few more words about techniques" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Technique"}
+                tooltip="few more words about techniques"
+              />
             </div>
             <div className={sideSectionClass}>
               {configSuccess && (
@@ -271,10 +274,11 @@ export default function Timings() {
                   }
                 />
               )}
-              <Text flexed className="text-sm">
-                Components
-                <TooltipExplanation tooltip="few more words about Finding Tags" />
-              </Text>
+
+              <TooltipExplanation
+                text={"Components"}
+                tooltip="few more words about Finding Tags"
+              />
             </div>
             <TypeOfConsciousnessFilter
               checked={consciousness}
@@ -302,7 +306,7 @@ export default function Timings() {
           </SideControl>
         }
         graph={
-          <div style={{ height: "calc(100% - 100px)" }}>
+          <div className="h-full">
             <TopGraphText
               text={graphsHeaders[6].figureText}
               firstLine={graphsHeaders[6].figureLine}
@@ -310,6 +314,8 @@ export default function Timings() {
             />
             {isLoading ? (
               <Spinner />
+            ) : !traces.length ? (
+              <NoResults />
             ) : (
               <div className=" w-full h-full flex gap-2">
                 <Plot

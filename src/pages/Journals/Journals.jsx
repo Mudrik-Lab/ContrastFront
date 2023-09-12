@@ -30,6 +30,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { buildUrl } from "../../Utils/functions";
+import NoResults from "../../components/NoResults";
 
 export default function Journals() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -145,10 +146,11 @@ export default function Journals() {
                   buildUrl(pageName, "theory", e?.value, navigate);
                 }}
               />
-              <Text flexed className="text-sm">
-                Theory Family
-                <TooltipExplanation tooltip="You can use this to filter the result by a specific theory family or select none to not filter." />
-              </Text>
+
+              <TooltipExplanation
+                text={"Theory Family"}
+                tooltip="You can use this to filter the result by a specific theory family or select none to not filter."
+              />
             </div>
 
             <TypeOfConsciousnessFilter
@@ -183,13 +185,15 @@ export default function Journals() {
             />
             {isLoading ? (
               <Spinner />
+            ) : !data?.data.length ? (
+              <NoResults />
             ) : (
               <Plot
                 data={[trace1]}
                 config={plotConfig}
                 layout={{
                   autosize: false,
-                  width: isMoblile ? screenWidth : screenWidth - 400,
+                  width: screenWidth,
                   height: 35 * Y?.length + 350,
                   showlegend: false,
 

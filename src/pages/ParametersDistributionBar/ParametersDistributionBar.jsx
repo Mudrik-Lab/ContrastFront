@@ -44,12 +44,10 @@ export default function ParametersDistributionBar() {
     [`parent_theories`],
     getConfiguration
   );
-
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
       value: parentTheory,
       label: parentTheory,
-      color: "#" + Math.floor(Math.random() * 16777215).toString(16),
     })
   );
 
@@ -153,13 +151,13 @@ export default function ParametersDistributionBar() {
       });
     } else {
       setSelectedParent({
-        value: "Global Workspace",
-        label: "Global Workspace",
+        value: "Global Workspace theories",
+        label: "Global Workspace theories",
       });
     }
 
     navigate({ search: queryParams.toString() });
-  }, [searchParams]);
+  }, [searchParams, parentTheories]);
 
   return (
     <div>
@@ -209,10 +207,10 @@ export default function ParametersDistributionBar() {
                     buildUrl(pageName, "breakdown", e.value, navigate);
                   }}
                 />
-                <Text className="text-sm" flexed>
-                  Parameter of interest
-                  <TooltipExplanation tooltip="Choose the dependent variable to be queried." />
-                </Text>
+                <TooltipExplanation
+                  text={"Parameter of interest"}
+                  tooltip="Choose the dependent variable to be queried."
+                />
               </div>
 
               <ReportFilter

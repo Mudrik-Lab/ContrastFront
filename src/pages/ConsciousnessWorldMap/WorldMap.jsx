@@ -22,6 +22,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
+import NoResults from "../../components/NoResults";
 
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -270,10 +271,10 @@ export default function WorldMap() {
                 }}
               />
               <div className={sectionClass}>
-                <Text flexed lg weight="bold">
-                  Theory Family
-                  <TooltipExplanation tooltip="few more words about Theories" />
-                </Text>
+                <TooltipExplanation
+                  text={"Theory Family"}
+                  tooltip="few more words about Theories"
+                />
 
                 <Select
                   className="text-lg w-[300px]"
@@ -320,6 +321,8 @@ export default function WorldMap() {
               />
               {isLoading ? (
                 <Spinner />
+              ) : !data?.data.length ? (
+                <NoResults />
               ) : (
                 <Plot
                   data={graphData}

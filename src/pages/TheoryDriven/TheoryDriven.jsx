@@ -8,7 +8,6 @@ import {
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   RangeInput,
@@ -29,6 +28,7 @@ import PageTemplate from "../../components/PageTemplate";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { designerColors } from "../../Utils/Colors";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import NoResults from "../../components/NoResults";
 
 export default function TheoryDriven() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -74,7 +74,8 @@ export default function TheoryDriven() {
   const labels2 = [];
   const cleanLabels2 = [];
 
-  data?.data.map((x, index) => {
+  const chartsData = data?.data;
+  chartsData?.map((x, index) => {
     values1.push(x.value);
     labels1.push(x.series_name);
     x.series.map((y) => {
@@ -84,7 +85,6 @@ export default function TheoryDriven() {
     });
   });
 
-  const chartsData = data?.data;
   const keysArr = [];
   chartsData?.map((theory) =>
     theory.series.map((row) => keysArr.push(row.key))
@@ -219,7 +219,7 @@ export default function TheoryDriven() {
         </SideControl>
       }
       graph={
-        <div>
+        <div className="h-full">
           <TopGraphText
             text={graphsHeaders[5].figureText}
             firstLine={graphsHeaders[5].figureLine}
@@ -227,36 +227,31 @@ export default function TheoryDriven() {
           />
           {isLoading ? (
             <Spinner />
+          ) : chartsData.length ? (
+            <Plot
+              onClick={(e) => {
+                setIsSpecificTheory(!isSpecificTheory);
+                isSpecificTheory
+                  ? buildUrl(pageName, "theory_driven", "either", navigate)
+                  : e.points[0].label === "Post Hoc"
+                  ? buildUrl(pageName, "theory_driven", "post-hoc", navigate)
+                  : e.points[0].label === "Driven"
+                  ? buildUrl(pageName, "theory_driven", "driven", navigate)
+                  : e.points[0].label === "Mentioning"
+                  ? buildUrl(pageName, "theory_driven", "mentioning", navigate)
+                  : buildUrl(pageName, "theory_driven", "either", navigate);
+              }}
+              data={graphData}
+              config={plotConfig}
+              layout={{
+                width: isMoblile ? screenWidth : screenHeight,
+                height: isMoblile ? screenWidth : screenHeight,
+                showlegend: false,
+                annotations: [{ showarrow: false, text: "" }],
+              }}
+            />
           ) : (
-            <div>
-              <Plot
-                onClick={(e) => {
-                  setIsSpecificTheory(!isSpecificTheory);
-                  isSpecificTheory
-                    ? buildUrl(pageName, "theory_driven", "either", navigate)
-                    : e.points[0].label === "Post Hoc"
-                    ? buildUrl(pageName, "theory_driven", "post-hoc", navigate)
-                    : e.points[0].label === "Driven"
-                    ? buildUrl(pageName, "theory_driven", "driven", navigate)
-                    : e.points[0].label === "Mentioning"
-                    ? buildUrl(
-                        pageName,
-                        "theory_driven",
-                        "mentioning",
-                        navigate
-                      )
-                    : buildUrl(pageName, "theory_driven", "either", navigate);
-                }}
-                data={graphData}
-                config={plotConfig}
-                layout={{
-                  width: isMoblile ? screenWidth : screenHeight,
-                  height: isMoblile ? screenWidth : screenHeight,
-                  showlegend: false,
-                  annotations: [{ showarrow: false, text: "" }],
-                }}
-              />
-            </div>
+            <NoResults />
           )}
         </div>
       }
