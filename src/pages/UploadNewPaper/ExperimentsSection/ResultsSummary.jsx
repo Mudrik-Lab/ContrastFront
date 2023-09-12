@@ -21,7 +21,6 @@ export default function ResultsSummary({
   values,
 }) {
   const [description, setDescription] = useState(values?.tasks_notes || "");
-  const [fieldValues, setFieldValues] = useState(values || "");
   const classificationName = "results_summary";
 
   return (

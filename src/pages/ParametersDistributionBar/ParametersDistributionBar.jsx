@@ -189,10 +189,10 @@ export default function ParametersDistributionBar() {
                     buildUrl(pageName, "theory", e?.value, navigate);
                   }}
                 />
-                <Text className="text-sm" flexed>
-                  Theory Family
-                  <TooltipExplanation tooltip="few more words about Theory" />
-                </Text>
+                <TooltipExplanation
+                  text={"Theory Family"}
+                  tooltip="few more words about Theory"
+                />
               </div>
               <div className={sideSectionClass}>
                 <Select

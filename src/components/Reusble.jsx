@@ -241,7 +241,6 @@ export const RangeInput = ({ number, setNumber }) => {
   useEffect(() => {
     setLabel(number);
   }, [number]);
-  console.log(label);
   return (
     <div className={sideSectionClass}>
       <div className="relative">
