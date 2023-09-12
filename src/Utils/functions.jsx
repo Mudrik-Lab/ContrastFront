@@ -148,15 +148,26 @@ function updateClass(classToFind, newClass) {
     element.setAttribute("class", updatedClasses.join(" "));
   });
 }
-export function updateTextClass() {
-  updateClass("text-5xl", "text-7xl");
-  updateClass("text-4xl", "text-6xl");
-  updateClass("text-3xl", "text-5xl");
-  updateClass("text-xl", "text-3xl");
-  updateClass("text-lg", "text-3xl");
-  updateClass("text-base", "text-2xl");
-  updateClass("text-sm", "text-xl");
-  updateClass("text-xs", "text-lg");
+export function updateTextClass(isBiggerText) {
+  if (!isBiggerText) {
+    updateClass("text-5xl", "text-7xl");
+    updateClass("text-4xl", "text-6xl");
+    updateClass("text-3xl", "text-5xl");
+    updateClass("text-xl", "text-3xl");
+    updateClass("text-lg", "text-3xl");
+    updateClass("text-base", "text-2xl");
+    updateClass("text-sm", "text-xl");
+    updateClass("text-xs", "text-lg");
+  } else {
+    updateClass("text-7xl", "text-5xl");
+    updateClass("text-6xl", "text-4xl");
+    updateClass("text-5xl", "text-3xl");
+    updateClass("text-3xl", "text-xl");
+    updateClass("text-3xl", "text-lg");
+    updateClass("text-2xl", "text-base");
+    updateClass("text-xl", "text-sm");
+    updateClass("text-lg", "text-xs");
+  }
 }
 export const generateSelectOptions = (start, end) => {
   const options = [];
