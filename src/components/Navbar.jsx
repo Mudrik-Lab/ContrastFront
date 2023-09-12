@@ -222,7 +222,7 @@ export default function Navbar() {
                 </li>
                 <li>
                   <Tooltip
-                    placement="left"
+                    placement="right"
                     content={
                       !snap.auth
                         ? "Registration is needed before uploading study"
