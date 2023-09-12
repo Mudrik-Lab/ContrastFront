@@ -103,7 +103,7 @@ export default function ParametersDistributionTheoriesComparison() {
   [...new Set(trimedKeysArr)]?.map((key, index) => {
     keysColors[key] = someColors[index];
   });
-
+  console.log(experimentsNum);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -143,6 +143,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+
   return (
     <PageTemplate
       control={
@@ -150,12 +151,14 @@ export default function ParametersDistributionTheoriesComparison() {
           <Text lg weight="bold">
             Axis Controls
           </Text>
+
           <RangeInput
             number={experimentsNum}
             setNumber={(e) => {
               buildUrl(pageName, "min_number_of_experiments", e, navigate);
             }}
           />
+
           <div className={sideSectionClass}>
             <Select
               className="text-lg w-[300px]"

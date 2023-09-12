@@ -269,12 +269,11 @@ export default function FreeQueriesBar() {
       fontSize: 16,
     }),
   };
-
+  console.log(experimentsNum);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
     function updateMultiFilterState(setState, queryName, optionsArr) {
-      console.log(queryParams.getAll(queryName));
       setState(
         queryParams.getAll(queryName).map((item) => {
           return {
