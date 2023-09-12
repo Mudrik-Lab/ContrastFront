@@ -79,13 +79,12 @@ function App() {
                 text={"Increase contrast"}
                 onClick={() => setIsHighContrast(true)}></BigButton>
               <BigButton
-                extraClass={classNames(`${isBiggerText ? "opacity-50" : ""}`)}
                 icon={<TextIcon />}
-                disabled={isBiggerText}
-                text={"Enlarge text"}
+                text={isBiggerText ? "Reduce text size" : "Enlarge text"}
                 onClick={() => {
-                  updateTextClass();
-                  setIsBiggerText(true);
+                  console.log(isBiggerText);
+                  updateTextClass(isBiggerText);
+                  setIsBiggerText(!isBiggerText);
                 }}>
                 {" "}
               </BigButton>
