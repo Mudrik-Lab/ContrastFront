@@ -175,7 +175,9 @@ export default function Timings() {
     const tagsOnURL = queryParams.getAll("tags_types");
 
     if (configSuccess) {
+      // url is being belt in the end of this proccess and so only the last part build it (tags)
       if (techniquesOnURL.length === 0) {
+        console.log(techniques);
         buildUrlForMultiSelect(
           techniques,
           "techniques",
@@ -187,9 +189,12 @@ export default function Timings() {
           techniquesOnURL.map((x) => ({ value: x, label: x }))
         );
       }
-      tagsOnURL.length === 0
-        ? buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate)
-        : setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));
+      if (tagsOnURL.length === 0) {
+        console.log(tagsOnURL);
+        buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate);
+      } else {
+        setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));
+      }
     }
   }, [configSuccess]);
 

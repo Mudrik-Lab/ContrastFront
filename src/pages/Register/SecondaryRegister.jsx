@@ -69,7 +69,7 @@ export default function SecondaryRegister() {
         navigate("/");
       }
     } catch (e) {
-      e.response.status === 400 && setErrorMsg(e.response.data);
+      e.response?.status === 400 && setErrorMsg(e.response?.data);
     }
   };
 
