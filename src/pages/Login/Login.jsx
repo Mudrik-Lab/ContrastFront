@@ -87,11 +87,11 @@ export default function Login() {
                       Forgot your password?
                     </a>
                     <span>
-                      Don’t have a username? register{" "}
+                      Don’t have a username?{" "}
                       <a
                         className="text-blue text-center underline"
                         href="/register">
-                        here
+                        register here
                       </a>{" "}
                     </span>
                   </div>

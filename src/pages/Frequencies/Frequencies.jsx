@@ -2,13 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -17,7 +15,6 @@ import {
 import Plot from "react-plotly.js";
 import {
   FrequenciesColors,
-  isMoblile,
   plotConfig,
   sideSectionClass,
 } from "../../Utils/HardCoded";
@@ -61,32 +58,26 @@ export default function Frequencies() {
       }))
     : [];
 
-  const { data, isLoading } = useQuery(
-    [
-      `frequencies${
-        selectedTechniques?.map((x) => x.value).join("+") +
-        " " +
-        theory?.value +
-        " " +
-        reporting +
-        " " +
-        theoryDriven +
-        " " +
-        consciousness
-      }`,
+  const { data, isLoading } = useQuery({
+    queryKey: [
+      `frequencies`,
+      selectedTechniques?.map((x) => x.value).join("+"),
+      theory?.value,
+      reporting,
+      theoryDriven,
+      consciousness,
     ],
-    () =>
+    queryFn: () =>
       getFrequencies({
         techniques: selectedTechniques,
         theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
-      })
-  );
+      }),
+  });
 
   let indexedDataList = [];
-
   for (let i = 0; i < data?.data.length; i++) {
     const item = data?.data[i];
     const objectsList = item.series;
@@ -305,24 +296,6 @@ export default function Frequencies() {
               </div>
             }
           />
-
-          {/* {!isMoblile && screenHeight > 500 && (
-            <div
-              className=" fixed top-52 right-24 h-[150px]"
-              style={{ height: screenHeight - 150 }}>
-              {Object.values(FrequenciesColors).map((color, index) => (
-                <div
-                  className="flex justify-start items-end gap-2"
-                  id="color"
-                  key={color}>
-                  <div
-                    className="w-5 h-5 mt-2 "
-                    style={{ backgroundColor: color }}></div>
-                  <Text>{Object.keys(FrequenciesColors)[index]}</Text>
-                </div>
-              ))}
-            </div>
-          )} */}
         </div>
       )}
     </div>

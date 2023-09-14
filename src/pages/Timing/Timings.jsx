@@ -2,13 +2,11 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
 import Select from "react-select";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
@@ -16,7 +14,6 @@ import {
 } from "../../components/Reusble";
 import Plot from "react-plotly.js";
 import {
-  isMoblile,
   plotConfig,
   screenHeight,
   sideSectionClass,
@@ -47,12 +44,12 @@ export default function Timings() {
     getConfiguration
   );
 
-  const techniques = configSuccess
-    ? configuration?.data.available_techniques_for_timings.map((technique) => ({
-        value: technique,
-        label: technique,
-      }))
-    : [];
+  const techniques = configuration?.data.available_techniques_for_timings.map(
+    (technique) => ({
+      value: technique,
+      label: technique,
+    })
+  );
 
   const tags = configSuccess
     ? configuration?.data.available_finding_tags_types_for_timings.map(
@@ -70,23 +67,17 @@ export default function Timings() {
     })
   );
 
-  const { data, isLoading } = useQuery(
-    [
-      `timings${
-        selectedTechniques?.map((x) => x.value).join("+") +
-        " " +
-        theory?.value +
-        " " +
-        reporting +
-        " " +
-        theoryDriven +
-        " " +
-        consciousness +
-        " " +
-        selectedTags?.map((x) => x.value).join("+")
-      }`,
+  const { data, isLoading } = useQuery({
+    queryKey: [
+      "timings",
+      selectedTechniques?.map((x) => x.value).join("+"),
+      theory?.value,
+      reporting,
+      theoryDriven,
+      consciousness,
+      selectedTags?.map((x) => x.value).join("+"),
     ],
-    () =>
+    queryFn: () =>
       getTimings({
         techniques: selectedTechniques,
         tags: selectedTags,
@@ -94,8 +85,8 @@ export default function Timings() {
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
-      })
-  );
+      }),
+  });
 
   let indexedDataList = [];
   let tagsForLegend = [];
@@ -177,6 +168,7 @@ export default function Timings() {
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
+  // useEffect to state the initial values on mount (insert all options or takes from url)
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
     const techniquesOnURL = queryParams.getAll("techniques");
@@ -199,7 +191,7 @@ export default function Timings() {
         ? buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate)
         : setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));
     }
-  }, [configSuccess, location.search]);
+  }, [configSuccess]);
 
   return (
     <div>
@@ -235,6 +227,7 @@ export default function Timings() {
                   aria-label="techniques"
                   closeMenuOnSelect={true}
                   isMulti={true}
+                  isClearable={true}
                   value={selectedTechniques}
                   options={techniques}
                   placeholder="Techniques"
@@ -343,7 +336,7 @@ export default function Timings() {
                     },
                   }}
                 />
-                {!isMoblile && screenHeight > 500 && (
+                {screenHeight > 500 && (
                   <div
                     style={{
                       height: "calc(100% - 200px)",

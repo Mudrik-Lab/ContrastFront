@@ -51,31 +51,27 @@ export default function ParametersDistributionBar() {
     })
   );
 
-  const { data, isLoading } = useQuery(
-    [
-      `parameters_distribution_bar${
-        selected?.value +
-        " " +
-        selectedParent?.value +
-        " " +
-        reporting +
-        " " +
-        experimentsNum +
-        isCsv
-      }`,
+  const { data, isLoading } = useQuery({
+    queryKey: [
+      `parameters_distribution_bar`,
+      selected?.value,
+      selectedParent?.value,
+      reporting,
+      experimentsNum,
+      isCsv,
     ],
-    () =>
-      selected.value &&
-      selectedParent.value &&
-      getExperimentsGraphs({
+    queryFn: () => {
+      return getExperimentsGraphs({
         graphName: "parameters_distribution_bar",
         breakdown: selected?.value,
         theory: selectedParent?.value,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
         is_csv: isCsv,
-      })
-  );
+      });
+    },
+    enabled: Boolean(selected?.value && selectedParent?.value),
+  });
   const X1 = data?.data?.map((row) => row.series[0].value).reverse();
 
   const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
@@ -149,15 +145,12 @@ export default function ParametersDistributionBar() {
         value: queryParams.get("theory"),
         label: queryParams.get("theory"),
       });
-    } else {
-      setSelectedParent({
-        value: "Global Workspace theories",
-        label: "Global Workspace theories",
-      });
+    } else if (configurationSuccess) {
+      setSelectedParent(parentTheories[0]);
     }
 
     navigate({ search: queryParams.toString() });
-  }, [searchParams, parentTheories]);
+  }, [searchParams, configurationSuccess]);
 
   return (
     <div>
@@ -189,10 +182,10 @@ export default function ParametersDistributionBar() {
                     buildUrl(pageName, "theory", e?.value, navigate);
                   }}
                 />
-                <Text className="text-sm" flexed>
-                  Theory Family
-                  <TooltipExplanation tooltip="few more words about Theory" />
-                </Text>
+                <TooltipExplanation
+                  text={"Theory Family"}
+                  tooltip="few more words about Theory"
+                />
               </div>
               <div className={sideSectionClass}>
                 <Select

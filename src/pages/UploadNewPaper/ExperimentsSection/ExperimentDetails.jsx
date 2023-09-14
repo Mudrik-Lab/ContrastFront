@@ -427,11 +427,13 @@ export default function ExperimentDetails({
             <ExpandingBox
               headline={"Results Summary"}
               number={experiment.results_summary && 1}>
-              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                <div className="w-full flex flex-col gap-2">
-                  <Text>{experiment.results_summary}</Text>
+              {experiment.results_summary && (
+                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <div className="w-full flex flex-col gap-2">
+                    <Text>{experiment.results_summary}</Text>
+                  </div>
                 </div>
-              </div>
+              )}
             </ExpandingBox>
           </div>
           <button

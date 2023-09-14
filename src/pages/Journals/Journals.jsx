@@ -47,30 +47,24 @@ export default function Journals() {
     [`parent_theories`],
     getConfiguration
   );
-  const { data, isSuccess, isLoading } = useQuery(
-    [
-      `journals${
-        +" " +
-        theory?.value +
-        " " +
-        reporting +
-        " " +
-        theoryDriven +
-        " " +
-        experimentsNum +
-        " " +
-        consciousness
-      }`,
+  const { data, isSuccess, isLoading } = useQuery({
+    queryKey: [
+      "journals",
+      theory?.value,
+      reporting,
+      theoryDriven,
+      experimentsNum,
+      consciousness,
     ],
-    () =>
+    quertFn: () =>
       getJournals({
         theory: theory?.value,
         is_reporting: reporting,
         theory_driven: theoryDriven,
         type_of_consciousness: consciousness,
         min_number_of_experiments: experimentsNum,
-      })
-  );
+      }),
+  });
 
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
