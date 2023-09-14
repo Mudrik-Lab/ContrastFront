@@ -49,17 +49,12 @@ export default function WorldMap() {
     : [];
   const { data, isLoading } = useQuery(
     [
-      `nations_of_consciousness${
-        theoryFamilies?.map((x) => x.value).join("+") +
-        " " +
-        reporting +
-        " " +
-        experimentsNum +
-        " " +
-        consciousness +
-        " " +
-        theoryDriven
-      }`,
+      "nations_of_consciousness",
+      theoryFamilies?.map((x) => x.value).join("+"),
+      reporting,
+      experimentsNum,
+      consciousness,
+      theoryDriven,
     ],
     () =>
       getNations({

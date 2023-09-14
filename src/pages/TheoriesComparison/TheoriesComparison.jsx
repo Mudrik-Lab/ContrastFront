@@ -46,25 +46,17 @@ export default function ParametersDistributionTheoriesComparison() {
   const navigate = useNavigate();
   const pageName = "theories-comparison";
 
-  const { data, isLoading, isSuccess } = useQuery(
-    [
-      `parameters_distribution_theories_comparison${
-        +" " +
-        selected?.value +
-        " " +
-        consciousness +
-        " " +
-        reporting +
-        " " +
-        experimentsNum +
-        " " +
-        theoryDriven +
-        " " +
-        (interpretation === "true" ? "challenges" : "pro")
-      }`,
+  const { data, isLoading, isSuccess } = useQuery({
+    queryKey: [
+      "parameters_distribution_theories_comparison",
+      selected?.value,
+      consciousness,
+      reporting,
+      experimentsNum,
+      theoryDriven,
+      interpretation === "true" ? "challenges" : "pro",
     ],
-    () =>
-      selected.value &&
+    queryFn: () =>
       getExperimentsGraphs({
         graphName: "parameters_distribution_theories_comparison",
         breakdown: selected?.value,
@@ -73,8 +65,9 @@ export default function ParametersDistributionTheoriesComparison() {
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
         interpretation: interpretation === "true" ? "challenges" : "pro",
-      })
-  );
+      }),
+    enabled: Boolean(selected?.value),
+  });
 
   const chartsData = data?.data;
   const keysArr = [];
@@ -103,7 +96,6 @@ export default function ParametersDistributionTheoriesComparison() {
   [...new Set(trimedKeysArr)]?.map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(experimentsNum);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

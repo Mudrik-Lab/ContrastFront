@@ -42,26 +42,22 @@ export default function AcrossTheYears() {
   const navigate = useNavigate();
   const pageName = "trends-over-time";
 
-  const { data, isSuccess, isLoading } = useQuery(
-    [
-      `across_the_years${
-        consciousness +
-          " " +
-          reporting +
-          " " +
-          experimentsNum +
-          " " +
-          selected?.value || parametersOptions[0].value
-      }`,
+  const { data, isSuccess, isLoading } = useQuery({
+    queryKey: [
+      "across_the_years",
+      consciousness,
+      reporting,
+      experimentsNum,
+      selected?.value || parametersOptions[0].value,
     ],
-    () =>
+    queryFn: () =>
       getAcrossTheYears({
         type_of_consciousness: consciousness,
         is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
         breakdown: selected?.value || parametersOptions[0].value,
-      })
-  );
+      }),
+  });
 
   const graphsData = [];
   data?.data.map((row) => {

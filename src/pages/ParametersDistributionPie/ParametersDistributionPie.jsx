@@ -49,22 +49,16 @@ export default function ParametersDistributionPie() {
   const navigate = useNavigate();
   const pageName = "parameter-distribution-pie";
 
-  const { data, isSuccess, isLoading } = useQuery(
-    [
-      `parameters_distribution_pie${
-        +" " +
-        selected.value +
-        " " +
-        consciousness +
-        " " +
-        reporting +
-        " " +
-        experimentsNum +
-        " " +
-        theoryDriven
-      }`,
+  const { data, isSuccess, isLoading } = useQuery({
+    queryKey: [
+      "parameters_distribution_pie",
+      selected.value,
+      consciousness,
+      reporting,
+      experimentsNum,
+      theoryDriven,
     ],
-    () =>
+    queryFn: () =>
       getExperimentsGraphs({
         graphName: "parameters_distribution_pie",
         breakdown: selected.value,
@@ -72,8 +66,9 @@ export default function ParametersDistributionPie() {
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-      })
-  );
+      }),
+  });
+
   const values1 = [];
   const labels1 = [];
   const outsideColors = [];

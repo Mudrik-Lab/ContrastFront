@@ -172,52 +172,32 @@ export default function FreeQueriesBar() {
   ];
 
   const theoriesArr = configSuccess ? extraConfig?.data.available_theories : [];
-  const { data, isLoading } = useQuery(
-    [
-      `parameters_distribution_free_queries${
-        selected?.value +
-        " " +
-        isReporting +
-        " " +
-        experimentsNum +
-        " " +
-        consciousness +
-        " " +
-        theoryDriven?.map((row) => row.label).join(",") +
-        " " +
-        interpretations?.map((row) => row.label).join(",") +
-        " " +
-        selectedTechniques?.map((row) => row.label).join(",") +
-        " " +
-        consciousnessMeasurePhases?.map((row) => row.label).join(",") +
-        " " +
-        consciousnessMeasureTypes?.map((row) => row.label).join(",") +
-        " " +
-        tagsFamilies?.map((row) => row.label).join(",") +
-        " " +
-        tagsTypes?.map((row) => row.label).join(",") +
-        " " +
-        measures?.map((row) => row.label).join(",") +
-        " " +
-        paradigmFamilies?.map((row) => row.label).join(",") +
-        " " +
-        paradigms?.map((row) => row.label).join(",") +
-        " " +
-        populations?.map((row) => row.label).join(",") +
-        " " +
-        stimuliCategories?.map((row) => row.label).join(",") +
-        " " +
-        stimuliModalities?.map((row) => row.label).join(",") +
-        " " +
-        tasks?.map((row) => row.label).join(",") +
-        " " +
-        theoryFamilies?.map((x) => x.value).join(",")
-      }`,
+  const { data, isLoading } = useQuery({
+    queryKey: [
+      "parameters_distribution_free_queries",
+      selected?.value,
+      isReporting,
+      experimentsNum,
+      consciousness,
+      theoryDriven?.map((row) => row.label).join(","),
+      interpretations?.map((row) => row.label).join(","),
+      selectedTechniques?.map((row) => row.label).join(","),
+      consciousnessMeasurePhases?.map((row) => row.label).join(","),
+      consciousnessMeasureTypes?.map((row) => row.label).join(","),
+      tagsFamilies?.map((row) => row.label).join(","),
+      tagsTypes?.map((row) => row.label).join(","),
+      measures?.map((row) => row.label).join(","),
+      paradigmFamilies?.map((row) => row.label).join(","),
+      paradigms?.map((row) => row.label).join(","),
+      populations?.map((row) => row.label).join(","),
+      stimuliCategories?.map((row) => row.label).join(","),
+      stimuliModalities?.map((row) => row.label).join(","),
+      tasks?.map((row) => row.label).join(","),
+      theoryFamilies?.map((x) => x.value).join(","),
     ],
-    () =>
-      selected.value &&
+    queryFn: () =>
       getFreeQueries({
-        breakdown: selected?.value,
+        breakdown: selected.value,
         is_reporting: isReporting,
         type_of_consciousness: consciousness,
         theory_driven: theoryDriven,
@@ -236,8 +216,10 @@ export default function FreeQueriesBar() {
         stimuli_modalities: stimuliModalities,
         interpretation_theories: theoryFamilies,
         tasks,
-      })
-  );
+      }),
+    enabled: Boolean(selected?.value),
+  });
+
   const X1 = data?.data.map((row) => row.value).reverse();
   const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 
@@ -269,7 +251,6 @@ export default function FreeQueriesBar() {
       fontSize: 16,
     }),
   };
-  console.log(experimentsNum);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

@@ -238,26 +238,28 @@ export const Label = ({ children }) => {
 
 export const RangeInput = ({ number, setNumber }) => {
   const [label, setLabel] = React.useState(number);
+
   useEffect(() => {
     setLabel(number);
   }, [number]);
   return (
     <div className={sideSectionClass}>
       <div className="relative">
-        <input
-          type="range"
-          onChange={(e) => setLabel(e.target.value)}
-          onMouseUp={(e) => setNumber(e.target.value)}
-          onTouchEnd={(e) => setNumber(e.target.value)}
-          min={0}
-          defaultValue={number}
-          max={99}
-          step={1}
-          className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
-          id="numOfExperiments"
-          aria-label="number of experiments range input"
-        />
-
+        {(number || number === 0) && (
+          <input
+            type="range"
+            onChange={(e) => setLabel(e.target.value)}
+            onMouseUp={(e) => setNumber(e.target.value)}
+            onTouchEnd={(e) => setNumber(e.target.value)}
+            min={0}
+            defaultValue={number}
+            max={99}
+            step={1}
+            className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
+            id="numOfExperiments"
+            aria-label="number of experiments range input"
+          />
+        )}
         <span
           style={{
             left: label * 0.9 + (label < 10 ? 4 : 2) + "%",
