@@ -175,26 +175,28 @@ export default function Timings() {
     const tagsOnURL = queryParams.getAll("tags_types");
 
     if (configSuccess) {
-      // url is being belt in the end of this proccess and so only the last part build it (tags)
+      const queryParams = new URLSearchParams(searchParams.toString());
       if (techniquesOnURL.length === 0) {
-        console.log(techniques);
-        buildUrlForMultiSelect(
-          techniques,
-          "techniques",
-          searchParams,
-          navigate
-        );
+        queryParams.delete("techniques");
+        techniques.forEach((value) => {
+          queryParams.append("techniques", value.value);
+        });
       } else {
         setSelectedTechniques(
           techniquesOnURL.map((x) => ({ value: x, label: x }))
         );
       }
       if (tagsOnURL.length === 0) {
-        console.log(tagsOnURL);
-        buildUrlForMultiSelect(tags, "tags_types", searchParams, navigate);
+        queryParams.delete("tags_types");
+        tags.forEach((value) => {
+          queryParams.append("tags_types", value.value);
+        });
       } else {
         setSelectedTags(tagsOnURL.map((x) => ({ value: x, label: x })));
       }
+
+      navigate(`?${queryParams.toString()}`);
+      // url is being belt in the end of this proccess and so only the last part build it (tags)
     }
   }, [configSuccess]);
 
