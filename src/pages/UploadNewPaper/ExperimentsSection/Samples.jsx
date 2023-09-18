@@ -95,6 +95,10 @@ export default function Samples({
                         const newArray = [...fieldValues];
                         newArray[index].type = value;
                         setFieldValues(newArray);
+                        fieldValue?.type &&
+                          fieldValue?.total_size &&
+                          fieldValue?.size_included &&
+                          handleSubmit(fieldValues, index);
                       }}
                       options={fieldOptions}
                     />
@@ -124,6 +128,19 @@ export default function Samples({
                             )
                           );
                         }}
+                        onBlur={() =>
+                          fieldValue?.type &&
+                          fieldValue?.total_size &&
+                          fieldValue?.size_included &&
+                          handleSubmit(fieldValues, index)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" &&
+                          fieldValue?.type &&
+                          fieldValue?.total_size &&
+                          fieldValue?.size_included &&
+                          handleSubmit(fieldValues, index)
+                        }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"
@@ -160,6 +177,19 @@ export default function Samples({
                             )
                           );
                         }}
+                        onBlur={() =>
+                          fieldValue?.type &&
+                          fieldValue?.total_size &&
+                          fieldValue?.size_included &&
+                          handleSubmit(fieldValues, index)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" &&
+                          fieldValue?.type &&
+                          fieldValue?.total_size &&
+                          fieldValue?.size_included &&
+                          handleSubmit(fieldValues, index)
+                        }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"
@@ -181,7 +211,7 @@ export default function Samples({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
@@ -193,7 +223,7 @@ export default function Samples({
                         fieldValue?.type
                       ) || fieldValue.id
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

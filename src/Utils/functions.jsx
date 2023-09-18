@@ -209,14 +209,6 @@ export function SubmitClassificationField(
         });
 
         if (res.status === 201) {
-          toast.success(
-            <ToastBox
-              headline={"Success"}
-              text={`Added ${rawTextToShow(
-                classificationName.slice(0, -1)
-              )} classification`}
-            />
-          );
           const newArr = [...fieldValues];
           newArr[index] = res.data;
           setFieldValues(newArr);
@@ -236,12 +228,6 @@ export function SubmitClassificationField(
           classificationName,
         });
         if (res.status === 201) {
-          toast.success(
-            <ToastBox
-              headline={"Success"}
-              text={`Added ${classificationName.slice(0, -1)} classification`}
-            />
-          );
           const newArr = [...fieldValues];
           newArr[index].id = res.data.id;
           setFieldValues(newArr);

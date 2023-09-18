@@ -119,7 +119,6 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
-  console.log(extraConfig?.data.available_finding_tags_families);
   const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
     (type) => ({
       value: type,

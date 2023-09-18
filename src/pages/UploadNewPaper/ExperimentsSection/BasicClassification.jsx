@@ -55,7 +55,6 @@ export default function BasicClassification({
   });
 
   const handleSubmit = async (values) => {
-    console.log(values);
     try {
       const res = await createExperiments({
         type_of_consciousness: values.type_of_consciousness,
