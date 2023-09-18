@@ -166,7 +166,7 @@ export default function Samples({
 
                     <div className="flex gap-2">
                       <input
-                        disabled={fieldValues[index].id}
+                        disabled={fieldValues[index]?.id}
                         type="number"
                         min={0}
                         defaultValue={fieldValue.size_included}

@@ -1,6 +1,5 @@
 import React from "react";
 import { upladPaperPageTopSection } from "../../Utils/HardCoded";
-import classNames from "classnames";
 
 export default function ProgressComponent({ status, paperNmae, experiment }) {
   const Arrow = (

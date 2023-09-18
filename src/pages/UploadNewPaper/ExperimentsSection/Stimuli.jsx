@@ -1,14 +1,11 @@
 import {
   AddFieldButton,
   ExpandingBox,
-  SubmitButton,
   Text,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
   CircledIndex,
-  ToastBox,
-  ToastErrorBox,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -17,8 +14,6 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
-import { toast } from "react-toastify";
-import { setNotes } from "../../../apiHooks/setNotes";
 import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Stimuli({
@@ -58,7 +53,7 @@ export default function Stimuli({
   );
 
   useEffect(() => {
-    if (values && values.stimuli.length > 0) {
+    if (values && values.stimuli?.length > 0) {
       setFieldValues(
         values.stimuli.map((row) => {
           return {
@@ -72,6 +67,15 @@ export default function Stimuli({
       );
     }
   }, []);
+
+  const submitCondition = (index) => {
+    return (
+      fieldValues[index]?.category &&
+      fieldValues[index]?.sub_category &&
+      fieldValues[index]?.modality &&
+      fieldValues[index]?.duration
+    );
+  };
 
   return (
     <ExpandingBox
@@ -111,6 +115,8 @@ export default function Stimuli({
                             const newArray = [...fieldValues];
                             newArray[index].category = value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={fieldOptions}
                         />
@@ -129,6 +135,8 @@ export default function Stimuli({
                             const newArray = [...fieldValues];
                             newArray[index].sub_category = value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={alphabetizeByLabels(subCategories)}
                         />
@@ -151,6 +159,8 @@ export default function Stimuli({
                           const newArray = [...fieldValues];
                           newArray[index].modality = value;
                           setFieldValues(newArray);
+                          submitCondition(index) &&
+                            handleSubmit(fieldValues, index);
                         }}
                         options={modalities}
                       />
@@ -167,10 +177,11 @@ export default function Stimuli({
                       <div className="flex flex-col items-center">
                         <input
                           min={0}
-                          disabled={fieldValues[index].id}
+                          disabled={fieldValues[index]?.id}
                           type="number"
                           defaultValue={fieldValue.duration}
                           onChange={(e) => {
+                            e.preventDefault();
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
                                 i === index
@@ -179,6 +190,15 @@ export default function Stimuli({
                               )
                             );
                           }}
+                          onBlur={() =>
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
+                          onKeyDown={(e) =>
+                            e.key === "Enter" &&
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
                             "bg-grayDisable text-gray-400"
@@ -198,7 +218,7 @@ export default function Stimuli({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
@@ -210,7 +230,7 @@ export default function Stimuli({
                         fieldValue?.modality
                       ) || fieldValue.id
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </form>
