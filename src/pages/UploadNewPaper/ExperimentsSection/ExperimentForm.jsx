@@ -232,11 +232,10 @@ export default function ExperimentForm({
 
             <Findings
               fieldOptions={{
-                techniquesOptions:
-                  techniques?.map((tech) => ({
-                    value: tech.id,
-                    label: tech.name,
-                  })) || techniquesOptions,
+                techniquesOptions: techniques?.map((tech) => ({
+                  value: tech.id || tech.value,
+                  label: tech.name || tech.label,
+                })),
                 findingTagsFamilies,
                 findingTypes,
                 AALOptions,

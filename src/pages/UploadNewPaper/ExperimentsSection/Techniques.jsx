@@ -8,7 +8,6 @@ import {
   CustomSelect,
   CircledIndex,
 } from "../../../components/Reusble";
-import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
@@ -59,6 +58,7 @@ export default function Techniques({
       );
     }
   }, []);
+
   return (
     <ExpandingBox
       number={
@@ -86,7 +86,7 @@ export default function Techniques({
                   <CustomSelect
                     disabled={fieldValue.id}
                     value={fieldValue.technique}
-                    onChange={(value) => {
+                    onChange={async (value) => {
                       const newArray = [...fieldValues];
                       newArray[index].technique = value;
                       setFieldValues(newArray);
@@ -103,21 +103,16 @@ export default function Techniques({
                   />
                   <SubmitButton
                     submit={async () => {
-                      console.log(fieldValues[index].technique, {
-                        fieldOptions,
-                      });
+                      const techniqueToAppend = fieldOptions.find(
+                        (option) => option.value == fieldValues[index].technique
+                      );
                       const res = await handleSubmit(
                         fieldValues[index].technique,
                         index
                       );
-                      res &&
-                        setTechniques((prev) => [
-                          ...prev,
-                          fieldOptions.find(
-                            (option) =>
-                              option.value == fieldValues[index].technique
-                          ),
-                        ]);
+                      if (res) {
+                        setTechniques((prev) => [...prev, techniqueToAppend]);
+                      }
                     }}
                     disabled={!fieldValue?.technique || fieldValue.id}
                   />

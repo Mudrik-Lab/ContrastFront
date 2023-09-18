@@ -115,7 +115,7 @@ export default function ExperimentDetails({
                     </Text>
 
                     {experiment.theory_driven_theories.map((theory) => (
-                      <span>{theory}, </span>
+                      <span key={theory}>{theory}, </span>
                     ))}
                   </div>
                 </div>
@@ -126,7 +126,9 @@ export default function ExperimentDetails({
               number={experiment.paradigms.length}>
               {experiment.paradigms.map((paradigm, index) => {
                 return (
-                  <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <div
+                    key={paradigm.name}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                     <CircledIndex index={index} />
                     <div className="w-full flex flex-col gap-2">
                       <div className="flex gap-2 items-start">
@@ -168,7 +170,9 @@ export default function ExperimentDetails({
               headline={"Samples"}
               number={experiment.samples.length}>
               {experiment.samples.map((sample, index) => (
-                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                <div
+                  key={sample.type}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-full flex flex-col gap-2">
                     <div className="w-full flex gap-2 items-start justify-between px-2">
@@ -228,7 +232,9 @@ export default function ExperimentDetails({
               headline={"Stimuli"}
               number={experiment.stimuli.length}>
               {experiment.stimuli.map((stimulus, index) => (
-                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                <div
+                  key={stimulus.category.name}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
                     <div className="flex w-full justify-between ">

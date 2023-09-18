@@ -195,7 +195,6 @@ export function SubmitClassificationField(
   setFieldValues
 ) {
   return async (values, index) => {
-    console.log({ values, index });
     if (
       classificationName !== "paradigms" &&
       classificationName !== "techniques"

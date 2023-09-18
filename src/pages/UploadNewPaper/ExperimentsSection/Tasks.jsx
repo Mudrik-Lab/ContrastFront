@@ -42,7 +42,6 @@ export default function Tasks({
     fieldValues,
     setFieldValues
   );
-  console.log(fieldValues);
   useEffect(() => {
     if (values?.tasks && values.tasks.length > 0) {
       setFieldValues(
