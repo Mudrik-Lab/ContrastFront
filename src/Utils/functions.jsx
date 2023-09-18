@@ -113,8 +113,13 @@ export function buildUrl(pageName, paramName, value, navigate) {
   }
 }
 
-export function buildUrlForMultiSelect(e, paramName, searchParams, navigate) {
-  const selectedValues = Array.from(e, (option) => option);
+export function buildUrlForMultiSelect(
+  options,
+  paramName,
+  searchParams,
+  navigate
+) {
+  const selectedValues = Array.from(options, (option) => option);
   const queryParams = new URLSearchParams(searchParams.toString());
   queryParams.delete(paramName);
   selectedValues.forEach((value) => {
