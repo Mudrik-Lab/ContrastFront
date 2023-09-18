@@ -24,11 +24,7 @@ export default function Tasks({
   values,
 }) {
   const [description, setDescription] = useState(values?.tasks_notes || "");
-  const [fieldValues, setFieldValues] = useState([
-    {
-      type: "",
-    },
-  ]);
+  const [fieldValues, setFieldValues] = useState([{ type: "" }]);
   const classificationName = "tasks";
 
   const handleSubmit = SubmitClassificationField(
@@ -46,7 +42,7 @@ export default function Tasks({
     fieldValues,
     setFieldValues
   );
-
+  console.log(fieldValues);
   useEffect(() => {
     if (values?.tasks && values.tasks.length > 0) {
       setFieldValues(
@@ -92,6 +88,7 @@ export default function Tasks({
                         const newArray = [...fieldValues];
                         newArray[index].type = value;
                         setFieldValues(newArray);
+                        handleSubmit(fieldValues, index);
                       }}
                       options={alphabetizeByLabels(fieldOptions)}
                     />
@@ -104,11 +101,11 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
-                  />
+                  /> */}
                 </div>
               </div>
             </form>
