@@ -275,9 +275,10 @@ export default function WorldMap() {
                   className="text-lg w-[300px]"
                   aria-label="theories"
                   closeMenuOnSelect={true}
+                  isClearable
                   isMulti={true}
                   value={theoryFamilies}
-                  options={theories.map((theory) => theory.label)}
+                  options={theories}
                   placeholder="Theories"
                   onChange={(e) =>
                     buildUrlForMultiSelect(e, "theory", searchParams, navigate)

@@ -71,7 +71,6 @@ export default function Stimuli({
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.category &&
-      fieldValues[index]?.sub_category &&
       fieldValues[index]?.modality &&
       fieldValues[index]?.duration
     );

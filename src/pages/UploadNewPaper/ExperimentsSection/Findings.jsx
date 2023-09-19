@@ -527,7 +527,7 @@ export default function Findings({
                   )}
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
-                      Notes
+                      Notes (optional)
                     </Text>
                     <textarea
                       disabled={fieldValues[index].id}
