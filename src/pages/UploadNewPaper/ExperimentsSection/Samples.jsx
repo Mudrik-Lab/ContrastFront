@@ -63,6 +63,14 @@ export default function Samples({
     }
   }, []);
 
+  const submitCondition = (index) => {
+    return (
+      fieldValues[index]?.type &&
+      fieldValues[index]?.total_size &&
+      fieldValues[index]?.size_included &&
+      fieldValues[index]?.size_included <= fieldValues[index]?.total_size
+    );
+  };
   return (
     <ExpandingBox
       number={
@@ -95,6 +103,8 @@ export default function Samples({
                         const newArray = [...fieldValues];
                         newArray[index].type = value;
                         setFieldValues(newArray);
+                        submitCondition(index) &&
+                          handleSubmit(fieldValues, index);
                       }}
                       options={fieldOptions}
                     />
@@ -124,6 +134,15 @@ export default function Samples({
                             )
                           );
                         }}
+                        onBlur={() =>
+                          submitCondition(index) &&
+                          handleSubmit(fieldValues, index)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" &&
+                          submitCondition(index) &&
+                          handleSubmit(fieldValues, index)
+                        }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"
@@ -147,7 +166,7 @@ export default function Samples({
 
                     <div className="flex gap-2">
                       <input
-                        disabled={fieldValues[index].id}
+                        disabled={fieldValues[index]?.id}
                         type="number"
                         min={0}
                         defaultValue={fieldValue.size_included}
@@ -160,6 +179,15 @@ export default function Samples({
                             )
                           );
                         }}
+                        onBlur={() =>
+                          submitCondition(index) &&
+                          handleSubmit(fieldValues, index)
+                        }
+                        onKeyDown={(e) =>
+                          e.key === "Enter" &&
+                          submitCondition(index) &&
+                          handleSubmit(fieldValues, index)
+                        }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"
@@ -181,7 +209,7 @@ export default function Samples({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
@@ -193,7 +221,7 @@ export default function Samples({
                         fieldValue?.type
                       ) || fieldValue.id
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

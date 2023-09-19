@@ -135,7 +135,6 @@ export default function Findings({
                         disabled={fieldValue?.id}
                         value={fieldValue.family}
                         onChange={(value) => {
-                          console.log(value);
                           const newArray = [...fieldValues];
                           newArray[index].family = value;
                           setFieldValues(newArray);

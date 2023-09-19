@@ -65,6 +65,16 @@ export default function Paradigms({
       );
     }
   }, []);
+  async function uniqSubmit(index) {
+    let chosenParadigm = fieldValues[index].sub_type
+      ? optionalParadigms.find(
+          (paradigm) => paradigm.sub_type === fieldValues[index].sub_type
+        ).id
+      : optionalParadigms.find(
+          (paradigm) => paradigm.name === fieldValues[index].specific
+        ).id;
+    handleSubmit(chosenParadigm, index);
+  }
 
   const paradigmsWithSubtype = [
     ...new Set(
@@ -74,6 +84,14 @@ export default function Paradigms({
     ),
   ];
 
+  const submitCondition = (index) => {
+    return [
+      fieldValues[index]?.main,
+      fieldValues[index]?.specific,
+      !paradigmsWithSubtype.includes(fieldValues[index]?.specific) ||
+        fieldValues[index]?.sub_type,
+    ].every((condition) => Boolean(condition) === true);
+  };
   return (
     <>
       <ExpandingBox
@@ -108,6 +126,7 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].main = value;
                             setFieldValues(newArray);
+                            submitCondition(index) && uniqSubmit(index);
                           }}
                           options={fieldOptions}
                         />
@@ -129,6 +148,8 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].specific = value;
                             setFieldValues(newArray);
+                            console.log(submitCondition(index));
+                            submitCondition(index) && uniqSubmit(index);
                           }}
                           options={[
                             ...new Set(
@@ -161,6 +182,7 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].sub_type = value;
                             setFieldValues(newArray);
+                            submitCondition(index) && uniqSubmit(index);
                           }}
                           options={optionalParadigms
                             .filter(
@@ -180,22 +202,10 @@ export default function Paradigms({
                       fieldValues={fieldValues}
                       index={index}
                     />
-                    <SubmitButton
-                      submit={() => {
-                        let chosenParadigm = fieldValues[index].sub_type
-                          ? optionalParadigms.find(
-                              (paradigm) =>
-                                paradigm.sub_type ===
-                                fieldValues[index].sub_type
-                            ).id
-                          : optionalParadigms.find(
-                              (paradigm) =>
-                                paradigm.name === fieldValues[index].specific
-                            ).id;
-                        handleSubmit(chosenParadigm, index);
-                      }}
+                    {/* <SubmitButton
+                      submit={uniqSubmit(index)}
                       disabled={!fieldValue?.specific || fieldValue.id}
-                    />
+                    /> */}
                   </div>
                 </div>
               </form>

@@ -19,21 +19,18 @@ export default function ExternalNotes({
         note: description,
         classification,
       });
-      if (res.status === 201) {
-        toast.success(
-          <ToastBox
-            headline={"Success"}
-            text={`${rawTextToShow(
-              classification
-            )}'s notes were added successfully`}
-          />
-        );
-      }
     } catch (e) {
       console.log(e);
       toast.error(
         <ToastErrorBox errors={e?.response.data || "Error occurred"} />
       );
+    }
+  };
+  const handleKeyDown = (event) => {
+    if (event.key === "Enter") {
+      event.preventDefault(); // Prevent the default behavior (new line)
+      // Trigger your submit action here, for example:
+      handleNotes();
     }
   };
   return (
@@ -51,14 +48,16 @@ export default function ExternalNotes({
               onChange={(e) => {
                 setDescription(e.target.value);
               }}
+              onBlur={handleNotes}
+              onKeyDown={handleKeyDown}
               className={`border w-full border-gray-300 rounded-md p-2 `}
             />
           </div>
         </div>
 
-        <div id="trash+submit">
+        {/* <div id="trash+submit">
           <SubmitButton submit={handleNotes} />
-        </div>
+        </div> */}
       </div>
     </form>
   );

@@ -8,7 +8,6 @@ import {
   CustomSelect,
   CircledIndex,
 } from "../../../components/Reusble";
-import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
@@ -59,6 +58,16 @@ export default function Techniques({
       );
     }
   }, []);
+  async function submitOnChange(index) {
+    const techniqueToAppend = fieldOptions.find(
+      (option) => option.value == fieldValues[index].technique
+    );
+    const res = await handleSubmit(fieldValues[index].technique, index);
+    if (res) {
+      setTechniques((prev) => [...prev, techniqueToAppend]);
+    }
+  }
+
   return (
     <ExpandingBox
       number={
@@ -86,10 +95,11 @@ export default function Techniques({
                   <CustomSelect
                     disabled={fieldValue.id}
                     value={fieldValue.technique}
-                    onChange={(value) => {
+                    onChange={async (value) => {
                       const newArray = [...fieldValues];
                       newArray[index].technique = value;
                       setFieldValues(newArray);
+                      submitOnChange(index);
                     }}
                     options={fieldOptions}
                   />
@@ -101,26 +111,10 @@ export default function Techniques({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={async () => {
-                      console.log(fieldValues[index].technique, {
-                        fieldOptions,
-                      });
-                      const res = await handleSubmit(
-                        fieldValues[index].technique,
-                        index
-                      );
-                      res &&
-                        setTechniques((prev) => [
-                          ...prev,
-                          fieldOptions.find(
-                            (option) =>
-                              option.value == fieldValues[index].technique
-                          ),
-                        ]);
-                    }}
+                  {/* <SubmitButton
+                    submit={submitOnChange(index)}
                     disabled={!fieldValue?.technique || fieldValue.id}
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

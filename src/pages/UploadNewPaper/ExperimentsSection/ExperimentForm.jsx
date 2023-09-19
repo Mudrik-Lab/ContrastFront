@@ -32,8 +32,9 @@ export default function ExperimentForm({
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
-  const [techniques, setTechniques] = useState(experimentData?.techniques);
-
+  const [techniques, setTechniques] = useState(
+    experimentData?.techniques || []
+  );
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
@@ -119,7 +120,6 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
-  console.log(extraConfig?.data.available_finding_tags_families);
   const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
     (type) => ({
       value: type,
@@ -233,11 +233,10 @@ export default function ExperimentForm({
 
             <Findings
               fieldOptions={{
-                techniquesOptions:
-                  techniques?.map((tech) => ({
-                    value: tech.id,
-                    label: tech.name,
-                  })) || techniquesOptions,
+                techniquesOptions: techniques?.map((tech) => ({
+                  value: tech.id || tech.value,
+                  label: tech.name || tech.label,
+                })),
                 findingTagsFamilies,
                 findingTypes,
                 AALOptions,

@@ -64,6 +64,10 @@ export default function ConsciousnessMeasures({
     }
   }, []);
 
+  const submitCondition = (index) => {
+    return fieldValues[index]?.type && fieldValues[index]?.phase;
+  };
+
   return (
     <ExpandingBox
       number={
@@ -97,6 +101,8 @@ export default function ConsciousnessMeasures({
                             const newArray = [...fieldValues];
                             newArray[index].type = value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={fieldOptions}
                         />
@@ -116,6 +122,8 @@ export default function ConsciousnessMeasures({
                             const newArray = [...fieldValues];
                             newArray[index].phase = value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={analysisPhaseOptions}
                         />
@@ -130,14 +138,14 @@ export default function ConsciousnessMeasures({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
+                  {/* <SubmitButton
                     submit={() => {
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={
                       !(fieldValue?.phase && fieldValue?.type) || fieldValue.id
                     }
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

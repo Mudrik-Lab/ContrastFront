@@ -195,7 +195,6 @@ export function SubmitClassificationField(
   setFieldValues
 ) {
   return async (values, index) => {
-    console.log({ values, index });
     if (
       classificationName !== "paradigms" &&
       classificationName !== "techniques"
@@ -209,14 +208,6 @@ export function SubmitClassificationField(
         });
 
         if (res.status === 201) {
-          toast.success(
-            <ToastBox
-              headline={"Success"}
-              text={`Added ${rawTextToShow(
-                classificationName.slice(0, -1)
-              )} classification`}
-            />
-          );
           const newArr = [...fieldValues];
           newArr[index] = res.data;
           setFieldValues(newArr);
@@ -236,12 +227,6 @@ export function SubmitClassificationField(
           classificationName,
         });
         if (res.status === 201) {
-          toast.success(
-            <ToastBox
-              headline={"Success"}
-              text={`Added ${classificationName.slice(0, -1)} classification`}
-            />
-          );
           const newArr = [...fieldValues];
           newArr[index].id = res.data.id;
           setFieldValues(newArr);
@@ -385,7 +370,7 @@ export function confirmFunction({
   });
 }
 export function alphabetizeByLabels(selectFieldOptions) {
-  const sortedOptionListByLabels = selectFieldOptions.sort((a, b) => {
+  const sortedOptionListByLabels = selectFieldOptions?.sort((a, b) => {
     if (a.label < b.label) {
       return -1;
     }

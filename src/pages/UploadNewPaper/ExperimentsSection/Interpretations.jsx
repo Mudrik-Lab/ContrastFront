@@ -41,6 +41,10 @@ export default function Interpretations({
     setFieldValues
   );
 
+  const numberOfFilled = fieldValues.filter(
+    (field) => field.type !== ""
+  ).length;
+
   useEffect(() => {
     if (values && values.length > 0) {
       setFieldValues(
@@ -55,9 +59,10 @@ export default function Interpretations({
       );
     }
   }, []);
+
   return (
     <ExpandingBox
-      number={fieldOptions.length}
+      number={numberOfFilled}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues
@@ -101,18 +106,19 @@ export default function Interpretations({
                           const newArray = [...fieldValues];
                           newArray[index].type = value;
                           setFieldValues(newArray);
+                          handleSubmit(fieldValues, index);
                         }}
                         options={interpretationTypes}
                       />
                     </div>
                   </div>
                   <div id="trash+submit" className=" flex gap-2">
-                    <SubmitButton
+                    {/* <SubmitButton
                       submit={() => {
                         handleSubmit(fieldValues, index);
                       }}
                       disabled={!(fieldValue?.theory && fieldValue?.type)}
-                    />
+                    /> */}
                   </div>
                 </div>
               </form>
