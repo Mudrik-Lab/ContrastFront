@@ -28,9 +28,10 @@ export default function FinalSubmit({ study, refetch, onClose }) {
         extraClass="my-2 mx-auto"
         onClick={async () => {
           confirmFunction({
-            paperName: study.title,
-            question: "Submit?",
-            confirmButton: "Yes, submit study",
+            paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
+            question:
+              "Are you sure you want to submit the classification of the paper: ",
+            confirmButton: "Yes, submit paper",
             clickDelete: handleSubmit,
           });
         }}>

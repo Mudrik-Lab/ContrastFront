@@ -6,6 +6,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  TooltipExplanation,
 } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
 
@@ -64,7 +65,15 @@ export default function Interpretations({
     <ExpandingBox
       number={numberOfFilled}
       disabled={disabled}
-      headline={rawTextToShow(classificationName)}>
+      headline={
+        <TooltipExplanation
+          blackHeadline
+          text={rawTextToShow(classificationName)}
+          tooltip={
+            "Indicate if the experiment's findings were interpreted as Supporting/Challenging or Neutral regarding each of the theories. If the theory wasn’t mentioned in the paper (or was mentioned but without being portrayed as supported/challenged), indicate “Neutral.”"
+          }
+        />
+      }>
       {fieldValues
         .sort((a, b) => {
           if (a.parentTheoryId > b.parentTheoryId) {
