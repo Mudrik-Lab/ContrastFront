@@ -58,6 +58,15 @@ export default function Techniques({
       );
     }
   }, []);
+  async function submitOnChange(index) {
+    const techniqueToAppend = fieldOptions.find(
+      (option) => option.value == fieldValues[index].technique
+    );
+    const res = await handleSubmit(fieldValues[index].technique, index);
+    if (res) {
+      setTechniques((prev) => [...prev, techniqueToAppend]);
+    }
+  }
 
   return (
     <ExpandingBox
@@ -90,6 +99,7 @@ export default function Techniques({
                       const newArray = [...fieldValues];
                       newArray[index].technique = value;
                       setFieldValues(newArray);
+                      submitOnChange(index);
                     }}
                     options={fieldOptions}
                   />
@@ -101,21 +111,10 @@ export default function Techniques({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={async () => {
-                      const techniqueToAppend = fieldOptions.find(
-                        (option) => option.value == fieldValues[index].technique
-                      );
-                      const res = await handleSubmit(
-                        fieldValues[index].technique,
-                        index
-                      );
-                      if (res) {
-                        setTechniques((prev) => [...prev, techniqueToAppend]);
-                      }
-                    }}
+                  {/* <SubmitButton
+                    submit={submitOnChange(index)}
                     disabled={!fieldValue?.technique || fieldValue.id}
-                  />
+                  /> */}
                 </div>
               </div>
             </form>

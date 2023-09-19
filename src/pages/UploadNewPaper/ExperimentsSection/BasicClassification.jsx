@@ -14,7 +14,7 @@ import {
   editExperiments,
 } from "../../../apiHooks/createExperiment";
 import { toast } from "react-toastify";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { ReactComponent as Vicon } from "../../../assets/icons/v-icon.svg";
 import {
   concsiousnessOptions,
@@ -116,7 +116,6 @@ export default function BasicClassification({
         onSubmit={handleSubmit}
         validationSchema={validationSchema}>
         {({ dirty, isValid, values, setFieldValue }) => {
-          console.log(values);
           return (
             <Form className="flex flex-col gap-2">
               <div className=" flex flex-col gap-4 border border-blue border-x-4 p-2 rounded-md">
@@ -238,7 +237,6 @@ export default function BasicClassification({
                         isClearable
                         value={values.theories}
                         onChange={(v) => {
-                          console.log(v);
                           setFieldValue("theories", v);
                         }}
                         placeholder="Theories"

@@ -32,8 +32,9 @@ export default function ExperimentForm({
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
-  const [techniques, setTechniques] = useState(experimentData?.techniques);
-
+  const [techniques, setTechniques] = useState(
+    experimentData?.techniques || []
+  );
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
