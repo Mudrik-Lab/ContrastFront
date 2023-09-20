@@ -189,15 +189,18 @@ export default function Stimuli({
                               )
                             );
                           }}
-                          onBlur={() =>
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
-                          onKeyDown={(e) =>
-                            e.key === "Enter" &&
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
+                          onBlur={(e) => {
+                            if (submitCondition(index)) {
+                              e.preventDefault();
+                              handleSubmit(fieldValues, index);
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            if (e.key === "Enter" && submitCondition(index)) {
+                              e.preventDefault();
+                              handleSubmit(fieldValues, index);
+                            }
+                          }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             fieldValues[index].id &&
                             "bg-grayDisable text-gray-400"
@@ -236,17 +239,18 @@ export default function Stimuli({
           </div>
         );
       })}
+
       <AddFieldButton
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
-      <ExternalNotes
+      {/* <ExternalNotes
         description={description}
         setDescription={setDescription}
         classification={classificationName}
         study_pk={study_pk}
         experiment_pk={experiment_pk}
-      />
+      /> */}
     </ExpandingBox>
   );
 }

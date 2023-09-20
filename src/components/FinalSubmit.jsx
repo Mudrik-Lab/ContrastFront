@@ -23,7 +23,6 @@ export default function FinalSubmit({ study, refetch, onClose }) {
       toast.error(<ToastErrorBox errors={e?.response?.data} />);
     }
   }
-  console.log(study.experiments);
   return (
     <div className="w-full flex justify-center">
       {/* <Button

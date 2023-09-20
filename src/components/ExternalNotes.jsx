@@ -21,7 +21,7 @@ export default function ExternalNotes({
     } catch (e) {
       console.log(e);
       toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+        <ToastErrorBox errors={e.response?.data || "Error occurred"} />
       );
     }
   };
@@ -31,7 +31,6 @@ export default function ExternalNotes({
       handleNotes();
     }
   };
-  console.log(classification);
   return (
     <form action="submit">
       <div className=" flex gap-2 items-center p-2 bg-grayLight rounded-md">
