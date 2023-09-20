@@ -14,7 +14,7 @@ import {
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../Utils/functions";
-import classNames from "classnames";
+import Toggle from "../../../components/Toggle";
 
 export default function Findings({
   fieldOptions,
@@ -52,6 +52,7 @@ export default function Findings({
 
   useEffect(() => {
     if (values && values.length > 0) {
+      console.log(values);
       setFieldValues(
         values.map((row) => {
           return {
@@ -60,7 +61,7 @@ export default function Findings({
             technique: row.technique,
             onset: row.onset,
             offset: row.offset,
-            direction: row.direction,
+            direction: row.direction === "positive" ? true : false,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -86,13 +87,16 @@ export default function Findings({
       }
       disabled={disabled}
       headline={
-        <TooltipExplanation
-          blackHeadline
-          text={"Experiment's Findings"}
-          tooltip={
-            "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
-          }
-        />
+        <div className="flex gap-2">
+          <Text weight={"bold"}>Experiment's Findings</Text>
+          <TooltipExplanation
+            blackHeadline
+            hover
+            tooltip={
+              "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
+            }
+          />
+        </div>
       }>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -190,31 +194,19 @@ export default function Findings({
                         Is NCC
                       </Text>
                     </div>
-                    <div className="w-2/3 flex justify-between">
-                      <div className="w-full flex justify-center gap-4 ">
+                    <div className="w-2/3 flex justify-between gap-1">
+                      <div className="w-full flex justify-center gap-2 ">
                         <Text>True</Text>
-                        <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                          <input
-                            aria-label="toggle input"
-                            type="checkbox"
-                            disabled={fieldValues[index].id}
-                            value={fieldValues[index].isNNC}
-                            className="sr-only peer"
-                            onChange={(e) => {
-                              const newArray = [...fieldValues];
-                              console.log(e.target);
-                              newArray[index].isNNC = e.target.value;
-                              setFieldValues(newArray);
-                            }}
-                          />
-
-                          <div
-                            className={classNames(
-                              ` ${
-                                fieldValues[index].id ? "bg-grayReg" : "bg-blue"
-                              } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                            )}></div>
-                        </label>
+                        <Toggle
+                          disabled={fieldValue?.id}
+                          checked={fieldValues[index].isNNC}
+                          setChecked={() => {
+                            console.log(fieldValues);
+                            const newArray = [...fieldValues];
+                            newArray[index].isNNC = !fieldValues[index].isNNC;
+                            setFieldValues(newArray);
+                          }}
+                        />
                         <Text>False</Text>
                       </div>
                       <TooltipExplanation
@@ -318,35 +310,20 @@ export default function Findings({
                             Direction
                           </Text>
                         </div>
-                        <div className="w-2/3 flex justify-between">
-                          <div className="w-full flex justify-center gap-4 ">
+                        <div className="w-2/3 flex justify-between gap-1">
+                          <div className="w-full flex justify-center gap-2 ">
                             <Text>Positive</Text>
-                            <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                              <input
-                                aria-label="toggle input"
-                                type="checkbox"
-                                disabled={fieldValues[index].id}
-                                value={fieldValues[index].direction}
-                                className="sr-only peer"
-                                onChange={(e) => {
-                                  const newArray = [...fieldValues];
-                                  console.log(e.target);
-                                  newArray[index].direction =
-                                    e.target.value === "positive"
-                                      ? "negative"
-                                      : "positive";
-                                  setFieldValues(newArray);
-                                }}
-                              />
-                              <div
-                                className={classNames(
-                                  ` ${
-                                    fieldValues[index].id
-                                      ? "bg-grayReg"
-                                      : "bg-blue"
-                                  } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                                )}></div>
-                            </label>
+                            <Toggle
+                              disabled={fieldValues[index].id}
+                              checked={fieldValues[index].direction}
+                              setChecked={() => {
+                                const newArray = [...fieldValues];
+                                newArray[index].direction = newArray[
+                                  index
+                                ].direction = !fieldValues[index].direction;
+                                setFieldValues(newArray);
+                              }}
+                            />
                             <Text>Negative</Text>
                           </div>
                           <TooltipExplanation
@@ -558,7 +535,16 @@ export default function Findings({
                   />
                   <SubmitButton
                     submit={() => {
-                      console.log(fieldValues);
+                      const newArr = fieldValues;
+                      newArr[index].isNNC =
+                        "isNNC" in fieldValues[index]
+                          ? fieldValues[index].isNNC
+                          : true;
+                      newArr[index].direction =
+                        "direction" in fieldValues[index]
+                          ? fieldValues[index].direction
+                          : true;
+                      setFieldValues(newArr);
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={

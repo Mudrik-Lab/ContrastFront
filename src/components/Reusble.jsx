@@ -207,10 +207,15 @@ export const TooltipExplanation = ({
   tooltip,
   isHeadline,
   blackHeadline,
+  hover,
 }) => {
   return (
     <div className="flex gap-2 mt-1 ">
-      <Tooltip animation content={tooltip} trigger="click" className="w-60">
+      <Tooltip
+        animation
+        content={tooltip}
+        trigger={hover ? "hover" : "click"}
+        className="w-60">
         <button
           type="button"
           className={classNames(
@@ -623,14 +628,7 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
           type="button"
           disabled={!fieldValues[fieldValues.length - 1].id}
           onClick={() => {
-            setFieldValues([
-              ...fieldValues,
-              {
-                type: "",
-                description: "",
-                key: Math.round(Math.random() * 150),
-              },
-            ]);
+            setFieldValues([...fieldValues, {}]);
           }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"
