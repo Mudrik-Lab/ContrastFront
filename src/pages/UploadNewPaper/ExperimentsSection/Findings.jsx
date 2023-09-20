@@ -60,7 +60,7 @@ export default function Findings({
             technique: row.technique,
             onset: row.onset,
             offset: row.offset,
-            direction: row.direction ? "positive" : "negative",
+            direction: row.direction,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -108,7 +108,7 @@ export default function Findings({
                         Technique
                       </Text>
                     </div>
-                    <div className="w-2/3">
+                    <div className="w-2/3 flex items-center gap-2">
                       <CustomSelect
                         disabled={fieldValue?.id}
                         value={fieldValue.technique}
@@ -121,6 +121,12 @@ export default function Findings({
                           fieldOptions.techniquesOptions
                         )}
                       />
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={
+                          "Choose the technique used to obtain this finding."
+                        }
+                      />
                     </div>
                   </div>
 
@@ -130,7 +136,7 @@ export default function Findings({
                         Family
                       </Text>
                     </div>
-                    <div className="w-2/3">
+                    <div className="w-2/3 flex items-center gap-2">
                       <CustomSelect
                         disabled={fieldValue?.id}
                         value={fieldValue.family}
@@ -141,6 +147,11 @@ export default function Findings({
                         }}
                         options={fieldOptions.findingTagsFamilies}
                       />
+                      <TooltipExplanation
+                        tooltip={
+                          "Choose to which domain the finding belongs. If it is not a Temporal, Spatial or Frequency, choose Miscellaneous."
+                        }
+                      />
                     </div>
                   </div>
 
@@ -150,7 +161,7 @@ export default function Findings({
                         Type
                       </Text>
                     </div>
-                    <div className="w-2/3">
+                    <div className="w-2/3  flex items-center gap-2">
                       <CustomSelect
                         disabled={fieldValue?.id}
                         value={fieldValue.type}
@@ -164,38 +175,53 @@ export default function Findings({
                           (type) => type.family == fieldValues[index]?.family
                         )}
                       />
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={
+                          "Choose the specific type of NCC finding within the domain you defined."
+                        }
+                      />
                     </div>
                   </div>
 
-                  <div className="w-full gap-2 flex">
+                  <div className="w-full gap-2 flex my-1">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
                         Is NCC
                       </Text>
                     </div>
                     <div className="w-2/3 flex justify-between">
-                      <Text>False</Text>
-                      <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                        <input
-                          aria-label="toggle input"
-                          type="checkbox"
-                          disabled={fieldValues[index].id}
-                          value={fieldValues[index].isNNC}
-                          className="sr-only peer"
-                          onChange={(e) => {
-                            const newArray = [...fieldValues];
-                            newArray[index].isNNC = !e.target.value;
-                            setFieldValues(newArray);
-                          }}
-                        />
-                        <div
-                          className={classNames(
-                            ` ${
-                              fieldValues[index].id ? "bg-grayReg" : "bg-blue"
-                            } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                          )}></div>
-                      </label>
-                      <Text>True</Text>
+                      <div className="w-full flex justify-center gap-4 ">
+                        <Text>True</Text>
+                        <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                          <input
+                            aria-label="toggle input"
+                            type="checkbox"
+                            disabled={fieldValues[index].id}
+                            value={fieldValues[index].isNNC}
+                            className="sr-only peer"
+                            onChange={(e) => {
+                              const newArray = [...fieldValues];
+                              console.log(e.target);
+                              newArray[index].isNNC = e.target.value;
+                              setFieldValues(newArray);
+                            }}
+                          />
+
+                          <div
+                            className={classNames(
+                              ` ${
+                                fieldValues[index].id ? "bg-grayReg" : "bg-blue"
+                              } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                            )}></div>
+                        </label>
+                        <Text>False</Text>
+                      </div>
+                      <TooltipExplanation
+                        tooltip={
+                          "If this finding is interpreted as an NCC, select “True”. If this finding is reported not to be an NCC (e.g., it is not found under a no-report paradigm, where participants were conscious of the stimulus), indicate “False”."
+                        }
+                      />
                     </div>
                   </div>
 
@@ -293,30 +319,41 @@ export default function Findings({
                           </Text>
                         </div>
                         <div className="w-2/3 flex justify-between">
-                          <Text>Negative</Text>
-                          <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                            <input
-                              aria-label="toggle input"
-                              type="checkbox"
-                              disabled={fieldValues[index].id}
-                              value={fieldValues[index].direction}
-                              className="sr-only peer"
-                              onChange={(e) => {
-                                const newArray = [...fieldValues];
-                                newArray[index].direction = !e.target.value;
-                                setFieldValues(newArray);
-                              }}
-                            />
-                            <div
-                              className={classNames(
-                                ` ${
-                                  fieldValues[index].id
-                                    ? "bg-grayReg"
-                                    : "bg-blue"
-                                } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                              )}></div>
-                          </label>
-                          <Text>Positive</Text>
+                          <div className="w-full flex justify-center gap-4 ">
+                            <Text>Positive</Text>
+                            <label className="relative inline-flex items-center mx-2 cursor-pointer">
+                              <input
+                                aria-label="toggle input"
+                                type="checkbox"
+                                disabled={fieldValues[index].id}
+                                value={fieldValues[index].direction}
+                                className="sr-only peer"
+                                onChange={(e) => {
+                                  const newArray = [...fieldValues];
+                                  console.log(e.target);
+                                  newArray[index].direction =
+                                    e.target.value === "positive"
+                                      ? "negative"
+                                      : "positive";
+                                  setFieldValues(newArray);
+                                }}
+                              />
+                              <div
+                                className={classNames(
+                                  ` ${
+                                    fieldValues[index].id
+                                      ? "bg-grayReg"
+                                      : "bg-blue"
+                                  } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
+                                )}></div>
+                            </label>
+                            <Text>Negative</Text>
+                          </div>
+                          <TooltipExplanation
+                            tooltip={
+                              " If for this finding, its presence is associated with f consciousness, mark it as “Positive”. If its absence is associated with consciousness, mark it as “Negative”."
+                            }
+                          />
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -350,6 +387,11 @@ export default function Findings({
                           <Text weight={"bold"} color={"grayReg"}>
                             (Hz)
                           </Text>
+                          <TooltipExplanation
+                            tooltip={
+                              "specify the bounds of the effect: for an effect that was found between 100-300ms fill 100 in the lower bound and 300 in the upper bound."
+                            }
+                          />
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -383,6 +425,11 @@ export default function Findings({
                           <Text weight={"bold"} color={"grayReg"}>
                             (Hz)
                           </Text>
+                          <TooltipExplanation
+                            tooltip={
+                              "specify the bounds of the effect: for an effect that was found between 100-300ms fill 100 in the lower bound and 300 in the upper bound."
+                            }
+                          />
                         </div>
                       </div>
                       <div className="flex gap-2 w-full">
@@ -391,7 +438,7 @@ export default function Findings({
                             Analysis Type
                           </Text>
                         </div>
-                        <div className="w-2/3">
+                        <div className="w-2/3 flex items-center gap-2">
                           <CustomSelect
                             disabled={fieldValues[index].id}
                             value={fieldValue.analysis_type}
@@ -403,6 +450,11 @@ export default function Findings({
                             options={alphabetizeByLabels(
                               fieldOptions.analysisTypeOptions
                             )}
+                          />
+                          <TooltipExplanation
+                            tooltip={
+                              "Which analysis type was performed to obtain this finding?"
+                            }
                           />
                         </div>
                       </div>
@@ -475,7 +527,7 @@ export default function Findings({
                   )}
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
-                      Notes
+                      Notes (optional)
                     </Text>
                     <textarea
                       disabled={fieldValues[index].id}
@@ -506,6 +558,7 @@ export default function Findings({
                   />
                   <SubmitButton
                     submit={() => {
+                      console.log(fieldValues);
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={

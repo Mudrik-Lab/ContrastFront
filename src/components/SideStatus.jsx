@@ -112,7 +112,7 @@ export default function SideStatus({
       <div
         className="flex justify-between font-bold cursor-pointer text-base"
         onClick={() => setOpen(!open)}>
-        <span>{isExperiment ? "Submitted Experiments" : status}</span>
+        <span>{isExperiment ? "Added Experiments" : status}</span>
 
         <div className="flex items-center gap-1">
           <span>({number})</span>

@@ -651,6 +651,7 @@ export const SubmitButton = ({ disabled, submit }) => {
   return (
     <Tooltip
       animation
+      placement="bottom"
       content={
         disabled ? "Must fill all field in order to save" : "Click to save"
       }>

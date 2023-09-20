@@ -75,7 +75,7 @@ export default function UploadNewPaper() {
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
                   <TooltipExplanation
                     text={"Papers we approved"}
-                    tooltip={"View completed submissions to check their status"}
+                    tooltip={"Here you can view your Approved Submissions."}
                   />
                 </div>
                 <SideStatus
@@ -93,8 +93,8 @@ export default function UploadNewPaper() {
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
                   <TooltipExplanation
-                    text={"Your rejected papers"}
-                    tooltip={"Your rejected papers"}
+                    text={"Rejected papers"}
+                    tooltip={"Here you can view your Rejected Submissions."}
                   />
                 </div>
 
@@ -113,8 +113,8 @@ export default function UploadNewPaper() {
                 />
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
                   <TooltipExplanation
-                    text={"Awaiting"}
-                    tooltip={"View submissions awaiting review"}
+                    text={"Papers awaiting to review"}
+                    tooltip={"Here you can view your Awaiting Submissions."}
                   />
                 </div>
 
@@ -138,7 +138,9 @@ export default function UploadNewPaper() {
                 <div className="w-full flex justify-center border-b border-black pb-4 mb-4">
                   <TooltipExplanation
                     text={"Uncompleted submissions"}
-                    tooltip={"View submissions in progress and complete them!"}
+                    tooltip={
+                      "Here you can view or edit your submissions in progress. When you’re done, submit them for review."
+                    }
                   />
                 </div>
 

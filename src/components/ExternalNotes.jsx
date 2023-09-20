@@ -1,8 +1,7 @@
 import React from "react";
 import { setNotes } from "../apiHooks/setNotes";
 import { toast } from "react-toastify";
-import { SubmitButton, Text, ToastBox, ToastErrorBox } from "./Reusble";
-import { rawTextToShow } from "../Utils/functions";
+import { Text, ToastErrorBox } from "./Reusble";
 
 export default function ExternalNotes({
   description,
@@ -22,14 +21,13 @@ export default function ExternalNotes({
     } catch (e) {
       console.log(e);
       toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+        <ToastErrorBox errors={e.response?.data || "Error occurred"} />
       );
     }
   };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent the default behavior (new line)
-      // Trigger your submit action here, for example:
+      event.preventDefault(); // Prevent the default behavior
       handleNotes();
     }
   };
@@ -38,7 +36,9 @@ export default function ExternalNotes({
       <div className=" flex gap-2 items-center p-2 bg-grayLight rounded-md">
         <div className="w-full">
           <Text weight={"bold"} color={"blue"}>
-            Notes
+            {classification === "results_summary"
+              ? "Notes"
+              : "Notes (optional)"}
           </Text>
 
           <div className="flex gap-2">

@@ -102,7 +102,7 @@ export default function Measures({
 
                   <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
-                      Notes
+                      Notes (optional)
                     </Text>
 
                     <div className="flex gap-2">

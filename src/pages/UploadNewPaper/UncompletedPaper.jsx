@@ -247,7 +247,9 @@ export default function UncompletedPaper({
 
                             <TooltipExplanation
                               text={""}
-                              tooltip={"Enter the valid DOI of your study"}
+                              tooltip={
+                                "Enter the paper’s DOI (e.g. 10.1038/s41562-021-01284-5"
+                              }
                             />
                           </div>
                           <ErrorMessage
@@ -351,7 +353,12 @@ export default function UncompletedPaper({
                               options={countryOption}
                             />
 
-                            <TooltipExplanation text={""} tooltip={""} />
+                            <TooltipExplanation
+                              text={""}
+                              tooltip={
+                                "Add the country or countries of the affiliations of the authors."
+                              }
+                            />
                           </div>{" "}
                           <ErrorMessage
                             name="countries"
