@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ToastBox, ToastErrorBox } from "./Reusble";
 import { sendStudyToReview } from "../apiHooks/sendStudyToReview";
 import { toast } from "react-toastify";
-import { confirmFunction } from "../Utils/functions";
+import { confirmFunction, rawTextToShow } from "../Utils/functions";
 import { Tooltip } from "flowbite-react";
 
 export default function FinalSubmit({ study, refetch, onClose }) {
@@ -23,6 +23,13 @@ export default function FinalSubmit({ study, refetch, onClose }) {
       toast.error(<ToastErrorBox errors={e?.response?.data} />);
     }
   }
+  const missingDetails = study.experiments.map((experiment) =>
+    Object.keys(experiment).filter(
+      (key) =>
+        (Array.isArray(experiment[key]) && experiment[key].length === 0) ||
+        key === "results_summary"
+    )
+  );
   return (
     <div className="w-full flex justify-center">
       {/* <Button
@@ -53,6 +60,31 @@ export default function FinalSubmit({ study, refetch, onClose }) {
           extraClass="my-2 mx-auto"
           disabled={!study.experiments.length}
           onClick={async () => {
+            if (missingDetails.flat().length > 0) {
+              toast.error(
+                <div className="w-full">
+                  <h1 className="text-flourishRed font-bold text-xl">
+                    Missing details before final submit is avalble:
+                  </h1>
+                  {missingDetails.map((row, index) => (
+                    <div>
+                      <h3 className="font-bold">Experiment {index + 1}:</h3>
+                      <div>
+                        {row.map((missingKey) => {
+                          return (
+                            <span>
+                              {rawTextToShow(missingKey)}
+                              {", "}
+                            </span>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              );
+              return;
+            }
             confirmFunction({
               paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
               question:
