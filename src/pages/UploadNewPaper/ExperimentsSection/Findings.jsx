@@ -78,6 +78,34 @@ export default function Findings({
     return result;
   }, {});
 
+  const submitConditions = (index) => {
+    const field = fieldValues[index];
+    if (!(field?.type && field?.family)) {
+      return false;
+    }
+    if (field?.family == families["Temporal"]) {
+      return [field.onset, field?.offset].every(
+        (condition) => Boolean(condition) === true
+      );
+    }
+
+    if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
+      return [field.AAL_atlas_tag].every(
+        (condition) => Boolean(condition) === true
+      );
+    }
+    if (field?.family == families["Frequency"]) {
+      return [
+        field.onset,
+        field.offset,
+        field.band_higher_bound,
+        field.band_lower_bound,
+        field.analysis_type,
+      ].every((condition) => Boolean(condition) === true);
+    }
+    return true;
+  };
+  console.log(fieldValues[1]?.isNNC);
   return (
     <ExpandingBox
       number={
@@ -200,10 +228,10 @@ export default function Findings({
                         <Toggle
                           disabled={fieldValue?.id}
                           checked={fieldValues[index].isNNC}
-                          setChecked={() => {
-                            console.log(fieldValues);
+                          setChecked={(e) => {
+                            console.log(e);
                             const newArray = [...fieldValues];
-                            newArray[index].isNNC = !fieldValues[index].isNNC;
+                            newArray[index].isNNC = !newArray[index].isNNC;
                             setFieldValues(newArray);
                           }}
                         />
@@ -218,14 +246,14 @@ export default function Findings({
                   </div>
 
                   {fieldValue.family == families["Temporal"] ? (
-                    <div className="flex gap-4 ">
-                      <div className="flex gap-1 items-center">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex gap-2 items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Onset
                           </Text>
                         </div>
-                        <div className="w-2/3 flex gap-1 items-center">
+                        <div className="w-2/3 flex gap-2 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -245,18 +273,18 @@ export default function Findings({
                               "bg-grayDisable text-gray-400"
                             } `}
                           />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (ms)
+                          </Text>
                         </div>
-                        <Text weight={"bold"} color={"grayReg"}>
-                          (ms)
-                        </Text>
                       </div>
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-2 items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Offset
                           </Text>
                         </div>
-                        <div className="w-2/3 flex gap-1 items-center">
+                        <div className="w-2/3 flex gap-2 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -536,24 +564,27 @@ export default function Findings({
                   <SubmitButton
                     submit={() => {
                       const newArr = fieldValues;
-                      newArr[index].isNNC =
-                        "isNNC" in fieldValues[index]
-                          ? fieldValues[index].isNNC
-                          : true;
-                      newArr[index].direction =
-                        "direction" in fieldValues[index]
-                          ? fieldValues[index].direction
-                          : true;
+                      if ("isNNC" in fieldValues[index]) {
+                        newArr[index].isNNC = fieldValues[index].isNNC;
+                        console.log("first");
+                      } else {
+                        newArr[index].isNNC = true;
+                      }
+
+                      if (fieldValues[index].family == families["Temporal"]) {
+                        if ("direction" in fieldValues[index]) {
+                          newArr[index].direction =
+                            fieldValues[index].direction === true
+                              ? "positive"
+                              : "negative";
+                        } else {
+                          newArr[index].direction = "positive";
+                        }
+                      }
                       setFieldValues(newArr);
                       handleSubmit(fieldValues, index);
                     }}
-                    disabled={
-                      !(
-                        fieldValue?.type &&
-                        fieldValue?.technique &&
-                        fieldValue?.family
-                      ) || fieldValue.id
-                    }
+                    disabled={!submitConditions(index) || fieldValue.id}
                   />
                 </div>
               </div>
