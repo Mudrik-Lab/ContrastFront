@@ -22,6 +22,8 @@ export default function Tasks({
   experiment_pk,
   study_pk,
   values,
+  setMinimumClassifications,
+  minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.tasks_notes || "");
   const [fieldValues, setFieldValues] = useState([{ type: "" }]);
@@ -54,14 +56,17 @@ export default function Tasks({
       );
     }
   }, []);
+  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
+  useEffect(() => {
+    setMinimumClassifications({
+      ...minimumClassifications,
+      tasks: fieldsNum,
+    });
+  }, [fieldsNum]);
 
   return (
     <ExpandingBox
-      number={
-        Object.values(fieldValues[0])[0] === ""
-          ? fieldValues.length - 1
-          : fieldValues.length
-      }
+      number={fieldsNum}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {

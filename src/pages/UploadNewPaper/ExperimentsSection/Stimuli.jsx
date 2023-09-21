@@ -24,6 +24,8 @@ export default function Stimuli({
   experiment_pk,
   study_pk,
   values,
+  setMinimumClassifications,
+  minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
@@ -76,13 +78,16 @@ export default function Stimuli({
     );
   };
 
+  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
+  useEffect(() => {
+    setMinimumClassifications({
+      ...minimumClassifications,
+      stimuli: fieldsNum,
+    });
+  }, [fieldsNum]);
   return (
     <ExpandingBox
-      number={
-        Object.values(fieldValues[0])[0] === ""
-          ? fieldValues.length - 1
-          : fieldValues.length
-      }
+      number={fieldsNum}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {

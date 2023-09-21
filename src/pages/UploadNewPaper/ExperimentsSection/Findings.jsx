@@ -105,7 +105,6 @@ export default function Findings({
     }
     return true;
   };
-  console.log(fieldValues[1]?.isNNC);
   return (
     <ExpandingBox
       number={
