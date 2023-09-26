@@ -80,7 +80,7 @@ export default function Findings({
 
   const submitConditions = (index) => {
     const field = fieldValues[index];
-    if (!(field?.type && field?.family)) {
+    if (!(field?.type && field?.family && field.technique)) {
       return false;
     }
     if (field?.family == families["Temporal"]) {
@@ -223,10 +223,16 @@ export default function Findings({
                     </div>
                     <div className="w-2/3 flex justify-between gap-1">
                       <div className="w-full flex justify-center gap-2 ">
-                        <Text>True</Text>
+                        {/* toggle's default value is undefined (case fieldValue
+                        had just been created) */}
+                        <Text>False</Text>
                         <Toggle
                           disabled={fieldValue?.id}
-                          checked={fieldValues[index].isNNC}
+                          checked={
+                            fieldValue.isNNC === undefined
+                              ? true
+                              : fieldValue.isNNC
+                          }
                           setChecked={(e) => {
                             console.log(e);
                             const newArray = [...fieldValues];
@@ -234,7 +240,7 @@ export default function Findings({
                             setFieldValues(newArray);
                           }}
                         />
-                        <Text>False</Text>
+                        <Text>True</Text>
                       </div>
                       <TooltipExplanation
                         tooltip={
@@ -339,19 +345,22 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex justify-between gap-1">
                           <div className="w-full flex justify-center gap-2 ">
-                            <Text>Positive</Text>
+                            <Text>Negative</Text>
                             <Toggle
-                              disabled={fieldValues[index].id}
-                              checked={fieldValues[index].direction}
-                              setChecked={() => {
+                              disabled={fieldValue?.id}
+                              checked={
+                                fieldValue.direction === undefined
+                                  ? true
+                                  : fieldValue.direction
+                              }
+                              setChecked={(e) => {
                                 const newArray = [...fieldValues];
-                                newArray[index].direction = newArray[
-                                  index
-                                ].direction = !fieldValues[index].direction;
+                                newArray[index].direction =
+                                  !newArray[index].direction;
                                 setFieldValues(newArray);
                               }}
                             />
-                            <Text>Negative</Text>
+                            <Text>Positive</Text>
                           </div>
                           <TooltipExplanation
                             tooltip={
