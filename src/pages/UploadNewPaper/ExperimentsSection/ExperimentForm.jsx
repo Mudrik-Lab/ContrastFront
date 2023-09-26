@@ -135,6 +135,7 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
 
+  const shouldCheckAllClassificationsFilled = false;
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -259,20 +260,32 @@ export default function ExperimentForm({
               }}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={Object.values(minimumClassifications).includes(0)}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.finding_tags}
             />
             <Interpretations
               fieldOptions={theories}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={Object.values(minimumClassifications).includes(0)}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.interpretations}
             />
             <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={Object.values(minimumClassifications).includes(0)}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.results_summary}
             />
           </div>

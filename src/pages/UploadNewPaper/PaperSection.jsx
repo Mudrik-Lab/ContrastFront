@@ -54,13 +54,13 @@ export default function PaperSection({
       : "Awaiting Review";
 
   return (
-    <div className=" h-full">
+    <div>
       {
         // for case of watching paper (no edit)
         isSuccess &&
           (!showEditble ||
             study.approval_status !== statusNumber.ON_PROCCESS) && (
-            <div className="h-full">
+            <div>
               <ProgressComponent
                 status={status}
                 paperNmae={study.title.slice(0, headlineLenghtToShow) + "..."}

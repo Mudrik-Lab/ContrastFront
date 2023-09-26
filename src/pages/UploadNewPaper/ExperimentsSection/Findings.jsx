@@ -14,7 +14,6 @@ import {
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../Utils/functions";
-import Toggle from "../../../components/Toggle";
 
 export default function Findings({
   fieldOptions,
@@ -28,8 +27,6 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
-      isNNC: true,
-      direction: true,
     },
   ]);
   const classificationName = "finding_tags";
@@ -52,7 +49,6 @@ export default function Findings({
 
   useEffect(() => {
     if (values && values.length > 0) {
-      console.log(values);
       setFieldValues(
         values.map((row) => {
           return {
@@ -61,7 +57,8 @@ export default function Findings({
             technique: row.technique,
             onset: row.onset,
             offset: row.offset,
-            direction: row.direction === "positive" ? true : false,
+            direction: row.direction,
+            is_NCC: row.is_NCC,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -73,6 +70,7 @@ export default function Findings({
       );
     }
   }, []);
+
   const families = fieldOptions.findingTagsFamilies.reduce((result, item) => {
     result[item.label] = item.value;
     return result;
@@ -80,7 +78,7 @@ export default function Findings({
 
   const submitConditions = (index) => {
     const field = fieldValues[index];
-    if (!(field?.type && field?.family && field.technique)) {
+    if (!(field?.type && field?.family && field.technique && field.is_NCC)) {
       return false;
     }
     if (field?.family == families["Temporal"]) {
@@ -96,6 +94,7 @@ export default function Findings({
     }
     if (field?.family == families["Frequency"]) {
       return [
+        field.direction,
         field.onset,
         field.offset,
         field.band_higher_bound,
@@ -105,6 +104,7 @@ export default function Findings({
     }
     return true;
   };
+
   return (
     <ExpandingBox
       number={
@@ -214,34 +214,27 @@ export default function Findings({
                       />
                     </div>
                   </div>
-
-                  <div className="w-full gap-2 flex my-1">
+                  <div className="flex gap-2 w-full items-center">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
-                        Is NCC
+                        Is NCC?
                       </Text>
                     </div>
-                    <div className="w-2/3 flex justify-between gap-1">
-                      <div className="w-full flex justify-center gap-2 ">
-                        {/* toggle's default value is undefined (case fieldValue
-                        had just been created) */}
-                        <Text>False</Text>
-                        <Toggle
-                          disabled={fieldValue?.id}
-                          checked={
-                            fieldValue.isNNC === undefined
-                              ? true
-                              : fieldValue.isNNC
-                          }
-                          setChecked={(e) => {
-                            console.log(e);
-                            const newArray = [...fieldValues];
-                            newArray[index].isNNC = !newArray[index].isNNC;
-                            setFieldValues(newArray);
-                          }}
-                        />
-                        <Text>True</Text>
-                      </div>
+                    <div className="w-2/3 flex justify-between items-center gap-2">
+                      <CustomSelect
+                        disabled={fieldValue?.id}
+                        value={fieldValue.is_NCC}
+                        onChange={(value) => {
+                          const newArray = [...fieldValues];
+                          newArray[index].is_NCC = value;
+                          setFieldValues(newArray);
+                        }}
+                        options={[
+                          { value: true, label: "True" },
+                          { value: false, label: "False" },
+                        ]}
+                      />
+
                       <TooltipExplanation
                         tooltip={
                           "If this finding is interpreted as an NCC, select “True”. If this finding is reported not to be an NCC (e.g., it is not found under a no-report paradigm, where participants were conscious of the stimulus), indicate “False”."
@@ -337,31 +330,27 @@ export default function Findings({
                     </div>
                   ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
-                      <div className="flex gap-2 w-full">
+                      <div className="flex gap-2 w-full items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Direction
                           </Text>
                         </div>
-                        <div className="w-2/3 flex justify-between gap-1">
-                          <div className="w-full flex justify-center gap-2 ">
-                            <Text>Negative</Text>
-                            <Toggle
-                              disabled={fieldValue?.id}
-                              checked={
-                                fieldValue.direction === undefined
-                                  ? true
-                                  : fieldValue.direction
-                              }
-                              setChecked={(e) => {
-                                const newArray = [...fieldValues];
-                                newArray[index].direction =
-                                  !newArray[index].direction;
-                                setFieldValues(newArray);
-                              }}
-                            />
-                            <Text>Positive</Text>
-                          </div>
+                        <div className="w-2/3 flex justify-between items-center gap-2">
+                          <CustomSelect
+                            disabled={fieldValue?.id}
+                            value={fieldValue.direction}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].direction = value;
+                              setFieldValues(newArray);
+                            }}
+                            options={[
+                              { value: "positive", label: "Positive" },
+                              { value: "negative", label: "Negative" },
+                            ]}
+                          />
+
                           <TooltipExplanation
                             tooltip={
                               " If for this finding, its presence is associated with f consciousness, mark it as “Positive”. If its absence is associated with consciousness, mark it as “Negative”."
@@ -571,25 +560,6 @@ export default function Findings({
                   />
                   <SubmitButton
                     submit={() => {
-                      const newArr = fieldValues;
-                      if ("isNNC" in fieldValues[index]) {
-                        newArr[index].isNNC = fieldValues[index].isNNC;
-                        console.log("first");
-                      } else {
-                        newArr[index].isNNC = true;
-                      }
-
-                      if (fieldValues[index].family == families["Temporal"]) {
-                        if ("direction" in fieldValues[index]) {
-                          newArr[index].direction =
-                            fieldValues[index].direction === true
-                              ? "positive"
-                              : "negative";
-                        } else {
-                          newArr[index].direction = "positive";
-                        }
-                      }
-                      setFieldValues(newArr);
                       handleSubmit(fieldValues, index);
                     }}
                     disabled={!submitConditions(index) || fieldValue.id}

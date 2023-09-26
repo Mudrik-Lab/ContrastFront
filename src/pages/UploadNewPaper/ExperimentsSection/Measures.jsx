@@ -126,17 +126,6 @@ export default function Measures({
                             )
                           );
                         }}
-                        // onBlur={() =>
-                        //   fieldValue?.notes &&
-                        //   fieldValue?.type &&
-                        //   handleSubmit(fieldValues, index)
-                        // }
-                        // onKeyDown={(e) =>
-                        //   e.key === "Enter" &&
-                        //   fieldValue?.notes &&
-                        //   fieldValue?.type &&
-                        //   handleSubmit(fieldValues, index)
-                        // }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"

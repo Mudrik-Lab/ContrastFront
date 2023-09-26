@@ -37,7 +37,7 @@ export default function UploadNewPaper() {
     refetch();
   };
   return (
-    <div className=" h-full">
+    <div>
       {isSuccess && (
         <PageTemplate
           control={
@@ -158,7 +158,7 @@ export default function UploadNewPaper() {
             </div>
           }
           graph={
-            <div className=" shadow-3xl mt-2 overflow-y-scroll h-full">
+            <div className=" shadow-3xl mt-2 overflow-y-hidden">
               {addNewPaper ? (
                 <NewPaperForm
                   setAddNewPaper={setAddNewPaper}
