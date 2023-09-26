@@ -1,5 +1,5 @@
 import React from "react";
-import { upladPaperPageTopSection } from "../../Utils/HardCoded";
+import { uploadPaperPageTopSection } from "../../Utils/HardCoded";
 
 export default function ProgressComponent({ status, paperNmae, experiment }) {
   const Arrow = (
@@ -17,8 +17,8 @@ export default function ProgressComponent({ status, paperNmae, experiment }) {
   );
   return (
     <div
-      style={{ height: upladPaperPageTopSection }}
-      className={`px-6  bg-grayLight flex items-center`}>
+      style={{ height: uploadPaperPageTopSection }}
+      className={`px-6 bg-grayLight flex items-center`}>
       <div className="flex w-full justify-start items-center gap-2 text-lg">
         <span>{status}</span>
         {Arrow} <span>{paperNmae} </span>

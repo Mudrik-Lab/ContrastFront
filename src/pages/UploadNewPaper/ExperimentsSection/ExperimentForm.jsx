@@ -17,7 +17,7 @@ import Paradigms from "./Paradigms";
 import { getExperiment } from "../../../apiHooks/getExperiment";
 import { getStudy } from "../../../apiHooks/getStudies";
 import {
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
@@ -143,7 +143,7 @@ export default function ExperimentForm({
           className="p-2 w-1/2 shadow-3xl flex flex-col gap-2 overflow-y-scroll"
           style={{
             height: `calc(100vh - ${
-              uploadPaperUsedHeight + upladPaperPageTopSection + 10
+              uploadPaperUsedHeight + uploadPaperPageTopSection + 10
             }px)`,
           }}>
           <div>

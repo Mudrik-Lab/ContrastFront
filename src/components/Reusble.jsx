@@ -15,7 +15,7 @@ import {
   screenWidth,
   sideSectionClass,
   sideWidth,
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
 } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
@@ -466,7 +466,7 @@ export const TopSideUserBox = () => {
   return (
     <div
       className={classNames(
-        `w-full bg-grayLight p-4 h-[${upladPaperPageTopSection}px]`
+        `w-full bg-grayLight p-4 h-[${uploadPaperPageTopSection}px]`
       )}>
       <h2 className="text-2xl text-black font-normal">
         {snap.user.username}’s workspace

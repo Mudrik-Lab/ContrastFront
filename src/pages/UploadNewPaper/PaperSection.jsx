@@ -10,7 +10,7 @@ import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 import {
   statusNumber,
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
 
@@ -72,7 +72,7 @@ export default function PaperSection({
                   className="p-2 w-1/2 shadow-3xl overflow-y-scrol"
                   style={{
                     height: `calc(100vh - ${
-                      uploadPaperUsedHeight + upladPaperPageTopSection + 10
+                      uploadPaperUsedHeight + uploadPaperPageTopSection + 10
                     }px)`,
                   }}>
                   <div className="flex flex-col gap-6 ">
