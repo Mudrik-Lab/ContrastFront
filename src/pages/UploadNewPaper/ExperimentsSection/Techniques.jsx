@@ -22,8 +22,6 @@ export default function Techniques({
   study_pk,
   values,
   setTechniques,
-  setMinimumClassifications,
-  minimumClassifications,
 }) {
   const [fieldValues, setFieldValues] = useState([
     {
@@ -69,17 +67,14 @@ export default function Techniques({
       setTechniques((prev) => [...prev, techniqueToAppend]);
     }
   }
-  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      techniques: fieldsNum,
-    });
-  }, [fieldsNum]);
 
   return (
     <ExpandingBox
-      number={fieldsNum}
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {

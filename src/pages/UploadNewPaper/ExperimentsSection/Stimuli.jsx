@@ -24,8 +24,6 @@ export default function Stimuli({
   experiment_pk,
   study_pk,
   values,
-  setMinimumClassifications,
-  minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
@@ -60,7 +58,7 @@ export default function Stimuli({
         values.stimuli.map((row) => {
           return {
             category: row.category,
-            sub_category: row.sub_category || "",
+            sub_category: row.sub_category,
             modality: row.modality,
             duration: row.duration,
             id: row.id,
@@ -78,16 +76,13 @@ export default function Stimuli({
     );
   };
 
-  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      stimuli: fieldsNum,
-    });
-  }, [fieldsNum]);
   return (
     <ExpandingBox
-      number={fieldsNum}
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -185,7 +180,6 @@ export default function Stimuli({
                           type="number"
                           defaultValue={fieldValue.duration}
                           onChange={(e) => {
-                            e.stopPropagation();
                             e.preventDefault();
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
@@ -196,21 +190,15 @@ export default function Stimuli({
                             );
                           }}
                           onBlur={(e) => {
-                            e.stopPropagation();
                             if (submitCondition(index)) {
                               e.preventDefault();
-
                               handleSubmit(fieldValues, index);
                             }
                           }}
                           onKeyDown={(e) => {
-                            e.stopPropagation();
-
                             if (e.key === "Enter" && submitCondition(index)) {
                               e.preventDefault();
                               handleSubmit(fieldValues, index);
-                            } else if (e.key === "Enter") {
-                              e.preventDefault();
                             }
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${

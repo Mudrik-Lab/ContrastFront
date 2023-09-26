@@ -24,8 +24,6 @@ export default function Paradigms({
   experiment_pk,
   study_pk,
   values,
-  minimumClassifications,
-  setMinimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.paradigms || "");
   const [fieldValues, setFieldValues] = useState([
@@ -94,19 +92,14 @@ export default function Paradigms({
         fieldValues[index]?.sub_type,
     ].every((condition) => Boolean(condition) === true);
   };
-
-  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      paradigms: fieldsNum,
-    });
-  }, [fieldsNum]);
-
   return (
     <>
       <ExpandingBox
-        number={fieldsNum}
+        number={
+          Object.values(fieldValues[0])[0] === ""
+            ? fieldValues.length - 1
+            : fieldValues.length
+        }
         disabled={disabled}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
@@ -155,6 +148,7 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].specific = value;
                             setFieldValues(newArray);
+                            console.log(submitCondition(index));
                             submitCondition(index) && uniqSubmit(index);
                           }}
                           options={[

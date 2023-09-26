@@ -11,6 +11,7 @@ export default function ExperimentsBox({
   setPaperToEdit,
   showEditble,
   refetch,
+
   setAddNewExperiment,
 }) {
   return (

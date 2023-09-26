@@ -73,16 +73,13 @@ export default function Interpretations({
       number={numberOfFilled}
       disabled={disabled}
       headline={
-        <div className="flex gap-2">
-          <Text weight={"bold"}>{rawTextToShow(classificationName)}</Text>
-          <TooltipExplanation
-            blackHeadline
-            hover
-            tooltip={
-              "Indicate if the experiment's findings were interpreted as Supporting/Challenging or Neutral regarding each of the theories. If the theory wasn’t mentioned in the paper (or was mentioned but without being portrayed as supported/challenged), indicate “Neutral.”"
-            }
-          />
-        </div>
+        <TooltipExplanation
+          blackHeadline
+          text={rawTextToShow(classificationName)}
+          tooltip={
+            "Indicate if the experiment's findings were interpreted as Supporting/Challenging or Neutral regarding each of the theories. If the theory wasn’t mentioned in the paper (or was mentioned but without being portrayed as supported/challenged), indicate “Neutral.”"
+          }
+        />
       }>
       {fieldValues.map((fieldValue, index) => {
         return (

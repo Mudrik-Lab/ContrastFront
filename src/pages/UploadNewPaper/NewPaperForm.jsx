@@ -50,7 +50,6 @@ export default function NewPaperForm({
     isSuccess: extraConfigSuccess,
     refetch: extraConfigRefetch,
   } = useQuery([`more_configurations`], getExtraConfig);
-
   const journals = extraConfig?.data.existing_journals.map((journal) => ({
     value: journal,
     label: journal,

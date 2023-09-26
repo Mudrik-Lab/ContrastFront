@@ -22,8 +22,6 @@ export default function Measures({
   experiment_pk,
   study_pk,
   values,
-  setMinimumClassifications,
-  minimumClassifications,
 }) {
   const [fieldValues, setFieldValues] = useState([
     {
@@ -62,17 +60,13 @@ export default function Measures({
     }
   }, []);
 
-  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      measures: fieldsNum,
-    });
-  }, [fieldsNum]);
-
   return (
     <ExpandingBox
-      number={fieldsNum}
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
@@ -126,6 +120,17 @@ export default function Measures({
                             )
                           );
                         }}
+                        // onBlur={() =>
+                        //   fieldValue?.notes &&
+                        //   fieldValue?.type &&
+                        //   handleSubmit(fieldValues, index)
+                        // }
+                        // onKeyDown={(e) =>
+                        //   e.key === "Enter" &&
+                        //   fieldValue?.notes &&
+                        //   fieldValue?.type &&
+                        //   handleSubmit(fieldValues, index)
+                        // }
                         className={`border w-full border-gray-300 rounded-md p-2 ${
                           fieldValues[index].id &&
                           "bg-grayDisable text-gray-400"

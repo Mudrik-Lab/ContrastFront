@@ -11,7 +11,7 @@ import { rawTextToShow } from "../../../Utils/functions";
 import FindingsTags from "../FindingsTags";
 import {
   interpretationTypes,
-  uploadPaperPageTopSection,
+  upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
 
@@ -51,7 +51,7 @@ export default function ExperimentDetails({
           className="p-2 h-full w-[50%] shadow-3xl flex flex-col gap-2 overflow-y-scroll"
           style={{
             height: `calc(100vh - ${
-              uploadPaperUsedHeight + uploadPaperPageTopSection + 10
+              uploadPaperUsedHeight + upladPaperPageTopSection + 10
             }px)`,
           }}>
           <div>
@@ -403,9 +403,7 @@ export default function ExperimentDetails({
               headline={"Interpretations"}
               number={experiment.interpretations.length}>
               {experiment.interpretations.map((interpretation, index) => (
-                <div
-                  key={interpretation.theory.name}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-full flex flex-col gap-2">
                     <div className="flex gap-2 items-start px-2">

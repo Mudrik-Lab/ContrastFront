@@ -3,7 +3,7 @@ export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
 export const footerHeight = 81;
-export const uploadPaperPageTopSection = 112; //h-28
+export const upladPaperPageTopSection = 112; //h-28
 export const uploadPaperUsedHeight = footerHeight + navHeight + 20;
 
 export const fieldClass = "border border-gray-300 rounded-sm p-2 h-10 w-72";

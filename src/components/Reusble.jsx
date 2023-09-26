@@ -15,7 +15,7 @@ import {
   screenWidth,
   sideSectionClass,
   sideWidth,
-  uploadPaperPageTopSection,
+  upladPaperPageTopSection,
 } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
@@ -207,15 +207,10 @@ export const TooltipExplanation = ({
   tooltip,
   isHeadline,
   blackHeadline,
-  hover,
 }) => {
   return (
     <div className="flex gap-2 mt-1 ">
-      <Tooltip
-        animation
-        content={tooltip}
-        trigger={hover ? "hover" : "click"}
-        className="w-60">
+      <Tooltip animation content={tooltip} trigger="click" className="w-60">
         <button
           type="button"
           className={classNames(
@@ -466,7 +461,7 @@ export const TopSideUserBox = () => {
   return (
     <div
       className={classNames(
-        `w-full bg-grayLight p-4 h-[${uploadPaperPageTopSection}px]`
+        `w-full bg-grayLight p-4 h-[${upladPaperPageTopSection}px]`
       )}>
       <h2 className="text-2xl text-black font-normal">
         {snap.user.username}’s workspace
@@ -628,7 +623,14 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
           type="button"
           disabled={!fieldValues[fieldValues.length - 1].id}
           onClick={() => {
-            setFieldValues([...fieldValues, {}]);
+            setFieldValues([
+              ...fieldValues,
+              {
+                type: "",
+                description: "",
+                key: Math.round(Math.random() * 150),
+              },
+            ]);
           }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

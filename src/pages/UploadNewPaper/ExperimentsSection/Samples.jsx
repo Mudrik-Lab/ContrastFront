@@ -21,8 +21,6 @@ export default function Samples({
   experiment_pk,
   study_pk,
   values,
-  setMinimumClassifications,
-  minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.samples_notes || "");
   const [fieldValues, setFieldValues] = useState([
@@ -73,17 +71,13 @@ export default function Samples({
       fieldValues[index]?.size_included <= fieldValues[index]?.total_size
     );
   };
-
-  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      samples: fieldsNum,
-    });
-  }, [fieldsNum]);
   return (
     <ExpandingBox
-      number={fieldsNum}
+      number={
+        Object.values(fieldValues[0])[0] === ""
+          ? fieldValues.length - 1
+          : fieldValues.length
+      }
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {

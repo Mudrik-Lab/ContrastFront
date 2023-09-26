@@ -10,7 +10,7 @@ import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
 import {
   statusNumber,
-  uploadPaperPageTopSection,
+  upladPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
 
@@ -54,13 +54,13 @@ export default function PaperSection({
       : "Awaiting Review";
 
   return (
-    <div>
+    <div className=" h-full">
       {
         // for case of watching paper (no edit)
         isSuccess &&
           (!showEditble ||
             study.approval_status !== statusNumber.ON_PROCCESS) && (
-            <div>
+            <div className="h-full">
               <ProgressComponent
                 status={status}
                 paperNmae={study.title.slice(0, headlineLenghtToShow) + "..."}
@@ -72,7 +72,7 @@ export default function PaperSection({
                   className="p-2 w-1/2 shadow-3xl overflow-y-scrol"
                   style={{
                     height: `calc(100vh - ${
-                      uploadPaperUsedHeight + uploadPaperPageTopSection + 10
+                      uploadPaperUsedHeight + upladPaperPageTopSection + 10
                     }px)`,
                   }}>
                   <div className="flex flex-col gap-6 ">
