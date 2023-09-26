@@ -16,7 +16,7 @@ import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.sv
 import NewPaperForm from "./NewPaperForm";
 import {
   statusNumber,
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
 
@@ -37,7 +37,7 @@ export default function UploadNewPaper() {
     refetch();
   };
   return (
-    <div className=" h-full">
+    <div>
       {isSuccess && (
         <PageTemplate
           control={
@@ -50,7 +50,7 @@ export default function UploadNewPaper() {
                 className="p-4 shadow-3xl mt-2 overflow-y-scroll "
                 style={{
                   height: `calc(100vh - ${
-                    uploadPaperUsedHeight + upladPaperPageTopSection
+                    uploadPaperUsedHeight + uploadPaperPageTopSection
                   }px)`,
                 }}>
                 <Text weight={"bold"} color={"grayHeavy"}>
@@ -158,7 +158,7 @@ export default function UploadNewPaper() {
             </div>
           }
           graph={
-            <div className=" shadow-3xl mt-2 overflow-y-scroll h-full">
+            <div className=" shadow-3xl mt-2 overflow-y-hidden">
               {addNewPaper ? (
                 <NewPaperForm
                   setAddNewPaper={setAddNewPaper}

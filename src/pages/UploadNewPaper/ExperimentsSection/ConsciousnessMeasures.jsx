@@ -21,6 +21,8 @@ export default function ConsciousnessMeasures({
   experiment_pk,
   study_pk,
   values,
+  minimumClassifications,
+  setMinimumClassifications,
 }) {
   const [description, setDescription] = useState(
     values?.consciousness_measures_notes || ""
@@ -67,14 +69,17 @@ export default function ConsciousnessMeasures({
   const submitCondition = (index) => {
     return fieldValues[index]?.type && fieldValues[index]?.phase;
   };
+  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
+  useEffect(() => {
+    setMinimumClassifications({
+      ...minimumClassifications,
+      consciousnessMeasures: fieldsNum,
+    });
+  }, [fieldsNum]);
 
   return (
     <ExpandingBox
-      number={
-        Object.values(fieldValues[0])[0] === ""
-          ? fieldValues.length - 1
-          : fieldValues.length
-      }
+      number={fieldsNum}
       disabled={disabled}
       headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {

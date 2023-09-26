@@ -14,10 +14,8 @@ export default function SideStatus({
   papers,
   isExperiment,
   setPaperToShow,
-  setNewPaper,
   setShowEditble,
   showEditble,
-  setAddNewExperiment,
   refetch,
   setPaperToEdit,
 }) {
@@ -186,7 +184,6 @@ export default function SideStatus({
                       className="cursor-pointer"
                       onClick={() => {
                         if (isExperiment) {
-                          // setPaperToShow(paper);
                           setPaperToEdit(paper);
                           setPaperToShow(false);
                         } else {

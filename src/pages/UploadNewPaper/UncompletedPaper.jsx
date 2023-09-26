@@ -21,7 +21,7 @@ import {
   fieldClass,
   footerHeight,
   navHeight,
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
 import CreatableSelect from "react-select/creatable";
@@ -166,7 +166,6 @@ export default function UncompletedPaper({
       console.log(e);
     }
   };
-
   return (
     <div className="h-full ">
       {study && (
@@ -174,11 +173,15 @@ export default function UncompletedPaper({
           <ProgressComponent
             status={"Uncompleted submissoins"}
             paperNmae={
-              study.title.length > 35
-                ? study.title.slice(0, 35) + "..."
+              study.title.length > 45
+                ? study.title.slice(0, 45) + "..."
                 : study.title
             }
-            experiment={paperToShow?.title}
+            experiment={
+              paperToShow?.title ||
+              paperToEdit.title ||
+              (addNewExperiment && "New Experiment")
+            }
           />
           <Spacer height={10} />
           <div className="flex justify-between relative ">
@@ -186,7 +189,7 @@ export default function UncompletedPaper({
               className="p-2 w-1/2 shadow-3xl overflow-y-scroll"
               style={{
                 height: `calc(100vh - ${
-                  uploadPaperUsedHeight + upladPaperPageTopSection + 10
+                  uploadPaperUsedHeight + uploadPaperPageTopSection + 10
                 }px)`,
               }}>
               {addNewExperiment && (

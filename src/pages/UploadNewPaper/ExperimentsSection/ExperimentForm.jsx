@@ -17,7 +17,7 @@ import Paradigms from "./Paradigms";
 import { getExperiment } from "../../../apiHooks/getExperiment";
 import { getStudy } from "../../../apiHooks/getStudies";
 import {
-  upladPaperPageTopSection,
+  uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
@@ -32,6 +32,15 @@ export default function ExperimentForm({
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
+  const [minimumClassifications, setMinimumClassifications] = useState({
+    paradigms: experimentData?.paradigms?.length || 0,
+    samples: experimentData?.samples?.length || 0,
+    tasks: experimentData?.tasks?.length || 0,
+    stimuli: experimentData?.stimuli?.length || 0,
+    consciousnessMeasures: experimentData?.consciousness_measures?.length || 0,
+    techniques: experimentData?.techniques?.length || 0,
+    measures: experimentData?.measures?.length || 0,
+  });
   const [techniques, setTechniques] = useState(
     experimentData?.techniques || []
   );
@@ -39,14 +48,6 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-  const {
-    data,
-    isSuccess,
-    refetch: studyRefetch,
-  } = useQuery({
-    queryKey: [`submitted_study`, study.id],
-    queryFn: () => study && getStudy({ id: study.id }),
-  });
 
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.name, label: family.name })
@@ -134,6 +135,7 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
 
+  const shouldCheckAllClassificationsFilled = false;
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -141,7 +143,7 @@ export default function ExperimentForm({
           className="p-2 w-1/2 shadow-3xl flex flex-col gap-2 overflow-y-scroll"
           style={{
             height: `calc(100vh - ${
-              uploadPaperUsedHeight + upladPaperPageTopSection + 10
+              uploadPaperUsedHeight + uploadPaperPageTopSection + 10
             }px)`,
           }}>
           <div>
@@ -170,6 +172,8 @@ export default function ExperimentForm({
             />
 
             <Paradigms
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={paradigmsFamilies}
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
@@ -179,6 +183,8 @@ export default function ExperimentForm({
             />
 
             <Samples
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={populations}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -186,6 +192,8 @@ export default function ExperimentForm({
               values={experimentData}
             />
             <Tasks
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={tasks}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -193,6 +201,8 @@ export default function ExperimentForm({
               values={experimentData}
             />
             <Stimuli
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={stimulusCategories}
               subCategories={stimulusSubCategories}
               modalities={stimulusModalities}
@@ -202,6 +212,8 @@ export default function ExperimentForm({
               values={experimentData}
             />
             <ConsciousnessMeasures
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={analysisMeasuresOptions}
               analysisPhaseOptions={analysisPhaseOptions}
               experiment_pk={experimentID}
@@ -210,6 +222,8 @@ export default function ExperimentForm({
               values={experimentData}
             />
             <Techniques
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={techniquesOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -219,6 +233,8 @@ export default function ExperimentForm({
             />
 
             <Measures
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
               fieldOptions={measuresOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
@@ -244,20 +260,32 @@ export default function ExperimentForm({
               }}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={!experimentID}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.finding_tags}
             />
             <Interpretations
               fieldOptions={theories}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={!experimentID}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.interpretations}
             />
             <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={!experimentID}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
               values={experimentData?.results_summary}
             />
           </div>
@@ -268,7 +296,7 @@ export default function ExperimentForm({
               setPaperToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
-              studyRefetch();
+              refetch();
             }}>
             Close Experiment
           </button>

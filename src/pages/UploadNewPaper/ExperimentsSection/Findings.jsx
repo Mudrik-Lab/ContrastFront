@@ -14,7 +14,6 @@ import {
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../Utils/functions";
-import classNames from "classnames";
 
 export default function Findings({
   fieldOptions,
@@ -28,8 +27,6 @@ export default function Findings({
       technique: "",
       family: "",
       type: "",
-      isNNC: true,
-      direction: true,
     },
   ]);
   const classificationName = "finding_tags";
@@ -61,6 +58,7 @@ export default function Findings({
             onset: row.onset,
             offset: row.offset,
             direction: row.direction,
+            is_NCC: row.is_NCC,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
             AAL_atlas_tag: row.AAL_atlas_tag,
@@ -72,10 +70,40 @@ export default function Findings({
       );
     }
   }, []);
+
   const families = fieldOptions.findingTagsFamilies.reduce((result, item) => {
     result[item.label] = item.value;
     return result;
   }, {});
+
+  const submitConditions = (index) => {
+    const field = fieldValues[index];
+    if (!(field?.type && field?.family && field.technique && field.is_NCC)) {
+      return false;
+    }
+    if (field?.family == families["Temporal"]) {
+      return [field.onset, field?.offset].every(
+        (condition) => Boolean(condition) === true
+      );
+    }
+
+    if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
+      return [field.AAL_atlas_tag].every(
+        (condition) => Boolean(condition) === true
+      );
+    }
+    if (field?.family == families["Frequency"]) {
+      return [
+        field.direction,
+        field.onset,
+        field.offset,
+        field.band_higher_bound,
+        field.band_lower_bound,
+        field.analysis_type,
+      ].every((condition) => Boolean(condition) === true);
+    }
+    return true;
+  };
 
   return (
     <ExpandingBox
@@ -86,13 +114,16 @@ export default function Findings({
       }
       disabled={disabled}
       headline={
-        <TooltipExplanation
-          blackHeadline
-          text={"Experiment's Findings"}
-          tooltip={
-            "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
-          }
-        />
+        <div className="flex gap-2">
+          <Text weight={"bold"}>Experiment's Findings</Text>
+          <TooltipExplanation
+            blackHeadline
+            hover
+            tooltip={
+              "Indicate all the Neural Correlations of Consciousness found in the experiment. If the experiment used multiple Neuroscientific techniques, enter which technique was used to obtain the specific finding."
+            }
+          />
+        </div>
       }>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -183,40 +214,27 @@ export default function Findings({
                       />
                     </div>
                   </div>
-
-                  <div className="w-full gap-2 flex my-1">
+                  <div className="flex gap-2 w-full items-center">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
-                        Is NCC
+                        Is NCC?
                       </Text>
                     </div>
-                    <div className="w-2/3 flex justify-between">
-                      <div className="w-full flex justify-center gap-4 ">
-                        <Text>True</Text>
-                        <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                          <input
-                            aria-label="toggle input"
-                            type="checkbox"
-                            disabled={fieldValues[index].id}
-                            value={fieldValues[index].isNNC}
-                            className="sr-only peer"
-                            onChange={(e) => {
-                              const newArray = [...fieldValues];
-                              console.log(e.target);
-                              newArray[index].isNNC = e.target.value;
-                              setFieldValues(newArray);
-                            }}
-                          />
+                    <div className="w-2/3 flex justify-between items-center gap-2">
+                      <CustomSelect
+                        disabled={fieldValue?.id}
+                        value={fieldValue.is_NCC}
+                        onChange={(value) => {
+                          const newArray = [...fieldValues];
+                          newArray[index].is_NCC = value;
+                          setFieldValues(newArray);
+                        }}
+                        options={[
+                          { value: true, label: "True" },
+                          { value: false, label: "False" },
+                        ]}
+                      />
 
-                          <div
-                            className={classNames(
-                              ` ${
-                                fieldValues[index].id ? "bg-grayReg" : "bg-blue"
-                              } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                            )}></div>
-                        </label>
-                        <Text>False</Text>
-                      </div>
                       <TooltipExplanation
                         tooltip={
                           "If this finding is interpreted as an NCC, select “True”. If this finding is reported not to be an NCC (e.g., it is not found under a no-report paradigm, where participants were conscious of the stimulus), indicate “False”."
@@ -226,14 +244,14 @@ export default function Findings({
                   </div>
 
                   {fieldValue.family == families["Temporal"] ? (
-                    <div className="flex gap-4 ">
-                      <div className="flex gap-1 items-center">
+                    <div className="flex flex-col gap-2">
+                      <div className="flex gap-2 items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Onset
                           </Text>
                         </div>
-                        <div className="w-2/3 flex gap-1 items-center">
+                        <div className="w-2/3 flex gap-2 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -253,18 +271,18 @@ export default function Findings({
                               "bg-grayDisable text-gray-400"
                             } `}
                           />
+                          <Text weight={"bold"} color={"grayReg"}>
+                            (ms)
+                          </Text>
                         </div>
-                        <Text weight={"bold"} color={"grayReg"}>
-                          (ms)
-                        </Text>
                       </div>
-                      <div className="flex gap-1 items-center">
+                      <div className="flex gap-2 items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Offset
                           </Text>
                         </div>
-                        <div className="w-2/3 flex gap-1 items-center">
+                        <div className="w-2/3 flex gap-2 items-center">
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
@@ -312,43 +330,27 @@ export default function Findings({
                     </div>
                   ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
-                      <div className="flex gap-2 w-full">
+                      <div className="flex gap-2 w-full items-center">
                         <div className="w-1/3">
                           <Text weight={"bold"} color={"grayReg"}>
                             Direction
                           </Text>
                         </div>
-                        <div className="w-2/3 flex justify-between">
-                          <div className="w-full flex justify-center gap-4 ">
-                            <Text>Positive</Text>
-                            <label className="relative inline-flex items-center mx-2 cursor-pointer">
-                              <input
-                                aria-label="toggle input"
-                                type="checkbox"
-                                disabled={fieldValues[index].id}
-                                value={fieldValues[index].direction}
-                                className="sr-only peer"
-                                onChange={(e) => {
-                                  const newArray = [...fieldValues];
-                                  console.log(e.target);
-                                  newArray[index].direction =
-                                    e.target.value === "positive"
-                                      ? "negative"
-                                      : "positive";
-                                  setFieldValues(newArray);
-                                }}
-                              />
-                              <div
-                                className={classNames(
-                                  ` ${
-                                    fieldValues[index].id
-                                      ? "bg-grayReg"
-                                      : "bg-blue"
-                                  } w-11 h-6 rounded-full peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-0.5 after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all  peer-checked:bg-blue `
-                                )}></div>
-                            </label>
-                            <Text>Negative</Text>
-                          </div>
+                        <div className="w-2/3 flex justify-between items-center gap-2">
+                          <CustomSelect
+                            disabled={fieldValue?.id}
+                            value={fieldValue.direction}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].direction = value;
+                              setFieldValues(newArray);
+                            }}
+                            options={[
+                              { value: "positive", label: "Positive" },
+                              { value: "negative", label: "Negative" },
+                            ]}
+                          />
+
                           <TooltipExplanation
                             tooltip={
                               " If for this finding, its presence is associated with f consciousness, mark it as “Positive”. If its absence is associated with consciousness, mark it as “Negative”."
@@ -558,16 +560,9 @@ export default function Findings({
                   />
                   <SubmitButton
                     submit={() => {
-                      console.log(fieldValues);
                       handleSubmit(fieldValues, index);
                     }}
-                    disabled={
-                      !(
-                        fieldValue?.type &&
-                        fieldValue?.technique &&
-                        fieldValue?.family
-                      ) || fieldValue.id
-                    }
+                    disabled={!submitConditions(index) || fieldValue.id}
                   />
                 </div>
               </div>
