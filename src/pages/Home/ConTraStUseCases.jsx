@@ -7,8 +7,7 @@ import Cogtate from "../../assets/logoes/cogtate.png";
 export default function ConTraStUseCases() {
   const cardsInfo = [
     {
-      image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2mGuiTnSMifrKst2aOFNmjdbBBbGemF_zHbI2oO9&s",
+      image: "https://player.vimeo.com/video/274353008?h=a5e71d0bc5",
       headline: "Find the papers that are most relevant to you",
       text: "Conduct your own queries, looking for different intersections of methods, approaches and paradigms. Download citations lists of relevant works that could help you map the field and get started!",
     },
@@ -47,7 +46,7 @@ export default function ConTraStUseCases() {
           <div
             className="card shadow-xl flex flex-col justify-center p-6 sm:w-96 mt-2 sm:mt-0"
             key={card.text}>
-            <img src={card.image} alt="" />
+            <iframe src={card.image} alt="" />
             <Text center xl weight="bold">
               {card.headline}
             </Text>
