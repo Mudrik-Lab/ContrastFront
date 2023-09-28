@@ -403,7 +403,7 @@ export default function FreeQueriesBar() {
                 tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters."
               />
               {extraConfigSuccess && (
-                <>
+                <div>
                   <div className={sideSectionClass}>
                     <Select
                       className="text-lg w-[300px]"
@@ -676,7 +676,7 @@ export default function FreeQueriesBar() {
                       tooltip='In order to use this filter please choose a theory in "Theries" field and then choose interpretation for that theory'
                     />
                   </div>
-                </>
+                </div>
               )}{" "}
               <div className="w-full flex items-center justify-between my-4">
                 <a

@@ -56,7 +56,7 @@ export default function Journals() {
       experimentsNum,
       consciousness,
     ],
-    quertFn: () =>
+    queryFn: () =>
       getJournals({
         theory: theory?.value,
         is_reporting: reporting,
@@ -65,7 +65,6 @@ export default function Journals() {
         min_number_of_experiments: experimentsNum,
       }),
   });
-
   const parentTheories = configuration?.data.available_parent_theories.map(
     (parentTheory) => ({
       value: parentTheory,
