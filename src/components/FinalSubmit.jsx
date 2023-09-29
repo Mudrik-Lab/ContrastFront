@@ -38,9 +38,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
   ];
   const missingDetails = study.experiments.map((experiment) =>
     requiredKeys.filter(
-      (key) =>
-        (Array.isArray(experiment[key]) && experiment[key].length === 0) ||
-        key === "results_summary"
+      (key) => Array.isArray(experiment[key]) && experiment[key].length === 0
     )
   );
   const shouldCheckAllClassificationsFilled = false;
