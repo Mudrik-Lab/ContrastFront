@@ -43,7 +43,6 @@ export default function FinalSubmit({ study, refetch, onClose }) {
         experiment[key] === null
     )
   );
-  console.log(study.experiments);
   const shouldCheckAllClassificationsFilled = false;
   return (
     <div className="w-full flex justify-center">
