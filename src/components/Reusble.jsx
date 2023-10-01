@@ -10,7 +10,9 @@ import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
 import {
   commonBlue,
+  footerHeight,
   grayReg,
+  navHeight,
   revoltingGreen,
   screenWidth,
   sideSectionClass,
@@ -297,7 +299,9 @@ export const SideControl = ({ children, headline, isUploadPaper = false }) => {
       )}
       style={{
         width: "100%",
-        maxHeight: isMoblile ? "400px" : "100vh",
+        maxHeight: isMoblile
+          ? "400px"
+          : `calc(100vh - ${navHeight + footerHeight}px)`,
       }}>
       {isUploadPaper ? (
         <div className=" w-full">{headline}</div>

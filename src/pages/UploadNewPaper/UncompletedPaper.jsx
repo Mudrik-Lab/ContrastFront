@@ -179,7 +179,7 @@ export default function UncompletedPaper({
             }
             experiment={
               paperToShow?.title ||
-              paperToEdit.title ||
+              paperToEdit?.title ||
               (addNewExperiment && "New Experiment")
             }
           />

@@ -8,7 +8,7 @@ export default function ConTraStUseCases() {
   const cardsInfo = [
     {
       image:
-        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRj2mGuiTnSMifrKst2aOFNmjdbBBbGemF_zHbI2oO9&s",
+        "https://i.guim.co.uk/img/media/26392d05302e02f7bf4eb143bb84c8097d09144b/446_167_3683_2210/master/3683.jpg?width=1200&quality=85&auto=format&fit=max&s=a52bbe202f57ac0f5ff7f47166906403",
       headline: "Find the papers that are most relevant to you",
       text: "Conduct your own queries, looking for different intersections of methods, approaches and paradigms. Download citations lists of relevant works that could help you map the field and get started!",
     },
@@ -47,7 +47,7 @@ export default function ConTraStUseCases() {
           <div
             className="card shadow-xl flex flex-col justify-center p-6 sm:w-96 mt-2 sm:mt-0"
             key={card.text}>
-            <img src={card.image} alt="" />
+            <iframe src={card.image} alt="" />
             <Text center xl weight="bold">
               {card.headline}
             </Text>
