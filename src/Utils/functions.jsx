@@ -287,8 +287,6 @@ export function DeleteClassificationField(
         toast.error(<ToastErrorBox errors={e?.response?.data} />);
       }
     } else {
-      console.log(classificationName);
-
       try {
         const res = await deletePropertyFromExperiment({
           study_pk,
