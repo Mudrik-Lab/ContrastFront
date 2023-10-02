@@ -24,7 +24,6 @@ export default function ExperimentDetails({
     [`more_configurations`],
     getExtraConfig
   );
-  console.log(extraConfig?.data);
   const tasks = extraConfig?.data.available_tasks_types;
   const stimuliCategories = extraConfig?.data.available_stimulus_category_type;
   const stimuliModality = extraConfig?.data.available_stimulus_modality_type;

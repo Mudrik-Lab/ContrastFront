@@ -92,7 +92,6 @@ export default function UncompletedPaper({
       setIsLoading(true);
       const res = await createNewAuthor(authorName);
       if (res.status === 201) {
-        console.log(res.data);
         setAuthorOptions((prev) => [
           ...prev,
           { label: res.data.name, value: res.data.id },
@@ -135,7 +134,6 @@ export default function UncompletedPaper({
   });
 
   const handleSubmit = async (values) => {
-    console.log(value.length);
     if (!value.length) {
       setAuthorsError("Please select at least one author");
       return;
