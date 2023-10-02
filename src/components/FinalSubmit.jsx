@@ -43,6 +43,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
         experiment[key] === null
     )
   );
+
   const shouldCheckAllClassificationsFilled = false;
   return (
     <div className="w-full flex justify-center">
@@ -85,9 +86,10 @@ export default function FinalSubmit({ study, refetch, onClose }) {
               }
             }
             confirmFunction({
-              paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
               question:
                 "Are you sure you want to submit the classification of the paper: ",
+              paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
+              missingDetails: missingDetails,
               confirmButton: "Yes, submit paper",
               clickDelete: handleSubmit,
             });
