@@ -57,7 +57,7 @@ export default function ResetPassword() {
         setServerError(res.error.message);
       }
     } catch (e) {
-      toast.error(<ToastErrorBox errors={e?.response?.data} />);
+      ToastError(e);
     }
   };
   return (

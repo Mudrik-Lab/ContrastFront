@@ -57,9 +57,7 @@ export default function Feedback() {
         setTimeout(() => navigate("/contact"), 2000);
       }
     } catch (e) {
-      toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-      );
+      ToastError(e);
     }
   };
   return (

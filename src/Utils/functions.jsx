@@ -214,9 +214,7 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(
-          <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
-        );
+        ToastError(e);
       }
     } else {
       try {
@@ -233,9 +231,7 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(
-          <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-        );
+        ToastError(e);
       }
     }
   };
@@ -284,7 +280,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e?.response?.data} />);
+        ToastError(e);
       }
     } else {
       try {
@@ -310,7 +306,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e?.response?.data} />);
+        ToastError(e);
       }
     }
   };
@@ -378,4 +374,8 @@ export function alphabetizeByLabels(selectFieldOptions) {
     return 0;
   });
   return sortedOptionListByLabels;
+}
+
+export function ToastError(e) {
+  ToastError(e);
 }

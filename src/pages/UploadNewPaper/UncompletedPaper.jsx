@@ -35,6 +35,7 @@ import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import { toast } from "react-toastify";
 import FinalSubmit from "../../components/FinalSubmit";
 import { createNewAuthor } from "../../apiHooks/createNewAuthor";
+import { ToastError } from "../../Utils/functions";
 
 export default function UncompletedPaper({
   study,
@@ -104,9 +105,7 @@ export default function UncompletedPaper({
       }
     } catch (e) {
       console.log(e);
-      toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-      );
+      ToastError(e);
     }
   };
 

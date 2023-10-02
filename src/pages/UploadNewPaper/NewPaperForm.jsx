@@ -24,7 +24,7 @@ import { submitStudy } from "../../apiHooks/getStudies";
 import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
-import { confirmFunction } from "../../Utils/functions";
+import { ToastError, confirmFunction } from "../../Utils/functions";
 import { sendStudyToReview } from "../../apiHooks/sendStudyToReview";
 import FinalSubmit from "../../components/FinalSubmit";
 import { createNewAuthor } from "../../apiHooks/createNewAuthor";
@@ -81,9 +81,7 @@ export default function NewPaperForm({
         setIsLoading(false);
       }
     } catch (e) {
-      toast.error(
-        <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-      );
+      ToastError(e);
     }
   };
 
@@ -142,7 +140,7 @@ export default function NewPaperForm({
           );
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e?.response?.data} />);
+        ToastError(e);
       }
     }
   };

@@ -657,7 +657,13 @@ export const SubmitButton = ({ disabled, submit }) => {
       content={
         disabled ? "Must fill all field in order to save" : "Click to save"
       }>
-      <button type="button" disabled={disabled} onClick={submit}>
+      <button
+        className="bg-blue text-white rounded-full text-xs font-semibold px-1 py-2 hover:opacity-40 disabled:opacity-40 flex justify-center items-center"
+        type="button"
+        disabled={disabled}
+        onClick={submit}>
+        Save
+        {/* {" "}
         <svg
           width="20"
           height="20"
@@ -670,7 +676,7 @@ export const SubmitButton = ({ disabled, submit }) => {
               fill={disabled ? grayReg : commonBlue}
             />
           </g>
-        </svg>
+        </svg> */}
       </button>
     </Tooltip>
   );

@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ToastBox, ToastErrorBox } from "./Reusble";
 import { sendStudyToReview } from "../apiHooks/sendStudyToReview";
 import { toast } from "react-toastify";
-import { confirmFunction, rawTextToShow } from "../Utils/functions";
+import { ToastError, confirmFunction, rawTextToShow } from "../Utils/functions";
 import { Tooltip } from "flowbite-react";
 
 export default function FinalSubmit({ study, refetch, onClose }) {
@@ -20,7 +20,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
       }
       refetch();
     } catch (e) {
-      toast.error(<ToastErrorBox errors={e?.response?.data} />);
+      ToastError(e);
     }
   }
   const requiredKeys = [

@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Button, ToastBox, ToastErrorBox } from "./Reusble";
 import { deleteStudy } from "../apiHooks/deleteStudy";
 import { commonBlue, grayHeavy, revoltingGreen } from "../Utils/HardCoded";
-import { confirmFunction } from "../Utils/functions";
+import { ToastError, confirmFunction } from "../Utils/functions";
 
 export default function SideStatus({
   number,
@@ -42,9 +42,7 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          toast.error(
-            <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-          );
+          ToastError(e);
         }
       } else {
         try {
@@ -59,7 +57,7 @@ export default function SideStatus({
           }
           console.log(res);
         } catch (e) {
-          toast.error(<ToastErrorBox errors={e?.response?.data} />);
+          ToastError(e);
         }
       }
     }

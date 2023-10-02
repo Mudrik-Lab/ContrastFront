@@ -20,11 +20,15 @@ export default function ResultsSummary({
   study_pk,
   values,
 }) {
-  const [description, setDescription] = useState(values?.tasks_notes || "");
+  const [description, setDescription] = useState("");
   const classificationName = "results_summary";
+  useEffect(() => {
+    setDescription(values);
+  }, []);
 
   return (
     <ExpandingBox
+      number={description.length > 0 ? 1 : 0}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       <ExternalNotes

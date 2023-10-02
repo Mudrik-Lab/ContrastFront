@@ -22,6 +22,7 @@ import {
   theoryDrivenOptions,
 } from "../../../Utils/HardCoded";
 import MultiSelect from "../../../components/SelectField";
+import { ToastError } from "../../../Utils/functions";
 
 export default function BasicClassification({
   study_id,
@@ -77,7 +78,7 @@ export default function BasicClassification({
       }
     } catch (e) {
       console.log(e);
-      toast.error(<ToastErrorBox errors={e?.response?.data} />);
+      ToastError(e);
     }
   };
 
@@ -102,7 +103,7 @@ export default function BasicClassification({
       }
       console.log(res);
     } catch (e) {
-      toast.error(<ToastErrorBox errors={e?.response?.data} />);
+      ToastError(e);
     }
   };
 
