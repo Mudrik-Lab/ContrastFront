@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import classNames from "classnames";
-import { ReactComponent as Arrow } from "../assets/drop-arrow.svg";
+import { ReactComponent as Arrow } from "../assets/icons/drop-arrow.svg";
 import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";

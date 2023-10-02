@@ -1,21 +1,12 @@
 import React from "react";
 import { Text } from "./Reusble";
+import { ReactComponent as SubmitIcon } from "../assets/icons/submit.svg";
 
 export default function NoResults() {
   return (
     <div className="w-full h-full flex justify-center items-center">
       <div className="flex flex-col justify-center items-center">
-        <svg
-          width="33"
-          height="33"
-          viewBox="0 0 33 33"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg">
-          <path
-            d="M23 4.63428C23 4.10384 23.2107 3.59514 23.5858 3.22006C23.9609 2.84499 24.4696 2.63428 25 2.63428H29C29.5304 2.63428 30.0391 2.84499 30.4142 3.22006C30.7893 3.59514 31 4.10384 31 4.63428V28.6343H32C32.2652 28.6343 32.5196 28.7396 32.7071 28.9272C32.8946 29.1147 33 29.3691 33 29.6343C33 29.8995 32.8946 30.1538 32.7071 30.3414C32.5196 30.5289 32.2652 30.6343 32 30.6343H2C1.73478 30.6343 1.48043 30.5289 1.29289 30.3414C1.10536 30.1538 1 29.8995 1 29.6343C1 29.3691 1.10536 29.1147 1.29289 28.9272C1.48043 28.7396 1.73478 28.6343 2 28.6343H3V22.6343C3 22.1038 3.21071 21.5951 3.58579 21.2201C3.96086 20.845 4.46957 20.6343 5 20.6343H9C9.53043 20.6343 10.0391 20.845 10.4142 21.2201C10.7893 21.5951 11 22.1038 11 22.6343V28.6343H13V14.6343C13 14.1038 13.2107 13.5951 13.5858 13.2201C13.9609 12.845 14.4696 12.6343 15 12.6343H19C19.5304 12.6343 20.0391 12.845 20.4142 13.2201C20.7893 13.5951 21 14.1038 21 14.6343V28.6343H23V4.63428Z"
-            fill="#E9E9E9"
-          />
-        </svg>
+        <SubmitIcon />
         <Text color={"gray"}>These parameters had given no results</Text>
         <Text xs color={"gray"}>
           These parameters had given no results
