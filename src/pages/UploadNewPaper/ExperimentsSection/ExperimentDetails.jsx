@@ -336,7 +336,7 @@ export default function ExperimentDetails({
                 <Text weight={"bold"} color={"grayReg"}>
                   Notes
                 </Text>
-                <Text>{experiment.stimuli_notes}</Text>
+                <Text>{experiment.consciousness_measures_notes}</Text>
               </div>
             </ExpandingBox>
             <ExpandingBox
@@ -448,7 +448,7 @@ export default function ExperimentDetails({
             onClick={() => {
               setPaperToShow(false);
             }}>
-            Close Experiment
+            Save & Close Experiment
           </button>
         </div>
       )}

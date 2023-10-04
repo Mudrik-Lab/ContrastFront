@@ -15,6 +15,7 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
+import { Tooltip } from "flowbite-react";
 
 export default function Measures({
   fieldOptions,
@@ -135,7 +136,9 @@ export default function Measures({
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
-                <div id="trash+submit">
+                <div
+                  className="flex flex-col items-center gap-1"
+                  id="trash+submit">
                   <TrashButton
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
@@ -153,10 +156,20 @@ export default function Measures({
           </div>
         );
       })}
-      <AddFieldButton
-        fieldValues={fieldValues}
-        setFieldValues={setFieldValues}
-      />
+      <div className="w-full flex justify-center">
+        <Tooltip
+          placement="top"
+          content={
+            fieldValues[fieldValues.length - 1].id
+              ? "Add measures field"
+              : "Add another measures field is abled after clicking save button on right side of the field"
+          }>
+          <AddFieldButton
+            fieldValues={fieldValues}
+            setFieldValues={setFieldValues}
+          />
+        </Tooltip>
+      </div>
     </ExpandingBox>
   );
 }

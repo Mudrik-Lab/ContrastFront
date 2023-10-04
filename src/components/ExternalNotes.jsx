@@ -2,6 +2,7 @@ import React from "react";
 import { setNotes } from "../apiHooks/setNotes";
 import { toast } from "react-toastify";
 import { Text, ToastErrorBox } from "./Reusble";
+import { ToastError } from "../Utils/functions";
 
 export default function ExternalNotes({
   description,
@@ -20,9 +21,7 @@ export default function ExternalNotes({
       });
     } catch (e) {
       console.log(e);
-      toast.error(
-        <ToastErrorBox errors={e.response?.data || "Error occurred"} />
-      );
+      ToastError(e);
     }
   };
   const handleKeyDown = (event) => {

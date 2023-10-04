@@ -2,7 +2,7 @@ import React from "react";
 import { Button, ToastBox, ToastErrorBox } from "./Reusble";
 import { sendStudyToReview } from "../apiHooks/sendStudyToReview";
 import { toast } from "react-toastify";
-import { confirmFunction, rawTextToShow } from "../Utils/functions";
+import { ToastError, confirmFunction, rawTextToShow } from "../Utils/functions";
 import { Tooltip } from "flowbite-react";
 
 export default function FinalSubmit({ study, refetch, onClose }) {
@@ -20,7 +20,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
       }
       refetch();
     } catch (e) {
-      toast.error(<ToastErrorBox errors={e?.response?.data} />);
+      ToastError(e);
     }
   }
   const requiredKeys = [
@@ -43,6 +43,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
         experiment[key] === null
     )
   );
+
   const shouldCheckAllClassificationsFilled = false;
   return (
     <div className="w-full flex justify-center">
@@ -85,9 +86,10 @@ export default function FinalSubmit({ study, refetch, onClose }) {
               }
             }
             confirmFunction({
-              paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
               question:
                 "Are you sure you want to submit the classification of the paper: ",
+              paperName: `"${study.title}"? After submitting it, you will no longer be able to edit it!`,
+              missingDetails: missingDetails,
               confirmButton: "Yes, submit paper",
               clickDelete: handleSubmit,
             });

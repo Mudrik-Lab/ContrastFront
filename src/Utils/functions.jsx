@@ -214,9 +214,7 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(
-          <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
-        );
+        ToastError(e);
       }
     } else {
       try {
@@ -233,9 +231,7 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        toast.error(
-          <ToastErrorBox errors={e?.response.data || "Error occurred"} />
-        );
+        ToastError(e);
       }
     }
   };
@@ -284,7 +280,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e?.response?.data} />);
+        ToastError(e);
       }
     } else {
       try {
@@ -310,7 +306,7 @@ export function DeleteClassificationField(
           }
         }
       } catch (e) {
-        toast.error(<ToastErrorBox errors={e?.response?.data} />);
+        ToastError(e);
       }
     }
   };
@@ -321,7 +317,9 @@ export function confirmFunction({
   clickDelete,
   question,
   confirmButton,
+  missingDetails,
 }) {
+  console.log(missingDetails);
   confirmAlert({
     customUI: ({ onClose }) => {
       return (
@@ -346,6 +344,28 @@ export function confirmFunction({
                 <p className="text-gray-600 text-lg">
                   {question} {paperName}
                 </p>
+                {missingDetails && (
+                  <div>
+                    <span className="text-flourishRed">
+                      Notice! There are missing details in:{" "}
+                    </span>
+                    {missingDetails?.map((row, index) => (
+                      <div>
+                        <h3 className="font-bold">Experiment {index + 1}:</h3>
+                        <div>
+                          {row.map((missingKey) => {
+                            return (
+                              <span>
+                                {rawTextToShow(missingKey)}
+                                {", "}
+                              </span>
+                            );
+                          })}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
                 <div className="mt-4 flex justify-start gap-2">
                   <button
                     onClick={() => {
@@ -378,4 +398,8 @@ export function alphabetizeByLabels(selectFieldOptions) {
     return 0;
   });
   return sortedOptionListByLabels;
+}
+
+export function ToastError(e) {
+  ToastError(e);
 }

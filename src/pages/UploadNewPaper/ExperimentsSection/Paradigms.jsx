@@ -177,7 +177,9 @@ export default function Paradigms({
                       <div className="w-full">
                         <TooltipExplanation
                           isHeadline
-                          tooltip={""}
+                          tooltip={
+                            "Choose a relevant type from the list below."
+                          }
                           text={"Sub-Type"}
                         />
 

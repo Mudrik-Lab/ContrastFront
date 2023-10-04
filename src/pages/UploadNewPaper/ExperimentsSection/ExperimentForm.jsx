@@ -134,7 +134,6 @@ export default function ExperimentForm({
       value: type,
       label: rawTextToShow(type),
     }));
-
   const shouldCheckAllClassificationsFilled = false;
   return (
     <>
@@ -298,7 +297,7 @@ export default function ExperimentForm({
               setNewPaper(false);
               refetch();
             }}>
-            Close Experiment
+            Save & Close Experiment
           </button>
         </div>
       )}

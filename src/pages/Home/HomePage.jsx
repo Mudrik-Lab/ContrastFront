@@ -4,7 +4,7 @@ import copy from "copy-to-clipboard";
 import { Button, Spacer, Text, WhiteButton } from "../../components/Reusble";
 import { ReactComponent as Graph } from "../../assets/icons/start-exploring.svg";
 import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
-import { ReactComponent as Quote } from "../../assets/cite-quote.svg";
+import { ReactComponent as Quote } from "../../assets/icons/cite-quote.svg";
 import { ReactComponent as QouteIcon } from "../../assets/icons/copy-to-clipboard-icon.svg";
 import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
