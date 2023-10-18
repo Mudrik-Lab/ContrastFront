@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
-
-import Plot from "react-plotly.js";
 import { designerColors } from "../Utils/Colors";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 const Spinner = () => {
   const [angle, setAngle] = useState(0);

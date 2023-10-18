@@ -12,7 +12,6 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
-import Plot from "react-plotly.js";
 import {
   plotConfig,
   screenHeight,
@@ -27,6 +26,10 @@ import PageTemplate from "../../components/PageTemplate";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function Timings() {
   const [searchParams, setSearchParams] = useSearchParams();

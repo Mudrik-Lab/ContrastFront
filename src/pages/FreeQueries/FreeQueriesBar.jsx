@@ -13,7 +13,7 @@ import {
   TypeOfConsciousnessFilter,
   Button,
 } from "../../components/Reusble";
-import Plot from "react-plotly.js";
+
 import {
   available_populations,
   footerHeight,
@@ -39,6 +39,10 @@ import {
 } from "../../Utils/functions";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();

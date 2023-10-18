@@ -1,16 +1,13 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
-import Plot from "react-plotly.js";
 import Select from "react-select";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
@@ -22,7 +19,6 @@ import {
   screenHeight,
   screenWidth,
   sideSectionClass,
-  sideWidth,
 } from "../../Utils/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../components/Spinner";
@@ -31,6 +27,10 @@ import { buildUrl, rawTextToShow } from "../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function AcrossTheYears() {
   const [searchParams, setSearchParams] = useSearchParams();
