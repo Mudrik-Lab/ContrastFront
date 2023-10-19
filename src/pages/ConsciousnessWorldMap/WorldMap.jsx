@@ -23,7 +23,7 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 import NoResults from "../../components/NoResults";
-import Plotly from "plotly.js-basic-dist";
+import Plotly from "plotly.js-geo-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 
 const Plot = createPlotlyComponent(Plotly);
