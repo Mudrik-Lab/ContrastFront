@@ -12,7 +12,6 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
-import Plot from "react-plotly.js";
 import {
   FrequenciesColors,
   plotConfig,
@@ -26,6 +25,10 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function Frequencies() {
   const [searchParams, setSearchParams] = useSearchParams();

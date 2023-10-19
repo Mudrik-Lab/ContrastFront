@@ -13,7 +13,7 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
-import Plot from "react-plotly.js";
+
 import getConfiguration from "../../apiHooks/getConfiguration";
 import Spinner from "../../components/Spinner";
 import { azure, grayReg, isMoblile, plotConfig } from "../../Utils/HardCoded";
@@ -23,6 +23,10 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-geo-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();

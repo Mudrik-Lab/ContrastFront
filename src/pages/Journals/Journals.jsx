@@ -3,22 +3,18 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   RangeInput,
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
-import Plot from "react-plotly.js";
 import {
-  isMoblile,
   plotConfig,
   screenWidth,
   sideSectionClass,
@@ -31,6 +27,10 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { buildUrl } from "../../Utils/functions";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function Journals() {
   const [searchParams, setSearchParams] = useSearchParams();

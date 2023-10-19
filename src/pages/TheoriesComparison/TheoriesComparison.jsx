@@ -24,7 +24,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
-import Plot from "react-plotly.js";
+
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { breakLongLines, rawTextToShow, buildUrl } from "../../Utils/functions";
@@ -33,6 +33,10 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function ParametersDistributionTheoriesComparison() {
   const [searchParams, setSearchParams] = useSearchParams();

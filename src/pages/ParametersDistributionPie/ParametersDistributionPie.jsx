@@ -6,11 +6,9 @@ import {
   parametersOptions,
   plotConfig,
   screenHeight,
-  screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   RangeInput,
@@ -23,7 +21,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
-import Plot from "react-plotly.js";
+
 import Spinner from "../../components/Spinner";
 import {
   hexToRgba,
@@ -36,6 +34,10 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function ParametersDistributionPie() {
   const [searchParams, setSearchParams] = useSearchParams();
