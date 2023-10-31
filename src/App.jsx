@@ -13,40 +13,6 @@ import useAuth from "./apiHooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-// import * as React from 'react';
-// import { Routes, Route, Link } from 'react-router-dom';
-
-// const Home = React.lazy(() => import('./pages/Home'));
-// const About = React.lazy(() => import('./pages/About'));
-
-// const App = () => {
-//   return (
-//     <>
-//       ...
-
-//       <Routes>
-//         <Route
-//           index
-//           element={
-//             <React.Suspense fallback={<>...</>}>
-//               <Home />
-//             </React.Suspense>
-//           }
-//         />
-//         <Route
-//           path="about"
-//           element={
-//             <React.Suspense fallback={<>...</>}>
-//               <About />
-//             </React.Suspense>
-//           }
-//         />
-//         <Route path="*" element={<NoMatch />} />
-//       </Routes>
-//     </>
-//   );
-// };
-
 function App() {
   const client = new QueryClient({
     defaultOptions: {

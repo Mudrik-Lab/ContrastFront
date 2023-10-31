@@ -13,7 +13,6 @@ import ParametersDistributionPie from "./pages/ParametersDistributionPie/Paramet
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison";
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
 
-import WorldMap from "./pages/ConsciousnessWorldMap/WorldMap";
 import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
@@ -26,6 +25,42 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import SecondaryRegister from "./pages/Register/SecondaryRegister";
 import RecoverPassword from "./pages/Login/RecoverPassword";
 import ResetPassword from "./pages/Login/ResetPassword";
+
+import * as React from "react";
+// import { Routes, Route, Link } from 'react-router-dom';
+
+const WorldMap = React.lazy(() =>
+  import("./pages/ConsciousnessWorldMap/WorldMap")
+);
+// const About = React.lazy(() => import('./pages/About'));
+
+// const App = () => {
+//   return (
+//     <>
+//       ...
+
+//       <Routes>
+//         <Route
+//           index
+//           element={
+//             <React.Suspense fallback={<>...</>}>
+//               <Home />
+//             </React.Suspense>
+//           }
+//         />
+//         <Route
+//           path="about"
+//           element={
+//             <React.Suspense fallback={<>...</>}>
+//               <About />
+//             </React.Suspense>
+//           }
+//         />
+//         <Route path="*" element={<NoMatch />} />
+//       </Routes>
+//     </>
+//   );
+// };
 
 const Screens = () => {
   return (
@@ -102,7 +137,16 @@ const Screens = () => {
         />
         <Route
           path="/consciousness-world-map"
-          element={isMoblile ? <MobileScreen /> : <WorldMap />}
+          element={
+            isMoblile ? (
+              <MobileScreen />
+            ) : (
+              <React.Suspense fallback={<>...</>}>
+                {" "}
+                <WorldMap />
+              </React.Suspense>
+            )
+          }
         />
       </Routes>
     </BrowserRouter>
