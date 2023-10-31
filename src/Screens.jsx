@@ -12,8 +12,6 @@ import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie";
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison";
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
-
-import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
@@ -25,42 +23,14 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import SecondaryRegister from "./pages/Register/SecondaryRegister";
 import RecoverPassword from "./pages/Login/RecoverPassword";
 import ResetPassword from "./pages/Login/ResetPassword";
-
 import * as React from "react";
-// import { Routes, Route, Link } from 'react-router-dom';
 
 const WorldMap = React.lazy(() =>
   import("./pages/ConsciousnessWorldMap/WorldMap")
 );
-// const About = React.lazy(() => import('./pages/About'));
-
-// const App = () => {
-//   return (
-//     <>
-//       ...
-
-//       <Routes>
-//         <Route
-//           index
-//           element={
-//             <React.Suspense fallback={<>...</>}>
-//               <Home />
-//             </React.Suspense>
-//           }
-//         />
-//         <Route
-//           path="about"
-//           element={
-//             <React.Suspense fallback={<>...</>}>
-//               <About />
-//             </React.Suspense>
-//           }
-//         />
-//         <Route path="*" element={<NoMatch />} />
-//       </Routes>
-//     </>
-//   );
-// };
+const UploadNewPaper = React.lazy(() =>
+  import("./pages/UploadNewPaper/UploadNewPaperPage")
+);
 
 const Screens = () => {
   return (
@@ -85,7 +55,11 @@ const Screens = () => {
           element={
             <ProtectedRoute
               path="/upload-new-paper"
-              element={<UploadNewPaper />}
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UploadNewPaper />
+                </React.Suspense>
+              }
             />
           }
         />
@@ -142,7 +116,6 @@ const Screens = () => {
               <MobileScreen />
             ) : (
               <React.Suspense fallback={<>...</>}>
-                {" "}
                 <WorldMap />
               </React.Suspense>
             )
