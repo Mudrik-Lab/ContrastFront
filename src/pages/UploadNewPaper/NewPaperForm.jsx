@@ -261,6 +261,7 @@ export default function NewPaperForm({
                     </Text>
                     <div className="flex items-center gap-2">
                       <CreatableSelect
+                        aria-label="Select authors"
                         isMulti
                         isClearable
                         isDisabled={isLoading}
@@ -288,6 +289,7 @@ export default function NewPaperForm({
                     </Text>
                     <div className="flex items-center gap-2">
                       <CreatableSelect
+                        aria-label="Select jurnal"
                         name="source_title"
                         id="source_title"
                         isMulti={false}
@@ -316,6 +318,7 @@ export default function NewPaperForm({
                       <Select
                         name="countries"
                         isClearable
+                        aria-label="Select countries"
                         // value={values.countries}
                         onChange={(v) => {
                           setFieldValue(

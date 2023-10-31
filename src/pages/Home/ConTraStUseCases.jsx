@@ -44,6 +44,7 @@ export default function ConTraStUseCases() {
             className="card shadow-xl flex flex-col justify-center p-6 sm:w-96 mt-2 sm:mt-0"
             key={card.text}>
             <iframe
+              title={card.title}
               alt={card.title}
               src={card.video}
               width="350"

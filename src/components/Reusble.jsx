@@ -38,34 +38,21 @@ export const Button = ({
   extraClass,
   children,
   black,
-  isCommingSoon,
+
   ...config
 }) => {
-  const [hover, setHover] = React.useState(false);
   return (
-    <div className={classNames(`${isCommingSoon ? "relative" : ""}`)}>
-      {hover && isCommingSoon && (
-        <p
-          className="bg-indigo-900 text-white p-1 min-w-full z-50  "
-          style={{
-            position: "absolute",
-            top: "calc(50% - 16px)",
-          }}>
-          Comming soon
-        </p>
+    <button
+      className={classNames(
+        `${
+          extraClass ? extraClass : ""
+        } text-white text-base leading-4 font-bold ${
+          black ? "bg-black" : "bg-blue border-[3px] border-blue"
+        } hover:opacity-40 disabled:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
       )}
-      <button
-        onMouseEnter={() => setHover(true)}
-        onMouseLeave={() => setHover(false)}
-        className={classNames(
-          `${extraClass} text-white text-base leading-4 font-bold ${
-            black ? "bg-black" : "bg-blue border-[3px] border-blue"
-          } hover:opacity-40 disabled:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
-        )}
-        {...config}>
-        {children}
-      </button>
-    </div>
+      {...config}>
+      {children}
+    </button>
   );
 };
 export const ButtonReversed = ({
@@ -78,7 +65,7 @@ export const ButtonReversed = ({
   return (
     <button
       className={classNames(
-        ` ${extraClass} ${
+        ` ${extraClass ? extraClass : ""} ${
           isChosen ? "text-blue bg-white" : "bg-blue text-white"
         } text-blue text-md leading-4 font-bold bg-white border-[3px] border-blue rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap hover:opacity-40`
       )}
@@ -222,10 +209,10 @@ export const TooltipExplanation = ({
           type="button"
           className={classNames(
             `flex justify-center items-center gap-2 text-sm ${
-              blackHeadline && "text-base"
-            } ${isHeadline && "font-bold text-grayReg text-base"} `
+              blackHeadline ? "text-base" : ""
+            } ${isHeadline ? "font-bold text-grayReg text-base" : ""} `
           )}
-          aria-label={tooltip}>
+          aria-label={text ? text : "Tooltip explaination by click "}>
           {text} <QuestionMark />
         </button>
       </Tooltip>
@@ -614,7 +601,7 @@ export function TrashButton({ handleDelete, fieldValues, index }) {
   return (
     <button
       type="button"
-      // disabled={!fieldValues[index].id}
+      aria-label="delete this field"
       onClick={() => {
         handleDelete(fieldValues, index);
       }}>
@@ -630,6 +617,7 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
         <button
           id="add"
           type="button"
+          aria-label="add field"
           disabled={!fieldValues[fieldValues.length - 1].id}
           onClick={() => {
             setFieldValues([...fieldValues, {}]);

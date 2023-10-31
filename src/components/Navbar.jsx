@@ -51,7 +51,7 @@ export default function Navbar() {
             <div
               className="logo-right flex gap-3 items-center cursor-pointer"
               onClick={() => navigate("/")}>
-              <img src={Logo} alt="" />
+              <img src={Logo} alt="logo-right" />
               <div className=" border-r border-black h-10 "></div>
               <Text xs color="grayHeavy">
                 {" "}
@@ -147,7 +147,7 @@ export default function Navbar() {
               <div
                 className="logo-right flex gap-3 items-center cursor-pointer"
                 onClick={() => navigate("/")}>
-                <img src={Logo} alt="" />
+                <img src={Logo} alt="logo-right" />
                 <div className=" border-r border-black h-10 "></div>
                 <Text xs color="grayHeavy">
                   {" "}
