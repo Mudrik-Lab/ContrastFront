@@ -36,7 +36,11 @@ export default function AnatomicalFindings() {
             <div
               style={{ height: "calc(100vh - 200px)" }}
               className=" flex justify-center items-center">
-              <img src={pic} className="max-h-full my-0 mx-auto" />
+              <img
+                src={pic}
+                alt="Anatomical findings graph"
+                className="max-h-full my-0 mx-auto"
+              />
             </div>
           )}
         </div>

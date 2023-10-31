@@ -24,7 +24,7 @@ export default function AboutPage() {
           </Text>
           <div className="h-auto flex flex-col sm:flex-row sm:gap-10 mt-6 max-w-[1250px] mx-auto sm:px-2">
             <div className="h-auto bg-black flex flex-col justify-center">
-              <img src={BrainImg} alt="" />
+              <img src={BrainImg} alt="Brain Image" />
             </div>
 
             <Text className="px-4 sm:px-0 ">

@@ -10,32 +10,27 @@ export default function ConTraStUseCases() {
       video: "https://player.vimeo.com/video/864370519?h=b3c1541d39",
       title: "Find the papers that are most relevant to you",
       text: "Conduct your own queries, looking for different intersections of methods, approaches and paradigms. Download citations lists of relevant works that could help you map the field and get started!",
-      alt: "video3",
     },
     {
       video: "https://player.vimeo.com/video/870160361?h=73778ff75e",
       title: "Compare between the theories",
       text: "Choose parameters of interest and explore how these distribute between the different theories and within each one. This will allow you to ask meaningful questions about the ways in which the theories have been tested and studied, and perhaps give you ideas for you own new study",
-      alt: "video4",
     },
     {
       video: "https://player.vimeo.com/video/870160728?h=6dfa7054fc",
       title: "Discover trends over time",
       text: "For each Parameters, explore how the experiments in the ConTraSt database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
-      alt: "video5",
     },
     {
       video: "https://player.vimeo.com/video/870160616?h=9afb6fdd5d",
       title: "Get a high level snapshot of findings",
       text: "For both anatomical and temporal findings, get plots that summarize the current state of affairs and provide an overview of the way theories of consciousness have been studied",
-      alt: "video1",
     },
     {
       video:
         "https://player.vimeo.com/video/870160616?h=9afb6fdd5d&title=0&byline=0&portrait=0",
       title: "Simply have fun ",
       text: "You can also enjoy some of our plots that provide a more sociological view of the field: which theories are more popular in different countries and journals?...",
-      alt: "video2",
     },
   ];
   return (
@@ -49,10 +44,12 @@ export default function ConTraStUseCases() {
             className="card shadow-xl flex flex-col justify-center p-6 sm:w-96 mt-2 sm:mt-0"
             key={card.text}>
             <iframe
+              title={card.title}
+              alt={card.title}
               src={card.video}
               width="350"
               height="220"
-              frameborder="0"
+              frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
               webkitallowfullscreen
               mozallowfullscreen
