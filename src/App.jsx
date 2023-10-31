@@ -13,11 +13,41 @@ import useAuth from "./apiHooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
-function App() {
-  const [open, setOpen] = React.useState(false);
-  const [isHighContrast, setIsHighContrast] = React.useState(false);
-  const [isBiggerText, setIsBiggerText] = React.useState(false);
+// import * as React from 'react';
+// import { Routes, Route, Link } from 'react-router-dom';
 
+// const Home = React.lazy(() => import('./pages/Home'));
+// const About = React.lazy(() => import('./pages/About'));
+
+// const App = () => {
+//   return (
+//     <>
+//       ...
+
+//       <Routes>
+//         <Route
+//           index
+//           element={
+//             <React.Suspense fallback={<>...</>}>
+//               <Home />
+//             </React.Suspense>
+//           }
+//         />
+//         <Route
+//           path="about"
+//           element={
+//             <React.Suspense fallback={<>...</>}>
+//               <About />
+//             </React.Suspense>
+//           }
+//         />
+//         <Route path="*" element={<NoMatch />} />
+//       </Routes>
+//     </>
+//   );
+// };
+
+function App() {
   const client = new QueryClient({
     defaultOptions: {
       queries: {
@@ -30,68 +60,30 @@ function App() {
   });
   const { isLoadingToken, snap } = useAuth();
   return (
-    <div
-      className={classNames(
-        `${isHighContrast ? "bg-white text-black" : ""} App `
+    <div>
+      {isLoadingToken ? (
+        <div className="text-blue text-3xl">Loading...</div>
+      ) : (
+        <QueryClientProvider client={client}>
+          <ToastContainer
+            style={{
+              width: 450,
+              height: 200,
+            }}
+            position="top-center"
+            autoClose={5000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="light"
+          />
+          <Screens />
+        </QueryClientProvider>
       )}
-      onClick={() => (open ? setOpen(false) : null)}>
-      <div>
-        {isLoadingToken ? (
-          <div className="text-blue text-3xl">Loading...</div>
-        ) : (
-          <QueryClientProvider client={client}>
-            <ToastContainer
-              style={{
-                width: 450,
-                height: 200,
-              }}
-              position="top-center"
-              autoClose={5000}
-              hideProgressBar={false}
-              newestOnTop={false}
-              closeOnClick
-              rtl={false}
-              pauseOnFocusLoss
-              draggable
-              pauseOnHover
-              theme="light"
-            />
-            <Screens />
-          </QueryClientProvider>
-        )}
-      </div>
-      <div className="fixed top-1/4 flex flex-row-reverse items-start z-50 ">
-        <div className=" justify-end items-center h-16 w-16 bg-darkBlue  rounded-r-full p-2 border border-white border-l-0">
-          {open ? (
-            <Close className="w-12 h-12" onClick={() => setOpen(false)} />
-          ) : (
-            <Accessibility
-              className="w-12 h-12"
-              onClick={() => setOpen(true)}
-            />
-          )}
-        </div>
-        {open && (
-          <div className="bg-darkBlue h-40 w-80 p-2 pl-0 border border-white border-l-0">
-            <div className="bg-white h-full w-full flex justify-between p-2 gap-2">
-              <BigButton
-                icon={<ContrastIcon />}
-                text={"Increase contrast"}
-                onClick={() => setIsHighContrast(true)}></BigButton>
-              <BigButton
-                icon={<TextIcon />}
-                text={isBiggerText ? "Reduce text size" : "Enlarge text"}
-                onClick={() => {
-                  console.log(isBiggerText);
-                  updateTextClass(isBiggerText);
-                  setIsBiggerText(!isBiggerText);
-                }}>
-                {" "}
-              </BigButton>
-            </div>
-          </div>
-        )}
-      </div>
     </div>
   );
 }
