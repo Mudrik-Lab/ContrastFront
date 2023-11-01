@@ -282,11 +282,16 @@ export default function UncompletedPaper({
                           />
                         </div>
                         <div>
-                          <Text weight={"bold"} color={"grayReg"}>
+                          <Text
+                            weight={"bold"}
+                            color={"grayReg"}
+                            aria-role="label">
                             Authors
                           </Text>
+                          <label for="Authors"></label>
                           <div className="flex items-center gap-2">
                             <CreatableSelect
+                              name="Authors"
                               isMulti
                               isClearable
                               isDisabled={isLoading}
@@ -311,7 +316,10 @@ export default function UncompletedPaper({
                           )}
                         </div>
                         <div>
-                          <Text weight={"bold"} color={"grayReg"}>
+                          <Text
+                            weight={"bold"}
+                            color={"grayReg"}
+                            aria-role="label">
                             Journal
                           </Text>
                           <div className="flex items-center gap-2">
