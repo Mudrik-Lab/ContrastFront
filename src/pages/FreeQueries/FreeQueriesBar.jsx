@@ -361,7 +361,7 @@ export default function FreeQueriesBar() {
       {extraConfigSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={"Parameter Distribution Free Queries"}>
+            <SideControl headline={"Free Queries"}>
               <Text center lg weight="bold">
                 Axis Controls
               </Text>

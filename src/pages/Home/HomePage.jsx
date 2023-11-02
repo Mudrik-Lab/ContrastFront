@@ -83,7 +83,7 @@ export default function HomePage() {
                 extraClass="text-lg sm:text-sm "
                 black
                 onClick={copyToClipboard}>
-                <QouteIcon /> Copy Cite to Clipboard
+                <QouteIcon /> Copy Citation to Clipboard
               </Button>
             </div>
           </div>

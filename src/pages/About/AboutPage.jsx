@@ -33,18 +33,19 @@ export default function AboutPage() {
               (ConTraSt) database. Below you can get a bird’s eye view on how
               theories of consciousness have been studied and conduct your own
               queries on the data. Here, we focus on four leading families of
-              theories: Global Workspace theories, Integrated Information
-              Theories, Higher Order Theories theories and First order &
-              predictive processing theories. We provide analytics on papers
-              that interpret their findings in light of these theories, aiming
-              at identifying trends in methodological choices, interpretations,
-              findings, and more, by classifying and quantifying the original
-              authors’ point of view with regard to their studies Below is a
-              list of plots and searches that can be generated. For each such
-              plot/search you can also download a CSV file where all relevant
-              papers are listed. We welcome the uploading of new, relevant,
-              papers to the database! If you have a paper that refers to one of
-              the above-mentioned families of theories, feel free to{" "}
+              theories: Global Workspace theories (GWT), Integrated Information
+              Theories (IIT), Higher Order Theories theories (HOT) and First
+              order & predictive processing theories (FOT). We provide analytics
+              on papers that interpret their findings in light of these
+              theories, aiming at identifying trends in methodological choices,
+              interpretations, findings, and more, by classifying and
+              quantifying the original authors’ point of view with regard to
+              their studies. Below is a list of plots and searches that can be
+              generated. For each such plot/search you can also download a CSV
+              file where all relevant papers are listed. We welcome the
+              uploading of new, relevant, papers to the database! If you have a
+              paper that refers to one of the above-mentioned families of
+              theories, feel free to{" "}
               <a className={aLinkClass} href="/upload-new-paper">
                 upload information about the paper here.
               </a>{" "}
