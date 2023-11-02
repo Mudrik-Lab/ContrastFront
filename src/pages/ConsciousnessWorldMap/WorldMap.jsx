@@ -150,7 +150,6 @@ export default function WorldMap() {
       },
       tick0: 0,
       zmin: 0,
-
       colorbar: {
         len: 0.5,
         yanchor: "bottom",
@@ -171,11 +170,10 @@ export default function WorldMap() {
         size: 10,
       },
       marker: {
-        size: sortedResult.map((row) => row.totalValue * 1.5 + 10),
+        size: sortedResult.map((row) => row.totalValue + 5),
         sizemode: "area",
         sizeref: 0.05,
         color: "white",
-
         cmin: 0,
         cmax: 50,
         line: {
@@ -314,7 +312,7 @@ export default function WorldMap() {
             </SideControl>
           }
           graph={
-            <div style={{ width: "98%", height: "calc(100% - 100px)" }}>
+            <div className="h-full w-full">
               <TopGraphText
                 text={graphsHeaders[10].figureText}
                 firstLine={graphsHeaders[10].figureLine}
