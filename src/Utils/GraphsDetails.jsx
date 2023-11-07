@@ -12,7 +12,7 @@ import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-
 
 export const graphsHeaders = [
   {
-    text: "Parameter Distribution Free Queries",
+    text: "Free Queries",
     color: "yellow",
     icon: <ParameterDist />,
     tooltip:
