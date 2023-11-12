@@ -15,9 +15,7 @@ export default function AboutPage() {
       <Navbar />
       <Spacer height={navHeight + 64} />
       <div className="max-w-[1018px] mx-auto">
-        <Text className="text-6xl" color="blue" center>
-          About ConTraSt
-        </Text>
+        <h1 className="text-blue text-center text-6xl">About ConTraSt</h1>
         <div className="about-database sm:mt-10 mx-auto ">
           <Text className="text-4xl leading-snug" center>
             The Consciousness Theories Studies (ConTraSt) database
