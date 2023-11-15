@@ -288,7 +288,7 @@ export default function UncompletedPaper({
                             aria-role="label">
                             Authors
                           </Text>
-                          <label for="Authors"></label>
+                          <label htmlFor="Authors"></label>
                           <div className="flex items-center gap-2">
                             <CreatableSelect
                               name="Authors"

@@ -28,7 +28,7 @@ export default function ResultsSummary({
 
   return (
     <ExpandingBox
-      number={description.length > 0 ? 1 : 0}
+      number={description?.length > 0 ? 1 : 0}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       <ExternalNotes
