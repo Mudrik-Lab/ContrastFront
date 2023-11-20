@@ -128,7 +128,11 @@ export default function ExperimentForm({
     })
   );
 
-  const experimentTypeOptions = extraConfig?.data.available_experiment_types;
+  const experimentTypeOptions =
+    extraConfig?.data.available_experiment_types.map((type) => ({
+      value: type.value,
+      label: rawTextToShow(type.name),
+    }));
   const analysisTypeOptions =
     extraConfig?.data.available_analysis_type_choices.map((type) => ({
       value: type,

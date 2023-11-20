@@ -54,15 +54,14 @@ export default function BasicClassification({
     report: Yup.string().required("Please select : 'Report'/'No Report'"),
     theory_driven: Yup.string().required("Please select type of theory driven"),
   });
-
   const handleSubmit = async (values) => {
     try {
       const res = await createExperiments({
-        type_of_consciousness: values.type_of_consciousness,
+        type_of_consciousness: values.type_of_consciousness.value,
         theory_driven_theories: values.theories?.map((theory) => theory.label),
-        is_reporting: values.report,
-        theory_driven: values.theory_driven,
-        experiment_type: values.experiment_type,
+        is_reporting: values.report.value,
+        theory_driven: values.theory_driven.value,
+        experiment_type: values.experiment_type.value,
         study_pk: study_id,
       });
       if (res.status === 201) {
@@ -128,18 +127,16 @@ export default function BasicClassification({
                     Experiment type
                   </Text>
                   <div className="flex gap-2 items-center w-full">
-                    <Field
-                      as="select"
+                    <Select
+                      options={fieldOptions}
                       id="experiment_type"
+                      value={values.experiment_type}
                       name="experiment_type"
-                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
-                      <option></option>
-                      {fieldOptions.map((type) => (
-                        <option key={`type-${type.value}`} value={type.value}>
-                          {type.name}
-                        </option>
-                      ))}
-                    </Field>
+                      onChange={(selectedOption) => {
+                        setFieldValue("experiment_type", selectedOption);
+                      }}
+                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                    />
                     <TooltipExplanation
                       text={""}
                       tooltip={
@@ -153,19 +150,16 @@ export default function BasicClassification({
                     Type of consciousness
                   </Text>
                   <div className="flex items-center gap-2">
-                    <Field
-                      as="select"
+                    <Select
+                      options={concsiousnessOptions}
                       id="type_of_consciousness"
+                      value={values.type_of_consciousness}
                       name="type_of_consciousness"
-                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
-                      {concsiousnessOptions.map((type) => (
-                        <option
-                          key={`concsiousness-${type.value}`}
-                          value={type.value}>
-                          {type.label}
-                        </option>
-                      ))}
-                    </Field>
+                      onChange={(selectedOption) => {
+                        setFieldValue("type_of_consciousness", selectedOption);
+                      }}
+                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                    />
 
                     <TooltipExplanation
                       tooltip={
@@ -179,17 +173,17 @@ export default function BasicClassification({
                     Report/No report
                   </Text>
                   <div className="flex items-center gap-2">
-                    <Field
-                      as="select"
+                    <Select
+                      options={reportOptions}
                       id="report"
+                      value={values.report}
                       name="report"
-                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
-                      {reportOptions.map((type) => (
-                        <option key={`report-${type.value}`} value={type.value}>
-                          {type.label}
-                        </option>
-                      ))}
-                    </Field>
+                      onChange={(selectedOption) => {
+                        setFieldValue("report", selectedOption);
+                      }}
+                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                    />
+
                     <TooltipExplanation
                       text={""}
                       tooltip={
@@ -203,20 +197,16 @@ export default function BasicClassification({
                     Theory driven
                   </Text>
                   <div className="flex items-center gap-2">
-                    <Field
-                      as="select"
+                    <Select
+                      options={theoryDrivenOptions}
                       id="theory_driven"
                       name="theory_driven"
-                      placeholder="Select Theory "
-                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black">
-                      {theoryDrivenOptions.map((type) => (
-                        <option
-                          key={`theory_driven-${type.value}`}
-                          value={type.value}>
-                          {type.label}
-                        </option>
-                      ))}
-                    </Field>
+                      onChange={(selectedOption) => {
+                        setFieldValue("theory_driven", selectedOption);
+                      }}
+                      className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
+                    />
+
                     <TooltipExplanation
                       text={""}
                       tooltip={
@@ -226,8 +216,8 @@ export default function BasicClassification({
                   </div>
                 </div>
 
-                {(values.theory_driven === "mentioning" ||
-                  values.theory_driven === "driven") && (
+                {(values.theory_driven.value === "mentioning" ||
+                  values.theory_driven.value === "driven") && (
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
                       Theories
@@ -258,9 +248,11 @@ export default function BasicClassification({
               </div>
               <div className="w-full flex justify-center">
                 <Button
-                  type={!submitted ? "submit" : "button"}
-                  disabled={!dirty && submitted}
-                  onClick={() => submitted && handleEdit(values)}>
+                  type="button"
+                  disabled={!dirty}
+                  onClick={() =>
+                    submitted ? handleEdit(values) : handleSubmit(values)
+                  }>
                   <Vicon />
                   {!submitted ? "Save Experiment" : "Save edit"}
                 </Button>
