@@ -130,7 +130,7 @@ export default function Stimuli({
                           weight={"bold"}
                           color={"grayReg"}
                           className={"whitespace-nowrap "}>
-                          Sub-category
+                          Sub-category (optional)
                         </Text>
                         <CustomSelect
                           disabled={fieldValue.id}
