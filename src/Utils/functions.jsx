@@ -401,5 +401,7 @@ export function alphabetizeByLabels(selectFieldOptions) {
 }
 
 export function ToastError(e) {
-  ToastError(e);
+  return toast.error(
+    <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+  );
 }

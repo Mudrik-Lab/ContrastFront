@@ -216,7 +216,8 @@ export default function NewPaperForm({
                         name="DOI"
                         id="DOI"
                         placeholder="Enter your DOI identifier"
-                        className="border border-grayFrame p-2 w-full text-base rounded-md"
+                        className="border border-grayFrame p-1.5 w-full text-base rounded-md"
+                        disabled={addExperiments}
                       />
 
                       <TooltipExplanation
@@ -241,7 +242,8 @@ export default function NewPaperForm({
                         name="year"
                         id="year"
                         placeholder="Enter year"
-                        className="border border-grayFrame p-2 w-full text-base rounded-md"
+                        className="border border-grayFrame p-1.5 w-full text-base rounded-md"
+                        disabled={addExperiments}
                       />
 
                       <TooltipExplanation
@@ -264,11 +266,12 @@ export default function NewPaperForm({
                         aria-label="Select authors"
                         isMulti
                         isClearable
-                        isDisabled={isLoading}
+                        isDisabled={addExperiments}
                         isLoading={isLoading}
                         onCreateOption={handleNewAuthor}
                         onChange={(v) => setValue(v)}
                         placeholder="Select or Add Authors"
+                        className=" w-full text-base rounded-md"
                         options={authorsOptions}
                         value={value}
                       />
@@ -297,6 +300,8 @@ export default function NewPaperForm({
                         placeholder="Select journal"
                         isClearable={true}
                         options={journals}
+                        isDisabled={addExperiments}
+                        className=" w-full text-base rounded-md"
                       />
 
                       <TooltipExplanation
@@ -319,7 +324,7 @@ export default function NewPaperForm({
                         name="countries"
                         isClearable
                         aria-label="Select countries"
-                        // value={values.countries}
+                        isDisabled={addExperiments}
                         onChange={(v) => {
                           setFieldValue(
                             "countries",
@@ -330,6 +335,7 @@ export default function NewPaperForm({
                         isMulti={true}
                         component={MultiSelect}
                         options={countryOption}
+                        className=" w-full text-base rounded-md"
                       />
 
                       <TooltipExplanation

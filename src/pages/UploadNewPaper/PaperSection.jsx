@@ -92,6 +92,12 @@ export default function PaperSection({
                     </div>
                     <div>
                       <Text weight={"bold"} color={"grayReg"}>
+                        Year
+                      </Text>
+                      <Text lg>{study?.year}</Text>
+                    </div>
+                    <div>
+                      <Text weight={"bold"} color={"grayReg"}>
                         Authors
                       </Text>
                       {study.authors.map((author) => (
