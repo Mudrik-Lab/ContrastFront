@@ -327,6 +327,11 @@ export default function Findings({
                           options={alphabetizeByLabels(fieldOptions.AALOptions)}
                         />
                       </div>
+                      <TooltipExplanation
+                        tooltip={
+                          'Please indicate the area relevant to this finding according to the AAL Atlas. If there is more than one relevant area, choose one here and add the rest in the "Notes" field below.'
+                        }
+                      />
                     </div>
                   ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
