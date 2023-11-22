@@ -32,7 +32,6 @@ export default function BasicClassification({
   setExperimentID,
   theories,
 }) {
-  console.log(fieldOptions);
   const [submitted, setSubmitted] = useState(experimentData);
   const [experiment, setExperiment] = useState(false);
   const initialValues = {
@@ -85,10 +84,10 @@ export default function BasicClassification({
   const handleEdit = async (values) => {
     try {
       const res = await editExperiments({
-        type_of_consciousness: values.type_of_consciousness,
-        is_reporting: values.report,
-        theory_driven: values.theory_driven,
-        experiment_type: values.experiment_type,
+        type_of_consciousness: values.type_of_consciousness.value,
+        is_reporting: values.report.value,
+        theory_driven: values.theory_driven.value,
+        experiment_type: values.experiment_type.value,
         theory_driven_theories: values.theories.map((theory) => theory.label),
         study_pk: study_id,
         id: experiment.id || experimentData.id,
@@ -106,6 +105,7 @@ export default function BasicClassification({
       ToastError(e);
     }
   };
+  console.log(initialValues.experiment_type);
   return (
     <ExpandingBox
       disabled={disabled}
@@ -115,7 +115,8 @@ export default function BasicClassification({
         initialValues={initialValues}
         onSubmit={handleSubmit}
         validationSchema={validationSchema}>
-        {({ dirty, isValid, values, setFieldValue }) => {
+        {({ dirty, values, setFieldValue }) => {
+          console.log(values.experiment_type);
           return (
             <Form className="flex flex-col gap-2">
               <div className=" flex flex-col gap-4 border border-blue border-x-4 p-2 rounded-md">
@@ -130,9 +131,9 @@ export default function BasicClassification({
                     <Select
                       options={fieldOptions}
                       id="experiment_type"
-                      value={fieldOptions.find(
-                        (x) => x.value === values.experiment_type
-                      )}
+                      // value={fieldOptions.find(
+                      //   (x) => x.value == values.experiment_type
+                      // )}
                       name="experiment_type"
                       onChange={(selectedOption) => {
                         console.log(values.experiment_type);
@@ -156,9 +157,9 @@ export default function BasicClassification({
                     <Select
                       options={concsiousnessOptions}
                       id="type_of_consciousness"
-                      value={concsiousnessOptions.find(
-                        (x) => x.value === values.type_of_consciousness
-                      )}
+                      // value={concsiousnessOptions.find(
+                      //   (x) => x.value === values.type_of_consciousness
+                      // )}
                       name="type_of_consciousness"
                       onChange={(selectedOption) => {
                         setFieldValue("type_of_consciousness", selectedOption);
@@ -181,9 +182,9 @@ export default function BasicClassification({
                     <Select
                       options={reportOptions}
                       id="report"
-                      value={reportOptions.find(
-                        (x) => x.value === values.report
-                      )}
+                      // value={reportOptions.find(
+                      //   (x) => x.value === values.report
+                      // )}
                       name="report"
                       onChange={(selectedOption) => {
                         setFieldValue("report", selectedOption);
@@ -206,9 +207,9 @@ export default function BasicClassification({
                   <div className="flex items-center gap-2">
                     <Select
                       options={theoryDrivenOptions}
-                      value={theoryDrivenOptions.find(
-                        (x) => x.value === values.theory_driven
-                      )}
+                      // value={theoryDrivenOptions.find(
+                      //   (x) => x.value === values.theory_driven
+                      // )}
                       id="theory_driven"
                       name="theory_driven"
                       onChange={(selectedOption) => {
@@ -227,7 +228,9 @@ export default function BasicClassification({
                 </div>
 
                 {(values.theory_driven.value === "mentioning" ||
-                  values.theory_driven.value === "driven") && (
+                  values.theory_driven.value === "driven" ||
+                  values.theory_driven === "mentioning" ||
+                  values.theory_driven === "driven") && (
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
                       Theories

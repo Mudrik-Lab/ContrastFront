@@ -172,6 +172,7 @@ export default function ExperimentForm({
               study_id={study.id}
               setExperimentID={setExperimentID}
               isEditMode={isEditMode}
+              refetch={refetch}
             />
 
             <Paradigms
