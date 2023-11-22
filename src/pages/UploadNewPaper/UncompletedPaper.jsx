@@ -168,7 +168,7 @@ export default function UncompletedPaper({
       {study && (
         <div className="h-full">
           <ProgressComponent
-            status={"Uncompleted submissoins"}
+            status={"Uncompleted submissions"}
             paperNmae={
               study.title.length > 45
                 ? study.title.slice(0, 45) + "..."
