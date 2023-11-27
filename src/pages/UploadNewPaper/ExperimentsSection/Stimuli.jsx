@@ -137,7 +137,9 @@ export default function Stimuli({
                           value={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            newArray[index].sub_category = value;
+                            value !== ""
+                              ? (newArray[index].sub_category = value)
+                              : delete newArray[index].sub_category;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
