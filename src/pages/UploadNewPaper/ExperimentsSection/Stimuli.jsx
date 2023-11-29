@@ -31,7 +31,6 @@ export default function Stimuli({
   const [fieldValues, setFieldValues] = useState([
     {
       category: "",
-      sub_category: "",
       modality: "",
       duration: "",
     },

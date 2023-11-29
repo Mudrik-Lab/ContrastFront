@@ -200,6 +200,10 @@ export function SubmitClassificationField(
       classificationName !== "techniques"
     ) {
       try {
+        console.log(values[index]);
+        if (values[index].sub_category === "") {
+          delete values[index].sub_category;
+        }
         const res = await addFieldToexperiment({
           field: values[index],
           study_pk,
@@ -270,13 +274,11 @@ export function DeleteClassificationField(
             newArr.splice(index, 1);
             setFieldValues(newArr);
           } else {
-            setFieldValues([
-              {
-                type: "",
-                description: "",
-                key: Math.round(Math.random() * 101),
-              },
-            ]);
+            const updatedState = {};
+            Object.keys(fieldValues[0]).map((key) => {
+              updatedState[key] = "";
+            });
+            setFieldValues([updatedState]);
           }
         }
       } catch (e) {
@@ -296,13 +298,11 @@ export function DeleteClassificationField(
             newArr.splice(index, 1);
             setFieldValues(newArr);
           } else {
-            setFieldValues([
-              {
-                type: "",
-                description: "",
-                key: Math.round(Math.random() * 101),
-              },
-            ]);
+            const updatedState = {};
+            Object.keys(fieldValues[0]).map((key) => {
+              updatedState[key] = "";
+            });
+            setFieldValues([updatedState]);
           }
         }
       } catch (e) {
