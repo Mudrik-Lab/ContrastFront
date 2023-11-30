@@ -189,7 +189,7 @@ export default function Stimuli({
                           min={0}
                           disabled={fieldValues[index]?.id}
                           type="number"
-                          defaultValue={fieldValue.duration}
+                          value={fieldValues[index].duration}
                           onChange={(e) => {
                             e.stopPropagation();
                             e.preventDefault();

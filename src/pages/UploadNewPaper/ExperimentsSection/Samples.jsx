@@ -130,7 +130,7 @@ export default function Samples({
                         min={0}
                         disabled={fieldValues[index].id}
                         type="number"
-                        defaultValue={fieldValue.total_size}
+                        value={fieldValue.total_size}
                         onChange={(e) => {
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
@@ -175,8 +175,9 @@ export default function Samples({
                         disabled={fieldValues[index]?.id}
                         type="number"
                         min={0}
-                        defaultValue={fieldValue.size_included}
+                        value={fieldValue.size_included}
                         onChange={(e) => {
+                          console.log(e);
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
                               i === index

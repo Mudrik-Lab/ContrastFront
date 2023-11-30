@@ -286,7 +286,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            defaultValue={fieldValue.offset}
+                            value={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -373,7 +373,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            defaultValue={fieldValue.band_lower_bound}
+                            value={fieldValue.band_lower_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -411,7 +411,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            defaultValue={fieldValue.band_higher_bound}
+                            value={fieldValue.band_higher_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -506,7 +506,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            defaultValue={fieldValue.offset}
+                            value={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
