@@ -24,6 +24,7 @@ export async function EditUncompletedStudy({
   countries,
   year,
   authors_key_words,
+  is_author_submitter,
 }) {
   return await queryApi({
     url: `studies/submitted_studies/${id}/`,
@@ -37,6 +38,7 @@ export async function EditUncompletedStudy({
       countries,
       year,
       authors_key_words,
+      is_author_submitter,
     },
   });
 }
@@ -49,6 +51,7 @@ export async function submitStudy({
   countries,
   year,
   authors_key_words,
+  is_author_submitter,
 }) {
   return await queryApi({
     url: `studies/submitted_studies/`,
@@ -62,6 +65,7 @@ export async function submitStudy({
       countries,
       year,
       authors_key_words,
+      is_author_submitter,
     },
   });
 }

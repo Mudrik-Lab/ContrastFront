@@ -25,7 +25,6 @@ import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ToastError, confirmFunction } from "../../Utils/functions";
-import { sendStudyToReview } from "../../apiHooks/sendStudyToReview";
 import FinalSubmit from "../../components/FinalSubmit";
 import { createNewAuthor } from "../../apiHooks/createNewAuthor";
 
@@ -91,6 +90,7 @@ export default function NewPaperForm({
     countries: [],
     authors_key_words: [],
     year: "",
+    is_author_submitter: false,
   };
   const validationSchema = Yup.object().shape({
     // authors: Yup.array().min(1, "Please select at least one author"),
@@ -126,6 +126,7 @@ export default function NewPaperForm({
           countries: values.countries,
           DOI: values.DOI,
           source_title: values.source_title?.value,
+          is_author_submitter: values?.is_author_submitter,
         });
 
         if (res.status === 201) {
@@ -140,6 +141,7 @@ export default function NewPaperForm({
           );
         }
       } catch (e) {
+        console.log(e);
         ToastError(e);
       }
     }
@@ -285,6 +287,25 @@ export default function NewPaperForm({
                     {authorsError && (
                       <Text className={errorMsgClass}>{authorsError}</Text>
                     )}
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <div className="flex gap-1 items-center ">
+                      <Field
+                        aria-label="Are you one of the authors of this paper?"
+                        type="checkbox"
+                        name="is_author_submitter"
+                        className="text-blue rounded-sm "
+                      />
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Are you one of the authors of this paper?
+                      </Text>
+                    </div>
+                    <TooltipExplanation
+                      text={""}
+                      tooltip={
+                        "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                      }
+                    />
                   </div>
                   <div>
                     <Text weight={"bold"} color={"grayReg"}>
