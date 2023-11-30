@@ -27,7 +27,6 @@ export default function Stimuli({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [description, setDescription] = useState(values?.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       category: "",
@@ -52,6 +51,12 @@ export default function Stimuli({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (fieldValues[0].sub_category === "") {
+      delete fieldValues[0].sub_category;
+    }
+  }, [fieldValues[0]]);
 
   useEffect(() => {
     if (values && values.stimuli?.length > 0) {
