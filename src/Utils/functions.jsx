@@ -200,10 +200,6 @@ export function SubmitClassificationField(
       classificationName !== "techniques"
     ) {
       try {
-        // console.log(values[index]);
-        // if (values[index].sub_category === "") {
-        //   delete values[index].sub_category;
-        // }
         const res = await addFieldToexperiment({
           field: values[index],
           study_pk,

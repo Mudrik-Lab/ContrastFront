@@ -1,7 +1,6 @@
 import {
   AddFieldButton,
   ExpandingBox,
-  SubmitButton,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
@@ -24,16 +23,15 @@ export default function ConsciousnessMeasures({
   minimumClassifications,
   setMinimumClassifications,
 }) {
+  const initialValues = {
+    type: "",
+    phase: "",
+    description: "",
+  };
   const [description, setDescription] = useState(
     values?.consciousness_measures_notes || ""
   );
-  const [fieldValues, setFieldValues] = useState([
-    {
-      type: "",
-      phase: "",
-      description: "",
-    },
-  ]);
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "consciousness_measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -143,14 +141,6 @@ export default function ConsciousnessMeasures({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  {/* <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={
-                      !(fieldValue?.phase && fieldValue?.type) || fieldValue.id
-                    }
-                  /> */}
                 </div>
               </div>
             </form>
@@ -158,6 +148,7 @@ export default function ConsciousnessMeasures({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

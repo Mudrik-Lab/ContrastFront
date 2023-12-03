@@ -610,7 +610,7 @@ export function TrashButton({ handleDelete, fieldValues, index }) {
   );
 }
 
-export function AddFieldButton({ fieldValues, setFieldValues }) {
+export function AddFieldButton({ fieldValues, setFieldValues, initialValues }) {
   return (
     <div className="w-full flex  justify-center">
       {fieldValues.length > 0 && (
@@ -620,7 +620,10 @@ export function AddFieldButton({ fieldValues, setFieldValues }) {
           aria-label="add field"
           disabled={!fieldValues[fieldValues.length - 1].id}
           onClick={() => {
-            setFieldValues([...fieldValues, {}]);
+            setFieldValues([
+              ...fieldValues,
+              initialValues ? initialValues : {},
+            ]);
           }}>
           <svg
             xmlns="http://www.w3.org/2000/svg"

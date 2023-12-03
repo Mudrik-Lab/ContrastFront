@@ -1,17 +1,6 @@
-import {
-  AddFieldButton,
-  ExpandingBox,
-  SubmitButton,
-  Text,
-  ToastBox,
-  ToastErrorBox,
-  TrashButton,
-} from "../../../components/Reusble";
+import { ExpandingBox } from "../../../components/Reusble";
 import { useEffect, useState } from "react";
-
 import { rawTextToShow } from "../../../Utils/functions";
-import { setNotes } from "../../../apiHooks/setNotes";
-import { toast } from "react-toastify";
 import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function ResultsSummary({

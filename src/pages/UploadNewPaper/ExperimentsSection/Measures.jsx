@@ -8,7 +8,6 @@ import {
   CustomSelect,
   CircledIndex,
 } from "../../../components/Reusble";
-import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
@@ -26,12 +25,11 @@ export default function Measures({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      type: "",
-      notes: "",
-    },
-  ]);
+  const initialValues = {
+    type: "",
+    notes: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -165,6 +163,7 @@ export default function Measures({
               : "Add another measures field is abled after clicking save button on right side of the field"
           }>
           <AddFieldButton
+            initialValues={initialValues}
             fieldValues={fieldValues}
             setFieldValues={setFieldValues}
           />

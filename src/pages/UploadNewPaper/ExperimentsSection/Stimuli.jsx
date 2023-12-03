@@ -14,7 +14,6 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
-import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Stimuli({
   fieldOptions,
@@ -27,13 +26,12 @@ export default function Stimuli({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      category: "",
-      modality: "",
-      duration: "",
-    },
-  ]);
+  const initialValues = {
+    category: "",
+    modality: "",
+    duration: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -138,7 +136,7 @@ export default function Stimuli({
                         </Text>
                         <CustomSelect
                           disabled={fieldValue.id}
-                          value={fieldValue.sub_category}
+                          defaultValue={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             value !== ""
@@ -259,16 +257,10 @@ export default function Stimuli({
       })}
 
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
-      {/* <ExternalNotes
-        description={description}
-        setDescription={setDescription}
-        classification={classificationName}
-        study_pk={study_pk}
-        experiment_pk={experiment_pk}
-      /> */}
     </ExpandingBox>
   );
 }
