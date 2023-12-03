@@ -25,8 +25,9 @@ export default function Tasks({
   setMinimumClassifications,
   minimumClassifications,
 }) {
+  const initialValues = { type: "" };
   const [description, setDescription] = useState(values?.tasks_notes || "");
-  const [fieldValues, setFieldValues] = useState([{ type: "" }]);
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "tasks";
 
   const handleSubmit = SubmitClassificationField(
@@ -105,11 +106,6 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  {/* <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                  /> */}
                 </div>
               </div>
             </form>
@@ -118,6 +114,7 @@ export default function Tasks({
       })}
 
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

@@ -44,7 +44,7 @@ export default function ExperimentDetails({
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
 
   return (
-    <>
+    <div>
       {isSuccess && (
         <div
           className="p-2 h-full w-[50%] shadow-3xl flex flex-col gap-2 overflow-y-scroll"
@@ -452,7 +452,7 @@ export default function ExperimentDetails({
           </button>
         </div>
       )}
-    </>
+    </div>
   );
 }
 // available_properties_by_family = {

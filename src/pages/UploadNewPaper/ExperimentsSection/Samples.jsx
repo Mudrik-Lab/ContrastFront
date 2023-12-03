@@ -25,13 +25,12 @@ export default function Samples({
   minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.samples_notes || "");
-  const [fieldValues, setFieldValues] = useState([
-    {
-      type: "",
-      size_included: "",
-      total_size: "",
-    },
-  ]);
+  const initialValues = {
+    type: "",
+    size_included: "",
+    total_size: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "samples";
 
   const handleSubmit = SubmitClassificationField(
@@ -177,7 +176,6 @@ export default function Samples({
                         min={0}
                         value={fieldValue.size_included}
                         onChange={(e) => {
-                          console.log(e);
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
                               i === index
@@ -236,6 +234,7 @@ export default function Samples({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

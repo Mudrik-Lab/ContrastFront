@@ -22,13 +22,12 @@ export default function Findings({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      technique: "",
-      family: "",
-      type: "",
-    },
-  ]);
+  const initialValues = {
+    technique: "",
+    family: "",
+    type: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "finding_tags";
 
   const handleSubmit = SubmitClassificationField(
@@ -256,7 +255,8 @@ export default function Findings({
                             disabled={fieldValues[index].id}
                             type="number"
                             name="onset"
-                            value={fieldValue.onset}
+                            min={0}
+                            defaultValue={fieldValue.onset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -286,7 +286,8 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            value={fieldValue.offset}
+                            min={0}
+                            defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -373,7 +374,8 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            value={fieldValue.band_lower_bound}
+                            min={0}
+                            defaultValue={fieldValue.band_lower_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -411,7 +413,8 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            value={fieldValue.band_higher_bound}
+                            min={0}
+                            defaultValue={fieldValue.band_higher_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -475,8 +478,9 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             name="onset"
-                            value={fieldValue.onset}
+                            defaultValue={fieldValue.onset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -506,7 +510,8 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
-                            value={fieldValue.offset}
+                            min={0}
+                            defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -576,6 +581,7 @@ export default function Findings({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
