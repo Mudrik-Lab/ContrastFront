@@ -113,12 +113,12 @@ export default function UncompletedPaper({
     DOI: study.DOI || "",
     authors_key_words: study.authors_key_words || [],
     year: study.year,
-
     source_title: study.source_title,
     countries: study.countries.map((country) => ({
       value: country,
       label: countries[country].name,
     })),
+    is_author_submitter: study.is_author_submitter,
   };
   const validationSchema = Yup.object().shape({
     // authors: Yup.array().min(1, "Please select at least one author"),
@@ -149,6 +149,7 @@ export default function UncompletedPaper({
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
         source_title: values.source_title,
+        is_author_submitter: values?.is_author_submitter,
       });
       console.log(res);
       if (res.status === 200) {
@@ -314,6 +315,25 @@ export default function UncompletedPaper({
                               {authorsError}
                             </Text>
                           )}
+                        </div>
+                        <div className="flex justify-between items-center">
+                          <div className="flex gap-1 items-center ">
+                            <Field
+                              aria-label="Are you one of the authors of this paper?"
+                              type="checkbox"
+                              name="is_author_submitter"
+                              className="text-blue rounded-sm "
+                            />
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Are you one of the authors of this paper?
+                            </Text>
+                          </div>
+                          <TooltipExplanation
+                            text={""}
+                            tooltip={
+                              "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                            }
+                          />
                         </div>
                         <div>
                           <Text

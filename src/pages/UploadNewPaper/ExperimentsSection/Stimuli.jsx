@@ -27,11 +27,9 @@ export default function Stimuli({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [description, setDescription] = useState(values?.stimuli_notes || "");
   const [fieldValues, setFieldValues] = useState([
     {
       category: "",
-      sub_category: "",
       modality: "",
       duration: "",
     },
@@ -53,6 +51,12 @@ export default function Stimuli({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (fieldValues[0].sub_category === "") {
+      delete fieldValues[0].sub_category;
+    }
+  }, [fieldValues[0]]);
 
   useEffect(() => {
     if (values && values.stimuli?.length > 0) {
@@ -185,7 +189,7 @@ export default function Stimuli({
                           min={0}
                           disabled={fieldValues[index]?.id}
                           type="number"
-                          defaultValue={fieldValue.duration}
+                          value={fieldValues[index].duration}
                           onChange={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
