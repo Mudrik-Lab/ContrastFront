@@ -255,6 +255,7 @@ export default function Findings({
                             disabled={fieldValues[index].id}
                             type="number"
                             name="onset"
+                            min={0}
                             defaultValue={fieldValue.onset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -285,6 +286,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -372,6 +374,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.band_lower_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -410,6 +413,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.band_higher_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -474,6 +478,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             name="onset"
                             defaultValue={fieldValue.onset}
                             onChange={(e) => {
@@ -505,6 +510,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>

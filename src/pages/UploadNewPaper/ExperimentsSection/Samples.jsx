@@ -131,7 +131,6 @@ export default function Samples({
                         type="number"
                         value={fieldValue.total_size}
                         onChange={(e) => {
-                          console.log(fieldValues);
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
                               i === index
