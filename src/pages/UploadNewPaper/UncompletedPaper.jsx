@@ -325,9 +325,15 @@ export default function UncompletedPaper({
                               className="text-blue rounded-sm "
                             />
                             <Text weight={"bold"} color={"grayReg"}>
-                              Are you one of the authors of this paper?
+                              I am one of the authors
                             </Text>
                           </div>
+                          <TooltipExplanation
+                            text={""}
+                            tooltip={
+                              "Mark this checkbox only if you are one of the authors of this paper"
+                            }
+                          />
                         </div>
                         <div>
                           <Text

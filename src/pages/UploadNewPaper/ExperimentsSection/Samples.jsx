@@ -69,7 +69,8 @@ export default function Samples({
       fieldValues[index]?.type &&
       fieldValues[index]?.total_size &&
       fieldValues[index]?.size_included &&
-      fieldValues[index]?.size_included <= fieldValues[index]?.total_size
+      parseInt(fieldValues[index]?.size_included) <=
+        parseInt(fieldValues[index]?.total_size)
     );
   };
 
@@ -154,7 +155,8 @@ export default function Samples({
                         } `}
                       />
                     </div>
-                    {fieldValue.size_included > fieldValue.total_size && (
+                    {parseInt(fieldValue.size_included) >
+                      parseInt(fieldValue.total_size) && (
                       <span className="text-flourishRed ">
                         Smaller than included
                       </span>

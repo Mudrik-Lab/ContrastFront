@@ -297,13 +297,13 @@ export default function NewPaperForm({
                         className="text-blue rounded-sm "
                       />
                       <Text weight={"bold"} color={"grayReg"}>
-                        Are you one of the authors of this paper?
+                        I am one of the authors
                       </Text>
                     </div>
                     <TooltipExplanation
                       text={""}
                       tooltip={
-                        "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                        "Mark this checkbox only if you are one of the authors of this paper"
                       }
                     />
                   </div>
