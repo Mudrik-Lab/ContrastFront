@@ -340,7 +340,7 @@ export function confirmFunction({
                 <p className="text-gray-600 text-lg">
                   {question} {paperName}
                 </p>
-                {missingDetails && (
+                {missingDetails && missingDetails[0].length > 0 && (
                   <div>
                     <span className="text-flourishRed">
                       Notice! There are missing details in:{" "}
