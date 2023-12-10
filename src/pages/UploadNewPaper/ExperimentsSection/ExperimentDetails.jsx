@@ -44,10 +44,10 @@ export default function ExperimentDetails({
   const experimentTypeOptions = extraConfig?.data.available_experiment_types;
 
   return (
-    <div>
+    <div className="w-1/2">
       {isSuccess && (
         <div
-          className="p-2 h-full w-[50%] shadow-3xl flex flex-col gap-2 overflow-y-scroll"
+          className="experiments-details p-2 h-full shadow-3xl flex flex-col gap-2 overflow-y-scroll"
           style={{
             height: `calc(100vh - ${
               uploadPaperUsedHeight + uploadPaperPageTopSection + 10
@@ -455,8 +455,3 @@ export default function ExperimentDetails({
     </div>
   );
 }
-// available_properties_by_family = {
-//     "Temporal": ["onset", "offset"],
-//     "Frequency": ["onset", "offset", "correlation_sign", "band_lower_bound", "band_higher_bound", "analysis_type"],
-//     "Spatial Areas": ["AAL_atlas_tag"]
-// }
