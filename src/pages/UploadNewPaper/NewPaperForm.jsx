@@ -103,10 +103,7 @@ export default function NewPaperForm({
     source_title: Yup.object().required("Please select or add source title"),
     countries: Yup.array().min(1, "Please select at least one country"),
     DOI: Yup.string()
-      .matches(
-        /^10\.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i,
-        "Please enter a valid DOI."
-      )
+      .matches(/^10\./, "Please enter a valid DOI.")
       .required("DOI is required."),
   });
 
