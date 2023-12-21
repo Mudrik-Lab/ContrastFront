@@ -1,3 +1,5 @@
+import * as Yup from "yup";
+
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
@@ -55,6 +57,20 @@ export const statusNumber = {
   REJECTED: 2,
   AWAITING: 3,
 };
+export const studyValidationSchema = Yup.object().shape({
+  authors: Yup.array().min(1, "Please select at least one author"),
+  year: Yup.date()
+    .max(
+      new Date().getFullYear(),
+      "Year must be current year or less than current year"
+    )
+    .required("Publication year is required."),
+  source_title: Yup.mixed().required("Please select or add source title"),
+  countries: Yup.array().min(1, "Please select at least one country"),
+  DOI: Yup.string()
+    .matches(/^10\./, "Please enter a valid DOI.")
+    .required("DOI is required."),
+});
 export const parametersOptions = [
   {
     value: "paradigm_family",

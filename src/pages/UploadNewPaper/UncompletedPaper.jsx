@@ -18,9 +18,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
   errorMsgClass,
-  fieldClass,
-  footerHeight,
-  navHeight,
+  studyValidationSchema,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
@@ -120,17 +118,6 @@ export default function UncompletedPaper({
     })),
     is_author_submitter: study.is_author_submitter || false,
   };
-  const validationSchema = Yup.object().shape({
-    // authors: Yup.array().min(1, "Please select at least one author"),
-    source_title: Yup.string().required("Please select at least one journal"),
-    countries: Yup.array().min(1, "Please select at least one country"),
-    DOI: Yup.string()
-      .matches(
-        /^10\.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i,
-        "Please enter a valid DOI."
-      )
-      .required("DOI is required."),
-  });
 
   const handleSubmit = async (values) => {
     if (!value.length) {
@@ -224,7 +211,7 @@ export default function UncompletedPaper({
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  validationSchema={validationSchema}>
+                  validationSchema={studyValidationSchema}>
                   {({
                     isSubmitting,
                     dirty,
@@ -347,9 +334,9 @@ export default function UncompletedPaper({
                               name={"source_title"}
                               id={"source_title"}
                               isClearable
-                              defaultInputValue={values.source_title}
+                              defaultInputValue={values?.source_title}
                               onChange={(v) => {
-                                setFieldValue("source_title", v.value);
+                                setFieldValue("source_title", v?.value);
                               }}
                               options={journalsList}
                             />
@@ -400,9 +387,9 @@ export default function UncompletedPaper({
                       <div className="flex gap-2">
                         <Button
                           type="submit"
-                          disabled={isSubmitting && !isValid}
-                          extraClass={
-                            " disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none"
+                          disabled={!isValid}
+                          className={
+                            "bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy"
                           }>
                           <V />
                           Update Paper
