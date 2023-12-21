@@ -44,9 +44,8 @@ export const Button = ({
   return (
     <button
       className={classNames(
-        `${
-          extraClass ? extraClass : ""
-        } text-white text-base leading-4 font-bold ${
+        extraClass,
+        `text-white text-base leading-4 font-bold disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none ${
           black ? "bg-black" : "bg-blue border-[3px] border-blue"
         } hover:opacity-40 disabled:opacity-40 rounded-full px-4 py-3 text-center flex justify-center items-center gap-2 whitespace-nowrap`
       )}

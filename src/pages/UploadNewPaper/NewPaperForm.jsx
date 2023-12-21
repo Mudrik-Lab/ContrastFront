@@ -10,8 +10,7 @@ import {
   ToastBox,
   ToastErrorBox,
 } from "../../components/Reusble";
-import { errorMsgClass } from "../../Utils/HardCoded";
-import * as Yup from "yup";
+import { errorMsgClass, studyValidationSchema } from "../../Utils/HardCoded";
 import MultiSelect from "../../components/SelectField";
 import classNames from "classnames";
 import ExperimentsBox from "./ExperimentsBox";
@@ -92,20 +91,6 @@ export default function NewPaperForm({
     year: "",
     is_author_submitter: false,
   };
-  const validationSchema = Yup.object().shape({
-    // authors: Yup.array().min(1, "Please select at least one author"),
-    year: Yup.date()
-      .max(
-        new Date().getFullYear(),
-        "Year must be current year or less than current year"
-      )
-      .required("Publication year is required."),
-    source_title: Yup.object().required("Please select or add source title"),
-    countries: Yup.array().min(1, "Please select at least one country"),
-    DOI: Yup.string()
-      .matches(/^10\./, "Please enter a valid DOI.")
-      .required("DOI is required."),
-  });
 
   const handleSubmit = async (values) => {
     if (!value.length) {
@@ -202,7 +187,7 @@ export default function NewPaperForm({
           <Formik
             initialValues={initialValues}
             onSubmit={handleSubmit}
-            validationSchema={validationSchema}>
+            validationSchema={studyValidationSchema}>
             {({ dirty, isValid, setFieldValue }) => (
               <Form>
                 <div className="flex flex-col gap-4">
