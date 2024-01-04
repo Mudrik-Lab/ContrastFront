@@ -32,6 +32,12 @@ export default function ConTraStUseCases() {
       title: "Simply have fun ",
       text: "You can also enjoy some of our plots that provide a more sociological view of the field: which theories are more popular in different countries and journals?...",
     },
+    {
+      video:
+        "https://player.vimeo.com/video/898841169?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+      title: "Submit a paper to our database",
+      text: "Watch this video to see how to add a paper to our database. In any case you encounter a problem, feel free to contact us through the contact form.",
+    },
   ];
   return (
     <div className=" sm:w-256 mx-auto my-20 flex flex-col items-center sm:gap-8 ">
