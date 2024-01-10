@@ -471,7 +471,7 @@ export const TopSideUserBox = () => {
         {snap.user.email}
       </Text>
       <div className="flex gap-2">
-        <a className="underline text-xs" href="">
+        <a className="underline text-xs" href="/profile">
           edit my profile
         </a>
         <a className="underline text-xs" href="/" onClick={handleLogout}>

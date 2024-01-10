@@ -49,7 +49,19 @@ const Screens = () => {
         <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<SecondaryRegister />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              path="/profile"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <SecondaryRegister />
+                </React.Suspense>
+              }
+            />
+          }
+        />
         <Route
           path="/upload-new-paper"
           element={
