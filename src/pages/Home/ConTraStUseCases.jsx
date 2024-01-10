@@ -57,7 +57,6 @@ export default function ConTraStUseCases() {
               height="220"
               frameBorder="0"
               allow="autoplay; fullscreen; picture-in-picture"
-              webkitallowfullscreen
               mozallowfullscreen
               allowfullscreen
             />
