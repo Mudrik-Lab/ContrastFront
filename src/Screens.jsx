@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
@@ -46,7 +45,6 @@ const Screens = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
         <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
-        <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
         <Route
