@@ -7,7 +7,7 @@ import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Text } from "./Reusble";
-import { useNavigate } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";
 import { useSnapshot } from "valtio";
@@ -42,7 +42,6 @@ export default function Navbar() {
     state.auth = null;
     state.user = {};
   };
-  console.log(snap.user.username);
   return (
     <div>
       {isMoblile ? (
@@ -176,8 +175,8 @@ export default function Navbar() {
                           aria-labelledby="dropdownLargeButton">
                           {graphsHeaders.map((row) => (
                             <li id={row.color} key={row.text}>
-                              <a
-                                href={row.route}
+                              <NavLink
+                                to={row.route}
                                 className="px-4 py-2 hover:bg-gray-100 flex justify-start items-center gap-2.5 hover:font-bold">
                                 <div
                                   className={classNames(
@@ -186,7 +185,7 @@ export default function Navbar() {
                                     }  green rounded-full w-3 h-3`
                                   )}></div>
                                 {row.text}
-                              </a>
+                              </NavLink>
 
                               <hr className="mx-3" />
                             </li>
@@ -197,28 +196,28 @@ export default function Navbar() {
                   )}
                 </li>
                 <li>
-                  <a
+                  <NavLink
                     className={
                       page === "/about"
                         ? "text-blue font-bold text-base"
                         : "text-base"
                     }
-                    href="about">
+                    to="/about">
                     About
-                  </a>
+                  </NavLink>
                 </li>
 
                 <li>
-                  <a
+                  <NavLink
                     className={
                       page === "/contact"
                         ? "text-blue font-bold text-base"
                         : "text-base"
                     }
-                    href="contact"
+                    to="/contact"
                     aria-current="page">
                     Contact
-                  </a>
+                  </NavLink>
                 </li>
                 <li>
                   <Tooltip
@@ -228,8 +227,8 @@ export default function Navbar() {
                         ? "Registration is needed before uploading study"
                         : "Add your paper to site's data"
                     }>
-                    <a
-                      href="/upload-new-paper"
+                    <NavLink
+                      to="/upload-new-paper"
                       className={classNames(
                         `${
                           page === "/upload-new-paper"
@@ -241,7 +240,7 @@ export default function Navbar() {
                       )}
                       aria-current="page">
                       Upload New Paper
-                    </a>
+                    </NavLink>
                   </Tooltip>
                 </li>
               </ul>
@@ -249,7 +248,7 @@ export default function Navbar() {
             <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
               {snap.auth ? (
                 <>
-                  <Button type="button" onClick={() => navigate("/register")}>
+                  <Button type="button" onClick={() => navigate("/profile")}>
                     {" "}
                     <ProfileIcon /> {snap.user?.username || snap.tempUsername}
                   </Button>
@@ -263,11 +262,11 @@ export default function Navbar() {
                     {" "}
                     <ProfileIcon /> Register now
                   </Button>
-                  <a
+                  <NavLink
                     className={page === "/login" ? "text-blue font-bold" : ""}
-                    href="login">
+                    to="/login">
                     Login
-                  </a>
+                  </NavLink>
                 </>
               )}
             </div>

@@ -30,6 +30,9 @@ export default function SecondaryRegister() {
     [`profile`],
     getUser
   );
+  const userId = userData?.data.id;
+
+  console.log(userId);
   let month, day, year;
   if (userSuccess) {
     if (userData.data.date_of_birth) {
@@ -55,7 +58,7 @@ export default function SecondaryRegister() {
     country: userData?.data.country_of_residence || "",
     academicStage: userData?.data.academic_stage || "",
     academicAffiliation: userData?.data.academic_affiliation || "",
-    check: userData?.data.has_ASSC_membership || false, //change to aprroved get updates from Contrast
+    check: userData?.data.has_opted_for_contrast_updates || false, //change to aprroved get updates from Contrast
   };
 
   useEffect(() => {
@@ -79,6 +82,7 @@ export default function SecondaryRegister() {
 
     try {
       const result = await createProfile({
+        id: userId,
         date_of_birth: `${values.year}-${values.month}-${values.day}`,
         self_identified_gender: values.gender,
         academic_affiliation: values.academicAffiliation,
@@ -86,9 +90,8 @@ export default function SecondaryRegister() {
         academic_stage: values.academicStage,
         check: values.check,
       });
-      if (result.status === 201) {
-        navigate("/");
-      }
+
+      navigate("/");
     } catch (e) {
       e.response?.status === 400 && setErrorMsg(e.response?.data);
     }
