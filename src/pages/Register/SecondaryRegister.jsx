@@ -1,7 +1,11 @@
 import { ErrorMessage, Field, Form, Formik, isPromise } from "formik";
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useEffect, useMemo, useRef, useState } from "react";
 import countryList from "react-select-country-list";
-import { generateSelectOptions, rawTextToShow } from "../../Utils/functions";
+import {
+  ToastError,
+  generateSelectOptions,
+  rawTextToShow,
+} from "../../Utils/functions";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import Navbar from "../../components/Navbar";
@@ -21,14 +25,13 @@ export default function SecondaryRegister() {
   const [isNew, setIsNew] = useState(true);
   const [searchParams] = useSearchParams();
   const isNewUser = searchParams.get("new");
-  console.log(isNewUser);
 
   const snap = useSnapshot(state);
   const navigate = useNavigate();
   const countryOption = useMemo(() => countryList().getData(), []);
+  const currentYear = new Date().getFullYear();
 
   const { data, isSuccess } = useQuery([`form_configurations`], getFormConfig);
-
   const { data: userData, isSuccess: userSuccess } = useQuery(
     [`profile`],
     getUser
@@ -94,7 +97,9 @@ export default function SecondaryRegister() {
       });
       isNewUser ? navigate("/") : navigate(-1);
     } catch (e) {
-      e.response?.status === 400 && setErrorMsg(e.response?.data);
+      e.response?.status === 400
+        ? setErrorMsg(e.response?.data)
+        : ToastError(e);
     }
   };
 
@@ -149,7 +154,7 @@ export default function SecondaryRegister() {
                           name="year"
                           className={fieldClass + "w-20"}>
                           <option value=""> Year</option>
-                          {generateSelectOptions(1900, 2023).sort(
+                          {generateSelectOptions(1900, currentYear - 18).sort(
                             (a, b) => b.props.value - a.props.value
                           )}
                         </Field>
