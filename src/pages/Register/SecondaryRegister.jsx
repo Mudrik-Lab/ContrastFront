@@ -9,7 +9,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
 import { Checkbox } from "../../components/Reusble";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getFormConfig from "../../apiHooks/getFormConfiguration";
 import getUser from "../../apiHooks/getUser";
@@ -19,6 +19,9 @@ export default function SecondaryRegister() {
   const [errorMsg, setErrorMsg] = useState("");
   const [dateError, setDateError] = useState(false);
   const [isNew, setIsNew] = useState(true);
+  const [searchParams] = useSearchParams();
+  const isNewUser = searchParams.get("new");
+  console.log(isNewUser);
 
   const snap = useSnapshot(state);
   const navigate = useNavigate();
@@ -32,7 +35,6 @@ export default function SecondaryRegister() {
   );
   const userId = userData?.data.id;
 
-  console.log(userId);
   let month, day, year;
   if (userSuccess) {
     if (userData.data.date_of_birth) {
@@ -90,8 +92,7 @@ export default function SecondaryRegister() {
         academic_stage: values.academicStage,
         check: values.check,
       });
-
-      navigate("/");
+      isNewUser ? navigate("/") : navigate(-1);
     } catch (e) {
       e.response?.status === 400 && setErrorMsg(e.response?.data);
     }
@@ -121,7 +122,6 @@ export default function SecondaryRegister() {
             {isSuccess && userData && (
               <Formik initialValues={initialValues} onSubmit={handleSubmit}>
                 {({ dirty, values }) => {
-                  console.log(values);
                   return (
                     <Form className="flex flex-col gap-4">
                       <div className="flex gap-4">

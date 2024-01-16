@@ -5,7 +5,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import createRegistration from "../../apiHooks/createRegistration";
 import useLogin from "../../apiHooks/loginApi";
 import {
@@ -18,6 +18,7 @@ import { useState } from "react";
 
 export default function RegisterComponent() {
   const [errorMsg, setErrorMsg] = useState(false);
+
   const navigate = useNavigate();
   const initialValues = {
     name: "",
@@ -54,7 +55,7 @@ export default function RegisterComponent() {
             setToken(res.data.access);
             setRefreshToken(res.data.refresh);
             state.auth = res.data.access;
-            navigate("/profile");
+            navigate("/profile?new=true");
           }
         }
       }
