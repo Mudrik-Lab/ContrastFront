@@ -50,7 +50,6 @@ export default function RegisterComponent() {
         const res = await useLogin(values.name, values.password);
         if (res.error) {
           setServerError(res.error.message);
-          console.log(res.error);
         } else {
           if (isValidToken(res.data.access)) {
             setToken(res.data.access);
@@ -61,7 +60,6 @@ export default function RegisterComponent() {
         }
       }
     } catch (error) {
-      console.log(error);
       setErrorMsg(error.response?.data);
     }
   };
