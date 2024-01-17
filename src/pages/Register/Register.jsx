@@ -15,6 +15,7 @@ import {
 } from "../../Utils/tokenHandler";
 import { state } from "../../state";
 import { useState } from "react";
+import { rawTextToShow } from "../../Utils/functions";
 
 export default function RegisterComponent() {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -60,7 +61,8 @@ export default function RegisterComponent() {
         }
       }
     } catch (error) {
-      error.response.status === 400 && setErrorMsg(true);
+      console.log(error);
+      setErrorMsg(error.response?.data);
     }
   };
 
@@ -134,7 +136,15 @@ export default function RegisterComponent() {
                   </div>
                   {errorMsg && (
                     <p className={errorMsgClass}>
-                      Error occurred. Try again later.
+                      {Object.entries(errorMsg).map(([key, msg]) => (
+                        <li key={key}>
+                          {/* <span className="text-flourishRed text-lg my-1 font-bold ">
+                            {rawTextToShow(key)}
+                            {": "}
+                          </span> */}
+                          <span> {Array.isArray(msg) ? msg[0] : msg}</span>
+                        </li>
+                      ))}
                       <br /> If you already have a user try to{" "}
                       <a className="underline text-blue" href="/login">
                         login
@@ -146,9 +156,7 @@ export default function RegisterComponent() {
                     <button
                       disabled={!(isValid && dirty)}
                       className="bg-blue text-white py-2 px-4 rounded-full flex items-center gap-1 disabled:opacity-50"
-                      type="submit"
-                      // onClick={() => setFirst(false)}
-                    >
+                      type="submit">
                       <ProfileIcon /> Continue
                     </button>
                     <button
