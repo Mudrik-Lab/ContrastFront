@@ -1,18 +1,19 @@
 import { queryApi } from "../Utils/api";
 
 export default async function createProfile({
+  id,
   date_of_birth,
   self_identified_gender,
   academic_affiliation,
   country_of_residence,
   academic_stage,
-  has_ASSC_membership = true,
+  has_opted_for_contrast_updates = true,
 }) {
   const requestData = {
     self_identified_gender,
     academic_affiliation,
     academic_stage,
-    has_ASSC_membership,
+    has_opted_for_contrast_updates,
   };
 
   if (country_of_residence !== "") {
@@ -23,8 +24,8 @@ export default async function createProfile({
   }
 
   return await queryApi({
-    url: "profiles/profiles/register/",
-    method: "POST",
+    url: `profiles/profiles/${id}/`,
+    method: "PATCH",
     isProtected: true,
     data: requestData,
   });

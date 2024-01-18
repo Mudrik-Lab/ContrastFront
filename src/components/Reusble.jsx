@@ -24,6 +24,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../state";
 import { ErrorMessage, Field } from "formik";
 import { rawTextToShow } from "../Utils/functions";
+import { removeToken } from "../Utils/tokenHandler";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -453,6 +454,11 @@ export const Checkbox = ({ field }) => {
 };
 export const TopSideUserBox = () => {
   const snap = useSnapshot(state);
+  const handleLogout = async () => {
+    await removeToken();
+    state.auth = null;
+    state.user = {};
+  };
   return (
     <div
       className={classNames(
@@ -465,10 +471,10 @@ export const TopSideUserBox = () => {
         {snap.user.email}
       </Text>
       <div className="flex gap-2">
-        <a className="underline text-xs" href="">
+        <a className="underline text-xs" href="/profile">
           edit my profile
         </a>
-        <a className="underline text-xs" href="">
+        <a className="underline text-xs" href="/" onClick={handleLogout}>
           logout
         </a>
       </div>

@@ -16,10 +16,16 @@ import mobileBrain from "../../assets/images/mobile-brain.jpeg";
 import { isMoblile } from "../../Utils/HardCoded";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
+import { useQuery } from "@tanstack/react-query";
+import getExtraConfig from "../../apiHooks/getExtraConfig";
 
 export default function HomePage() {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
+
+  const { data, isSuccess } = useQuery([`more_configurations`], getExtraConfig);
+  console.log(data?.data.approved_studies_count);
+
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
   const copyToClipboard = () => {
@@ -40,7 +46,10 @@ export default function HomePage() {
             ConTraSt Database
           </h1>
           <h1 className="text-white text-3xl">Examine trends</h1>
-          <h1 className="text-blue text-3xl"> in over 400 experiments</h1>
+          <h1 className="text-blue text-3xl">
+            {" "}
+            in {data?.data.approved_experiments_count} experiments
+          </h1>
           <h1 className="text-white text-3xl">
             studying theories of consciousness
           </h1>
