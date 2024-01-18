@@ -48,7 +48,7 @@ export default function HomePage() {
           <h1 className="text-white text-3xl">Examine trends</h1>
           <h1 className="text-blue text-3xl">
             {" "}
-            in over {data?.data.approved_studies_count} experiments
+            in {data?.data.approved_experiments_count} experiments
           </h1>
           <h1 className="text-white text-3xl">
             studying theories of consciousness
