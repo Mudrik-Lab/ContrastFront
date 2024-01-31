@@ -29,7 +29,7 @@ export const graphsHeaders = [
       "The graph depicts the different distributions of parameters for the four theories separately.",
     color: "orange",
     icon: <TheoriesComparison />,
-    route: "theories-comparison",
+    route: "/theories-comparison",
     figureLine:
       "Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter.",
     figureText:
