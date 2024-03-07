@@ -23,6 +23,7 @@ import SecondaryRegister from "./pages/Register/SecondaryRegister";
 import RecoverPassword from "./pages/Login/RecoverPassword";
 import ResetPassword from "./pages/Login/ResetPassword";
 import * as React from "react";
+import TheoryGrandOverviewBar from "./pages/TheoryGrandOverviewBar/TheoryGrandOverviewBar";
 
 const WorldMap = React.lazy(() =>
   import("./pages/ConsciousnessWorldMap/WorldMap")
@@ -80,6 +81,10 @@ const Screens = () => {
         <Route
           path="/parameter-distribution-bar"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
+        />
+        <Route
+          path="/theory_grand_overview_bar"
+          element={isMoblile ? <MobileScreen /> : <TheoryGrandOverviewBar />}
         />
         <Route
           path="/parameter-distribution-pie"
