@@ -1,5 +1,6 @@
 import { ReactComponent as ParameterDist } from "../assets/icons/parameter-distribution.svg";
 import { ReactComponent as ParameterDist2 } from "../assets/icons/parameter-distribution2.svg";
+import { ReactComponent as GrandOverview } from "../assets/icons/binoculars.svg";
 import { ReactComponent as TheoriesComparison } from "../assets/icons/theories-comparison.svg";
 import { ReactComponent as TheoryDriven } from "../assets/icons/theory-driven.svg";
 import { ReactComponent as ParameterTheory } from "../assets/icons/parameter&theory.svg";
@@ -47,6 +48,7 @@ export const graphsHeaders = [
     figureText:
       "The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.You can also filter the results according to reporting technique.",
   },
+
   {
     text: "Parameter Distribution Pie",
     tooltip:
@@ -113,6 +115,27 @@ export const graphsHeaders = [
     figureText:
       "Each horizontal line represents the frequency band reported in a specific experiment, colored according to its classification by the authors (see the legend). Darker colors indicate lower frequencies. Cases in which a specific frequency was reported (e.g., 5Hz), are represented by dots. In this figure, you can select a specific technique or multi-select more than one. You can also filter the results according to consciousness type, reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
   },
+  {
+    text: "Theory Support Overview",
+    tooltip:
+      "The figure depicts the division of experiments to the four groups of theories, separately for experiments that challenged or supported each theory",
+    icon: <GrandOverview />,
+    color: "someRed",
+    route: "/theory_grand_overview_bar",
+    figureLine:
+      "Here, you can see how the experiments in the database divide to the theories, separately for experiments that support/challenge them. On the left, you can select sub-groups of the experiments to be presented in the figure",
+    figureText: "",
+    legendLine: "Challenges, Supports",
+  },
+  // {
+  //   text: "Grand Overview Bar",
+  //   tooltip: "Grand Overview Bar",
+  //   icon: <GrandOverview />,
+  //   color: "someRed",
+  //   route: "/theory_grand_overview_bar",
+  //   figureLine: "Grand Overview Bar ",
+  //   figureText: "Grand Overview Bar",
+  // },
   {
     text: "Anatomical Findings",
     tooltip:
