@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import Select from "react-select";
 import {
   TooltipExplanation,
   RangeInput,
@@ -28,7 +27,7 @@ import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, rawTextToShow } from "../../Utils/functions";
+import { breakLongLines, buildUrl, rawTextToShow } from "../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 
@@ -85,7 +84,9 @@ export default function TheoryGrandOverviewBar() {
   });
   const X1 = data?.data?.map((row) => row.series[0].value).reverse();
 
-  const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
+  const Y = data?.data
+    ?.map((row) => breakLongLines(rawTextToShow(row.series_name), 10))
+    .reverse();
 
   const X2 = data?.data?.map((row) => row.series[1]?.value || 0).reverse();
 
@@ -230,8 +231,8 @@ export default function TheoryGrandOverviewBar() {
           graph={
             <div>
               <TopGraphText
-                text={graphsHeaders[8].figureText}
-                firstLine={graphsHeaders[8].figureLine}
+                text={graphsHeaders[0].figureText}
+                firstLine={graphsHeaders[0].figureLine}
               />
               {isLoading ? (
                 <Spinner />
@@ -244,26 +245,27 @@ export default function TheoryGrandOverviewBar() {
                       barmode: isStacked ? "stack" : "group",
                       width: isMoblile ? screenWidth : screenWidth - 400,
                       height: 100 * Y?.length + 350,
-                      margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                      legend: { itemwidth: 90, x: -0.3, y: 1.2 },
+                      margin: { autoexpand: true, l: 20, t: 150 },
+                      legend: { itemwidth: 90, x: -0.1, y: 1.2 },
 
                       xaxis: {
-                        title: "Number of experiments",
+                        title: {
+                          text: "Number of experiments",
+                          font: { size: 16 },
+                        },
                         zeroline: true,
                         side: "top",
                         tickmode: "linear",
-                        dtick: 10,
+                        dtick: 20,
                         tickfont: {
-                          size: 16,
-                          standoff: 50,
+                          size: 14,
                         },
                       },
                       yaxis: {
-                        showticklabels: !isMoblile,
                         automargin: true,
                         ticks: "outside",
                         tickfont: {
-                          size: 10,
+                          size: 14,
                           standoff: 50,
                         },
                       },

@@ -243,8 +243,8 @@ export default function Frequencies() {
             graph={
               <div style={{ height: "calc(100% - 100px)" }}>
                 <TopGraphText
-                  text={graphsHeaders[7].figureText}
-                  firstLine={graphsHeaders[7].figureLine}
+                  text={graphsHeaders[8].figureText}
+                  firstLine={graphsHeaders[8].figureLine}
                 />
 
                 {isLoading ? (
