@@ -268,9 +268,9 @@ export default function ParametersDistributionPie() {
       graph={
         <div className="h-full">
           <TopGraphText
-            text={graphsHeaders[3].figureText}
-            legendLine={graphsHeaders[3].legendLine}
-            firstLine={graphsHeaders[3].figureLine}
+            text={graphsHeaders[4].figureText}
+            legendLine={graphsHeaders[4].legendLine}
+            firstLine={graphsHeaders[4].figureLine}
           />
           {isLoading ? (
             <Spinner />

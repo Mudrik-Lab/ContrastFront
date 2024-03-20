@@ -240,8 +240,8 @@ export default function ParametersDistributionBar() {
           graph={
             <div>
               <TopGraphText
-                text={graphsHeaders[3].figureText}
-                firstLine={graphsHeaders[3].figureLine}
+                text={graphsHeaders[4].figureText}
+                firstLine={graphsHeaders[4].figureLine}
               />
               {isLoading ? (
                 <Spinner />

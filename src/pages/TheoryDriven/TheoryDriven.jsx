@@ -224,9 +224,9 @@ export default function TheoryDriven() {
       graph={
         <div className="h-full">
           <TopGraphText
-            text={graphsHeaders[5].figureText}
-            firstLine={graphsHeaders[5].figureLine}
-            legendLine={graphsHeaders[5].legendLine}
+            text={graphsHeaders[6].figureText}
+            firstLine={graphsHeaders[6].figureLine}
+            legendLine={graphsHeaders[6].legendLine}
           />
           {isLoading ? (
             <Spinner />
