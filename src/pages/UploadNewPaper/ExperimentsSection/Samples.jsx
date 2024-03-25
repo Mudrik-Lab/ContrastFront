@@ -25,13 +25,12 @@ export default function Samples({
   minimumClassifications,
 }) {
   const [description, setDescription] = useState(values?.samples_notes || "");
-  const [fieldValues, setFieldValues] = useState([
-    {
-      type: "",
-      size_included: "",
-      total_size: "",
-    },
-  ]);
+  const initialValues = {
+    type: "",
+    size_included: "",
+    total_size: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "samples";
 
   const handleSubmit = SubmitClassificationField(
@@ -70,7 +69,8 @@ export default function Samples({
       fieldValues[index]?.type &&
       fieldValues[index]?.total_size &&
       fieldValues[index]?.size_included &&
-      fieldValues[index]?.size_included <= fieldValues[index]?.total_size
+      parseInt(fieldValues[index]?.size_included) <=
+        parseInt(fieldValues[index]?.total_size)
     );
   };
 
@@ -130,7 +130,7 @@ export default function Samples({
                         min={0}
                         disabled={fieldValues[index].id}
                         type="number"
-                        defaultValue={fieldValue.total_size}
+                        value={fieldValue.total_size}
                         onChange={(e) => {
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
@@ -155,7 +155,8 @@ export default function Samples({
                         } `}
                       />
                     </div>
-                    {fieldValue.size_included > fieldValue.total_size && (
+                    {parseInt(fieldValue.size_included) >
+                      parseInt(fieldValue.total_size) && (
                       <span className="text-flourishRed ">
                         Smaller than included
                       </span>
@@ -175,7 +176,7 @@ export default function Samples({
                         disabled={fieldValues[index]?.id}
                         type="number"
                         min={0}
-                        defaultValue={fieldValue.size_included}
+                        value={fieldValue.size_included}
                         onChange={(e) => {
                           setFieldValues((prev) =>
                             prev.map((item, i) =>
@@ -235,6 +236,7 @@ export default function Samples({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

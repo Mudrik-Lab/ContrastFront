@@ -1,15 +1,12 @@
 import {
   AddFieldButton,
   ExpandingBox,
-  SubmitButton,
-  Text,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
   CircledIndex,
 } from "../../../../shared/Reusble.jsx";
 import { useEffect, useState } from "react";
-import _ from "lodash";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
@@ -27,14 +24,13 @@ export default function Paradigms({
   minimumClassifications,
   setMinimumClassifications,
 }) {
+  const initialValues = {
+    main: "",
+    specific: "",
+    sub_type: "",
+  };
   const [description, setDescription] = useState(values?.paradigms || "");
-  const [fieldValues, setFieldValues] = useState([
-    {
-      main: "",
-      specific: "",
-      sub_type: "",
-    },
-  ]);
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "paradigms";
 
   const handleSubmit = SubmitClassificationField(
@@ -221,6 +217,7 @@ export default function Paradigms({
           );
         })}
         <AddFieldButton
+          initialValues={initialValues}
           fieldValues={fieldValues}
           setFieldValues={setFieldValues}
         />

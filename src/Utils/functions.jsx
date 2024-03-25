@@ -270,13 +270,11 @@ export function DeleteClassificationField(
             newArr.splice(index, 1);
             setFieldValues(newArr);
           } else {
-            setFieldValues([
-              {
-                type: "",
-                description: "",
-                key: Math.round(Math.random() * 101),
-              },
-            ]);
+            const updatedState = {};
+            Object.keys(fieldValues[0]).map((key) => {
+              updatedState[key] = "";
+            });
+            setFieldValues([updatedState]);
           }
         }
       } catch (e) {
@@ -296,13 +294,11 @@ export function DeleteClassificationField(
             newArr.splice(index, 1);
             setFieldValues(newArr);
           } else {
-            setFieldValues([
-              {
-                type: "",
-                description: "",
-                key: Math.round(Math.random() * 101),
-              },
-            ]);
+            const updatedState = {};
+            Object.keys(fieldValues[0]).map((key) => {
+              updatedState[key] = "";
+            });
+            setFieldValues([updatedState]);
           }
         }
       } catch (e) {
@@ -344,7 +340,7 @@ export function confirmFunction({
                 <p className="text-gray-600 text-lg">
                   {question} {paperName}
                 </p>
-                {missingDetails && (
+                {missingDetails && missingDetails[0].length > 0 && (
                   <div>
                     <span className="text-flourishRed">
                       Notice! There are missing details in:{" "}
@@ -401,5 +397,7 @@ export function alphabetizeByLabels(selectFieldOptions) {
 }
 
 export function ToastError(e) {
-  ToastError(e);
+  return toast.error(
+    <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+  );
 }

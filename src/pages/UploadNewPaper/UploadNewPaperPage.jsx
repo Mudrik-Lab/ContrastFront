@@ -53,9 +53,18 @@ export default function UploadNewPaper() {
                     uploadPaperUsedHeight + uploadPaperPageTopSection
                   }px)`,
                 }}>
-                <Text weight={"bold"} color={"grayHeavy"}>
-                  My Papers
-                </Text>
+                <div className="flex justify-between">
+                  <Text weight={"bold"} color={"grayHeavy"}>
+                    My Papers
+                  </Text>
+                  <a
+                    className="text-blue underline"
+                    href="https://player.vimeo.com/video/898841169?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479"
+                    target="_blank">
+                    tutorial
+                  </a>
+                </div>
+
                 <Spacer height={20} />
                 <SideStatus
                   status={"Approved Submissions"}

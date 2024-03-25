@@ -14,7 +14,6 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../Utils/functions";
-import ExternalNotes from "../../../components/ExternalNotes";
 
 export default function Stimuli({
   fieldOptions,
@@ -27,15 +26,12 @@ export default function Stimuli({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [description, setDescription] = useState(values?.stimuli_notes || "");
-  const [fieldValues, setFieldValues] = useState([
-    {
-      category: "",
-      sub_category: "",
-      modality: "",
-      duration: "",
-    },
-  ]);
+  const initialValues = {
+    category: "",
+    modality: "",
+    duration: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -53,6 +49,12 @@ export default function Stimuli({
     fieldValues,
     setFieldValues
   );
+
+  useEffect(() => {
+    if (fieldValues[0].sub_category === "") {
+      delete fieldValues[0].sub_category;
+    }
+  }, [fieldValues[0]]);
 
   useEffect(() => {
     if (values && values.stimuli?.length > 0) {
@@ -130,14 +132,16 @@ export default function Stimuli({
                           weight={"bold"}
                           color={"grayReg"}
                           className={"whitespace-nowrap "}>
-                          Sub-category
+                          Sub-category (optional)
                         </Text>
                         <CustomSelect
                           disabled={fieldValue.id}
-                          value={fieldValue.sub_category}
+                          defaultValue={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            newArray[index].sub_category = value;
+                            value !== ""
+                              ? (newArray[index].sub_category = value)
+                              : delete newArray[index].sub_category;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
@@ -183,7 +187,7 @@ export default function Stimuli({
                           min={0}
                           disabled={fieldValues[index]?.id}
                           type="number"
-                          defaultValue={fieldValue.duration}
+                          value={fieldValues[index].duration}
                           onChange={(e) => {
                             e.stopPropagation();
                             e.preventDefault();
@@ -253,16 +257,10 @@ export default function Stimuli({
       })}
 
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />
-      {/* <ExternalNotes
-        description={description}
-        setDescription={setDescription}
-        classification={classificationName}
-        study_pk={study_pk}
-        experiment_pk={experiment_pk}
-      /> */}
     </ExpandingBox>
   );
 }

@@ -20,7 +20,6 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../../shared/Reusble.jsx";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
-import Plot from "react-plotly.js";
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";
@@ -29,6 +28,10 @@ import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { designerColors } from "../../Utils/Colors";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function TheoryDriven() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -221,9 +224,9 @@ export default function TheoryDriven() {
       graph={
         <div className="h-full">
           <TopGraphText
-            text={graphsHeaders[5].figureText}
-            firstLine={graphsHeaders[5].figureLine}
-            legendLine={graphsHeaders[5].legendLine}
+            text={graphsHeaders[6].figureText}
+            firstLine={graphsHeaders[6].figureLine}
+            legendLine={graphsHeaders[6].legendLine}
           />
           {isLoading ? (
             <Spinner />

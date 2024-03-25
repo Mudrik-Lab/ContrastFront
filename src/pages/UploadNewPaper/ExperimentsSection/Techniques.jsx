@@ -25,11 +25,10 @@ export default function Techniques({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      technique: "",
-    },
-  ]);
+  const initialValues = {
+    technique: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "techniques";
 
   const handleSubmit = SubmitClassificationField(
@@ -116,10 +115,6 @@ export default function Techniques({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  {/* <SubmitButton
-                    submit={submitOnChange(index)}
-                    disabled={!fieldValue?.technique || fieldValue.id}
-                  /> */}
                 </div>
               </div>
             </form>
@@ -127,6 +122,7 @@ export default function Techniques({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

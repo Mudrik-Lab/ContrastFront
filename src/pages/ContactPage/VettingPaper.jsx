@@ -22,10 +22,7 @@ export default function VettingPaper() {
       .email("Invalid email address")
       .required("Email is required"),
     DOI: Yup.string()
-      .matches(
-        /^10\.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i,
-        "Please enter a valid DOI."
-      )
+      .matches(/^10\./, "Please enter a valid DOI.")
       .required("DOI is required."),
     comments: Yup.string(),
   });

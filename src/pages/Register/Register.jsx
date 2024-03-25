@@ -5,7 +5,7 @@ import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import createRegistration from "../../apiHooks/createRegistration";
 import useLogin from "../../apiHooks/loginApi";
 import {
@@ -15,9 +15,11 @@ import {
 } from "../../Utils/tokenHandler";
 import { state } from "../../state";
 import { useState } from "react";
+import { rawTextToShow } from "../../Utils/functions";
 
 export default function RegisterComponent() {
   const [errorMsg, setErrorMsg] = useState(false);
+
   const navigate = useNavigate();
   const initialValues = {
     name: "",
@@ -48,18 +50,17 @@ export default function RegisterComponent() {
         const res = await useLogin(values.name, values.password);
         if (res.error) {
           setServerError(res.error.message);
-          console.log(res.error);
         } else {
           if (isValidToken(res.data.access)) {
             setToken(res.data.access);
             setRefreshToken(res.data.refresh);
             state.auth = res.data.access;
-            navigate("/profile");
+            navigate("/profile?new=true");
           }
         }
       }
     } catch (error) {
-      error.response.status === 400 && setErrorMsg(true);
+      setErrorMsg(error.response?.data);
     }
   };
 
@@ -133,7 +134,15 @@ export default function RegisterComponent() {
                   </div>
                   {errorMsg && (
                     <p className={errorMsgClass}>
-                      Error occurred. Try again later.
+                      {Object.entries(errorMsg).map(([key, msg]) => (
+                        <li key={key}>
+                          {/* <span className="text-flourishRed text-lg my-1 font-bold ">
+                            {rawTextToShow(key)}
+                            {": "}
+                          </span> */}
+                          <span> {Array.isArray(msg) ? msg[0] : msg}</span>
+                        </li>
+                      ))}
                       <br /> If you already have a user try to{" "}
                       <a className="underline text-blue" href="/login">
                         login
@@ -145,9 +154,7 @@ export default function RegisterComponent() {
                     <button
                       disabled={!(isValid && dirty)}
                       className="bg-blue text-white py-2 px-4 rounded-full flex items-center gap-1 disabled:opacity-50"
-                      type="submit"
-                      // onClick={() => setFirst(false)}
-                    >
+                      type="submit">
                       <ProfileIcon /> Continue
                     </button>
                     <button

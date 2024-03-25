@@ -22,13 +22,12 @@ export default function Findings({
   study_pk,
   values,
 }) {
-  const [fieldValues, setFieldValues] = useState([
-    {
-      technique: "",
-      family: "",
-      type: "",
-    },
-  ]);
+  const initialValues = {
+    technique: "",
+    family: "",
+    type: "",
+  };
+  const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "finding_tags";
 
   const handleSubmit = SubmitClassificationField(
@@ -256,7 +255,8 @@ export default function Findings({
                             disabled={fieldValues[index].id}
                             type="number"
                             name="onset"
-                            value={fieldValue.onset}
+                            min={0}
+                            defaultValue={fieldValue.onset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -286,6 +286,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -327,6 +328,11 @@ export default function Findings({
                           options={alphabetizeByLabels(fieldOptions.AALOptions)}
                         />
                       </div>
+                      <TooltipExplanation
+                        tooltip={
+                          'Please indicate the area relevant to this finding according to the AAL Atlas. If there is more than one relevant area, choose one here and add the rest in the "Notes" field below.'
+                        }
+                      />
                     </div>
                   ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
@@ -368,6 +374,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.band_lower_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -406,6 +413,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.band_higher_bound}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -470,8 +478,9 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             name="onset"
-                            value={fieldValue.onset}
+                            defaultValue={fieldValue.onset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
@@ -501,6 +510,7 @@ export default function Findings({
                           <input
                             disabled={fieldValues[index].id}
                             type="number"
+                            min={0}
                             defaultValue={fieldValue.offset}
                             onChange={(e) => {
                               setFieldValues((prev) =>
@@ -571,6 +581,7 @@ export default function Findings({
         );
       })}
       <AddFieldButton
+        initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
       />

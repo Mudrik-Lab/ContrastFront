@@ -53,10 +53,6 @@ export default function ExternalNotes({
             />
           </div>
         </div>
-
-        {/* <div id="trash+submit">
-          <SubmitButton submit={handleNotes} />
-        </div> */}
       </div>
     </form>
   );

@@ -2,7 +2,6 @@
 
 import axios from "axios";
 import { getToken, isValidToken } from "./tokenHandler";
-import { state } from "../state";
 import { toast } from "react-toastify";
 import { ToastErrorBox } from "../../shared/Reusble.jsx";
 

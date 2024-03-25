@@ -25,7 +25,7 @@ export default function MobileScreen() {
           </Text>
         </div>
         <Button onClick={() => navigate("/")}>Back to homepage</Button>
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="logo on mobile screen" />
       </div>
       <Graph />
     </div>

@@ -58,7 +58,9 @@ export default function Login() {
                     />
                     <TooltipExplanation
                       text={"Your user name for ConTraSt "}
-                      tooltip={""}
+                      tooltip={
+                        "Please enter your username and not your e-mail address."
+                      }
                     />
                     <ErrorMessage
                       name="name"
@@ -84,7 +86,7 @@ export default function Login() {
                       href="/request-password-recovery"
                       className="text-blue text-center underline">
                       {" "}
-                      Forgot your password?
+                      Forgot your username or password?
                     </a>
                     <span>
                       Don’t have a username?{" "}

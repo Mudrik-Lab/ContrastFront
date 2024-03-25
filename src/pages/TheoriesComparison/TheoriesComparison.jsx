@@ -24,7 +24,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../../shared/Reusble.jsx";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
-import Plot from "react-plotly.js";
+
 import Toggle from "../../components/Toggle";
 import Spinner from "../../components/Spinner";
 import { breakLongLines, rawTextToShow, buildUrl } from "../../Utils/functions";
@@ -33,6 +33,10 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function ParametersDistributionTheoriesComparison() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -213,8 +217,8 @@ export default function ParametersDistributionTheoriesComparison() {
       graph={
         <div style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
           <TopGraphText
-            text={graphsHeaders[1].figureText}
-            firstLine={graphsHeaders[1].figureLine}
+            text={graphsHeaders[2].figureText}
+            firstLine={graphsHeaders[2].figureLine}
           />
           <div className="four-wheels mx-auto max-w-[1800px] h-full ">
             {isLoading ? (

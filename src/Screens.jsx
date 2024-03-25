@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import HomePage from "./pages/Home/HomePage";
 import AboutPage from "./pages/About/AboutPage";
@@ -12,9 +11,6 @@ import Timing from "./pages/Timing/Timings";
 import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie";
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison";
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
-
-import WorldMap from "./pages/ConsciousnessWorldMap/WorldMap";
-import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
 import MobileScreen from "./pages/MobileScreen/MobileScreen";
@@ -26,6 +22,15 @@ import ProtectedRoute from "./Utils/ProtectedRoute";
 import SecondaryRegister from "./pages/Register/SecondaryRegister";
 import RecoverPassword from "./pages/Login/RecoverPassword";
 import ResetPassword from "./pages/Login/ResetPassword";
+import * as React from "react";
+import TheoryGrandOverviewBar from "./pages/TheoryGrandOverviewBar/TheoryGrandOverviewBar";
+
+const WorldMap = React.lazy(() =>
+  import("./pages/ConsciousnessWorldMap/WorldMap")
+);
+const UploadNewPaper = React.lazy(() =>
+  import("./pages/UploadNewPaper/UploadNewPaperPage")
+);
 
 const Screens = () => {
   return (
@@ -41,16 +46,31 @@ const Screens = () => {
         <Route path="/about" element={<AboutPage />} />
         <Route path="/terms-of-use" element={<TermOfUse />} />
         <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
-        <Route path="/temp" element={<MobileScreen />} />
         <Route path="/contact" element={<ContactPage />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/profile" element={<SecondaryRegister />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              path="/profile"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <SecondaryRegister />
+                </React.Suspense>
+              }
+            />
+          }
+        />
         <Route
           path="/upload-new-paper"
           element={
             <ProtectedRoute
               path="/upload-new-paper"
-              element={<UploadNewPaper />}
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UploadNewPaper />
+                </React.Suspense>
+              }
             />
           }
         />
@@ -61,6 +81,10 @@ const Screens = () => {
         <Route
           path="/parameter-distribution-bar"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
+        />
+        <Route
+          path="/theory_grand_overview_bar"
+          element={isMoblile ? <MobileScreen /> : <TheoryGrandOverviewBar />}
         />
         <Route
           path="/parameter-distribution-pie"
@@ -102,7 +126,15 @@ const Screens = () => {
         />
         <Route
           path="/consciousness-world-map"
-          element={isMoblile ? <MobileScreen /> : <WorldMap />}
+          element={
+            isMoblile ? (
+              <MobileScreen />
+            ) : (
+              <React.Suspense fallback={<>...</>}>
+                <WorldMap />
+              </React.Suspense>
+            )
+          }
         />
       </Routes>
     </BrowserRouter>

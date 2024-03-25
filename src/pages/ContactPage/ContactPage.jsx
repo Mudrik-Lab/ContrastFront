@@ -19,7 +19,7 @@ export default function ContactPage() {
       <Navbar />
       <Spacer height={navHeight + 20} />
       <div className="container w-[730px] mx-auto">
-        <h1 className="text-blue text-center text-6xl  mb-8">
+        <h1 className="text-blue text-center text-6xl mb-8">
           Contact ConTraSt
         </h1>
         <div className="w-full mx-auto text-base">
@@ -62,23 +62,25 @@ export default function ContactPage() {
             <br />
             <br />
             There’s more:
-            <li>
-              If you would like to add a study to our database, please{" "}
-              <a className="underline font-bold " href="upload-new-paper">
-                follow this link
-              </a>
-            </li>
-            <li>
-              If you want to find out if a paper is included in the database, so
-              to know if you should add it, or to double-check our
-              classifications, you can{" "}
-              <a
-                className="underline font-bold "
-                href="parameter-distribution-free-queries">
-                download a CSV
-              </a>{" "}
-              with the list of all included experiments.
-            </li>
+            <ul className="list-disc ml-4">
+              <li>
+                If you would like to add a study to our database, please{" "}
+                <a className="underline font-bold " href="upload-new-paper">
+                  follow this link
+                </a>
+              </li>
+              <li>
+                If you want to find out if a paper is included in the database,
+                so to know if you should add it, or to double-check our
+                classifications, you can{" "}
+                <a
+                  className="underline font-bold "
+                  href="parameter-distribution-free-queries">
+                  download a CSV
+                </a>{" "}
+                with the list of all included experiments.
+              </li>
+            </ul>
           </p>
         </div>
         <Spacer height={20} />

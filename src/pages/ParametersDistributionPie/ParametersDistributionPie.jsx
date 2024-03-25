@@ -6,11 +6,9 @@ import {
   parametersOptions,
   plotConfig,
   screenHeight,
-  screenWidth,
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import {
-  ButtonReversed,
   CSV,
   TooltipExplanation,
   RangeInput,
@@ -23,7 +21,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../../shared/Reusble.jsx";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
-import Plot from "react-plotly.js";
+
 import Spinner from "../../components/Spinner";
 import {
   hexToRgba,
@@ -36,6 +34,10 @@ import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../components/NoResults";
+import Plotly from "plotly.js-basic-dist";
+import createPlotlyComponent from "react-plotly.js/factory";
+
+const Plot = createPlotlyComponent(Plotly);
 
 export default function ParametersDistributionPie() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -266,9 +268,9 @@ export default function ParametersDistributionPie() {
       graph={
         <div className="h-full">
           <TopGraphText
-            text={graphsHeaders[3].figureText}
-            legendLine={graphsHeaders[3].legendLine}
-            firstLine={graphsHeaders[3].figureLine}
+            text={graphsHeaders[4].figureText}
+            legendLine={graphsHeaders[4].legendLine}
+            firstLine={graphsHeaders[4].figureLine}
           />
           {isLoading ? (
             <Spinner />

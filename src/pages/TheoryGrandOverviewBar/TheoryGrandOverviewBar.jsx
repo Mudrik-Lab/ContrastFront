@@ -1,6 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import Select from "react-select";
 import {
   TooltipExplanation,
   RangeInput,
@@ -10,7 +9,9 @@ import {
   TopGraphText,
   CSV,
   Reset,
-} from "../../../shared/Reusble.jsx";
+  TypeOfConsciousnessFilter,
+  TheoryDrivenFilter,
+} from "../../components/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import {
   screenWidth,
@@ -26,13 +27,15 @@ import { designerColors } from "../../Utils/Colors";
 import Toggle from "../../components/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, rawTextToShow } from "../../Utils/functions";
+import { breakLongLines, buildUrl, rawTextToShow } from "../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 
 const Plot = createPlotlyComponent(Plotly);
 
-export default function ParametersDistributionBar() {
+export default function TheoryGrandOverviewBar() {
+  const [consciousness, setConsciousness] = React.useState();
+  const [theoryDriven, setTheoryDriven] = React.useState();
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
   const [selectedParent, setSelectedParent] = React.useState();
@@ -42,7 +45,7 @@ export default function ParametersDistributionBar() {
   const [isCsv, setIsCsv] = React.useState(false);
 
   const navigate = useNavigate();
-  const pageName = "parameter-distribution-bar";
+  const pageName = "theory_grand_overview_bar";
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
@@ -57,7 +60,9 @@ export default function ParametersDistributionBar() {
   const { data, isLoading } = useQuery({
     queryKey: [
       `parameters_distribution_bar`,
+      consciousness,
       selected?.value,
+      theoryDriven,
       selectedParent?.value,
       reporting,
       experimentsNum,
@@ -65,10 +70,12 @@ export default function ParametersDistributionBar() {
     ],
     queryFn: () => {
       return getExperimentsGraphs({
-        graphName: "parameters_distribution_bar",
+        graphName: "theory_grand_overview_bar",
         breakdown: selected?.value,
         theory: selectedParent?.value,
         is_reporting: reporting,
+        theory_driven: theoryDriven,
+        type_of_consciousness: consciousness,
         min_number_of_experiments: experimentsNum,
         is_csv: isCsv,
       });
@@ -77,7 +84,9 @@ export default function ParametersDistributionBar() {
   });
   const X1 = data?.data?.map((row) => row.series[0].value).reverse();
 
-  const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
+  const Y = data?.data
+    ?.map((row) => breakLongLines(rawTextToShow(row.series_name), 10))
+    .reverse();
 
   const X2 = data?.data?.map((row) => row.series[1]?.value || 0).reverse();
 
@@ -130,6 +139,14 @@ export default function ParametersDistributionBar() {
       ? setReporting(queryParams.get("is_reporting"))
       : setReporting("either");
 
+    queryParams.get("type_of_consciousness")
+      ? setConsciousness(queryParams.get("type_of_consciousness"))
+      : setConsciousness("either");
+
+    queryParams.get("theory_driven")
+      ? setTheoryDriven(queryParams.get("theory_driven"))
+      : setTheoryDriven("either");
+
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
@@ -160,7 +177,7 @@ export default function ParametersDistributionBar() {
       {configurationSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={" Parameters Distribution Bar"}>
+            <SideControl headline={" Grand Overview Bar"}>
               <Text lg weight="bold">
                 Axis Controls
               </Text>
@@ -171,44 +188,18 @@ export default function ParametersDistributionBar() {
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
-
-              <div className={sideSectionClass}>
-                <Select
-                  className="text-lg w-[300px]"
-                  aria-label="theory family"
-                  closeMenuOnSelect={true}
-                  isMulti={false}
-                  isClearable={false}
-                  options={parentTheories}
-                  value={selectedParent}
-                  onChange={(e) => {
-                    buildUrl(pageName, "theory", e?.value, navigate);
-                  }}
-                />
-                <TooltipExplanation
-                  text={"Theory Family"}
-                  tooltip="few more words about Theory"
-                />
-              </div>
-              <div className={sideSectionClass}>
-                <Select
-                  className="text-lg w-[300px]"
-                  aria-label="parameter of interest"
-                  closeMenuOnSelect={true}
-                  isMulti={false}
-                  isClearable={false}
-                  options={parametersOptions}
-                  value={selected}
-                  onChange={(e) => {
-                    buildUrl(pageName, "breakdown", e.value, navigate);
-                  }}
-                />
-                <TooltipExplanation
-                  text={"Parameter of interest"}
-                  tooltip="Choose the dependent variable to be queried."
-                />
-              </div>
-
+              <TypeOfConsciousnessFilter
+                checked={consciousness}
+                setChecked={(e) => {
+                  buildUrl(pageName, "type_of_consciousness", e, navigate);
+                }}
+              />
+              <TheoryDrivenFilter
+                checked={theoryDriven}
+                setChecked={(e) => {
+                  buildUrl(pageName, "theory_driven", e, navigate);
+                }}
+              />
               <ReportFilter
                 checked={reporting}
                 setChecked={(e) => {
@@ -240,8 +231,8 @@ export default function ParametersDistributionBar() {
           graph={
             <div>
               <TopGraphText
-                text={graphsHeaders[4].figureText}
-                firstLine={graphsHeaders[4].figureLine}
+                text={graphsHeaders[0].figureText}
+                firstLine={graphsHeaders[0].figureLine}
               />
               {isLoading ? (
                 <Spinner />
@@ -253,27 +244,28 @@ export default function ParametersDistributionBar() {
                     layout={{
                       barmode: isStacked ? "stack" : "group",
                       width: isMoblile ? screenWidth : screenWidth - 400,
-                      height: 35 * Y?.length + 350,
-                      margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                      legend: { itemwidth: 90, x: -0.25, y: 1.05 },
+                      height: 100 * Y?.length + 350,
+                      margin: { autoexpand: true, l: 20, t: 150 },
+                      legend: { itemwidth: 90, x: -0.1, y: 1.2 },
 
                       xaxis: {
-                        title: "Number of experiments",
+                        title: {
+                          text: "Number of experiments",
+                          font: { size: 16 },
+                        },
                         zeroline: true,
                         side: "top",
                         tickmode: "linear",
-                        dtick: 10,
+                        dtick: 20,
                         tickfont: {
-                          size: 16,
-                          standoff: 50,
+                          size: 14,
                         },
                       },
                       yaxis: {
-                        showticklabels: !isMoblile,
                         automargin: true,
                         ticks: "outside",
                         tickfont: {
-                          size: 10,
+                          size: 14,
                           standoff: 50,
                         },
                       },

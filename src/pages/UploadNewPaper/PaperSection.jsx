@@ -69,7 +69,7 @@ export default function PaperSection({
               <Spacer height={10} />
               <div className="flex justify-between ">
                 <div
-                  className="p-2 w-1/2 shadow-3xl overflow-y-scrol"
+                  className="p-2 w-1/2 shadow-3xl overflow-y-scroll"
                   style={{
                     height: `calc(100vh - ${
                       uploadPaperUsedHeight + uploadPaperPageTopSection + 10
@@ -89,6 +89,12 @@ export default function PaperSection({
                         DOI
                       </Text>
                       <Text lg>{study?.DOI}</Text>
+                    </div>
+                    <div>
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Year
+                      </Text>
+                      <Text lg>{study?.year}</Text>
                     </div>
                     <div>
                       <Text weight={"bold"} color={"grayReg"}>

@@ -14,7 +14,7 @@ export default function Footer({ isFixed }) {
         }h-max-${footerHeight} w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
       )}>
       <div className="flex gap-3 items-center ">
-        <img src={Logo} alt="" />
+        <img src={Logo} alt="footer logo" />
         <div className="invisible lg:visible border-r border-white h-10 "></div>
         <Text xs color="white" className={"invisible lg:visible"}>
           High Level <br /> Cognition Lab

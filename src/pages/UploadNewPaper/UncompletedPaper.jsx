@@ -18,9 +18,7 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import {
   errorMsgClass,
-  fieldClass,
-  footerHeight,
-  navHeight,
+  studyValidationSchema,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../Utils/HardCoded";
@@ -113,24 +111,13 @@ export default function UncompletedPaper({
     DOI: study.DOI || "",
     authors_key_words: study.authors_key_words || [],
     year: study.year,
-
     source_title: study.source_title,
     countries: study.countries.map((country) => ({
       value: country,
       label: countries[country].name,
     })),
+    is_author_submitter: study.is_author_submitter || false,
   };
-  const validationSchema = Yup.object().shape({
-    // authors: Yup.array().min(1, "Please select at least one author"),
-    source_title: Yup.string().required("Please select at least one journal"),
-    countries: Yup.array().min(1, "Please select at least one country"),
-    DOI: Yup.string()
-      .matches(
-        /^10\.\d{4,9}\/[-._;()\/:A-Z0-9]+$/i,
-        "Please enter a valid DOI."
-      )
-      .required("DOI is required."),
-  });
 
   const handleSubmit = async (values) => {
     if (!value.length) {
@@ -149,6 +136,7 @@ export default function UncompletedPaper({
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
         source_title: values.source_title,
+        is_author_submitter: values?.is_author_submitter,
       });
       console.log(res);
       if (res.status === 200) {
@@ -168,7 +156,7 @@ export default function UncompletedPaper({
       {study && (
         <div className="h-full">
           <ProgressComponent
-            status={"Uncompleted submissoins"}
+            status={"Uncompleted submissions"}
             paperNmae={
               study.title.length > 45
                 ? study.title.slice(0, 45) + "..."
@@ -223,7 +211,7 @@ export default function UncompletedPaper({
                 <Formik
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
-                  validationSchema={validationSchema}>
+                  validationSchema={studyValidationSchema}>
                   {({
                     isSubmitting,
                     dirty,
@@ -282,11 +270,16 @@ export default function UncompletedPaper({
                           />
                         </div>
                         <div>
-                          <Text weight={"bold"} color={"grayReg"}>
+                          <Text
+                            weight={"bold"}
+                            color={"grayReg"}
+                            aria-role="label">
                             Authors
                           </Text>
+                          <label htmlFor="Authors"></label>
                           <div className="flex items-center gap-2">
                             <CreatableSelect
+                              name="Authors"
                               isMulti
                               isClearable
                               isDisabled={isLoading}
@@ -310,8 +303,30 @@ export default function UncompletedPaper({
                             </Text>
                           )}
                         </div>
+                        <div className="flex justify-between items-center">
+                          <div className="flex gap-1 items-center ">
+                            <Field
+                              aria-label="Are you one of the authors of this paper?"
+                              type="checkbox"
+                              name="is_author_submitter"
+                              className="text-blue rounded-sm "
+                            />
+                            <Text weight={"bold"} color={"grayReg"}>
+                              I am one of the authors
+                            </Text>
+                          </div>
+                          <TooltipExplanation
+                            text={""}
+                            tooltip={
+                              "Mark this checkbox only if you are one of the authors of this paper"
+                            }
+                          />
+                        </div>
                         <div>
-                          <Text weight={"bold"} color={"grayReg"}>
+                          <Text
+                            weight={"bold"}
+                            color={"grayReg"}
+                            aria-role="label">
                             Journal
                           </Text>
                           <div className="flex items-center gap-2">
@@ -319,9 +334,9 @@ export default function UncompletedPaper({
                               name={"source_title"}
                               id={"source_title"}
                               isClearable
-                              defaultInputValue={values.source_title}
+                              defaultInputValue={values?.source_title}
                               onChange={(v) => {
-                                setFieldValue("source_title", v.value);
+                                setFieldValue("source_title", v?.value);
                               }}
                               options={journalsList}
                             />
@@ -372,9 +387,9 @@ export default function UncompletedPaper({
                       <div className="flex gap-2">
                         <Button
                           type="submit"
-                          disabled={isSubmitting && !isValid}
-                          extraClass={
-                            " disabled:bg-grayLight disabled:text-grayHeavy disabled:border-none"
+                          disabled={!isValid}
+                          className={
+                            "bg-blue px-4 py-2 text-lg font-bold text-white rounded-full flex items-center gap-2 disabled:bg-grayLight disabled:text-grayHeavy"
                           }>
                           <V />
                           Update Paper
