@@ -32,7 +32,9 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
 
                         },
                         input: resolve(__dirname, './index-contrast.html'),
-                    }, outDir: 'dist-contrast',
+                    },
+                    outDir: 'dist-contrast',
+                    name: 'index'
                 },
 
             };
