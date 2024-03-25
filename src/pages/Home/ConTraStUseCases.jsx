@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../../components/Reusble";
+import { Text } from "../../../shared/Reusble.jsx";
 import Tempeleton from "../../assets/logoes/tempelton.png";
 import TelAvivUni from "../../assets/logoes/tlv-uni.png";
 import Cogtate from "../../assets/logoes/cogtate.png";

@@ -14,7 +14,7 @@ import {
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import {
   isMoblile,
   parametersOptions,

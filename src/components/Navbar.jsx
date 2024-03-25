@@ -6,7 +6,7 @@ import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 import { useQuery } from "@tanstack/react-query";
-import { Button, Text } from "./Reusble";
+import { Button, Text } from "../../shared/Reusble.jsx";
 import { useNavigate } from "react-router-dom";
 import { graphsHeaders } from "../Utils/GraphsDetails";
 import { isMoblile } from "../Utils/HardCoded";

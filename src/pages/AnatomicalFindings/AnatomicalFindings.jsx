@@ -3,7 +3,7 @@ import getConfiguration from "../../apiHooks/getConfiguration";
 import { useQuery } from "@tanstack/react-query";
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { Spacer, TopGraphText, Text } from "../../components/Reusble";
+import { Spacer, TopGraphText, Text } from "../../../shared/Reusble.jsx";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import Spinner from "../../components/Spinner";
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "./Reusble";
+import { Text } from "../../shared/Reusble.jsx";
 import { ReactComponent as SubmitIcon } from "../assets/icons/submit.svg";
 
 export default function NoResults() {

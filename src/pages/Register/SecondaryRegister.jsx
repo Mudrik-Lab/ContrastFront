@@ -8,7 +8,7 @@ import Navbar from "../../components/Navbar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
-import { Checkbox } from "../../components/Reusble";
+import { Checkbox } from "../../../shared/Reusble.jsx";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getFormConfig from "../../apiHooks/getFormConfiguration";

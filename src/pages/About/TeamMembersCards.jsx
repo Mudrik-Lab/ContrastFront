@@ -1,5 +1,5 @@
 import React from "react";
-import { Text } from "../../components/Reusble";
+import { Text } from "../../../shared/Reusble.jsx";
 import ShowMoreText from "react-show-more-text";
 import { ReactComponent as Web } from "../../assets/icons/website.svg";
 import karine from "../../assets/images/Karine.jpg";

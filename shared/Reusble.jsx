@@ -1,12 +1,12 @@
 /** @format */
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { ReactComponent as Trash } from "../assets/icons/trash.svg";
-import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
+import { ReactComponent as Trash } from "../src/assets/icons/trash.svg";
+import { ReactComponent as QuestionMark } from "../src/assets/icons/help-q-mark.svg";
 RessetIcon;
-import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
+import { ReactComponent as CsvIcon } from "../src/assets/icons/csv-file.svg";
 
-import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
+import { ReactComponent as RessetIcon } from "../src/assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
 import {
   commonBlue,
@@ -18,12 +18,12 @@ import {
   sideSectionClass,
   sideWidth,
   uploadPaperPageTopSection,
-} from "../Utils/HardCoded";
+} from "../src/Utils/HardCoded.jsx";
 import { useNavigate } from "react-router-dom";
 import { useSnapshot } from "valtio";
-import { state } from "../state";
+import { state } from "../src/state.jsx";
 import { ErrorMessage, Field } from "formik";
-import { rawTextToShow } from "../Utils/functions";
+import { rawTextToShow } from "../src/Utils/functions.jsx";
 
 export const TextInput = ({ ...config }) => {
   return (

@@ -4,7 +4,7 @@ import axios from "axios";
 import { getToken, isValidToken } from "./tokenHandler";
 import { state } from "../state";
 import { toast } from "react-toastify";
-import { ToastErrorBox } from "../components/Reusble";
+import { ToastErrorBox } from "../../shared/Reusble.jsx";
 
 export const axiosInterceptor = axios.create({
   baseURL: import.meta.env.VITE_API_URL,

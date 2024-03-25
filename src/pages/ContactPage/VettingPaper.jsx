@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import sendVetAPaper from "../../apiHooks/sendVetAPaper";
 import { toast } from "react-toastify";
-import { ToastBox } from "../../components/Reusble";
+import { ToastBox } from "../../../shared/Reusble.jsx";
 
 export default function VettingPaper() {
   const [errorMsg, setErrorMsg] = useState(false);

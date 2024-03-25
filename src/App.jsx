@@ -6,7 +6,7 @@ import { ReactComponent as ContrastIcon } from "./assets/icons/noun-contrast.svg
 import { ReactComponent as TextIcon } from "./assets/icons/noun-text.svg";
 import "./App.css";
 import Screens from "./Screens";
-import { BigButton, Button } from "./components/Reusble";
+import { BigButton, Button } from "../shared/Reusble.jsx";
 import { updateTextClass } from "./Utils/functions";
 import classNames from "classnames";
 import useAuth from "./apiHooks/useAuth";

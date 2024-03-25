@@ -7,7 +7,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../../components/Reusble";
+} from "../../../../shared/Reusble.jsx";
 import { useEffect, useState } from "react";
 import _ from "lodash";
 import {

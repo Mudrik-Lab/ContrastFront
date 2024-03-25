@@ -1,6 +1,6 @@
 import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
-import { Text } from "./Reusble";
+import { Text } from "../../shared/Reusble.jsx";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 import classNames from "classnames";
 import { footerHeight } from "../Utils/HardCoded";

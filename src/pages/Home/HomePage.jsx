@@ -1,7 +1,7 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
 import copy from "copy-to-clipboard";
-import { Button, Spacer, Text, WhiteButton } from "../../components/Reusble";
+import { Button, Spacer, Text, WhiteButton } from "../../../shared/Reusble.jsx";
 import { ReactComponent as Graph } from "../../assets/icons/start-exploring.svg";
 import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Quote } from "../../assets/icons/cite-quote.svg";

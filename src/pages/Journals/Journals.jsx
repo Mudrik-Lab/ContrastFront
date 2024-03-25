@@ -15,7 +15,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import Plot from "react-plotly.js";
 import {
   isMoblile,

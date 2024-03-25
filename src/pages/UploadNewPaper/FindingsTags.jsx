@@ -1,5 +1,5 @@
 import React from "react";
-import { CircledIndex, Text } from "../../components/Reusble";
+import { CircledIndex, Text } from "../../../shared/Reusble.jsx";
 
 export default function FindingsTags({ experiment, findingOptions }) {
   const Element = ({ headline, text }) => {

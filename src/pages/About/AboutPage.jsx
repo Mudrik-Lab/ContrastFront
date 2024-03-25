@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import { Button, Spacer, Text } from "../../components/Reusble";
+import { Button, Spacer, Text } from "../../../shared/Reusble.jsx";
 import { ReactComponent as Github } from "../../assets/icons/github-small.svg";
 import BrainImg from "../../assets/images/brain-prism-tall.jpg";
 import TeamMembersCards from "./TeamMembersCards";

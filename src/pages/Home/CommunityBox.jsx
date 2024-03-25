@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, Text } from "../../components/Reusble";
+import { Button, Text } from "../../../shared/Reusble.jsx";
 import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
 import { isMoblile } from "../../Utils/HardCoded";
 

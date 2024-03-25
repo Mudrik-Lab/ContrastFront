@@ -7,7 +7,7 @@ import {
   Text,
   ToastBox,
   ToastErrorBox,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import { countries } from "countries-list";

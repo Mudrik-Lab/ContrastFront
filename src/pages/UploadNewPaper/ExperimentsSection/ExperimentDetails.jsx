@@ -4,7 +4,7 @@ import {
   ExpandingBox,
   Spacer,
   Text,
-} from "../../../components/Reusble";
+} from "../../../../shared/Reusble.jsx";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import { rawTextToShow } from "../../../Utils/functions";

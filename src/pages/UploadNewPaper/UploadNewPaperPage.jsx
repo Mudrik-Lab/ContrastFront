@@ -4,7 +4,7 @@ import {
   Spacer,
   TopSideUserBox,
   Text,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import PageTemplate from "../../components/PageTemplate";
 
 import SideStatus from "../../components/SideStatus";

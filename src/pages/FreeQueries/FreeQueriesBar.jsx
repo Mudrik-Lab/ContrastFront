@@ -12,7 +12,7 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
   Button,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import Plot from "react-plotly.js";
 import {
   available_populations,

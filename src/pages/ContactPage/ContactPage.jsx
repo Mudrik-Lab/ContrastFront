@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../../components/Navbar";
-import { Text, Spacer, ButtonReversed } from "../../components/Reusble";
+import { Text, Spacer, ButtonReversed } from "../../../shared/Reusble.jsx";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../components/Footer";
 import { navHeight } from "../../Utils/HardCoded";

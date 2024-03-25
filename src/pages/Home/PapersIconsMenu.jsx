@@ -1,6 +1,6 @@
 import React from "react";
 
-import { Text } from "../../components/Reusble";
+import { Text } from "../../../shared/Reusble.jsx";
 import { useNavigate } from "react-router-dom";
 
 import { Tooltip } from "flowbite-react";

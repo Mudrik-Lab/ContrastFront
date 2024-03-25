@@ -21,7 +21,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import Plot from "react-plotly.js";
 import Spinner from "../../components/Spinner";

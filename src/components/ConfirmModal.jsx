@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Spacer } from "./Reusble";
+import { Spacer } from "../../shared/Reusble.jsx";
 
 const ConfirmModal = (text, setIsModalOpen) => {
   const handleConfirm = () => {

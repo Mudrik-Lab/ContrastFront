@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
 import SideStatus from "../../components/SideStatus";
-import { Spacer } from "../../components/Reusble";
+import { Spacer } from "../../../shared/Reusble.jsx";
 
 export default function ExperimentsBox({
   disabled,

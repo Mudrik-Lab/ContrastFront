@@ -2,7 +2,7 @@ import classNames from "classnames";
 import react, { useState } from "react";
 import { deleteExperiment } from "../apiHooks/deleteExperiment";
 import { toast } from "react-toastify";
-import { Button, ToastBox, ToastErrorBox } from "./Reusble";
+import { Button, ToastBox, ToastErrorBox } from "../../shared/Reusble.jsx";
 import { deleteStudy } from "../apiHooks/deleteStudy";
 import { commonBlue, grayHeavy, revoltingGreen } from "../Utils/HardCoded";
 import { ToastError, confirmFunction } from "../Utils/functions";

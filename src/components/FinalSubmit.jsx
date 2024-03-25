@@ -1,5 +1,5 @@
 import React from "react";
-import { Button, ToastBox, ToastErrorBox } from "./Reusble";
+import { Button, ToastBox, ToastErrorBox } from "../../shared/Reusble.jsx";
 import { sendStudyToReview } from "../apiHooks/sendStudyToReview";
 import { toast } from "react-toastify";
 import { ToastError, confirmFunction, rawTextToShow } from "../Utils/functions";

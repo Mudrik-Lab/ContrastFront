@@ -7,7 +7,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../../components/Reusble";
+} from "../../../../shared/Reusble.jsx";
 import { v4 as uuid } from "uuid";
 import { useEffect, useState } from "react";
 import {

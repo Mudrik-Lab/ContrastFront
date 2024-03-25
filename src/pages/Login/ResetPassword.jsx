@@ -7,7 +7,7 @@ import {
   TooltipExplanation,
   ToastBox,
   ToastErrorBox,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

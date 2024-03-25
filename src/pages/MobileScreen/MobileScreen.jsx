@@ -3,7 +3,7 @@ import Navbar from "../../components/Navbar";
 import { ReactComponent as Desktop } from "../../assets/icons/desktop.svg";
 import { ReactComponent as Graph } from "../../assets/graph.svg";
 import Logo from "../../assets/logoes/logo-negative.png";
-import { Button, Text } from "../../components/Reusble";
+import { Button, Text } from "../../../shared/Reusble.jsx";
 import { navHeight, screenHeight } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 

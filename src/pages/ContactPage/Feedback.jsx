@@ -8,7 +8,7 @@ import {
   RadioFeedback,
   ToastBox,
   ToastErrorBox,
-} from "../../components/Reusble";
+} from "../../../shared/Reusble.jsx";
 import sendFeedback from "../../apiHooks/sendFeedback";
 import { toast } from "react-toastify";
 

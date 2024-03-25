@@ -4,7 +4,7 @@ import * as Yup from "yup";
 
 import Navbar from "../../components/Navbar";
 import Footer from "../../components/Footer";
-import { TooltipExplanation, ToastBox } from "../../components/Reusble";
+import { TooltipExplanation, ToastBox } from "../../../shared/Reusble.jsx";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import recoverPassword from "../../apiHooks/recoverPassword";

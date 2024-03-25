@@ -7,7 +7,7 @@ import {
   CustomSelect,
   CircledIndex,
   TooltipExplanation,
-} from "../../../components/Reusble";
+} from "../../../../shared/Reusble.jsx";
 import { useEffect, useState } from "react";
 
 import {

@@ -6,7 +6,7 @@ import {
   ToastBox,
   ToastErrorBox,
   TrashButton,
-} from "../../../components/Reusble";
+} from "../../../../shared/Reusble.jsx";
 import { useEffect, useState } from "react";
 
 import { rawTextToShow } from "../../../Utils/functions";
