@@ -4,10 +4,11 @@ import ReactDOM from "react-dom/client";
 
 import "../index.css";
 import App from '../App.jsx';
+import {Site} from '../config/siteType.js';
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
-
-console.log("main-contrast.jsx");
+// Sanity check : TODO: Remove
+console.log( `You are at site: ${Site.type} in main-contrast.jsx`);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>

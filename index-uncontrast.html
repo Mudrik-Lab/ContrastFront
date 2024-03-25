@@ -17,7 +17,7 @@
       pixel_from_start = 200;
   </script> -->
       <script type="module">
-          <!--        This is needed for dev server to run see documentation/dev-server-plugin-fix-->
+          //This is needed for dev server to run see documentation/dev-server-plugin-fix
           import RefreshRuntime from "/@react-refresh"
           RefreshRuntime.injectIntoGlobalHook(window)
           window.$RefreshReg$ = () => {}
@@ -28,5 +28,6 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/uncontrast/main-uncontrast.jsx"></script>
+    <script> console.log('index-uncontrast-main-html');</script>
   </body>
 </html>

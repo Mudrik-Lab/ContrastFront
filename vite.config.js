@@ -7,10 +7,7 @@ import {resolve} from 'path';
 export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
 
     const defaultConfig = {
-        plugins: [react(), svgr(),
-            // Custom inline Vite plugin
-            // Using Vite's transformIndexHtml() hook, for certain env flag, we overwrite index.html's content with another file.
-            {
+        plugins: [react(), svgr(),   {
                 name: 'index-html-build-replacement',
                 apply: 'serve' ,
                 //   docs:
@@ -32,7 +29,8 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
                 ...defaultConfig, build: {
                     rollupOptions: {
                         input: resolve(__dirname, './index-contrast.html'),
-                    }, outDir: 'dist-contrast',
+                    },
+                    outDir: 'dist-contrast',
                 },
 
             };
@@ -40,12 +38,12 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
         case "uncontrast_prod":
             return {
                 ...defaultConfig,
-
                 build: {
                     rollupOptions: {
-                        input: resolve(__dirname, 'src/uncontrast/index-uncontrast.html'),
+                        input: resolve(__dirname, './index-uncontrast.html'),
 
-                    }, outDir: 'dist-uncontrast',
+                    },
+                    outDir: 'dist-uncontrast',
 
                 },
 

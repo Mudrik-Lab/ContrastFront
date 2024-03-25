@@ -14,6 +14,13 @@ Vite also has a difference between mode and environment variables, which allows 
 - I've tried to put the html files in different folder. But vite does not support that. And the trials to change the root of the folder bare little fruit. So all html files are in the root of the source directory.
 - The only way to change the default html file is with a vite built-in plugin: [vite-plugin-html](https://vitejs.dev/guide/api-plugin.html#conditional-application)
 - The big problem with all of this was with the dev server and **Not the build**. As far as I could see changing the build was pretty strait forward.
+
+### Breaking changes
+
+The goal is here **Not to have any breaking changes**. At least not for now.
+
+In the future we could delete index.html and main.jsx files.
+
 ### References
 
 - [Vite Docs - multi page apps](https://vitejs.dev/guide/features.html#multi-page-app)
