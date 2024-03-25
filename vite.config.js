@@ -2,7 +2,7 @@ import {defineConfig} from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import {resolve} from 'path';
-import * as fs from 'fs:promises';
+ import fs from "node:fs/promises";
 
 export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
 
@@ -12,16 +12,19 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
             // Using Vite's transformIndexHtml() hook, for certain env flag, we overwrite index.html's content with another file.
             {
                 name: 'index-html-build-replacement',
-                // apply: 'build' // Only use apply if you need it only for that state. See docs: https://vitejs.dev/guide/api-plugin.html#conditional-application
-                async transformIndexHtml(html) {
+                apply: 'serve' ,// Only use apply if you need it only for that state.
+                // See docs: https://vitejs.dev/guide/api-plugin.html#conditional-application
+                   async transformIndexHtml(html) {
                     if (mode === 'contrast_prod') {
-                        const htmlFile = await fs.readFile('./index-contrast.html', 'utf8')
-                        console.log(htmlFile)
+                         const htmlFile = await fs.readFile('./index-contrast.html', 'utf8')
+
                         return htmlFile;
                     }
+
                     return  html;
                 }
-            }],
+            }
+            ],
     };
     switch (mode) {
         case "contrast_prod":
