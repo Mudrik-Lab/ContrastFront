@@ -4,11 +4,11 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:contrast": "vite",
-    "dev:uncontrast": "vite",
-    "build": "vite build",
-    "build:contrast": "vite build",
+    "dev": "vite ",
+    "dev:contrast": "vite --mode contrast_prod",
+    "dev:uncontrast": "vite --mode uncontrast_prod",
+    "build": "vite build --mode contrast_prod",
+    "build:contrast": "vite build --mode uncontrast_prod",
     "build:uncontrast": "vite build",
     "preview": "vite preview"
   },
