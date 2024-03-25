@@ -10,8 +10,12 @@ Vite has a feature called Multi-page app, which allows us to have multiple entry
 Vite also has a difference between mode and environment variables, which allows us to have different configurations for each project.
 
 
+
 ### References
 
+- [Vite Docs - multi page apps](https://vitejs.dev/guide/features.html#multi-page-app)
+- [Vite Docs - build config](https://vitejs.dev/guide/build)
+
+### All kinds of experiments and hacks (not official)
 - [Multiple projects in the same source directory](https://stackoverflow.com/questions/74159670/vite-multiple-apps-with-same-source)
-- [Vite Docs](https://vitejs.dev/guide/features.html#multi-page-app)
 - [build-javascript-library-with-multiple-entry-points-using-vite-3](https://www.raulmelo.me/en/blog/build-javascript-library-with-multiple-entry-points-using-vite-3)
