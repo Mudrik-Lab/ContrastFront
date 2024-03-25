@@ -9,28 +9,32 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
         plugins: [react(), svgr()],
     };
     switch (mode) {
-        case "uncontrast_prod":
+        case "contrast_prod":
             return {
-                ...defaultConfig, build: {
+                ...defaultConfig,
+
+                  build: {
                     rollupOptions: {
 
-                        input: {
-                            uncontrast: resolve(__dirname, 'src/uncontrast/index-uncontrast.html'),
-                        },
-                    }, outDir: 'dist-uncontrast',
+                        input: resolve(__dirname, 'src/contrast/index-contrast.html'),
 
+                    }, outDir: 'dist-contrast',
+                }, server: {
+                    open: resolve(__dirname, 'src/contrast/index-contrast.html'),
                 },
 
             };
-        case "contrast_prod":
-            console.log("contrast_prod")
+
+        case "uncontrast_prod":
             return {
-                ...defaultConfig, build: {
+                ...defaultConfig,
+
+                build: {
                     rollupOptions: {
-                        input: {
-                            contrast: resolve(__dirname, 'src/contrast/index-contrast.html'),
-                        },
-                    }, outDir: 'dist-contrast',
+                        input: resolve(__dirname, 'src/uncontrast/index-uncontrast.html'),
+
+                    }, outDir: 'dist-uncontrast',
+
                 },
 
             };
@@ -40,10 +44,6 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
     }
 
 
-    return {
-        ...defaultConfig
-
-    };
 });
 
 
