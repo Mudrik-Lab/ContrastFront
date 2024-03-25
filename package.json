@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
+    "dev:contrast": "vite",
+    "dev:uncontrast": "vite",
     "build": "vite build",
     "build:contrast": "vite build",
+    "build:uncontrast": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
