@@ -4,7 +4,6 @@ import svgr from "vite-plugin-svgr";
 import {resolve} from 'path';
 
 export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
-    console.log({command, mode, isSsrBuild, isPreview});
 
     const defaultConfig = {
         plugins: [react(), svgr()],
@@ -14,10 +13,12 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
             return {
                 ...defaultConfig, build: {
                     rollupOptions: {
+
                         input: {
                             uncontrast: resolve(__dirname, 'src/uncontrast/index-uncontrast.html'),
                         },
-                    },
+                    }, outDir: 'dist-uncontrast',
+
                 },
 
             };
@@ -28,7 +29,7 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
                         input: {
                             contrast: resolve(__dirname, 'src/contrast/index-contrast.html'),
                         },
-                    },
+                    }, outDir: 'dist-contrast',
                 },
 
             };
