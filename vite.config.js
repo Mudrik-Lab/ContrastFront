@@ -11,15 +11,12 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
     switch (mode) {
         case "contrast_prod":
             return {
-                ...defaultConfig,
-                build: {
+                ...defaultConfig, build: {
                     rollupOptions: {
-                         input: resolve(__dirname, './index-contrast.html'),
-                    },
-                    outDir: 'dist-contrast',
-                },
-                server: {
-                    open:'/index-contrast.html',
+                        input: resolve(__dirname, './index-contrast.html'),
+                    }, outDir: 'dist-contrast',
+                }, server: {
+                    open: resolve(__dirname, './index-contrast.html'),
                 },
 
             };
