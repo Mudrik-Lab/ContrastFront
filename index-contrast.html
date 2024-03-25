@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
 
-<script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
- 
-<!-- <script src="https://www.negishim.com/accessibility/accessibility_pro_group255.js" type="text/javascript"></script> -->
+    <script src="https://code.jquery.com/jquery-1.12.4.js" type="text/javascript"></script>
 
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/openBrain.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- <script src="https://www.negishim.com/accessibility/accessibility_pro_group255.js" type="text/javascript"></script> -->
+
+    <meta charset="UTF-8"/>
+    <link rel="icon" type="image/svg+xml" href="/openBrain.svg"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>ConTraSt</title>
     <!-- <script src="negeshim.js" type="text/javascript"></script>
     <script type="text/javascript">
@@ -16,11 +16,22 @@
       pixel_from_side = -5;
       pixel_from_start = 200;
   </script> -->
-  </head>
-  <body>
 
-    <div id="root"></div>
-    <script type="module" src="/src/contrast/main-contrast.jsx"></script>
-<script> console.log('index-contrast-main-html')</script>
-  </body>
+    <script type="module">
+<!--        This is needed for dev server to run-->
+        import RefreshRuntime from "/@react-refresh"
+        RefreshRuntime.injectIntoGlobalHook(window)
+        window.$RefreshReg$ = () => {}
+        window.$RefreshSig$ = () => (type) => type
+        window.__vite_plugin_react_preamble_installed__ = true
+    </script>
+
+</head>
+<body>
+
+<div id="root"></div>
+
+<script type="module" src="/src/contrast/main-contrast.jsx"></script>
+<script> console.log('index-contrast-main-html');</script>
+</body>
 </html>

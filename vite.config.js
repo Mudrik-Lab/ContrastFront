@@ -12,12 +12,12 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
             // Using Vite's transformIndexHtml() hook, for certain env flag, we overwrite index.html's content with another file.
             {
                 name: 'index-html-build-replacement',
-                apply: 'serve' ,// Only use apply if you need it only for that state.
-                // See docs: https://vitejs.dev/guide/api-plugin.html#conditional-application
+                apply: 'serve' ,
+                //   docs:
+                //   https://vitejs.dev/guide/api-plugin.html#conditional-application
                    async transformIndexHtml(html) {
                     if (mode === 'contrast_prod') {
                          const htmlFile = await fs.readFile('./index-contrast.html', 'utf8')
-
                         return htmlFile;
                     }
 
