@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite ",
     "dev:contrast": "vite --mode contrast_prod ",
-    "dev:uncontrast": "vite --mode uncontrast_prod ",
+    "dev:uncontrast": "vite --mode uncontrast_prod ./index-uncontrast.html",
     "build": "vite build",
     "build:contrast": "vite build --mode contrast_prod",
     "build:uncontrast": "vite build --mode uncontrast_prod",
