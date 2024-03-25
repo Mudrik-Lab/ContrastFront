@@ -6,6 +6,8 @@ import "./index.css";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
+console.log("main-contrast.jsx");
+
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <App />
