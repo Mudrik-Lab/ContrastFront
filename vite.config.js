@@ -1,27 +1,20 @@
-import { defineConfig } from "vite";
+import {defineConfig} from "vite";
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
-import {resolve} from 'path';
 
-const configs = {
-  defaultBuild: {
-    entry: resolve(__dirname, "./src/main.jsx"),
-    fileName: "index.js",
-  },
-  contrast: {
-    entry: resolve(__dirname, "./src/contrast/main-contrast.jsx"),
-    fileName: "main.js",
-  },
-  uncontrast: {
-    entry: resolve(__dirname, "./src/uncontrast/main-uncontrast.jsx"),
-    fileName: "main.js",
-  },
-};
+export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
+  console.log({command, mode, isSsrBuild, isPreview})
+
+    const defaultConfig = {
+        plugins: [react(), svgr()],
+    };
 
 
-// https://vitejs.dev/config/
-export default defineConfig({
-  plugins: [react(), svgr()],
+    return {
+        ...defaultConfig
+
+    };
 });
+
 
 
