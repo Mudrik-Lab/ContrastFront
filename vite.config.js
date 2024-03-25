@@ -9,7 +9,7 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
         plugins: [react(), svgr()],
     };
     switch (mode) {
-        case "uncontrast":
+        case "uncontrast_prod":
             return {
                 ...defaultConfig, build: {
                     rollupOptions: {
@@ -22,7 +22,8 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
                 },
 
             };
-        case "contrast":
+        case "contrast_prod":
+            console.log("contrast_prod")
             return {
                 ...defaultConfig, build: {
                     rollupOptions: {

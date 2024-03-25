@@ -8,7 +8,7 @@
     "dev:contrast": "vite --mode contrast_prod",
     "dev:uncontrast": "vite --mode uncontrast_prod",
     "build": "vite build",
-    "build:contrast": "vite build --mode production",
+    "build:contrast": "vite build --mode contrast_prod",
     "build:uncontrast": "vite build",
     "preview": "vite preview"
   },
