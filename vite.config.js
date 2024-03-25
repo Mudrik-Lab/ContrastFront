@@ -4,6 +4,10 @@ import svgr from "vite-plugin-svgr";
 import {resolve} from 'path';
 
 const configs = {
+  defaultBuild: {
+    entry: resolve(__dirname, "./src/main.jsx"),
+    fileName: "index.js",
+  },
   contrast: {
     entry: resolve(__dirname, "./src/contrast/main-contrast.jsx"),
     fileName: "main.js",
