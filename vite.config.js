@@ -30,14 +30,9 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
         case "contrast_prod":
             return {
                 ...defaultConfig, build: {
-
                     rollupOptions: {
-
                         input: resolve(__dirname, './index-contrast.html'),
                     }, outDir: 'dist-contrast',
-                },
-                server: {
-                    open: resolve(__dirname, './index2.html'),
                 },
 
             };
