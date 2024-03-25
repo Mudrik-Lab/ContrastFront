@@ -6,4 +6,5 @@ export const state = proxy({
   user: {},
   tempUsername: null,
   serverError: false,
+  projectName: "contrast", // "uncontrast"
 });
