@@ -10,12 +10,19 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
             name: 'index-html-build-replacement', apply: 'serve', //   docs:
             //   https://vitejs.dev/guide/api-plugin.html#conditional-application
             async transformIndexHtml(html) {
-                switch (mode) {
-                    case  'contrast_prod':
-                        return await fs.readFile('./index-contrast.html', 'utf8');
+                switch (command) {
 
-                    case 'uncontrast_prod':
-                        return await fs.readFile('./index-uncontrast.html', 'utf8');
+                }
+                switch (mode) {
+                    case  'contrast_prod': {
+                        const content = await fs.readFile('./index-contrast.html', 'utf8');
+                        return {html: content, tags: []};
+                    }
+                    case 'uncontrast_prod':{
+                        const content = await fs.readFile('./index-uncontrast.html', 'utf8');
+                        return {html: content, tags: []};
+                    }
+
                 }
 
                 return html;
@@ -28,17 +35,13 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
                 ...defaultConfig, build: {
                     rollupOptions: {
                         output: {
-                            name : 'index'
+                            name: 'index'
 
-                        },
-                        input: resolve(__dirname, './index-contrast.html'),
-                    },
-                    outDir: 'dist-contrast',
-                    name: 'index'
+                        }, input: resolve(__dirname, './index-contrast.html'),
+                    }, outDir: 'dist-contrast', name: 'index'
                 },
 
             };
-
         case "uncontrast_prod":
             return {
                 ...defaultConfig, build: {

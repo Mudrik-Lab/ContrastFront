@@ -1,17 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import {
-  TooltipExplanation,
-  RangeInput,
-  ReportFilter,
-  SideControl,
-  Text,
-  TopGraphText,
-  CSV,
-  Reset,
-  TypeOfConsciousnessFilter,
-  TheoryDrivenFilter,
-} from "../../components/Reusble";
+
+
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import {
   screenWidth,
@@ -30,6 +20,16 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { breakLongLines, buildUrl, rawTextToShow } from "../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
+import {
+  CSV,
+  RangeInput,
+  ReportFilter,
+  Reset,
+  SideControl,
+  TheoryDrivenFilter,
+  TooltipExplanation, TopGraphText,
+  TypeOfConsciousnessFilter
+} from '../../../shared/Reusble.jsx';
 
 const Plot = createPlotlyComponent(Plotly);
 
