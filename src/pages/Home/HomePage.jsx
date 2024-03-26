@@ -24,7 +24,7 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   const { data, isSuccess } = useQuery([`more_configurations`], getExtraConfig);
-  console.log(data?.data.approved_studies_count);
+
 
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
