@@ -23,14 +23,7 @@
 <body>
 
 <div id="root"></div>
-<script type="module">
-    //This is needed for dev server to run see documentation/dev-server-plugin-fix
-    import RefreshRuntime from "/@react-refresh"
-    RefreshRuntime.injectIntoGlobalHook(window)
-    window.$RefreshReg$ = () => {}
-    window.$RefreshSig$ = () => (type) => type
-    window.__vite_plugin_react_preamble_installed__ = true
-</script>
+
 <script type="module" src="/src/contrast/main-contrast.jsx"></script>
 <!-- Sanity check   TODO : Remove this-->
 <script> console.log('This is index-contrast-main-html');</script>
