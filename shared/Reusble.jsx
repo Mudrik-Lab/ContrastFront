@@ -610,6 +610,8 @@ export const ExpandingBox = ({
   );
 };
 
+// TODO: Was in pr https://github.com/Mudrik-Lab/ContrastFront/pull/149 and not
+//  related to the pr
 export function TrashButton({ handleDelete, fieldValues, index }) {
   return (
     <button
