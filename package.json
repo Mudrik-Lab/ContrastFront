@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "vite ",
     "dev:contrast": "vite --mode contrast_prod ",
-    "dev:uncontrast": "vite --mode uncontrast_prod ./index-uncontrast.html",
+    "dev:uncontrast": "vite --mode uncontrast_prod ",
     "build": "vite build",
     "build:contrast": "vite build --mode contrast_prod",
     "postbuild:contrast": "node -e \"require('fs').rename('dist-contrast/index-contrast.html', 'dist-contrast/index.html', ()=>{})\"",
