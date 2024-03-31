@@ -1,12 +1,10 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-
 import "./App.css";
-import ContrastScreens from "./ContrastScreens";
-
 import useAuth from "./apiHooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import ContrastScreens from "./ContrastScreens";
 
 function AppContrast() {
   const client = new QueryClient({

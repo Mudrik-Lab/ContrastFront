@@ -1,10 +1,10 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import "./App.css";
-import Screens from "./ContrastScreens";
 import useAuth from "./apiHooks/useAuth";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import UncontrastScreens from "./UncontrastScreen";
 
 function AppUncontrast() {
   const client = new QueryClient({
@@ -40,7 +40,7 @@ function AppUncontrast() {
             pauseOnHover
             theme="light"
           />
-          <h1 className="text-4xl">This is UnConTraSt</h1>
+          <UncontrastScreens />
         </QueryClientProvider>
       )}
     </div>

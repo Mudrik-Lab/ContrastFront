@@ -1,8 +1,8 @@
 import axios from "axios";
 import React from "react";
 import ReactDOM from "react-dom/client";
-import AppContrast from "./AppContrast";
 import "./index.css";
+import AppContrast from "./AppContrast";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
