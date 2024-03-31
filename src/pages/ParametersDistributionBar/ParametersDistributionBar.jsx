@@ -10,7 +10,7 @@ import {
   TopGraphText,
   CSV,
   Reset,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 import {
   screenWidth,
@@ -20,10 +20,10 @@ import {
   plotConfig,
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import Spinner from "../../components/Spinner";
-import PageTemplate from "../../components/PageTemplate";
+import Spinner from "../.././sharedComponents/Spinner";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
-import Toggle from "../../components/Toggle";
+import Toggle from "../.././sharedComponents/Toggle";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";

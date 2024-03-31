@@ -1,7 +1,7 @@
 import classNames from "classnames";
 import React, { useState } from "react";
-import SideStatus from "../../components/SideStatus";
-import { Spacer } from "../../components/Reusble";
+import SideStatus from "../.././sharedComponents/SideStatus";
+import { Spacer } from "../.././sharedComponents/Reusble";
 
 export default function ExperimentsBox({
   disabled,

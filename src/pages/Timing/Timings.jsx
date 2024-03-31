@@ -11,7 +11,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import {
   plotConfig,
   screenHeight,
@@ -19,13 +19,13 @@ import {
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getTimings from "../../apiHooks/getTimings";
-import Spinner from "../../components/Spinner";
+import Spinner from "../.././sharedComponents/Spinner";
 import { blueToYellow } from "../../Utils/functions";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
-import PageTemplate from "../../components/PageTemplate";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
-import NoResults from "../../components/NoResults";
+import NoResults from "../.././sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

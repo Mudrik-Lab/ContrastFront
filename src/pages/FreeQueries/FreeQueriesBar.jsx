@@ -12,7 +12,7 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
   Button,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 
 import {
   available_populations,
@@ -26,7 +26,7 @@ import {
 } from "../../Utils/HardCoded";
 import getExtraConfig from "../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../apiHooks/getFreeQueries";
-import PageTemplate from "../../components/PageTemplate";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -38,7 +38,7 @@ import {
   rawTextToShow,
 } from "../../Utils/functions";
 import getConfiguration from "../../apiHooks/getConfiguration";
-import NoResults from "../../components/NoResults";
+import NoResults from "../.././sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

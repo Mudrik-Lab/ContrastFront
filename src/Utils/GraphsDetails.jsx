@@ -111,7 +111,7 @@ export const graphsHeaders = [
     figureLine:
       "Here, you can plot the time windows over which effects were reported in all experiments in the database that employed a time-resolved technique.",
     figureText:
-      "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later components. Components for which a time window was given are depicted as a continuous line spanning over the components range. Dots depict components for which only the peak was reported. In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later sharedComponents. Components for which a time window was given are depicted as a continuous line spanning over the sharedComponents range. Dots depict sharedComponents for which only the peak was reported. In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     legendLine:
       "To zoom in on a specific time window, simply draw a rectangle with your mouse on the area of interest, and the figure will change accordingly.",
   },

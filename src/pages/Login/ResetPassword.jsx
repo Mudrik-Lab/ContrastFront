@@ -1,13 +1,13 @@
 import React, { useEffect } from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
+import Navbar from "../.././sharedComponents/Navbar";
+import Footer from "../.././sharedComponents/Footer";
 import {
   TooltipExplanation,
   ToastBox,
   ToastErrorBox,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";

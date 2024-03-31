@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import ProgressComponent from "./ProgressComponent";
-import { Spacer, Text } from "../../components/Reusble";
+import { Spacer, Text } from "../.././sharedComponents/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import { countries } from "countries-list";
 

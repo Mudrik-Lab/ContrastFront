@@ -6,14 +6,14 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../../components/Reusble";
+} from "../../.././sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../Utils/functions";
-import ExternalNotes from "../../../components/ExternalNotes";
+import ExternalNotes from "../../.././sharedComponents/ExternalNotes";
 
 export default function Samples({
   fieldOptions,

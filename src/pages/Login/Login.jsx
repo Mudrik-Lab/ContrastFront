@@ -1,9 +1,9 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import { state } from "../../state";
-import Navbar from "../../components/Navbar";
-import Footer from "../../components/Footer";
-import { TooltipExplanation } from "../../components/Reusble";
+import Navbar from "../.././sharedComponents/Navbar";
+import Footer from "../.././sharedComponents/Footer";
+import { TooltipExplanation } from "../.././sharedComponents/Reusble";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
