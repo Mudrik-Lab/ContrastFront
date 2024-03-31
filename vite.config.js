@@ -4,7 +4,7 @@ import svgr from "vite-plugin-svgr";
 import { resolve } from "path";
 import fs from "node:fs/promises";
 import { devServerHtmlScript } from "./scripts/dev-server-html-script.js";
-import visualizer from "rollup-plugin-visualizer";
+import { visualizer } from "rollup-plugin-visualizer";
 
 export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
   const defaultConfig = {
