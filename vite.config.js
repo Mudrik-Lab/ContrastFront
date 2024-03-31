@@ -23,11 +23,11 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
                     });
                 }
                 switch (mode) {
-                    case  'contrast_prod': {
+                    case  'contrast_dev': {
                         const content = await fs.readFile('./index-contrast.html', 'utf8');
                         return {html: content, tags };
                     }
-                    case 'uncontrast_prod': {
+                    case 'uncontrast_dev': {
                         const content = await fs.readFile('./index-uncontrast.html', 'utf8');
                         return {html: content, tags };
                     }
@@ -39,6 +39,7 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
         }],
     };
     switch (mode) {
+        case "contrast_dev":
         case "contrast_prod":
             return {
                 ...defaultConfig, build: {
@@ -52,6 +53,7 @@ export default defineConfig(({command, mode, isSsrBuild, isPreview}) => {
 
             };
         case "uncontrast_prod":
+        case "uncontrast_dev":
             return {
                 ...defaultConfig, build: {
                     rollupOptions: {
