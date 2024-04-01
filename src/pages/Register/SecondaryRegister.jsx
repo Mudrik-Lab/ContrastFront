@@ -1,5 +1,5 @@
-import { ErrorMessage, Field, Form, Formik, isPromise } from "formik";
-import React, { useEffect, useMemo, useRef, useState } from "react";
+import {  Field, Form, Formik } from "formik";
+import React, { useEffect, useMemo, useState } from "react";
 import countryList from "react-select-country-list";
 import {
   ToastError,
@@ -13,7 +13,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
 import { Checkbox } from "../.././sharedComponents/Reusble";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import {  useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getFormConfig from "../../apiHooks/getFormConfiguration";
 import getUser from "../../apiHooks/getUser";
@@ -126,7 +126,7 @@ export default function SecondaryRegister() {
             </p>
             {isSuccess && userData && (
               <Formik initialValues={initialValues} onSubmit={handleSubmit}>
-                {({ dirty, values }) => {
+                {({ values }) => {
                   return (
                     <Form className="flex flex-col gap-4">
                       <div className="flex gap-4">
