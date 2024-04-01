@@ -1,7 +1,7 @@
-import { ExpandingBox } from "../../../components/Reusble";
+import { ExpandingBox } from "../../.././sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import { rawTextToShow } from "../../../Utils/functions";
-import ExternalNotes from "../../../components/ExternalNotes";
+import ExternalNotes from "../../.././sharedComponents/ExternalNotes";
 
 export default function ResultsSummary({
   disabled,

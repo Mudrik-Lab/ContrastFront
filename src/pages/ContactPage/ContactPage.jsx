@@ -1,8 +1,8 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
-import { Text, Spacer, ButtonReversed } from "../../components/Reusble";
+import Navbar from "../.././sharedComponents/Navbar";
+import { Text, Spacer, ButtonReversed } from "../.././sharedComponents/Reusble";
 import CommunityBox from "../Home/CommunityBox";
-import Footer from "../../components/Footer";
+import Footer from "../.././sharedComponents/Footer";
 import { navHeight } from "../../Utils/HardCoded";
 import { useState } from "react";
 import ContactUs from "./ContactUs";

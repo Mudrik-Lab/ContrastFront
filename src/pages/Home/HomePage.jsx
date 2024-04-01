@@ -1,7 +1,7 @@
 import React from "react";
-import Navbar from "../../components/Navbar";
+import Navbar from "../.././sharedComponents/Navbar";
 import copy from "copy-to-clipboard";
-import { Button, Spacer, Text, WhiteButton } from "../../components/Reusble";
+import { Button, Spacer, Text, WhiteButton } from "../.././sharedComponents/Reusble";
 import { ReactComponent as Graph } from "../../assets/icons/start-exploring.svg";
 import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Quote } from "../../assets/icons/cite-quote.svg";
@@ -10,7 +10,7 @@ import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
-import Footer from "../../components/Footer";
+import Footer from "../.././sharedComponents/Footer";
 import brain from "../../assets/images/XwW4T0UQ.jpeg";
 import mobileBrain from "../../assets/images/mobile-brain.jpeg";
 import { isMoblile } from "../../Utils/HardCoded";
@@ -24,7 +24,6 @@ export default function HomePage() {
   const navigate = useNavigate();
 
   const { data, isSuccess } = useQuery([`more_configurations`], getExtraConfig);
-  console.log(data?.data.approved_studies_count);
 
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";

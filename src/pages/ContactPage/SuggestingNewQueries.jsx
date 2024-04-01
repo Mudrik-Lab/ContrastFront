@@ -5,7 +5,7 @@ import * as Yup from "yup";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import sendSuggestNewQuery from "../../apiHooks/sendSuggestNewQuery";
 import { toast } from "react-toastify";
-import { ToastBox } from "../../components/Reusble";
+import { ToastBox } from "../.././sharedComponents/Reusble";
 
 export default function SuggestingNewQueries() {
   const [errorMsg, setErrorMsg] = useState(false);

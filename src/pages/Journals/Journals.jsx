@@ -13,7 +13,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import {
   plotConfig,
   screenWidth,
@@ -21,12 +21,12 @@ import {
 } from "../../Utils/HardCoded";
 import getConfiguration from "../../apiHooks/getConfiguration";
 import getJournals from "../../apiHooks/getJournals";
-import Spinner from "../../components/Spinner";
-import PageTemplate from "../../components/PageTemplate";
+import Spinner from "../.././sharedComponents/Spinner";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { buildUrl } from "../../Utils/functions";
-import NoResults from "../../components/NoResults";
+import NoResults from "../.././sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

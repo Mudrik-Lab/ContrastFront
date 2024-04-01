@@ -6,7 +6,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../../components/Reusble";
+} from "../../.././sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,

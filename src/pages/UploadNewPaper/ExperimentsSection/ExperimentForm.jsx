@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Text } from "../../../components/Reusble";
+import { Text } from "../../.././sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
 

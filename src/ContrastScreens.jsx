@@ -32,7 +32,7 @@ const UploadNewPaper = React.lazy(() =>
   import("./pages/UploadNewPaper/UploadNewPaperPage")
 );
 
-const Screens = () => {
+const ContrastScreens = () => {
   return (
     <BrowserRouter>
       <Routes>
@@ -141,4 +141,4 @@ const Screens = () => {
   );
 };
 
-export default Screens;
+export default ContrastScreens;

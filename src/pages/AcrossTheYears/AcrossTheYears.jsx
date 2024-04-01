@@ -11,7 +11,7 @@ import {
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import {
   isMoblile,
   parametersOptions,
@@ -21,12 +21,12 @@ import {
   sideSectionClass,
 } from "../../Utils/HardCoded";
 import getAcrossTheYears from "../../apiHooks/getAcrossTheYearsGraph";
-import Spinner from "../../components/Spinner";
-import PageTemplate from "../../components/PageTemplate";
+import Spinner from "../.././sharedComponents/Spinner";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { buildUrl, rawTextToShow } from "../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
-import NoResults from "../../components/NoResults";
+import NoResults from "../.././sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

@@ -9,9 +9,9 @@ import {
   Spacer,
   ToastBox,
   ToastErrorBox,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import { errorMsgClass, studyValidationSchema } from "../../Utils/HardCoded";
-import MultiSelect from "../../components/SelectField";
+import MultiSelect from "../.././sharedComponents/SelectField";
 import classNames from "classnames";
 import ExperimentsBox from "./ExperimentsBox";
 import countryList from "react-select-country-list";
@@ -24,7 +24,7 @@ import { toast } from "react-toastify";
 import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ToastError, confirmFunction } from "../../Utils/functions";
-import FinalSubmit from "../../components/FinalSubmit";
+import FinalSubmit from "../.././sharedComponents/FinalSubmit";
 import { createNewAuthor } from "../../apiHooks/createNewAuthor";
 
 export default function NewPaperForm({

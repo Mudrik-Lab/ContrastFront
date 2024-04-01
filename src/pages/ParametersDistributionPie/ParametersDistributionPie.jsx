@@ -19,21 +19,21 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../../components/Reusble";
+} from "../.././sharedComponents/Reusble";
 import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
 
-import Spinner from "../../components/Spinner";
+import Spinner from "../.././sharedComponents/Spinner";
 import {
   hexToRgba,
   rawTextToShow,
   showTextToRaw,
   buildUrl,
 } from "../../Utils/functions";
-import PageTemplate from "../../components/PageTemplate";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 import { designerColors } from "../../Utils/Colors";
 import { graphsHeaders } from "../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import NoResults from "../../components/NoResults";
+import NoResults from "../.././sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

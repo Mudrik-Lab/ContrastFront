@@ -8,11 +8,11 @@ import {
 } from "../../Utils/functions";
 import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
-import Navbar from "../../components/Navbar";
+import Navbar from "../.././sharedComponents/Navbar";
 import { useSnapshot } from "valtio";
 import { state } from "../../state";
 import createProfile from "../../apiHooks/createRegistrationDetails";
-import { Checkbox } from "../../components/Reusble";
+import { Checkbox } from "../.././sharedComponents/Reusble";
 import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getFormConfig from "../../apiHooks/getFormConfiguration";

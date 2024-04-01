@@ -4,10 +4,10 @@ import {
   Spacer,
   TopSideUserBox,
   Text,
-} from "../../components/Reusble";
-import PageTemplate from "../../components/PageTemplate";
+} from "../.././sharedComponents/Reusble";
+import PageTemplate from "../.././sharedComponents/PageTemplate";
 
-import SideStatus from "../../components/SideStatus";
+import SideStatus from "../.././sharedComponents/SideStatus";
 import { useQuery } from "@tanstack/react-query";
 import { getMySubmittedStudies } from "../../apiHooks/getStudies";
 import PaperSection from "./PaperSection";

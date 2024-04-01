@@ -4,7 +4,7 @@ import {
   Text,
   Button,
   ToastBox,
-} from "../../../components/Reusble";
+} from "../../.././sharedComponents/Reusble";
 import Select from "react-select";
 import {
   createExperiments,
@@ -18,7 +18,7 @@ import {
   reportOptions,
   theoryDrivenOptions,
 } from "../../../Utils/HardCoded";
-import MultiSelect from "../../../components/SelectField";
+import MultiSelect from "../../.././sharedComponents/SelectField";
 import { ToastError } from "../../../Utils/functions";
 
 export default function BasicClassification({
