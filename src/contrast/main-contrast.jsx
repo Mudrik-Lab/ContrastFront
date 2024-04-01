@@ -4,7 +4,7 @@ import ReactDOM from "react-dom/client";
 
 import "../index.css";
 import { Site } from "../config/siteType.js";
-import AppContrast from "../AppContrast.jsx";
+import AppContrast from "./AppContrast.jsx";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 // Sanity check : TODO: Remove
