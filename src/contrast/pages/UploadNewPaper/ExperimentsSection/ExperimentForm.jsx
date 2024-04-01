@@ -1,10 +1,10 @@
 import React, { useState } from "react";
-import { Text } from "../../.././sharedComponents/Reusble";
+import { Text } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import getExtraConfig from "../../../../apiHooks/getExtraConfig";
 
 import BasicClassification from "./BasicClassification";
-import { rawTextToShow } from "../../../Utils/functions";
+import { rawTextToShow } from "../../../../Utils/functions";
 import Samples from "./Samples";
 import Stimuli from "./Stimuli";
 import Techniques from "./Techniques";
@@ -14,12 +14,11 @@ import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
-import { getExperiment } from "../../../apiHooks/getExperiment";
-import { getStudy } from "../../../apiHooks/getStudies";
+
 import {
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
-} from "../../../Utils/HardCoded";
+} from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
 
 export default function ExperimentForm({

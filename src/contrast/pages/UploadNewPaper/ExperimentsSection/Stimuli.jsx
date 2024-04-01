@@ -6,14 +6,14 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
   alphabetizeByLabels,
   rawTextToShow,
-} from "../../../Utils/functions";
+} from "../../../../Utils/functions";
 
 export default function Stimuli({
   fieldOptions,

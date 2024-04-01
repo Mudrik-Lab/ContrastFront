@@ -1,10 +1,10 @@
 import React, { useState } from "react";
 import ProgressComponent from "./ProgressComponent";
-import { Spacer, Text } from "../.././sharedComponents/Reusble";
+import { Spacer, Text } from "../../../sharedComponents/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import { countries } from "countries-list";
 
-import { getStudy } from "../../apiHooks/getStudies";
+import { getStudy } from "../../../apiHooks/getStudies";
 import { useQuery } from "@tanstack/react-query";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import UncompletedPaper from "./UncompletedPaper";
@@ -12,7 +12,7 @@ import {
   statusNumber,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
-} from "../../Utils/HardCoded";
+} from "../../../Utils/HardCoded";
 
 export default function PaperSection({
   paperId,

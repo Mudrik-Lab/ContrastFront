@@ -5,13 +5,13 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
-} from "../../../Utils/functions";
-import ExternalNotes from "../../.././sharedComponents/ExternalNotes";
+} from "../../../../Utils/functions";
+import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function ConsciousnessMeasures({
   fieldOptions,

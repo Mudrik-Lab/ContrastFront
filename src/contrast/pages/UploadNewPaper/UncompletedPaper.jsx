@@ -7,7 +7,7 @@ import {
   Text,
   ToastBox,
   ToastErrorBox,
-} from "../.././sharedComponents/Reusble";
+} from "../../../sharedComponents/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import { countries } from "countries-list";
@@ -21,19 +21,19 @@ import {
   studyValidationSchema,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
-} from "../../Utils/HardCoded";
+} from "../../../Utils/HardCoded";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
-import MultiSelect from "../.././sharedComponents/SelectField";
+import MultiSelect from "../../../sharedComponents/SelectField";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import { EditUncompletedStudy } from "../../apiHooks/getStudies";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import { EditUncompletedStudy } from "../../../apiHooks/getStudies";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
-import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
+import { ReactComponent as V } from "../../../assets/icons/white-circle-v.svg";
 import { toast } from "react-toastify";
-import FinalSubmit from "../.././sharedComponents/FinalSubmit";
-import { createNewAuthor } from "../../apiHooks/createNewAuthor";
-import { ToastError } from "../../Utils/functions";
+import FinalSubmit from "../../../sharedComponents/FinalSubmit";
+import { createNewAuthor } from "../../../apiHooks/createNewAuthor";
+import { ToastError } from "../../../Utils/functions";
 
 export default function UncompletedPaper({
   study,

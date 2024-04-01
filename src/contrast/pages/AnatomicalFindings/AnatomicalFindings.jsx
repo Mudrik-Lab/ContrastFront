@@ -1,11 +1,11 @@
 import React from "react";
-import getConfiguration from "../../apiHooks/getConfiguration";
+import getConfiguration from "../../../apiHooks/getConfiguration";
 import { useQuery } from "@tanstack/react-query";
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
-import { Spacer, TopGraphText, Text } from "../.././sharedComponents/Reusble";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
-import Spinner from "../.././sharedComponents/Spinner";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
+import { Spacer, TopGraphText, Text } from "../../../sharedComponents/Reusble";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
+import Spinner from "../../../sharedComponents/Spinner";
 
 export default function AnatomicalFindings() {
   const { data, isSuccess, isLoading } = useQuery(

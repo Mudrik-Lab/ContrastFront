@@ -10,23 +10,23 @@ import {
   TopGraphText,
   CSV,
   Reset,
-} from "../.././sharedComponents/Reusble";
-import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
+} from "../../../sharedComponents/Reusble";
+import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 import {
   screenWidth,
   parametersOptions,
   isMoblile,
   sideSectionClass,
   plotConfig,
-} from "../../Utils/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import Spinner from "../.././sharedComponents/Spinner";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
-import { designerColors } from "../../Utils/Colors";
-import Toggle from "../.././sharedComponents/Toggle";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
+} from "../../../Utils/HardCoded";
+import getConfiguration from "../../../apiHooks/getConfiguration";
+import Spinner from "../../../sharedComponents/Spinner";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
+import { designerColors } from "../../../Utils/Colors";
+import Toggle from "../../../sharedComponents/Toggle";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, rawTextToShow } from "../../Utils/functions";
+import { buildUrl, rawTextToShow } from "../../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

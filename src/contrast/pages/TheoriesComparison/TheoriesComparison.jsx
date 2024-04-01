@@ -9,7 +9,7 @@ import {
   plotConfig,
   screenWidth,
   sideSectionClass,
-} from "../../Utils/HardCoded";
+} from "../../../Utils/HardCoded";
 import {
   CSV,
   TooltipExplanation,
@@ -22,17 +22,17 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../.././sharedComponents/Reusble";
-import getExperimentsGraphs from "../../apiHooks/getExperimentsGraphs";
+} from "../../../sharedComponents/Reusble";
+import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
-import Toggle from "../.././sharedComponents/Toggle";
-import Spinner from "../.././sharedComponents/Spinner";
-import { breakLongLines, rawTextToShow, buildUrl } from "../../Utils/functions";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
-import { designerColors } from "../../Utils/Colors";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
+import Toggle from "../../../sharedComponents/Toggle";
+import Spinner from "../../../sharedComponents/Spinner";
+import { breakLongLines, rawTextToShow, buildUrl } from "../../../Utils/functions";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
+import { designerColors } from "../../../Utils/Colors";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import NoResults from "../.././sharedComponents/NoResults";
+import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

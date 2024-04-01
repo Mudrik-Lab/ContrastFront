@@ -2,12 +2,12 @@ import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
-import { TooltipExplanation, ToastBox } from "../.././sharedComponents/Reusble";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
+import { TooltipExplanation, ToastBox } from "../../../sharedComponents/Reusble";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
-import recoverPassword from "../../apiHooks/recoverPassword";
+import recoverPassword from "../../../apiHooks/recoverPassword";
 import { toast } from "react-toastify";
 
 export default function RecoverPassword() {

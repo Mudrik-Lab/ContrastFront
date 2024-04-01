@@ -13,20 +13,20 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../.././sharedComponents/Reusble";
+} from "../../../sharedComponents/Reusble";
 import {
   plotConfig,
   screenWidth,
   sideSectionClass,
-} from "../../Utils/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import getJournals from "../../apiHooks/getJournals";
-import Spinner from "../.././sharedComponents/Spinner";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
-import { designerColors } from "../../Utils/Colors";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
-import { buildUrl } from "../../Utils/functions";
-import NoResults from "../.././sharedComponents/NoResults";
+} from "../../../Utils/HardCoded";
+import getConfiguration from "../../../apiHooks/getConfiguration";
+import getJournals from "../../../apiHooks/getJournals";
+import Spinner from "../../../sharedComponents/Spinner";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
+import { designerColors } from "../../../Utils/Colors";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
+import { buildUrl } from "../../../Utils/functions";
+import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

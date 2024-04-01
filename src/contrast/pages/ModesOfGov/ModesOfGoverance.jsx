@@ -1,7 +1,6 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
-import { Text } from "../.././sharedComponents/Reusble";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
 
 export default function ModesOfGoverance() {
   return (

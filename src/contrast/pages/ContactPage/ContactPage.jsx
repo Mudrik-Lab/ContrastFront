@@ -1,9 +1,9 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
-import { Text, Spacer, ButtonReversed } from "../.././sharedComponents/Reusble";
+import Navbar from "../../../sharedComponents/Navbar";
+import { Text, Spacer, ButtonReversed } from "../../../sharedComponents/Reusble";
 import CommunityBox from "../Home/CommunityBox";
-import Footer from "../.././sharedComponents/Footer";
-import { navHeight } from "../../Utils/HardCoded";
+import Footer from "../../../sharedComponents/Footer";
+import { navHeight } from "../../../Utils/HardCoded";
 import { useState } from "react";
 import ContactUs from "./ContactUs";
 import SuggestingNewQueries from "./SuggestingNewQueries";

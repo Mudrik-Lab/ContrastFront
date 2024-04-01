@@ -1,6 +1,6 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
 
 export default function TermOfUse() {
   const htmlEl = (

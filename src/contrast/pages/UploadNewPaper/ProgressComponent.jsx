@@ -1,5 +1,5 @@
 import React from "react";
-import { uploadPaperPageTopSection } from "../../Utils/HardCoded";
+import { uploadPaperPageTopSection } from "../../../Utils/HardCoded";
 
 export default function ProgressComponent({ status, paperNmae, experiment }) {
   const Arrow = (

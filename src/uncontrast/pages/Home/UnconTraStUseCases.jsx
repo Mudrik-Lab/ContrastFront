@@ -4,7 +4,7 @@ import Tempeleton from "../../../assets/logoes/tempelton.png";
 import TelAvivUni from "../../../assets/logoes/tlv-uni.png";
 import Cogtate from "../../../assets/logoes/cogtate.png";
 
-export default function ConTraStUseCases() {
+export default function UnconTraStUseCases() {
   const cardsInfo = [
     {
       video: "https://player.vimeo.com/video/864370519?h=b3c1541d39",

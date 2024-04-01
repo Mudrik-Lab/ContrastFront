@@ -2,10 +2,10 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
-import sendContactUs from "../../apiHooks/sendContactUs";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
+import sendContactUs from "../../../apiHooks/sendContactUs";
 import { toast } from "react-toastify";
-import { ToastBox } from "../.././sharedComponents/Reusble";
+import { ToastBox } from "../../../sharedComponents/Reusble";
 
 export default function ContactUs() {
   const [errorMsg, setErrorMsg] = useState(false);

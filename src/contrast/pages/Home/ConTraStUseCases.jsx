@@ -1,8 +1,8 @@
 import React from "react";
-import { Text } from "../.././sharedComponents/Reusble";
-import Tempeleton from "../../assets/logoes/tempelton.png";
-import TelAvivUni from "../../assets/logoes/tlv-uni.png";
-import Cogtate from "../../assets/logoes/cogtate.png";
+import { Text } from "../../../sharedComponents/Reusble";
+import Tempeleton from "../../../assets/logoes/tempelton.png";
+import TelAvivUni from "../../../assets/logoes/tlv-uni.png";
+import Cogtate from "../../../assets/logoes/cogtate.png";
 
 export default function ConTraStUseCases() {
   const cardsInfo = [

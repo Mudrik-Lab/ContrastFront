@@ -12,7 +12,7 @@ import {
   TopGraphText,
   TypeOfConsciousnessFilter,
   Button,
-} from "../.././sharedComponents/Reusble";
+} from "../../../sharedComponents/Reusble";
 
 import {
   available_populations,
@@ -23,22 +23,22 @@ import {
   plotConfig,
   screenWidth,
   sideSectionClass,
-} from "../../Utils/HardCoded";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import getFreeQueries from "../../apiHooks/getFreeQueries";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
-import { designerColors } from "../../Utils/Colors";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
+} from "../../../Utils/HardCoded";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import getFreeQueries from "../../../apiHooks/getFreeQueries";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
+import { designerColors } from "../../../Utils/Colors";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { ReactComponent as CsvIcon } from "../../assets/icons/csv-file.svg";
+import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 
 import {
   buildUrl,
   buildUrlForMultiSelect,
   rawTextToShow,
-} from "../../Utils/functions";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import NoResults from "../.././sharedComponents/NoResults";
+} from "../../../Utils/functions";
+import getConfiguration from "../../../apiHooks/getConfiguration";
+import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

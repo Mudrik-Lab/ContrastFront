@@ -11,7 +11,7 @@ import Navbar from "../../../sharedComponents/Navbar.jsx";
 import {Button, Text, WhiteButton} from "../../../sharedComponents/Reusble.jsx";
 import PapersIconsMenu from "./PapersIconsMenu.jsx";
 import CommunityBox from "./CommunityBox.jsx";
-import ConTraStUseCases from "./ConTraStUseCases.jsx";
+import UnconTraStUseCases from "./UnconTraStUseCases.jsx";
 import Footer from "../../../sharedComponents/Footer.jsx";
 import React from "react";
 import {ReactComponent as Graph} from "../../../assets/icons/start-exploring.svg";
@@ -100,7 +100,7 @@ export default function Homepage() {
                 </div>
                 <PapersIconsMenu/>
                 <CommunityBox/>
-                <ConTraStUseCases/>
+                <UnconTraStUseCases/>
             </div>
             <Footer/>
 

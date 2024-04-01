@@ -4,16 +4,16 @@ import {
   ExpandingBox,
   Spacer,
   Text,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../../apiHooks/getExtraConfig";
-import { rawTextToShow } from "../../../Utils/functions";
+import getExtraConfig from "../../../../apiHooks/getExtraConfig";
+import { rawTextToShow } from "../../../../Utils/functions";
 import FindingsTags from "../FindingsTags";
 import {
   interpretationTypes,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
-} from "../../../Utils/HardCoded";
+} from "../../../../Utils/HardCoded";
 
 export default function ExperimentDetails({
   experiment,

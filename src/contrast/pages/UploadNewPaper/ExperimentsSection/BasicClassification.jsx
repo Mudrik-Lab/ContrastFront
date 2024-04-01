@@ -4,22 +4,22 @@ import {
   Text,
   Button,
   ToastBox,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import Select from "react-select";
 import {
   createExperiments,
   editExperiments,
-} from "../../../apiHooks/createExperiment";
+} from "../../../../apiHooks/createExperiment";
 import { toast } from "react-toastify";
 import { useEffect, useState } from "react";
-import { ReactComponent as Vicon } from "../../../assets/icons/v-icon.svg";
+import { ReactComponent as Vicon } from "../../../../assets/icons/v-icon.svg";
 import {
   concsiousnessOptions,
   reportOptions,
   theoryDrivenOptions,
-} from "../../../Utils/HardCoded";
-import MultiSelect from "../../.././sharedComponents/SelectField";
-import { ToastError } from "../../../Utils/functions";
+} from "../../../../Utils/HardCoded";
+import MultiSelect from "../../../../sharedComponents/SelectField";
+import { ToastError } from "../../../../Utils/functions";
 
 export default function BasicClassification({
   study_id,

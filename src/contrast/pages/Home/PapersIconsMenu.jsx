@@ -1,10 +1,10 @@
 import React from "react";
 
-import { Text } from "../.././sharedComponents/Reusble";
+import { Text } from "../../../sharedComponents/Reusble";
 import { useNavigate } from "react-router-dom";
 
 import { Tooltip } from "flowbite-react";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
 
 export default function PapersIconsMenu() {
   const navigate = useNavigate();

@@ -7,13 +7,13 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
   rawTextToShow,
-} from "../../../Utils/functions";
+} from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 
 export default function Measures({

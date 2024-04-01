@@ -1,23 +1,23 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
+import Navbar from "../../../sharedComponents/Navbar";
 import copy from "copy-to-clipboard";
-import { Button, Spacer, Text, WhiteButton } from "../.././sharedComponents/Reusble";
-import { ReactComponent as Graph } from "../../assets/icons/start-exploring.svg";
-import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
-import { ReactComponent as Quote } from "../../assets/icons/cite-quote.svg";
-import { ReactComponent as QouteIcon } from "../../assets/icons/copy-to-clipboard-icon.svg";
+import { Button, Spacer, Text, WhiteButton } from "../../../sharedComponents/Reusble";
+import { ReactComponent as Graph } from "../../../assets/icons/start-exploring.svg";
+import { ReactComponent as Profile } from "../../../assets/icons/profile-negative-icon.svg";
+import { ReactComponent as Quote } from "../../../assets/icons/cite-quote.svg";
+import { ReactComponent as QouteIcon } from "../../../assets/icons/copy-to-clipboard-icon.svg";
 import PapersIconsMenu from "./PapersIconsMenu";
 import ConTraStUseCases from "./ConTraStUseCases";
 import CommunityBox from "./CommunityBox";
 import { useNavigate } from "react-router-dom";
-import Footer from "../.././sharedComponents/Footer";
-import brain from "../../assets/images/XwW4T0UQ.jpeg";
-import mobileBrain from "../../assets/images/mobile-brain.jpeg";
-import { isMoblile } from "../../Utils/HardCoded";
+import Footer from "../../../sharedComponents/Footer";
+import brain from "../../../assets/images/XwW4T0UQ.jpeg";
+import mobileBrain from "../../../assets/images/mobile-brain.jpeg";
+import { isMoblile } from "../../../Utils/HardCoded";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
+import { state } from "../../../state";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
 
 export default function HomePage() {
   const snap = useSnapshot(state);

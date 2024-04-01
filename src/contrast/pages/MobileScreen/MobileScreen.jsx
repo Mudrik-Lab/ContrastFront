@@ -1,10 +1,10 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
-import { ReactComponent as Desktop } from "../../assets/icons/desktop.svg";
-import { ReactComponent as Graph } from "../../assets/graph.svg";
-import Logo from "../../assets/logoes/logo-negative.png";
-import { Button, Text } from "../.././sharedComponents/Reusble";
-import { navHeight, screenHeight } from "../../Utils/HardCoded";
+import Navbar from "../../../sharedComponents/Navbar";
+import { ReactComponent as Desktop } from "../../../assets/icons/desktop.svg";
+import { ReactComponent as Graph } from "../../../assets/graph.svg";
+import Logo from "../../../assets/logoes/logo-negative.png";
+import { Button, Text } from "../../../sharedComponents/Reusble";
+import { navHeight, screenHeight } from "../../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 
 export default function MobileScreen() {

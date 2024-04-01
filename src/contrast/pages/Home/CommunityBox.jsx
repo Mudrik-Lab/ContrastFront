@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Text } from "../.././sharedComponents/Reusble";
-import { ReactComponent as Profile } from "../../assets/icons/profile-negative-icon.svg";
-import { isMoblile } from "../../Utils/HardCoded";
+import { Button, Text } from "../../../sharedComponents/Reusble";
+import { ReactComponent as Profile } from "../../../assets/icons/profile-negative-icon.svg";
+import { isMoblile } from "../../../Utils/HardCoded";
 
 export default function CommunityBox() {
   return (

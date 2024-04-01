@@ -4,21 +4,21 @@ import {
   Spacer,
   TopSideUserBox,
   Text,
-} from "../.././sharedComponents/Reusble";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
+} from "../../../sharedComponents/Reusble";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
 
-import SideStatus from "../.././sharedComponents/SideStatus";
+import SideStatus from "../../../sharedComponents/SideStatus";
 import { useQuery } from "@tanstack/react-query";
-import { getMySubmittedStudies } from "../../apiHooks/getStudies";
+import { getMySubmittedStudies } from "../../../apiHooks/getStudies";
 import PaperSection from "./PaperSection";
 import React, { useState } from "react";
-import { ReactComponent as AddPaper } from "../../assets/icons/add-paper-icon.svg";
+import { ReactComponent as AddPaper } from "../../../assets/icons/add-paper-icon.svg";
 import NewPaperForm from "./NewPaperForm";
 import {
   statusNumber,
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
-} from "../../Utils/HardCoded";
+} from "../../../Utils/HardCoded";
 
 export default function UploadNewPaper() {
   const [paperToShow, setPaperToShow] = useState();

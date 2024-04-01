@@ -1,21 +1,20 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile-negative-icon.svg";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import createRegistration from "../../apiHooks/createRegistration";
-import useLogin from "../../apiHooks/loginApi";
+import createRegistration from "../../../apiHooks/createRegistration";
+import useLogin from "../../../apiHooks/loginApi";
 import {
   isValidToken,
   setRefreshToken,
   setToken,
-} from "../../Utils/tokenHandler";
-import { state } from "../../state";
+} from "../../../Utils/tokenHandler";
+import { state } from "../../../state";
 import { useState } from "react";
-import { rawTextToShow } from "../../Utils/functions";
 
 export default function RegisterComponent() {
   const [errorMsg, setErrorMsg] = useState(false);

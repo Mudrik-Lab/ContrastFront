@@ -11,20 +11,20 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../.././sharedComponents/Reusble";
+} from "../../../sharedComponents/Reusble";
 import {
   FrequenciesColors,
   plotConfig,
   sideSectionClass,
-} from "../../Utils/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import getFrequencies from "../../apiHooks/getFrequencyGraph";
-import Spinner from "../.././sharedComponents/Spinner";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
+} from "../../../Utils/HardCoded";
+import getConfiguration from "../../../apiHooks/getConfiguration";
+import getFrequencies from "../../../apiHooks/getFrequencyGraph";
+import Spinner from "../../../sharedComponents/Spinner";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
-import NoResults from "../.././sharedComponents/NoResults";
+import { buildUrl, buildUrlForMultiSelect } from "../../../Utils/functions";
+import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

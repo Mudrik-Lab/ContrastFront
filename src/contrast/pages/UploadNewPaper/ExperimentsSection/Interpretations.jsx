@@ -5,15 +5,15 @@ import {
   CustomSelect,
   CircledIndex,
   TooltipExplanation,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 
 import {
   DeleteClassificationField,
   SubmitClassificationField,
   rawTextToShow,
-} from "../../../Utils/functions";
-import { interpretationTypes } from "../../../Utils/HardCoded";
+} from "../../../../Utils/functions";
+import { interpretationTypes } from "../../../../Utils/HardCoded";
 
 export default function Interpretations({
   fieldOptions,

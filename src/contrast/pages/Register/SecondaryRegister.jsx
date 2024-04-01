@@ -5,18 +5,18 @@ import {
   ToastError,
   generateSelectOptions,
   rawTextToShow,
-} from "../../Utils/functions";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
-import Navbar from "../.././sharedComponents/Navbar";
+} from "../../../Utils/functions";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile-negative-icon.svg";
+import Navbar from "../../../sharedComponents/Navbar";
 import { useSnapshot } from "valtio";
-import { state } from "../../state";
-import createProfile from "../../apiHooks/createRegistrationDetails";
-import { Checkbox } from "../.././sharedComponents/Reusble";
+import { state } from "../../../state"
+import createProfile from "../../../apiHooks/createRegistrationDetails";
+import { Checkbox } from "../../../sharedComponents/Reusble";
 import {  useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import getFormConfig from "../../apiHooks/getFormConfiguration";
-import getUser from "../../apiHooks/getUser";
+import getFormConfig from "../../../apiHooks/getFormConfiguration";
+import getUser from "../../../apiHooks/getUser";
 import { format } from "date-fns/esm";
 
 export default function SecondaryRegister() {

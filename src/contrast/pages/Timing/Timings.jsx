@@ -11,21 +11,21 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-} from "../.././sharedComponents/Reusble";
+} from "../../../sharedComponents/Reusble";
 import {
   plotConfig,
   screenHeight,
   sideSectionClass,
-} from "../../Utils/HardCoded";
-import getConfiguration from "../../apiHooks/getConfiguration";
-import getTimings from "../../apiHooks/getTimings";
-import Spinner from "../.././sharedComponents/Spinner";
-import { blueToYellow } from "../../Utils/functions";
-import { graphsHeaders } from "../../Utils/GraphsDetails";
-import PageTemplate from "../.././sharedComponents/PageTemplate";
+} from "../../../Utils/HardCoded";
+import getConfiguration from "../../../apiHooks/getConfiguration";
+import getTimings from "../../../apiHooks/getTimings";
+import Spinner from "../../../sharedComponents/Spinner";
+import { blueToYellow } from "../../../Utils/functions";
+import { graphsHeaders } from "../../../Utils/GraphsDetails";
+import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, buildUrlForMultiSelect } from "../../Utils/functions";
-import NoResults from "../.././sharedComponents/NoResults";
+import { buildUrl, buildUrlForMultiSelect } from "../../../Utils/functions";
+import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 

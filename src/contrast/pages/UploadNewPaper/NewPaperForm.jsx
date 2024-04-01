@@ -9,23 +9,23 @@ import {
   Spacer,
   ToastBox,
   ToastErrorBox,
-} from "../.././sharedComponents/Reusble";
-import { errorMsgClass, studyValidationSchema } from "../../Utils/HardCoded";
-import MultiSelect from "../.././sharedComponents/SelectField";
+} from "../../../sharedComponents/Reusble";
+import { errorMsgClass, studyValidationSchema } from "../../../Utils/HardCoded";
+import MultiSelect from "../../../sharedComponents/SelectField";
 import classNames from "classnames";
 import ExperimentsBox from "./ExperimentsBox";
 import countryList from "react-select-country-list";
 import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../apiHooks/getExtraConfig";
-import { submitStudy } from "../../apiHooks/getStudies";
+import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import { submitStudy } from "../../../apiHooks/getStudies";
 import { toast } from "react-toastify";
-import { ReactComponent as V } from "../../assets/icons/white-circle-v.svg";
+import { ReactComponent as V } from "../../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
-import { ToastError, confirmFunction } from "../../Utils/functions";
-import FinalSubmit from "../.././sharedComponents/FinalSubmit";
-import { createNewAuthor } from "../../apiHooks/createNewAuthor";
+import { ToastError, confirmFunction } from "../../../Utils/functions";
+import FinalSubmit from "../../../sharedComponents/FinalSubmit";
+import { createNewAuthor } from "../../../apiHooks/createNewAuthor";
 
 export default function NewPaperForm({
   setAddNewPaper,

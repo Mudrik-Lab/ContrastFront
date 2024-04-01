@@ -1,9 +1,9 @@
 import React from "react";
-import {Text} from "../.././sharedComponents/Reusble";
+import {Text} from "../../../sharedComponents/Reusble";
 import ShowMoreText from "react-show-more-text";
-import {ReactComponent as Web} from "../../assets/icons/website.svg";
-import karine from "../../assets/images/Karine.jpg";
-import {foundingBoardBios} from "../../Utils/FoundersBios";
+import {ReactComponent as Web} from "../../../assets/icons/website.svg";
+import karine from "../../../assets/images/Karine.jpg";
+import {foundingBoardBios} from "../../../Utils/FoundersBios";
 
 export default function TeamMembersCards() {
     return (

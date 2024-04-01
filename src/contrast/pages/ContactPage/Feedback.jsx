@@ -2,14 +2,14 @@ import { ErrorMessage, Field, Form, Formik } from "formik";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
 import {
   Button,
   RadioFeedback,
   ToastBox,
   ToastErrorBox,
-} from "../.././sharedComponents/Reusble";
-import sendFeedback from "../../apiHooks/sendFeedback";
+} from "../../../sharedComponents/Reusble";
+import sendFeedback from "../../../apiHooks/sendFeedback";
 import { toast } from "react-toastify";
 
 export default function Feedback() {

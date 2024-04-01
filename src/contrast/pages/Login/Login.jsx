@@ -1,18 +1,18 @@
 import React from "react";
 import { Formik, Field, Form, ErrorMessage } from "formik";
-import { state } from "../../state";
-import Navbar from "../.././sharedComponents/Navbar";
-import Footer from "../.././sharedComponents/Footer";
-import { TooltipExplanation } from "../.././sharedComponents/Reusble";
-import { errorMsgClass, fieldClass } from "../../Utils/HardCoded";
-import { ReactComponent as ProfileIcon } from "../../assets/icons/profile-negative-icon.svg";
+import { state } from "../../../state";
+import Navbar from "../../../sharedComponents/Navbar";
+import Footer from "../../../sharedComponents/Footer";
+import { TooltipExplanation } from "../../../sharedComponents/Reusble";
+import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
+import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile-negative-icon.svg";
 import { useNavigate } from "react-router-dom";
-import useLogin from "../../apiHooks/loginApi";
+import useLogin from "../../../apiHooks/loginApi";
 import {
   isValidToken,
   setRefreshToken,
   setToken,
-} from "../../Utils/tokenHandler";
+} from "../../../Utils/tokenHandler";
 
 export default function Login() {
   const [serverError, setServerError] = React.useState(false);

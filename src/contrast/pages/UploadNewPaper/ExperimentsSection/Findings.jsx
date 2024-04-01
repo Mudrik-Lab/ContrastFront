@@ -7,13 +7,13 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
-} from "../../.././sharedComponents/Reusble";
+} from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
   alphabetizeByLabels,
-} from "../../../Utils/functions";
+} from "../../../../Utils/functions";
 
 export default function Findings({
   fieldOptions,

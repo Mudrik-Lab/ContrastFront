@@ -1,12 +1,12 @@
 import React from "react";
-import Navbar from "../.././sharedComponents/Navbar";
-import { Button, Spacer, Text } from "../.././sharedComponents/Reusble";
-import { ReactComponent as Github } from "../../assets/icons/github-small.svg";
-import BrainImg from "../../assets/images/brain-prism-tall.jpg";
+import Navbar from "../../../sharedComponents/Navbar";
+import { Button, Spacer, Text } from "../../../sharedComponents/Reusble";
+import { ReactComponent as Github } from "../../../assets/icons/github-small.svg";
+import BrainImg from "../../../assets/images/brain-prism-tall.jpg";
 import TeamMembersCards from "./TeamMembersCards";
 import CommunityBox from "../Home/CommunityBox";
-import Footer from "../.././sharedComponents/Footer";
-import { isMoblile, navHeight } from "../../Utils/HardCoded";
+import Footer from "../../../sharedComponents/Footer";
+import { isMoblile, navHeight } from "../../../Utils/HardCoded";
 
 export default function AboutPage() {
   const aLinkClass = "text-darkBlue underline cursor-pointer";
