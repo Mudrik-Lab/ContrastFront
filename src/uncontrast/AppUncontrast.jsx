@@ -1,10 +1,10 @@
 import React from "react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import "./App.css";
-import useAuth from "./apiHooks/useAuth";
+import "../App.css";
+import useAuth from "../apiHooks/useAuth.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import UncontrastScreens from "./UncontrastScreen";
+import UncontrastScreens from "./UncontrastScreen.jsx";
 
 function AppUncontrast() {
   const client = new QueryClient({

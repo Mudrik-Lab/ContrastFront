@@ -3,7 +3,7 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import "../index.css";
 import { Site } from "../config/siteType.js";
-import AppUncontrast from "../AppUncontrast.jsx";
+import AppUncontrast from "./AppUncontrast.jsx";
 
 axios.defaults.baseURL = import.meta.env.VITE_API_URL;
 
