@@ -15,7 +15,6 @@ import countryList from "react-select-country-list";
 
 import classNames from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
-import * as Yup from "yup";
 import {
   errorMsgClass,
   studyValidationSchema,
