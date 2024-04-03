@@ -15,6 +15,8 @@ export const foundingBoardBios = [
     image: Liad,
     text: "School of Psychological Sciences and Sagol School of Neuroscience, Tel Aviv University.",
     website: "https://mudriklab.tau.ac.il",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Stephen Fleming",
@@ -22,6 +24,8 @@ export const foundingBoardBios = [
     image: Steve,
     text: "University College London",
     website: "https://metacoglab.org/",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Megan Peters",
@@ -29,6 +33,8 @@ export const foundingBoardBios = [
     image: Megan,
     text: "Department of Cognitive Sciences, University of California Irvine",
     website: "https://faculty.sites.uci.edu/cnclab",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Anil Seth",
@@ -36,6 +42,8 @@ export const foundingBoardBios = [
     image: Anil,
     text: "Sussex Centre for Consciousness Science and Canadian Institute for Advanced Research, Program on Brain, Mind, and Consciousness",
     website: "https://www.anilseth.com",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Axel Cleeremans",
@@ -43,6 +51,8 @@ export const foundingBoardBios = [
     image: Axel,
     text: "Center for Research in Cognition & Neurosciences, Université libre de Bruxelles (BELGIUM)",
     website: "https://axc.ulb.be/",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Lucie Charles",
@@ -50,14 +60,17 @@ export const foundingBoardBios = [
     image: LucieC,
     text: "	Department of Psychology, Queen Mary University of London",
     website: "https://sites.google.com/site/luciecharlesneuro/home?pli=1",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Lucia Melloni",
     secondName: "Melloni",
     image: LuciaM,
     text: "Neural Circuits, Consciousness, and Cognition Research Group, Max Planck Institute for Empirical Aesthetics, Germany Department of Neurology, NYU Grossman School of Medicine, US",
-    website:
-      "https://www.aesthetics.mpg.de/en/research/research-group-neural-circuits-consciousness-and-cognition.html ",
+    website:"https://www.aesthetics.mpg.de/en/research/research-group-neural-circuits-consciousness-and-cognition.html ",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Ned Block",
@@ -65,6 +78,8 @@ export const foundingBoardBios = [
     image: Ned,
     text: "Departments of Philosophy, Psychology, and Center for Neural Science New York University",
     website: "https://www.nedblock.us",
+    isContrastMember: true,
+    isUncontrastMember: true,
   },
   {
     name: "Itay Yaron",
@@ -72,5 +87,34 @@ export const foundingBoardBios = [
     image: Itay,
     text: "Sagol School of Neuroscience, Tel Aviv University.",
     website: "https://people.socsci.tau.ac.il/mu/mudriklab/people/#gkit-popup",
+    isContrastMember: true,
+    isUncontrastMember: true,
+  },
+  {
+    name: "Dominique Lamy",
+    secondName: "Lamy",
+    image: Itay,
+    text: "School of Psychological Sciences, Tel Aviv University .",
+    website: "",
+    isContrastMember: false,
+    isUncontrastMember: true,
+  },
+  {
+    name: "Maor Schreiber",
+    secondName: "Schreiber",
+    image: Itay,
+    text: "School of Psychological Sciences, Tel Aviv University.",
+    website: "",
+    isContrastMember: false,
+    isUncontrastMember: true,
+  },
+  {
+    name: "François Stockart ",
+    secondName: "Stockart ",
+    image: Itay,
+    text: "Univ. Grenoble Alpes, Univ. Savoie Mont Blanc, CNRS, LPNC, 38000 Grenoble, France",
+    website: "",
+    isContrastMember: false,
+    isUncontrastMember: true,
   },
 ];
