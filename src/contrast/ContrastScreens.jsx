@@ -13,7 +13,7 @@ import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
-import MobileScreen from "./pages/MobileScreen/MobileScreen";
+import MobileScreen from "../sharedComponents/MobileScreen/MobileScreen";
 import { isMoblile } from "../Utils/HardCoded.jsx";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
 import Register from "./pages/Register/Register";
