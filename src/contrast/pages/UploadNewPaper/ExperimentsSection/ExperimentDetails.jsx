@@ -1,8 +1,7 @@
-import React, { useState } from "react";
+import Reactfrom "react";
 import {
   CircledIndex,
   ExpandingBox,
-  Spacer,
   Text,
 } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
