@@ -16,6 +16,7 @@ export default async function getUncontrastFreeQueries({
                                                            tasks,
 
                                                        }) {
+
     const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
         (item) => "&consciousness_measure_phases=" + item.value
     );
