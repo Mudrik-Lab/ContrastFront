@@ -6,6 +6,7 @@ import ContactPage from "./pages/ContactPage/ContactPage.jsx";
 import {isMoblile} from "../Utils/HardCoded.jsx";
 import MobileScreen from "../sharedComponents/MobileScreen/MobileScreen.jsx";
 import FreeQueriesBar from "./pages/FreeQueries/FreeQueriesBar.jsx";
+import AcrossTheYears from "./pages/AcrossTheYears/AcrossTheYears.jsx";
 
 const UncontrastScreens = () => {
     return (
@@ -19,6 +20,11 @@ const UncontrastScreens = () => {
                     path="/parameter-distribution-free-queries"
                     element={isMoblile ? <MobileScreen /> : <FreeQueriesBar />}
                 />
+                <Route
+                    path="/trends-over-time"
+                    element={isMoblile ? <MobileScreen /> : <AcrossTheYears />}
+                />
+
             </Routes>
         </BrowserRouter>
     );

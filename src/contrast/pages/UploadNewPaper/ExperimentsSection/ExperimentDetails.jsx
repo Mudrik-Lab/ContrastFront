@@ -33,7 +33,6 @@ export default function ExperimentDetails({
     extraConfig?.data.available_consciousness_measure_type;
   const consciousnessMeasuresPhases =
     extraConfig?.data.available_consciousness_measure_phase_type;
-
   const findingOptions = {
     techniques: extraConfig?.data.available_techniques,
     types: extraConfig?.data.available_finding_tags_types,

@@ -16,7 +16,6 @@ import {
     footerHeight,
     isMoblile,
     navHeight,
-    parametersOptions,
     plotConfig,
     screenWidth,
     sideSectionClass,
@@ -117,8 +116,6 @@ export default function FreeQueriesBar() {
         : [];
 
 
-
-
     const {data, isLoading} = useQuery({
         queryKey: [
             "parameters_distribution_free_queries",
@@ -195,8 +192,6 @@ export default function FreeQueriesBar() {
             );
         }
 
-
-
         queryParams.get("min_number_of_experiments")
             ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
             : setExperimentsNum(0);
@@ -234,8 +229,6 @@ export default function FreeQueriesBar() {
                 "consciousness_measure_types",
                 consciousnessMeasureTypesArr
             );
-
-
         }
 
         navigate({search: queryParams.toString()});
@@ -293,10 +286,6 @@ export default function FreeQueriesBar() {
                             {extraConfigSuccess && (
                                 <div>
                                     <div className={sideSectionClass}>
-
-
-
-
                                         <Select
                                             className="text-lg w-[300px]"
                                             closeMenuOnSelect={true}
@@ -331,7 +320,6 @@ export default function FreeQueriesBar() {
                                                 );
                                             }}
                                         />
-
                                         <Select
                                             className="text-lg w-[300px]"
                                             closeMenuOnSelect={true}
@@ -400,7 +388,6 @@ export default function FreeQueriesBar() {
                                                 );
                                             }}
                                         />
-
                                     </div>
 
                                 </div>
