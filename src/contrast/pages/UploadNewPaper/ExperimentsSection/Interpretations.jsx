@@ -1,7 +1,6 @@
 import {
   ExpandingBox,
   Text,
-  TrashButton,
   CustomSelect,
   CircledIndex,
   TooltipExplanation,
@@ -9,7 +8,6 @@ import {
 import { useEffect, useState } from "react";
 
 import {
-  DeleteClassificationField,
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../../Utils/functions";

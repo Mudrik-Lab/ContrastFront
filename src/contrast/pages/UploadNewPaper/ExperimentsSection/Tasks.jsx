@@ -1,7 +1,6 @@
 import {
   AddFieldButton,
   ExpandingBox,
-  SubmitButton,
   TooltipExplanation,
   TrashButton,
   CustomSelect,
