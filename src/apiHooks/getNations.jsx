@@ -6,18 +6,20 @@ export default async function getNations({
   type_of_consciousness,
   theory,
   min_number_of_experiments,
+  isUncontrast,
 }) {
   const theoriesArr = theory?.map((t) => "&theory=" + t.value);
+  const url = isUncontrast
+    ? "uncontrast_studies/experiments_graphs/nations_of_consciousness"
+    : "studies/experiments_graphs/nations_of_consciousness";
 
   return await queryApi({
-    url: `studies/experiments_graphs/nations_of_consciousness/?${theoriesArr
-      ?.join("")
-      .slice(1)}`,
+    url: `${url}/?${theoriesArr?.join("").slice(1)}`,
     params: {
-      is_reporting,
-      theory_driven,
-      type_of_consciousness,
       min_number_of_experiments,
+      ...(isUncontrast ? {} : { is_reporting: is_reporting }),
+      ...(isUncontrast ? {} : { type_of_consciousness: type_of_consciousness }),
+      ...(isUncontrast ? {} : { theory_driven: theory_driven }),
     },
     method: "GET",
   });

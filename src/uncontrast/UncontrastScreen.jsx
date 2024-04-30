@@ -9,6 +9,7 @@ import FreeQueriesBar from "./pages/FreeQueries/FreeQueriesBar.jsx";
 import AcrossTheYears from "./pages/AcrossTheYears/AcrossTheYears.jsx";
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison.jsx";
 import Journals from "./pages/Journals/Journals.jsx";
+import WorldMap from "./pages/WorldMap/WorldMap.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -38,6 +39,18 @@ const UncontrastScreens = () => {
         <Route
           path="/trends-over-time"
           element={isMoblile ? <MobileScreen /> : <AcrossTheYears />}
+        />
+        <Route
+          path="/consciousness-world-map"
+          element={
+            isMoblile ? (
+              <MobileScreen />
+            ) : (
+              <React.Suspense fallback={<>...</>}>
+                <WorldMap />
+              </React.Suspense>
+            )
+          }
         />
       </Routes>
     </BrowserRouter>
