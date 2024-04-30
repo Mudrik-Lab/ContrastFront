@@ -10,6 +10,7 @@ import AcrossTheYears from "./pages/AcrossTheYears/AcrossTheYears.jsx";
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison.jsx";
 import Journals from "./pages/Journals/Journals.jsx";
 import WorldMap from "./pages/WorldMap/WorldMap.jsx";
+import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -51,6 +52,10 @@ const UncontrastScreens = () => {
               </React.Suspense>
             )
           }
+        />
+        <Route
+          path="/parameter-distribution-pie"
+          element={isMoblile ? <MobileScreen /> : <ParametersDistributionPie />}
         />
       </Routes>
     </BrowserRouter>

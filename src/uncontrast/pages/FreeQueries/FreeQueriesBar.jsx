@@ -120,6 +120,7 @@ export default function FreeQueriesBar() {
   const { data, isLoading } = useQuery({
     queryKey: [
       "parameters_distribution_free_queries",
+      "uncontrast",
       selected?.value,
       experimentsNum,
       consciousnessMeasurePhases?.map((row) => row.label).join(","),
