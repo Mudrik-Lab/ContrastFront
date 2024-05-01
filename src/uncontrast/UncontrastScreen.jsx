@@ -7,11 +7,11 @@ import { isMoblile } from "../Utils/HardCoded.jsx";
 import MobileScreen from "../sharedComponents/MobileScreen/MobileScreen.jsx";
 import FreeQueriesBar from "./pages/FreeQueries/FreeQueriesBar.jsx";
 import AcrossTheYears from "./pages/AcrossTheYears/AcrossTheYears.jsx";
-import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison.jsx";
 import Journals from "./pages/Journals/Journals.jsx";
 import WorldMap from "./pages/WorldMap/WorldMap.jsx";
 import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie.jsx";
 import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar.jsx";
+import ParametersDistributionExperimentsComparison from "./pages/ExperimentsComparison/ExperimentsComparison.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -30,7 +30,7 @@ const UncontrastScreens = () => {
             isMoblile ? (
               <MobileScreen />
             ) : (
-              <ParametersDistributionTheoriesComparison />
+              <ParametersDistributionExperimentsComparison />
             )
           }
         />

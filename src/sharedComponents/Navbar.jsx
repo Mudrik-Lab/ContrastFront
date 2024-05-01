@@ -20,8 +20,9 @@ export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
   const navigate = useNavigate();
-
+  const isUncontrast = true;
   const page = window.location.pathname;
+  console.log(window.location);
   const snap = useSnapshot(state);
   const { data: userData, isSuccess: userSuccess } = useQuery([`user`], () => {
     if (snap.auth) {
