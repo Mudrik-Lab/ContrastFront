@@ -18,10 +18,10 @@ import {
   SideControl,
   Text,
   TopGraphText,
+  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
-import Toggle from "../../../sharedComponents/Toggle";
 import Spinner from "../../../sharedComponents/Spinner";
 import {
   breakLongLines,
@@ -42,6 +42,7 @@ export default function ParametersDistributionExperimentsComparison() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
+  const [significance, setSignificance] = React.useState();
 
   const navigate = useNavigate();
   const pageName = "experiments-comparison";
@@ -52,6 +53,7 @@ export default function ParametersDistributionExperimentsComparison() {
       "uncontrast",
       selected?.value,
       experimentsNum,
+      significance,
     ],
     queryFn: () =>
       getExperimentsGraphs({
@@ -59,6 +61,7 @@ export default function ParametersDistributionExperimentsComparison() {
         breakdown: selected?.value,
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
+        significance,
       }),
     enabled: Boolean(selected?.value),
   });
@@ -92,6 +95,10 @@ export default function ParametersDistributionExperimentsComparison() {
   });
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -142,6 +149,13 @@ export default function ParametersDistributionExperimentsComparison() {
               tooltip="Choose the dependent variable to be queried."
             />
           </div>
+
+          <SignificanceFilter
+            checked={significance}
+            setChecked={(e) => {
+              buildUrl(pageName, "significance", e, navigate);
+            }}
+          />
 
           <div className="w-full flex items-center justify-between my-4">
             <CSV data={data} />

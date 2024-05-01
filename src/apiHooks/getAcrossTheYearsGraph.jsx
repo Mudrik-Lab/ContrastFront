@@ -7,6 +7,7 @@ export default async function getAcrossTheYears({
   theory_driven,
   type_of_consciousness,
   isUncontrast,
+  significance,
 }) {
   return await queryApi({
     url: isUncontrast
@@ -15,9 +16,10 @@ export default async function getAcrossTheYears({
     params: {
       breakdown,
       min_number_of_experiments,
-      ...(isUncontrast ? {} : { is_reporting: is_reporting }),
-      ...(isUncontrast ? {} : { type_of_consciousness: type_of_consciousness }),
-      ...(isUncontrast ? {} : { theory_driven: theory_driven }),
+      significance,
+      is_reporting: is_reporting,
+      type_of_consciousness: type_of_consciousness,
+      theory_driven: theory_driven,
     },
     method: "GET",
   });

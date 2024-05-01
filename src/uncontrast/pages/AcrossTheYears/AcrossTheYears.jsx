@@ -7,6 +7,7 @@ import {
   ReportFilter,
   Reset,
   SideControl,
+  SignificanceFilter,
   Text,
   TooltipExplanation,
   TopGraphText,
@@ -35,8 +36,7 @@ const Plot = createPlotlyComponent(Plotly);
 export default function AcrossTheYears() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
-  const [reporting, setReporting] = React.useState();
-  const [consciousness, setConsciousness] = React.useState();
+  const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const navigate = useNavigate();
   const pageName = "trends-over-time";
@@ -44,15 +44,13 @@ export default function AcrossTheYears() {
     queryKey: [
       "across_the_years",
       "uncontrast",
-      consciousness,
-      reporting,
+      significance,
       experimentsNum,
       selected?.value || uncontrastParametersOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
-        type_of_consciousness: consciousness,
-        is_reporting: reporting,
+        significance,
         min_number_of_experiments: experimentsNum,
         breakdown: selected?.value || uncontrastParametersOptions[0].value,
         isUncontrast: true,
@@ -80,13 +78,9 @@ export default function AcrossTheYears() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    queryParams.get("is_reporting")
-      ? setReporting(queryParams.get("is_reporting"))
-      : setReporting("either");
-
-    queryParams.get("type_of_consciousness")
-      ? setConsciousness(queryParams.get("type_of_consciousness"))
-      : setConsciousness("either");
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -141,6 +135,13 @@ export default function AcrossTheYears() {
                 tooltip="Choose the dependent variable to be queried."
               />
             </div>
+
+            <SignificanceFilter
+              checked={significance}
+              setChecked={(e) => {
+                buildUrl(pageName, "significance", e, navigate);
+              }}
+            />
 
             <div className="w-full flex items-center justify-between my-4">
               <CSV data={data} />

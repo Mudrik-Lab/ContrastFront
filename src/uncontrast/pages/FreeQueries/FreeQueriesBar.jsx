@@ -6,6 +6,7 @@ import {
   RangeInput,
   Reset,
   SideControl,
+  SignificanceFilter,
   Text,
   TooltipExplanation,
   TopGraphText,
@@ -55,6 +56,7 @@ export default function FreeQueriesBar() {
   const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] = useState(
     []
   );
+  const [significance, setSignificance] = useState();
   const [tagsFamilies, setTagsFamilies] = useState([]);
   const [tagsTypes, setTagsTypes] = useState([]);
   const [theoryFamilies, setTheoryFamilies] = React.useState([]);
@@ -123,6 +125,7 @@ export default function FreeQueriesBar() {
       "uncontrast",
       selected?.value,
       experimentsNum,
+      significance,
       consciousnessMeasurePhases?.map((row) => row.label).join(","),
       consciousnessMeasureTypes?.map((row) => row.label).join(","),
       populations?.map((row) => row.label).join(","),
@@ -137,6 +140,7 @@ export default function FreeQueriesBar() {
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
         populations,
+        significance,
         target_stimuli_categories: stimuliCategories,
         target_stimuli_modalities: stimuliModalities,
         tasks,
@@ -193,6 +197,10 @@ export default function FreeQueriesBar() {
         })
       );
     }
+
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -279,12 +287,21 @@ export default function FreeQueriesBar() {
                   tooltip="Choose the dependent variable to be queried."
                 />
               </div>
-              <TooltipExplanation
-                text={"Filter by"}
-                tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters."
+              <SignificanceFilter
+                checked={significance}
+                setChecked={(e) => {
+                  buildUrl(pageName, "significance", e, navigate);
+                }}
               />
               {extraConfigSuccess && (
                 <div>
+                  <div className="flex flex-col items-center">
+                    <TooltipExplanation
+                      text={"Filter by"}
+                      tooltip="You can select every combination of parameters you are interested in filtering the results by; for each parameter, open the drop-down menu and indicate your preference. Choosing to filter by multiple values within parameters filters by either value, and selecting multiple parameters filters by both parameters."
+                    />
+                  </div>
+
                   <div className={sideSectionClass}>
                     <Select
                       className="text-lg w-[300px]"

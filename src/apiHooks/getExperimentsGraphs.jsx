@@ -10,6 +10,7 @@ export default async function getExperimentsGraphs({
   theory_driven,
   interpretation,
   isUncontrast,
+  significance,
 }) {
   const url = isUncontrast
     ? "uncontrast_studies/experiments_graphs"
@@ -20,10 +21,11 @@ export default async function getExperimentsGraphs({
       breakdown,
       theory,
       min_number_of_experiments,
-      ...(isUncontrast ? {} : { is_reporting: is_reporting }),
-      ...(isUncontrast ? {} : { type_of_consciousness: type_of_consciousness }),
-      ...(isUncontrast ? {} : { theory_driven: theory_driven }),
-      ...(isUncontrast ? {} : { interpretation: interpretation }),
+      significance,
+      is_reporting,
+      type_of_consciousness,
+      theory_driven,
+      interpretation,
     },
     method: "GET",
   });

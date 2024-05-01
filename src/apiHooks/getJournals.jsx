@@ -7,6 +7,7 @@ export default async function getJournals({
   type_of_consciousness,
   min_number_of_experiments,
   isUncontrast,
+  significance,
 }) {
   return await queryApi({
     url: isUncontrast
@@ -14,10 +15,11 @@ export default async function getJournals({
       : `studies/experiments_graphs/journals/`,
     params: {
       min_number_of_experiments,
-      ...(isUncontrast ? {} : { theory }),
-      ...(isUncontrast ? {} : { is_reporting: is_reporting }),
-      ...(isUncontrast ? {} : { type_of_consciousness: type_of_consciousness }),
-      ...(isUncontrast ? {} : { theory_driven: theory_driven }),
+      significance,
+      theory,
+      is_reporting: is_reporting,
+      type_of_consciousness: type_of_consciousness,
+      theory_driven: theory_driven,
     },
     method: "GET",
   });

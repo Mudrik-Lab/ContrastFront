@@ -19,23 +19,25 @@ export default function PapersIconsMenu() {
           With a Range of Unique Data Visualization Tools:{" "}
         </Text>
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
-          {graphsHeaders.map((paper) => (
-            <div
-              role="button"
-              key={paper.text}
-              className="flex flex-col w-24 items-center cursor-pointer p-2 hover:bg-grayLight"
-              onClick={() => navigate(paper.route)}>
-              <Tooltip content={paper.tooltip} trigger="hover">
-                <div className="flex flex-col justify-start items-center gap-3">
-                  {" "}
-                  {paper.icon}
-                  <p className="text-center text-base leading-5">
-                    {paper.text}
-                  </p>
-                </div>
-              </Tooltip>
-            </div>
-          ))}
+          {graphsHeaders
+            .filter((graph) => graph.isContrast)
+            .map((paper) => (
+              <div
+                role="button"
+                key={paper.text}
+                className="flex flex-col w-24 items-center cursor-pointer p-2 hover:bg-grayLight"
+                onClick={() => navigate(paper.route)}>
+                <Tooltip content={paper.tooltip} trigger="hover">
+                  <div className="flex flex-col justify-start items-center gap-3">
+                    {" "}
+                    {paper.icon}
+                    <p className="text-center text-base leading-5">
+                      {paper.text}
+                    </p>
+                  </div>
+                </Tooltip>
+              </div>
+            ))}
         </div>
       </div>
     </div>

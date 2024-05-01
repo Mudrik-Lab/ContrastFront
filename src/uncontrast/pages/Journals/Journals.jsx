@@ -13,6 +13,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
+  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import {
   plotConfig,
@@ -35,16 +36,17 @@ const Plot = createPlotlyComponent(Plotly);
 export default function Journals() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
-
+  const [significance, setSignificance] = React.useState();
   const navigate = useNavigate();
   const pageName = "journals";
 
   const { data, isSuccess, isLoading } = useQuery({
-    queryKey: ["journals", experimentsNum],
+    queryKey: ["journals", experimentsNum, significance],
     queryFn: () =>
       getJournals({
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
+        significance,
       }),
   });
 
@@ -62,6 +64,10 @@ export default function Journals() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
+
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -82,6 +88,12 @@ export default function Journals() {
               number={experimentsNum}
               setNumber={(e) => {
                 buildUrl(pageName, "min_number_of_experiments", e, navigate);
+              }}
+            />
+            <SignificanceFilter
+              checked={significance}
+              setChecked={(e) => {
+                buildUrl(pageName, "significance", e, navigate);
               }}
             />
 

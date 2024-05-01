@@ -10,6 +10,7 @@ import {
   TopGraphText,
   CSV,
   Reset,
+  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 import {
@@ -19,7 +20,6 @@ import {
   sideSectionClass,
   plotConfig,
 } from "../../../Utils/HardCoded";
-import getConfiguration from "../../../apiHooks/getConfiguration";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -35,7 +35,7 @@ const Plot = createPlotlyComponent(Plotly);
 export default function ParametersDistributionBar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
-
+  const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [isStacked, setIsStacked] = React.useState(true);
   const [isCsv, setIsCsv] = React.useState(false);
@@ -50,6 +50,7 @@ export default function ParametersDistributionBar() {
       selected?.value,
       experimentsNum,
       isCsv,
+      significance,
     ],
     queryFn: () => {
       return getExperimentsGraphs({
@@ -58,6 +59,7 @@ export default function ParametersDistributionBar() {
         min_number_of_experiments: experimentsNum,
         is_csv: isCsv,
         isUncontrast: true,
+        significance,
       });
     },
     enabled: Boolean(selected?.value),
@@ -113,6 +115,10 @@ export default function ParametersDistributionBar() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
+
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
@@ -164,6 +170,13 @@ export default function ParametersDistributionBar() {
               />
             </div>
 
+            <SignificanceFilter
+              checked={significance}
+              setChecked={(e) => {
+                buildUrl(pageName, "significance", e, navigate);
+              }}
+            />
+
             <div className={sideSectionClass}>
               <div className="flex gap-2 mt-4">
                 <Text>Side by side</Text>
@@ -178,6 +191,7 @@ export default function ParametersDistributionBar() {
                 />
               </div>
             </div>
+
             <div className="w-full flex items-center justify-between my-4">
               <div className="w-full flex items-center justify-between my-4">
                 <CSV data={data} />

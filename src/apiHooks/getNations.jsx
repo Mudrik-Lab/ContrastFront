@@ -7,6 +7,7 @@ export default async function getNations({
   theory,
   min_number_of_experiments,
   isUncontrast,
+  significance,
 }) {
   const theoriesArr = theory?.map((t) => "&theory=" + t.value);
   const url = isUncontrast
@@ -17,9 +18,10 @@ export default async function getNations({
     url: `${url}/?${theoriesArr?.join("").slice(1)}`,
     params: {
       min_number_of_experiments,
-      ...(isUncontrast ? {} : { is_reporting: is_reporting }),
-      ...(isUncontrast ? {} : { type_of_consciousness: type_of_consciousness }),
-      ...(isUncontrast ? {} : { theory_driven: theory_driven }),
+      significance,
+      is_reporting: is_reporting,
+      type_of_consciousness: type_of_consciousness,
+      theory_driven: theory_driven,
     },
     method: "GET",
   });

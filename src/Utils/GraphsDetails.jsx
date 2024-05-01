@@ -55,15 +55,13 @@ export const graphsHeaders = [
     isUncontrast: false,
   },
   {
-    text: "Theories Experiments",
+    text: "Experiments Comparison",
     tooltip: "",
     color: "orange",
     icon: <TheoriesComparison />,
-    route: "/theories-comparison",
-    figureLine:
-      "Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter.",
-    figureText:
-      "You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    route: "/experiments-comparison",
+    figureLine: "Experiments Comparison",
+    figureText: "Experiments Comparison",
     isContrast: false,
     isUncontrast: true,
   },
