@@ -10,8 +10,8 @@ export default async function getAcrossTheYears({
 }) {
   return await queryApi({
     url: isUncontrast
-      ? `uncontrast_studies/experiments_graphs/across_the_years/`
-      : `studies/experiments_graphs/across_the_years`,
+      ? `uncontrast_studies/experiments_graphs/trends_over_years/`
+      : `studies/experiments_graphs/trends_over_years`,
     params: {
       breakdown,
       min_number_of_experiments,
