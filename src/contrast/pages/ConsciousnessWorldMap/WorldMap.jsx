@@ -16,7 +16,12 @@ import {
 
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import Spinner from "../../../sharedComponents/Spinner";
-import { azure, grayReg, isMoblile, plotConfig } from "../../../Utils/HardCoded";
+import {
+  azure,
+  grayReg,
+  isMoblile,
+  plotConfig,
+} from "../../../Utils/HardCoded";
 import getNations from "../../../apiHooks/getNations";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";

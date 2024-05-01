@@ -11,6 +11,7 @@ import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison
 import Journals from "./pages/Journals/Journals.jsx";
 import WorldMap from "./pages/WorldMap/WorldMap.jsx";
 import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie.jsx";
+import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -56,6 +57,10 @@ const UncontrastScreens = () => {
         <Route
           path="/parameter-distribution-pie"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionPie />}
+        />
+        <Route
+          path="/parameter-distribution-bar"
+          element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
         />
       </Routes>
     </BrowserRouter>
