@@ -23,6 +23,7 @@ export const graphsHeaders = [
       "Here, you can see how the experiments in the database divide to the theories, separately for experiments that support/challenge them. On the left, you can select sub-groups of the experiments to be presented in the figure",
     figureText: "",
     legendLine: "Challenges, Supports",
+    isContrast: true,
     isUncontrast: false,
   },
   {
@@ -36,6 +37,7 @@ export const graphsHeaders = [
       "Here, you can use the toolbar on the left to create your own queries of the data, and generate new figures based on your parameters of interest.",
     figureText:
       " Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: true,
     isUncontrast: true,
   },
   {
@@ -49,6 +51,20 @@ export const graphsHeaders = [
       "Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter.",
     figureText:
       "You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: true,
+    isUncontrast: false,
+  },
+  {
+    text: "Theories Experiments",
+    tooltip: "",
+    color: "orange",
+    icon: <TheoriesComparison />,
+    route: "/theories-comparison",
+    figureLine:
+      "Here, you can select a specific parameter of interest, and see how the experiments referring to each one of the theories distribute over the different levels of that parameter.",
+    figureText:
+      "You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: false,
     isUncontrast: true,
   },
   {
@@ -62,6 +78,7 @@ export const graphsHeaders = [
       "Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter.",
     figureText:
       "The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.You can also filter the results according to reporting technique.",
+    isContrast: true,
     isUncontrast: true,
   },
 
@@ -78,6 +95,7 @@ export const graphsHeaders = [
       "The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
+    isContrast: true,
     isUncontrast: true,
   },
   {
@@ -91,6 +109,7 @@ export const graphsHeaders = [
       "Here, you can select a specific parameter of interest, and see how the experiments in the database distribute over the different levels of that parameter over time.",
     figureText:
       "The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: true,
     isUncontrast: true,
   },
   {
@@ -106,6 +125,7 @@ export const graphsHeaders = [
       "The category 'Mentioning' includes experiments that mentioned at least one family of theories in the introduction. The category 'Post hoc' includes experiments that only interpreted their results in light of the theories. The outer circle describes the distribution of the interpretations of each experiment in the inner circle slice according to the four families of theories. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
+    isContrast: true,
     isUncontrast: false,
   },
   {
@@ -121,6 +141,7 @@ export const graphsHeaders = [
       "Each horizontal line represents a specific component, colored according to its classification by the authors (see the legend). Darker colors indicate later sharedComponents. Components for which a time window was given are depicted as a continuous line spanning over the sharedComponents range. Dots depict sharedComponents for which only the peak was reported. In this figure, you can select a specific technique/component or multi-select more than one. In addition, you can filter the results according to consciousness type and reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     legendLine:
       "To zoom in on a specific time window, simply draw a rectangle with your mouse on the area of interest, and the figure will change accordingly.",
+    isContrast: true,
     isUncontrast: false,
   },
   {
@@ -134,6 +155,7 @@ export const graphsHeaders = [
       "Here, you can plot the frequencies in which effects were reported in all experiments in the database that employed a time-resolved technique. ",
     figureText:
       "Each horizontal line represents the frequency band reported in a specific experiment, colored according to its classification by the authors (see the legend). Darker colors indicate lower frequencies. Cases in which a specific frequency was reported (e.g., 5Hz), are represented by dots. In this figure, you can select a specific technique or multi-select more than one. You can also filter the results according to consciousness type, reporting technique, and theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: true,
     isUncontrast: false,
   },
 
@@ -150,6 +172,7 @@ export const graphsHeaders = [
       "Red, yellow, blue, and green activations represent experiments supporting the global workspace theories, integrated information, higher order, and re-entry and predictive processing theories, respectively. The intensity of the color of each activation indicates the relative frequency of the activation in each brain area, within the findings supporting each theory family. Note that this does not include any statistical analysis of the data, just a simple “vote count” of the number of experiments in which a specific area was reported. ",
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
+    isContrast: true,
     isUncontrast: false,
   },
   {
@@ -163,6 +186,7 @@ export const graphsHeaders = [
       "Here, you can see in which journals the experiments in the database for a chosen theory family were reported. ",
     figureText:
       "You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. ",
+    isContrast: true,
     isUncontrast: true,
   },
   {
@@ -176,6 +200,7 @@ export const graphsHeaders = [
       "Here, you can see how the different theories are supported in different countries around the world.",
     figureText:
       " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    isContrast: true,
     isUncontrast: true,
   },
 ];
