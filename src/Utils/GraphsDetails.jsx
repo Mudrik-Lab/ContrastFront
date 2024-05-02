@@ -10,6 +10,7 @@ import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
+import { ReactComponent as Effects } from "../assets/icons/effects.svg";
 
 export const graphsHeaders = [
   {
@@ -62,6 +63,17 @@ export const graphsHeaders = [
     route: "/experiments-comparison",
     figureLine: "Experiments Comparison",
     figureText: "Experiments Comparison",
+    isContrast: false,
+    isUncontrast: true,
+  },
+  {
+    text: "Distribution of Effects Across Parameter",
+    tooltip: "",
+    color: "someRed",
+    icon: <Effects />,
+    route: "/distribution_of_effects_across_parameters",
+    figureLine: "Distribution of Effects Across Parameter",
+    figureText: "Distribution of Effects Across Parameter",
     isContrast: false,
     isUncontrast: true,
   },

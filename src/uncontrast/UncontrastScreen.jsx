@@ -12,6 +12,7 @@ import WorldMap from "./pages/WorldMap/WorldMap.jsx";
 import ParametersDistributionPie from "./pages/ParametersDistributionPie/ParametersDistributionPie.jsx";
 import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar.jsx";
 import ParametersDistributionExperimentsComparison from "./pages/ExperimentsComparison/ExperimentsComparison.jsx";
+import EffectsDistributionLines from "./pages/EffectsDistributionLines/EffectsDistributionLines.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -61,6 +62,10 @@ const UncontrastScreens = () => {
         <Route
           path="/parameter-distribution-bar"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
+        />
+        <Route
+          path="/distribution_of_effects_across_parameters"
+          element={isMoblile ? <MobileScreen /> : <EffectsDistributionLines />}
         />
       </Routes>
     </BrowserRouter>

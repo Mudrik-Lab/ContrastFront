@@ -310,6 +310,8 @@ export default function FreeQueriesBar() {
     }
   }, [csvRef.current]);
 
+  console.log(configuration);
+
   return (
     <div>
       {extraConfigSuccess && (
