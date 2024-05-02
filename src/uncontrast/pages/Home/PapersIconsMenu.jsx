@@ -20,7 +20,11 @@ export default function PapersIconsMenu() {
         </Text>
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
           {graphsHeaders
-            .filter((graph) => graph.isUncontrast)
+            .filter(
+              (graph) =>
+                graph.siteToDisplay === "uncontrast" ||
+                graph.siteToDisplay === "both"
+            )
             .map((paper) => (
               <div
                 role="button"

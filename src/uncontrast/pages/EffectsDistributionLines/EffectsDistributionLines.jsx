@@ -19,9 +19,7 @@ import {
   screenHeight,
   screenWidth,
   sideSectionClass,
-  uncontrastParametersOptions,
 } from "../../../Utils/HardCoded";
-import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { buildUrl, rawTextToShow } from "../../../Utils/functions";
@@ -41,30 +39,37 @@ export default function EffectsDistributionLines() {
   const [experimentsNum, setExperimentsNum] = React.useState();
   const navigate = useNavigate();
   const pageName = "distribution-of-effects-across-parameters";
-  // const continuousBreakdownOptions = [
-  //   { value: "number_of_stimuli" label:"number_of_stimuli"},
-  //   { value: "outcome_number_of_trials" label:"outcome_number_of_trials"},
-  //   { value: "sample_size_excluded" label:},
-  //   { value: "sample_size_included" label:},
-  //   { value: "suppressed_stimuli_duration" label:},
-  //   {
-  //     value: "unconsciousness_measure_number_of_participants_in_awareness_test",
-  //   label:},
-  //   { value: "unconsciousness_measure_number_of_trials" label:},
-  // ];
+  const continuousBreakdownOptions = [
+    { value: "number_of_stimuli", label: "number_of_stimuli" },
+    { value: "outcome_number_of_trials", label: "outcome_number_of_trials" },
+    { value: "sample_size_excluded", label: "sample_size_excluded" },
+    { value: "sample_size_included", label: "sample_size_included" },
+    {
+      value: "suppressed_stimuli_duration",
+      label: "suppressed_stimuli_duration",
+    },
+    {
+      value: "unconsciousness_measure_number_of_participants_in_awareness_test",
+      label: "unconsciousness_measure_number_of_participants_in_awareness_test",
+    },
+    {
+      value: "unconsciousness_measure_number_of_trials",
+      label: "unconsciousness_measure_number_of_trials",
+    },
+  ];
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "distribution_of_effects_across_parameters",
       significance,
       experimentsNum,
-      selected?.value || uncontrastParametersOptions[0].value,
+      selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
         significance,
         min_number_of_experiments: experimentsNum,
         continuous_breakdown:
-          selected?.value || uncontrastParametersOptions[0].value,
+          selected?.value || continuousBreakdownOptions[0].value,
         isUncontrast: true,
       }),
   });
@@ -104,7 +109,7 @@ export default function EffectsDistributionLines() {
         label: rawTextToShow(queryParams.get("breakdown")),
       });
     } else {
-      setSelected(uncontrastParametersOptions[0]);
+      setSelected(continuousBreakdownOptions[0]);
     }
 
     navigate({ search: queryParams.toString() });
@@ -135,7 +140,7 @@ export default function EffectsDistributionLines() {
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}
-                options={uncontrastParametersOptions}
+                options={continuousBreakdownOptions}
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);

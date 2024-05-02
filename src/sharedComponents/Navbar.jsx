@@ -24,8 +24,12 @@ export default function Navbar() {
 
   const isUncontrast = Site.type === "uncontrast";
   const graphs = isUncontrast
-    ? graphsHeaders.filter((x) => x.isUncontrast === true)
-    : graphsHeaders.filter((x) => x.isContrast === true);
+    ? graphsHeaders.filter(
+        (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
+      )
+    : graphsHeaders.filter(
+        (x) => x.siteToDisplay === "contrast" || x.siteToDisplay === "both"
+      );
 
   const page = window.location.pathname;
 
