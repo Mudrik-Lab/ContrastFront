@@ -27,7 +27,11 @@ import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
 import Toggle from "../../../sharedComponents/Toggle";
 import Spinner from "../../../sharedComponents/Spinner";
-import { breakLongLines, rawTextToShow, buildUrl } from "../../../Utils/functions";
+import {
+  breakLongLines,
+  rawTextToShow,
+  buildUrl,
+} from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";

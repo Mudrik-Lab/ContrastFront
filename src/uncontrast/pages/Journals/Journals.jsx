@@ -1,26 +1,16 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect } from "react";
-import Select from "react-select";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
   CSV,
-  TooltipExplanation,
   RangeInput,
-  ReportFilter,
   Reset,
   SideControl,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
-  TypeOfConsciousnessFilter,
   SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
-import {
-  plotConfig,
-  screenWidth,
-  sideSectionClass,
-} from "../../../Utils/HardCoded";
-import getConfiguration from "../../../apiHooks/getConfiguration";
+import { plotConfig, screenWidth } from "../../../Utils/HardCoded";
 import getJournals from "../../../apiHooks/getJournals";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -39,7 +29,8 @@ export default function Journals() {
   const [significance, setSignificance] = React.useState();
   const navigate = useNavigate();
   const pageName = "journals";
-
+  const ONE_ROW_HEIGHT = 35;
+  const Y_AXIS_OFFSET = 350;
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: ["journals", experimentsNum, significance],
     queryFn: () =>
@@ -51,9 +42,9 @@ export default function Journals() {
   });
 
   const graphsData = isSuccess ? data?.data : [];
-  const Y = graphsData.map((row) => row.key);
+  const YaxisData = graphsData.map((row) => row.key);
   var trace1 = {
-    y: Y.reverse(),
+    y: YaxisData.reverse(),
     x: graphsData.map((row) => row.value).reverse(),
     type: "bar",
     orientation: "h",
@@ -120,7 +111,7 @@ export default function Journals() {
                 layout={{
                   autosize: false,
                   width: screenWidth,
-                  height: 35 * Y?.length + 350,
+                  height: ONE_ROW_HEIGHT * YaxisData?.length + Y_AXIS_OFFSET,
                   showlegend: false,
 
                   legend: { itemwidth: 90 },

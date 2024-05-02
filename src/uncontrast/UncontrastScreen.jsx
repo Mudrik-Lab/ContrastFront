@@ -25,7 +25,7 @@ const UncontrastScreens = () => {
           element={isMoblile ? <MobileScreen /> : <FreeQueriesBar />}
         />
         <Route
-          path="/theories-comparison"
+          path="/experiments-comparison"
           element={
             isMoblile ? (
               <MobileScreen />

@@ -11,9 +11,7 @@ import {
   TooltipExplanation,
   TopGraphText,
 } from "../../../sharedComponents/Reusble";
-
 import {
-  available_populations,
   footerHeight,
   isMoblile,
   navHeight,
@@ -28,17 +26,16 @@ import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
-
 import {
   buildUrl,
   buildUrlForMultiSelect,
   rawTextToShow,
 } from "../../../Utils/functions";
-import getConfiguration from "../../../apiHooks/getConfiguration";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 import getUncontrastFreeQueries from "../../../apiHooks/getUncontrastFreeQueries.jsx";
+import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration.jsx";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -46,9 +43,16 @@ export default function FreeQueriesBar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = useState();
+  const [significance, setSignificance] = useState();
+
   const [stimuliCategories, setStimuliCategories] = useState([]);
   const [stimuliModalities, setStimuliModalities] = useState([]);
+  const [targetStimuliCategories, setTargetStimuliCategories] = useState([]);
+  const [targetStimuliModalities, setTargetStimuliModalities] = useState([]);
   const [tasks, setTasks] = useState([]);
+  const [types, setTypes] = useState([]);
+
+  const [paradigms, setParadigms] = useState([]);
   const [populations, setPopulations] = useState([]);
   const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] = useState(
     []
@@ -56,35 +60,23 @@ export default function FreeQueriesBar() {
   const [consciousnessMeasurePhases, setConsciousnessMeasurePhases] = useState(
     []
   );
-  const [significance, setSignificance] = useState();
-  const [tagsFamilies, setTagsFamilies] = useState([]);
-  const [tagsTypes, setTagsTypes] = useState([]);
-  const [theoryFamilies, setTheoryFamilies] = React.useState([]);
-  const [interpretations, setInterpretations] = useState([]);
-  const [measures, setMeasures] = useState([]);
+  const [modeOfPresentation, setModeOfPresentation] = useState([]);
+  const [processingDomain, setProcessingDomain] = useState([]);
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-free-queries";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
-    getConfiguration
+    getUncontrastConfiguration
   );
   const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
     getExtraConfig
   );
 
-  const consciousnessMeasurePhaseArr = extraConfigSuccess
-    ? extraConfig?.data.available_consciousness_measure_phase_type.map(
-        (type, index) => ({
-          value: type.id,
-          label: type.name,
-        })
-      )
-    : [];
-  const consciousnessMeasureTypesArr = extraConfigSuccess
-    ? extraConfig?.data.available_consciousness_measure_type.map(
+  const consciousnessMeasurePhaseArr = configSuccess
+    ? configuration?.data.available_consciousness_measure_phase_type.map(
         (type, index) => ({
           value: type.id,
           label: type.name,
@@ -92,28 +84,68 @@ export default function FreeQueriesBar() {
       )
     : [];
 
-  const tagsTypesArr = extraConfigSuccess
-    ? extraConfig?.data.available_finding_tags_types.map((type, index) => ({
+  const consciousnessMeasureTypesArr = configSuccess
+    ? configuration?.data.available_consciousness_measure_type.map(
+        (type, index) => ({
+          value: type.id,
+          label: type.name,
+        })
+      )
+    : [];
+
+  const modeOfPresentationArr = configSuccess
+    ? configuration?.data.available_mode_of_presentation.map((type, index) => ({
+        value: type,
+        label: rawTextToShow(type),
+      }))
+    : [];
+
+  const populationsArr = configSuccess
+    ? configuration?.data.available_populations_types.map((type, index) => ({
+        value: type,
+        label: rawTextToShow(type),
+      }))
+    : [];
+  const processingDomainArr = configSuccess
+    ? configuration?.data.available_processing_main_domain_types.map(
+        (type, index) => ({
+          value: type.id,
+          label: type.name,
+        })
+      )
+    : [];
+
+  const stimuliCategoriesArr = configSuccess
+    ? configuration?.data.available_stimulus_category_type.map(
+        (type, index) => ({
+          value: type.id,
+          label: type.name,
+        })
+      )
+    : [];
+  const stimuliModalitiesArr = configSuccess
+    ? configuration?.data.available_stimulus_modality_type.map(
+        (type, index) => ({
+          value: type.id,
+          label: type.name,
+        })
+      )
+    : [];
+  const tasksArr = configSuccess
+    ? configuration?.data.available_tasks_types.map((type, index) => ({
         value: type.id,
         label: type.name,
       }))
     : [];
 
-  const populationsArr = available_populations;
-  const stimuliCategoriesArr = extraConfigSuccess
-    ? extraConfig?.data.available_stimulus_category_type.map((type, index) => ({
+  const typesArr = configSuccess
+    ? configuration?.data.available_experiment_types.map((type, index) => ({
         value: type.id,
         label: type.name,
       }))
     : [];
-  const stimuliModalitiesArr = extraConfigSuccess
-    ? extraConfig?.data.available_stimulus_modality_type.map((type, index) => ({
-        value: type.id,
-        label: type.name,
-      }))
-    : [];
-  const tasksArr = extraConfigSuccess
-    ? extraConfig?.data.available_tasks_types.map((type, index) => ({
+  const paradigmsArr = extraConfigSuccess
+    ? extraConfig?.data.available_paradigms.map((type, index) => ({
         value: type.id,
         label: type.name,
       }))
@@ -128,27 +160,33 @@ export default function FreeQueriesBar() {
       significance,
       consciousnessMeasurePhases?.map((row) => row.label).join(","),
       consciousnessMeasureTypes?.map((row) => row.label).join(","),
+      modeOfPresentation?.map((row) => row.label).join(","),
+      paradigms?.map((row) => row.label).join(","),
       populations?.map((row) => row.label).join(","),
       stimuliCategories?.map((row) => row.label).join(","),
       stimuliModalities?.map((row) => row.label).join(","),
+      targetStimuliCategories?.map((row) => row.label).join(","),
+      targetStimuliModalities?.map((row) => row.label).join(","),
       tasks?.map((row) => row.label).join(","),
+      types?.map((row) => row.label).join(","),
     ],
     queryFn: () =>
       getUncontrastFreeQueries({
         breakdown: selected.value,
         min_number_of_experiments: experimentsNum,
+        significance,
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
+        mode_of_presentation: modeOfPresentation,
+        paradigms,
         populations,
-        significance,
-        target_stimuli_categories: stimuliCategories,
-        target_stimuli_modalities: stimuliModalities,
+        processing_domain_types: processingDomain,
+        suppressed_stimuli_categories: stimuliCategories,
+        suppressed_stimuli_modalities: stimuliModalities,
+        target_stimuli_categories: targetStimuliCategories,
+        target_stimuli_modalities: targetStimuliModalities,
         tasks,
-        // types,
-        // processing_domain_types,
-        // suppressed_stimuli_categories,
-        // suppressed_stimuli_modalities,
-        // suppression_methods_types,
+        types,
       }),
     enabled: Boolean(selected?.value),
   });
@@ -214,20 +252,7 @@ export default function FreeQueriesBar() {
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
-    if (extraConfigSuccess) {
-      updateMultiFilterState(
-        setStimuliCategories,
-        "stimuli_categories",
-        stimuliCategoriesArr
-      );
-      updateMultiFilterState(
-        setStimuliModalities,
-        "stimuli_modalities",
-        stimuliModalitiesArr
-      );
-      updateMultiFilterState(setTasks, "tasks", tasksArr);
-      updateMultiFilterState(setPopulations, "populations", populationsArr);
-
+    if (extraConfigSuccess && configSuccess) {
       updateMultiFilterState(
         setConsciousnessMeasurePhases,
         "consciousness_measure_phases",
@@ -238,9 +263,42 @@ export default function FreeQueriesBar() {
         "consciousness_measure_types",
         consciousnessMeasureTypesArr
       );
-    }
+      updateMultiFilterState(
+        setModeOfPresentation,
+        "mode_of_presentation",
+        modeOfPresentationArr
+      );
+      updateMultiFilterState(setParadigms, "paradigms", paradigmsArr);
 
-    navigate({ search: queryParams.toString() });
+      updateMultiFilterState(setPopulations, "populations", populationsArr);
+      updateMultiFilterState(
+        setProcessingDomain,
+        "processing_domain_types",
+        processingDomainArr
+      );
+      updateMultiFilterState(
+        setStimuliCategories,
+        "suppressed_stimuli_categories",
+        stimuliCategoriesArr
+      );
+      updateMultiFilterState(
+        setStimuliModalities,
+        "suppressed_stimuli_modalities",
+        stimuliModalitiesArr
+      );
+      updateMultiFilterState(
+        setTargetStimuliCategories,
+        "target_stimuli_categories",
+        stimuliCategoriesArr
+      );
+      updateMultiFilterState(
+        setTargetStimuliModalities,
+        "target_stimuli_modalities",
+        stimuliModalitiesArr
+      );
+      updateMultiFilterState(setTasks, "tasks", tasksArr);
+      updateMultiFilterState(setTypes, "types", typesArr);
+    }
   }, [searchParams, extraConfigSuccess]);
 
   const referrerUrl = document.referrer;
@@ -307,65 +365,14 @@ export default function FreeQueriesBar() {
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
-                      value={stimuliCategories}
-                      options={stimuliCategoriesArr}
-                      placeholder="Stimulus Category"
-                      aria-label="Stimulus Category"
+                      value={consciousnessMeasurePhases}
+                      options={consciousnessMeasurePhaseArr}
+                      placeholder={"When was consciousness measured? "}
+                      aria-label={"When was consciousness measured? "}
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
-                          "stimuli_categories",
-                          searchParams,
-                          navigate
-                        );
-                      }}
-                    />
-                    <Select
-                      className="text-lg w-[300px]"
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={stimuliModalities}
-                      options={stimuliModalitiesArr}
-                      placeholder="Stimulus Modality"
-                      aria-label="Stimulus Modality"
-                      onChange={(e) => {
-                        buildUrlForMultiSelect(
-                          e,
-                          "stimuli_modalities",
-                          searchParams,
-                          navigate
-                        );
-                      }}
-                    />
-                    <Select
-                      className="text-lg w-[300px]"
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={tasks}
-                      options={tasksArr}
-                      placeholder="Task"
-                      aria-label="Task"
-                      onChange={(e) => {
-                        buildUrlForMultiSelect(
-                          e,
-                          "tasks",
-                          searchParams,
-                          navigate
-                        );
-                      }}
-                    />
-                    <Select
-                      className="text-lg w-[300px]"
-                      closeMenuOnSelect={true}
-                      isMulti={true}
-                      value={populations}
-                      options={populationsArr}
-                      placeholder="Population"
-                      aria-label="Population"
-                      onChange={(e) => {
-                        buildUrlForMultiSelect(
-                          e,
-                          "populations",
+                          "consciousness_measure_phases",
                           searchParams,
                           navigate
                         );
@@ -392,14 +399,172 @@ export default function FreeQueriesBar() {
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
-                      value={consciousnessMeasurePhases}
-                      options={consciousnessMeasurePhaseArr}
-                      placeholder={"When was consciousness measured? "}
-                      aria-label={"When was consciousness measured? "}
+                      value={modeOfPresentation}
+                      options={modeOfPresentationArr}
+                      placeholder="Mode of Presentation"
+                      aria-label="Mode of Presentation"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
-                          "consciousness_measure_phases",
+                          "mode_of_presentation",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={paradigms}
+                      options={paradigmsArr}
+                      placeholder="Paradigms"
+                      aria-label="Paradigms"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "paradigms",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={populations}
+                      options={populationsArr}
+                      placeholder="Population"
+                      aria-label="Population"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "populations",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={processingDomain}
+                      options={processingDomainArr}
+                      placeholder="Processing Domain Types"
+                      aria-label="Processing Domain Types"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "processing_domain_types",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={stimuliCategories}
+                      options={stimuliCategoriesArr}
+                      placeholder="Suppressed Stimuli Categories"
+                      aria-label="Suppressed Stimuli Categories"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "suppressed_stimuli_categories",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={stimuliModalities}
+                      options={stimuliModalitiesArr}
+                      placeholder="Suppressed Stimuli Modalities"
+                      aria-label="Suppressed Stimuli Modalities"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "suppressed_stimuli_modalities",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={targetStimuliCategories}
+                      options={stimuliCategoriesArr}
+                      placeholder="Target Stimuli Categories"
+                      aria-label="Target Stimuli Categories"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "target_stimuli_categories",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={targetStimuliModalities}
+                      options={stimuliModalitiesArr}
+                      placeholder="Target Stimuli Modalities"
+                      aria-label="Target Stimuli Modalities"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "target_stimuli_modalities",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={tasks}
+                      options={tasksArr}
+                      placeholder="Task"
+                      aria-label="Task"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "tasks",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={types}
+                      options={typesArr}
+                      placeholder="Types"
+                      aria-label="Types"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "types",
                           searchParams,
                           navigate
                         );

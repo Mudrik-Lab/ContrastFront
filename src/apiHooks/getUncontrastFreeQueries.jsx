@@ -5,19 +5,25 @@ export default async function getUncontrastFreeQueries({
   min_number_of_experiments,
   consciousness_measure_phases,
   consciousness_measure_types,
+  mode_of_presentation,
+  paradigms,
+  populations,
   processing_domain_types,
+  significance,
   suppressed_stimuli_categories,
   suppressed_stimuli_modalities,
   suppression_methods_types,
   target_stimuli_categories,
   target_stimuli_modalities,
   types,
-  populations,
   tasks,
-  significance,
 }) {
   const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
     (item) => "&consciousness_measure_phases=" + item.value
+  );
+  const paradigmsArr = paradigms?.map((item) => "&paradigms=" + item.value);
+  const modeOfPresentationArr = mode_of_presentation?.map(
+    (item) => "&mode_of_presentation=" + item.value
   );
   const consciousnessMeasureTypesArr = consciousness_measure_types?.map(
     (item) => "&consciousness_measure_types=" + item.value
