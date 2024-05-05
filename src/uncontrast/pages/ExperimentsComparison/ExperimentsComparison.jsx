@@ -5,7 +5,7 @@ import {
   footerHeight,
   isMoblile,
   navHeight,
-  parametersOptions,
+  uncontrastParametersOptions,
   plotConfig,
   screenWidth,
   sideSectionClass,
@@ -14,18 +14,14 @@ import {
   CSV,
   TooltipExplanation,
   RangeInput,
-  ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
-  TypeOfConsciousnessFilter,
+  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
-import Toggle from "../../../sharedComponents/Toggle";
 import Spinner from "../../../sharedComponents/Spinner";
 import {
   breakLongLines,
@@ -42,37 +38,30 @@ import createPlotlyComponent from "react-plotly.js/factory";
 
 const Plot = createPlotlyComponent(Plotly);
 
-export default function ParametersDistributionTheoriesComparison() {
+export default function ParametersDistributionExperimentsComparison() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
-  const [reporting, setReporting] = React.useState();
-  const [consciousness, setConsciousness] = React.useState();
-  const [theoryDriven, setTheoryDriven] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [interpretation, setInterpretation] = useState();
+  const [significance, setSignificance] = React.useState();
 
   const navigate = useNavigate();
-  const pageName = "theories-comparison";
+  const pageName = "experiments-comparison";
 
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: [
-      "parameters_distribution_theories_comparison",
+      "parameters_distribution_experiments_comparison",
+      "uncontrast",
       selected?.value,
-      consciousness,
-      reporting,
       experimentsNum,
-      theoryDriven,
-      interpretation === "true" ? "challenges" : "pro",
+      significance,
     ],
     queryFn: () =>
       getExperimentsGraphs({
-        graphName: "parameters_distribution_theories_comparison",
+        graphName: "parameters_distribution_experiments_comparison",
         breakdown: selected?.value,
-        is_reporting: reporting,
-        type_of_consciousness: consciousness,
-        theory_driven: theoryDriven,
         min_number_of_experiments: experimentsNum,
-        interpretation: interpretation === "true" ? "challenges" : "pro",
+        isUncontrast: true,
+        significance,
       }),
     enabled: Boolean(selected?.value),
   });
@@ -107,17 +96,9 @@ export default function ParametersDistributionTheoriesComparison() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    queryParams.get("is_reporting")
-      ? setReporting(queryParams.get("is_reporting"))
-      : setReporting("either");
-
-    queryParams.get("type_of_consciousness")
-      ? setConsciousness(queryParams.get("type_of_consciousness"))
-      : setConsciousness("either");
-
-    queryParams.get("theory_driven")
-      ? setTheoryDriven(queryParams.get("theory_driven"))
-      : setTheoryDriven("either");
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -129,16 +110,7 @@ export default function ParametersDistributionTheoriesComparison() {
         label: rawTextToShow(queryParams.get("breakdown")),
       });
     } else {
-      setSelected(parametersOptions[0]);
-    }
-
-    if (queryParams.get("interpretation")) {
-      queryParams.get("interpretation") === "true"
-        ? setInterpretation(true)
-        : setInterpretation(false);
-      setInterpretation(queryParams.get("interpretation"));
-    } else {
-      setInterpretation(true);
+      setSelected(uncontrastParametersOptions[0]);
     }
 
     navigate({ search: queryParams.toString() });
@@ -147,7 +119,7 @@ export default function ParametersDistributionTheoriesComparison() {
   return (
     <PageTemplate
       control={
-        <SideControl headline={"Theories Comparison"}>
+        <SideControl headline={"Experiments Comparison"}>
           <Text lg weight="bold">
             Axis Controls
           </Text>
@@ -165,7 +137,7 @@ export default function ParametersDistributionTheoriesComparison() {
               closeMenuOnSelect={true}
               isMulti={false}
               isClearable={false}
-              options={parametersOptions}
+              options={uncontrastParametersOptions}
               value={selected}
               aria-label=" Parameter of interest"
               onChange={(e) => {
@@ -177,41 +149,14 @@ export default function ParametersDistributionTheoriesComparison() {
               tooltip="Choose the dependent variable to be queried."
             />
           </div>
-          <div className={sideSectionClass}>
-            <div className="flex justify-center items-center gap-3 mt-3">
-              <Text>Supports</Text>
-              <Toggle
-                checked={interpretation === "true" ? true : false}
-                setChecked={(e) => {
-                  console.log(e);
-                  buildUrl(pageName, "interpretation", e, navigate);
-                }}
-              />
-              <Text>Challenges</Text>
-            </div>
-            <TooltipExplanation
-              text="Interpretation"
-              tooltip="You can choose to filter the results by experiments that support at least one theory, or challenge at least one theory. "
-            />
-          </div>
-          <TypeOfConsciousnessFilter
-            checked={consciousness}
+
+          <SignificanceFilter
+            checked={significance}
             setChecked={(e) => {
-              buildUrl(pageName, "type_of_consciousness", e, navigate);
+              buildUrl(pageName, "significance", e, navigate);
             }}
           />
-          <ReportFilter
-            checked={reporting}
-            setChecked={(e) => {
-              buildUrl(pageName, "is_reporting", e, navigate);
-            }}
-          />
-          <TheoryDrivenFilter
-            checked={theoryDriven}
-            setChecked={(e) => {
-              buildUrl(pageName, "theory_driven", e, navigate);
-            }}
-          />
+
           <div className="w-full flex items-center justify-between my-4">
             <CSV data={data} />
             <Reset pageName={pageName} />

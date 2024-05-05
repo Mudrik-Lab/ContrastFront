@@ -15,13 +15,24 @@ import { state } from "../state";
 import { removeToken } from "../Utils/tokenHandler";
 import getUser from "../apiHooks/getUser";
 import { Tooltip } from "flowbite-react";
+import { Site } from "../config/siteType";
 
 export default function Navbar() {
   const [graphMenue, setGraphMenue] = React.useState(false);
   const [isMobileOpen, setIsMobileOpen] = React.useState(false);
   const navigate = useNavigate();
 
+  const isUncontrast = Site.type === "uncontrast";
+  const graphs = isUncontrast
+    ? graphsHeaders.filter(
+        (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
+      )
+    : graphsHeaders.filter(
+        (x) => x.siteToDisplay === "contrast" || x.siteToDisplay === "both"
+      );
+
   const page = window.location.pathname;
+
   const snap = useSnapshot(state);
   const { data: userData, isSuccess: userSuccess } = useQuery([`user`], () => {
     if (snap.auth) {
@@ -84,7 +95,7 @@ export default function Navbar() {
                           <ul
                             className="py-2 text-lg text-gray-700 dark:text-gray-400"
                             aria-labelledby="dropdownLargeButton">
-                            {graphsHeaders.map((row) => (
+                            {graphs.map((row) => (
                               <li id={row.color} key={row.text}>
                                 <a
                                   href={row.route}
@@ -173,7 +184,7 @@ export default function Navbar() {
                         <ul
                           className="py-2 text-lg text-gray-700 dark:text-gray-400"
                           aria-labelledby="dropdownLargeButton">
-                          {graphsHeaders.map((row) => (
+                          {graphs.map((row) => (
                             <li id={row.color} key={row.text}>
                               <a
                                 href={row.route}

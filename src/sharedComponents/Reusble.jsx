@@ -11,12 +11,10 @@ import { Tooltip } from "flowbite-react";
 import {
   commonBlue,
   footerHeight,
-  grayReg,
   navHeight,
   revoltingGreen,
   screenWidth,
   sideSectionClass,
-  sideWidth,
   uploadPaperPageTopSection,
 } from "../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
@@ -356,6 +354,25 @@ export const ReportFilter = ({ checked, setChecked }) => {
         text="Report"
         tooltip="You can use this to filter the results by experiments that use Report, No-Report techniques. Both techniques in the same experiment (an AND operator), or either (show all experiments that used either report or content consciousness; an OR operator)."
       />
+    </div>
+  );
+};
+
+export const SignificanceFilter = ({ checked, setChecked }) => {
+  return (
+    <div className={sideSectionClass}>
+      <RadioInput
+        name="Significance"
+        values={[
+          { value: "Negative", name: "Negative" },
+          { value: "Positive", name: "Positive" },
+          { value: "either", name: "Either" },
+          { value: "Mixed", name: "Mixed" },
+        ]}
+        checked={checked}
+        setChecked={setChecked}
+      />
+      <TooltipExplanation text="Significance" tooltip="Significance" />
     </div>
   );
 };

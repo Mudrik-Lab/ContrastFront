@@ -12,6 +12,7 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
+  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 
 import getConfiguration from "../../../apiHooks/getConfiguration";
@@ -36,9 +37,7 @@ const Plot = createPlotlyComponent(Plotly);
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [reporting, setReporting] = React.useState();
-  const [consciousness, setConsciousness] = React.useState();
-  const [theoryDriven, setTheoryDriven] = React.useState();
+  const [significance, setSignificance] = React.useState();
   const [theoryFamilies, setTheoryFamilies] = React.useState([]);
   const navigate = useNavigate();
   const pageName = "consciousness-world-map";
@@ -60,19 +59,16 @@ export default function WorldMap() {
     [
       "nations_of_consciousness",
       theoryFamilies?.map((x) => x.value).join("+"),
-      reporting,
       experimentsNum,
-      consciousness,
-      theoryDriven,
+      significance,
     ],
     () =>
       getNations({
         graphName: "nations_of_consciousness",
         theory: theoryFamilies,
-        is_reporting: reporting,
         min_number_of_experiments: experimentsNum,
-        theory_driven: theoryDriven,
-        type_of_consciousness: consciousness,
+        isUncontrast: true,
+        significance,
       })
   );
 
@@ -217,17 +213,9 @@ export default function WorldMap() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    queryParams.get("is_reporting")
-      ? setReporting(queryParams.get("is_reporting"))
-      : setReporting("either");
-
-    queryParams.get("type_of_consciousness")
-      ? setConsciousness(queryParams.get("type_of_consciousness"))
-      : setConsciousness("either");
-
-    queryParams.get("theory_driven")
-      ? setTheoryDriven(queryParams.get("theory_driven"))
-      : setTheoryDriven("either");
+    queryParams.get("significance")
+      ? setSignificance(queryParams.get("significance"))
+      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -292,22 +280,11 @@ export default function WorldMap() {
                   }
                 />
               </div>
-              <TypeOfConsciousnessFilter
-                checked={consciousness}
+
+              <SignificanceFilter
+                checked={significance}
                 setChecked={(e) => {
-                  buildUrl(pageName, "type_of_consciousness", e, navigate);
-                }}
-              />
-              <ReportFilter
-                checked={reporting}
-                setChecked={(e) => {
-                  buildUrl(pageName, "is_reporting", e, navigate);
-                }}
-              />
-              <TheoryDrivenFilter
-                checked={theoryDriven}
-                setChecked={(e) => {
-                  buildUrl(pageName, "theory_driven", e, navigate);
+                  buildUrl(pageName, "significance", e, navigate);
                 }}
               />
               <div className="w-full flex items-center justify-between my-4">
