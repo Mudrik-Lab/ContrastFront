@@ -29,6 +29,7 @@ import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
+import { designerColors } from "../../../Utils/Colors";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -37,6 +38,7 @@ export default function EffectsDistributionLines() {
   const [selected, setSelected] = useState();
   const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
+  const [binSize, setBinSize] = React.useState(10);
   const navigate = useNavigate();
   const pageName = "distribution-of-effects-across-parameters";
   const continuousBreakdownOptions = [
@@ -62,36 +64,71 @@ export default function EffectsDistributionLines() {
       "distribution_of_effects_across_parameters",
       significance,
       experimentsNum,
+      binSize,
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
         significance,
         min_number_of_experiments: experimentsNum,
+        binSize,
         continuous_breakdown:
           selected?.value || continuousBreakdownOptions[0].value,
         isUncontrast: true,
       }),
   });
 
-  const graphsData = [];
-  data?.data.map((row) => {
-    graphsData.push({
-      x: row.series.map((a) => a.year),
-      y: row.series.map((a) => a.value),
-      type: "scatter",
-      name: rawTextToShow(row.series_name),
-      mode: "lines+markers",
-    });
-  });
+  const trace1 = {
+    x: data?.data[0].series.map((a) => a.key),
+    y: data?.data[0].series.map((a) => a.value),
+    opacity: 0.5,
+    type: "bar",
+    marker: { color: "red" },
+  };
 
-  let highestY = [];
+  const trace2 = {
+    x: data?.data[1].series.map((a) => a.key),
+    y: data?.data[1].series.map((a) => a.value),
+    opacity: 0.5,
+    type: "bar",
+    marker: { color: "blue" },
+  };
+
+  const graphsData = [trace1, trace2];
+  // data?.data.map((row) => {
+  //   graphsData.push(
+  //     {
+  //       x: row.series.map((a) => a.key),
+  //       y: row.series.map((a) => a.value),
+  //       autobinx: false,
+  //       histnorm: "count",
+
+  //       opacity: 0.5,
+  //       type: "bar",
+  //       xbins: {
+  //         size: 3,
+  //       },
+  //       name: rawTextToShow(row.series_name),
+  //     },
+  //     {
+  //       type: "line",
+
+  //       x: row.series.map((a) => a.key),
+  //       y: row.series.map((a) => a.value),
+  //     }
+  //   );
+  // });
+
+  let flatedY = [];
+  let highestY;
   if (data) {
-    highestY = data?.data
-      .map((row) => row.series.slice(-1).map((x) => x.value))
+    flatedY = data?.data
+      .map((row) => row.series.map((item) => item.value))
       .flat();
+    highestY = Math.max(...flatedY);
   }
 
+  console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -169,8 +206,14 @@ export default function EffectsDistributionLines() {
         graph={
           <div className="h-full">
             <TopGraphText
-              text={graphsHeaders[5].figureText}
-              firstLine={graphsHeaders[5].figureLine}
+              text={
+                graphsHeaders["Distribution of Effects Across Parameter"]
+                  .figureText
+              }
+              firstLine={
+                graphsHeaders["Distribution of Effects Across Parameter"]
+                  .figureLine
+              }
             />
             {isLoading ? (
               <Spinner />
@@ -179,20 +222,23 @@ export default function EffectsDistributionLines() {
                 data={graphsData}
                 config={plotConfig}
                 layout={{
+                  bargap: 0.05,
+                  bargroupgap: 0.2,
+                  barmode: "overlay",
                   xaxis: {
-                    title: "Years",
+                    title: "?",
                   },
                   yaxis: {
                     title: "Number of experiments",
                     tickmode: "linear",
-                    dtick: Math.max(...highestY) > 20 ? 20 : 1,
+                    dtick: highestY > 20 ? 20 : 1,
                   },
                   autosize: false,
                   showlegend: !isMoblile,
                   legend: {
-                    x: 1,
+                    x: 10,
                     xanchor: "left",
-                    y: 1,
+                    y: 100,
                     font: {
                       size: 16,
                       color: "#000000",

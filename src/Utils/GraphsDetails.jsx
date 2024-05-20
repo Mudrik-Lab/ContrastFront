@@ -12,8 +12,8 @@ import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 import { ReactComponent as Effects } from "../assets/icons/effects.svg";
 
-export const graphsHeaders = [
-  {
+export const graphsHeaders = {
+  "Theory Support Overview": {
     text: "Theory Support Overview",
     tooltip:
       "The figure depicts the division of experiments to the four groups of theories, separately for experiments that challenged or supported each theory",
@@ -26,7 +26,7 @@ export const graphsHeaders = [
     legendLine: "Challenges, Supports",
     siteToDisplay: "contrast",
   },
-  {
+  "Free Queries": {
     text: "Free Queries",
     color: "yellow",
     icon: <ParameterDist />,
@@ -39,7 +39,7 @@ export const graphsHeaders = [
       " Select a specific parameter of interest to see how the experiments in the database distribute over the different levels of that parameter. You can also filter the results according to various parameters. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "both",
   },
-  {
+  "Theories Comparison": {
     text: "Theories Comparison",
     tooltip:
       "The graph depicts the different distributions of parameters for the four theories separately.",
@@ -52,7 +52,7 @@ export const graphsHeaders = [
       "You can choose whether to see this distribution for experiments that supported one or more of these theories or challenged them.You can also filter the results according to consciousness type, reporting technique, and whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "contrast",
   },
-  {
+  "Experiments Comparison": {
     text: "Experiments Comparison",
     tooltip: "",
     color: "orange",
@@ -62,7 +62,7 @@ export const graphsHeaders = [
     figureText: "Experiments Comparison",
     siteToDisplay: "uncontrast",
   },
-  {
+  "Distribution of Effects Across Parameter": {
     text: "Distribution of Effects Across Parameter",
     tooltip: "",
     color: "someRed",
@@ -72,7 +72,7 @@ export const graphsHeaders = [
     figureText: "Distribution of Effects Across Parameter",
     siteToDisplay: "uncontrast",
   },
-  {
+  "Parameter Distribution Bar": {
     text: "Parameter Distribution Bar",
     tooltip:
       'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.',
@@ -86,7 +86,7 @@ export const graphsHeaders = [
     siteToDisplay: "both",
   },
 
-  {
+  "Parameter Distribution Pie": {
     text: "Parameter Distribution Pie",
     tooltip:
       "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories.",
@@ -101,7 +101,7 @@ export const graphsHeaders = [
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
     siteToDisplay: "both",
   },
-  {
+  "Trends Over Time": {
     text: "Trends Over Time",
     tooltip:
       "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time.",
@@ -114,7 +114,7 @@ export const graphsHeaders = [
       "The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "both",
   },
-  {
+  "Theory Driven": {
     text: "Theory Driven",
     tooltip:
       "The inner circle of the pie chart depicts the distribution of experiments divided into the categories: “Theory-Driven”, “Mentioning” or “Post hoc”",
@@ -129,7 +129,7 @@ export const graphsHeaders = [
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
     siteToDisplay: "contrast",
   },
-  {
+  Timings: {
     text: "Timings",
     tooltip:
       "The chart depicts the findings in the temporal domain of the experiments in the database.",
@@ -144,7 +144,7 @@ export const graphsHeaders = [
       "To zoom in on a specific time window, simply draw a rectangle with your mouse on the area of interest, and the figure will change accordingly.",
     siteToDisplay: "contrast",
   },
-  {
+  Frequencies: {
     text: "Frequencies",
     tooltip:
       "The chart depicts the findings in the frequency domain of the experiments in the database.",
@@ -158,7 +158,7 @@ export const graphsHeaders = [
     siteToDisplay: "contrast",
   },
 
-  {
+  "Anatomical Findings": {
     text: "Anatomical Findings",
     tooltip:
       "The figure depicts the findings in the spatial domain of the experiments in the database which used fMRI.",
@@ -173,7 +173,7 @@ export const graphsHeaders = [
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
     siteToDisplay: "contrast",
   },
-  {
+  Journals: {
     text: "Journals",
     tooltip:
       "The bar chart depicts distribution of experiments according to the journals they were published in.",
@@ -186,7 +186,7 @@ export const graphsHeaders = [
       "You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. ",
     siteToDisplay: "both",
   },
-  {
+  "World Map": {
     text: "Consciousness World Map",
     tooltip:
       "Distribution of the experiments in the database according to nations extracted from author affiliations.",
@@ -199,4 +199,4 @@ export const graphsHeaders = [
       " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "both",
   },
-];
+};

@@ -593,8 +593,8 @@ export default function FreeQueriesBar() {
             <div
               style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
               <TopGraphText
-                text={graphsHeaders[1].figureText}
-                firstLine={graphsHeaders[1].figureLine}
+                text={graphsHeaders["Free Queries"].figureText}
+                firstLine={graphsHeaders["Free Queries"].figureLine}
               />
               {X1?.length ? (
                 <Plot

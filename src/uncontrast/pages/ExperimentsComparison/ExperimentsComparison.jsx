@@ -166,8 +166,8 @@ export default function ParametersDistributionExperimentsComparison() {
       graph={
         <div style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
           <TopGraphText
-            text={graphsHeaders[2].figureText}
-            firstLine={graphsHeaders[2].figureLine}
+            text={graphsHeaders["Experiments Comparison"].figureText}
+            firstLine={graphsHeaders["Experiments Comparison"].figureLine}
           />
           <div className="four-wheels mx-auto max-w-[1800px] h-full ">
             {isLoading ? (

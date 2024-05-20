@@ -296,8 +296,8 @@ export default function WorldMap() {
           graph={
             <div className="h-full w-full">
               <TopGraphText
-                text={graphsHeaders[11].figureText}
-                firstLine={graphsHeaders[11].figureLine}
+                text={graphsHeaders["World Map"].figureText}
+                firstLine={graphsHeaders["World Map"].figureLine}
               />
               {isLoading ? (
                 <Spinner />

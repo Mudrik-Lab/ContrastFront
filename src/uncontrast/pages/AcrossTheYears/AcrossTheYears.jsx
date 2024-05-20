@@ -152,8 +152,8 @@ export default function AcrossTheYears() {
         graph={
           <div className="h-full">
             <TopGraphText
-              text={graphsHeaders[5].figureText}
-              firstLine={graphsHeaders[5].figureLine}
+              text={graphsHeaders["Trends Over Time"].figureText}
+              firstLine={graphsHeaders["Trends Over Time"].figureLine}
             />
             {isLoading ? (
               <Spinner />
