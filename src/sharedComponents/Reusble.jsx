@@ -228,7 +228,7 @@ export const Label = ({ children }) => {
   );
 };
 
-export const RangeInput = ({ number, setNumber }) => {
+export const RangeInput = ({ number, setNumber, isBinSize }) => {
   const [label, setLabel] = React.useState(number);
 
   useEffect(() => {
@@ -245,8 +245,8 @@ export const RangeInput = ({ number, setNumber }) => {
             onTouchEnd={(e) => setNumber(e.target.value)}
             min={0}
             defaultValue={number}
-            max={99}
-            step={1}
+            max={100}
+            step={isBinSize ? 10 : 1}
             className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
             id="numOfExperiments"
             aria-label="number of experiments range input"

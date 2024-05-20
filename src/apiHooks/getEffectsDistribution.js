@@ -12,7 +12,7 @@ export default async function getEffectsDistribution({
       continuous_breakdown,
       min_number_of_experiments,
       significance,
-      binSize,
+      bin_size: binSize,
     },
     method: "GET",
   });

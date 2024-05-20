@@ -78,46 +78,71 @@ export default function EffectsDistributionLines() {
       }),
   });
 
-  const trace1 = {
-    x: data?.data[0].series.map((a) => a.key),
-    y: data?.data[0].series.map((a) => a.value),
-    opacity: 0.5,
-    type: "bar",
-    marker: { color: "red" },
-  };
+  // const trace1 = {
+  //   x: data?.data[0]?.series.map((a) => a.key),
+  //   y: data?.data[0]?.series.map((a) => a.value),
+  //   opacity: 0.5,
+  //   type: "bar",
+  //   marker: { color: "green" },
+  //   name: data?.data[0].series_name,
+  // };
+  // const line1 = {
+  //   x: data?.data[0]?.series.map((a) => a.key),
+  //   y: data?.data[0]?.series.map((a) => a.value),
+  //   opacity: 0.5,
+  //   type: "scatter",
+  //   mode: "lines", // Only draw lines, no markers
+  //   line: {
+  //     shape: "spline", // Makes the line smooth and curvy
+  //   },
+  //   marker: { color: "green" },
+  //   name: data?.data[0].series_name,
+  // };
+  // const trace2 = {
+  //   x: data?.data[1]?.series.map((a) => a.key),
+  //   y: data?.data[1]?.series.map((a) => a.value),
+  //   opacity: 0.5,
+  //   type: "bar",
+  //   marker: { color: "blue" },
+  //   name: data?.data[1]?.series_name,
+  // };
+  // const trace3 = {
+  //   x: data?.data[2]?.series.map((a) => a.key),
+  //   y: data?.data[2]?.series.map((a) => a.value),
+  //   opacity: 0.5,
+  //   type: "bar",
+  //   marker: { color: "red" },
+  //   name: data?.data[2]?.series_name,
+  // };
+  // const graphsData = [trace1, line1, trace2, trace3];
+  const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
+  const graphsData = [];
+  data?.data.map((row, index) => {
+    graphsData.push(
+      {
+        x: row.series.map((a) => a.key),
+        y: row.series.map((a) => a.value),
+        autobinx: false,
+        histnorm: "count",
+        opacity: 0.5,
+        type: "bar",
+        marker: { color: colors[row.series_name] },
 
-  const trace2 = {
-    x: data?.data[1].series.map((a) => a.key),
-    y: data?.data[1].series.map((a) => a.value),
-    opacity: 0.5,
-    type: "bar",
-    marker: { color: "blue" },
-  };
-
-  const graphsData = [trace1, trace2];
-  // data?.data.map((row) => {
-  //   graphsData.push(
-  //     {
-  //       x: row.series.map((a) => a.key),
-  //       y: row.series.map((a) => a.value),
-  //       autobinx: false,
-  //       histnorm: "count",
-
-  //       opacity: 0.5,
-  //       type: "bar",
-  //       xbins: {
-  //         size: 3,
-  //       },
-  //       name: rawTextToShow(row.series_name),
-  //     },
-  //     {
-  //       type: "line",
-
-  //       x: row.series.map((a) => a.key),
-  //       y: row.series.map((a) => a.value),
-  //     }
-  //   );
-  // });
+        name: rawTextToShow(row.series_name),
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        marker: { color: colors[row.series_name] },
+        line: {
+          shape: "spline", // Makes the line smooth and curvy
+        },
+        showlegend: false,
+        x: row.series.map((a) => a.key),
+        y: row.series.map((a) => a.value),
+      }
+    );
+  });
 
   let flatedY = [];
   let highestY;
@@ -139,6 +164,10 @@ export default function EffectsDistributionLines() {
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
+
+    queryParams.get("bin_size")
+      ? setBinSize(queryParams.get("bin_size"))
+      : setBinSize(10);
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -196,6 +225,15 @@ export default function EffectsDistributionLines() {
                 buildUrl(pageName, "significance", e, navigate);
               }}
             />
+            <div className="w-full py-5 flex flex-col items-center gap-3 ">
+              <RangeInput
+                isBinSize={true}
+                number={binSize}
+                setNumber={(e) => {
+                  buildUrl(pageName, "bin_size", e, navigate);
+                }}
+              />
+            </div>
 
             <div className="w-full flex items-center justify-between my-4">
               <CSV data={data} />
@@ -222,11 +260,11 @@ export default function EffectsDistributionLines() {
                 data={graphsData}
                 config={plotConfig}
                 layout={{
-                  bargap: 0.05,
-                  bargroupgap: 0.2,
+                  bargap: 0.02,
+                  bargroupgap: 0.02,
                   barmode: "overlay",
                   xaxis: {
-                    title: "?",
+                    title: "Range",
                   },
                   yaxis: {
                     title: "Number of experiments",
@@ -238,7 +276,7 @@ export default function EffectsDistributionLines() {
                   legend: {
                     x: 10,
                     xanchor: "left",
-                    y: 100,
+                    y: 1,
                     font: {
                       size: 16,
                       color: "#000000",
