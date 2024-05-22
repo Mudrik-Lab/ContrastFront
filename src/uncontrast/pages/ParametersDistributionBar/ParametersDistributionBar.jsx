@@ -10,7 +10,6 @@ import {
   TopGraphText,
   CSV,
   Reset,
-  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 import {
@@ -35,7 +34,6 @@ const Plot = createPlotlyComponent(Plotly);
 export default function ParametersDistributionBar() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
-  const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [isStacked, setIsStacked] = React.useState(true);
   const [isCsv, setIsCsv] = React.useState(false);
@@ -50,7 +48,6 @@ export default function ParametersDistributionBar() {
       selected?.value,
       experimentsNum,
       isCsv,
-      significance,
     ],
     queryFn: () => {
       return getExperimentsGraphs({
@@ -59,7 +56,6 @@ export default function ParametersDistributionBar() {
         min_number_of_experiments: experimentsNum,
         is_csv: isCsv,
         isUncontrast: true,
-        significance,
       });
     },
     enabled: Boolean(selected?.value),
@@ -74,7 +70,7 @@ export default function ParametersDistributionBar() {
     x: X1,
     y: Y,
     text: X1,
-    name: "Supports",
+    name: data?.data[0].series_name,
     hoverinfo: "none",
     orientation: "h",
     insidetextanchor: "middle",
@@ -98,7 +94,7 @@ export default function ParametersDistributionBar() {
     y: Y,
     hoverinfo: "none", //turn off the tooltip when hover the bars
     text: X2,
-    name: "Challenges",
+    name: data?.data[1].series_name,
     orientation: "h",
     insidetextanchor: "middle",
     textfont: {
@@ -114,10 +110,6 @@ export default function ParametersDistributionBar() {
 
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-
-    queryParams.get("significance")
-      ? setSignificance(queryParams.get("significance"))
-      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -169,13 +161,6 @@ export default function ParametersDistributionBar() {
                 tooltip="Choose the dependent variable to be queried."
               />
             </div>
-
-            <SignificanceFilter
-              checked={significance}
-              setChecked={(e) => {
-                buildUrl(pageName, "significance", e, navigate);
-              }}
-            />
 
             <div className={sideSectionClass}>
               <div className="flex gap-2 mt-4">
