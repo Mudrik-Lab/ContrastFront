@@ -36,7 +36,6 @@ const Plot = createPlotlyComponent(Plotly);
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
-  const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [binSize, setBinSize] = React.useState(10);
   const navigate = useNavigate();
@@ -62,14 +61,12 @@ export default function EffectsDistributionLines() {
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "distribution_of_effects_across_parameters",
-      significance,
       experimentsNum,
       binSize,
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
-        significance,
         min_number_of_experiments: experimentsNum,
         binSize,
         continuous_breakdown:
@@ -78,46 +75,9 @@ export default function EffectsDistributionLines() {
       }),
   });
 
-  // const trace1 = {
-  //   x: data?.data[0]?.series.map((a) => a.key),
-  //   y: data?.data[0]?.series.map((a) => a.value),
-  //   opacity: 0.5,
-  //   type: "bar",
-  //   marker: { color: "green" },
-  //   name: data?.data[0].series_name,
-  // };
-  // const line1 = {
-  //   x: data?.data[0]?.series.map((a) => a.key),
-  //   y: data?.data[0]?.series.map((a) => a.value),
-  //   opacity: 0.5,
-  //   type: "scatter",
-  //   mode: "lines", // Only draw lines, no markers
-  //   line: {
-  //     shape: "spline", // Makes the line smooth and curvy
-  //   },
-  //   marker: { color: "green" },
-  //   name: data?.data[0].series_name,
-  // };
-  // const trace2 = {
-  //   x: data?.data[1]?.series.map((a) => a.key),
-  //   y: data?.data[1]?.series.map((a) => a.value),
-  //   opacity: 0.5,
-  //   type: "bar",
-  //   marker: { color: "blue" },
-  //   name: data?.data[1]?.series_name,
-  // };
-  // const trace3 = {
-  //   x: data?.data[2]?.series.map((a) => a.key),
-  //   y: data?.data[2]?.series.map((a) => a.value),
-  //   opacity: 0.5,
-  //   type: "bar",
-  //   marker: { color: "red" },
-  //   name: data?.data[2]?.series_name,
-  // };
-  // const graphsData = [trace1, line1, trace2, trace3];
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
   const graphsData = [];
-  data?.data.map((row, index) => {
+  data?.data.forEach((row, index) => {
     graphsData.push(
       {
         x: row.series.map((a) => a.key),
@@ -156,10 +116,6 @@ export default function EffectsDistributionLines() {
   console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-
-    queryParams.get("significance")
-      ? setSignificance(queryParams.get("significance"))
-      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -219,12 +175,6 @@ export default function EffectsDistributionLines() {
               />
             </div>
 
-            <SignificanceFilter
-              checked={significance}
-              setChecked={(e) => {
-                buildUrl(pageName, "significance", e, navigate);
-              }}
-            />
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
               <RangeInput
                 isBinSize={true}

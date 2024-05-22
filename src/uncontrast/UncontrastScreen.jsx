@@ -13,7 +13,6 @@ import ParametersDistributionPie from "./pages/ParametersDistributionPie/Paramet
 import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar.jsx";
 import ParametersDistributionExperimentsComparison from "./pages/ExperimentsComparison/ExperimentsComparison.jsx";
 import EffectsDistributionLines from "./pages/EffectsDistributionLines/EffectsDistributionLines.jsx";
-import HistogramChart from "./pages/histogram.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -68,11 +67,6 @@ const UncontrastScreens = () => {
           path="/distribution-of-effects-across-parameters"
           element={isMoblile ? <MobileScreen /> : <EffectsDistributionLines />}
         />
-        <Route
-          path="/histogram"
-          element={isMoblile ? <MobileScreen /> : <HistogramChart />}
-        />
-        histogram
       </Routes>
     </BrowserRouter>
   );

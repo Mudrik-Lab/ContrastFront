@@ -12,7 +12,6 @@ import {
   TheoryDrivenFilter,
   TopGraphText,
   TypeOfConsciousnessFilter,
-  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 
 import getConfiguration from "../../../apiHooks/getConfiguration";
@@ -37,7 +36,6 @@ const Plot = createPlotlyComponent(Plotly);
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [significance, setSignificance] = React.useState();
   const [theoryFamilies, setTheoryFamilies] = React.useState([]);
   const navigate = useNavigate();
   const pageName = "consciousness-world-map";
@@ -60,7 +58,6 @@ export default function WorldMap() {
       "nations_of_consciousness",
       theoryFamilies?.map((x) => x.value).join("+"),
       experimentsNum,
-      significance,
     ],
     () =>
       getNations({
@@ -68,7 +65,6 @@ export default function WorldMap() {
         theory: theoryFamilies,
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
-        significance,
       })
   );
 
@@ -213,10 +209,6 @@ export default function WorldMap() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    queryParams.get("significance")
-      ? setSignificance(queryParams.get("significance"))
-      : setSignificance("either");
-
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
@@ -281,12 +273,6 @@ export default function WorldMap() {
                 />
               </div>
 
-              <SignificanceFilter
-                checked={significance}
-                setChecked={(e) => {
-                  buildUrl(pageName, "significance", e, navigate);
-                }}
-              />
               <div className="w-full flex items-center justify-between my-4">
                 <CSV data={data} />
                 <Reset pageName={pageName} />
