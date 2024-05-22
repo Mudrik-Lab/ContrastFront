@@ -108,7 +108,7 @@ export default function Frequencies() {
       },
     });
   });
-
+  console.log(graphData);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -243,8 +243,8 @@ export default function Frequencies() {
             graph={
               <div style={{ height: "calc(100% - 100px)" }}>
                 <TopGraphText
-                  text={graphsHeaders[8].figureText}
-                  firstLine={graphsHeaders[8].figureLine}
+                  text={graphsHeaders["Frequencies"].figureText}
+                  firstLine={graphsHeaders["Frequencies"].figureLine}
                 />
 
                 {isLoading ? (

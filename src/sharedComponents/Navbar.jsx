@@ -24,10 +24,10 @@ export default function Navbar() {
 
   const isUncontrast = Site.type === "uncontrast";
   const graphs = isUncontrast
-    ? graphsHeaders.filter(
+    ? Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
       )
-    : graphsHeaders.filter(
+    : Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "contrast" || x.siteToDisplay === "both"
       );
 

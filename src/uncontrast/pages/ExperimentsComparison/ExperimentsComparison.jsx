@@ -18,7 +18,6 @@ import {
   SideControl,
   Text,
   TopGraphText,
-  SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
@@ -42,7 +41,6 @@ export default function ParametersDistributionExperimentsComparison() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [significance, setSignificance] = React.useState();
 
   const navigate = useNavigate();
   const pageName = "experiments-comparison";
@@ -53,7 +51,6 @@ export default function ParametersDistributionExperimentsComparison() {
       "uncontrast",
       selected?.value,
       experimentsNum,
-      significance,
     ],
     queryFn: () =>
       getExperimentsGraphs({
@@ -61,7 +58,6 @@ export default function ParametersDistributionExperimentsComparison() {
         breakdown: selected?.value,
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
-        significance,
       }),
     enabled: Boolean(selected?.value),
   });
@@ -95,10 +91,6 @@ export default function ParametersDistributionExperimentsComparison() {
   });
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-
-    queryParams.get("significance")
-      ? setSignificance(queryParams.get("significance"))
-      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
@@ -150,13 +142,6 @@ export default function ParametersDistributionExperimentsComparison() {
             />
           </div>
 
-          <SignificanceFilter
-            checked={significance}
-            setChecked={(e) => {
-              buildUrl(pageName, "significance", e, navigate);
-            }}
-          />
-
           <div className="w-full flex items-center justify-between my-4">
             <CSV data={data} />
             <Reset pageName={pageName} />
@@ -166,8 +151,8 @@ export default function ParametersDistributionExperimentsComparison() {
       graph={
         <div style={{ height: `calc(100% - ${navHeight + footerHeight}px)` }}>
           <TopGraphText
-            text={graphsHeaders[2].figureText}
-            firstLine={graphsHeaders[2].figureLine}
+            text={graphsHeaders["Experiments Comparison"].figureText}
+            firstLine={graphsHeaders["Experiments Comparison"].figureLine}
           />
           <div className="four-wheels mx-auto max-w-[1800px] h-full ">
             {isLoading ? (

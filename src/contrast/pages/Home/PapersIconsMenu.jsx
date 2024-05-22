@@ -19,7 +19,7 @@ export default function PapersIconsMenu() {
           With a Range of Unique Data Visualization Tools:{" "}
         </Text>
         <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
-          {graphsHeaders
+          {Object.values(graphsHeaders)
             .filter(
               (graph) =>
                 graph.siteToDisplay === "contrast" ||

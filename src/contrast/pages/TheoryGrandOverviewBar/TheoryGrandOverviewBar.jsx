@@ -28,7 +28,11 @@ import { designerColors } from "../../../Utils/Colors";
 import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { breakLongLines, buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  breakLongLines,
+  buildUrl,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 
@@ -232,8 +236,8 @@ export default function TheoryGrandOverviewBar() {
           graph={
             <div>
               <TopGraphText
-                text={graphsHeaders[0].figureText}
-                firstLine={graphsHeaders[0].figureLine}
+                text={graphsHeaders["Theory Support Overview"].figureText}
+                firstLine={graphsHeaders["Theory Support Overview"].figureLine}
               />
               {isLoading ? (
                 <Spinner />

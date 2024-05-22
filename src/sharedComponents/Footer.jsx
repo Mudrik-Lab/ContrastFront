@@ -38,8 +38,10 @@ export default function Footer({ isFixed }) {
       </div>
       <div className=" sm:mr-2">
         <Text color="white">
-          <a href="https://www.drorsoft.com/" target="_blank">
-            <span className="whitespace-nowrap">Developed by</span> <Drorsoft />
+          <a
+            href="https://www.drorsoft.com?utm_source=contrastDB&utm_medium=footer&utm_campaign=ongoing&ref=contrastDB/"
+            target="_blank">
+            <span className="whitespace-nowrap">Powered by</span> <Drorsoft />
           </a>
         </Text>
       </div>

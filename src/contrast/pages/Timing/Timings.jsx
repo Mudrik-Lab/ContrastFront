@@ -311,9 +311,9 @@ export default function Timings() {
         graph={
           <div className="h-full">
             <TopGraphText
-              text={graphsHeaders[7].figureText}
-              firstLine={graphsHeaders[7].figureLine}
-              legendLine={graphsHeaders[7].legendLine}
+              text={graphsHeaders["Timings"].figureText}
+              firstLine={graphsHeaders["Timings"].figureLine}
+              legendLine={graphsHeaders["Timings"].legendLine}
             />
             {isLoading ? (
               <Spinner />

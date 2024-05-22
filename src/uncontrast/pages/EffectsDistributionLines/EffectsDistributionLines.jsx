@@ -29,14 +29,15 @@ import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
+import { designerColors } from "../../../Utils/Colors";
 
 const Plot = createPlotlyComponent(Plotly);
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
-  const [significance, setSignificance] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
+  const [binSize, setBinSize] = React.useState(10);
   const navigate = useNavigate();
   const pageName = "distribution-of-effects-across-parameters";
   const continuousBreakdownOptions = [
@@ -60,48 +61,69 @@ export default function EffectsDistributionLines() {
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "distribution_of_effects_across_parameters",
-      significance,
       experimentsNum,
+      binSize,
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
-        significance,
         min_number_of_experiments: experimentsNum,
+        binSize,
         continuous_breakdown:
           selected?.value || continuousBreakdownOptions[0].value,
         isUncontrast: true,
       }),
   });
 
+  const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
   const graphsData = [];
-  data?.data.map((row) => {
-    graphsData.push({
-      x: row.series.map((a) => a.year),
-      y: row.series.map((a) => a.value),
-      type: "scatter",
-      name: rawTextToShow(row.series_name),
-      mode: "lines+markers",
-    });
+  data?.data.forEach((row, index) => {
+    graphsData.push(
+      {
+        x: row.series.map((a) => a.key),
+        y: row.series.map((a) => a.value),
+        autobinx: false,
+        histnorm: "count",
+        opacity: 0.5,
+        type: "bar",
+        marker: { color: colors[row.series_name] },
+
+        name: rawTextToShow(row.series_name),
+      },
+      {
+        type: "scatter",
+        mode: "lines",
+        marker: { color: colors[row.series_name] },
+        line: {
+          shape: "spline", // Makes the line smooth and curvy
+        },
+        showlegend: false,
+        x: row.series.map((a) => a.key),
+        y: row.series.map((a) => a.value),
+      }
+    );
   });
 
-  let highestY = [];
+  let flatedY = [];
+  let highestY;
   if (data) {
-    highestY = data?.data
-      .map((row) => row.series.slice(-1).map((x) => x.value))
+    flatedY = data?.data
+      .map((row) => row.series.map((item) => item.value))
       .flat();
+    highestY = Math.max(...flatedY);
   }
 
+  console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
-
-    queryParams.get("significance")
-      ? setSignificance(queryParams.get("significance"))
-      : setSignificance("either");
 
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
+
+    queryParams.get("bin_size")
+      ? setBinSize(queryParams.get("bin_size"))
+      : setBinSize(10);
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -153,12 +175,15 @@ export default function EffectsDistributionLines() {
               />
             </div>
 
-            <SignificanceFilter
-              checked={significance}
-              setChecked={(e) => {
-                buildUrl(pageName, "significance", e, navigate);
-              }}
-            />
+            <div className="w-full py-5 flex flex-col items-center gap-3 ">
+              <RangeInput
+                isBinSize={true}
+                number={binSize}
+                setNumber={(e) => {
+                  buildUrl(pageName, "bin_size", e, navigate);
+                }}
+              />
+            </div>
 
             <div className="w-full flex items-center justify-between my-4">
               <CSV data={data} />
@@ -169,8 +194,14 @@ export default function EffectsDistributionLines() {
         graph={
           <div className="h-full">
             <TopGraphText
-              text={graphsHeaders[5].figureText}
-              firstLine={graphsHeaders[5].figureLine}
+              text={
+                graphsHeaders["Distribution of Effects Across Parameter"]
+                  .figureText
+              }
+              firstLine={
+                graphsHeaders["Distribution of Effects Across Parameter"]
+                  .figureLine
+              }
             />
             {isLoading ? (
               <Spinner />
@@ -179,18 +210,21 @@ export default function EffectsDistributionLines() {
                 data={graphsData}
                 config={plotConfig}
                 layout={{
+                  bargap: 0.02,
+                  bargroupgap: 0.02,
+                  barmode: "overlay",
                   xaxis: {
-                    title: "Years",
+                    title: "Range",
                   },
                   yaxis: {
                     title: "Number of experiments",
                     tickmode: "linear",
-                    dtick: Math.max(...highestY) > 20 ? 20 : 1,
+                    dtick: highestY > 20 ? 20 : 1,
                   },
                   autosize: false,
                   showlegend: !isMoblile,
                   legend: {
-                    x: 1,
+                    x: 10,
                     xanchor: "left",
                     y: 1,
                     font: {

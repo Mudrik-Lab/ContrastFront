@@ -97,8 +97,8 @@ export default function Journals() {
         graph={
           <div className="overflow-x-scroll h-full">
             <TopGraphText
-              text={graphsHeaders[10].figureText}
-              firstLine={graphsHeaders[10].figureLine}
+              text={graphsHeaders["Journals"].figureText}
+              firstLine={graphsHeaders["Journals"].figureLine}
             />
             {isLoading ? (
               <Spinner />
