@@ -13,11 +13,38 @@ import ParametersDistributionPie from "./pages/ParametersDistributionPie/Paramet
 import ParametersDistributionBar from "./pages/ParametersDistributionBar/ParametersDistributionBar.jsx";
 import ParametersDistributionExperimentsComparison from "./pages/ExperimentsComparison/ExperimentsComparison.jsx";
 import EffectsDistributionLines from "./pages/EffectsDistributionLines/EffectsDistributionLines.jsx";
+import Login from "../contrast/pages/Login/Login.jsx";
+import RecoverPassword from "../contrast/pages/Login/RecoverPassword.jsx";
+import ResetPassword from "../contrast/pages/Login/ResetPassword.jsx";
+import RegisterComponent from "../contrast/pages/Register/Register.jsx";
+import SecondaryRegister from "../contrast/pages/Register/SecondaryRegister.jsx";
+import ProtectedRoute from "../Utils/ProtectedRoute.jsx";
 
 const UncontrastScreens = () => {
   return (
     <BrowserRouter>
       <Routes>
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/request-password-recovery"
+          element={<RecoverPassword />}
+        />
+        <Route path="/reset_password" element={<ResetPassword />} />
+        <Route path="/register" element={<RegisterComponent />} />
+        <Route
+          path="/profile"
+          element={
+            <ProtectedRoute
+              path="/profile"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <SecondaryRegister />
+                </React.Suspense>
+              }
+            />
+          }
+        />
+
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/contact" element={<ContactPage />} />
