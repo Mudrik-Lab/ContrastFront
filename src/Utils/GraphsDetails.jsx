@@ -68,8 +68,10 @@ export const graphsHeaders = {
     color: "someRed",
     icon: <Effects />,
     route: "/distribution-of-effects-across-parameters",
-    figureLine: "Distribution of Effects Across Parameter",
-    figureText: "Distribution of Effects Across Parameter",
+    figureLine:
+      "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
+    figureText:
+      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
     siteToDisplay: "uncontrast",
   },
   "Parameter Distribution Bar": {
@@ -83,7 +85,20 @@ export const graphsHeaders = {
       "Here, you can select a specific theory family and a specific parameter of interest, to explore how experiments in the database that refer to the chosen theory family distribute over the different levels of the chosen parameter.",
     figureText:
       "The results will be shown separately for experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.You can also filter the results according to reporting technique.",
-    siteToDisplay: "both",
+    siteToDisplay: "contrast",
+  },
+  "Parameter Distribution Bar uncontrast": {
+    text: "Parameter Distribution Bar",
+    tooltip:
+      'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.',
+    icon: <ParameterDist2 />,
+    color: "pink",
+    route: "/parameter-distribution-bar",
+    figureLine:
+      "Here, you can select a specific parameter of interest, and see how it distributes across experiments  that either supported or challenged the existence of unconscious processing.",
+    figureText:
+      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable (i.e., if two different experiments were reported in one experiment, each will be counted separately).",
+    siteToDisplay: "uncontrast",
   },
 
   "Parameter Distribution Pie": {
@@ -99,7 +114,20 @@ export const graphsHeaders = {
       "The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
-    siteToDisplay: "both",
+    siteToDisplay: "contrast",
+  },
+  "Parameter Distribution Pie uncontrast": {
+    text: "Parameter Distribution Pie",
+    tooltip:
+      "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories.",
+    icon: <ParameterTheory />,
+    color: "lilac",
+    route: "/parameter-distribution-pie",
+    figureLine:
+      "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across effects that supported or challenged the existence of unconscious processing.",
+    figureText:
+      "The inner circle of the pie describes the distribution of different levels across all effects, while the outer circle describes the distribution of the positive vs. negative effects for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+    siteToDisplay: "uncontrast",
   },
   "Trends Over Time": {
     text: "Trends Over Time",
@@ -184,7 +212,20 @@ export const graphsHeaders = {
       "Here, you can see in which journals the experiments in the database for a chosen theory family were reported. ",
     figureText:
       "You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. ",
-    siteToDisplay: "both",
+    siteToDisplay: "contrast",
+  },
+  "Journals uncontrast": {
+    text: "Journals",
+    tooltip:
+      "The bar chart depicts distribution of experiments according to the journals they were published in.",
+    icon: <Journals />,
+    color: "lightGreen",
+    route: "/journals",
+    figureLine:
+      " Here, you can see in which journals the effects that supported or challenged unconscious processing were published.",
+    figureText:
+      "Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+    siteToDisplay: "uncontrast",
   },
   "World Map": {
     text: "Consciousness World Map",
@@ -197,6 +238,19 @@ export const graphsHeaders = {
       "Here, you can see how the different theories are supported in different countries around the world.",
     figureText:
       " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
-    siteToDisplay: "both",
+    siteToDisplay: "contrast",
+  },
+  "World Map uncontrast": {
+    text: "Consciousness World Map",
+    tooltip:
+      "Distribution of the experiments in the database according to nations extracted from author affiliations.",
+    icon: <WorldMap />,
+    color: "lightGreen",
+    route: "/consciousness-world-map",
+    figureLine:
+      "Here, you can see how the different theories are supported in different countries around the world.",
+    figureText:
+      " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    siteToDisplay: "uncontrast",
   },
 };

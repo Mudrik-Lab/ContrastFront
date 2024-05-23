@@ -372,7 +372,10 @@ export const SignificanceFilter = ({ checked, setChecked }) => {
         checked={checked}
         setChecked={setChecked}
       />
-      <TooltipExplanation text="Significance" tooltip="Significance" />
+      <TooltipExplanation
+        text="Significance"
+        tooltip="You can choose whether to see the chosen distribution for experimenteffects that show evidence for unconscious processing (i.e., positive results) or those that do not (i.e., negative results), and those that show both positive and negative evidence (i.e., mixed)."
+      />
     </div>
   );
 };
