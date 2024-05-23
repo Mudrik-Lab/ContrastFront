@@ -188,8 +188,14 @@ export default function ParametersDistributionBar() {
         graph={
           <div>
             <TopGraphText
-              text={graphsHeaders["Parameter Distribution Bar"].figureText}
-              firstLine={graphsHeaders["Parameter Distribution Bar"].figureLine}
+              text={
+                graphsHeaders["Parameter Distribution Bar uncontrast"]
+                  .figureText
+              }
+              firstLine={
+                graphsHeaders["Parameter Distribution Bar uncontrast"]
+                  .figureLine
+              }
             />
             {isLoading ? (
               <Spinner />
