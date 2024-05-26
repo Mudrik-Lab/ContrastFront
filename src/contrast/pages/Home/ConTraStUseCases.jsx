@@ -33,8 +33,7 @@ export default function ConTraStUseCases() {
       text: "You can also enjoy some of our plots that provide a more sociological view of the field: which theories are more popular in different countries and journals?...",
     },
     {
-      video:
-        "https://player.vimeo.com/video/898841169?badge=0&amp;autopause=0&amp;player_id=0&amp;app_id=58479",
+      video: "https://player.vimeo.com/video/898841169",
       title: "Submit a paper to our database",
       text: "Watch this video to see how to add a paper to our database. In any case you encounter a problem, feel free to contact us through the contact form.",
     },
