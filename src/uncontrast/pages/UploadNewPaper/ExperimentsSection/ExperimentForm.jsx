@@ -1,25 +1,19 @@
 import React, { useState } from "react";
 import { Text } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../../../apiHooks/getExtraConfig";
-
-import BasicClassification from "./BasicClassification";
 import { rawTextToShow } from "../../../../Utils/functions";
 import Samples from "./Samples";
 import Stimuli from "./Stimuli";
-import Techniques from "./Techniques";
-import Measures from "./Measures";
 import ConsciousnessMeasures from "./ConsciousnessMeasures";
-import Interpretations from "./Interpretations";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
 import Paradigms from "./Paradigms";
-
 import {
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
+import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfiguration";
 
 export default function ExperimentForm({
   study,
@@ -43,29 +37,33 @@ export default function ExperimentForm({
   const [techniques, setTechniques] = useState(
     experimentData?.techniques || []
   );
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
+  const { data: configurations, isSuccess: extraConfigSuccess } = useQuery(
     [`more_configurations`],
-    getExtraConfig
+    getUncontrastConfiguration
   );
 
-  const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
-    (family) => ({ value: family.name, label: family.name })
-  );
-  const populations = extraConfig?.data.available_populations_types.map(
+  console.log(configurations);
+
+  const paradigmsFamilies =
+    configurations?.data.available_paradigms_families.map((family) => ({
+      value: family.name,
+      label: family.name,
+    }));
+  const populations = configurations?.data.available_populations_types.map(
     (population) => ({ value: population, label: rawTextToShow(population) })
   );
-  const tasks = extraConfig?.data.available_tasks_types.map((task) => ({
+  const tasks = configurations?.data.available_tasks_types.map((task) => ({
     value: task.id,
     label: task.name,
   }));
-  const paradigms = extraConfig?.data.available_paradigms;
+  const paradigms = configurations?.data.available_paradigms;
   const stimulusCategories =
-    extraConfig?.data.available_stimulus_category_type.map((cat) => ({
+    configurations?.data.available_stimulus_category_type.map((cat) => ({
       value: cat.id,
       label: cat.name,
     })); // name,id
   const stimulusSubCategories =
-    extraConfig?.data.available_stimulus_sub_category_type.map(
+    configurations?.data.available_stimulus_sub_category_type.map(
       (subCategory) => ({
         value: subCategory.id,
         label: subCategory.name,
@@ -73,42 +71,27 @@ export default function ExperimentForm({
       })
     ); //name, id, parent(by id number)
   const stimulusModalities =
-    extraConfig?.data.available_stimulus_modality_type.map((modality) => ({
+    configurations?.data.available_stimulus_modality_type.map((modality) => ({
       value: modality.id,
       label: modality.name,
     })); // name, id
-  let techniquesOptions = extraConfig?.data.available_techniques.map(
-    (tech) => ({
-      value: tech.id,
-      label: tech.name,
-    })
-  );
-  const measuresOptions = extraConfig?.data.available_measure_types?.map(
-    (measure) => ({
-      value: measure.id,
-      label: measure.name,
-    })
-  );
 
   const analysisPhaseOptions =
-    extraConfig?.data.available_consciousness_measure_phase_type?.map(
+    configurations?.data.available_consciousness_measure_phase_type?.map(
       (measure) => ({
         value: measure.id,
         label: measure.name,
       })
     );
   const analysisMeasuresOptions =
-    extraConfig?.data.available_consciousness_measure_type?.map((measure) => ({
-      value: measure.id,
-      label: measure.name,
-    }));
+    configurations?.data.available_consciousness_measure_type?.map(
+      (measure) => ({
+        value: measure.id,
+        label: measure.name,
+      })
+    );
 
-  const theories = extraConfig?.data.available_theories?.map((theory) => ({
-    value: theory.id,
-    label: theory.name,
-    parentId: theory.parent_id,
-  }));
-  const findingTypes = extraConfig?.data.available_finding_tags_types?.map(
+  const findingTypes = configurations?.data.available_finding_tags_types?.map(
     (type) => ({
       value: type.id,
       label: type.name,
@@ -116,24 +99,19 @@ export default function ExperimentForm({
     })
   );
   const findingTagsFamilies =
-    extraConfig?.data.available_finding_tags_families?.map((type) => ({
+    configurations?.data.available_finding_tags_families?.map((type) => ({
       value: type.id,
       label: type.name,
     }));
-  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
+  const AALOptions = configurations?.data.available_AAL_atlas_tag_types?.map(
     (type) => ({
       value: type,
       label: type,
     })
   );
 
-  const experimentTypeOptions =
-    extraConfig?.data.available_experiment_types.map((type) => ({
-      value: type.value,
-      label: rawTextToShow(type.name),
-    }));
   const analysisTypeOptions =
-    extraConfig?.data.available_analysis_type_choices.map((type) => ({
+    configurations?.data.available_analysis_type_choices.map((type) => ({
       value: type,
       label: rawTextToShow(type),
     }));
@@ -165,7 +143,7 @@ export default function ExperimentForm({
             </Text>
 
             <BasicClassification
-              theories={theories}
+              theories={[]}
               fieldOptions={experimentTypeOptions}
               experimentData={experimentData}
               study_id={study.id}
@@ -224,26 +202,6 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData}
             />
-            <Techniques
-              setMinimumClassifications={setMinimumClassifications}
-              minimumClassifications={minimumClassifications}
-              fieldOptions={techniquesOptions}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={experimentData?.techniques}
-              setTechniques={setTechniques}
-            />
-
-            <Measures
-              setMinimumClassifications={setMinimumClassifications}
-              minimumClassifications={minimumClassifications}
-              fieldOptions={measuresOptions}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={experimentData?.measures}
-            />
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
             <Text color="grayReg" weight={"bold"}>
@@ -270,17 +228,7 @@ export default function ExperimentForm({
               }
               values={experimentData?.finding_tags}
             />
-            <Interpretations
-              fieldOptions={theories}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={
-                shouldCheckAllClassificationsFilled
-                  ? Object.values(minimumClassifications).includes(0)
-                  : !experimentID
-              }
-              values={experimentData?.interpretations}
-            />
+
             <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}

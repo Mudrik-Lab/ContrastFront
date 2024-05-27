@@ -27,9 +27,8 @@ export default function UploadNewPaper() {
   const [newPaper, setNewPaper] = useState(false);
   const [addNewExperiment, setAddNewExperiment] = useState(false);
 
-  const { data, isSuccess, refetch } = useQuery(
-    ["submitted_studies"],
-    getMySubmittedStudies
+  const { data, isSuccess, refetch } = useQuery(["submitted_studies"], () =>
+    getMySubmittedStudies()
   );
 
   const handleRefetch = () => {

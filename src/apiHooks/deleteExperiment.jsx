@@ -1,8 +1,14 @@
 import { queryApi } from "../Utils/api";
 
-export async function deleteExperiment({ study_pk, experiment_pk }) {
+export async function deleteExperiment({
+  study_pk,
+  experiment_pk,
+  isUncontrast,
+}) {
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/`
+      : `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/`,
     method: "DELETE",
     isProtected: true,
   });

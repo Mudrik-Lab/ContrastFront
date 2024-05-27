@@ -27,12 +27,12 @@ export default function PaperSection({
 }) {
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
-
+  const isUncontrast = true;
   const id = paperId;
 
   const { data, isSuccess, refetch } = useQuery({
     queryKey: [`submitted_study`, id],
-    queryFn: () => getStudy({ id }),
+    queryFn: () => getStudy({ id, isUncontrast }),
   });
 
   const handleRefetch = () => {

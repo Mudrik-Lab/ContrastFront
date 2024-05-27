@@ -61,6 +61,7 @@ export default function UncompletedPaper({
     })) || []
   );
   const [authorsError, setAuthorsError] = useState(false);
+  const isUncontrast = true;
 
   const countryOption = useMemo(() => countryList().getData(), []);
 
@@ -136,6 +137,7 @@ export default function UncompletedPaper({
         DOI: values.DOI,
         source_title: values.source_title,
         is_author_submitter: values?.is_author_submitter,
+        isUncontrast,
       });
       console.log(res);
       if (res.status === 200) {

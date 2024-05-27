@@ -23,6 +23,7 @@ export default function ExperimentsBox({
       <h3 className="text-2xl">Experiments</h3>
       <div className="flex flex-col gap-2">
         <SideStatus
+          isUncontrast={true}
           refetch={refetch}
           isExperiment={true}
           number={experiments?.length}

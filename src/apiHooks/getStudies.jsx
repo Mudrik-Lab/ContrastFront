@@ -9,9 +9,11 @@ export async function getMySubmittedStudies(isUncontrast) {
     isProtected: true,
   });
 }
-export async function getStudy({ id }) {
+export async function getStudy({ id, isUncontrast }) {
   return await queryApi({
-    url: `studies/submitted_studies/${id}`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/${id}`
+      : `studies/submitted_studies/${id}`,
     method: "GET",
     isProtected: true,
   });
@@ -27,9 +29,12 @@ export async function EditUncompletedStudy({
   year,
   authors_key_words,
   is_author_submitter,
+  isUncontrast,
 }) {
   return await queryApi({
-    url: `studies/submitted_studies/${id}/`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/${id}/`
+      : `studies/submitted_studies/${id}/`,
     method: "PATCH",
     isProtected: true,
     data: {

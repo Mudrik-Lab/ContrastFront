@@ -13,11 +13,11 @@ import {
   rawTextToShow,
 } from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
+import { createExperiments } from "../../../../apiHooks/createExperiment";
 
 export default function Paradigms({
   fieldOptions,
   optionalParadigms,
-  disabled,
   experiment_pk,
   study_pk,
   values,
@@ -103,7 +103,7 @@ export default function Paradigms({
     <>
       <ExpandingBox
         number={fieldsNum}
-        disabled={disabled}
+        disabled={false}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
           return (
@@ -206,10 +206,6 @@ export default function Paradigms({
                       fieldValues={fieldValues}
                       index={index}
                     />
-                    {/* <SubmitButton
-                      submit={uniqSubmit(index)}
-                      disabled={!fieldValue?.specific || fieldValue.id}
-                    /> */}
                   </div>
                 </div>
               </form>
