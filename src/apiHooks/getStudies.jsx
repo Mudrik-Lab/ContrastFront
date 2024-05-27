@@ -1,8 +1,10 @@
 import { queryApi } from "../Utils/api";
 
-export async function getMySubmittedStudies() {
+export async function getMySubmittedStudies(isUncontrast) {
   return await queryApi({
-    url: `studies/submitted_studies/my_studies`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/my_studies`
+      : `studies/submitted_studies/my_studies`,
     method: "GET",
     isProtected: true,
   });
@@ -52,9 +54,12 @@ export async function submitStudy({
   year,
   authors_key_words,
   is_author_submitter,
+  isUncontrast,
 }) {
   return await queryApi({
-    url: `studies/submitted_studies/`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/`
+      : `studies/submitted_studies/`,
     method: "POST",
     isProtected: true,
     data: {
