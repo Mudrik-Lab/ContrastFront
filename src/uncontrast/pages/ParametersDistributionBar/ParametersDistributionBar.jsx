@@ -70,7 +70,7 @@ export default function ParametersDistributionBar() {
     x: X1,
     y: Y,
     text: X1,
-    name: data?.data[0].series_name,
+    name: "Positive",
     hoverinfo: "none",
     orientation: "h",
     insidetextanchor: "middle",
@@ -94,7 +94,7 @@ export default function ParametersDistributionBar() {
     y: Y,
     hoverinfo: "none", //turn off the tooltip when hover the bars
     text: X2,
-    name: data?.data[1].series_name,
+    name: "Mixed",
     orientation: "h",
     insidetextanchor: "middle",
     textfont: {

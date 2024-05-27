@@ -62,6 +62,8 @@ export default function FreeQueriesBar() {
   );
   const [modeOfPresentation, setModeOfPresentation] = useState([]);
   const [processingDomain, setProcessingDomain] = useState([]);
+  const [participantsExcluded, setParticipantsExcluded] = useState();
+  const [outcome, setOutcome] = useState([]);
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-free-queries";
@@ -151,6 +153,13 @@ export default function FreeQueriesBar() {
       }))
     : [];
 
+  const outcomeTypesArr = configSuccess
+    ? configuration?.data.available_outcomes_type?.map((type, index) => ({
+        value: type.id,
+        label: type.name,
+      }))
+    : [];
+
   const { data, isLoading } = useQuery({
     queryKey: [
       "parameters_distribution_free_queries",
@@ -158,6 +167,7 @@ export default function FreeQueriesBar() {
       selected?.value,
       experimentsNum,
       significance,
+      participantsExcluded,
       consciousnessMeasurePhases?.map((row) => row.label).join(","),
       consciousnessMeasureTypes?.map((row) => row.label).join(","),
       modeOfPresentation?.map((row) => row.label).join(","),
@@ -169,6 +179,7 @@ export default function FreeQueriesBar() {
       targetStimuliModalities?.map((row) => row.label).join(","),
       tasks?.map((row) => row.label).join(","),
       types?.map((row) => row.label).join(","),
+      outcome?.map((row) => row.label).join(","),
     ],
     queryFn: () =>
       getUncontrastFreeQueries({
@@ -187,6 +198,8 @@ export default function FreeQueriesBar() {
         target_stimuli_modalities: targetStimuliModalities,
         tasks,
         types,
+        are_participants_excluded: participantsExcluded,
+        outcome_types: outcome,
       }),
     enabled: Boolean(selected?.value),
   });
@@ -244,6 +257,10 @@ export default function FreeQueriesBar() {
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
 
+    queryParams.get("are_participants_excluded")
+      ? setParticipantsExcluded(queryParams.get("are_participants_excluded"))
+      : setParticipantsExcluded();
+
     if (queryParams.get("breakdown")) {
       setSelected({
         value: queryParams.get("breakdown"),
@@ -297,6 +314,7 @@ export default function FreeQueriesBar() {
         stimuliModalitiesArr
       );
       updateMultiFilterState(setTasks, "tasks", tasksArr);
+      updateMultiFilterState(setOutcome, "outcome_types", outcomeTypesArr);
       updateMultiFilterState(setTypes, "types", typesArr);
     }
   }, [searchParams, extraConfigSuccess]);
@@ -392,6 +410,23 @@ export default function FreeQueriesBar() {
                         buildUrlForMultiSelect(
                           e,
                           "consciousness_measure_types",
+                          searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={true}
+                      value={outcome}
+                      options={outcomeTypesArr}
+                      placeholder="Outcome Types"
+                      aria-label="Outcome Types"
+                      onChange={(e) => {
+                        buildUrlForMultiSelect(
+                          e,
+                          "outcome_types",
                           searchParams,
                           navigate
                         );
@@ -568,6 +603,27 @@ export default function FreeQueriesBar() {
                           e,
                           "types",
                           searchParams,
+                          navigate
+                        );
+                      }}
+                    />
+
+                    <Select
+                      className="text-lg w-[300px]"
+                      closeMenuOnSelect={true}
+                      isMulti={false}
+                      value={participantsExcluded}
+                      options={[
+                        { label: "Yes", value: true },
+                        { label: "No", value: false },
+                      ]}
+                      placeholder="Are Participants Excluded"
+                      aria-label="Are Participants Excluded"
+                      onChange={(e) => {
+                        buildUrl(
+                          pageName,
+                          "are_participants_excluded",
+                          e.value,
                           navigate
                         );
                       }}

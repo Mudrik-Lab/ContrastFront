@@ -17,6 +17,8 @@ export default async function getUncontrastFreeQueries({
   target_stimuli_modalities,
   types,
   tasks,
+  are_participants_excluded,
+  outcome_types,
 }) {
   const consciousnessMeasurePhasesArr = consciousness_measure_phases?.map(
     (item) => "&consciousness_measure_phases=" + item.value
@@ -51,6 +53,7 @@ export default async function getUncontrastFreeQueries({
     (item) => "&target_stimuli_modalities=" + item.value
   );
   const tasksArr = tasks?.map((item) => "&tasks=" + item.value);
+  const outcomeArr = tasks?.map((item) => "&outcome_types=" + item.value);
 
   return await queryApi({
     url: `uncontrast_studies/experiments_graphs/parameters_distribution_free_queries/?${
@@ -64,10 +67,11 @@ export default async function getUncontrastFreeQueries({
       (populationArr?.join("") || "") +
       (targetStimuliCategoriesArr?.join("") || "") +
       (targetStimuliModalitiesArr?.join("") || "") +
-      (tasksArr?.join("") || "")
+      (tasksArr?.join("") || "")(outcomeArr?.join("") || "")
     }`,
     params: {
       breakdown,
+      are_participants_excluded,
       min_number_of_experiments,
       significance,
     },
