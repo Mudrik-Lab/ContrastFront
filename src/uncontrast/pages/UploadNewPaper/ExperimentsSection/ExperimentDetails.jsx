@@ -111,7 +111,7 @@ export default function ExperimentDetails({
                       theories:
                     </Text>
 
-                    {experiment.theory_driven_theories.map((theory) => (
+                    {experiment?.theory_driven_theories.map((theory) => (
                       <span key={theory}>{theory}, </span>
                     ))}
                   </div>
@@ -120,8 +120,8 @@ export default function ExperimentDetails({
             </ExpandingBox>
             <ExpandingBox
               headline={"Paradigms"}
-              number={experiment.paradigms.length}>
-              {experiment.paradigms.map((paradigm, index) => {
+              number={experiment?.paradigms.length}>
+              {experiment?.paradigms.map((paradigm, index) => {
                 return (
                   <div
                     key={paradigm.name}

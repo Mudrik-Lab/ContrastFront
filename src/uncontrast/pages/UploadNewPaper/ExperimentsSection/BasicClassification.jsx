@@ -8,6 +8,7 @@ import {
 import Select from "react-select";
 import {
   createExperiments,
+  createUncontrastExperiments,
   editExperiments,
 } from "../../../../apiHooks/createExperiment";
 import { toast } from "react-toastify";
@@ -32,31 +33,35 @@ export default function BasicClassification({
   const [submitted, setSubmitted] = useState(experimentData);
   const [experiment, setExperiment] = useState(false);
   const [values, setValues] = useState({
-    type_of_consciousness: "",
-    experiment_type: "",
-    report: "",
-    theory_driven: "",
-    theories: [],
+    experiment_findings_notes: "",
+    type: 1,
+    is_target_same_as_suppressed_stimulus: "",
+    is_target_stimulus: "",
+    consciousness_measures_notes: "",
   });
 
   useEffect(() => {
     if (experimentData) {
       setValues({
-        type_of_consciousness: experimentData?.type_of_consciousness,
-        experiment_type: experimentData?.type,
-        report: experimentData?.is_reporting,
-        theory_driven: experimentData?.theory_driven,
+        experiment_findings_notes: experimentData.experiment_findings_notes,
+        type: experimentData.type,
+        is_target_same_as_suppressed_stimulus:
+          experimentData.is_target_same_as_suppressed_stimulus,
+        is_target_stimulus: experimentData.is_target_stimulus,
+        consciousness_measures_notes:
+          experimentData.consciousness_measures_notes,
       });
     }
   }, []);
   const handleSubmit = async (values) => {
     try {
-      const res = await createExperiments({
-        type_of_consciousness: values.type_of_consciousness,
-        theory_driven_theories: values.theories?.map((theory) => theory.label),
-        is_reporting: values.report,
-        theory_driven: values.theory_driven,
-        experiment_type: values.experiment_type,
+      const res = await createUncontrastExperiments({
+        experiment_findings_notes: values.experiment_findings_notes,
+        type: values.type,
+        is_target_same_as_suppressed_stimulus:
+          values.is_target_same_as_suppressed_stimulus,
+        is_target_stimulus: values.is_target_stimulus,
+        consciousness_measures_notes: values.consciousness_measures_notes,
         study_pk: study_id,
       });
       if (res.status === 201) {
@@ -78,11 +83,12 @@ export default function BasicClassification({
   const handleEdit = async (values) => {
     try {
       const res = await editExperiments({
-        type_of_consciousness: values.type_of_consciousness,
-        is_reporting: values.report,
-        theory_driven: values.theory_driven,
-        experiment_type: values.experiment_type,
-        theory_driven_theories: values.theories.map((theory) => theory.label),
+        experiment_findings_notes: values.experiment_findings_notes,
+        type: values.type,
+        is_target_same_as_suppressed_stimulus:
+          values.is_target_same_as_suppressed_stimulus,
+        is_target_stimulus: values.is_target_stimulus,
+        consciousness_measures_notes: values.consciousness_measures_notes,
         study_pk: study_id,
         id: experiment.id || experimentData.id,
       });
@@ -138,84 +144,57 @@ export default function BasicClassification({
           </div>
           <div>
             <Text weight={"bold"} color={"grayReg"}>
-              Type of consciousness
+              is_target_same_as_suppressed_stimulus
             </Text>
             <div className="flex items-center gap-2">
               <Select
-                options={concsiousnessOptions}
-                id="type_of_consciousness"
+                options={[
+                  { value: true, label: "Yes" },
+                  { value: false, label: "No" },
+                ]}
+                id="is_target_same_as_suppressed_stimulus"
                 value={concsiousnessOptions.find(
                   (x) => x.value == values.type_of_consciousness
                 )}
                 onChange={(selectedOption) => {
                   setValues((prev) => ({
                     ...prev,
-                    type_of_consciousness: selectedOption.value,
+                    is_target_same_as_suppressed_stimulus: selectedOption.value,
                   }));
                 }}
                 className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
               />
 
               <TooltipExplanation
-                tooltip={
-                  "Did this experiment study the state, content, or both types of consciousness?"
-                }
+                tooltip={"is_target_same_as_suppressed_stimulus?"}
               />
             </div>{" "}
           </div>
           <div>
             <Text weight={"bold"} color={"grayReg"}>
-              Report/No report
+              is_target_stimulus
             </Text>
             <div className="flex items-center gap-2">
               <Select
-                options={reportOptions}
-                id="report"
-                value={reportOptions.find((x) => x.value == values.report)}
-                onChange={(selectedOption) => {
-                  setValues((prev) => ({
-                    ...prev,
-                    report: selectedOption.value,
-                  }));
-                }}
-                className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
-              />
-
-              <TooltipExplanation
-                text={""}
-                tooltip={
-                  "Did this experiment have a report paradigm, a no-report paradigm, or both?"
-                }
-              />
-            </div>{" "}
-          </div>
-          <div>
-            <Text weight={"bold"} color={"grayReg"}>
-              Theory driven
-            </Text>
-            <div className="flex items-center gap-2">
-              <Select
-                options={theoryDrivenOptions}
-                id="theory_driven"
-                value={theoryDrivenOptions.find(
-                  (x) => x.value == values.theory_driven
+                options={[
+                  { value: true, label: "Yes" },
+                  { value: false, label: "No" },
+                ]}
+                id="is_target_stimulus"
+                value={concsiousnessOptions.find(
+                  (x) => x.value == values.type_of_consciousness
                 )}
                 onChange={(selectedOption) => {
                   setValues((prev) => ({
                     ...prev,
-                    theory_driven: selectedOption.value,
+                    is_target_stimulus: selectedOption.value,
                   }));
                 }}
                 className="text-base w-full bg-white disabled:bg-grayDisable border border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black"
               />
 
-              <TooltipExplanation
-                text={""}
-                tooltip={
-                  "Indicate if this study was theory driven? Theory-driven experiments should explicitly examine a hypothesis of at least one of the theories in their introduction. Experiments that mention the theories in the introduction without referring to a specific hypothesis tested in the experiment should be classified as “mentioning”. Experiments that only post-hoc interpreted the results according to one or more of the theories in the discussion should be classified as “post hoc”."
-                }
-              />
-            </div>
+              <TooltipExplanation tooltip={"is_target_stimulus?"} />
+            </div>{" "}
           </div>
 
           {(values.theory_driven === "mentioning" ||

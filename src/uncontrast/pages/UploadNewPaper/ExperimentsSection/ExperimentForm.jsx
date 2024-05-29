@@ -46,7 +46,7 @@ export default function ExperimentForm({
   console.log(configurations);
 
   const paradigmsFamilies =
-    configurations?.data.available_paradigms_families.map((family) => ({
+    configurations?.data.available_paradigms_families?.map((family) => ({
       value: family.name,
       label: family.name,
     }));
@@ -119,7 +119,7 @@ export default function ExperimentForm({
   );
 
   const analysisTypeOptions =
-    configurations?.data.available_analysis_type_choices.map((type) => ({
+    configurations?.data.available_analysis_type_choices?.map((type) => ({
       value: type,
       label: rawTextToShow(type),
     }));

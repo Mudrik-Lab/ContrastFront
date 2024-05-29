@@ -22,6 +22,28 @@ export async function createExperiments({
     data: requestData,
   });
 }
+export async function createUncontrastExperiments({
+  study_pk,
+  experiment_findings_notes,
+  type,
+  is_target_same_as_suppressed_stimulus,
+  is_target_stimulus,
+  consciousness_measures_notes,
+}) {
+  const requestData = {
+    experiment_findings_notes,
+    type,
+    is_target_same_as_suppressed_stimulus,
+    is_target_stimulus,
+    consciousness_measures_notes,
+  };
+  return await queryApi({
+    url: `uncontrast_studies/submitted_studies/${study_pk}/experiments/`,
+    method: "POST",
+    isProtected: true,
+    data: requestData,
+  });
+}
 
 export async function editExperiments({
   is_reporting,
