@@ -105,7 +105,7 @@ const UncontrastScreens = () => {
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
         />
         <Route
-          path="/distribution-of-effects-across-parameters"
+          path="/distribution-of-experiments-across-parameters"
           element={isMoblile ? <MobileScreen /> : <EffectsDistributionLines />}
         />
       </Routes>
