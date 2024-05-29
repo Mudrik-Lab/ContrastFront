@@ -14,6 +14,7 @@ import {
 } from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
 import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfiguration";
+import BasicClassification from "./BasicClassification";
 
 export default function ExperimentForm({
   study,
@@ -49,6 +50,13 @@ export default function ExperimentForm({
       value: family.name,
       label: family.name,
     }));
+
+  const experimentTypeOptions =
+    configurations?.data.available_experiment_types.map((type) => ({
+      value: type.value,
+      label: rawTextToShow(type.name),
+    }));
+
   const populations = configurations?.data.available_populations_types.map(
     (population) => ({ value: population, label: rawTextToShow(population) })
   );

@@ -23,6 +23,7 @@ export default function Paradigms({
   values,
   minimumClassifications,
   setMinimumClassifications,
+  disabled,
 }) {
   const initialValues = {
     main: "",
@@ -103,7 +104,7 @@ export default function Paradigms({
     <>
       <ExpandingBox
         number={fieldsNum}
-        disabled={false}
+        disabled={disabled}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
           return (

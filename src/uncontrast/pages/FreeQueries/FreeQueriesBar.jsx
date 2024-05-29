@@ -203,7 +203,6 @@ export default function FreeQueriesBar() {
       }),
     enabled: Boolean(selected?.value),
   });
-
   const X1 = data?.data.map((row) => row.value).reverse();
   const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 

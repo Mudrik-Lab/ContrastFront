@@ -46,10 +46,6 @@ export default function BasicClassification({
         experiment_type: experimentData?.type,
         report: experimentData?.is_reporting,
         theory_driven: experimentData?.theory_driven,
-        theories: experimentData?.theory_driven_theories.map((theory) => ({
-          values: theory,
-          label: theory,
-        })),
       });
     }
   }, []);

@@ -13,7 +13,6 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../../Utils/functions";
-import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function Tasks({
   fieldOptions,
@@ -25,7 +24,6 @@ export default function Tasks({
   minimumClassifications,
 }) {
   const initialValues = { type: "" };
-  const [description, setDescription] = useState(values?.tasks_notes || "");
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "tasks";
 
@@ -116,13 +114,6 @@ export default function Tasks({
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
-      />
-      <ExternalNotes
-        description={description}
-        setDescription={setDescription}
-        classification={classificationName}
-        study_pk={study_pk}
-        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );
