@@ -9,7 +9,8 @@ export default function TeamMembersCards() {
   return (
     <div>
       <div className="flex flex-wrap justify-center sm:w-[900px] sm:px-24 my-6 gap-5 gap-y-7 mx-auto ">
-        {foundingBoardBios.filter(member=>member.isUncontrastMember===true)
+        {foundingBoardBios
+          .filter((member) => member.isUncontrastMember === true)
           .sort((a, b) => {
             if (a.secondName < b.secondName) {
               return -1;
