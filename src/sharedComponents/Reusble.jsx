@@ -263,10 +263,12 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
       </div>
 
       <TooltipExplanation
-        text="Minimum number of experiments"
-        tooltip="You can determine the minimum number of experiments in
-         each category of the chosen parameter (i.e., filter out categories with very few entries).
-        "
+        text={isBinSize ? "Bin size" : "Minimum number of experiments"}
+        tooltip={
+          isBinSize
+            ? ""
+            : "You can determine the minimum number of experiments in each category of the chosen parameter (i.e., filter out categories with very few entries)."
+        }
       />
     </div>
   );

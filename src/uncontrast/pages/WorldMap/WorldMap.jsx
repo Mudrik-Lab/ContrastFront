@@ -36,7 +36,6 @@ const Plot = createPlotlyComponent(Plotly);
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [theoryFamilies, setTheoryFamilies] = React.useState([]);
   const navigate = useNavigate();
   const pageName = "consciousness-world-map";
 
@@ -54,15 +53,11 @@ export default function WorldMap() {
       })
     : [];
   const { data, isLoading } = useQuery(
-    [
-      "nations_of_consciousness",
-      theoryFamilies?.map((x) => x.value).join("+"),
-      experimentsNum,
-    ],
+    ["nations_of_consciousness", experimentsNum],
     () =>
       getNations({
         graphName: "nations_of_consciousness",
-        theory: theoryFamilies,
+
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
       })
@@ -212,30 +207,7 @@ export default function WorldMap() {
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
-    if (configSuccess) {
-      const selectedValues = queryParams.getAll("theory");
-      setTheoryFamilies(
-        selectedValues.map((item) => ({
-          value: item,
-          label: decodeURIComponent(item),
-        }))
-      );
-    }
   }, [searchParams]);
-
-  useEffect(() => {
-    const queryParams = new URLSearchParams(location.search);
-    const theoriesOnURL = queryParams.getAll("theory");
-    if (configSuccess) {
-      if (theoriesOnURL.length === 0) {
-        buildUrlForMultiSelect(theories, "theory", searchParams, navigate);
-      } else {
-        setTheoryFamilies(
-          theoriesOnURL.map((x) => ({ value: x, label: decodeURIComponent(x) }))
-        );
-      }
-    }
-  }, [configSuccess]);
 
   return (
     <div>
@@ -252,26 +224,6 @@ export default function WorldMap() {
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
-              <div className={sectionClass}>
-                <TooltipExplanation
-                  text={"Theory Family"}
-                  tooltip="few more words about Theories"
-                />
-
-                <Select
-                  className="text-lg w-[300px]"
-                  aria-label="theories"
-                  closeMenuOnSelect={true}
-                  isClearable
-                  isMulti={true}
-                  value={theoryFamilies}
-                  options={theories}
-                  placeholder="Theories"
-                  onChange={(e) =>
-                    buildUrlForMultiSelect(e, "theory", searchParams, navigate)
-                  }
-                />
-              </div>
 
               <div className="w-full flex items-center justify-between my-4">
                 <CSV data={data} />

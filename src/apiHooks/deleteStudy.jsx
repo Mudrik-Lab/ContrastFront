@@ -1,8 +1,10 @@
 import { queryApi } from "../Utils/api";
 
-export async function deleteStudy({ study_pk }) {
+export async function deleteStudy({ study_pk, isUncontrast }) {
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/`,
+    url: isUncontrast
+      ? `uncontrast_studies/submitted_studies/${study_pk}/`
+      : `studies/submitted_studies/${study_pk}/`,
     method: "DELETE",
     isProtected: true,
   });

@@ -1,5 +1,5 @@
 import { toast } from "react-toastify";
-import { ToastErrorBox } from "../sharedComponents/Reusble"
+import { ToastErrorBox } from "../sharedComponents/Reusble";
 import {
   addFieldToexperiment,
   addPropertyToexperiment,
@@ -400,4 +400,29 @@ export function ToastError(e) {
   return toast.error(
     <ToastErrorBox errors={e?.response.data || "Error occurred"} />
   );
+}
+export function calculateHistogramData(xValues, yValues, binSize = 1) {
+  if (xValues.length !== yValues.length) {
+    throw new Error("X and Y arrays must have the same length");
+  }
+
+  // Calculate histogram data
+  const min = Math.min(...xValues);
+  const max = Math.max(...xValues);
+  const numBins = Math.ceil((max - min) / binSize);
+  const binEdges = Array(numBins + 1)
+    .fill(0)
+    .map((_, i) => min + i * binSize);
+
+  const bins = Array(numBins).fill(0);
+  xValues.forEach((value, index) => {
+    const binIndex = Math.floor((value - min) / binSize);
+    bins[binIndex] += yValues[index];
+  });
+
+  const binMiddles = binEdges
+    .slice(0, -1)
+    .map((edge, i) => (edge + binEdges[i + 1]) / 2);
+
+  return { bins, binMiddles };
 }

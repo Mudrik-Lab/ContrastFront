@@ -62,12 +62,12 @@ export const graphsHeaders = {
     figureText: "Experiments Comparison",
     siteToDisplay: "uncontrast",
   },
-  "Distribution of Effects Across Parameter": {
-    text: "Distribution of Effects Across Parameter",
+  "Distribution of Experiments Across Parameter": {
+    text: "Distribution of Experiments Across Parameter",
     tooltip: "",
     color: "someRed",
     icon: <Effects />,
-    route: "/distribution-of-effects-across-parameters",
+    route: "/distribution-of-experiments-across-parameters",
     figureLine:
       "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
     figureText:

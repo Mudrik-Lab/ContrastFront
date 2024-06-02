@@ -18,6 +18,7 @@ export default function SideStatus({
   showEditble,
   refetch,
   setPaperToEdit,
+  isUncontrast,
 }) {
   const [open, setOpen] = useState(false);
   const [confirmed, setConfirmed] = useState(false);
@@ -31,6 +32,7 @@ export default function SideStatus({
           const res = await deleteExperiment({
             experiment_pk,
             study_pk,
+            isUncontrast,
           });
           if (res.status === 204) {
             setPaperToShow();
@@ -47,7 +49,7 @@ export default function SideStatus({
       } else {
         try {
           const study_pk = paper.id;
-          const res = await deleteStudy({ study_pk });
+          const res = await deleteStudy({ study_pk, isUncontrast });
           if (res.status === 204) {
             setPaperToShow();
             toast.success(
@@ -169,42 +171,39 @@ export default function SideStatus({
                 </span>
               </div>
 
-              {
-                // !completedStudy &&
-                showEditble && (
-                  <div
-                    className={classNames(
-                      `flex gap-1 items-center ${
-                        isExperiment ? "text-base" : "text-xs"
-                      }`
-                    )}>
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => {
-                        if (isExperiment) {
-                          setPaperToEdit(paper);
-                          setPaperToShow(false);
-                        } else {
-                          setPaperToShow(paper.id);
-                          if (paper.approval_status === 0) {
-                            setShowEditble(true);
-                          }
+              {showEditble && (
+                <div
+                  className={classNames(
+                    `flex gap-1 items-center ${
+                      isExperiment ? "text-base" : "text-xs"
+                    }`
+                  )}>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      if (isExperiment) {
+                        setPaperToEdit(paper);
+                        setPaperToShow(false);
+                      } else {
+                        setPaperToShow(paper.id);
+                        if (paper.approval_status === 0) {
+                          setShowEditble(true);
                         }
-                      }}>
-                      edit
-                    </span>
-                    <span>|</span>
+                      }
+                    }}>
+                    edit
+                  </span>
+                  <span>|</span>
 
-                    <span
-                      className="cursor-pointer"
-                      onClick={() => {
-                        handleDelete(paper);
-                      }}>
-                      delete
-                    </span>
-                  </div>
-                )
-              }
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => {
+                      handleDelete(paper);
+                    }}>
+                    delete
+                  </span>
+                </div>
+              )}
             </div>
           ))}
         </div>

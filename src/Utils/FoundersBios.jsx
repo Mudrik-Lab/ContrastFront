@@ -7,6 +7,9 @@ import Megan from "../assets/images/Megan.jpeg";
 import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
 import Itay from "../assets/images/Itay.jpg";
+import Francois from "../assets/images/Francois.jpg";
+import Dominique from "../assets/images/Dominique .png";
+import Maor from "../assets/images/Maor.png";
 
 export const foundingBoardBios = [
   {
@@ -68,7 +71,8 @@ export const foundingBoardBios = [
     secondName: "Melloni",
     image: LuciaM,
     text: "Neural Circuits, Consciousness, and Cognition Research Group, Max Planck Institute for Empirical Aesthetics, Germany Department of Neurology, NYU Grossman School of Medicine, US",
-    website:"https://www.aesthetics.mpg.de/en/research/research-group-neural-circuits-consciousness-and-cognition.html ",
+    website:
+      "https://www.aesthetics.mpg.de/en/research/research-group-neural-circuits-consciousness-and-cognition.html ",
     isContrastMember: true,
     isUncontrastMember: true,
   },
@@ -93,7 +97,7 @@ export const foundingBoardBios = [
   {
     name: "Dominique Lamy",
     secondName: "Lamy",
-    image: Itay,
+    image: Dominique,
     text: "School of Psychological Sciences, Tel Aviv University .",
     website: "",
     isContrastMember: false,
@@ -102,7 +106,7 @@ export const foundingBoardBios = [
   {
     name: "Maor Schreiber",
     secondName: "Schreiber",
-    image: Itay,
+    image: Maor,
     text: "School of Psychological Sciences, Tel Aviv University.",
     website: "",
     isContrastMember: false,
@@ -111,7 +115,7 @@ export const foundingBoardBios = [
   {
     name: "François Stockart ",
     secondName: "Stockart ",
-    image: Itay,
+    image: Francois,
     text: "Univ. Grenoble Alpes, Univ. Savoie Mont Blanc, CNRS, LPNC, 38000 Grenoble, France",
     website: "",
     isContrastMember: false,

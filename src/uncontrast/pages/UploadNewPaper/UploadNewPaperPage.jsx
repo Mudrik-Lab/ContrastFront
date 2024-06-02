@@ -26,9 +26,10 @@ export default function UploadNewPaper() {
   const [addNewPaper, setAddNewPaper] = useState(false);
   const [newPaper, setNewPaper] = useState(false);
   const [addNewExperiment, setAddNewExperiment] = useState(false);
+  const isUncontrast = true;
 
   const { data, isSuccess, refetch } = useQuery(["submitted_studies"], () =>
-    getMySubmittedStudies()
+    getMySubmittedStudies(isUncontrast)
   );
 
   const handleRefetch = () => {
@@ -66,6 +67,7 @@ export default function UploadNewPaper() {
 
                 <Spacer height={20} />
                 <SideStatus
+                  isUncontrast={isUncontrast}
                   status={"Approved Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
@@ -87,6 +89,7 @@ export default function UploadNewPaper() {
                   />
                 </div>
                 <SideStatus
+                  isUncontrast={isUncontrast}
                   status={"Rejected Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
@@ -107,6 +110,7 @@ export default function UploadNewPaper() {
                 </div>
 
                 <SideStatus
+                  isUncontrast={isUncontrast}
                   status={"Awaiting Review"}
                   setPaperToShow={setPaperToShow}
                   setShowEditble={setShowEditble}
@@ -127,6 +131,7 @@ export default function UploadNewPaper() {
                 </div>
 
                 <SideStatus
+                  isUncontrast={isUncontrast}
                   refetch={handleRefetch}
                   status={"Uncompleted submissions"}
                   setPaperToShow={setPaperToShow}

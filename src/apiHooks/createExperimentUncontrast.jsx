@@ -1,36 +1,16 @@
 import { queryApi } from "../Utils/api";
 
-export async function createExperiments({
-  is_reporting,
-  type_of_consciousness,
-  theory_driven,
-  experiment_type,
-  study_pk,
-  theory_driven_theories,
-}) {
-  const requestData = {
-    is_reporting,
-    type_of_consciousness,
-    theory_driven,
-    type: experiment_type,
-    theory_driven_theories,
-  };
-  return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/`,
-    method: "POST",
-    isProtected: true,
-    data: requestData,
-  });
-}
-export async function createUncontrastExperiments({
-  study_pk,
+export async function createExperimentsUncontrast({
+  study,
   experiment_findings_notes,
   type,
   is_target_same_as_suppressed_stimulus,
   is_target_stimulus,
   consciousness_measures_notes,
+  study_pk,
 }) {
   const requestData = {
+    study,
     experiment_findings_notes,
     type,
     is_target_same_as_suppressed_stimulus,

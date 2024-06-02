@@ -39,7 +39,7 @@ export default function EffectsDistributionLines() {
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [binSize, setBinSize] = React.useState(10);
   const navigate = useNavigate();
-  const pageName = "distribution-of-effects-across-parameters";
+  const pageName = "distribution-of-Experiments-across-parameters";
   const continuousBreakdownOptions = [
     { value: "number_of_stimuli", label: "number_of_stimuli" },
     { value: "outcome_number_of_trials", label: "outcome_number_of_trials" },
@@ -140,7 +140,8 @@ export default function EffectsDistributionLines() {
     <div>
       <PageTemplate
         control={
-          <SideControl headline={"Distribution of Effects Across Parameter"}>
+          <SideControl
+            headline={"Distribution of Experiments Across Parameter"}>
             <Text color="blue" weight="bold" className="text-3xl"></Text>
 
             <Text weight="bold" lg>
@@ -195,11 +196,11 @@ export default function EffectsDistributionLines() {
           <div className="h-full">
             <TopGraphText
               text={
-                graphsHeaders["Distribution of Effects Across Parameter"]
+                graphsHeaders["Distribution of Experiments Across Parameter"]
                   .figureText
               }
               firstLine={
-                graphsHeaders["Distribution of Effects Across Parameter"]
+                graphsHeaders["Distribution of Experiments Across Parameter"]
                   .figureLine
               }
             />

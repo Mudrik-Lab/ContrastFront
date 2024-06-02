@@ -87,7 +87,7 @@ export default function ParametersDistributionExperimentsComparison() {
 
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.map((key, index) => {
-    keysColors[key] = someColors[index];
+    keysColors[key] = someColors[index + 3];
   });
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);

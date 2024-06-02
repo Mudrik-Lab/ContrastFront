@@ -19,6 +19,8 @@ import ResetPassword from "../contrast/pages/Login/ResetPassword.jsx";
 import RegisterComponent from "../contrast/pages/Register/Register.jsx";
 import SecondaryRegister from "../contrast/pages/Register/SecondaryRegister.jsx";
 import ProtectedRoute from "../Utils/ProtectedRoute.jsx";
+import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage.jsx";
+import Histogram from "./pages/histogram.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -45,6 +47,19 @@ const UncontrastScreens = () => {
           }
         />
 
+        <Route
+          path="/upload-new-paper"
+          element={
+            <ProtectedRoute
+              path="/upload-new-paper"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <UploadNewPaper />
+                </React.Suspense>
+              }
+            />
+          }
+        />
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/contact" element={<ContactPage />} />
@@ -82,6 +97,11 @@ const UncontrastScreens = () => {
             )
           }
         />
+
+        <Route
+          path="/histogram"
+          element={isMoblile ? <MobileScreen /> : <Histogram />}
+        />
         <Route
           path="/parameter-distribution-pie"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionPie />}
@@ -91,7 +111,7 @@ const UncontrastScreens = () => {
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionBar />}
         />
         <Route
-          path="/distribution-of-effects-across-parameters"
+          path="/distribution-of-experiments-across-parameters"
           element={isMoblile ? <MobileScreen /> : <EffectsDistributionLines />}
         />
       </Routes>

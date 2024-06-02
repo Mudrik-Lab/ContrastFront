@@ -95,7 +95,7 @@ export default function ParametersDistributionPie() {
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
       marker: {
-        colors: designerColors,
+        colors: designerColors.splice(0, 6),
         line: { width: 1, color: "white" },
       },
     },
