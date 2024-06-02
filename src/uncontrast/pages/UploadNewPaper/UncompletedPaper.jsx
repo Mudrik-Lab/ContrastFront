@@ -139,7 +139,6 @@ export default function UncompletedPaper({
         is_author_submitter: values?.is_author_submitter,
         isUncontrast,
       });
-      console.log(res);
       if (res.status === 200) {
         toast.success(
           <ToastBox
@@ -149,7 +148,7 @@ export default function UncompletedPaper({
         );
       }
     } catch (e) {
-      console.log(e);
+      ToastError(e);
     }
   };
   return (

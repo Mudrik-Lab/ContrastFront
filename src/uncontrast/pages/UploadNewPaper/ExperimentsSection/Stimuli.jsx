@@ -99,7 +99,7 @@ export default function Stimuli({
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={false} // temporal false
+      disabled={false} // TODO =disabled
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (

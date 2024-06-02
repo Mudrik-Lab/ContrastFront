@@ -78,7 +78,7 @@ export default function ConsciousnessMeasures({
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={disabled}
+      disabled={false} // TODO =disabled
       headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -93,7 +93,7 @@ export default function ConsciousnessMeasures({
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            "Indicate what type of consciousness measure was taken."
+                            " Indicate which type of consciousness measure was taken. If no measure was administered, enter “None”. If more than one measure was administered fill this section separately for each measure (use the + button at the bottom to add more)."
                           }
                           text={"Type"}
                         />
