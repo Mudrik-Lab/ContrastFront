@@ -65,7 +65,7 @@ export default function Tasks({
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={disabled}
+      disabled={false} //TODO
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (

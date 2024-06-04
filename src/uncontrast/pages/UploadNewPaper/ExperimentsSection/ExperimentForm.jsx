@@ -14,7 +14,7 @@ import {
 } from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
 import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfiguration";
-import BasicClassification from "./BasicClassification";
+import SuppressionMethod from "./SuppressionMethod";
 
 export default function ExperimentForm({
   study,
@@ -38,18 +38,18 @@ export default function ExperimentForm({
   const [techniques, setTechniques] = useState(
     experimentData?.techniques || []
   );
-  const { data: configurations, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
+  const { data: configurations, isSuccess } = useQuery(
+    [`uncon_configurations`],
     getUncontrastConfiguration
   );
 
-  console.log(configurations);
-
-  const paradigmsFamilies =
-    configurations?.data.available_paradigms_families?.map((family) => ({
-      value: family.name,
-      label: family.name,
-    }));
+  const mainParadigms = configurations?.data.available_main_paradigm_type?.map(
+    (main) => ({
+      value: main.id,
+      label: main.name,
+    })
+  );
+  const paradigms = configurations?.data.available_specific_paradigm_type;
 
   const experimentTypeOptions =
     configurations?.data.available_experiment_types.map((type) => ({
@@ -64,7 +64,7 @@ export default function ExperimentForm({
     value: task.id,
     label: task.name,
   }));
-  const paradigms = configurations?.data.available_paradigms;
+
   const stimulusCategories =
     configurations?.data.available_stimulus_category_type.map((cat) => ({
       value: cat.id,
@@ -83,6 +83,14 @@ export default function ExperimentForm({
       value: modality.id,
       label: modality.name,
     })); // name, id
+
+  const mainSuppressionMethod =
+    configurations?.data.available_suppression_method_types?.map((main) => ({
+      value: main.id,
+      label: main.name,
+    }));
+  const subSuppressionMethod =
+    configurations?.data.available_suppression_method_sub_types;
 
   const analysisPhaseOptions =
     configurations?.data.available_consciousness_measure_phase_type?.map(
@@ -126,7 +134,7 @@ export default function ExperimentForm({
   const shouldCheckAllClassificationsFilled = false;
   return (
     <>
-      {extraConfigSuccess && setAddNewExperiment && (
+      {isSuccess && setAddNewExperiment && (
         <div
           className="p-2 w-1/2 shadow-3xl flex flex-col gap-2 overflow-y-scroll"
           style={{
@@ -150,24 +158,14 @@ export default function ExperimentForm({
               Experiment Classifications
             </Text>
 
-            <BasicClassification
-              theories={[]}
-              fieldOptions={experimentTypeOptions}
-              experimentData={experimentData}
-              study_id={study.id}
-              setExperimentID={setExperimentID}
-              isEditMode={isEditMode}
-              refetch={refetch}
-            />
-
             <Paradigms
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
-              fieldOptions={paradigmsFamilies}
+              fieldOptions={mainParadigms}
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={!experimentID}
+              disabled={false}
               values={experimentData?.paradigms}
             />
 
@@ -200,7 +198,17 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData}
             />
-            <ConsciousnessMeasures
+            <SuppressionMethod
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={mainSuppressionMethod}
+              optionalSubTypes={subSuppressionMethod}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={false}
+              values={experimentData?.paradigms}
+            />
+            {/*  <ConsciousnessMeasures
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
               fieldOptions={analysisMeasuresOptions}
@@ -209,14 +217,14 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData}
-            />
+            /> */}
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
             <Text color="grayReg" weight={"bold"}>
               Findings
             </Text>
 
-            <Findings
+            {/* <Findings
               fieldOptions={{
                 techniquesOptions: techniques?.map((tech) => ({
                   value: tech.id || tech.value,
@@ -246,7 +254,7 @@ export default function ExperimentForm({
                   : !experimentID
               }
               values={experimentData?.results_summary}
-            />
+            /> */}
           </div>
 
           <button

@@ -81,11 +81,6 @@ export default function Samples({
     );
   };
 
-  console.log(
-    fieldValues[0].excluded === "yes"
-      ? parseInt(fieldValues[0]?.excludedNum) > 0
-      : null
-  );
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
     setMinimumClassifications({
@@ -96,7 +91,7 @@ export default function Samples({
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={disabled}
+      disabled={false} //TODO
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -222,7 +217,7 @@ export default function Samples({
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div className="w-full ">
+                    <div className="w-1/2 ">
                       <TooltipExplanation
                         isHeadline
                         tooltip={
@@ -248,8 +243,8 @@ export default function Samples({
                       />
                     </div>
 
-                    <div className="w-full ">
-                      <div>
+                    {fieldValue.excluded === "yes" && (
+                      <div className="w-1/2">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
@@ -289,7 +284,7 @@ export default function Samples({
                           />
                         </div>
                       </div>
-                    </div>
+                    )}
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-14"></div>

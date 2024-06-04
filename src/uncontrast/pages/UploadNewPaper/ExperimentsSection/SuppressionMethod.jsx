@@ -18,9 +18,9 @@ import {
   createUncontrastExperiments,
 } from "../../../../apiHooks/createExperiment";
 
-export default function Paradigms({
+export default function SuppressionMethod({
   fieldOptions,
-  optionalParadigms,
+  optionalSubTypes,
   experiment_pk,
   study_pk,
   values,
@@ -32,9 +32,16 @@ export default function Paradigms({
     main: "",
     specific: "",
   };
-  const [description, setDescription] = useState(values?.paradigms || "");
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const classificationName = "paradigms";
+  const classificationName = "suppression_methods";
+
+  const handleSubmit = SubmitClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
 
   const handleDelete = DeleteClassificationField(
     study_pk,
@@ -49,7 +56,7 @@ export default function Paradigms({
       setFieldValues(
         values.map((row) => {
           return {
-            main: row.main?.name,
+            main: row.parent?.name,
             specific: row.name,
             sub_type: row.sub_type,
             id: row.id,
@@ -59,8 +66,8 @@ export default function Paradigms({
     }
   }, []);
   async function uniqSubmit(index) {
-    let chosenParadigm = fieldValues[index].specific;
-    createUncontrastExperiments({ study_pk, chosenParadigm });
+    let chosenMethod = fieldValues[index].specific;
+    createUncontrastExperiments({ study_pk, chosenMethod });
   }
 
   const submitCondition = (index) => {
@@ -73,15 +80,15 @@ export default function Paradigms({
   useEffect(() => {
     setMinimumClassifications({
       ...minimumClassifications,
-      paradigms: fieldsNum,
+      suppression_method: fieldsNum,
     });
   }, [fieldsNum]);
-  console.log(fieldValues[0].main);
+
   return (
     <>
       <ExpandingBox
         number={fieldsNum}
-        disabled={disabled}
+        disabled={false} //TODO
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
           return (
@@ -95,9 +102,9 @@ export default function Paradigms({
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            "Indicate which class of paradigms/manipulations were used in the experiment using the dropdown menu. Then, choose the more specific paradigm/manipulation used, under the specified class of paradigms/manipulations. You can choose several paradigms/manipulations if more than one was used."
+                            "Indicate the paradigm used in the experiment to present the stimulus so it was not consciously perceived"
                           }
-                          text={"Main paradigm"}
+                          text={"Main suppression method "}
                         />
 
                         <CustomSelect
@@ -107,7 +114,8 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].main = value;
                             setFieldValues(newArray);
-                            submitCondition(index) && uniqSubmit(index);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={fieldOptions}
                         />
@@ -117,9 +125,9 @@ export default function Paradigms({
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            'Choose a specific paradigm used in the experiment under the relevant paradigm class. For example, for an experiment that used backward masking, select "Masking" as the main paradigm, and then select Backward Masking as the specific paradigm.'
+                            "Choose a specific suppression method used in the experiment under the relevant suppression method class. For example."
                           }
-                          text={"Specific paradigm"}
+                          text={"Specific suppression method"}
                         />
 
                         <CustomSelect
@@ -129,14 +137,15 @@ export default function Paradigms({
                             const newArray = [...fieldValues];
                             newArray[index].specific = value;
                             setFieldValues(newArray);
-                            submitCondition(index) && uniqSubmit(index);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={[
                             ...new Set(
-                              optionalParadigms
+                              optionalSubTypes
                                 .filter(
-                                  (paradigm) =>
-                                    paradigm.main == fieldValues[index].main
+                                  (type) =>
+                                    type.parent == fieldValues[index].main
                                 )
                                 .map((row) => ({
                                   label: row.name,
@@ -161,14 +170,6 @@ export default function Paradigms({
             </div>
           );
         })}
-
-        <ExternalNotes
-          description={description}
-          setDescription={setDescription}
-          classification={classificationName}
-          study_pk={study_pk}
-          experiment_pk={experiment_pk}
-        />
       </ExpandingBox>
     </>
   );
