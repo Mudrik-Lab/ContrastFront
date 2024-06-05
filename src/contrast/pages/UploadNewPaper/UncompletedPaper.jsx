@@ -150,6 +150,8 @@ export default function UncompletedPaper({
       console.log(e);
     }
   };
+
+  console.log(study);
   return (
     <div className="h-full ">
       {study && (

@@ -15,6 +15,7 @@ import {
 import ResultsSummary from "./ResultsSummary";
 import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfiguration";
 import SuppressionMethod from "./SuppressionMethod";
+import ProcessingDomain from "./ProcessingDomain";
 
 export default function ExperimentForm({
   study,
@@ -92,6 +93,14 @@ export default function ExperimentForm({
   const subSuppressionMethod =
     configurations?.data.available_suppression_method_sub_types;
 
+  const mainProcessingDomain =
+    configurations?.data.available_processing_main_domain_types?.map(
+      (main) => ({
+        value: main.id,
+        label: main.name,
+      })
+    );
+
   const analysisPhaseOptions =
     configurations?.data.available_consciousness_measure_phase_type?.map(
       (measure) => ({
@@ -106,7 +115,14 @@ export default function ExperimentForm({
         label: measure.name,
       })
     );
-
+  const consciousnessMeasuresSubType =
+    configurations?.data.available_consciousness_measure_sub_type;
+  const outcomeOptions = configurations?.data.available_outcomes_type?.map(
+    (type) => ({
+      value: type.id,
+      label: type.name,
+    })
+  );
   const findingTypes = configurations?.data.available_finding_tags_types?.map(
     (type) => ({
       value: type.id,
@@ -165,7 +181,7 @@ export default function ExperimentForm({
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={false}
+              disabled={false} // TODO
               values={experimentData?.paradigms}
             />
 
@@ -208,43 +224,45 @@ export default function ExperimentForm({
               disabled={false}
               values={experimentData?.paradigms}
             />
-            {/*  <ConsciousnessMeasures
+            <ProcessingDomain
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
-              fieldOptions={analysisMeasuresOptions}
-              analysisPhaseOptions={analysisPhaseOptions}
+              fieldOptions={mainProcessingDomain}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData}
-            /> */}
+            />
+            <ConsciousnessMeasures
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={analysisMeasuresOptions}
+              analysisPhaseOptions={analysisPhaseOptions}
+              consciousnessMeasuresSubType={consciousnessMeasuresSubType}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
             <Text color="grayReg" weight={"bold"}>
               Findings
             </Text>
 
-            {/* <Findings
-              fieldOptions={{
-                techniquesOptions: techniques?.map((tech) => ({
-                  value: tech.id || tech.value,
-                  label: tech.name || tech.label,
-                })),
-                findingTagsFamilies,
-                findingTypes,
-                AALOptions,
-                analysisTypeOptions,
-              }}
+            <Findings
+              fieldOptions={outcomeOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={
-                shouldCheckAllClassificationsFilled
-                  ? Object.values(minimumClassifications).includes(0)
-                  : !experimentID
+                false
+                // shouldCheckAllClassificationsFilled
+                //   ? Object.values(minimumClassifications).includes(0)
+                //   : !experimentID
               }
               values={experimentData?.finding_tags}
             />
-
+            {/*
             <ResultsSummary
               experiment_pk={experimentID}
               study_pk={study.id}
