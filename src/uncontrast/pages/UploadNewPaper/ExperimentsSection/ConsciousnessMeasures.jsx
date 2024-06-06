@@ -25,13 +25,17 @@ export default function ConsciousnessMeasures({
   minimumClassifications,
   setMinimumClassifications,
 }) {
+  const isUncontrast = true;
   const initialValues = {
     type: "",
     sub_type: "",
     phase: "",
     description: "",
-    trailsNum: "",
-    awarenessTestedNum: "",
+    number_of_trials: "",
+    number_of_participants_in_awareness_test: "",
+    is_cm_same_participants_as_task: "",
+    is_performance_above_chance: "",
+    is_trial_excluded_based_on_measure: "",
   };
   const [description, setDescription] = useState(
     values?.consciousness_measures_notes || ""
@@ -40,6 +44,7 @@ export default function ConsciousnessMeasures({
   const classificationName = "consciousness_measures";
 
   const handleSubmit = SubmitClassificationField(
+    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
@@ -48,6 +53,7 @@ export default function ConsciousnessMeasures({
   );
 
   const handleDelete = DeleteClassificationField(
+    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
@@ -56,7 +62,7 @@ export default function ConsciousnessMeasures({
   );
 
   useEffect(() => {
-    if (values && values.consciousness_measures.length > 0) {
+    if (values && values.consciousness_measures?.length > 0) {
       setFieldValues(
         values.consciousness_measures.map((row) => {
           return {
@@ -65,6 +71,12 @@ export default function ConsciousnessMeasures({
             phase: row.phase,
             trailsNum: row.number_of_trials,
             awarenessTestedNum: row.number_of_participants_in_awareness_test,
+            is_cm_same_participants_as_task:
+              row.is_cm_same_participants_as_task,
+            is_performance_above_chance: row.is_performance_above_chance,
+            is_trial_excluded_based_on_measure:
+              row.is_trial_excluded_based_on_measure,
+
             id: row.id,
           };
         })
@@ -75,12 +87,17 @@ export default function ConsciousnessMeasures({
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.type &&
-      fieldValues[index]?.sub_type &&
       fieldValues[index]?.phase &&
-      fieldValues[index]?.trailsNum &&
-      fieldValues[index]?.awarenessTestedNum
+      fieldValues[index]?.number_of_trials &&
+      fieldValues[index]?.number_of_participants_in_awareness_test &&
+      fieldValues[index]?.is_cm_same_participants_as_task &&
+      fieldValues[index]?.is_performance_above_chance &&
+      fieldValues[index]?.is_trial_excluded_based_on_measure &&
+      (fieldValues[index]?.type == 1 || fieldValues[index]?.type == 2) &&
+      !!fieldValues[index].sub_type
     );
   };
+  console.log(fieldValues[0]);
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
     setMinimumClassifications({
@@ -88,12 +105,13 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
+
   const OBJECTIVE_CASE_TOOLTIP =
     " Indicate which type of objective awareness measure was taken  (e.g., if the task performed on the suppressed stimuli is the same as the task performed on the non-suppressed stimuli, enter “high-level discrimination”). If more than one objective measure was taken, please reply for the one taken on a trial-by-trial basis";
   const SUBJECTIVE_CASE_TOOLTIP =
     "Indicate which type of subjective awareness measure was taken. If more than one subjective measure was taken, please reply for the one taken on a trial-by-trial basis";
-
-  console.log(consciousnessMeasuresSubType);
+  const OTHER_TYPE = "No sub type for the type you have chosen";
+  const NO_TYPE = "For further instructions- first choose main type first";
 
   return (
     <ExpandingBox
@@ -134,11 +152,13 @@ export default function ConsciousnessMeasures({
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            fieldValue.main == 1
+                            fieldValue.type == 1
                               ? OBJECTIVE_CASE_TOOLTIP
-                              : fieldValue.main == 2
+                              : fieldValue.type == 2
                               ? SUBJECTIVE_CASE_TOOLTIP
-                              : "For further instructions- first choose main type first"
+                              : fieldValue.type > 2
+                              ? OTHER_TYPE
+                              : NO_TYPE
                           }
                           text={"Sub type"}
                         />
@@ -202,12 +222,15 @@ export default function ConsciousnessMeasures({
                           min={0}
                           disabled={fieldValues[index].id}
                           type="number"
-                          value={fieldValue.trailsNum}
+                          value={fieldValue.number_of_trials}
                           onChange={(e) => {
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
                                 i === index
-                                  ? { ...item, trailsNum: e.target.value }
+                                  ? {
+                                      ...item,
+                                      number_of_trials: e.target.value,
+                                    }
                                   : item
                               )
                             );
@@ -245,14 +268,17 @@ export default function ConsciousnessMeasures({
                           min={0}
                           disabled={fieldValues[index].id}
                           type="number"
-                          value={fieldValue.awarenessTestedNum}
+                          value={
+                            fieldValue.number_of_participants_in_awareness_test
+                          }
                           onChange={(e) => {
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
                                 i === index
                                   ? {
                                       ...item,
-                                      awarenessTestedNum: e.target.value,
+                                      number_of_participants_in_awareness_test:
+                                        e.target.value,
                                     }
                                   : item
                               )

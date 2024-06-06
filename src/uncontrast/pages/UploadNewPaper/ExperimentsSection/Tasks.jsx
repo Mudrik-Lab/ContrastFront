@@ -23,11 +23,13 @@ export default function Tasks({
   setMinimumClassifications,
   minimumClassifications,
 }) {
+  const isUncontrast = true;
   const initialValues = { type: "" };
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "tasks";
 
   const handleSubmit = SubmitClassificationField(
+    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,

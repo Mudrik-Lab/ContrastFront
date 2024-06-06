@@ -3,7 +3,7 @@ import { Text } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import { rawTextToShow } from "../../../../Utils/functions";
 import Samples from "./Samples";
-import Stimuli from "./Stimuli";
+import SuppressedStimuli from "./SuppressedStimuli";
 import ConsciousnessMeasures from "./ConsciousnessMeasures";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
@@ -12,10 +12,10 @@ import {
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
 } from "../../../../Utils/HardCoded";
-import ResultsSummary from "./ResultsSummary";
 import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfiguration";
 import SuppressionMethod from "./SuppressionMethod";
 import ProcessingDomain from "./ProcessingDomain";
+import TargetStimuli from "./TargetStimuli";
 
 export default function ExperimentForm({
   study,
@@ -28,10 +28,10 @@ export default function ExperimentForm({
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
   const [minimumClassifications, setMinimumClassifications] = useState({
-    paradigms: experimentData?.paradigms?.length || 0,
+    paradigms: experimentData?.paradigm?.length || 0,
     samples: experimentData?.samples?.length || 0,
     tasks: experimentData?.tasks?.length || 0,
-    stimuli: experimentData?.stimuli?.length || 0,
+    stimuli: experimentData?.suppressed_stimuli?.length || 0,
     consciousnessMeasures: experimentData?.consciousness_measures?.length || 0,
     techniques: experimentData?.techniques?.length || 0,
     measures: experimentData?.measures?.length || 0,
@@ -123,30 +123,7 @@ export default function ExperimentForm({
       label: type.name,
     })
   );
-  const findingTypes = configurations?.data.available_finding_tags_types?.map(
-    (type) => ({
-      value: type.id,
-      label: type.name,
-      family: type.family,
-    })
-  );
-  const findingTagsFamilies =
-    configurations?.data.available_finding_tags_families?.map((type) => ({
-      value: type.id,
-      label: type.name,
-    }));
-  const AALOptions = configurations?.data.available_AAL_atlas_tag_types?.map(
-    (type) => ({
-      value: type,
-      label: type,
-    })
-  );
 
-  const analysisTypeOptions =
-    configurations?.data.available_analysis_type_choices?.map((type) => ({
-      value: type,
-      label: rawTextToShow(type),
-    }));
   const shouldCheckAllClassificationsFilled = false;
   return (
     <>
@@ -182,7 +159,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={false} // TODO
-              values={experimentData?.paradigms}
+              values={experimentData?.paradigm}
             />
 
             <Samples
@@ -203,7 +180,7 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData}
             />
-            <Stimuli
+            <SuppressedStimuli
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
               fieldOptions={stimulusCategories}
@@ -214,6 +191,19 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData}
             />
+
+            <TargetStimuli
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={stimulusCategories}
+              subCategories={stimulusSubCategories}
+              modalities={stimulusModalities}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
+
             <SuppressionMethod
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
@@ -255,7 +245,7 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={
-                false
+                false //TODO
                 // shouldCheckAllClassificationsFilled
                 //   ? Object.values(minimumClassifications).includes(0)
                 //   : !experimentID

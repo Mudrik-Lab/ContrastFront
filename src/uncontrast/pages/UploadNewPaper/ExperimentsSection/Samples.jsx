@@ -23,18 +23,20 @@ export default function Samples({
   setMinimumClassifications,
   minimumClassifications,
 }) {
+  const isUncontrast = true;
   const [description, setDescription] = useState(values?.samples_notes || "");
   const initialValues = {
     type: "",
     size_included: "",
-    total_size: "",
+    size_total: "",
     excluded: "",
-    excludedNum: "",
+    size_excluded: 0,
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "samples";
 
   const handleSubmit = SubmitClassificationField(
+    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
@@ -70,14 +72,14 @@ export default function Samples({
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.type &&
-      fieldValues[index]?.total_size &&
+      fieldValues[index]?.size_total &&
       fieldValues[index]?.size_included &&
       parseInt(fieldValues[index]?.size_included) <=
-        parseInt(fieldValues[index]?.total_size) &&
+        parseInt(fieldValues[index]?.size_total) &&
       ((fieldValues[index].excluded === "yes" &&
-        parseInt(fieldValues[index]?.excludedNum)) ||
+        parseInt(fieldValues[index]?.size_excluded)) ||
         (fieldValues[index].excluded === "no" &&
-          !fieldValues[index]?.excludedNum))
+          !fieldValues[index]?.size_excluded))
     );
   };
 
@@ -137,12 +139,15 @@ export default function Samples({
                           min={0}
                           disabled={fieldValues[index].id}
                           type="number"
-                          value={fieldValue.total_size}
+                          value={fieldValue.size_total}
                           onChange={(e) => {
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
                                 i === index
-                                  ? { ...item, total_size: e.target.value }
+                                  ? {
+                                      ...item,
+                                      size_total: parseInt(e.target.value),
+                                    }
                                   : item
                               )
                             );
@@ -163,7 +168,7 @@ export default function Samples({
                         />
                       </div>
                       {parseInt(fieldValue.size_included) >
-                        parseInt(fieldValue.total_size) && (
+                        parseInt(fieldValue.size_total) && (
                         <span className="text-flourishRed ">
                           Smaller than included
                         </span>
@@ -188,7 +193,10 @@ export default function Samples({
                             setFieldValues((prev) =>
                               prev.map((item, i) =>
                                 i === index
-                                  ? { ...item, size_included: e.target.value }
+                                  ? {
+                                      ...item,
+                                      size_included: parseInt(e.target.value),
+                                    }
                                   : item
                               )
                             );
@@ -258,12 +266,15 @@ export default function Samples({
                             min={0}
                             disabled={fieldValues[index].id}
                             type="number"
-                            value={fieldValue.excludedNum}
+                            value={fieldValue.size_excluded}
                             onChange={(e) => {
                               setFieldValues((prev) =>
                                 prev.map((item, i) =>
                                   i === index
-                                    ? { ...item, excludedNum: e.target.value }
+                                    ? {
+                                        ...item,
+                                        size_excluded: parseInt(e.target.value),
+                                      }
                                     : item
                                 )
                               );

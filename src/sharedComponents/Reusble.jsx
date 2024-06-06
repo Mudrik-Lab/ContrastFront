@@ -208,7 +208,9 @@ export const TooltipExplanation = ({
           className={classNames(
             `flex justify-center items-center gap-2 text-sm ${
               blackHeadline ? "text-base" : ""
-            } ${isHeadline ? "font-bold text-grayReg text-base" : ""} `
+            } ${
+              isHeadline ? "font-bold text-grayReg text-base leading-5" : ""
+            } `
           )}
           aria-label={text ? text : "Tooltip explaination by click "}>
           {text} <QuestionMark />
