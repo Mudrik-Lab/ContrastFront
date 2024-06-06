@@ -5,6 +5,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  Text,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -16,6 +17,7 @@ import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 export default function ConsciousnessMeasures({
   fieldOptions,
   analysisPhaseOptions,
+  consciousnessMeasuresSubType,
   disabled,
   experiment_pk,
   study_pk,
@@ -25,8 +27,11 @@ export default function ConsciousnessMeasures({
 }) {
   const initialValues = {
     type: "",
+    sub_type: "",
     phase: "",
     description: "",
+    trailsNum: "",
+    awarenessTestedNum: "",
   };
   const [description, setDescription] = useState(
     values?.consciousness_measures_notes || ""
@@ -56,7 +61,10 @@ export default function ConsciousnessMeasures({
         values.consciousness_measures.map((row) => {
           return {
             type: row.type,
+            sub_type: row.sub_type,
             phase: row.phase,
+            trailsNum: row.number_of_trials,
+            awarenessTestedNum: row.number_of_participants_in_awareness_test,
             id: row.id,
           };
         })
@@ -65,7 +73,13 @@ export default function ConsciousnessMeasures({
   }, []);
 
   const submitCondition = (index) => {
-    return fieldValues[index]?.type && fieldValues[index]?.phase;
+    return (
+      fieldValues[index]?.type &&
+      fieldValues[index]?.sub_type &&
+      fieldValues[index]?.phase &&
+      fieldValues[index]?.trailsNum &&
+      fieldValues[index]?.awarenessTestedNum
+    );
   };
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
@@ -74,6 +88,12 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
+  const OBJECTIVE_CASE_TOOLTIP =
+    " Indicate which type of objective awareness measure was taken  (e.g., if the task performed on the suppressed stimuli is the same as the task performed on the non-suppressed stimuli, enter “high-level discrimination”). If more than one objective measure was taken, please reply for the one taken on a trial-by-trial basis";
+  const SUBJECTIVE_CASE_TOOLTIP =
+    "Indicate which type of subjective awareness measure was taken. If more than one subjective measure was taken, please reply for the one taken on a trial-by-trial basis";
+
+  console.log(consciousnessMeasuresSubType);
 
   return (
     <ExpandingBox
@@ -86,14 +106,14 @@ export default function ConsciousnessMeasures({
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
-                <div className="flex gap-2 items-start w-full">
+                <div className="flex flex-col gap-2 items-start w-full">
                   <div className="flex flex-col gap-2 w-full">
                     <div className="flex gap-2">
                       <div className="w-full">
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            " Indicate which type of consciousness measure was taken. If no measure was administered, enter “None”. If more than one measure was administered fill this section separately for each measure (use the + button at the bottom to add more)."
+                            "Indicate which type of consciousness measure was taken. If no measure was administered, enter “None”. If more than one measure was administered fill this section separately for each measure (use the + button at the bottom to add more)."
                           }
                           text={"Type"}
                         />
@@ -114,22 +134,216 @@ export default function ConsciousnessMeasures({
                         <TooltipExplanation
                           isHeadline
                           tooltip={
-                            "Indicate at which stage of the experiment the consciousness measure is taken."
+                            fieldValue.main == 1
+                              ? OBJECTIVE_CASE_TOOLTIP
+                              : fieldValue.main == 2
+                              ? SUBJECTIVE_CASE_TOOLTIP
+                              : "For further instructions- first choose main type first"
                           }
-                          text={"Phase"}
+                          text={"Sub type"}
                         />
                         <CustomSelect
                           disabled={fieldValue.id}
-                          value={fieldValue.phase}
+                          value={fieldValue.sub_type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            newArray[index].phase = value;
+                            newArray[index].sub_type = value;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
                           }}
-                          options={analysisPhaseOptions}
+                          options={[
+                            ...new Set(
+                              consciousnessMeasuresSubType
+                                .filter(
+                                  (subType) =>
+                                    subType.type == fieldValues[index].type
+                                )
+                                .map((row) => ({
+                                  label: row.name,
+                                  value: row.id,
+                                }))
+                            ),
+                          ]}
                         />
+                      </div>
+                    </div>
+                  </div>
+                  <div className="w-1/2">
+                    <TooltipExplanation
+                      isHeadline
+                      tooltip={
+                        "Indicate at which stage of the experiment the consciousness measure is taken."
+                      }
+                      text={"Phase"}
+                    />
+                    <CustomSelect
+                      disabled={fieldValue.id}
+                      value={fieldValue.phase}
+                      onChange={(value) => {
+                        const newArray = [...fieldValues];
+                        newArray[index].phase = value;
+                        setFieldValues(newArray);
+                        submitCondition(index) &&
+                          handleSubmit(fieldValues, index);
+                      }}
+                      options={analysisPhaseOptions}
+                    />
+                  </div>
+                  <div className="flex flex-col gap-2 w-fulll">
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-3/4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of trials for the objective measure
+                        </Text>
+                      </div>
+                      <div className="w-1/4 flex justify-between items-center gap-2">
+                        <input
+                          min={0}
+                          disabled={fieldValues[index].id}
+                          type="number"
+                          value={fieldValue.trailsNum}
+                          onChange={(e) => {
+                            setFieldValues((prev) =>
+                              prev.map((item, i) =>
+                                i === index
+                                  ? { ...item, trailsNum: e.target.value }
+                                  : item
+                              )
+                            );
+                          }}
+                          onBlur={() =>
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
+                          onKeyDown={(e) =>
+                            e.key === "Enter" &&
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
+                          className={`border w-full border-gray-300 rounded-md p-2 ${
+                            fieldValues[index].id &&
+                            "bg-grayDisable text-gray-400"
+                          } `}
+                        />
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            " Indicate how many trials were taken for the objective awareness measure"
+                          }
+                        />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-3/4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of participants in awareness test
+                        </Text>
+                      </div>
+                      <div className="w-1/4 flex justify-between items-center gap-2">
+                        <input
+                          min={0}
+                          disabled={fieldValues[index].id}
+                          type="number"
+                          value={fieldValue.awarenessTestedNum}
+                          onChange={(e) => {
+                            setFieldValues((prev) =>
+                              prev.map((item, i) =>
+                                i === index
+                                  ? {
+                                      ...item,
+                                      awarenessTestedNum: e.target.value,
+                                    }
+                                  : item
+                              )
+                            );
+                          }}
+                          onBlur={() =>
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
+                          onKeyDown={(e) =>
+                            e.key === "Enter" &&
+                            submitCondition(index) &&
+                            handleSubmit(fieldValues, index)
+                          }
+                          className={`border w-full border-gray-300 rounded-md p-2 ${
+                            fieldValues[index].id &&
+                            "bg-grayDisable text-gray-400"
+                          } `}
+                        />
+                        <TooltipExplanation isHeadline tooltip={" ?"} />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-3/4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is cm same participants as task?
+                        </Text>
+                      </div>
+                      <div className="w-1/4 flex justify-between items-center gap-2">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.is_cm_same_participants_as_task}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].is_cm_same_participants_as_task =
+                              value;
+                            setFieldValues(newArray);
+                          }}
+                          options={[
+                            { value: true, label: "Yes" },
+                            { value: false, label: "No" },
+                          ]}
+                        />
+                        <TooltipExplanation isHeadline tooltip={" ?"} />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-3/4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is performance above chance?
+                        </Text>
+                      </div>
+                      <div className="w-1/4 flex justify-between items-center gap-2">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.is_performance_above_chance}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].is_performance_above_chance = value;
+                            setFieldValues(newArray);
+                          }}
+                          options={[
+                            { value: true, label: "Yes" },
+                            { value: false, label: "No" },
+                          ]}
+                        />
+                        <TooltipExplanation isHeadline tooltip={" ?"} />
+                      </div>
+                    </div>
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-3/4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is trial excluded based on measure?
+                        </Text>
+                      </div>
+                      <div className="w-1/4 flex justify-between items-center gap-2">
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.is_trial_excluded_based_on_measure}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].is_trial_excluded_based_on_measure =
+                              value;
+                            setFieldValues(newArray);
+                          }}
+                          options={[
+                            { value: true, label: "Yes" },
+                            { value: false, label: "No" },
+                          ]}
+                        />
+                        <TooltipExplanation isHeadline tooltip={" ?"} />
                       </div>
                     </div>
                   </div>

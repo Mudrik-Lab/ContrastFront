@@ -14,7 +14,7 @@ import {
   rawTextToShow,
 } from "../../../../Utils/functions";
 
-export default function Tasks({
+export default function ProcessingDomain({
   fieldOptions,
   disabled,
   experiment_pk,
@@ -23,9 +23,9 @@ export default function Tasks({
   setMinimumClassifications,
   minimumClassifications,
 }) {
-  const initialValues = { type: "" };
+  const initialValues = { main: "" };
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const classificationName = "tasks";
+  const classificationName = "processing_domain";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
@@ -47,7 +47,7 @@ export default function Tasks({
       setFieldValues(
         values.tasks.map((row) => {
           return {
-            type: row.type,
+            main: row.main,
             id: row.id,
           };
         })
@@ -79,16 +79,16 @@ export default function Tasks({
                     <TooltipExplanation
                       isHeadline
                       tooltip={
-                        "Enter the type of tasks used in the experiment. Enter 'No Task' if no task was used."
+                        "Indicate which domains the processing involved. You may choose more than one option"
                       }
-                      text={"Type"}
+                      text={"Main Processing Domain"}
                     />
                     <CustomSelect
                       disabled={fieldValue.id}
-                      value={fieldValue.type}
+                      value={fieldValue.main}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
-                        newArray[index].type = value;
+                        newArray[index].main = value;
                         setFieldValues(newArray);
                         handleSubmit(fieldValues, index);
                       }}

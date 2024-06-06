@@ -5,6 +5,7 @@ import { ReactComponent as ProfileIcon } from "../assets/icons/profile-negative-
 import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
+import UnconLogo from "../assets/logoes/uncon-logo.png";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Text } from "./Reusble";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -23,6 +24,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const isUncontrast = Site.type === "uncontrast";
+  console.log(isUncontrast);
   const graphs = isUncontrast
     ? Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
@@ -61,7 +63,7 @@ export default function Navbar() {
             <div
               className="logo-right flex gap-3 items-center cursor-pointer"
               onClick={() => navigate("/")}>
-              <img src={Logo} alt="logo-right" />
+              <img src={isUncontrast ? UnconLogo : Logo} alt="logo-right" />
               <div className=" border-r border-black h-10 "></div>
               <Text xs color="grayHeavy">
                 {" "}
@@ -157,7 +159,11 @@ export default function Navbar() {
               <div
                 className="logo-right flex gap-3 items-center cursor-pointer"
                 onClick={() => navigate("/")}>
-                <img src={Logo} alt="logo-right" />
+                <img
+                  src={isUncontrast ? UnconLogo : Logo}
+                  width={85}
+                  alt="logo-right"
+                />
                 <div className=" border-r border-black h-10 "></div>
                 <Text xs color="grayHeavy">
                   {" "}
