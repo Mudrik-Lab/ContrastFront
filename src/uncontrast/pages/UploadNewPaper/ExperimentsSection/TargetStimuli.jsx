@@ -94,7 +94,6 @@ export default function TargetStimuli({
     });
   }, [fieldsNum]);
 
-  console.log(fieldValues);
   return (
     <ExpandingBox
       number={fieldsNum}

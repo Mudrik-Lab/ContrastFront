@@ -36,7 +36,6 @@ export default function ExperimentDetails({
   };
   const paradigmsWithFamily = data?.data.available_main_paradigm_type;
 
-  console.log(experiment);
   return (
     <div className="w-1/2">
       {isSuccess && (
