@@ -1,22 +1,13 @@
 import {
-  AddFieldButton,
   ExpandingBox,
   TooltipExplanation,
-  TrashButton,
   CustomSelect,
   CircledIndex,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
-import {
-  DeleteClassificationField,
-  SubmitClassificationField,
-  rawTextToShow,
-} from "../../../../Utils/functions";
+import { rawTextToShow } from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
-import {
-  createExperiments,
-  createUncontrastExperiments,
-} from "../../../../apiHooks/createExperiment";
+import { createUncontrastExperiments } from "../../../../apiHooks/createExperiment";
 
 export default function Paradigms({
   fieldOptions,
@@ -26,43 +17,27 @@ export default function Paradigms({
   values,
   minimumClassifications,
   setMinimumClassifications,
-  disabled,
+  setExperimentID,
+  experimentID,
 }) {
   const initialValues = {
     main: "",
     specific: "",
   };
   const [description, setDescription] = useState(values?.paradigms || "");
-  const [fieldValues, setFieldValues] = useState([initialValues]);
+
+  const [fieldValues, setFieldValues] = useState(initialValues);
   const classificationName = "paradigms";
 
-  const handleDelete = DeleteClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
   useEffect(() => {
-    if (values.id) {
+    if (values?.id) {
       setFieldValues({
-        main: values.name,
-        specific: values.name,
+        main: values.main,
+        specific: values.id,
         id: values.id,
       });
     }
   }, []);
-  async function uniqSubmit() {
-    let chosenParadigm = fieldValues.specific;
-    createUncontrastExperiments({ study_pk, chosenParadigm });
-  }
-
-  const submitCondition = () => {
-    return [fieldValues?.main, fieldValues?.specific].every(
-      (condition) => Boolean(condition) === true
-    );
-  };
 
   const fieldsNum = fieldValues.id ? 1 : 0;
   useEffect(() => {
@@ -71,12 +46,12 @@ export default function Paradigms({
       paradigms: fieldsNum,
     });
   }, [fieldsNum]);
-
+  console.log(fieldValues);
   return (
     <>
       <ExpandingBox
         number={fieldsNum}
-        disabled={disabled}
+        disabled={false}
         headline={rawTextToShow(classificationName)}>
         <div key={`${classificationName}`}>
           <form className="flex flex-col gap-2">
@@ -94,13 +69,12 @@ export default function Paradigms({
                     />
 
                     <CustomSelect
-                      disabled={fieldValues.id}
+                      disabled={experimentID}
                       value={fieldValues.main}
                       onChange={(value) => {
                         const newObj = { ...fieldValues };
                         newObj.main = value;
                         setFieldValues(newObj);
-                        submitCondition() && uniqSubmit();
                       }}
                       options={fieldOptions}
                     />
@@ -116,13 +90,19 @@ export default function Paradigms({
                     />
 
                     <CustomSelect
-                      disabled={fieldValues.id}
+                      disabled={experimentID}
                       value={fieldValues.specific}
-                      onChange={(value) => {
+                      onChange={async (value) => {
+                        console.log("onChang", value);
                         const newObj = { ...fieldValues };
                         newObj.specific = value;
                         setFieldValues(newObj);
-                        submitCondition(index) && uniqSubmit(index);
+                        let res = await createUncontrastExperiments({
+                          study_pk,
+                          chosenParadigm: value,
+                        });
+                        console.log(res);
+                        res.status === 201 && setExperimentID(res.data.id);
                       }}
                       options={[
                         ...new Set(

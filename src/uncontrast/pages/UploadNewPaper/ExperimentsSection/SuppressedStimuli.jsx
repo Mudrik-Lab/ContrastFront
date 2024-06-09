@@ -40,12 +40,12 @@ export default function SuppressedStimuli({
   const classificationName = "suppressed_stimuli";
 
   const handleSubmit = SubmitClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -53,7 +53,8 @@ export default function SuppressedStimuli({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -63,9 +64,9 @@ export default function SuppressedStimuli({
   }, [fieldValues[0]]);
 
   useEffect(() => {
-    if (values && values.stimuli?.length > 0) {
+    if (values && values.suppressed_stimuli?.length > 0) {
       setFieldValues(
-        values.stimuli.map((row) => {
+        values.suppressed_stimuli.map((row) => {
           return {
             category: row.category,
             sub_category: row.sub_category || "",
@@ -96,7 +97,7 @@ export default function SuppressedStimuli({
   useEffect(() => {
     setMinimumClassifications({
       ...minimumClassifications,
-      stimuli: fieldsNum,
+      suppressed_stimuli: fieldsNum,
     });
   }, [fieldsNum]);
 

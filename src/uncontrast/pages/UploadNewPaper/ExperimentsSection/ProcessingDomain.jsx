@@ -23,16 +23,18 @@ export default function ProcessingDomain({
   setMinimumClassifications,
   minimumClassifications,
 }) {
+  const isUncontrast = true;
   const initialValues = { main: "" };
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const classificationName = "processing_domain";
+  const classificationName = "processing_domains";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -40,12 +42,13 @@ export default function ProcessingDomain({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
   useEffect(() => {
-    if (values?.tasks && values.tasks.length > 0) {
+    if (values?.processing_domains && values.processing_domains.length > 0) {
       setFieldValues(
-        values.tasks.map((row) => {
+        values.processing_domains.map((row) => {
           return {
             main: row.main,
             id: row.id,
@@ -58,14 +61,14 @@ export default function ProcessingDomain({
   useEffect(() => {
     setMinimumClassifications({
       ...minimumClassifications,
-      tasks: fieldsNum,
+      processing_domains: fieldsNum,
     });
   }, [fieldsNum]);
 
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={false} //TODO
+      disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (

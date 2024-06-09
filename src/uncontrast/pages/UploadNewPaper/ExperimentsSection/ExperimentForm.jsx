@@ -153,12 +153,13 @@ export default function ExperimentForm({
 
             <Paradigms
               setMinimumClassifications={setMinimumClassifications}
+              setExperimentID={setExperimentID}
+              experimentID={experimentID}
               minimumClassifications={minimumClassifications}
               fieldOptions={mainParadigms}
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={false} // TODO
               values={experimentData?.paradigm}
             />
 
@@ -211,8 +212,8 @@ export default function ExperimentForm({
               optionalSubTypes={subSuppressionMethod}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={false}
-              values={experimentData?.paradigms}
+              disabled={!experimentID}
+              values={experimentData?.suppression_methods}
             />
             <ProcessingDomain
               setMinimumClassifications={setMinimumClassifications}
@@ -245,10 +246,9 @@ export default function ExperimentForm({
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={
-                false //TODO
-                // shouldCheckAllClassificationsFilled
-                //   ? Object.values(minimumClassifications).includes(0)
-                //   : !experimentID
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
               }
               values={experimentData?.finding_tags}
             />
