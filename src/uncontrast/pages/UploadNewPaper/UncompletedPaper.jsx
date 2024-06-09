@@ -33,6 +33,7 @@ import { toast } from "react-toastify";
 import FinalSubmit from "../../../sharedComponents/FinalSubmit";
 import { createNewAuthor } from "../../../apiHooks/createNewAuthor";
 import { ToastError } from "../../../Utils/functions";
+import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration";
 
 export default function UncompletedPaper({
   study,
@@ -65,15 +66,15 @@ export default function UncompletedPaper({
 
   const countryOption = useMemo(() => countryList().getData(), []);
 
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
-    getExtraConfig
+  const { data, isSuccess } = useQuery(
+    [`more_configurations`, "uncontrast"],
+    getUncontrastConfiguration
   );
-  const authorsList = extraConfig?.data.available_authors.map((author) => ({
+  const authorsList = data?.data.available_authors.map((author) => ({
     value: author.id,
     label: author.name,
   }));
-  const journalsList = extraConfig?.data.existing_journals.map((journal) => ({
+  const journalsList = data?.data.existing_journals.map((journal) => ({
     value: journal,
     label: journal,
   }));
@@ -84,7 +85,7 @@ export default function UncompletedPaper({
 
   useEffect(() => {
     setAuthorOptions(authorsList);
-  }, [extraConfig]);
+  }, [data]);
 
   const handleNewAuthor = async (authorName) => {
     try {

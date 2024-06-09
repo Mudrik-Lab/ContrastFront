@@ -74,13 +74,16 @@ export async function editExperiments({
 }
 
 export async function addPropertyToexperiment({
+  isUncontrast,
   property_id,
   study_pk,
   experiment_pk,
   classificationName,
 }) {
+  let UrlPrefix = isUncontrast ? "uncontrast_" : "";
+
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName.slice(
+    url: `${UrlPrefix}uncontrast_studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName.slice(
       0,
       classificationName.length - 1
     )}/`,
@@ -91,13 +94,15 @@ export async function addPropertyToexperiment({
 }
 
 export async function addFieldToexperiment({
+  isUncontrast,
   field,
   study_pk,
   experiment_pk,
   field_name,
 }) {
+  let UrlPrefix = isUncontrast ? "uncontrast_" : "";
   return await queryApi({
-    url: `studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${field_name}/`,
+    url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${field_name}/`,
     method: "POST",
     isProtected: true,
     data: field,

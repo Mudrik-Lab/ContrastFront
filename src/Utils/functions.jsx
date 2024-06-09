@@ -188,6 +188,7 @@ export const generateSelectOptions = (start, end) => {
 };
 
 export function SubmitClassificationField(
+  isUncontrast,
   study_pk,
   experiment_pk,
   classificationName,
@@ -200,7 +201,9 @@ export function SubmitClassificationField(
       classificationName !== "techniques"
     ) {
       try {
+        console.log(isUncontrast);
         const res = await addFieldToexperiment({
+          isUncontrast,
           field: values[index],
           study_pk,
           experiment_pk,
@@ -214,11 +217,13 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
+        console.log(e);
         ToastError(e);
       }
     } else {
       try {
         const res = await addPropertyToexperiment({
+          isUncontrast,
           experiment_pk,
           study_pk,
           property_id: values,
@@ -237,6 +242,7 @@ export function SubmitClassificationField(
   };
 }
 export function DeleteClassificationField(
+  isUncontrast,
   study_pk,
   experiment_pk,
   classificationName,
@@ -259,6 +265,7 @@ export function DeleteClassificationField(
     ) {
       try {
         const res = await deleteFieldFromExperiments({
+          isUncontrast,
           study_pk,
           experiment_pk,
           classificationName,
@@ -398,7 +405,7 @@ export function alphabetizeByLabels(selectFieldOptions) {
 
 export function ToastError(e) {
   return toast.error(
-    <ToastErrorBox errors={e?.response.data || "Error occurred"} />
+    <ToastErrorBox errors={e?.response?.data || "Error occurred"} />
   );
 }
 export function calculateHistogramData(xValues, yValues, binSize = 1) {

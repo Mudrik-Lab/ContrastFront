@@ -24,7 +24,6 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const isUncontrast = Site.type === "uncontrast";
-  console.log(isUncontrast);
   const graphs = isUncontrast
     ? Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
