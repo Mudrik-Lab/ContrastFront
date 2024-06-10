@@ -22,12 +22,16 @@ import { ReactComponent as Graph } from "../../../assets/icons/start-exploring.s
 import { ReactComponent as Profile } from "../../../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Quote } from "../../../assets/icons/cite-quote.svg";
 import { ReactComponent as QouteIcon } from "../../../assets/icons/copy-to-clipboard-icon.svg";
+import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration.jsx";
 
 export default function Homepage() {
   const snap = useSnapshot(state);
   const navigate = useNavigate();
 
-  const { data, isSuccess } = useQuery([`more_configurations`], getExtraConfig);
+  const { data, isSuccess } = useQuery(
+    [`more_configurations`, "uncontrast"],
+    getUncontrastConfiguration
+  );
   const cite =
     "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
   const copyToClipboard = () => {
@@ -46,14 +50,16 @@ export default function Homepage() {
           <h1 className="text-white text-5xl font-bold mb-10">
             UnconTrust Database
           </h1>
-          <h1 className="text-white text-3xl">Examine trends</h1>
-          <h1 className="text-blue text-3xl">
-            {" "}
-            in {data?.data.approved_experiments_count} experiments
-          </h1>
-          <h1 className="text-white text-3xl">
-            studying unconscious processing
-          </h1>
+          <div className="my-24">
+            <h1 className="text-white text-3xl">Examine trends</h1>
+            <h1 className="text-blue text-3xl">
+              {" "}
+              in {data?.data.approved_experiments_count} experiments
+            </h1>
+            <h1 className="text-white text-3xl">
+              studying unconscious processing
+            </h1>
+          </div>
         </div>
         <div className="header-buttons flex flex-col items-center sm:flex-row sm:justify-start gap-4 mt-60 sm:mt-24">
           <WhiteButton
