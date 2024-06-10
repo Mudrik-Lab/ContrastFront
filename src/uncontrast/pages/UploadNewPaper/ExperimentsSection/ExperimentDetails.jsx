@@ -116,6 +116,12 @@ export default function ExperimentDetails({
                         </Text>
                         <Text>{sample.size_included}</Text>
                       </div>
+                      <div className="flex flex-col ">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Excluded
+                        </Text>
+                        <Text>{sample.size_excluded}</Text>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -151,7 +157,7 @@ export default function ExperimentDetails({
               </div>
             </ExpandingBox>
             <ExpandingBox
-              headline={"Stimuli"}
+              headline={"Suppressed Stimuli"}
               number={experiment.suppressed_stimuli.length}>
               {experiment.suppressed_stimuli.map((stimulus, index) => (
                 <div
@@ -202,6 +208,89 @@ export default function ExperimentDetails({
                         <Text sm>
                           {Number(stimulus.duration).toFixed() + " (ms)"}
                         </Text>
+                      </div>
+                    </div>
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Presentation Mode
+                        </Text>
+                        <Text sm>{stimulus.mode_of_presentation}</Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Number of Stimuli
+                        </Text>
+                        <Text sm>{stimulus.number_of_stimuli}</Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          SOA
+                        </Text>
+                        <Text sm>{stimulus.soa}</Text>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+              <div className="pl-2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Notes
+                </Text>
+                <Text>{experiment.stimuli_notes}</Text>
+              </div>
+            </ExpandingBox>
+            <ExpandingBox
+              headline={"Target Stimuli"}
+              number={experiment.target_stimuli.length}>
+              {experiment.target_stimuli.map((stimulus, index) => (
+                <div
+                  key={stimulus.category.name}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="flex flex-col w-full gap-2">
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Category
+                        </Text>
+                        <Text sm>
+                          {
+                            stimuliCategories.find(
+                              (row) => row.id === stimulus.category
+                            )?.name
+                          }
+                        </Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Sub-category
+                        </Text>
+                        <Text sm>
+                          {stimuliSubCategories.find(
+                            (row) => row.id === stimulus.sub_category
+                          )?.name || "none"}
+                        </Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Modality
+                        </Text>
+                        <Text sm>
+                          {
+                            stimuliModality.find(
+                              (row) => row.id === stimulus.modality
+                            ).name
+                          }
+                        </Text>
+                      </div>
+                    </div>
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Number of Stimuli
+                        </Text>
+                        <Text sm>{stimulus.number_of_stimuli}</Text>
                       </div>
                     </div>
                   </div>
