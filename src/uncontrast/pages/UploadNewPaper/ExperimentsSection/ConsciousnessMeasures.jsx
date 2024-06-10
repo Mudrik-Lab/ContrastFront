@@ -396,6 +396,7 @@ export default function ConsciousnessMeasures({
         setFieldValues={setFieldValues}
       />
       <ExternalNotes
+        isUncontrast={isUncontrast}
         description={description}
         setDescription={setDescription}
         classification={classificationName}

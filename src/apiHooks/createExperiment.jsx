@@ -26,7 +26,6 @@ export async function createUncontrastExperiments({
   study_pk,
   chosenParadigm,
 }) {
-  console.log("chosenParadigm", chosenParadigm);
   const requestData = {
     paradigm: chosenParadigm,
   };

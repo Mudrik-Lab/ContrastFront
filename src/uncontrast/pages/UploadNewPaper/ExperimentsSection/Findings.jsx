@@ -14,6 +14,7 @@ import {
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../../Utils/functions";
+import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function Findings({
   fieldOptions,
@@ -31,6 +32,7 @@ export default function Findings({
     is_significant: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [description, setDescription] = useState(values?.finding_notes || "");
   const classificationName = "findings";
 
   const handleSubmit = SubmitClassificationField(
@@ -66,8 +68,12 @@ export default function Findings({
     }
   }, []);
 
-  const submitConditions = (index) => {
-    return true;
+  const submitCondition = (index) => {
+    return (
+      fieldValues[index].outcome &&
+      fieldValues[index].is_important &&
+      fieldValues[index].is_significant
+    );
   };
 
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
@@ -116,6 +122,8 @@ export default function Findings({
                           const newArray = [...fieldValues];
                           newArray[index].outcome = value;
                           setFieldValues(newArray);
+                          submitCondition(index) &&
+                            handleSubmit(fieldValues, index);
                         }}
                         options={fieldOptions}
                       />
@@ -142,10 +150,12 @@ export default function Findings({
                           const newArray = [...fieldValues];
                           newArray[index].is_significant = value;
                           setFieldValues(newArray);
+                          submitCondition(index) &&
+                            handleSubmit(fieldValues, index);
                         }}
                         options={[
-                          { value: true, label: "True" },
-                          { value: false, label: "False" },
+                          { value: true, label: "Yes" },
+                          { value: false, label: "No" },
                         ]}
                       />
 
@@ -170,10 +180,12 @@ export default function Findings({
                           const newArray = [...fieldValues];
                           newArray[index].is_important = value;
                           setFieldValues(newArray);
+                          submitCondition(index) &&
+                            handleSubmit(fieldValues, index);
                         }}
                         options={[
-                          { value: true, label: "True" },
-                          { value: false, label: "False" },
+                          { value: true, label: "Yes" },
+                          { value: false, label: "No" },
                         ]}
                       />
 
@@ -192,12 +204,6 @@ export default function Findings({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={!submitConditions(index) || fieldValue.id}
-                  />
                 </div>
               </div>
             </form>
@@ -208,6 +214,14 @@ export default function Findings({
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
+      />
+      <ExternalNotes
+        isUncontrast={isUncontrast}
+        description={description}
+        setDescription={setDescription}
+        classification={"experiment_findings"}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );

@@ -30,7 +30,8 @@ export default function ExperimentDetails({
     data?.data.available_consciousness_measure_type;
   const consciousnessMeasuresPhases =
     data?.data.available_consciousness_measure_phase_type;
-
+  const consciousnessMeasuresSubtypes =
+    data?.data.available_consciousness_measure_sub_type;
   const suppresionMethodsTypes = data?.data.available_suppression_method_types;
   const suppresionMethodsSubtypes =
     data?.data.available_suppression_method_sub_types;
@@ -286,57 +287,10 @@ export default function ExperimentDetails({
                 </div>
               ))}
             </ExpandingBox>
-            <ExpandingBox
-              headline={"Consciousness Measures"}
-              number={experiment.consciousness_measures.length}>
-              {experiment.consciousness_measures.map((cm, index) => (
-                <div
-                  key={cm + index}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="w-full flex items-start">
-                    <div className="w-full flex flex-col gap-2">
-                      <div className="flex w-full gap-2">
-                        <div className="w-1/2">
-                          <Text weight={"bold"} color={"grayReg"}>
-                            Type
-                          </Text>
-                          <Text>
-                            {
-                              consciousnessMeasuresTypes.find(
-                                (row) => row.id === cm.type
-                              )?.name
-                            }
-                          </Text>
-                        </div>
-                        <div className="w-1/2">
-                          <Text weight={"bold"} color={"grayReg"}>
-                            Phase
-                          </Text>
-                          <Text>
-                            {" "}
-                            {
-                              consciousnessMeasuresPhases.find(
-                                (row) => row.id === cm.phase
-                              )?.name
-                            }
-                          </Text>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}{" "}
-              <div className="pl-2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{experiment.consciousness_measures_notes}</Text>
-              </div>
-            </ExpandingBox>
+
             <ExpandingBox
               headline={"Suppression Methods"}
-              number={experiment.tasks.length}>
+              number={experiment.suppression_methods.length}>
               {experiment.suppression_methods.map((method, index) => (
                 <div
                   key={method + index}
@@ -387,7 +341,7 @@ export default function ExperimentDetails({
                       <Text>
                         {
                           processingDomainTypes.find(
-                            (x) => x.id === domain.type
+                            (x) => x.id === domain.main
                           )?.name
                         }
                       </Text>
@@ -395,6 +349,104 @@ export default function ExperimentDetails({
                   </div>
                 </div>
               ))}
+            </ExpandingBox>
+            <ExpandingBox
+              headline={"Consciousness Measures"}
+              number={experiment.consciousness_measures.length}>
+              {experiment.consciousness_measures.map((cm, index) => (
+                <div
+                  key={cm + index}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="w-full flex items-start">
+                    <div className="w-full flex flex-col gap-2">
+                      <div className="flex w-full justify-between gap-4">
+                        <div>
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Type
+                          </Text>
+                          <Text>
+                            {
+                              consciousnessMeasuresTypes.find(
+                                (row) => row.id === cm.type
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                        <div>
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Sub Type
+                          </Text>
+                          <Text>
+                            {
+                              consciousnessMeasuresSubtypes.find(
+                                (row) => row.id === cm.sub_type
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                        <div>
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Phase
+                          </Text>
+                          <Text>
+                            {" "}
+                            {
+                              consciousnessMeasuresPhases.find(
+                                (row) => row.id === cm.phase
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of trials for the objective measure
+                        </Text>
+                        <Text>{cm.number_of_trials}</Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of participants in awareness test
+                        </Text>
+                        <Text>
+                          {cm.number_of_participants_in_awareness_test}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is cm same participants as task?
+                        </Text>
+                        <Text>
+                          {cm.is_cm_same_participants_as_task ? "Yes" : "No"}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is performance above chance?
+                        </Text>
+                        <Text>
+                          {cm.is_performance_above_chance ? "Yes" : "No"}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is trial excluded based on measure?
+                        </Text>
+                        <Text>
+                          {cm.is_trial_excluded_based_on_measure ? "Yes" : "No"}
+                        </Text>
+                      </div>{" "}
+                    </div>
+                  </div>
+                </div>
+              ))}{" "}
+              <div className="pl-2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Notes
+                </Text>
+                <Text>{experiment.consciousness_measures_notes}</Text>
+              </div>
             </ExpandingBox>
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">

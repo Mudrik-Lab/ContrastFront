@@ -67,7 +67,6 @@ export default function BasicClassifications({
   };
   const handleEdit = async (chosenParadigm) => {
     try {
-      console.log(experimentID);
       const res = await updateUncontrastExperiments({
         experiment_id: experimentID,
         chosenParadigm,
@@ -93,7 +92,6 @@ export default function BasicClassifications({
     });
   }, [fieldsNum]);
 
-  console.log(values);
   return (
     <>
       <ExpandingBox
@@ -138,7 +136,6 @@ export default function BasicClassifications({
                     <CustomSelect
                       value={fieldValues.specific}
                       onChange={async (value) => {
-                        console.log("onChang", value);
                         const newObj = { ...fieldValues };
                         newObj.specific = value;
                         setFieldValues(newObj);

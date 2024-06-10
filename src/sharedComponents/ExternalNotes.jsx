@@ -10,6 +10,7 @@ export default function ExternalNotes({
   study_pk,
   experiment_pk,
   classification,
+  isUncontrast,
 }) {
   const handleNotes = async () => {
     try {
@@ -18,6 +19,7 @@ export default function ExternalNotes({
         experiment_pk,
         note: description,
         classification,
+        isUncontrast,
       });
     } catch (e) {
       console.log(e);

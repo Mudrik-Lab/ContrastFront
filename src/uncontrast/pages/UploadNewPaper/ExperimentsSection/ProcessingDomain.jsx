@@ -84,7 +84,7 @@ export default function ProcessingDomain({
                       tooltip={
                         "Indicate which domains the processing involved. You may choose more than one option"
                       }
-                      text={"Main Processing Domain"}
+                      text={"Processing Domain Type"}
                     />
                     <CustomSelect
                       disabled={fieldValue.id}

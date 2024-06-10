@@ -234,7 +234,7 @@ export default function Samples({
                           tooltip={
                             "Were participants excluded from analysis based on the awareness measure?"
                           }
-                          text={"Excluded participants"}
+                          text={"Excluded participants?"}
                         />
 
                         <CustomSelect
@@ -320,14 +320,6 @@ export default function Samples({
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
-      />
-
-      <ExternalNotes
-        description={description}
-        setDescription={setDescription}
-        classification={classificationName}
-        study_pk={study_pk}
-        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );
