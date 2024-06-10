@@ -39,6 +39,23 @@ export async function createUncontrastExperiments({
   });
 }
 
+export async function updateUncontrastExperiments({
+  study_pk,
+  chosenParadigm,
+  experiment_id,
+}) {
+  const requestData = {
+    paradigm: parseInt(chosenParadigm),
+  };
+
+  return await queryApi({
+    url: `uncontrast_studies/submitted_studies/${study_pk}/experiments/${experiment_id}/`,
+    method: "PATCH",
+    isProtected: true,
+    data: requestData,
+  });
+}
+
 export async function editExperiments({
   is_reporting,
   type_of_consciousness,

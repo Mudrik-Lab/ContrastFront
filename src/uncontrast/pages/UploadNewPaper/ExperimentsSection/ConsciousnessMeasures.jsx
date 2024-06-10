@@ -101,8 +101,6 @@ export default function ConsciousnessMeasures({
       fieldValues[index]?.is_trial_excluded_based_on_measure
     );
   };
-  console.log(submitCondition(1));
-  console.log(fieldValues[1]);
 
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {

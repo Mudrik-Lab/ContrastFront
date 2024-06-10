@@ -21,21 +21,25 @@ export default function Findings({
   experiment_pk,
   study_pk,
   values,
+  setMinimumClassifications,
+  minimumClassifications,
 }) {
+  const isUncontrast = true;
   const initialValues = {
     outcome: "",
-    importance: "",
-    significance: "",
+    is_important: "",
+    is_significant: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const classificationName = "finding_tags";
+  const classificationName = "findings";
 
   const handleSubmit = SubmitClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -43,7 +47,8 @@ export default function Findings({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -52,8 +57,8 @@ export default function Findings({
         values.map((row) => {
           return {
             outcome: row.outcome,
-            importance: row.importance,
-            significance: row.significance,
+            is_important: row.is_important,
+            is_significant: row.is_significant,
             id: row.id,
           };
         })
@@ -65,13 +70,17 @@ export default function Findings({
     return true;
   };
 
+  const fieldsNum = fieldValues.filter((field) => field.id)?.length;
+  useEffect(() => {
+    setMinimumClassifications({
+      ...minimumClassifications,
+      findings: fieldsNum,
+    });
+  }, [fieldsNum]);
+
   return (
     <ExpandingBox
-      number={
-        Object.values(fieldValues[0])[0] === ""
-          ? fieldValues.length - 1
-          : fieldValues.length
-      }
+      number={fieldsNum}
       disabled={disabled}
       headline={
         <div className="flex gap-2">
@@ -93,7 +102,7 @@ export default function Findings({
                 <CircledIndex index={index} />
 
                 <div className="flex flex-col gap-2 w-full">
-                  <div className="w-full gap-2 flex">
+                  <div className="w-full gap-2 flex items-center">
                     <div className="w-1/3">
                       <Text weight={"bold"} color={"grayReg"}>
                         Outcome
@@ -128,10 +137,10 @@ export default function Findings({
                     <div className="w-1/3 flex justify-between items-center gap-2">
                       <CustomSelect
                         disabled={fieldValue?.id}
-                        value={fieldValue.significance}
+                        value={fieldValue.is_significant}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
-                          newArray[index].significance = value;
+                          newArray[index].is_significant = value;
                           setFieldValues(newArray);
                         }}
                         options={[
@@ -156,10 +165,10 @@ export default function Findings({
                     <div className="w-1/3 flex justify-between items-center gap-2">
                       <CustomSelect
                         disabled={fieldValue?.id}
-                        value={fieldValue.importance}
+                        value={fieldValue.is_important}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
-                          newArray[index].importance = value;
+                          newArray[index].is_important = value;
                           setFieldValues(newArray);
                         }}
                         options={[
@@ -174,29 +183,6 @@ export default function Findings({
                         }
                       />
                     </div>
-                  </div>
-                  <div>
-                    <Text weight={"bold"} color={"grayReg"}>
-                      Notes (optional)
-                    </Text>
-                    <textarea
-                      disabled={fieldValues[index].id}
-                      type="textarea"
-                      defaultValue={fieldValue.notes}
-                      rows={4}
-                      onChange={(e) => {
-                        setFieldValues((prev) =>
-                          prev.map((item, i) =>
-                            i === index
-                              ? { ...item, notes: e.target.value }
-                              : item
-                          )
-                        );
-                      }}
-                      className={`border w-full border-gray-300 rounded-md p-2 ${
-                        fieldValues[index].id && "bg-grayDisable text-gray-400"
-                      } `}
-                    />
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>

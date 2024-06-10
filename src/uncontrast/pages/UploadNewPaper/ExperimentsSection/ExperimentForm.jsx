@@ -7,7 +7,7 @@ import SuppressedStimuli from "./SuppressedStimuli";
 import ConsciousnessMeasures from "./ConsciousnessMeasures";
 import Findings from "./Findings";
 import Tasks from "./Tasks";
-import Paradigms from "./Paradigms";
+import BasicClassifications from "./BasicClassifications";
 import {
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
@@ -124,7 +124,6 @@ export default function ExperimentForm({
     })
   );
 
-  const shouldCheckAllClassificationsFilled = false;
   return (
     <>
       {isSuccess && setAddNewExperiment && (
@@ -151,7 +150,7 @@ export default function ExperimentForm({
               Experiment Classifications
             </Text>
 
-            <Paradigms
+            <BasicClassifications
               setMinimumClassifications={setMinimumClassifications}
               setExperimentID={setExperimentID}
               experimentID={experimentID}
@@ -160,7 +159,7 @@ export default function ExperimentForm({
               optionalParadigms={paradigms}
               experiment_pk={experimentID}
               study_pk={study.id}
-              values={experimentData?.paradigm}
+              values={experimentData}
             />
 
             <Samples
@@ -245,24 +244,11 @@ export default function ExperimentForm({
               fieldOptions={outcomeOptions}
               experiment_pk={experimentID}
               study_pk={study.id}
-              disabled={
-                shouldCheckAllClassificationsFilled
-                  ? Object.values(minimumClassifications).includes(0)
-                  : !experimentID
-              }
-              values={experimentData?.finding_tags}
+              disabled={!experimentID}
+              values={experimentData?.findings}
+              minimumClassifications={minimumClassifications}
+              setMinimumClassifications={setMinimumClassifications}
             />
-            {/*
-            <ResultsSummary
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={
-                shouldCheckAllClassificationsFilled
-                  ? Object.values(minimumClassifications).includes(0)
-                  : !experimentID
-              }
-              values={experimentData?.results_summary}
-            /> */}
           </div>
 
           <button
