@@ -39,21 +39,21 @@ export default function TargetStimuli({
   const classificationName = "target_stimuli";
 
   const handleSubmit = SubmitClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -63,9 +63,9 @@ export default function TargetStimuli({
   }, [fieldValues[0]]);
 
   useEffect(() => {
-    if (values && values.stimuli?.length > 0) {
+    if (values && values.target_stimuli?.length > 0) {
       setFieldValues(
-        values.stimuli.map((row) => {
+        values.target_stimuli.map((row) => {
           return {
             category: row.category,
             sub_category: row.sub_category || "",
@@ -90,7 +90,7 @@ export default function TargetStimuli({
   useEffect(() => {
     setMinimumClassifications({
       ...minimumClassifications,
-      stimuli: fieldsNum,
+      target_stimuli: fieldsNum,
     });
   }, [fieldsNum]);
 

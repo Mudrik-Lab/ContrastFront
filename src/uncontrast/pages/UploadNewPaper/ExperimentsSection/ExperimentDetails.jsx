@@ -30,7 +30,17 @@ export default function ExperimentDetails({
     data?.data.available_consciousness_measure_type;
   const consciousnessMeasuresPhases =
     data?.data.available_consciousness_measure_phase_type;
+  const consciousnessMeasuresSubtypes =
+    data?.data.available_consciousness_measure_sub_type;
+  const suppresionMethodsTypes = data?.data.available_suppression_method_types;
+  const suppresionMethodsSubtypes =
+    data?.data.available_suppression_method_sub_types;
+  const processingDomainTypes =
+    data?.data.available_processing_main_domain_types;
   // available_consciousness_measure_sub_type
+
+  const outcomeTypes = data?.data.available_outcomes_type;
+
   const findingOptions = {
     outcomes: data?.dataavailable_outcomes_type,
   };
@@ -55,9 +65,7 @@ export default function ExperimentDetails({
             </Text>
           </div>
           <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
-            <ExpandingBox
-              headline={"Paradigms"}
-              number={experiment?.paradigm ? 1 : 0}>
+            <ExpandingBox headline={"Basic Classification"} noNumber>
               <div
                 key={experiment?.paradigm.name}
                 className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
@@ -116,16 +124,16 @@ export default function ExperimentDetails({
                         </Text>
                         <Text>{sample.size_included}</Text>
                       </div>
+                      <div className="flex flex-col ">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Excluded
+                        </Text>
+                        <Text>{sample.size_excluded}</Text>
+                      </div>
                     </div>
                   </div>
                 </div>
               ))}
-              <div className="pl-2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{experiment.sample_notes}</Text>
-              </div>
             </ExpandingBox>
             <ExpandingBox headline={"Tasks"} number={experiment.tasks.length}>
               {experiment.tasks.map((task, index) => (
@@ -143,15 +151,9 @@ export default function ExperimentDetails({
                   </div>
                 </div>
               ))}
-              <div className="pl-2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{experiment.tasks_notes}</Text>
-              </div>
             </ExpandingBox>
             <ExpandingBox
-              headline={"Stimuli"}
+              headline={"Suppressed Stimuli"}
               number={experiment.suppressed_stimuli.length}>
               {experiment.suppressed_stimuli.map((stimulus, index) => (
                 <div
@@ -204,15 +206,149 @@ export default function ExperimentDetails({
                         </Text>
                       </div>
                     </div>
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Presentation Mode
+                        </Text>
+                        <Text sm>{stimulus.mode_of_presentation}</Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Number of Stimuli
+                        </Text>
+                        <Text sm>{stimulus.number_of_stimuli}</Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          SOA
+                        </Text>
+                        <Text sm>{stimulus.soa}</Text>
+                      </div>
+                    </div>
                   </div>
                 </div>
               ))}
-              <div className="pl-2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{experiment.stimuli_notes}</Text>
-              </div>
+            </ExpandingBox>
+            <ExpandingBox
+              headline={"Target Stimuli"}
+              number={experiment.target_stimuli.length}>
+              {experiment.target_stimuli.map((stimulus, index) => (
+                <div
+                  key={stimulus.category.name}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="flex flex-col w-full gap-2">
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Category
+                        </Text>
+                        <Text sm>
+                          {
+                            stimuliCategories.find(
+                              (row) => row.id === stimulus.category
+                            )?.name
+                          }
+                        </Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Sub-category
+                        </Text>
+                        <Text sm>
+                          {stimuliSubCategories.find(
+                            (row) => row.id === stimulus.sub_category
+                          )?.name || "none"}
+                        </Text>
+                      </div>
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Modality
+                        </Text>
+                        <Text sm>
+                          {
+                            stimuliModality.find(
+                              (row) => row.id === stimulus.modality
+                            ).name
+                          }
+                        </Text>
+                      </div>
+                    </div>
+                    <div className="flex w-full justify-between ">
+                      <div>
+                        <Text sm weight={"bold"} color={"grayReg"}>
+                          Number of Stimuli
+                        </Text>
+                        <Text sm>{stimulus.number_of_stimuli}</Text>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </ExpandingBox>
+
+            <ExpandingBox
+              headline={"Suppression Methods"}
+              number={experiment.suppression_methods.length}>
+              {experiment.suppression_methods.map((method, index) => (
+                <div
+                  key={method + index}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="flex flex-col w-full gap-2">
+                    <div className="flex gap-2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Type
+                      </Text>
+                      <Text>
+                        {
+                          suppresionMethodsTypes.find(
+                            (x) => x.id === method.type
+                          )?.name
+                        }
+                      </Text>
+                    </div>
+                    <div className="flex gap-2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Sub Type
+                      </Text>
+                      <Text>
+                        {
+                          suppresionMethodsSubtypes.find(
+                            (x) => x.id === method.type
+                          )?.name
+                        }
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </ExpandingBox>
+            <ExpandingBox
+              headline={"Processing Domain"}
+              number={experiment.processing_domains.length}>
+              {experiment.processing_domains.map((domain, index) => (
+                <div
+                  key={domain + index}
+                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                  <CircledIndex index={index} />
+                  <div className="flex flex-col w-full gap-2">
+                    <div className="flex gap-2">
+                      <Text weight={"bold"} color={"grayReg"}>
+                        Processing Domain
+                      </Text>
+                      <Text>
+                        {
+                          processingDomainTypes.find(
+                            (x) => x.id === domain.main
+                          )?.name
+                        }
+                      </Text>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </ExpandingBox>
             <ExpandingBox
               headline={"Consciousness Measures"}
@@ -224,8 +360,8 @@ export default function ExperimentDetails({
                   <CircledIndex index={index} />
                   <div className="w-full flex items-start">
                     <div className="w-full flex flex-col gap-2">
-                      <div className="flex w-full gap-2">
-                        <div className="w-1/2">
+                      <div className="flex w-full justify-between gap-4">
+                        <div>
                           <Text weight={"bold"} color={"grayReg"}>
                             Type
                           </Text>
@@ -237,7 +373,19 @@ export default function ExperimentDetails({
                             }
                           </Text>
                         </div>
-                        <div className="w-1/2">
+                        <div>
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Sub Type
+                          </Text>
+                          <Text>
+                            {
+                              consciousnessMeasuresSubtypes.find(
+                                (row) => row.id === cm.sub_type
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                        <div>
                           <Text weight={"bold"} color={"grayReg"}>
                             Phase
                           </Text>
@@ -251,6 +399,44 @@ export default function ExperimentDetails({
                           </Text>
                         </div>
                       </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of trials for the objective measure
+                        </Text>
+                        <Text>{cm.number_of_trials}</Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Number of participants in awareness test
+                        </Text>
+                        <Text>
+                          {cm.number_of_participants_in_awareness_test}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is cm same participants as task?
+                        </Text>
+                        <Text>
+                          {cm.is_cm_same_participants_as_task ? "Yes" : "No"}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is performance above chance?
+                        </Text>
+                        <Text>
+                          {cm.is_performance_above_chance ? "Yes" : "No"}
+                        </Text>
+                      </div>
+                      <div className="flex w-full items-center justify-between  gap-4">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Is trial excluded based on measure?
+                        </Text>
+                        <Text>
+                          {cm.is_trial_excluded_based_on_measure ? "Yes" : "No"}
+                        </Text>
+                      </div>{" "}
                     </div>
                   </div>
                 </div>
@@ -267,14 +453,39 @@ export default function ExperimentDetails({
             <Text color="grayReg" weight={"bold"}>
               Findings
             </Text>
-            {/* <ExpandingBox
+            <ExpandingBox
               headline={"Experiment's Findings"}
-              number={experiment.finding_tags.length}>
-              <FindingsTags
-                experiment={experiment}
-                findingOptions={findingOptions}
-              />
-            </ExpandingBox> */}
+              number={experiment.findings?.length}>
+              {experiment.findings.map((finding) => (
+                <div>
+                  <div className="flex w-full justify-between gap-4">
+                    <div>
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        Outcome
+                      </Text>
+                      <Text sm>
+                        {
+                          outcomeTypes.find((row) => row.id === finding.outcome)
+                            ?.name
+                        }
+                      </Text>
+                    </div>
+                    <div>
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        Is the effect reported as significant?
+                      </Text>
+                      <Text sm>{finding.is_significant ? "Yes" : "No"}</Text>
+                    </div>
+                    <div>
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        Is the finding important?
+                      </Text>
+                      <Text sm>{finding.is_important ? "Yes" : "No"}</Text>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </ExpandingBox>
           </div>
           <button
             className="font-bold my-2"

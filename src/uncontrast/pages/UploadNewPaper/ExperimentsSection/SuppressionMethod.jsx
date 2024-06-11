@@ -28,9 +28,10 @@ export default function SuppressionMethod({
   setMinimumClassifications,
   disabled,
 }) {
+  const isUncontrast = true;
   const initialValues = {
-    main: "",
-    specific: "",
+    type: "",
+    sub_type: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "suppression_methods";
@@ -40,7 +41,8 @@ export default function SuppressionMethod({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -48,7 +50,8 @@ export default function SuppressionMethod({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -56,8 +59,7 @@ export default function SuppressionMethod({
       setFieldValues(
         values.map((row) => {
           return {
-            main: row.parent?.name,
-            specific: row.name,
+            type: row.type,
             sub_type: row.sub_type,
             id: row.id,
           };
@@ -65,16 +67,6 @@ export default function SuppressionMethod({
       );
     }
   }, []);
-  async function uniqSubmit(index) {
-    let chosenMethod = fieldValues[index].specific;
-    createUncontrastExperiments({ study_pk, chosenMethod });
-  }
-
-  const submitCondition = (index) => {
-    return [fieldValues[index]?.main, fieldValues[index]?.specific].every(
-      (condition) => Boolean(condition) === true
-    );
-  };
 
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
@@ -84,11 +76,35 @@ export default function SuppressionMethod({
     });
   }, [fieldsNum]);
 
+  function createSubTypeOptions(optionalSubTypes, fieldValues, index) {
+    return [
+      ...new Set(
+        optionalSubTypes
+          .filter((type) => type.parent == fieldValues[index].type)
+          .map((row) => ({
+            label: row.name,
+            value: row.id,
+          }))
+      ),
+    ];
+  }
+
+  const submitCondition = (index) => {
+    return [
+      fieldValues[index]?.type,
+      fieldValues[index]?.sub_type ||
+        (fieldValues[index].type &&
+          createSubTypeOptions(optionalSubTypes, fieldValues, index).length ===
+            0),
+    ].every((condition) => Boolean(condition) === true);
+  };
+
+  // console.log(createSubTypeOptions(optionalSubTypes, fieldValues, 0).length);
   return (
     <>
       <ExpandingBox
         number={fieldsNum}
-        disabled={false} //TODO
+        disabled={disabled}
         headline={rawTextToShow(classificationName)}>
         {fieldValues.map((fieldValue, index) => {
           return (
@@ -109,10 +125,10 @@ export default function SuppressionMethod({
 
                         <CustomSelect
                           disabled={fieldValue.id}
-                          value={fieldValue.main}
+                          value={fieldValue.type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            newArray[index].main = value;
+                            newArray[index].type = value;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
@@ -132,27 +148,19 @@ export default function SuppressionMethod({
 
                         <CustomSelect
                           disabled={fieldValue.id}
-                          value={fieldValue.specific}
+                          value={fieldValue.sub_type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            newArray[index].specific = value;
+                            newArray[index].sub_type = value;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
                           }}
-                          options={[
-                            ...new Set(
-                              optionalSubTypes
-                                .filter(
-                                  (type) =>
-                                    type.parent == fieldValues[index].main
-                                )
-                                .map((row) => ({
-                                  label: row.name,
-                                  value: row.id,
-                                }))
-                            ),
-                          ]}
+                          options={createSubTypeOptions(
+                            optionalSubTypes,
+                            fieldValues,
+                            index
+                          )}
                         />
                       </div>
                     </div>
@@ -170,6 +178,11 @@ export default function SuppressionMethod({
             </div>
           );
         })}
+        <AddFieldButton
+          initialValues={initialValues}
+          fieldValues={fieldValues}
+          setFieldValues={setFieldValues}
+        />
       </ExpandingBox>
     </>
   );

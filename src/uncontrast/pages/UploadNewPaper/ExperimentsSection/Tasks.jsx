@@ -29,12 +29,12 @@ export default function Tasks({
   const classificationName = "tasks";
 
   const handleSubmit = SubmitClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -42,7 +42,8 @@ export default function Tasks({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
   useEffect(() => {
     if (values?.tasks && values.tasks.length > 0) {
@@ -67,7 +68,7 @@ export default function Tasks({
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={false} //TODO
+      disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (

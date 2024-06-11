@@ -36,12 +36,12 @@ export default function Samples({
   const classificationName = "samples";
 
   const handleSubmit = SubmitClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
@@ -49,7 +49,8 @@ export default function Samples({
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -61,7 +62,7 @@ export default function Samples({
             size_included: row.size_included,
             total_size: row.total_size,
             excluded: row.excluded,
-            excludedNum: row.excludedNum,
+            size_excluded: row.size_excluded,
             id: row.id,
           };
         })
@@ -90,10 +91,11 @@ export default function Samples({
       samples: fieldsNum,
     });
   }, [fieldsNum]);
+
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={false} //TODO
+      disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -225,33 +227,36 @@ export default function Samples({
                     </div>
                   </div>
                   <div className="flex items-start gap-2">
-                    <div className="w-1/2 ">
-                      <TooltipExplanation
-                        isHeadline
-                        tooltip={
-                          "Were participants excluded from analysis based on the awareness measure?"
-                        }
-                        text={"Excluded participants"}
-                      />
+                    {!fieldValues[index].id && (
+                      <div className="w-1/2 ">
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            "Were participants excluded from analysis based on the awareness measure?"
+                          }
+                          text={"Excluded participants?"}
+                        />
 
-                      <CustomSelect
-                        disabled={fieldValue.id}
-                        value={fieldValue.excluded}
-                        onChange={(value) => {
-                          const newArray = [...fieldValues];
-                          newArray[index].excluded = value;
-                          setFieldValues(newArray);
-                          submitCondition(index) &&
-                            handleSubmit(fieldValues, index);
-                        }}
-                        options={[
-                          { value: "yes", label: "Yes" },
-                          { value: "no", label: "No" },
-                        ]}
-                      />
-                    </div>
+                        <CustomSelect
+                          disabled={fieldValue.id}
+                          value={fieldValue.excluded}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].excluded = value;
+                            setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
+                          }}
+                          options={[
+                            { value: "yes", label: "Yes" },
+                            { value: "no", label: "No" },
+                          ]}
+                        />
+                      </div>
+                    )}
 
-                    {fieldValue.excluded === "yes" && (
+                    {(fieldValue.excluded === "yes" ||
+                      fieldValue.size_excluded > 0) && (
                       <div className="w-1/2">
                         <TooltipExplanation
                           isHeadline
@@ -315,14 +320,6 @@ export default function Samples({
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
-      />
-
-      <ExternalNotes
-        description={description}
-        setDescription={setDescription}
-        classification={classificationName}
-        study_pk={study_pk}
-        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );

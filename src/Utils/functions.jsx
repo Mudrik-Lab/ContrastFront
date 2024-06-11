@@ -188,12 +188,12 @@ export const generateSelectOptions = (start, end) => {
 };
 
 export function SubmitClassificationField(
-  isUncontrast,
   study_pk,
   experiment_pk,
   classificationName,
   fieldValues,
-  setFieldValues
+  setFieldValues,
+  isUncontrast
 ) {
   return async (values, index) => {
     if (
@@ -242,12 +242,12 @@ export function SubmitClassificationField(
   };
 }
 export function DeleteClassificationField(
-  isUncontrast,
   study_pk,
   experiment_pk,
   classificationName,
   fieldValues,
-  setFieldValues
+  setFieldValues,
+  isUncontrast
 ) {
   return async (values, index) => {
     if (!values[index].id) {

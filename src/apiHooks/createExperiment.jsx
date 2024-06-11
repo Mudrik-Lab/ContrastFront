@@ -25,25 +25,31 @@ export async function createExperiments({
 export async function createUncontrastExperiments({
   study_pk,
   chosenParadigm,
-  // experiment_findings_notes,
-  // type,
-  // is_target_same_as_suppressed_stimulus,
-  // is_target_stimulus,
-  // consciousness_measures_notes,
 }) {
-  console.log(chosenParadigm);
   const requestData = {
     paradigm: chosenParadigm,
-    // experiment_findings_notes,
-    // type,
-    // is_target_same_as_suppressed_stimulus,
-    // is_target_stimulus,
-    // consciousness_measures_notes,
   };
 
   return await queryApi({
     url: `uncontrast_studies/submitted_studies/${study_pk}/experiments/`,
     method: "POST",
+    isProtected: true,
+    data: requestData,
+  });
+}
+
+export async function updateUncontrastExperiments({
+  study_pk,
+  chosenParadigm,
+  experiment_id,
+}) {
+  const requestData = {
+    paradigm: parseInt(chosenParadigm),
+  };
+
+  return await queryApi({
+    url: `uncontrast_studies/submitted_studies/${study_pk}/experiments/${experiment_id}/`,
+    method: "PATCH",
     isProtected: true,
     data: requestData,
   });
@@ -74,11 +80,11 @@ export async function editExperiments({
 }
 
 export async function addPropertyToexperiment({
-  isUncontrast,
   property_id,
   study_pk,
   experiment_pk,
   classificationName,
+  isUncontrast,
 }) {
   let UrlPrefix = isUncontrast ? "uncontrast_" : "";
 

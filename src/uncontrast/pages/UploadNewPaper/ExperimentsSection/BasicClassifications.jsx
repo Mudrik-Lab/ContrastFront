@@ -1,24 +1,22 @@
 import {
-  AddFieldButton,
   ExpandingBox,
   TooltipExplanation,
-  TrashButton,
   CustomSelect,
   CircledIndex,
+  Button,
+  ToastBox,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
-import {
-  DeleteClassificationField,
-  SubmitClassificationField,
-  rawTextToShow,
-} from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 import {
-  createExperiments,
   createUncontrastExperiments,
+  editExperiments,
+  updateUncontrastExperiments,
 } from "../../../../apiHooks/createExperiment";
+import { ReactComponent as Vicon } from "../../../../assets/icons/v-icon.svg";
+import { toast } from "react-toastify";
 
-export default function Paradigms({
+export default function BasicClassifications({
   fieldOptions,
   optionalParadigms,
   experiment_pk,
@@ -26,44 +24,66 @@ export default function Paradigms({
   values,
   minimumClassifications,
   setMinimumClassifications,
-  disabled,
+  setExperimentID,
+  experimentID,
 }) {
   const initialValues = {
     main: "",
     specific: "",
   };
+
   const [description, setDescription] = useState(values?.paradigms || "");
-  const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [fieldValues, setFieldValues] = useState(initialValues);
   const classificationName = "paradigms";
 
-  const handleDelete = DeleteClassificationField(
-    study_pk,
-    experiment_pk,
-    classificationName,
-    fieldValues,
-    setFieldValues
-  );
-
   useEffect(() => {
-    if (values.id) {
+    if (values?.paradigm?.id) {
       setFieldValues({
-        main: values.name,
-        specific: values.name,
-        id: values.id,
+        main: values.paradigm.main,
+        specific: values.paradigm.id,
+        id: values.paradigm.id,
       });
     }
   }, []);
-  async function uniqSubmit() {
-    let chosenParadigm = fieldValues.specific;
-    createUncontrastExperiments({ study_pk, chosenParadigm });
-  }
 
-  const submitCondition = () => {
-    return [fieldValues?.main, fieldValues?.specific].every(
-      (condition) => Boolean(condition) === true
-    );
+  const handleSubmit = async (chosenParadigm) => {
+    try {
+      let res = await createUncontrastExperiments({
+        study_pk,
+        chosenParadigm,
+      });
+      if (res.status === 201) {
+        setExperimentID(res.data.id);
+        toast.success(
+          <ToastBox
+            headline={"New experiment was created successfully"}
+            text={" Now you can add other classifications"}
+          />
+        );
+      }
+    } catch (e) {
+      ToastError(e);
+    }
   };
-
+  const handleEdit = async (chosenParadigm) => {
+    try {
+      const res = await updateUncontrastExperiments({
+        experiment_id: experimentID,
+        chosenParadigm,
+        study_pk,
+      });
+      if (res.status === 201) {
+        toast.success(
+          <ToastBox
+            headline={"Success"}
+            text={"Experiment's basic classifications were updated "}
+          />
+        );
+      }
+    } catch (e) {
+      ToastError(e);
+    }
+  };
   const fieldsNum = fieldValues.id ? 1 : 0;
   useEffect(() => {
     setMinimumClassifications({
@@ -75,9 +95,9 @@ export default function Paradigms({
   return (
     <>
       <ExpandingBox
-        number={fieldsNum}
-        disabled={disabled}
-        headline={rawTextToShow(classificationName)}>
+        noNumber
+        disabled={false}
+        headline={"Basic Classifications"}>
         <div key={`${classificationName}`}>
           <form className="flex flex-col gap-2">
             <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
@@ -94,13 +114,11 @@ export default function Paradigms({
                     />
 
                     <CustomSelect
-                      disabled={fieldValues.id}
                       value={fieldValues.main}
                       onChange={(value) => {
                         const newObj = { ...fieldValues };
                         newObj.main = value;
                         setFieldValues(newObj);
-                        submitCondition() && uniqSubmit();
                       }}
                       options={fieldOptions}
                     />
@@ -116,13 +134,11 @@ export default function Paradigms({
                     />
 
                     <CustomSelect
-                      disabled={fieldValues.id}
                       value={fieldValues.specific}
-                      onChange={(value) => {
+                      onChange={async (value) => {
                         const newObj = { ...fieldValues };
                         newObj.specific = value;
                         setFieldValues(newObj);
-                        submitCondition(index) && uniqSubmit(index);
                       }}
                       options={[
                         ...new Set(
@@ -141,16 +157,20 @@ export default function Paradigms({
                 </div>
               </div>
             </div>
+            <div className="w-full flex justify-center">
+              <Button
+                type="button"
+                onClick={() =>
+                  experimentID
+                    ? handleEdit(fieldValues.specific)
+                    : handleSubmit(fieldValues.specific)
+                }>
+                <Vicon />
+                {!experimentID ? "Save Experiment" : "Save edit"}
+              </Button>
+            </div>
           </form>
         </div>
-
-        <ExternalNotes
-          description={description}
-          setDescription={setDescription}
-          classification={classificationName}
-          study_pk={study_pk}
-          experiment_pk={experiment_pk}
-        />
       </ExpandingBox>
     </>
   );

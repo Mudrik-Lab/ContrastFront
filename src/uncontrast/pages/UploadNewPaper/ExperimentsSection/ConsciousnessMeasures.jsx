@@ -30,7 +30,6 @@ export default function ConsciousnessMeasures({
     type: "",
     sub_type: "",
     phase: "",
-    description: "",
     number_of_trials: "",
     number_of_participants_in_awareness_test: "",
     is_cm_same_participants_as_task: "",
@@ -43,22 +42,29 @@ export default function ConsciousnessMeasures({
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "consciousness_measures";
 
+  const OBJECTIVE_CASE_TOOLTIP =
+    " Indicate which type of objective awareness measure was taken  (e.g., if the task performed on the suppressed stimuli is the same as the task performed on the non-suppressed stimuli, enter “high-level discrimination”). If more than one objective measure was taken, please reply for the one taken on a trial-by-trial basis";
+  const SUBJECTIVE_CASE_TOOLTIP =
+    "Indicate which type of subjective awareness measure was taken. If more than one subjective measure was taken, please reply for the one taken on a trial-by-trial basis";
+  const OTHER_TYPE = "No sub type for the type you have chosen";
+  const NO_TYPE = "For further instructions- first choose main type first";
+
   const handleSubmit = SubmitClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   const handleDelete = DeleteClassificationField(
-    isUncontrast,
     study_pk,
     experiment_pk,
     classificationName,
     fieldValues,
-    setFieldValues
+    setFieldValues,
+    isUncontrast
   );
 
   useEffect(() => {
@@ -92,12 +98,10 @@ export default function ConsciousnessMeasures({
       fieldValues[index]?.number_of_participants_in_awareness_test &&
       fieldValues[index]?.is_cm_same_participants_as_task &&
       fieldValues[index]?.is_performance_above_chance &&
-      fieldValues[index]?.is_trial_excluded_based_on_measure &&
-      (fieldValues[index]?.type == 1 || fieldValues[index]?.type == 2) &&
-      !!fieldValues[index].sub_type
+      fieldValues[index]?.is_trial_excluded_based_on_measure
     );
   };
-  console.log(fieldValues[0]);
+
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
     setMinimumClassifications({
@@ -106,17 +110,10 @@ export default function ConsciousnessMeasures({
     });
   }, [fieldsNum]);
 
-  const OBJECTIVE_CASE_TOOLTIP =
-    " Indicate which type of objective awareness measure was taken  (e.g., if the task performed on the suppressed stimuli is the same as the task performed on the non-suppressed stimuli, enter “high-level discrimination”). If more than one objective measure was taken, please reply for the one taken on a trial-by-trial basis";
-  const SUBJECTIVE_CASE_TOOLTIP =
-    "Indicate which type of subjective awareness measure was taken. If more than one subjective measure was taken, please reply for the one taken on a trial-by-trial basis";
-  const OTHER_TYPE = "No sub type for the type you have chosen";
-  const NO_TYPE = "For further instructions- first choose main type first";
-
   return (
     <ExpandingBox
       number={fieldsNum}
-      disabled={false} // TODO =disabled
+      disabled={disabled}
       headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
@@ -316,6 +313,8 @@ export default function ConsciousnessMeasures({
                             newArray[index].is_cm_same_participants_as_task =
                               value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -339,6 +338,8 @@ export default function ConsciousnessMeasures({
                             const newArray = [...fieldValues];
                             newArray[index].is_performance_above_chance = value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -363,6 +364,8 @@ export default function ConsciousnessMeasures({
                             newArray[index].is_trial_excluded_based_on_measure =
                               value;
                             setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -393,6 +396,7 @@ export default function ConsciousnessMeasures({
         setFieldValues={setFieldValues}
       />
       <ExternalNotes
+        isUncontrast={isUncontrast}
         description={description}
         setDescription={setDescription}
         classification={classificationName}
