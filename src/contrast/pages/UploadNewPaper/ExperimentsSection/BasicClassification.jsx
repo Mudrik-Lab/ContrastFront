@@ -124,7 +124,6 @@ export default function BasicClassification({
                   (x) => x.value == values.experiment_type
                 )}
                 onChange={(selectedOption) => {
-                  console.log(values.experiment_type);
                   setValues((prev) => ({
                     ...prev,
                     experiment_type: selectedOption.value,

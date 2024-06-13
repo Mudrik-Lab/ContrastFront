@@ -103,7 +103,6 @@ export default function UncompletedPaper({
         setIsLoading(false);
       }
     } catch (e) {
-      console.log(e);
       ToastError(e);
     }
   };

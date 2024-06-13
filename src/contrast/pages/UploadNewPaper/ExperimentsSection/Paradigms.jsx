@@ -98,7 +98,7 @@ export default function Paradigms({
       paradigms: fieldsNum,
     });
   }, [fieldsNum]);
-  console.log(fieldValues);
+
   return (
     <>
       <ExpandingBox

@@ -21,7 +21,6 @@ export default function FindingsTags({ experiment, findingOptions }) {
     result[item.name] = item.id;
     return result;
   }, {});
-  console.log(families);
   return (
     <div className="flex flex-wrap justify-between gap-y-2 ">
       {experiment.finding_tags.map((tag, index) => {

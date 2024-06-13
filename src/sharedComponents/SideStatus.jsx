@@ -42,7 +42,6 @@ export default function SideStatus({
 
             refetch();
           }
-          console.log(res);
         } catch (e) {
           ToastError(e);
         }
@@ -57,7 +56,6 @@ export default function SideStatus({
             );
             refetch();
           }
-          console.log(res);
         } catch (e) {
           ToastError(e);
         }
