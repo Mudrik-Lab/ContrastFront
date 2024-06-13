@@ -101,7 +101,6 @@ export default function UncompletedPaper({
         setIsLoading(false);
       }
     } catch (e) {
-      console.log(e);
       ToastError(e);
     }
   };
@@ -137,7 +136,7 @@ export default function UncompletedPaper({
         source_title: values.source_title,
         is_author_submitter: values?.is_author_submitter,
       });
-      console.log(res);
+
       if (res.status === 200) {
         toast.success(
           <ToastBox
@@ -151,7 +150,6 @@ export default function UncompletedPaper({
     }
   };
 
-  console.log(study);
   return (
     <div className="h-full ">
       {study && (

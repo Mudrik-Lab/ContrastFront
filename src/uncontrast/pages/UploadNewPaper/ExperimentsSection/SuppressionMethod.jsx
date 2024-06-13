@@ -99,7 +99,6 @@ export default function SuppressionMethod({
     ].every((condition) => Boolean(condition) === true);
   };
 
-  // console.log(createSubTypeOptions(optionalSubTypes, fieldValues, 0).length);
   return (
     <>
       <ExpandingBox

@@ -113,7 +113,6 @@ export default function EffectsDistributionLines() {
     highestY = Math.max(...flatedY);
   }
 
-  console.log(data?.data);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

@@ -66,7 +66,7 @@ export default function Journals() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
-  console.log(data);
+
   return (
     <div className="h-full">
       <PageTemplate

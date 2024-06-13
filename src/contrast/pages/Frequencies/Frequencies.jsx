@@ -108,7 +108,6 @@ export default function Frequencies() {
       },
     });
   });
-  console.log(graphData);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

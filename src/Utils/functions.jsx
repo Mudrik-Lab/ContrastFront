@@ -201,7 +201,6 @@ export function SubmitClassificationField(
       classificationName !== "techniques"
     ) {
       try {
-        console.log(isUncontrast);
         const res = await addFieldToexperiment({
           isUncontrast,
           field: values[index],
@@ -217,7 +216,6 @@ export function SubmitClassificationField(
           return true;
         }
       } catch (e) {
-        console.log(e);
         ToastError(e);
       }
     } else {
@@ -322,7 +320,6 @@ export function confirmFunction({
   confirmButton,
   missingDetails,
 }) {
-  console.log(missingDetails);
   confirmAlert({
     customUI: ({ onClose }) => {
       return (

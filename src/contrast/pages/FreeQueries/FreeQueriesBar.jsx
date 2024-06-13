@@ -666,7 +666,6 @@ export default function FreeQueriesBar() {
                       placeholder="interpretations"
                       aria-label="interpretations"
                       onChange={(e) => {
-                        console.log(e);
                         buildUrlForMultiSelect(
                           e,
                           "interpretations_types",

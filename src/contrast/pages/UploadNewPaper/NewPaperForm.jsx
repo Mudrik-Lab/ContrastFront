@@ -67,7 +67,6 @@ export default function NewPaperForm({
       setIsLoading(true);
       const res = await createNewAuthor(authorName);
       if (res.status === 201) {
-        console.log(res.data);
         setAuthorOptions((prev) => [
           ...prev,
           { label: res.data.name, value: res.data.id },
@@ -123,7 +122,6 @@ export default function NewPaperForm({
           );
         }
       } catch (e) {
-        console.log(e);
         ToastError(e);
       }
     }

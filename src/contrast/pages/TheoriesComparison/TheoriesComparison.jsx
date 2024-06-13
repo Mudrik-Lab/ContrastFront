@@ -183,7 +183,6 @@ export default function ParametersDistributionTheoriesComparison() {
               <Toggle
                 checked={interpretation === "true" ? true : false}
                 setChecked={(e) => {
-                  console.log(e);
                   buildUrl(pageName, "interpretation", e, navigate);
                 }}
               />
