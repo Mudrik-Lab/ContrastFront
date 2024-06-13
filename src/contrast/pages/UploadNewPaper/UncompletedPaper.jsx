@@ -79,7 +79,7 @@ export default function UncompletedPaper({
 
   useEffect(() => {
     setTitle(study.title);
-  }, []);
+  }, [study]);
 
   useEffect(() => {
     setAuthorOptions(authorsList);
@@ -208,16 +208,11 @@ export default function UncompletedPaper({
                   </div>
                 </div>
                 <Formik
+                  enableReinitialize={true}
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
                   validationSchema={studyValidationSchema}>
-                  {({
-                    isSubmitting,
-                    dirty,
-                    isValid,
-                    values,
-                    setFieldValue,
-                  }) => (
+                  {({ isValid, values, setFieldValue }) => (
                     <Form>
                       <div className="flex flex-col gap-4">
                         <div>

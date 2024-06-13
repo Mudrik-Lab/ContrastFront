@@ -209,6 +209,7 @@ export default function UncompletedPaper({
                   </div>
                 </div>
                 <Formik
+                  enableReinitialize={true}
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
                   validationSchema={studyValidationSchema}>

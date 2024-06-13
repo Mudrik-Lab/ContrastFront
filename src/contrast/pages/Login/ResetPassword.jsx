@@ -68,6 +68,7 @@ export default function ResetPassword() {
           <h2 className="mx-auto text-3xl">New Password</h2>
 
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}>

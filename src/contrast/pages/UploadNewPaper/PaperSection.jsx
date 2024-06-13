@@ -28,11 +28,9 @@ export default function PaperSection({
   const [paperToShow, setPaperToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
 
-  const id = paperId;
-
   const { data, isSuccess, refetch } = useQuery({
-    queryKey: [`submitted_study`, id],
-    queryFn: () => getStudy({ id }),
+    queryKey: [`submitted_study`, paperId],
+    queryFn: () => getStudy({ id: paperId }),
   });
 
   const handleRefetch = () => {

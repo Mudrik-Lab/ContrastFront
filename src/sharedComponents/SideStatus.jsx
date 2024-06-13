@@ -131,9 +131,9 @@ export default function SideStatus({
       </div>
       {open && (
         <div>
-          {papers?.map((paper, index) => (
+          {papers?.map((paper) => (
             <div
-              key={index}
+              key={paper.title}
               className={classNames(
                 `flex my-2 justify-between text-base border-b border-${color}`
               )}>
@@ -186,6 +186,7 @@ export default function SideStatus({
                         setPaperToShow(paper.id);
                         if (paper.approval_status === 0) {
                           setShowEditble(true);
+                          refetch();
                         }
                       }
                     }}>

@@ -72,6 +72,7 @@ export default function VettingPaper() {
         changed and how:
       </p>
       <Formik
+        enableReinitialize={true}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>

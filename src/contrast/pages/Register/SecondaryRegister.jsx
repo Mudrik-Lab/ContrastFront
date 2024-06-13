@@ -1,4 +1,4 @@
-import {  Field, Form, Formik } from "formik";
+import { Field, Form, Formik } from "formik";
 import React, { useEffect, useMemo, useState } from "react";
 import countryList from "react-select-country-list";
 import {
@@ -10,10 +10,10 @@ import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
 import { ReactComponent as ProfileIcon } from "../../../assets/icons/profile-negative-icon.svg";
 import Navbar from "../../../sharedComponents/Navbar";
 import { useSnapshot } from "valtio";
-import { state } from "../../../state"
+import { state } from "../../../state";
 import createProfile from "../../../apiHooks/createRegistrationDetails";
 import { Checkbox } from "../../../sharedComponents/Reusble";
-import {  useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import getFormConfig from "../../../apiHooks/getFormConfiguration";
 import getUser from "../../../apiHooks/getUser";
@@ -125,7 +125,10 @@ export default function SecondaryRegister() {
               </a>
             </p>
             {isSuccess && userData && (
-              <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+              <Formik
+                enableReinitialize={true}
+                initialValues={initialValues}
+                onSubmit={handleSubmit}>
                 {({ values }) => {
                   return (
                     <Form className="flex flex-col gap-4">

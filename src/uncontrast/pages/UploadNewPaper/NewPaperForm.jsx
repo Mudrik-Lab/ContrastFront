@@ -186,6 +186,7 @@ export default function NewPaperForm({
             />
           </div>
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={studyValidationSchema}>

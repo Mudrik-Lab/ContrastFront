@@ -45,7 +45,10 @@ export default function Login() {
         <div className="bg-white rounded-lg shadow-3xl px-4 py-6 flex flex-col items-center gap-5">
           <h2 className="mx-auto text-3xl">Login</h2>
 
-          <Formik initialValues={initialValues} onSubmit={handleSubmit}>
+          <Formik
+            enableReinitialize={true}
+            initialValues={initialValues}
+            onSubmit={handleSubmit}>
             {({ isSubmitting, dirty }) => (
               <Form>
                 <div className="flex flex-col items-center gap-5 px-4">
