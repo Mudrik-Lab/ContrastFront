@@ -89,7 +89,7 @@ export async function addPropertyToexperiment({
   let UrlPrefix = isUncontrast ? "uncontrast_" : "";
 
   return await queryApi({
-    url: `${UrlPrefix}uncontrast_studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName.slice(
+    url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/add_${classificationName.slice(
       0,
       classificationName.length - 1
     )}/`,
