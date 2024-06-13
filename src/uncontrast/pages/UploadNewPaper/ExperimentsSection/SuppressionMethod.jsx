@@ -136,32 +136,38 @@ export default function SuppressionMethod({
                         />
                       </div>
 
-                      <div className="w-full">
-                        <TooltipExplanation
-                          isHeadline
-                          tooltip={
-                            "Choose a specific suppression method used in the experiment under the relevant suppression method class. For example."
-                          }
-                          text={"Specific suppression method"}
-                        />
+                      {createSubTypeOptions(
+                        optionalSubTypes,
+                        fieldValues,
+                        index
+                      )?.length && (
+                        <div className="w-full">
+                          <TooltipExplanation
+                            isHeadline
+                            tooltip={
+                              "Choose a specific suppression method used in the experiment under the relevant suppression method class. For example."
+                            }
+                            text={"Specific suppression method"}
+                          />
 
-                        <CustomSelect
-                          disabled={fieldValue.id}
-                          value={fieldValue.sub_type}
-                          onChange={(value) => {
-                            const newArray = [...fieldValues];
-                            newArray[index].sub_type = value;
-                            setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
-                          }}
-                          options={createSubTypeOptions(
-                            optionalSubTypes,
-                            fieldValues,
-                            index
-                          )}
-                        />
-                      </div>
+                          <CustomSelect
+                            disabled={fieldValue.id}
+                            value={fieldValue.sub_type}
+                            onChange={(value) => {
+                              const newArray = [...fieldValues];
+                              newArray[index].sub_type = value;
+                              setFieldValues(newArray);
+                              submitCondition(index) &&
+                                handleSubmit(fieldValues, index);
+                            }}
+                            options={createSubTypeOptions(
+                              optionalSubTypes,
+                              fieldValues,
+                              index
+                            )}
+                          />
+                        </div>
+                      )}
                     </div>
                   </div>
                   <div className="border-r-2 border-blue h-14"></div>
