@@ -149,6 +149,7 @@ export default function NewPaperForm({
           });
     };
   };
+
   return (
     <div>
       <ProgressComponent

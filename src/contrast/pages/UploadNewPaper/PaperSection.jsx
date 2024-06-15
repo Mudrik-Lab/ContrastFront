@@ -25,7 +25,7 @@ export default function PaperSection({
   setAddNewExperiment,
   allStudiesRefetch,
 }) {
-  const [paperToShow, setPaperToShow] = useState();
+  const [experimentToShow, setExperimentToShow] = useState();
   const [paperToEdit, setPaperToEdit] = useState();
 
   const { data, isSuccess, refetch } = useQuery({
@@ -62,7 +62,7 @@ export default function PaperSection({
               <ProgressComponent
                 status={status}
                 paperNmae={study.title.slice(0, headlineLenghtToShow) + "..."}
-                experiment={paperToShow?.title}
+                experiment={experimentToShow?.title}
               />
               <Spacer height={10} />
               <div className="flex justify-between ">
@@ -126,7 +126,7 @@ export default function PaperSection({
                     completedStudy
                     showEditble={false}
                     refetch={handleRefetch}
-                    setPaperToShow={setPaperToShow}
+                    setExperimentToShow={setExperimentToShow}
                     setPaperToEdit={setPaperToEdit}
                     experiments={study.experiments.map((experiment, index) => ({
                       ...experiment,
@@ -135,10 +135,10 @@ export default function PaperSection({
                   />
                   <Spacer height={20} />
                 </div>
-                {paperToShow && (
+                {experimentToShow && (
                   <ExperimentDetails
-                    setPaperToShow={setPaperToShow}
-                    experiment={paperToShow}
+                    setExperimentToShow={setExperimentToShow}
+                    experiment={experimentToShow}
                     study={study}
                   />
                 )}
@@ -162,8 +162,8 @@ export default function PaperSection({
               newPaper={newPaper}
               setNewPaper={setNewPaper}
               setShowEditble={setShowEditble}
-              paperToShow={paperToShow}
-              setPaperToShow={setPaperToShow}
+              experimentToShow={experimentToShow}
+              setExperimentToShow={setExperimentToShow}
               paperToEdit={paperToEdit}
               setPaperToEdit={setPaperToEdit}
             />

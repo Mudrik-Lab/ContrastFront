@@ -36,8 +36,8 @@ import { ToastError } from "../../../Utils/functions";
 
 export default function UncompletedPaper({
   study,
-  paperToShow,
-  setPaperToShow,
+  experimentToShow,
+  setExperimentToShow,
   paperToEdit,
   setPaperToEdit,
   showEditble,
@@ -162,7 +162,7 @@ export default function UncompletedPaper({
                 : study.title
             }
             experiment={
-              paperToShow?.title ||
+              experimentToShow?.title ||
               paperToEdit?.title ||
               (addNewExperiment && "New Experiment")
             }
@@ -392,7 +392,7 @@ export default function UncompletedPaper({
                           type="button"
                           onClick={() => {
                             setAddNewPaper(false);
-                            setPaperToShow(false);
+                            setExperimentToShow(false);
                             setPaperToEdit(false);
                             setShowEditble(false);
                             refetch();
@@ -411,7 +411,7 @@ export default function UncompletedPaper({
                 completedStudy={false}
                 disabled={false}
                 setNewPaper={setNewPaper}
-                setPaperToShow={setPaperToShow}
+                setExperimentToShow={setExperimentToShow}
                 setPaperToEdit={setPaperToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
@@ -438,11 +438,11 @@ export default function UncompletedPaper({
                 refetch={refetch}
               />
             )}
-            {paperToShow && !newPaper && (
+            {experimentToShow && !newPaper && (
               <ExperimentDetails
-                experiment={paperToShow}
+                experiment={experimentToShow}
                 study={study}
-                setPaperToShow={setPaperToShow}
+                setPaperToShow={setExperimentToShow}
               />
             )}
             {paperToEdit && (

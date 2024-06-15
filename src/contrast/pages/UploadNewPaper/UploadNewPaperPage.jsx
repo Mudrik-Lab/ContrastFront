@@ -35,6 +35,7 @@ export default function UploadNewPaper() {
     console.log("did refetch to all studies");
     refetch();
   };
+
   return (
     <div>
       {isSuccess && (

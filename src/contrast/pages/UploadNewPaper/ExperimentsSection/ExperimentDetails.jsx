@@ -17,7 +17,7 @@ import {
 export default function ExperimentDetails({
   experiment,
   study,
-  setPaperToShow,
+  setExperimentToShow,
 }) {
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
@@ -444,7 +444,7 @@ export default function ExperimentDetails({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToShow(false);
+              setExperimentToShow(false);
             }}>
             Save & Close Experiment
           </button>

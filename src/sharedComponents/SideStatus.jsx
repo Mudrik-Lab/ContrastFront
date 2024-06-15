@@ -21,7 +21,6 @@ export default function SideStatus({
   isUncontrast,
 }) {
   const [open, setOpen] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
 
   const handleDelete = async (paper) => {
     const experiment_pk = paper.id;

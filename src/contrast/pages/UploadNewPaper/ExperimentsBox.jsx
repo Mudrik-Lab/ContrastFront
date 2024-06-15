@@ -6,7 +6,7 @@ import { Spacer } from "../../../sharedComponents/Reusble";
 export default function ExperimentsBox({
   disabled,
   experiments,
-  setPaperToShow,
+  setExperimentToShow,
   setNewPaper,
   setPaperToEdit,
   showEditble,
@@ -29,7 +29,7 @@ export default function ExperimentsBox({
           status={"Submitted"}
           disabled={disabled}
           papers={experiments}
-          setPaperToShow={setPaperToShow}
+          setPaperToShow={setExperimentToShow}
           setPaperToEdit={setPaperToEdit}
           showEditble={showEditble}
           setNewPaper={setNewPaper}
