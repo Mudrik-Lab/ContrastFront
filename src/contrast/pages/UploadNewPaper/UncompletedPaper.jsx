@@ -39,7 +39,7 @@ export default function UncompletedPaper({
   experimentToShow,
   setExperimentToShow,
   paperToEdit,
-  setPaperToEdit,
+  setExperimentToEdit,
   showEditble,
   refetch,
   setAddNewPaper,
@@ -393,7 +393,7 @@ export default function UncompletedPaper({
                           onClick={() => {
                             setAddNewPaper(false);
                             setExperimentToShow(false);
-                            setPaperToEdit(false);
+                            setExperimentToEdit(false);
                             setShowEditble(false);
                             refetch();
                           }}
@@ -412,7 +412,7 @@ export default function UncompletedPaper({
                 disabled={false}
                 setNewPaper={setNewPaper}
                 setExperimentToShow={setExperimentToShow}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToEdit={setExperimentToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 showEditble={showEditble}
@@ -432,7 +432,7 @@ export default function UncompletedPaper({
             {addNewExperiment && (
               <ExperimentForm
                 setNewPaper={setNewPaper}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToEdit={setExperimentToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 refetch={refetch}
@@ -450,7 +450,7 @@ export default function UncompletedPaper({
                 setNewPaper={setNewPaper}
                 experimentData={paperToEdit}
                 setAddNewExperiment={setAddNewExperiment}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToEdit={setExperimentToEdit}
                 refetch={refetch}
                 study={study}
                 isEditMode={true}

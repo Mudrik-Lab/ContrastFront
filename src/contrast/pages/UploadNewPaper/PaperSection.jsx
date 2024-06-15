@@ -26,7 +26,7 @@ export default function PaperSection({
   allStudiesRefetch,
 }) {
   const [experimentToShow, setExperimentToShow] = useState();
-  const [paperToEdit, setPaperToEdit] = useState();
+  const [experimentToEdit, setExperimentToEdit] = useState();
 
   const { data, isSuccess, refetch } = useQuery({
     queryKey: [`submitted_study`, paperId],
@@ -127,7 +127,7 @@ export default function PaperSection({
                     showEditble={false}
                     refetch={handleRefetch}
                     setExperimentToShow={setExperimentToShow}
-                    setPaperToEdit={setPaperToEdit}
+                    setExperimentToEdit={setExperimentToEdit}
                     experiments={study.experiments.map((experiment, index) => ({
                       ...experiment,
                       title: `Experiment #${index + 1}`,
@@ -164,8 +164,8 @@ export default function PaperSection({
               setShowEditble={setShowEditble}
               experimentToShow={experimentToShow}
               setExperimentToShow={setExperimentToShow}
-              paperToEdit={paperToEdit}
-              setPaperToEdit={setPaperToEdit}
+              paperToEdit={experimentToEdit}
+              setExperimentToEdit={setExperimentToEdit}
             />
           )
       }

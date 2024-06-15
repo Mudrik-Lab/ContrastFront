@@ -24,7 +24,7 @@ import ResultsSummary from "./ResultsSummary";
 export default function ExperimentForm({
   study,
   setAddNewExperiment,
-  setPaperToEdit,
+  setExperimentToEdit,
   experimentData,
   isEditMode,
   refetch,
@@ -304,7 +304,7 @@ export default function ExperimentForm({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToEdit(false);
+              setExperimentToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
               refetch();

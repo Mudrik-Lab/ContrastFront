@@ -410,7 +410,7 @@ export default function NewPaperForm({
         {addNewExperiment && study && (
           <ExperimentForm
             setNewPaper={setNewPaper}
-            setPaperToEdit={setStudy}
+            setExperimentToEdit={setStudy}
             study={study}
             setAddNewExperiment={setAddNewExperiment}
             refetch={refetch}
