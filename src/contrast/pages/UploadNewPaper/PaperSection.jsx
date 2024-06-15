@@ -24,10 +24,11 @@ export default function PaperSection({
   addNewExperiment,
   setAddNewExperiment,
   allStudiesRefetch,
+  experimentToEdit,
+  setExperimentToEdit,
+  experimentToShow,
+  setExperimentToShow,
 }) {
-  const [experimentToShow, setExperimentToShow] = useState();
-  const [experimentToEdit, setExperimentToEdit] = useState();
-
   const { data, isSuccess, refetch } = useQuery({
     queryKey: [`submitted_study`, paperId],
     queryFn: () => getStudy({ id: paperId }),

@@ -19,6 +19,8 @@ export default function SideStatus({
   refetch,
   setPaperToEdit,
   isUncontrast,
+  setExperimentToEdit,
+  setExperimentToShow,
 }) {
   const [open, setOpen] = useState(false);
 
@@ -157,6 +159,10 @@ export default function SideStatus({
                       setPaperToShow(paper);
                       setPaperToEdit(false);
                     } else {
+                      //setExperimentToShow(false)& setExperimentToEdit(false) are for closing the experiment section
+                      //so no "old" experimnet will stay there while another study is on the studies section
+                      setExperimentToShow(false);
+                      setExperimentToEdit(false);
                       setPaperToShow(paper.id);
                       setShowEditble(false);
                     }
@@ -183,6 +189,11 @@ export default function SideStatus({
                         setPaperToShow(false);
                       } else {
                         setPaperToShow(paper.id);
+                        //setExperimentToShow(false)& setExperimentToEdit(false) are for closing the experiment section
+                        //so no "old" experimnet will stay there while another study is on the studies section
+                        setExperimentToEdit(false);
+                        setExperimentToShow(false);
+
                         if (paper.approval_status === 0) {
                           setShowEditble(true);
                           refetch();
