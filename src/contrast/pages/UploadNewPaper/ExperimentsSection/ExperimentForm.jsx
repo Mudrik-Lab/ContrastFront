@@ -20,6 +20,7 @@ import {
   uploadPaperUsedHeight,
 } from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
+import { getExperiment } from "../../../../apiHooks/getExperiment";
 
 export default function ExperimentForm({
   study,
@@ -141,11 +142,12 @@ export default function ExperimentForm({
     }));
   const shouldCheckAllClassificationsFilled = false;
 
-  useEffect(() => {
-    setIsStudyFit(experimentData.study === study.id);
-  }, [study]);
+  if (experimentData) {
+    useEffect(() => {
+      setIsStudyFit(experimentData.study === study.id);
+    }, [study]);
+  }
 
-  console.log(experimentData.study === study.id);
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -167,143 +169,140 @@ export default function ExperimentForm({
             </Text>
           </div>
 
-          {isStudyFit && (
-            <div>
-              <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
-                <Text color="grayReg" weight={"bold"}>
-                  Experiment Classifications
-                </Text>
+          <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
+            <Text color="grayReg" weight={"bold"}>
+              Experiment Classifications
+            </Text>
 
-                <BasicClassification
-                  theories={theories}
-                  fieldOptions={experimentTypeOptions}
-                  experimentData={experimentData}
-                  study_id={study.id}
-                  setExperimentID={setExperimentID}
-                  isEditMode={isEditMode}
-                  refetch={refetch}
-                />
+            <BasicClassification
+              theories={theories}
+              fieldOptions={experimentTypeOptions}
+              experimentData={experimentData}
+              study_id={study.id}
+              setExperimentID={setExperimentID}
+              isEditMode={isEditMode}
+              refetch={refetch}
+            />
 
-                <Paradigms
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={paradigmsFamilies}
-                  optionalParadigms={paradigms}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData?.paradigms}
-                />
+            <Paradigms
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={paradigmsFamilies}
+              optionalParadigms={paradigms}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.paradigms}
+            />
 
-                <Samples
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={populations}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData}
-                />
-                <Tasks
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={tasks}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData}
-                />
-                <Stimuli
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={stimulusCategories}
-                  subCategories={stimulusSubCategories}
-                  modalities={stimulusModalities}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData}
-                />
-                <ConsciousnessMeasures
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={analysisMeasuresOptions}
-                  analysisPhaseOptions={analysisPhaseOptions}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData}
-                />
-                <Techniques
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={techniquesOptions}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData?.techniques}
-                  setTechniques={setTechniques}
-                />
+            <Samples
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={populations}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
+            <Tasks
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={tasks}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
+            <Stimuli
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={stimulusCategories}
+              subCategories={stimulusSubCategories}
+              modalities={stimulusModalities}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
+            <ConsciousnessMeasures
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={analysisMeasuresOptions}
+              analysisPhaseOptions={analysisPhaseOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData}
+            />
+            <Techniques
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={techniquesOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.techniques}
+              setTechniques={setTechniques}
+              techniques={techniques}
+            />
 
-                <Measures
-                  setMinimumClassifications={setMinimumClassifications}
-                  minimumClassifications={minimumClassifications}
-                  fieldOptions={measuresOptions}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={!experimentID}
-                  values={experimentData?.measures}
-                />
-              </div>
-              <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
-                <Text color="grayReg" weight={"bold"}>
-                  Findings
-                </Text>
+            <Measures
+              setMinimumClassifications={setMinimumClassifications}
+              minimumClassifications={minimumClassifications}
+              fieldOptions={measuresOptions}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={!experimentID}
+              values={experimentData?.measures}
+            />
+          </div>
+          <div className="flex flex-col gap-2 p-2 border border-black rounded-md ">
+            <Text color="grayReg" weight={"bold"}>
+              Findings
+            </Text>
 
-                <Findings
-                  fieldOptions={{
-                    techniquesOptions: techniques?.map((tech) => ({
-                      value: tech.id || tech.value,
-                      label: tech.name || tech.label,
-                    })),
-                    findingTagsFamilies,
-                    findingTypes,
-                    AALOptions,
-                    analysisTypeOptions,
-                  }}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={
-                    shouldCheckAllClassificationsFilled
-                      ? Object.values(minimumClassifications).includes(0)
-                      : !experimentID
-                  }
-                  values={experimentData?.finding_tags}
-                />
-                <Interpretations
-                  fieldOptions={theories}
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={
-                    shouldCheckAllClassificationsFilled
-                      ? Object.values(minimumClassifications).includes(0)
-                      : !experimentID
-                  }
-                  values={experimentData?.interpretations}
-                />
-                <ResultsSummary
-                  experiment_pk={experimentID}
-                  study_pk={study.id}
-                  disabled={
-                    shouldCheckAllClassificationsFilled
-                      ? Object.values(minimumClassifications).includes(0)
-                      : !experimentID
-                  }
-                  values={experimentData?.results_summary}
-                />
-              </div>
-            </div>
-          )}
+            <Findings
+              fieldOptions={{
+                techniquesOptions: techniquesOptions.filter((item2) =>
+                  techniques.some((item1) => item1.id === item2.value)
+                ),
+
+                findingTagsFamilies,
+                findingTypes,
+                AALOptions,
+                analysisTypeOptions,
+              }}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
+              values={experimentData?.finding_tags}
+            />
+            <Interpretations
+              fieldOptions={theories}
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
+              values={experimentData?.interpretations}
+            />
+            <ResultsSummary
+              experiment_pk={experimentID}
+              study_pk={study.id}
+              disabled={
+                shouldCheckAllClassificationsFilled
+                  ? Object.values(minimumClassifications).includes(0)
+                  : !experimentID
+              }
+              values={experimentData?.results_summary}
+            />
+          </div>
 
           <button
             className="font-bold my-2"
@@ -313,9 +312,7 @@ export default function ExperimentForm({
               setNewPaper(false);
               refetch();
             }}>
-            {isStudyFit
-              ? "Save & Close Experiment"
-              : "Close Experiment Section"}
+            Save & Close Experiment
           </button>
         </div>
       )}

@@ -103,7 +103,6 @@ export default function Findings({
     }
     return true;
   };
-
   return (
     <ExpandingBox
       number={
@@ -148,7 +147,15 @@ export default function Findings({
                           setFieldValues(newArray);
                         }}
                         options={alphabetizeByLabels(
-                          fieldOptions.techniquesOptions
+                          // triming the list of option so no duplicated options
+                          fieldOptions.techniquesOptions.filter(
+                            (obj, index, self) =>
+                              index ===
+                              self.findIndex(
+                                (t) =>
+                                  t.value === obj.value && t.label === obj.label
+                              )
+                          )
                         )}
                       />
                       <TooltipExplanation

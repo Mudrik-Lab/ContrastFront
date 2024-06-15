@@ -20,6 +20,7 @@ export default function Techniques({
   study_pk,
   values,
   setTechniques,
+  techniques,
   setMinimumClassifications,
   minimumClassifications,
 }) {
@@ -66,12 +67,14 @@ export default function Techniques({
       setTechniques((prev) => [...prev, techniqueToAppend]);
     }
   }
+
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
   useEffect(() => {
     setMinimumClassifications({
       ...minimumClassifications,
       techniques: fieldsNum,
     });
+    setTechniques(fieldValues);
   }, [fieldsNum]);
 
   return (
