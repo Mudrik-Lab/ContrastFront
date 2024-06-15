@@ -20,7 +20,6 @@ import {
   uploadPaperUsedHeight,
 } from "../../../../Utils/HardCoded";
 import ResultsSummary from "./ResultsSummary";
-import { getExperiment } from "../../../../apiHooks/getExperiment";
 
 export default function ExperimentForm({
   study,
@@ -142,11 +141,9 @@ export default function ExperimentForm({
     }));
   const shouldCheckAllClassificationsFilled = false;
 
-  if (experimentData) {
-    useEffect(() => {
-      setIsStudyFit(experimentData.study === study.id);
-    }, [study]);
-  }
+  useEffect(() => {
+    setIsStudyFit(experimentData?.study === study.id);
+  }, [study]);
 
   return (
     <>
