@@ -162,7 +162,7 @@ export default function Navbar() {
                 onClick={() => navigate("/")}>
                 <img
                   src={isUncontrast ? UnconLogo : Logo}
-                  width={85}
+                  width={100}
                   alt="logo-right"
                 />
                 <div className=" border-r border-black h-10 "></div>

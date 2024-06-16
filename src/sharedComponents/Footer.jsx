@@ -1,11 +1,14 @@
 import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
+import UnconLogo from "../assets/logoes/uncon-negative.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 import classNames from "classnames";
 import { footerHeight } from "../Utils/HardCoded";
+import { Site } from "../config/siteType";
 
 export default function Footer({ isFixed }) {
+  const isUncontrast = Site.type === "uncontrast";
   return (
     <div
       className={classNames(
@@ -14,7 +17,11 @@ export default function Footer({ isFixed }) {
         }h-max-${footerHeight} w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
       )}>
       <div className="flex gap-3 items-center ">
-        <img src={Logo} alt="footer logo" />
+        <img
+          src={isUncontrast ? UnconLogo : Logo}
+          width={110}
+          alt="footer logo"
+        />
         <div className="invisible lg:visible border-r border-white h-10 "></div>
         <Text xs color="white" className={"invisible lg:visible"}>
           High Level <br /> Cognition Lab

@@ -54,7 +54,8 @@ export const graphsHeaders = {
   },
   "Experiments Comparison": {
     text: "Experiments Comparison",
-    tooltip: "",
+    tooltip:
+      "The graph depicts the different distribution of parameters across experiments showing positive, negative or mixed findings separately.",
     color: "orange",
     icon: <TheoriesComparison />,
     route: "/experiments-comparison",
@@ -64,7 +65,8 @@ export const graphsHeaders = {
   },
   "Distribution of Experiments Across Parameter": {
     text: "Distribution of Experiments Across Parameter",
-    tooltip: "",
+    tooltip:
+      "The graph depicts the distribution of effects for a specific parameter of interest.",
     color: "someRed",
     icon: <Effects />,
     route: "/distribution-of-experiments-across-parameters",
@@ -90,7 +92,7 @@ export const graphsHeaders = {
   "Parameter Distribution Bar uncontrast": {
     text: "Parameter Distribution Bar",
     tooltip:
-      'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.',
+      "The graph depicts the distribution of a specific parameter of interest across experiments who show positive, negative or mixed findings.",
     icon: <ParameterDist2 />,
     color: "pink",
     route: "/parameter-distribution-bar",
