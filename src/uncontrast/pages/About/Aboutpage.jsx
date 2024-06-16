@@ -52,7 +52,7 @@ export default function Aboutpage() {
               you have a paper that explored such processing, feel free to{" "}
               <a href="/upload-new-paper" className={aLinkClass}>
                 upload information about the paper here.
-              </a>
+              </a>{" "}
               New uploads will be approved by{" "}
               <a className={aLinkClass} href="#steering_committee">
                 the UnconTrust steering committee
@@ -64,7 +64,7 @@ export default function Aboutpage() {
                 href={"https://www.nature.com/articles/s41562-021-01284-5"}
                 target="_blank">
                 (see Yaron et al., 2022).
-              </a>
+              </a>{" "}
               UnconTrust has been created by Maor Schreiber and Francois
               Stockart, based on two meta-analyses conducted in the Mudrik lab
               (Schreiber et al., in preparation; Stockart et al., in
