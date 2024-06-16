@@ -1,7 +1,12 @@
 import React from "react";
 import Navbar from "../../../sharedComponents/Navbar";
 import copy from "copy-to-clipboard";
-import { Button, Spacer, Text, WhiteButton } from "../../../sharedComponents/Reusble";
+import {
+  Button,
+  Spacer,
+  Text,
+  WhiteButton,
+} from "../../../sharedComponents/Reusble";
 import { ReactComponent as Graph } from "../../../assets/icons/start-exploring.svg";
 import { ReactComponent as Profile } from "../../../assets/icons/profile-negative-icon.svg";
 import { ReactComponent as Quote } from "../../../assets/icons/cite-quote.svg";
@@ -38,7 +43,7 @@ export default function HomePage() {
       <Navbar />
       <div
         style={containerStyle}
-        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center ">
+        className="header  h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center ">
         <div className="headline w-full text-center sm:text-left">
           <h1 className="text-white text-5xl font-bold mb-10">
             {" "}

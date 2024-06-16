@@ -5,7 +5,7 @@ import { isMoblile } from "../../../Utils/HardCoded";
 
 export default function CommunityBox() {
   return (
-    <div className="w-144 bg-grayLight mx-auto p-8 flex ">
+    <div className="lg:w-144 bg-grayLight mx-auto p-8 lg:flex ">
       <div className="flex flex-col justify-between pr-8 border-r border-black">
         <div>
           <Text color="black" weight="bold" xl3 center={isMoblile}>
