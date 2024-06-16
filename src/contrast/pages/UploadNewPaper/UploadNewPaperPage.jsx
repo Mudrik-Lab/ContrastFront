@@ -26,6 +26,8 @@ export default function UploadNewPaper() {
   const [addNewPaper, setAddNewPaper] = useState(false);
   const [newPaper, setNewPaper] = useState(false);
   const [addNewExperiment, setAddNewExperiment] = useState(false);
+  const [experimentToEdit, setExperimentToEdit] = useState();
+  const [experimentToShow, setExperimentToShow] = useState();
 
   const { data, isSuccess, refetch } = useQuery(["submitted_studies"], () =>
     getMySubmittedStudies()
@@ -35,6 +37,7 @@ export default function UploadNewPaper() {
     console.log("did refetch to all studies");
     refetch();
   };
+
   return (
     <div>
       {isSuccess && (
@@ -130,6 +133,8 @@ export default function UploadNewPaper() {
                   refetch={handleRefetch}
                   status={"Uncompleted submissions"}
                   setPaperToShow={setPaperToShow}
+                  setExperimentToEdit={setExperimentToEdit}
+                  setExperimentToShow={setExperimentToShow}
                   setShowEditble={setShowEditble}
                   showEditble={true}
                   number={
@@ -178,6 +183,10 @@ export default function UploadNewPaper() {
               ) : (
                 paperToShow && (
                   <PaperSection
+                    setExperimentToEdit={setExperimentToEdit}
+                    experimentToEdit={experimentToEdit}
+                    setExperimentToShow={setExperimentToShow}
+                    experimentToShow={experimentToShow}
                     allStudiesRefetch={refetch}
                     newPaper={newPaper}
                     setNewPaper={setNewPaper}

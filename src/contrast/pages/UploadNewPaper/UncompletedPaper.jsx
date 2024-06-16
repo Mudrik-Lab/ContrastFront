@@ -36,10 +36,10 @@ import { ToastError } from "../../../Utils/functions";
 
 export default function UncompletedPaper({
   study,
-  paperToShow,
-  setPaperToShow,
+  experimentToShow,
+  setExperimentToShow,
   paperToEdit,
-  setPaperToEdit,
+  setExperimentToEdit,
   showEditble,
   refetch,
   setAddNewPaper,
@@ -79,7 +79,7 @@ export default function UncompletedPaper({
 
   useEffect(() => {
     setTitle(study.title);
-  }, []);
+  }, [study]);
 
   useEffect(() => {
     setAuthorOptions(authorsList);
@@ -162,7 +162,7 @@ export default function UncompletedPaper({
                 : study.title
             }
             experiment={
-              paperToShow?.title ||
+              experimentToShow?.title ||
               paperToEdit?.title ||
               (addNewExperiment && "New Experiment")
             }
@@ -208,16 +208,11 @@ export default function UncompletedPaper({
                   </div>
                 </div>
                 <Formik
+                  enableReinitialize={true}
                   initialValues={initialValues}
                   onSubmit={handleSubmit}
                   validationSchema={studyValidationSchema}>
-                  {({
-                    isSubmitting,
-                    dirty,
-                    isValid,
-                    values,
-                    setFieldValue,
-                  }) => (
+                  {({ isValid, values, setFieldValue }) => (
                     <Form>
                       <div className="flex flex-col gap-4">
                         <div>
@@ -397,8 +392,8 @@ export default function UncompletedPaper({
                           type="button"
                           onClick={() => {
                             setAddNewPaper(false);
-                            setPaperToShow(false);
-                            setPaperToEdit(false);
+                            setExperimentToShow(false);
+                            setExperimentToEdit(false);
                             setShowEditble(false);
                             refetch();
                           }}
@@ -416,8 +411,8 @@ export default function UncompletedPaper({
                 completedStudy={false}
                 disabled={false}
                 setNewPaper={setNewPaper}
-                setPaperToShow={setPaperToShow}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToShow={setExperimentToShow}
+                setExperimentToEdit={setExperimentToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 showEditble={showEditble}
@@ -437,17 +432,17 @@ export default function UncompletedPaper({
             {addNewExperiment && (
               <ExperimentForm
                 setNewPaper={setNewPaper}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToEdit={setExperimentToEdit}
                 study={study}
                 setAddNewExperiment={setAddNewExperiment}
                 refetch={refetch}
               />
             )}
-            {paperToShow && !newPaper && (
+            {experimentToShow && !newPaper && (
               <ExperimentDetails
-                experiment={paperToShow}
+                experiment={experimentToShow}
                 study={study}
-                setPaperToShow={setPaperToShow}
+                setPaperToShow={setExperimentToShow}
               />
             )}
             {paperToEdit && (
@@ -455,7 +450,7 @@ export default function UncompletedPaper({
                 setNewPaper={setNewPaper}
                 experimentData={paperToEdit}
                 setAddNewExperiment={setAddNewExperiment}
-                setPaperToEdit={setPaperToEdit}
+                setExperimentToEdit={setExperimentToEdit}
                 refetch={refetch}
                 study={study}
                 isEditMode={true}

@@ -4,7 +4,10 @@ import * as Yup from "yup";
 
 import Navbar from "../../../sharedComponents/Navbar";
 import Footer from "../../../sharedComponents/Footer";
-import { TooltipExplanation, ToastBox } from "../../../sharedComponents/Reusble";
+import {
+  TooltipExplanation,
+  ToastBox,
+} from "../../../sharedComponents/Reusble";
 import { errorMsgClass, fieldClass } from "../../../Utils/HardCoded";
 import { useNavigate } from "react-router-dom";
 import recoverPassword from "../../../apiHooks/recoverPassword";
@@ -48,6 +51,7 @@ export default function RecoverPassword() {
           <h2 className="mx-auto text-3xl">Recover Password</h2>
 
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={validationSchema}>

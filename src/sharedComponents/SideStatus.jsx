@@ -19,9 +19,10 @@ export default function SideStatus({
   refetch,
   setPaperToEdit,
   isUncontrast,
+  setExperimentToEdit,
+  setExperimentToShow,
 }) {
   const [open, setOpen] = useState(false);
-  const [confirmed, setConfirmed] = useState(false);
 
   const handleDelete = async (paper) => {
     const experiment_pk = paper.id;
@@ -131,9 +132,9 @@ export default function SideStatus({
       </div>
       {open && (
         <div>
-          {papers?.map((paper, index) => (
+          {papers?.map((paper) => (
             <div
-              key={index}
+              key={paper.title}
               className={classNames(
                 `flex my-2 justify-between text-base border-b border-${color}`
               )}>
@@ -158,6 +159,10 @@ export default function SideStatus({
                       setPaperToShow(paper);
                       setPaperToEdit(false);
                     } else {
+                      //setExperimentToShow(false)& setExperimentToEdit(false) are for closing the experiment section
+                      //so no "old" experimnet will stay there while another study is on the studies section
+                      setExperimentToShow(false);
+                      setExperimentToEdit(false);
                       setPaperToShow(paper.id);
                       setShowEditble(false);
                     }
@@ -184,8 +189,14 @@ export default function SideStatus({
                         setPaperToShow(false);
                       } else {
                         setPaperToShow(paper.id);
+                        //setExperimentToShow(false)& setExperimentToEdit(false) are for closing the experiment section
+                        //so no "old" experimnet will stay there while another study is on the studies section
+                        setExperimentToEdit(false);
+                        setExperimentToShow(false);
+
                         if (paper.approval_status === 0) {
                           setShowEditble(true);
+                          refetch();
                         }
                       }
                     }}>

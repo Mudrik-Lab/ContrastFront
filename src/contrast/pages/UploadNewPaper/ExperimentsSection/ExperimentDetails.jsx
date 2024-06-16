@@ -17,7 +17,7 @@ import {
 export default function ExperimentDetails({
   experiment,
   study,
-  setPaperToShow,
+  setExperimentToShow,
 }) {
   const { data: extraConfig, isSuccess } = useQuery(
     [`more_configurations`],
@@ -230,7 +230,7 @@ export default function ExperimentDetails({
               number={experiment.stimuli.length}>
               {experiment.stimuli.map((stimulus, index) => (
                 <div
-                  key={stimulus.category.name}
+                  key={stimulus.category.name + index}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
@@ -401,7 +401,7 @@ export default function ExperimentDetails({
               number={experiment.interpretations.length}>
               {experiment.interpretations.map((interpretation, index) => (
                 <div
-                  key={interpretation.theory.name}
+                  key={interpretation.theory.name + index}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-full flex flex-col gap-2">
@@ -444,7 +444,7 @@ export default function ExperimentDetails({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToShow(false);
+              setExperimentToShow(false);
             }}>
             Save & Close Experiment
           </button>

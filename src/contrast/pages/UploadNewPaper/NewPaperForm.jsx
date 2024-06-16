@@ -149,6 +149,7 @@ export default function NewPaperForm({
           });
     };
   };
+
   return (
     <div>
       <ProgressComponent
@@ -183,6 +184,7 @@ export default function NewPaperForm({
             />
           </div>
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             onSubmit={handleSubmit}
             validationSchema={studyValidationSchema}>
@@ -408,7 +410,7 @@ export default function NewPaperForm({
         {addNewExperiment && study && (
           <ExperimentForm
             setNewPaper={setNewPaper}
-            setPaperToEdit={setStudy}
+            setExperimentToEdit={setStudy}
             study={study}
             setAddNewExperiment={setAddNewExperiment}
             refetch={refetch}

@@ -71,6 +71,7 @@ export default function RegisterComponent() {
           <h2 className="mx-auto text-3xl ">Register</h2>
 
           <Formik
+            enableReinitialize={true}
             initialValues={initialValues}
             validationSchema={validationSchema}
             onSubmit={handleSubmit}>

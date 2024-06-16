@@ -49,6 +49,7 @@ export default function SuggestingNewQueries() {
       <div className="border-b border-black w-full"></div>
 
       <Formik
+        enableReinitialize={true}
         initialValues={initialValues}
         validationSchema={validationSchema}
         onSubmit={handleSubmit}>

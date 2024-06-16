@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../../apiHooks/getExtraConfig";
@@ -24,13 +24,15 @@ import ResultsSummary from "./ResultsSummary";
 export default function ExperimentForm({
   study,
   setAddNewExperiment,
-  setPaperToEdit,
+  setExperimentToEdit,
   experimentData,
   isEditMode,
   refetch,
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
+  const [isStudyFit, setIsStudyFit] = useState(false);
+
   const [minimumClassifications, setMinimumClassifications] = useState({
     paradigms: experimentData?.paradigms?.length || 0,
     samples: experimentData?.samples?.length || 0,
@@ -138,6 +140,11 @@ export default function ExperimentForm({
       label: rawTextToShow(type),
     }));
   const shouldCheckAllClassificationsFilled = false;
+
+  useEffect(() => {
+    setIsStudyFit(experimentData?.study === study.id);
+  }, [study]);
+
   return (
     <>
       {extraConfigSuccess && setAddNewExperiment && (
@@ -233,6 +240,7 @@ export default function ExperimentForm({
               disabled={!experimentID}
               values={experimentData?.techniques}
               setTechniques={setTechniques}
+              techniques={techniques}
             />
 
             <Measures
@@ -252,10 +260,10 @@ export default function ExperimentForm({
 
             <Findings
               fieldOptions={{
-                techniquesOptions: techniques?.map((tech) => ({
-                  value: tech.id || tech.value,
-                  label: tech.name || tech.label,
-                })),
+                techniquesOptions: techniquesOptions.filter((item2) =>
+                  techniques.some((item1) => item1.id === item2.value)
+                ),
+
                 findingTagsFamilies,
                 findingTypes,
                 AALOptions,
@@ -296,7 +304,7 @@ export default function ExperimentForm({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToEdit(false);
+              setExperimentToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
               refetch();
