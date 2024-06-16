@@ -21,6 +21,8 @@ import SecondaryRegister from "../contrast/pages/Register/SecondaryRegister.jsx"
 import ProtectedRoute from "../Utils/ProtectedRoute.jsx";
 import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage.jsx";
 import Histogram from "./pages/histogram.jsx";
+import TermOfUse from "../contrast/pages/TermsOfUse/TermsOfUse.jsx";
+import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance.jsx";
 
 const UncontrastScreens = () => {
   return (
@@ -63,6 +65,8 @@ const UncontrastScreens = () => {
         <Route path="/" element={<Homepage />} />
         <Route path="/about" element={<Aboutpage />} />
         <Route path="/contact" element={<ContactPage />} />
+        <Route path="/terms-of-use" element={<TermOfUse />} />
+        <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
         <Route
           path="/parameter-distribution-free-queries"
           element={isMoblile ? <MobileScreen /> : <FreeQueriesBar />}
