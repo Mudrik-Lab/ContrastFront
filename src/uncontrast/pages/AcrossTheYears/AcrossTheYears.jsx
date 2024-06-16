@@ -102,7 +102,7 @@ export default function AcrossTheYears() {
       <PageTemplate
         control={
           <SideControl headline={"Trends over time"}>
-            <Text color="blue" weight="bold" className="text-3xl"></Text>
+            <Text color="blue" weight="bold" xl3></Text>
 
             <Text weight="bold" lg>
               Axis Controls

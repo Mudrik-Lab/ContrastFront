@@ -38,6 +38,8 @@ export default function HomePage() {
   const containerStyle = {
     backgroundImage: `url(${isMoblile ? mobileBrain : brain})`,
   };
+
+  console.log(data?.data);
   return (
     <div>
       <Navbar />
