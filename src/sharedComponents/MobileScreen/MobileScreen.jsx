@@ -17,7 +17,7 @@ export default function MobileScreen() {
         className=" bg-black flex flex-col justify-center items-center px-5 gap-14">
         <div className="flex flex-col items-center">
           <Desktop />
-          <Text className="text-3xl" color="white" center>
+          <Text xl3 color="white" center>
             This Feature is currently only available for desktop
           </Text>
           <Text color="white" className="text-sm">

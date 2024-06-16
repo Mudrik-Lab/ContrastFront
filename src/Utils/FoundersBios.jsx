@@ -8,7 +8,7 @@ import Ned from "../assets/images/Ned.jpg";
 import Steve from "../assets/images/Steve.jpg";
 import Itay from "../assets/images/Itay.jpg";
 import Francois from "../assets/images/Francois.jpg";
-import Dominique from "../assets/images/Dominique .png";
+import Dominique from "../assets/images/Dominique.png";
 import Maor from "../assets/images/Maor.png";
 
 export const foundingBoardBios = [
@@ -57,15 +57,15 @@ export const foundingBoardBios = [
     isContrastMember: true,
     isUncontrastMember: true,
   },
-  {
-    name: "Lucie Charles",
-    secondName: "Charles",
-    image: LucieC,
-    text: "	Department of Psychology, Queen Mary University of London",
-    website: "https://sites.google.com/site/luciecharlesneuro/home?pli=1",
-    isContrastMember: true,
-    isUncontrastMember: true,
-  },
+  // {
+  //   name: "Lucie Charles",
+  //   secondName: "Charles",
+  //   image: LucieC,
+  //   text: "	Department of Psychology, Queen Mary University of London",
+  //   website: "https://sites.google.com/site/luciecharlesneuro/home?pli=1",
+  //   isContrastMember: true,
+  //   isUncontrastMember: true,
+  // },
   {
     name: "Lucia Melloni",
     secondName: "Melloni",

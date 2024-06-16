@@ -24,9 +24,11 @@ export default function PaperSection({
   addNewExperiment,
   setAddNewExperiment,
   allStudiesRefetch,
+  experimentToEdit,
+  setExperimentToEdit,
+  experimentToShow,
+  setExperimentToShow,
 }) {
-  const [paperToShow, setPaperToShow] = useState();
-  const [paperToEdit, setPaperToEdit] = useState();
   const isUncontrast = true;
   const id = paperId;
 
@@ -64,7 +66,7 @@ export default function PaperSection({
               <ProgressComponent
                 status={status}
                 paperNmae={study.title.slice(0, headlineLenghtToShow) + "..."}
-                experiment={paperToShow?.title}
+                experiment={experimentToShow?.title}
               />
               <Spacer height={10} />
               <div className="flex justify-between ">
@@ -128,8 +130,8 @@ export default function PaperSection({
                     completedStudy
                     showEditble={false}
                     refetch={handleRefetch}
-                    setPaperToShow={setPaperToShow}
-                    setPaperToEdit={setPaperToEdit}
+                    setExperimentToShow={setExperimentToShow}
+                    setExperimentToEdit={setExperimentToEdit}
                     experiments={study.experiments.map((experiment, index) => ({
                       ...experiment,
                       title: `Experiment #${index + 1}`,
@@ -137,10 +139,10 @@ export default function PaperSection({
                   />
                   <Spacer height={20} />
                 </div>
-                {paperToShow && (
+                {experimentToShow && (
                   <ExperimentDetails
-                    setPaperToShow={setPaperToShow}
-                    experiment={paperToShow}
+                    setExperimentToShow={setExperimentToShow}
+                    experiment={experimentToShow}
                     study={study}
                   />
                 )}
@@ -164,10 +166,10 @@ export default function PaperSection({
               newPaper={newPaper}
               setNewPaper={setNewPaper}
               setShowEditble={setShowEditble}
-              paperToShow={paperToShow}
-              setPaperToShow={setPaperToShow}
-              paperToEdit={paperToEdit}
-              setPaperToEdit={setPaperToEdit}
+              experimentToShow={experimentToShow}
+              setExperimentToShow={setExperimentToShow}
+              paperToEdit={experimentToEdit}
+              setExperimentToEdit={setExperimentToEdit}
             />
           )
       }

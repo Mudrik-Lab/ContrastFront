@@ -2,13 +2,13 @@ import React from "react";
 import { Text } from "../../../sharedComponents/Reusble";
 import ShowMoreText from "react-show-more-text";
 import { ReactComponent as Web } from "../../../assets/icons/website.svg";
-import karine from "../../../assets/images/Karine.jpg";
+import Maor from "../../../assets/images/Maor.png";
 import { foundingBoardBios } from "../../../Utils/FoundersBios";
 
 export default function TeamMembersCards() {
   return (
     <div>
-      <div className="flex flex-wrap justify-center sm:w-[900px] sm:px-24 my-6 gap-5 gap-y-7 mx-auto ">
+      <div className="flex flex-wrap justify-center sm:w-[900px] sm:px-2 my-6 gap-5 gap-y-7 mx-auto ">
         {foundingBoardBios
           .filter((member) => member.isUncontrastMember === true)
           .sort((a, b) => {
@@ -73,7 +73,7 @@ export default function TeamMembersCards() {
               width: 120,
               height: 120,
               borderRadius: "50%",
-              backgroundImage: `url(${karine})`,
+              backgroundImage: `url(${Maor})`,
               backgroundPosition: "center",
               backgroundSize: "cover",
               backgroundRepeat: "no-repeat",
@@ -82,7 +82,7 @@ export default function TeamMembersCards() {
           <div className="w-[150px]">
             <div className="flex flex-col justify-center items-center my-4">
               <Text center lg weight="bold">
-                {"Karine Jospe"}
+                {"Maor Schreiber"}
               </Text>
             </div>
 
@@ -99,7 +99,7 @@ export default function TeamMembersCards() {
               Website Manager
             </ShowMoreText>
           </div>
-          <div className="absolute  bottom-2">
+          {/* <div className="absolute  bottom-2">
             <a
               href={
                 "https://people.socsci.tau.ac.il/mu/mudriklab/people/#gkit-popup"
@@ -108,7 +108,7 @@ export default function TeamMembersCards() {
               target="_blank">
               <Web />
             </a>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

@@ -6,6 +6,7 @@ import { ReactComponent as Burger } from "../assets/icons/hamburger.svg";
 import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 import UnconLogo from "../assets/logoes/uncon-logo.png";
+import CifarLogo from "../assets/logoes/cifar.png";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Text } from "./Reusble";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -69,6 +70,7 @@ export default function Navbar() {
                 High Level <br /> Cognition Lab
               </Text>
             </div>
+
             <button
               onClick={() => setIsMobileOpen(!isMobileOpen)}
               aria-label="hamburger-menu">
@@ -154,9 +156,9 @@ export default function Navbar() {
       ) : (
         <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-30 top-0 left-0 shadow-lg ">
           <div className=" flex flex-wrap items-center justify-between w-full ">
-            <div className="flex items-center justify-between">
+            <div className="flex items-center gap-2 w-1/3">
               <div
-                className="logo-right flex gap-3 items-center cursor-pointer"
+                className="logo-right flex gap-1 items-center cursor-pointer"
                 onClick={() => navigate("/")}>
                 <img
                   src={isUncontrast ? UnconLogo : Logo}
@@ -169,8 +171,16 @@ export default function Navbar() {
                   High Level <br /> Cognition Lab{" "}
                 </Text>
               </div>
+              <div className="logo-cifar flex gap-1 items-center ">
+                <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
+                <div className=" border-r border-black h-10 "></div>
+                <Text xs color="grayHeavy">
+                  {" "}
+                  Brain, Mind and <br /> Consciousness program
+                </Text>
+              </div>
             </div>
-            <div className="navigate-buttons items-center justify-between flex ">
+            <div className="navigate-buttons w-1/3 items-center justify-center flex ">
               <ul className="flex flex-row text-black space-x-12">
                 <li className="flex items-center relative">
                   <button
@@ -261,7 +271,7 @@ export default function Navbar() {
                 </li>
               </ul>
             </div>
-            <div className="login-register flex flex-row items-center justify-between space-x-4 text-black">
+            <div className="login-register w-1/3 flex flex-row items-center justify-end space-x-4 text-black">
               {snap.auth ? (
                 <>
                   <Button type="button" onClick={() => navigate("/profile")}>

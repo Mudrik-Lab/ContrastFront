@@ -17,7 +17,7 @@ export default function Aboutpage() {
       <div className="max-w-[1018px] mx-auto">
         <h1 className="text-blue text-center text-6xl">About UnconTrast</h1>
         <div className="about-database sm:mt-10 mx-auto ">
-          <Text className="text-4xl leading-snug" center>
+          <Text xl3 className=" leading-snug" center>
             The database for Unconscious processing studies that we Trust
           </Text>
           <div className="h-auto flex flex-col sm:flex-row sm:gap-10 mt-6 max-w-[1250px] mx-auto sm:px-2">
@@ -52,7 +52,7 @@ export default function Aboutpage() {
               you have a paper that explored such processing, feel free to{" "}
               <a href="/upload-new-paper" className={aLinkClass}>
                 upload information about the paper here.
-              </a>
+              </a>{" "}
               New uploads will be approved by{" "}
               <a className={aLinkClass} href="#steering_committee">
                 the UnconTrust steering committee
@@ -64,7 +64,7 @@ export default function Aboutpage() {
                 href={"https://www.nature.com/articles/s41562-021-01284-5"}
                 target="_blank">
                 (see Yaron et al., 2022).
-              </a>
+              </a>{" "}
               UnconTrust has been created by Maor Schreiber and Francois
               Stockart, based on two meta-analyses conducted in the Mudrik lab
               (Schreiber et al., in preparation; Stockart et al., in
@@ -81,7 +81,7 @@ export default function Aboutpage() {
           <div className="px-4 sm:px-0">
             <div className=" openSource-box max-w-[815px] bg-grayLight sm:flex justify-between items-center gap-4 px-6 py-4 mx-auto my-16">
               <div className="sm:w-[165px] ">
-                <Text className={" text-3xl"} weight="bold" center={isMoblile}>
+                <Text xl3 weight="bold" center={isMoblile}>
                   We Are{isMoblile ? " " : <br />} Open Source
                 </Text>
               </div>
@@ -119,7 +119,7 @@ export default function Aboutpage() {
               </div>
             </div>
             <div id="steering_committee">
-              <Text className="text-4xl" center>
+              <Text xl3 center>
                 UnconTraSt Steering Committee
               </Text>
               <TeamMembersCards />

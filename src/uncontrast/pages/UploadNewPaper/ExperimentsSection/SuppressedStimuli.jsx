@@ -89,7 +89,10 @@ export default function SuppressedStimuli({
       fieldValues[index]?.duration &&
       fieldValues[index]?.mode_of_presentation &&
       fieldValues[index]?.number_of_stimuli &&
-      fieldValues[index]?.soa
+      fieldValues[index]?.soa &&
+      (creatSubOptions(index).length > 0
+        ? fieldValues[index]?.sub_category
+        : true)
     );
   };
 
@@ -101,6 +104,17 @@ export default function SuppressedStimuli({
     });
   }, [fieldsNum]);
 
+  function creatSubOptions(index) {
+    return [
+      ...new Set(
+        subCategories.filter(
+          (sub) => sub.parent == fieldValues[index]?.category
+        )
+      ),
+    ];
+  }
+  console.log({ fieldOptions });
+  console.log({ subCategories });
   return (
     <ExpandingBox
       number={fieldsNum}
@@ -115,7 +129,7 @@ export default function SuppressedStimuli({
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start gap-2">
                     <div className="w-full flex gap-2 items-start">
-                      <div className="w-full">
+                      <div className="w-1/2">
                         <div className="flex gap-1 items-center">
                           <Text weight={"bold"} color={"grayReg"}>
                             Category
@@ -141,15 +155,19 @@ export default function SuppressedStimuli({
                           options={fieldOptions}
                         />
                       </div>
-                      <div className="w-full">
+
+                      <div className="w-1/2">
                         <Text
                           weight={"bold"}
                           color={"grayReg"}
                           className={"whitespace-nowrap "}>
-                          Sub-category (optional)
+                          Sub-category
                         </Text>
                         <CustomSelect
-                          disabled={fieldValue.id}
+                          disabled={
+                            fieldValue.id ||
+                            creatSubOptions(index)?.length === 0
+                          }
                           defaultValue={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
@@ -160,7 +178,7 @@ export default function SuppressedStimuli({
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
                           }}
-                          options={alphabetizeByLabels(subCategories)}
+                          options={creatSubOptions(index)}
                         />
                       </div>
                     </div>

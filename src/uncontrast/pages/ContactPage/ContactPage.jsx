@@ -1,6 +1,10 @@
 import React from "react";
 import Navbar from "../../../sharedComponents/Navbar";
-import { Text, Spacer, ButtonReversed } from "../../../sharedComponents/Reusble";
+import {
+  Text,
+  Spacer,
+  ButtonReversed,
+} from "../../../sharedComponents/Reusble";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../../sharedComponents/Footer";
 import { navHeight } from "../../../Utils/HardCoded";
@@ -21,7 +25,7 @@ export default function ContactPage() {
       <Spacer height={navHeight + 20} />
       <div className="container w-[730px] mx-auto">
         <h1 className="text-blue text-center text-6xl mb-8">
-          Contact ConTraSt
+          Contact UnconTraSt
         </h1>
         <div className="w-full mx-auto text-base">
           <p className="text-justify">
@@ -65,8 +69,9 @@ export default function ContactPage() {
             There’s more:
             <ul className="list-disc ml-4">
               <li>
-                If you would like to add a study that focuses on unconscious processing
-                (i.e., where stimuli that were not consciously perceived) to our database, please {" "}
+                If you would like to add a study that focuses on unconscious
+                processing (i.e., where stimuli that were not consciously
+                perceived) to our database, please{" "}
                 <a className="underline font-bold " href="upload-new-paper">
                   follow this link
                 </a>

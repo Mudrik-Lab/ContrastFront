@@ -90,6 +90,19 @@ export default function ConsciousnessMeasures({
     }
   }, []);
 
+  function createSubTypes(index) {
+    return [
+      ...new Set(
+        consciousnessMeasuresSubType
+          .filter((subType) => subType.type == fieldValues[index].type)
+          .map((row) => ({
+            label: row.name,
+            value: row.id,
+          }))
+      ),
+    ];
+  }
+
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.type &&
@@ -98,7 +111,8 @@ export default function ConsciousnessMeasures({
       fieldValues[index]?.number_of_participants_in_awareness_test &&
       fieldValues[index]?.is_cm_same_participants_as_task &&
       fieldValues[index]?.is_performance_above_chance &&
-      fieldValues[index]?.is_trial_excluded_based_on_measure
+      fieldValues[index]?.is_trial_excluded_based_on_measure &&
+      (createSubTypes(index)?.length > 0 ? fieldValues[index]?.sub_type : true)
     );
   };
 
@@ -160,7 +174,9 @@ export default function ConsciousnessMeasures({
                           text={"Sub type"}
                         />
                         <CustomSelect
-                          disabled={fieldValue.id}
+                          disabled={
+                            fieldValue.id || createSubTypes(index)?.length === 0
+                          }
                           value={fieldValue.sub_type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
@@ -169,19 +185,7 @@ export default function ConsciousnessMeasures({
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
                           }}
-                          options={[
-                            ...new Set(
-                              consciousnessMeasuresSubType
-                                .filter(
-                                  (subType) =>
-                                    subType.type == fieldValues[index].type
-                                )
-                                .map((row) => ({
-                                  label: row.name,
-                                  value: row.id,
-                                }))
-                            ),
-                          ]}
+                          options={createSubTypes(index)}
                         />
                       </div>
                     </div>

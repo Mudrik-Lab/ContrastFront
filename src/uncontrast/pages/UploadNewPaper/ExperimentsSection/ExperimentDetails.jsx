@@ -16,7 +16,7 @@ import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfig
 export default function ExperimentDetails({
   experiment,
   study,
-  setPaperToShow,
+  setExperimentToShow,
 }) {
   const { data, isSuccess } = useQuery(
     [`more_configurations`, "uncontrast"],
@@ -45,7 +45,7 @@ export default function ExperimentDetails({
     outcomes: data?.dataavailable_outcomes_type,
   };
   const paradigmsWithFamily = data?.data.available_main_paradigm_type;
-
+  console.log(experiment);
   return (
     <div className="w-1/2">
       {isSuccess && (
@@ -225,6 +225,24 @@ export default function ExperimentDetails({
                         </Text>
                         <Text sm>{stimulus.soa}</Text>
                       </div>
+                    </div>
+                    <div className="flex gap-1">
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        is_target_same_as_suppressed_stimulus?
+                      </Text>
+                      <Text sm>
+                        {experiment.is_target_same_as_suppressed_stimulus
+                          ? "Yes"
+                          : "No"}
+                      </Text>
+                    </div>
+                    <div className="flex gap-1">
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        is_target_stimulus?
+                      </Text>
+                      <Text sm>
+                        {experiment.is_target_stimulus ? "Yes" : "No"}
+                      </Text>
                     </div>
                   </div>
                 </div>
@@ -490,7 +508,7 @@ export default function ExperimentDetails({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToShow(false);
+              setExperimentToShow(false);
             }}>
             Save & Close Experiment
           </button>

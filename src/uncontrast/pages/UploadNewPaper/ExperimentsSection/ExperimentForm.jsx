@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Text } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import { rawTextToShow } from "../../../../Utils/functions";
@@ -20,13 +20,14 @@ import TargetStimuli from "./TargetStimuli";
 export default function ExperimentForm({
   study,
   setAddNewExperiment,
-  setPaperToEdit,
+  setExperimentToEdit,
   experimentData,
   isEditMode,
   refetch,
   setNewPaper,
 }) {
   const [experimentID, setExperimentID] = useState(experimentData?.id);
+  const [isStudyFit, setIsStudyFit] = useState(false);
   const [minimumClassifications, setMinimumClassifications] = useState({
     paradigms: experimentData?.paradigm?.length || 0,
     samples: experimentData?.samples?.length || 0,
@@ -36,9 +37,7 @@ export default function ExperimentForm({
     techniques: experimentData?.techniques?.length || 0,
     measures: experimentData?.measures?.length || 0,
   });
-  const [techniques, setTechniques] = useState(
-    experimentData?.techniques || []
-  );
+
   const { data: configurations, isSuccess } = useQuery(
     [`uncon_configurations`],
     getUncontrastConfiguration
@@ -51,12 +50,6 @@ export default function ExperimentForm({
     })
   );
   const paradigms = configurations?.data.available_specific_paradigm_type;
-
-  const experimentTypeOptions =
-    configurations?.data.available_experiment_types.map((type) => ({
-      value: type.value,
-      label: rawTextToShow(type.name),
-    }));
 
   const populations = configurations?.data.available_populations_types.map(
     (population) => ({ value: population, label: rawTextToShow(population) })
@@ -123,6 +116,9 @@ export default function ExperimentForm({
       label: type.name,
     })
   );
+  useEffect(() => {
+    setIsStudyFit(experimentData?.study === study.id);
+  }, [study]);
 
   return (
     <>
@@ -254,7 +250,7 @@ export default function ExperimentForm({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToEdit(false);
+              setExperimentToEdit(false);
               setAddNewExperiment(false);
               setNewPaper(false);
               refetch();

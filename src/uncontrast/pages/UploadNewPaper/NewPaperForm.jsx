@@ -24,7 +24,6 @@ import { ReactComponent as V } from "../../../assets/icons/white-circle-v.svg";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ToastError, confirmFunction } from "../../../Utils/functions";
 import FinalSubmit from "../../../sharedComponents/FinalSubmit";
-
 import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration";
 import { createNewAuthor } from "../../../apiHooks/createNewAuthor";
 
@@ -412,7 +411,7 @@ export default function NewPaperForm({
         {addNewExperiment && study && (
           <ExperimentForm
             setNewPaper={setNewPaper}
-            setPaperToEdit={setStudy}
+            setExperimentToEdit={setStudy}
             study={study}
             setAddNewExperiment={setAddNewExperiment}
             refetch={refetch}
