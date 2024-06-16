@@ -16,7 +16,7 @@ import getUncontrastConfiguration from "../../../../apiHooks/getUncontrastConfig
 export default function ExperimentDetails({
   experiment,
   study,
-  setPaperToShow,
+  setExperimentToShow,
 }) {
   const { data, isSuccess } = useQuery(
     [`more_configurations`, "uncontrast"],
@@ -490,7 +490,7 @@ export default function ExperimentDetails({
           <button
             className="font-bold my-2"
             onClick={() => {
-              setPaperToShow(false);
+              setExperimentToShow(false);
             }}>
             Save & Close Experiment
           </button>
