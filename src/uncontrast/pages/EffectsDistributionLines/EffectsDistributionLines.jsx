@@ -4,14 +4,11 @@ import Select from "react-select";
 import {
   CSV,
   RangeInput,
-  ReportFilter,
   Reset,
   SideControl,
-  SignificanceFilter,
   Text,
   TooltipExplanation,
   TopGraphText,
-  TypeOfConsciousnessFilter,
 } from "../../../sharedComponents/Reusble";
 import {
   isMoblile,
@@ -29,7 +26,6 @@ import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
-import { designerColors } from "../../../Utils/Colors";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -37,25 +33,25 @@ export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [binSize, setBinSize] = React.useState(10);
+  const [binSize, setBinSize] = React.useState(1);
   const navigate = useNavigate();
   const pageName = "distribution-of-Experiments-across-parameters";
   const continuousBreakdownOptions = [
-    { value: "number_of_stimuli", label: "number_of_stimuli" },
-    { value: "outcome_number_of_trials", label: "outcome_number_of_trials" },
-    { value: "sample_size_excluded", label: "sample_size_excluded" },
-    { value: "sample_size_included", label: "sample_size_included" },
+    { value: "number_of_stimuli", label: "Number of Stimuli" },
+    { value: "outcome_number_of_trials", label: "Outcome Number of Trials" },
+    { value: "sample_size_excluded", label: "Sample Size Excluded" },
+    { value: "sample_size_included", label: "Sample Size Included" },
     {
       value: "suppressed_stimuli_duration",
-      label: "suppressed_stimuli_duration",
+      label: "Suppressed Stimuli Duration",
     },
     {
       value: "unconsciousness_measure_number_of_participants_in_awareness_test",
-      label: "unconsciousness_measure_number_of_participants_in_awareness_test",
+      label: "Unconsciousness Measure Number of Participants in Awareness Test",
     },
     {
       value: "unconsciousness_measure_number_of_trials",
-      label: "unconsciousness_measure_number_of_trials",
+      label: "Unconsciousness Measure Number of Trials",
     },
   ];
   const { data, isSuccess, isLoading } = useQuery({
@@ -122,7 +118,7 @@ export default function EffectsDistributionLines() {
 
     queryParams.get("bin_size")
       ? setBinSize(queryParams.get("bin_size"))
-      : setBinSize(10);
+      : setBinSize(1);
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -178,7 +174,7 @@ export default function EffectsDistributionLines() {
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
               <RangeInput
                 isBinSize={true}
-                number={binSize}
+                number={binSize || 1}
                 setNumber={(e) => {
                   buildUrl(pageName, "bin_size", e, navigate);
                 }}
