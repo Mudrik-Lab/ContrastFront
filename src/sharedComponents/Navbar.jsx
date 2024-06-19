@@ -165,7 +165,7 @@ export default function Navbar() {
                   width={100}
                   alt="logo-right"
                 />
-                <div className=" border-r border-black h-10 "></div>
+                <div className=" border-r border-black h-8 "></div>
                 <Text xs color="grayHeavy">
                   {" "}
                   High Level <br /> Cognition Lab{" "}
@@ -173,7 +173,7 @@ export default function Navbar() {
               </div>
               <div className="logo-cifar flex gap-1 items-center ">
                 <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
-                <div className=" border-r border-black h-10 "></div>
+                <div className=" border-r border-black h-8 "></div>
                 <Text xs color="grayHeavy">
                   {" "}
                   Brain, Mind and <br /> Consciousness program

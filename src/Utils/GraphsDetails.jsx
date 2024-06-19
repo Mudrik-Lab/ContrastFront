@@ -59,8 +59,10 @@ export const graphsHeaders = {
     color: "orange",
     icon: <TheoriesComparison />,
     route: "/experiments-comparison",
-    figureLine: "Experiments Comparison",
-    figureText: "Experiments Comparison",
+    figureLine:
+      "Here, you can select a specific parameter of interest, and see how it distributes across experiments that either supported or challenged the existence of unconscious processing.",
+    figureText:
+      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
   "Distribution of Experiments Across Parameter": {
@@ -99,7 +101,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can select a specific parameter of interest, and see how it distributes across experiments  that either supported or challenged the existence of unconscious processing.",
     figureText:
-      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable (i.e., if two different experiments were reported in one experiment, each will be counted separately).",
+      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
 
@@ -121,7 +123,7 @@ export const graphsHeaders = {
   "Parameter Distribution Pie uncontrast": {
     text: "Parameter Distribution Pie",
     tooltip:
-      "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories.",
+      " The inner circle of the pie shows the distribution of different parameters across all experiments, while the outer circle shows the distribution for experiments showing positive, negative or mixed findings separately.",
     icon: <ParameterTheory />,
     color: "lilac",
     route: "/parameter-distribution-pie",
@@ -243,12 +245,12 @@ export const graphsHeaders = {
     siteToDisplay: "contrast",
   },
   "World Map uncontrast": {
-    text: "Consciousness World Map",
+    text: "Unconscious processing world map",
     tooltip:
       "Distribution of the experiments in the database according to nations extracted from author affiliations.",
     icon: <WorldMap />,
     color: "lightGreen",
-    route: "/consciousness-world-map",
+    route: "/unconsciousness-world-map",
     figureLine:
       "Here, you can see how unconscious processing has been studied in different countries around the world.",
     figureText:

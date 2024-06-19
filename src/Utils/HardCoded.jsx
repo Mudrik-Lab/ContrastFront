@@ -4,7 +4,7 @@ export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
-export const footerHeight = 81;
+export const footerHeight = 75;
 export const uploadPaperPageTopSection = 112; //h-28
 export const uploadPaperUsedHeight = footerHeight + navHeight + 20;
 

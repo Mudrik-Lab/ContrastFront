@@ -33,7 +33,7 @@ export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const navigate = useNavigate();
-  const pageName = "consciousness-world-map";
+  const pageName = "unconsciousness-world-map";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
@@ -41,16 +41,13 @@ export default function WorldMap() {
   );
 
   const { data, isLoading } = useQuery(
-    ["nations_of_consciousness", experimentsNum],
+    ["unconsciousness-world-map", experimentsNum],
     () =>
       getNations({
-        graphName: "nations_of_consciousness",
-
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
       })
   );
-  console.log(data?.data);
   const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
     acc[country] = (acc[country] || 0) + value;
     return acc;
@@ -157,7 +154,7 @@ export default function WorldMap() {
           color: "white",
         },
       },
-      name: "Nations of Consciousness",
+      name: "Unconscious processing world map",
     },
   ];
   const layout = {
@@ -193,13 +190,12 @@ export default function WorldMap() {
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
   }, [searchParams]);
-  console.log(graphData);
   return (
     <div>
       {configSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={"Nations of Consciousness"}>
+            <SideControl headline={"Unconscious processing world map"}>
               <Text lg weight="bold">
                 Axis Controls
               </Text>

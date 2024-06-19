@@ -90,7 +90,7 @@ const UncontrastScreens = () => {
           element={isMoblile ? <MobileScreen /> : <AcrossTheYears />}
         />
         <Route
-          path="/consciousness-world-map"
+          path="/unconsciousness-world-map"
           element={
             isMoblile ? (
               <MobileScreen />

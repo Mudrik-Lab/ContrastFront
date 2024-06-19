@@ -27,7 +27,7 @@ import {
   buildUrl,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import { designerColors } from "../../../Utils/Colors";
+// import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -46,6 +46,17 @@ export default function ParametersDistributionPie() {
 
   const navigate = useNavigate();
   const pageName = "parameter-distribution-pie";
+  const designerColors = [
+    "#A9A132",
+    "#B16A2F",
+    "#B82932",
+    "#8A3A7B",
+    "#563886",
+    "#2B4E7E",
+    "#236074",
+    "#226D74",
+    "#267B68",
+  ];
 
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
@@ -80,7 +91,6 @@ export default function ParametersDistributionPie() {
       );
     });
   });
-
   const initialGraphData = [
     //inner pie
     {
@@ -118,17 +128,21 @@ export default function ParametersDistributionPie() {
       },
     },
   ];
-  isSuccess && graphData.length === 0 && setGraphData(initialGraphData);
+  useEffect(() => {
+    graphData.length === 0 && setGraphData(initialGraphData);
+  }, [isSuccess]);
 
   function secondaryPie(seriesName) {
-    const secondaryData = data?.data.find(
-      (row) =>
-        row.series_name === seriesName.label ||
-        row.series_name === showTextToRaw(seriesName.label) ||
-        row.series_name.toLowerCase() === seriesName.label.toLowerCase() ||
-        row.series_name.toLowerCase() ===
+    const secondaryData = data.data.find((row) => {
+      let fixdSeriesName = rawTextToShow(row.series_name);
+      return (
+        fixdSeriesName === seriesName.label ||
+        fixdSeriesName === showTextToRaw(seriesName.label) ||
+        fixdSeriesName.toLowerCase() === seriesName.label.toLowerCase() ||
+        fixdSeriesName.toLowerCase() ===
           showTextToRaw(seriesName.label.toLowerCase())
-    );
+      );
+    });
 
     const color = seriesName.color;
 

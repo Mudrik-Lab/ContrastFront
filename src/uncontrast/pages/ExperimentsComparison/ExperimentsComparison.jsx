@@ -9,6 +9,7 @@ import {
   plotConfig,
   screenWidth,
   sideSectionClass,
+  sideWidth,
 } from "../../../Utils/HardCoded";
 import {
   CSV,
@@ -182,8 +183,12 @@ export default function ParametersDistributionExperimentsComparison() {
                   ]}
                   config={plotConfig}
                   layout={{
-                    width: isMoblile ? screenWidth : screenWidth / 3,
-                    height: isMoblile ? screenWidth : screenWidth / 3,
+                    width: isMoblile
+                      ? screenWidth
+                      : (screenWidth - sideWidth) / 3,
+                    height: isMoblile
+                      ? screenWidth
+                      : (screenWidth - sideWidth) / 3,
                     showlegend: false,
                     annotations: [
                       {
