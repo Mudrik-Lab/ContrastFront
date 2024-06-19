@@ -250,9 +250,9 @@ export const graphsHeaders = {
     color: "lightGreen",
     route: "/consciousness-world-map",
     figureLine:
-      "Here, you can see how the different theories are supported in different countries around the world.",
+      "Here, you can see how unconscious processing has been studied in different countries around the world.",
     figureText:
-      " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "The map presents the distribution of the effects in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of effects supporting or challenging the existence of unconscious processing (i.e., positive or negative effects). You can choose either type of findings or both. Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
     siteToDisplay: "uncontrast",
   },
 };
