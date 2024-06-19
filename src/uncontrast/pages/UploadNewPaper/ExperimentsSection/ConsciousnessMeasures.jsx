@@ -75,8 +75,9 @@ export default function ConsciousnessMeasures({
             type: row.type,
             sub_type: row.sub_type,
             phase: row.phase,
-            trailsNum: row.number_of_trials,
-            awarenessTestedNum: row.number_of_participants_in_awareness_test,
+            number_of_trials: row.number_of_trials,
+            number_of_participants_in_awareness_test:
+              row.number_of_participants_in_awareness_test,
             is_cm_same_participants_as_task:
               row.is_cm_same_participants_as_task,
             is_performance_above_chance: row.is_performance_above_chance,
@@ -123,7 +124,7 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
-
+  console.log(fieldValues[0].number_of_trials);
   return (
     <ExpandingBox
       number={fieldsNum}
