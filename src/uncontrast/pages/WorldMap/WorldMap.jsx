@@ -3,15 +3,11 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   CSV,
-  TooltipExplanation,
   RangeInput,
-  ReportFilter,
   Reset,
   SideControl,
   Text,
-  TheoryDrivenFilter,
   TopGraphText,
-  TypeOfConsciousnessFilter,
 } from "../../../sharedComponents/Reusble";
 
 import getConfiguration from "../../../apiHooks/getConfiguration";
@@ -37,35 +33,21 @@ export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const navigate = useNavigate();
-  const pageName = "consciousness-world-map";
+  const pageName = "unconsciousness-world-map";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
 
-  const theories = configSuccess
-    ? configuration?.data.available_parent_theories.map((tag) => {
-        return {
-          value: encodeURIComponent(tag),
-          label: tag,
-        };
-      })
-    : [];
   const { data, isLoading } = useQuery(
-    ["nations_of_consciousness", experimentsNum],
+    ["unconsciousness-world-map", experimentsNum],
     () =>
       getNations({
-        graphName: "nations_of_consciousness",
-
         min_number_of_experiments: experimentsNum,
         isUncontrast: true,
       })
   );
-
-  const sectionClass =
-    "w-full border-b border-grayReg py-5 flex flex-col items-center gap-3 ";
-
   const sumPerCountry = data?.data.reduce((acc, { country, value }) => {
     acc[country] = (acc[country] || 0) + value;
     return acc;
@@ -84,16 +66,16 @@ export default function WorldMap() {
 
     data?.data.forEach((row) => {
       const country = row.country_name;
-      const theory = row.theory;
+      const significance = row.significance;
       const value = row.value;
       const fullTextItem = {
         Country: country,
-        [theory]: value,
+        [significance]: value,
         Total: row.total,
       };
       const theoryOnlyTextItem = {
         Country: country,
-        [theory]: value,
+        [significance]: value,
       };
 
       if (!mergedStates[country]) {
@@ -172,7 +154,7 @@ export default function WorldMap() {
           color: "white",
         },
       },
-      name: "Nations of Consciousness",
+      name: "Unconscious processing world map",
     },
   ];
   const layout = {
@@ -208,13 +190,12 @@ export default function WorldMap() {
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
   }, [searchParams]);
-
   return (
     <div>
       {configSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={"Nations of Consciousness"}>
+            <SideControl headline={"Unconscious processing world map"}>
               <Text lg weight="bold">
                 Axis Controls
               </Text>

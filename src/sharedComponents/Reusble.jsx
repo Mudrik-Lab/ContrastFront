@@ -33,13 +33,7 @@ export const TextInput = ({ ...config }) => {
   );
 };
 
-export const Button = ({
-  extraClass,
-  children,
-  black,
-
-  ...config
-}) => {
+export const Button = ({ extraClass, children, black, ...config }) => {
   return (
     <button
       className={classNames(

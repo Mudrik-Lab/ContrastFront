@@ -105,7 +105,7 @@ export default function HomePage() {
         </div>
         <PapersIconsMenu />
         <CommunityBox />
-        <ConTraStUseCases />
+        {!isMoblile && <ConTraStUseCases />}
       </div>
       <Footer />
     </div>

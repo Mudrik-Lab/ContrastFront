@@ -4,7 +4,7 @@ export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
 export const navHeight = 70;
 export const sideWidth = 370;
-export const footerHeight = 81;
+export const footerHeight = 75;
 export const uploadPaperPageTopSection = 112; //h-28
 export const uploadPaperUsedHeight = footerHeight + navHeight + 20;
 
@@ -137,28 +137,28 @@ export const parametersOptions = [
 export const uncontrastParametersOptions = [
   {
     value: "consciousness_measure_phase",
-    label: "consciousness_measure_phase",
+    label: "Consciousness Measure Phase",
   },
-  { value: "consciousness_measure_type", label: "consciousness_measure_type" },
+  { value: "consciousness_measure_type", label: "Consciousness Measure Type" },
   {
     value: "is_target_same_as_suppressed_stimulus",
-    label: "is_target_same_as_suppressed_stimulus",
+    label: "Is Target Same as Suppressed Stimulus",
   },
-  { value: "paradigm", label: "paradigm" },
-  { value: "population", label: "population" },
-  { value: "processing_domain", label: "processing_domain" },
+  { value: "paradigm", label: "Paradigm" },
+  { value: "population", label: "Population" },
+  { value: "processing_domain", label: "Processing Domain" },
   {
     value: "suppressed_stimuli_category",
-    label: "suppressed_stimuli_category",
+    label: "Suppressed Stimuli Category",
   },
   {
     value: "suppressed_stimuli_modality",
-    label: "suppressed_stimuli_modality",
+    label: "Suppressed Stimuli Modality",
   },
-  { value: "suppression_method", label: "suppression_method" },
-  { value: "target_stimuli_category", label: "target_stimuli_category" },
-  { value: "target_stimuli_modality", label: "target_stimuli_modality" },
-  { value: "task", label: "task" },
+  { value: "suppression_method", label: "Suppression Method" },
+  { value: "target_stimuli_category", label: "Target Stimuli Category" },
+  { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
+  { value: "task", label: "Task" },
 ];
 
 export const FrequenciesColors = {

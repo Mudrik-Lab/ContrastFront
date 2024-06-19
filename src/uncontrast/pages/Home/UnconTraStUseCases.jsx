@@ -2,7 +2,7 @@ import React from "react";
 import { Text } from "../../../sharedComponents/Reusble";
 import Tempeleton from "../../../assets/logoes/tempelton.png";
 import TelAvivUni from "../../../assets/logoes/tlv-uni.png";
-import Cogtate from "../../../assets/logoes/cogtate.png";
+import Cifar from "../../../assets/logoes/cifar.png";
 
 export default function UnconTraStUseCases() {
   const cardsInfo = [
@@ -64,6 +64,9 @@ export default function UnconTraStUseCases() {
       </div>
 
       <div className="footer flex justify-center items-center gap-6 mt-8 sm:mt-0">
+        <a href="https://www.arc-cogitate.com/" target="_blank">
+          <img src={Cifar} width={110} alt="https://cifar.ca/ " />{" "}
+        </a>{" "}
         <a
           href="https://live-templeton-next-nhemv.appa.pantheon.site/"
           target="_blank">
@@ -72,9 +75,6 @@ export default function UnconTraStUseCases() {
             alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
           />{" "}
         </a>
-        <a href="https://www.arc-cogitate.com/" target="_blank">
-          <img src={Cogtate} alt="https://www.arc-cogitate.com/ " />{" "}
-        </a>{" "}
         <a href="https://www.tau.ac.il/" target="_blank">
           <img src={TelAvivUni} alt="https://www.tau.ac.il/" />{" "}
         </a>{" "}

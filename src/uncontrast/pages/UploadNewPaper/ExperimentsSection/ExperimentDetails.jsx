@@ -417,13 +417,13 @@ export default function ExperimentDetails({
                           </Text>
                         </div>
                       </div>
-                      <div className="flex w-full items-center justify-between  gap-4">
+                      <div className="flex w-full items-center   gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
                           Number of trials for the objective measure
                         </Text>
                         <Text>{cm.number_of_trials}</Text>
                       </div>
-                      <div className="flex w-full items-center justify-between  gap-4">
+                      <div className="flex w-full items-center gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
                           Number of participants in awareness test
                         </Text>
@@ -431,7 +431,7 @@ export default function ExperimentDetails({
                           {cm.number_of_participants_in_awareness_test}
                         </Text>
                       </div>
-                      <div className="flex w-full items-center justify-between  gap-4">
+                      <div className="flex w-full items-center gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
                           Is cm same participants as task?
                         </Text>
@@ -439,7 +439,7 @@ export default function ExperimentDetails({
                           {cm.is_cm_same_participants_as_task ? "Yes" : "No"}
                         </Text>
                       </div>
-                      <div className="flex w-full items-center justify-between  gap-4">
+                      <div className="flex w-full items-center gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
                           Is performance above chance?
                         </Text>
@@ -447,7 +447,7 @@ export default function ExperimentDetails({
                           {cm.is_performance_above_chance ? "Yes" : "No"}
                         </Text>
                       </div>
-                      <div className="flex w-full items-center justify-between  gap-4">
+                      <div className="flex w-full items-center gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
                           Is trial excluded based on measure?
                         </Text>

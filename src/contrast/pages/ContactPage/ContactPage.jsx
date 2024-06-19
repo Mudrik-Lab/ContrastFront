@@ -1,6 +1,10 @@
 import React from "react";
 import Navbar from "../../../sharedComponents/Navbar";
-import { Text, Spacer, ButtonReversed } from "../../../sharedComponents/Reusble";
+import {
+  Text,
+  Spacer,
+  ButtonReversed,
+} from "../../../sharedComponents/Reusble";
 import CommunityBox from "../Home/CommunityBox";
 import Footer from "../../../sharedComponents/Footer";
 import { navHeight } from "../../../Utils/HardCoded";
@@ -9,11 +13,10 @@ import ContactUs from "./ContactUs";
 import SuggestingNewQueries from "./SuggestingNewQueries";
 import VettingPaper from "./VettingPaper";
 import Feedback from "./Feedback";
-import { useNavigate } from "react-router-dom";
 
 export default function ContactPage() {
   const [chosen, setChosen] = useState("contact-us");
-  const navigate = useNavigate();
+
   return (
     <div>
       <Navbar />

@@ -10,7 +10,7 @@ import {
   TopGraphText,
   SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
-import { plotConfig, screenWidth } from "../../../Utils/HardCoded";
+import { plotConfig, screenWidth, sideWidth } from "../../../Utils/HardCoded";
 import getJournals from "../../../apiHooks/getJournals";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -110,7 +110,7 @@ export default function Journals() {
                 config={plotConfig}
                 layout={{
                   autosize: false,
-                  width: screenWidth,
+                  width: screenWidth - sideWidth,
                   height: ONE_ROW_HEIGHT * YaxisData?.length + Y_AXIS_OFFSET,
                   showlegend: false,
 

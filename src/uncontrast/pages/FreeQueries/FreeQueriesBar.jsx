@@ -20,7 +20,6 @@ import {
   sideSectionClass,
   uncontrastParametersOptions,
 } from "../../../Utils/HardCoded";
-import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
@@ -71,10 +70,6 @@ export default function FreeQueriesBar() {
   const { data: configuration, isSuccess: configSuccess } = useQuery(
     [`parent_theories`],
     getUncontrastConfiguration
-  );
-  const { data: extraConfig, isSuccess: extraConfigSuccess } = useQuery(
-    [`more_configurations`],
-    getExtraConfig
   );
 
   const consciousnessMeasurePhaseArr = configSuccess
@@ -146,8 +141,8 @@ export default function FreeQueriesBar() {
         label: type.name,
       }))
     : [];
-  const paradigmsArr = extraConfigSuccess
-    ? extraConfig?.data.available_paradigms.map((type, index) => ({
+  const paradigmsArr = configSuccess
+    ? configuration?.data.available_main_paradigm_type.map((type, index) => ({
         value: type.id,
         label: type.name,
       }))
@@ -268,7 +263,7 @@ export default function FreeQueriesBar() {
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
-    if (extraConfigSuccess && configSuccess) {
+    if (configSuccess) {
       updateMultiFilterState(
         setConsciousnessMeasurePhases,
         "consciousness_measure_phases",
@@ -316,7 +311,7 @@ export default function FreeQueriesBar() {
       updateMultiFilterState(setOutcome, "outcome_types", outcomeTypesArr);
       updateMultiFilterState(setTypes, "types", typesArr);
     }
-  }, [searchParams, extraConfigSuccess]);
+  }, [searchParams]);
 
   const referrerUrl = document.referrer;
   const csvRef = useRef(null);
@@ -329,7 +324,7 @@ export default function FreeQueriesBar() {
 
   return (
     <div>
-      {extraConfigSuccess && (
+      {configSuccess && (
         <PageTemplate
           control={
             <SideControl headline={"Free Queries"}>
@@ -368,7 +363,7 @@ export default function FreeQueriesBar() {
                   buildUrl(pageName, "significance", e, navigate);
                 }}
               />
-              {extraConfigSuccess && (
+              {configSuccess && (
                 <div>
                   <div className="flex flex-col items-center">
                     <TooltipExplanation

@@ -10,7 +10,7 @@ import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
-import { ReactComponent as Effects } from "../assets/icons/effects.svg";
+import { ReactComponent as Histogram } from "../assets/icons/histogram.svg";
 
 export const graphsHeaders = {
   "Theory Support Overview": {
@@ -54,19 +54,23 @@ export const graphsHeaders = {
   },
   "Experiments Comparison": {
     text: "Experiments Comparison",
-    tooltip: "",
+    tooltip:
+      "The graph depicts the different distribution of parameters across experiments showing positive, negative or mixed findings separately.",
     color: "orange",
     icon: <TheoriesComparison />,
     route: "/experiments-comparison",
-    figureLine: "Experiments Comparison",
-    figureText: "Experiments Comparison",
+    figureLine:
+      "Here, you can select a specific parameter of interest, and see how it distributes across experiments that either supported or challenged the existence of unconscious processing.",
+    figureText:
+      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
   "Distribution of Experiments Across Parameter": {
     text: "Distribution of Experiments Across Parameter",
-    tooltip: "",
+    tooltip:
+      "The graph depicts the distribution of effects for a specific parameter of interest.",
     color: "someRed",
-    icon: <Effects />,
+    icon: <Histogram />,
     route: "/distribution-of-experiments-across-parameters",
     figureLine:
       "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
@@ -90,14 +94,14 @@ export const graphsHeaders = {
   "Parameter Distribution Bar uncontrast": {
     text: "Parameter Distribution Bar",
     tooltip:
-      'The graph depicts the distribution of different parameters for each selected theory, separated to experiments challenging ("Against") and supporting ("Pro") the theory.',
+      "The graph depicts the distribution of a specific parameter of interest across experiments who show positive, negative or mixed findings.",
     icon: <ParameterDist2 />,
     color: "pink",
     route: "/parameter-distribution-bar",
     figureLine:
       "Here, you can select a specific parameter of interest, and see how it distributes across experiments  that either supported or challenged the existence of unconscious processing.",
     figureText:
-      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable (i.e., if two different experiments were reported in one experiment, each will be counted separately).",
+      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
 
@@ -119,7 +123,7 @@ export const graphsHeaders = {
   "Parameter Distribution Pie uncontrast": {
     text: "Parameter Distribution Pie",
     tooltip:
-      "The inner circle of the pie chart depicts the distribution of different parameters acorss theories, The outer circle describes the distribution of each inner slice to theories.",
+      " The inner circle of the pie shows the distribution of different parameters across all experiments, while the outer circle shows the distribution for experiments showing positive, negative or mixed findings separately.",
     icon: <ParameterTheory />,
     color: "lilac",
     route: "/parameter-distribution-pie",
@@ -241,16 +245,16 @@ export const graphsHeaders = {
     siteToDisplay: "contrast",
   },
   "World Map uncontrast": {
-    text: "Consciousness World Map",
+    text: "Unconscious processing world map",
     tooltip:
       "Distribution of the experiments in the database according to nations extracted from author affiliations.",
     icon: <WorldMap />,
     color: "lightGreen",
-    route: "/consciousness-world-map",
+    route: "/unconsciousness-world-map",
     figureLine:
-      "Here, you can see how the different theories are supported in different countries around the world.",
+      "Here, you can see how unconscious processing has been studied in different countries around the world.",
     figureText:
-      " The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments supporting each theory family. You can choose a specific theory family or multi-select many.You can also filter the results according to consciousness type, reporting technique, and also whether the study was theory-driven or not. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "The map presents the distribution of the effects in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of effects supporting or challenging the existence of unconscious processing (i.e., positive or negative effects). You can choose either type of findings or both. Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
     siteToDisplay: "uncontrast",
   },
 };
