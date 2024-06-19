@@ -10,7 +10,7 @@ import { ReactComponent as Frequencies } from "../assets/icons/frequencies.svg";
 import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
-import { ReactComponent as Effects } from "../assets/icons/effects.svg";
+import { ReactComponent as Histogram } from "../assets/icons/histogram.svg";
 
 export const graphsHeaders = {
   "Theory Support Overview": {
@@ -70,7 +70,7 @@ export const graphsHeaders = {
     tooltip:
       "The graph depicts the distribution of effects for a specific parameter of interest.",
     color: "someRed",
-    icon: <Effects />,
+    icon: <Histogram />,
     route: "/distribution-of-experiments-across-parameters",
     figureLine:
       "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",

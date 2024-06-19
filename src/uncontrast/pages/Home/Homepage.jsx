@@ -32,8 +32,7 @@ export default function Homepage() {
     [`more_configurations`, "uncontrast"],
     getUncontrastConfiguration
   );
-  const cite =
-    "Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The ConTraSt database for analysing and comparing empirical studies of consciousness theories. Nature Human Behaviour. https://www.nature.com/articles/s41562-021-01284-5";
+  const cite = "uncontrustdb.tau.ac.il";
   const copyToClipboard = () => {
     copy(cite);
   };
@@ -83,14 +82,11 @@ export default function Homepage() {
               <Quote />
             </div>
             <Text>
-              Yaron, I., Melloni, L., Pitts, M., & Mudrik, L. (2022). The
-              ConTraSt database for analysing and comparing empirical studies of{" "}
-              consciousness theories. Nature Human Behaviour.{" "}
               <a
                 className="text-darkBlue underline break-all"
-                href="https://www.nature.com/articles/s41562-021-01284-5"
+                href={cite}
                 target="_blank">
-                https://www.nature.com/articles/s41562-021-01284-5
+                {cite}
               </a>
             </Text>
             <div className=" border-b my-4 sm:my-0 sm:border-r border-black sm:h-16 "></div>
@@ -106,7 +102,7 @@ export default function Homepage() {
         </div>
         <PapersIconsMenu />
         <CommunityBox />
-        <UnconTraStUseCases />
+        {!isMoblile && <UnconTraStUseCases />}
       </div>
       <Footer />
     </div>
