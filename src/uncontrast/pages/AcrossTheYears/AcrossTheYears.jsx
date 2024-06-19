@@ -19,6 +19,7 @@ import {
   screenHeight,
   screenWidth,
   sideSectionClass,
+  sideWidth,
   uncontrastParametersOptions,
 } from "../../../Utils/HardCoded";
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
@@ -173,7 +174,7 @@ export default function AcrossTheYears() {
                   autosize: false,
                   showlegend: !isMoblile,
                   legend: {
-                    x: 1,
+                    x: 1.1,
                     xanchor: "left",
                     y: 1,
                     font: {
@@ -189,7 +190,7 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: screenWidth,
+                  width: screenWidth - sideWidth,
                   height: screenHeight,
                 }}
               />
