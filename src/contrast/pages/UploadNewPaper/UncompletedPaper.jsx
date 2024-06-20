@@ -77,8 +77,22 @@ export default function UncompletedPaper({
     label: journal,
   }));
 
+  const studyValues = {
+    DOI: study.DOI || "",
+    authors_key_words: study.authors_key_words || [],
+    year: study.year,
+    source_title: study.source_title,
+    countries: study.countries.map((country) => ({
+      value: country,
+      label: countries[country].name,
+    })),
+    is_author_submitter: study.is_author_submitter || false,
+  };
+  const [initialValues, setInitialValues] = useState(studyValues);
+
   useEffect(() => {
     setTitle(study.title);
+    setInitialValues(studyValues);
   }, [study]);
 
   useEffect(() => {
@@ -105,18 +119,6 @@ export default function UncompletedPaper({
     }
   };
 
-  const initialValues = {
-    DOI: study.DOI || "",
-    authors_key_words: study.authors_key_words || [],
-    year: study.year,
-    source_title: study.source_title,
-    countries: study.countries.map((country) => ({
-      value: country,
-      label: countries[country].name,
-    })),
-    is_author_submitter: study.is_author_submitter || false,
-  };
-
   const handleSubmit = async (values) => {
     if (!value.length) {
       setAuthorsError("Please select at least one author");
@@ -138,6 +140,7 @@ export default function UncompletedPaper({
       });
 
       if (res.status === 200) {
+        refetch();
         toast.success(
           <ToastBox
             headline={"Success"}

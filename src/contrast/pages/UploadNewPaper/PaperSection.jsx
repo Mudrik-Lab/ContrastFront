@@ -34,11 +34,11 @@ export default function PaperSection({
     queryFn: () => getStudy({ id: paperId }),
   });
 
+  const study = data?.data;
   const handleRefetch = () => {
-    console.log("i did refetch");
     refetch();
   };
-  const study = data?.data;
+
   const headlineLenghtToShow = 40; //chars
 
   let status = "";
