@@ -72,6 +72,8 @@ export default function UploadNewPaper() {
                   status={"Approved Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
+                  setExperimentToShow={setExperimentToShow}
+                  setExperimentToEdit={setExperimentToEdit}
                   number={
                     data.data.filter(
                       (paper) => paper.approval_status == statusNumber.APPROVED
@@ -93,6 +95,8 @@ export default function UploadNewPaper() {
                   status={"Rejected Submissions"}
                   completedStudy
                   setPaperToShow={setPaperToShow}
+                  setExperimentToShow={setExperimentToShow}
+                  setExperimentToEdit={setExperimentToEdit}
                   number={
                     data.data.filter(
                       (paper) => paper.approval_status == statusNumber.REJECTED
@@ -113,6 +117,8 @@ export default function UploadNewPaper() {
                   status={"Awaiting Review"}
                   setPaperToShow={setPaperToShow}
                   setShowEditble={setShowEditble}
+                  setExperimentToShow={setExperimentToShow}
+                  setExperimentToEdit={setExperimentToEdit}
                   number={
                     data.data.filter(
                       (paper) => paper.approval_status == statusNumber.AWAITING
