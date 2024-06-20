@@ -12,8 +12,8 @@ function AppContrast() {
       queries: {
         staleTime: 60 * 60000, // Cache data for 60 minute
         refetchOnMount: false, // Don't refetch data when the component mounts
-        refetchOnWindowFocus: false, // Don't refetch data when the window regains focus
-        refetchInterval: 60 * 60000, // Refetch data every 60 minute
+        refetchOnWindowFocus: false, //  refetch data when the window regains focus
+        refetchInterval: 10 * 60000, // Refetch data every 10 minute
       },
     },
   });
