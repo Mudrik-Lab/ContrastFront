@@ -11,11 +11,13 @@ import {
   TopGraphText,
 } from "../../../sharedComponents/Reusble";
 import {
+  footerHeight,
   isMoblile,
   plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
+  sideWidth,
 } from "../../../Utils/HardCoded";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -23,11 +25,9 @@ import { buildUrl, rawTextToShow } from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
-import Plotly from "plotly.js-basic-dist";
-import createPlotlyComponent from "react-plotly.js/factory";
-import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
+import Plot from "react-plotly.js";
 
-const Plot = createPlotlyComponent(Plotly);
+import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -72,30 +72,85 @@ export default function EffectsDistributionLines() {
   });
 
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
+
+  // const [graphsData, setGraphsData] = useState([]);
+
+  // useEffect(() => {
+  //   if (data?.data) {
+  //     const processedData = data.data.map((row) => {
+  //       const x = [];
+  //       const y = [];
+  //       const histogramMap = {};
+
+  //       // Compute histogram values manually
+  //       row.series.forEach((point) => {
+  //         console.log(point.key);
+  //         const bin = Math.round(point.key / binSize) * 10;
+  //         if (!histogramMap[bin]) {
+  //           histogramMap[bin] = 0;
+  //         }
+  //         histogramMap[bin] += point.value;
+  //       });
+
+  //       // Extract x and y values
+  //       Object.keys(histogramMap).forEach((bin) => {
+  //         x.push(parseInt(bin, binSize));
+  //         y.push(histogramMap[bin]);
+  //       });
+
+  //       // Sort x and y based on x values
+  //       const sortedIndices = x
+  //         .map((_, index) => index)
+  //         .sort((a, b) => x[a] - x[b]);
+  //       const sortedX = sortedIndices.map((index) => x[index]);
+  //       const sortedY = sortedIndices.map((index) => y[index]);
+
+  //       return {
+  //         x: sortedX,
+  //         y: sortedY,
+  //         name: rawTextToShow(row.series_name),
+  //         mode: "lines",
+  //         line: {
+  //           shape: "spline",
+  //           color: colors[row.series_name],
+  //         },
+  //         opacity: 0.5,
+  //         type: "scatter",
+  //       };
+  //     });
+
+  //     setGraphsData(processedData);
+  //   }
+  // }, [data]);
+
   const graphsData = [];
-  data?.data.forEach((row, index) => {
+  data?.data.forEach((row) => {
     graphsData.push(
       {
         x: row.series.map((a) => a.key),
         y: row.series.map((a) => a.value),
+        name: rawTextToShow(row.series_name),
         autobinx: false,
         histnorm: "count",
+        marker: {
+          color: colors[row.series_name],
+        },
         opacity: 0.5,
-        type: "bar",
-        marker: { color: colors[row.series_name] },
-
-        name: rawTextToShow(row.series_name),
+        type: "histogram",
       },
       {
-        type: "scatter",
-        mode: "lines",
-        marker: { color: colors[row.series_name] },
-        line: {
-          shape: "spline", // Makes the line smooth and curvy
-        },
-        showlegend: false,
         x: row.series.map((a) => a.key),
         y: row.series.map((a) => a.value),
+        name: rawTextToShow(row.series_name),
+        autobinx: false,
+        histnorm: "count",
+        line: {
+          shape: "spline", // Set the line shape to 'spline' for smooth curves
+          color: colors[row.series_name],
+        },
+        opacity: 0.5,
+        type: "scatter",
+        mode: "lines",
       }
     );
   });
@@ -237,7 +292,7 @@ export default function EffectsDistributionLines() {
                     },
                   },
                   width: screenWidth,
-                  height: screenHeight,
+                  height: screenHeight - footerHeight,
                 }}
               />
             ) : (

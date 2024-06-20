@@ -1,127 +1,83 @@
+import { useQuery } from "@tanstack/react-query";
 import React from "react";
 import Plot from "react-plotly.js";
+import getEffectsDistribution from "../../apiHooks/getEffectsDistribution";
+import { screenHeight, screenWidth } from "../../Utils/HardCoded";
 
 function Histogram() {
-  //   var x1 = [];
-  //   var x2 = [];
-  //   var y1 = [];
-  //   var y2 = [];
-  //   for (var i = 1; i < 500; i++) {
-  //     var k = Math.random();
-  //     x1.push(k * 5);
-  //     x2.push(k * 10);
-  //     y1.push(k);
-  //     y2.push(k * 2);
-  //   }
-  //   var trace1 = {
-  //     x: x1,
-  //     y: y1,
-  //     name: "control",
-  //     autobinx: false,
-  //     histnorm: "count",
-  //     marker: {
-  //       color: "rgba(255, 100, 102, 0.7)",
-  //       line: {
-  //         color: "rgba(255, 100, 102, 1)",
-  //         width: 1,
-  //       },
+  const {
+    data: histData,
+    isSuccess,
+    isLoading,
+  } = useQuery({
+    queryKey: [
+      "distribution_of_effects_across_parameters",
+      1,
+      1,
+      "number_of_stimuli",
+    ],
+    queryFn: () =>
+      getEffectsDistribution({
+        min_number_of_experiments: 1,
+        binSize: 1,
+        continuous_breakdown: "number_of_stimuli",
+        isUncontrast: true,
+      }),
+  });
+  console.log(histData?.data);
+
+  var trace1 = {
+    x: histData?.data[1].series.map((x) => x.key),
+    y: histData?.data[1].series.map((y) => y.value),
+    name: "control",
+    autobinx: false,
+    histnorm: "count",
+    marker: {
+      color: "rgba(255, 100, 102, 0.7)",
+      line: {
+        color: "rgba(255, 100, 102, 1)",
+        width: 1,
+      },
+    },
+    opacity: 0.5,
+    type: "histogram",
+  };
+  // var trace2 = {
+  //   x: x2,
+  //   y: y2,
+  //   autobinx: false,
+  //   marker: {
+  //     color: "rgba(100, 200, 102, 0.7)",
+  //     line: {
+  //       color: "rgba(100, 200, 102, 1)",
+  //       width: 1,
   //     },
-  //     opacity: 0.5,
-  //     type: "histogram",
-  //     xbins: {
-  //       end: 2.8,
-  //       size: 0.06,
-  //       start: 0.5,
-  //     },
-  //   };
-  //   var trace2 = {
-  //     x: x2,
-  //     y: y2,
-  //     autobinx: false,
-  //     marker: {
-  //       color: "rgba(100, 200, 102, 0.7)",
-  //       line: {
-  //         color: "rgba(100, 200, 102, 1)",
-  //         width: 1,
-  //       },
-  //     },
-  //     name: "experimental",
-  //     opacity: 0.75,
-  //     type: "histogram",
-  //     xbins: {
-  //       end: 4,
-  //       size: 0.06,
-  //       start: -3.2,
-  //     },
-  //   };
-  //   var data = [trace1, trace2];
-  //   var layout = {
-  //     bargap: 0.05,
-  //     bargroupgap: 0.2,
-  //     barmode: "overlay",
-  //     title: "Sampled Results",
-  //     xaxis: { title: "Value" },
-  //     yaxis: { title: "Count" },
-  //   };
-
-  //   return (
-  //     <div>
-  //       <Plot data={data} layout={layout} />
-  //     </div>
-  //   );
-  // }
-
-  const data = [1, 2, 2, 3, 3, 3, 4, 4, 4, 4];
-
-  // Calculate histogram data
-  const calculateHistogramData = (data, binSize) => {
-    const min = Math.min(...data);
-    const max = Math.max(...data);
-    const numBins = Math.ceil((max - min) / binSize);
-    const binEdges = Array(numBins + 1)
-      .fill(0)
-      .map((_, i) => min + i * binSize);
-
-    const bins = Array(numBins).fill(0);
-    data.forEach((value) => {
-      const binIndex = Math.floor((value - min) / binSize);
-      bins[binIndex]++;
-    });
-
-    const binMiddles = binEdges
-      .slice(0, -1)
-      .map((edge, i) => (edge + binEdges[i + 1]) / 2);
-
-    return { bins, binMiddles };
+  //   },
+  //   name: "experimental",
+  //   opacity: 0.75,
+  //   type: "histogram",
+  //   xbins: {
+  //     end: 4,
+  //     size: 0.06,
+  //     start: -3.2,
+  //   },
+  // };
+  var data = [trace1];
+  var layout = {
+    bargap: 0.05,
+    bargroupgap: 0.2,
+    barmode: "overlay",
+    title: "Sampled Results",
+    xaxis: { title: "Value" },
+    yaxis: { title: "Count" },
+    width: screenWidth,
+    height: screenHeight,
   };
 
-  const binSize = 10; // You can adjust this value
-  const { bins, binMiddles } = calculateHistogramData(data, binSize);
-
   return (
-    <Plot
-      data={[
-        {
-          x: data,
-          type: "bar",
-          opacity: 0.5, // Make the bars semi-transparent
-          marker: { color: "red" },
-        },
-        {
-          x: binMiddles,
-          y: bins,
-          type: "scatter",
-          mode: "lines+markers",
-          marker: { color: "blue" },
-          line: { shape: "spline" }, // Smooth lines
-        },
-      ]}
-      layout={{
-        title: "Combined Bar and Line Histogram",
-        xaxis: { title: "Values" },
-        yaxis: { title: "Frequency" },
-      }}
-    />
+    <div>
+      <Plot data={data} layout={layout} />
+    </div>
   );
 }
 

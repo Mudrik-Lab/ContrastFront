@@ -231,18 +231,6 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
     setLabel(number);
   }, [number]);
 
-  const handleSliderChange = (event) => {
-    const newValue = parseInt(event.target.value, 10);
-
-    if (newValue === 1) {
-      setNumber(1);
-    } else {
-      // Calculate the nearest step value (10, 20, 30, etc.)
-      const stepValue = Math.round(newValue / 10) * 10;
-      setNumber(stepValue);
-    }
-  };
-
   return (
     <div className={sideSectionClass}>
       <div className="relative">
@@ -250,12 +238,8 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
           <input
             type="range"
             onChange={(e) => setLabel(e.target.value)}
-            onMouseUp={(e) =>
-              isBinSize ? handleSliderChange(e) : setNumber(e.target.value)
-            }
-            onTouchEnd={(e) =>
-              isBinSize ? handleSliderChange(e) : setNumber(e.target.value)
-            }
+            onMouseUp={(e) => setNumber(e.target.value)}
+            onTouchEnd={(e) => setNumber(e.target.value)}
             min={isBinSize ? 1 : 0}
             defaultValue={number}
             max={100}
