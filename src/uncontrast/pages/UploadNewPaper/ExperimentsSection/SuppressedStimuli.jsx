@@ -14,6 +14,7 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../../Utils/functions";
+import TargetStimuli from "./TargetStimuli";
 
 export default function SuppressedStimuli({
   fieldOptions,
@@ -364,6 +365,7 @@ export default function SuppressedStimuli({
                         />
                       </div>
                     </div>
+
                     <div>
                       <TooltipExplanation
                         isHeadline
@@ -389,6 +391,17 @@ export default function SuppressedStimuli({
                       />
                     </div>
                   </div>
+                  <TargetStimuli
+                    setMinimumClassifications={setMinimumClassifications}
+                    minimumClassifications={minimumClassifications}
+                    fieldOptions={fieldOptions}
+                    subCategories={subCategories}
+                    modalities={modalities}
+                    experiment_pk={experiment_pk}
+                    study_pk={study_pk}
+                    disabled={!fieldValues[index].id}
+                    values={values}
+                  />
                 </div>
                 <div className="border-r-2 border-blue h-36"></div>
                 <div id="trash+submit">

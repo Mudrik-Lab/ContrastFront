@@ -230,6 +230,7 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
   useEffect(() => {
     setLabel(number);
   }, [number]);
+
   return (
     <div className={sideSectionClass}>
       <div className="relative">
@@ -239,10 +240,10 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
             onChange={(e) => setLabel(e.target.value)}
             onMouseUp={(e) => setNumber(e.target.value)}
             onTouchEnd={(e) => setNumber(e.target.value)}
-            min={0}
+            min={isBinSize ? 1 : 0}
             defaultValue={number}
             max={100}
-            step={isBinSize ? 10 : 1}
+            step={1}
             className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
             id="numOfExperiments"
             aria-label="number of experiments range input"

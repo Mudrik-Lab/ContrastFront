@@ -188,18 +188,6 @@ export default function ExperimentForm({
               values={experimentData}
             />
 
-            <TargetStimuli
-              setMinimumClassifications={setMinimumClassifications}
-              minimumClassifications={minimumClassifications}
-              fieldOptions={stimulusCategories}
-              subCategories={stimulusSubCategories}
-              modalities={stimulusModalities}
-              experiment_pk={experimentID}
-              study_pk={study.id}
-              disabled={!experimentID}
-              values={experimentData}
-            />
-
             <SuppressionMethod
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}

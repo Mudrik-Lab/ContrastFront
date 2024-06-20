@@ -96,15 +96,14 @@ export default function TargetStimuli({
 
   return (
     <ExpandingBox
-      number={fieldsNum}
+      noNumber
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
           <div key={`${classificationName}-${index}`}>
             <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
-                <CircledIndex index={index} />
+              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <div className="flex flex-col gap-2">
                   <div className="flex items-start gap-2">
                     <div className="flex gap-2 w-full items-center">
@@ -330,11 +329,11 @@ export default function TargetStimuli({
         );
       })}
 
-      <AddFieldButton
+      {/* <AddFieldButton
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
-      />
+      /> */}
     </ExpandingBox>
   );
 }

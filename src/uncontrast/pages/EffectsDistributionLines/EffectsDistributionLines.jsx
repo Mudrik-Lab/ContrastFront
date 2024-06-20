@@ -4,21 +4,20 @@ import Select from "react-select";
 import {
   CSV,
   RangeInput,
-  ReportFilter,
   Reset,
   SideControl,
-  SignificanceFilter,
   Text,
   TooltipExplanation,
   TopGraphText,
-  TypeOfConsciousnessFilter,
 } from "../../../sharedComponents/Reusble";
 import {
+  footerHeight,
   isMoblile,
   plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
+  sideWidth,
 } from "../../../Utils/HardCoded";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -26,36 +25,33 @@ import { buildUrl, rawTextToShow } from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
-import Plotly from "plotly.js-basic-dist";
-import createPlotlyComponent from "react-plotly.js/factory";
-import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
-import { designerColors } from "../../../Utils/Colors";
+import Plot from "react-plotly.js";
 
-const Plot = createPlotlyComponent(Plotly);
+import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [binSize, setBinSize] = React.useState(10);
+  const [binSize, setBinSize] = React.useState(1);
   const navigate = useNavigate();
   const pageName = "distribution-of-Experiments-across-parameters";
   const continuousBreakdownOptions = [
-    { value: "number_of_stimuli", label: "number_of_stimuli" },
-    { value: "outcome_number_of_trials", label: "outcome_number_of_trials" },
-    { value: "sample_size_excluded", label: "sample_size_excluded" },
-    { value: "sample_size_included", label: "sample_size_included" },
+    { value: "number_of_stimuli", label: "Number of Stimuli" },
+    { value: "outcome_number_of_trials", label: "Outcome Number of Trials" },
+    { value: "sample_size_excluded", label: "Sample Size Excluded" },
+    { value: "sample_size_included", label: "Sample Size Included" },
     {
       value: "suppressed_stimuli_duration",
-      label: "suppressed_stimuli_duration",
+      label: "Suppressed Stimuli Duration",
     },
     {
       value: "unconsciousness_measure_number_of_participants_in_awareness_test",
-      label: "unconsciousness_measure_number_of_participants_in_awareness_test",
+      label: "Unconsciousness Measure Number of Participants in Awareness Test",
     },
     {
       value: "unconsciousness_measure_number_of_trials",
-      label: "unconsciousness_measure_number_of_trials",
+      label: "Unconsciousness Measure Number of Trials",
     },
   ];
   const { data, isSuccess, isLoading } = useQuery({
@@ -76,30 +72,85 @@ export default function EffectsDistributionLines() {
   });
 
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
+
+  // const [graphsData, setGraphsData] = useState([]);
+
+  // useEffect(() => {
+  //   if (data?.data) {
+  //     const processedData = data.data.map((row) => {
+  //       const x = [];
+  //       const y = [];
+  //       const histogramMap = {};
+
+  //       // Compute histogram values manually
+  //       row.series.forEach((point) => {
+  //         console.log(point.key);
+  //         const bin = Math.round(point.key / binSize) * 10;
+  //         if (!histogramMap[bin]) {
+  //           histogramMap[bin] = 0;
+  //         }
+  //         histogramMap[bin] += point.value;
+  //       });
+
+  //       // Extract x and y values
+  //       Object.keys(histogramMap).forEach((bin) => {
+  //         x.push(parseInt(bin, binSize));
+  //         y.push(histogramMap[bin]);
+  //       });
+
+  //       // Sort x and y based on x values
+  //       const sortedIndices = x
+  //         .map((_, index) => index)
+  //         .sort((a, b) => x[a] - x[b]);
+  //       const sortedX = sortedIndices.map((index) => x[index]);
+  //       const sortedY = sortedIndices.map((index) => y[index]);
+
+  //       return {
+  //         x: sortedX,
+  //         y: sortedY,
+  //         name: rawTextToShow(row.series_name),
+  //         mode: "lines",
+  //         line: {
+  //           shape: "spline",
+  //           color: colors[row.series_name],
+  //         },
+  //         opacity: 0.5,
+  //         type: "scatter",
+  //       };
+  //     });
+
+  //     setGraphsData(processedData);
+  //   }
+  // }, [data]);
+
   const graphsData = [];
-  data?.data.forEach((row, index) => {
+  data?.data.forEach((row) => {
     graphsData.push(
       {
         x: row.series.map((a) => a.key),
         y: row.series.map((a) => a.value),
+        name: rawTextToShow(row.series_name),
         autobinx: false,
         histnorm: "count",
+        marker: {
+          color: colors[row.series_name],
+        },
         opacity: 0.5,
-        type: "bar",
-        marker: { color: colors[row.series_name] },
-
-        name: rawTextToShow(row.series_name),
+        type: "histogram",
       },
       {
-        type: "scatter",
-        mode: "lines",
-        marker: { color: colors[row.series_name] },
-        line: {
-          shape: "spline", // Makes the line smooth and curvy
-        },
-        showlegend: false,
         x: row.series.map((a) => a.key),
         y: row.series.map((a) => a.value),
+        name: rawTextToShow(row.series_name),
+        autobinx: false,
+        histnorm: "count",
+        line: {
+          shape: "spline", // Set the line shape to 'spline' for smooth curves
+          color: colors[row.series_name],
+        },
+        opacity: 0.5,
+        type: "scatter",
+        mode: "lines",
       }
     );
   });
@@ -122,7 +173,7 @@ export default function EffectsDistributionLines() {
 
     queryParams.get("bin_size")
       ? setBinSize(queryParams.get("bin_size"))
-      : setBinSize(10);
+      : setBinSize(1);
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -178,7 +229,7 @@ export default function EffectsDistributionLines() {
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
               <RangeInput
                 isBinSize={true}
-                number={binSize}
+                number={binSize || 1}
                 setNumber={(e) => {
                   buildUrl(pageName, "bin_size", e, navigate);
                 }}
@@ -241,7 +292,7 @@ export default function EffectsDistributionLines() {
                     },
                   },
                   width: screenWidth,
-                  height: screenHeight,
+                  height: screenHeight - footerHeight,
                 }}
               />
             ) : (

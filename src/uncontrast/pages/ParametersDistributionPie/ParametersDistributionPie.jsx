@@ -47,15 +47,14 @@ export default function ParametersDistributionPie() {
   const navigate = useNavigate();
   const pageName = "parameter-distribution-pie";
   const designerColors = [
-    "#A9A132",
-    "#B16A2F",
-    "#B82932",
-    "#8A3A7B",
-    "#563886",
-    "#2B4E7E",
-    "#236074",
-    "#226D74",
-    "#267B68",
+    "#0D3061",
+    "#084154",
+    "#074D54",
+    "#095C4A",
+    "#38176B",
+    "#701960",
+    "#088515",
+    "#496B9B",
   ];
 
   const { data, isSuccess, isLoading } = useQuery({

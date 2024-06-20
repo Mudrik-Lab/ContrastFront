@@ -1,6 +1,4 @@
 export const designerColors = [
-  "#FBF8CC",
-  "#FDE4CF",
   "#FFCFD2",
   "#F1C0E8",
   "#CFBAF0",

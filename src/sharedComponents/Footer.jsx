@@ -12,10 +12,11 @@ export default function Footer({ isFixed }) {
   const isUncontrast = Site.type === "uncontrast";
   return (
     <div
+      style={{ height: footerHeight }}
       className={classNames(
         `${
           isFixed && "absolute bottom-0"
-        } h-[${footerHeight}px] w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
+        } w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
       )}>
       <div className="flex gap-2 items-center w-1/3">
         <div className="logo-cifar flex gap-1 items-center ">
