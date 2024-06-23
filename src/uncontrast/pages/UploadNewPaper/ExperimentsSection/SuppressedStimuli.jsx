@@ -114,8 +114,7 @@ export default function SuppressedStimuli({
       ),
     ];
   }
-  console.log({ fieldOptions });
-  console.log({ subCategories });
+
   return (
     <ExpandingBox
       number={fieldsNum}
