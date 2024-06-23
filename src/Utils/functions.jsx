@@ -46,12 +46,12 @@ export function blueToYellow(numColors) {
 }
 
 export function rawTextToShow(text) {
-  text = text.replace(/[-_]/g, " ");
-  const words = text.split(" ");
-  const capitalizedWords = words.map(
+  text = text?.replace(/[-_]/g, " ");
+  const words = text?.split(" ");
+  const capitalizedWords = words?.map(
     (word) => word.charAt(0).toUpperCase() + word.slice(1)
   );
-  return capitalizedWords.join(" ");
+  return capitalizedWords?.join(" ");
 }
 
 export function showTextToRaw(text) {
@@ -62,29 +62,31 @@ export function showTextToRaw(text) {
   return rawWords.join("_");
 }
 export function breakLongLines(sentence, chunkSize) {
-  const words = sentence.split(" "); // Split the sentence into individual words
-  let result = "";
-  let currentChunk = "";
+  if (sentence) {
+    const words = sentence?.split(" "); // Split the sentence into individual words
+    let result = "";
+    let currentChunk = "";
 
-  for (let i = 0; i < words.length; i++) {
-    const word = words[i];
+    for (let i = 0; i < words.length; i++) {
+      const word = words[i];
 
-    if (currentChunk.length + word.length <= chunkSize) {
-      // Add the word to the current chunk
-      currentChunk += (currentChunk ? " " : "") + word;
-    } else {
-      // Start a new chunk
-      result += (result ? "<br />" : "") + currentChunk;
-      currentChunk = word;
+      if (currentChunk.length + word.length <= chunkSize) {
+        // Add the word to the current chunk
+        currentChunk += (currentChunk ? " " : "") + word;
+      } else {
+        // Start a new chunk
+        result += (result ? "<br />" : "") + currentChunk;
+        currentChunk = word;
+      }
     }
-  }
 
-  if (currentChunk) {
-    // Add the last chunk
-    result += (result ? "<br />" : "") + currentChunk;
-  }
+    if (currentChunk) {
+      // Add the last chunk
+      result += (result ? "<br />" : "") + currentChunk;
+    }
 
-  return result;
+    return result;
+  }
 }
 
 export function hexToRgba(hexColor) {

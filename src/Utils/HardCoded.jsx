@@ -136,6 +136,20 @@ export const parametersOptions = [
 
 export const uncontrastParametersOptions = [
   {
+    value: "is_cm_same_participants_as_task",
+    label: "Is Consciousness Measure Same Participants as Task",
+  },
+  {
+    value: "is_performance_above_chance",
+    label: "Is Performance Above Chance",
+  },
+  {
+    value: "is_trial_excluded_based_on_measure",
+    label: "Is Trial Excluded Based on Measure",
+  },
+  { value: "modes_of_presentation", label: "Modes of Presentation" },
+
+  {
     value: "consciousness_measure_phase",
     label: "Consciousness Measure Phase",
   },
@@ -152,11 +166,19 @@ export const uncontrastParametersOptions = [
     label: "Suppressed Stimuli Category",
   },
   {
+    value: "suppressed_stimuli_sub_category",
+    label: "Suppressed Stimuli Sub-Category",
+  },
+  {
     value: "suppressed_stimuli_modality",
     label: "Suppressed Stimuli Modality",
   },
   { value: "suppression_method", label: "Suppression Method" },
   { value: "target_stimuli_category", label: "Target Stimuli Category" },
+  {
+    value: "target_stimuli_sub_category",
+    label: "Target Stimuli Sub-Category",
+  },
   { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
   { value: "task", label: "Task" },
 ];
