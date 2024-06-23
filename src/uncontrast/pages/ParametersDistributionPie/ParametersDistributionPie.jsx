@@ -55,6 +55,14 @@ export default function ParametersDistributionPie() {
     "#701960",
     "#088515",
     "#496B9B",
+    "#6789B9",
+    "#5A9DB4",
+    "#58ACB5",
+    "#5FB8A5",
+    "#CFBAF0",
+    "#A3C4F3",
+    "#90DBF4",
+    "#8EECF5",
   ];
 
   const { data, isSuccess, isLoading } = useQuery({
@@ -90,6 +98,7 @@ export default function ParametersDistributionPie() {
       );
     });
   });
+
   const initialGraphData = [
     //inner pie
     {
@@ -104,7 +113,7 @@ export default function ParametersDistributionPie() {
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
       marker: {
-        colors: designerColors.splice(0, 6),
+        colors: designerColors,
         line: { width: 1, color: "white" },
       },
     },
