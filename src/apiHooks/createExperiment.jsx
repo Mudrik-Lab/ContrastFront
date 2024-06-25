@@ -106,6 +106,7 @@ export async function addFieldToexperiment({
   experiment_pk,
   field_name,
 }) {
+  console.log(field);
   let UrlPrefix = isUncontrast ? "uncontrast_" : "";
   return await queryApi({
     url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${field_name}/`,

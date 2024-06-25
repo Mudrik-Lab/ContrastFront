@@ -205,17 +205,23 @@ export function SubmitClassificationField(
       try {
         const res = await addFieldToexperiment({
           isUncontrast,
-          field: values[index],
+          field: Array.isArray(values) ? values[index] : values,
           study_pk,
           experiment_pk,
           field_name: classificationName,
         });
 
         if (res.status === 201) {
-          const newArr = [...fieldValues];
-          newArr[index] = res.data;
-          setFieldValues(newArr);
-          return true;
+          if (Array.isArray(values)) {
+            const newArr = [...fieldValues];
+            newArr[index] = res.data;
+            setFieldValues(newArr);
+            return true;
+          } else {
+            const newObj = res.data;
+            setFieldValues(newObj);
+            return true;
+          }
         }
       } catch (e) {
         ToastError(e);
@@ -250,13 +256,15 @@ export function DeleteClassificationField(
   isUncontrast
 ) {
   return async (values, index) => {
-    if (!values[index].id) {
-      if (fieldValues.length !== 1) {
-        const newArr = [...fieldValues];
-        newArr.splice(index, 1);
-        setFieldValues(newArr);
+    if (Array.isArray(values)) {
+      if (!values[index].id) {
+        if (fieldValues.length !== 1) {
+          const newArr = [...fieldValues];
+          newArr.splice(index, 1);
+          setFieldValues(newArr);
+        }
+        return;
       }
-      return;
     }
 
     if (
@@ -269,22 +277,33 @@ export function DeleteClassificationField(
           study_pk,
           experiment_pk,
           classificationName,
-          id: values[index].id,
+          id: Array.isArray(values) ? values[index].id : values.id,
         });
+
         if (res.status === 204) {
-          if (fieldValues.length !== 1) {
-            const newArr = [...fieldValues];
-            newArr.splice(index, 1);
-            setFieldValues(newArr);
+          if (Array.isArray(fieldValues)) {
+            if (fieldValues.length !== 1) {
+              const newArr = [...fieldValues];
+              newArr.splice(index, 1);
+              setFieldValues(newArr);
+            } else {
+              const updatedState = {};
+              Object.keys(fieldValues[0]).map((key) => {
+                updatedState[key] = "";
+              });
+              setFieldValues([updatedState]);
+            }
           } else {
             const updatedState = {};
-            Object.keys(fieldValues[0]).map((key) => {
+            Object.keys(fieldValues).map((key) => {
               updatedState[key] = "";
             });
-            setFieldValues([updatedState]);
+            console.log(updatedState);
+            setFieldValues(updatedState);
           }
         }
       } catch (e) {
+        console.log(e);
         ToastError(e);
       }
     } else {
