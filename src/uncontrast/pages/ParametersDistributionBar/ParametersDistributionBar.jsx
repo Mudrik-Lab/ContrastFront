@@ -65,6 +65,7 @@ export default function ParametersDistributionBar() {
   const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
 
   const X2 = data?.data?.map((row) => row.series[1]?.value || 0).reverse();
+  const X3 = data?.data?.map((row) => row.series[2]?.value || 0).reverse();
 
   var trace1 = {
     x: X1,
@@ -79,7 +80,7 @@ export default function ParametersDistributionBar() {
       color: "white",
     },
     marker: {
-      color: designerColors[25],
+      color: designerColors[24],
       width: 100,
       text: {
         font: {
@@ -104,6 +105,29 @@ export default function ParametersDistributionBar() {
     marker: {
       color: designerColors[22],
       width: 100,
+    },
+    type: "bar",
+  };
+  var trace3 = {
+    x: X3,
+    y: Y,
+    text: X3,
+    name: "Negative",
+    hoverinfo: "none",
+    orientation: "h",
+    insidetextanchor: "middle",
+    textfont: {
+      size: 18,
+      color: "white",
+    },
+    marker: {
+      color: designerColors[20],
+      width: 100,
+      text: {
+        font: {
+          weight: "bold",
+        },
+      },
     },
     type: "bar",
   };
@@ -202,7 +226,7 @@ export default function ParametersDistributionBar() {
             ) : (
               <div id="graphDiv">
                 <Plot
-                  data={[trace1, trace2]}
+                  data={[trace1, trace2, trace3]}
                   config={plotConfig}
                   layout={{
                     barmode: isStacked ? "stack" : "group",
