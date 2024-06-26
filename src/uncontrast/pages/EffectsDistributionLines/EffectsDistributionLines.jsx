@@ -80,7 +80,7 @@ export default function EffectsDistributionLines() {
         x: row.series.map((a) => parseInt(a.key)),
         y: row.series.map((a) => a.value),
         name: rawTextToShow(row.series_name),
-        autobinx: false,
+        autobinx: true,
         histnorm: "count",
         marker: {
           color: colors[row.series_name],

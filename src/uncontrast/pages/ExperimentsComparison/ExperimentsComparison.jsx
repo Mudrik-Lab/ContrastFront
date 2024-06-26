@@ -45,7 +45,7 @@ export default function ParametersDistributionExperimentsComparison() {
 
   const navigate = useNavigate();
   const pageName = "experiments-comparison";
-
+  const sizeProportionsForPlot = 2.5;
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: [
       "parameters_distribution_experiments_comparison",
@@ -82,14 +82,12 @@ export default function ParametersDistributionExperimentsComparison() {
   const trimedKeysArr = [...new Set(keysArr)];
 
   let someColors = designerColors.slice(0, trimedKeysArr.length);
-  if (selected?.value === "paradigm") {
-    someColors = designerColors.slice(0, trimedKeysArr.length);
-  }
-
+  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.map((key, index) => {
-    keysColors[key] = someColors[index + 3];
+    keysColors[key] = someColors[index];
   });
+  console.log(keysColors);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -155,7 +153,7 @@ export default function ParametersDistributionExperimentsComparison() {
             text={graphsHeaders["Experiments Comparison"].figureText}
             firstLine={graphsHeaders["Experiments Comparison"].figureLine}
           />
-          <div className="four-wheels mx-auto max-w-[1800px] h-full ">
+          <div className="four-wheels ">
             {isLoading ? (
               <Spinner />
             ) : keysColors && isSuccess && chartsData.length ? (
@@ -185,10 +183,10 @@ export default function ParametersDistributionExperimentsComparison() {
                   layout={{
                     width: isMoblile
                       ? screenWidth
-                      : (screenWidth - sideWidth) / 3,
+                      : (screenWidth - sideWidth) / sizeProportionsForPlot,
                     height: isMoblile
                       ? screenWidth
-                      : (screenWidth - sideWidth) / 3,
+                      : (screenWidth - sideWidth) / sizeProportionsForPlot,
                     showlegend: false,
                     annotations: [
                       {

@@ -11,7 +11,6 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
-  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../../Utils/functions";
 import TargetStimuli from "./TargetStimuli";
@@ -24,8 +23,6 @@ export default function SuppressedStimuli({
   experiment_pk,
   study_pk,
   values,
-  setMinimumClassifications,
-  minimumClassifications,
 }) {
   const isUncontrast = true;
   const initialValues = {
@@ -36,6 +33,7 @@ export default function SuppressedStimuli({
     number_of_stimuli: "",
     soa: "",
     mode_of_presentation: "",
+    is_target_stimulus: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "suppressed_stimuli";
@@ -59,32 +57,27 @@ export default function SuppressedStimuli({
   );
 
   useEffect(() => {
-    if (fieldValues[0].sub_category === "") {
-      delete fieldValues[0].sub_category;
-    }
-  }, [fieldValues[0]]);
-
-  useEffect(() => {
     if (values && values.suppressed_stimuli?.length > 0) {
       setFieldValues(
         values.suppressed_stimuli.map((row) => {
           return {
             category: row.category,
-            sub_category: row.sub_category || "",
+            sub_category: row.sub_category,
             modality: row.modality,
             duration: row.duration,
             mode_of_presentation: row.mode_of_presentation,
             soa: row.soa,
             number_of_stimuli: row.number_of_stimuli,
+            is_target_stimulus: row.is_target_stimulus ? "yes" : "no",
             id: row.id,
           };
         })
       );
     }
   }, []);
-
   const submitCondition = (index) => {
     return (
+      fieldValues[index]?.is_target_stimulus &&
       fieldValues[index]?.category &&
       fieldValues[index]?.modality &&
       fieldValues[index]?.duration &&
@@ -98,12 +91,6 @@ export default function SuppressedStimuli({
   };
 
   const fieldsNum = fieldValues.filter((field) => field.id)?.length;
-  useEffect(() => {
-    setMinimumClassifications({
-      ...minimumClassifications,
-      suppressed_stimuli: fieldsNum,
-    });
-  }, [fieldsNum]);
 
   function creatSubOptions(index) {
     return [
@@ -114,8 +101,7 @@ export default function SuppressedStimuli({
       ),
     ];
   }
-  console.log({ fieldOptions });
-  console.log({ subCategories });
+
   return (
     <ExpandingBox
       number={fieldsNum}
@@ -169,12 +155,12 @@ export default function SuppressedStimuli({
                             fieldValue.id ||
                             creatSubOptions(index)?.length === 0
                           }
-                          defaultValue={fieldValue.sub_category}
+                          value={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            value !== ""
-                              ? (newArray[index].sub_category = value)
-                              : delete newArray[index].sub_category;
+
+                            newArray[index].sub_category = value;
+
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
@@ -391,17 +377,54 @@ export default function SuppressedStimuli({
                       />
                     </div>
                   </div>
-                  <TargetStimuli
-                    setMinimumClassifications={setMinimumClassifications}
-                    minimumClassifications={minimumClassifications}
-                    fieldOptions={fieldOptions}
-                    subCategories={subCategories}
-                    modalities={modalities}
-                    experiment_pk={experiment_pk}
-                    study_pk={study_pk}
-                    disabled={!fieldValues[index].id}
-                    values={values}
-                  />
+                  <div className="flex items-start gap-2">
+                    <div className="flex gap-2 w-full items-center">
+                      <div className="w-2/3">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Are there also non-suppressed stimuli that
+                          participants had to provide a response to (i.e., a
+                          target)?
+                        </Text>
+                      </div>
+                      <div className="w-1/3 flex justify-between items-center gap-2">
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            " In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
+                          }
+                        />
+                        <CustomSelect
+                          disabled={fieldValue?.id}
+                          value={fieldValue.is_target_stimulus}
+                          onChange={(value) => {
+                            const newArray = [...fieldValues];
+                            newArray[index].is_target_stimulus = value;
+                            setFieldValues(newArray);
+                            submitCondition(index) &&
+                              handleSubmit(fieldValues, index);
+                          }}
+                          options={[
+                            { value: "yes", label: "Yes" },
+                            { value: "no", label: "No" },
+                          ]}
+                        />
+                      </div>
+                    </div>
+                  </div>
+                  {fieldValue.is_target_stimulus && (
+                    <TargetStimuli
+                      fieldOptions={fieldOptions}
+                      subCategories={subCategories}
+                      modalities={modalities}
+                      experiment_pk={experiment_pk}
+                      study_pk={study_pk}
+                      disabled={!fieldValues[index].id}
+                      suppressed_stimulus={fieldValues[index]?.id}
+                      values={values}
+                      index={index}
+                      suppressedValues={fieldValues[index]}
+                    />
+                  )}
                 </div>
                 <div className="border-r-2 border-blue h-36"></div>
                 <div id="trash+submit">

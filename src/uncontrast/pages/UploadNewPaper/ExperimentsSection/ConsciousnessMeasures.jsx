@@ -124,7 +124,7 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
-  console.log(fieldValues[0].number_of_trials);
+
   return (
     <ExpandingBox
       number={fieldsNum}
