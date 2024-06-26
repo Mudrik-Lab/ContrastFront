@@ -55,6 +55,7 @@ export function rawTextToShow(text) {
 }
 
 export function showTextToRaw(text) {
+  // take a showble strind and return a string with underscores and lowercases
   const words = text.split(" ");
   const rawWords = words.map(
     (word) => word.charAt(0).toLowerCase() + word.slice(1)
@@ -298,7 +299,6 @@ export function DeleteClassificationField(
             Object.keys(fieldValues).map((key) => {
               updatedState[key] = "";
             });
-            console.log(updatedState);
             setFieldValues(updatedState);
           }
         }

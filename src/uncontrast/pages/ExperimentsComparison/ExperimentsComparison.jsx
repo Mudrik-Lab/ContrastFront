@@ -45,7 +45,7 @@ export default function ParametersDistributionExperimentsComparison() {
 
   const navigate = useNavigate();
   const pageName = "experiments-comparison";
-
+  const sizeProportionsForPlot = 2.5;
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: [
       "parameters_distribution_experiments_comparison",
@@ -183,10 +183,10 @@ export default function ParametersDistributionExperimentsComparison() {
                   layout={{
                     width: isMoblile
                       ? screenWidth
-                      : (screenWidth - sideWidth) / 2.5,
+                      : (screenWidth - sideWidth) / sizeProportionsForPlot,
                     height: isMoblile
                       ? screenWidth
-                      : (screenWidth - sideWidth) / 2.5,
+                      : (screenWidth - sideWidth) / sizeProportionsForPlot,
                     showlegend: false,
                     annotations: [
                       {

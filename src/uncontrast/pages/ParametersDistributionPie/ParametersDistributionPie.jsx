@@ -94,7 +94,8 @@ export default function ParametersDistributionPie() {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
       outsideColors.push(
-        hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
+        hexToRgba(designerColors[index % designerColors.length])?.slice(0, -2) +
+          "0.7)"
       );
     });
   });
