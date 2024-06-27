@@ -129,7 +129,7 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0.02,
+        y: 0.03,
         title: "# of experiments",
       },
     },
