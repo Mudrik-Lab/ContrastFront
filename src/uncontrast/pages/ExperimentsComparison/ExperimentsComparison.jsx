@@ -82,12 +82,10 @@ export default function ParametersDistributionExperimentsComparison() {
   const trimedKeysArr = [...new Set(keysArr)];
 
   let someColors = designerColors.slice(0, trimedKeysArr.length);
-  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.map((key, index) => {
     keysColors[key] = someColors[index];
   });
-  console.log(keysColors);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

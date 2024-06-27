@@ -474,3 +474,15 @@ export function calculateHistogramData(xValues, yValues, binSize = 1) {
 
   return { bins, binMiddles };
 }
+
+export function duplicateArray(arr, n) {
+  // Create an empty array to hold the result
+  let result = [];
+
+  // Loop n times to concatenate the array to the result
+  for (let i = 0; i < n; i++) {
+    result = result.concat(arr);
+  }
+
+  return result;
+}

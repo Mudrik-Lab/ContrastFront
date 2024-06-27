@@ -138,12 +138,12 @@ export default function TargetStimuli({
                           { value: "no", label: "No" },
                         ]}
                       />
-                      <TooltipExplanation
+                      {/* <TooltipExplanation
                         isHeadline
                         tooltip={
                           "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
                         }
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -212,7 +212,7 @@ export default function TargetStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Indicate in which modality the stimuli were presented."
+                          "Indicate the modality in which the stimuli were presented."
                         }
                         text={"Modality"}
                       />
@@ -233,7 +233,7 @@ export default function TargetStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Enter the number of different suppressed stimuli that were used in the experiment; e.g., if the suppressed stimuli were the digits between 1-9, the number is 9. If this information is not available,  leave empty."
+                          "Enter the number of different non-suppressed stimuli that were used in the experiment; e.g., if the stimuli were the digits between 1-9, the number is 9. If this information is not available, leave empty."
                         }
                         text={"Number of stimuli"}
                       />

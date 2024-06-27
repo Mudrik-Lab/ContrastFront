@@ -131,6 +131,12 @@ export default function WorldMap() {
         x: 0.5,
         y: 0.03,
         title: "# of experiments",
+        ticklabelposition: "inside",
+        tickfont: {
+          size: 12,
+          color: "white",
+        },
+        ticks: "none", // Can also be 'inside'/'outside' if needed
       },
     },
     {

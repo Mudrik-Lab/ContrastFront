@@ -128,7 +128,7 @@ export default function BasicClassifications({
                     <TooltipExplanation
                       isHeadline
                       tooltip={
-                        'Choose a specific paradigm used in the experiment under the relevant paradigm class. For example, for an experiment that used backward masking, select "Masking" as the main paradigm, and then select Backward Masking as the specific paradigm.'
+                        'Choose a specific paradigm used in the experiment under the relevant paradigm class. For example, for an experiment that looked for priming effects, select "Priming" as the main paradigm, and then select the type as the specific paradigm.'
                       }
                       text={"Specific paradigm"}
                     />

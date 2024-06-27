@@ -373,7 +373,7 @@ export const SignificanceFilter = ({ checked, setChecked }) => {
       />
       <TooltipExplanation
         text="Significance"
-        tooltip="You can choose whether to see the chosen distribution for experimenteffects that show evidence for unconscious processing (i.e., positive results) or those that do not (i.e., negative results), and those that show both positive and negative evidence (i.e., mixed)."
+        tooltip="You can choose whether to see the chosen distribution for experiment effects that show evidence for unconscious processing (i.e., positive results) or those that do not (i.e., negative results), and those that show both positive and negative evidence (i.e., mixed)."
       />
     </div>
   );
@@ -423,7 +423,6 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
   );
 };
 export const CSV = ({ data, ref }) => {
-  console.log(data?.request.responseURL);
   return (
     <a href={data?.request.responseURL + "&is_csv=true"} id="download_csv">
       <Button extraClass={"px-3 py-1.5 "} ref={ref}>

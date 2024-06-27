@@ -24,7 +24,6 @@ function Histogram() {
         isUncontrast: true,
       }),
   });
-  console.log(histData?.data);
 
   var trace1 = {
     x: histData?.data[1].series.map((x) => x.key),

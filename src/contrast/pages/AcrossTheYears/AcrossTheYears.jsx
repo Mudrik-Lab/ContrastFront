@@ -13,12 +13,16 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../../sharedComponents/Reusble";
 import {
+  footerHeight,
   isMoblile,
+  navHeight,
   parametersOptions,
   plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
+  sideWidth,
+  uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
@@ -199,8 +203,8 @@ export default function AcrossTheYears() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: screenWidth,
-                  height: screenHeight,
+                  width: screenWidth - sideWidth,
+                  height: screenHeight - footerHeight - uploadPaperUsedHeight,
                 }}
               />
             ) : (
