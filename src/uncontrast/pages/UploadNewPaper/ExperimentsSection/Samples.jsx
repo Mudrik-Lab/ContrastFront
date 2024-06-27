@@ -12,7 +12,6 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../../Utils/functions";
-import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function Samples({
   fieldOptions,

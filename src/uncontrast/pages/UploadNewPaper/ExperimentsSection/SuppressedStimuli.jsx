@@ -55,7 +55,6 @@ export default function SuppressedStimuli({
     setFieldValues,
     isUncontrast
   );
-
   useEffect(() => {
     if (values && values.suppressed_stimuli?.length > 0) {
       setFieldValues(
@@ -135,6 +134,9 @@ export default function SuppressedStimuli({
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].category = value;
+                            if (creatSubOptions(index).length == 0) {
+                              newArray[index].sub_category = undefined;
+                            }
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
@@ -158,9 +160,7 @@ export default function SuppressedStimuli({
                           value={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-
                             newArray[index].sub_category = value;
-
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
