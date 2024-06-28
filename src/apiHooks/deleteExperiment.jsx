@@ -39,9 +39,11 @@ export async function deleteFieldFromExperiments({
   id,
 }) {
   let UrlPrefix = isUncontrast ? "uncontrast_" : "";
-  return await queryApi({
-    url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classificationName}/${id}/`,
-    method: "DELETE",
-    isProtected: true,
-  });
+  if (id) {
+    return await queryApi({
+      url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classificationName}/${id}/`,
+      method: "DELETE",
+      isProtected: true,
+    });
+  } else return;
 }

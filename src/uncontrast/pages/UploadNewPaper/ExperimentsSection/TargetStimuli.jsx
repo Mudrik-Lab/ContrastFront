@@ -69,7 +69,7 @@ export default function TargetStimuli({
           is_target_same_as_suppressed_stimulus:
             targetValues.is_target_same_as_suppressed_stimulus ? "yes" : "no",
           id: targetValues.id,
-          suppressed_stimulus: targetValues.suppressed_stimulus,
+          suppressed_stimulus,
         });
       }
     }
@@ -83,7 +83,6 @@ export default function TargetStimuli({
     ];
   }
   const submitCondition = () => {
-    console.log(fieldValues);
     if (fieldValues.is_target_same_as_suppressed_stimulus === "no") {
       return (
         // fix
@@ -131,6 +130,7 @@ export default function TargetStimuli({
                               suppressedValues.number_of_stimuli;
                           }
                           setFieldValues(newObj);
+                          value === "yes" && handleSubmit(newObj, 0);
                           submitCondition() && handleSubmit(fieldValues, 0);
                         }}
                         options={[
@@ -138,12 +138,12 @@ export default function TargetStimuli({
                           { value: "no", label: "No" },
                         ]}
                       />
-                      <TooltipExplanation
+                      {/* <TooltipExplanation
                         isHeadline
                         tooltip={
-                          " In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
+                          "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
                         }
-                      />
+                      /> */}
                     </div>
                   </div>
                 </div>
@@ -174,6 +174,12 @@ export default function TargetStimuli({
                           onChange={(value) => {
                             const newObj = { ...fieldValues };
                             newObj.category = value;
+                            if (
+                              subCategories.filter((sub) => sub.parent == value)
+                                .length == 0
+                            ) {
+                              newObj.sub_category = undefined;
+                            }
                             setFieldValues(newObj);
                             submitCondition() && handleSubmit(fieldValues, 0);
                           }}
@@ -196,7 +202,7 @@ export default function TargetStimuli({
                             setFieldValues(newObj);
                             submitCondition() && handleSubmit(fieldValues, 0);
                           }}
-                          options={alphabetizeByLabels(subCategories)}
+                          options={creatSubOptions()}
                         />
                       </div>
                     </div>
@@ -206,7 +212,7 @@ export default function TargetStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Indicate in which modality the stimuli were presented."
+                          "Indicate the modality in which the stimuli were presented."
                         }
                         text={"Modality"}
                       />
@@ -227,7 +233,7 @@ export default function TargetStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Enter the number of different suppressed stimuli that were used in the experiment; e.g., if the suppressed stimuli were the digits between 1-9, the number is 9. If this information is not available,  leave empty."
+                          "Enter the number of different non-suppressed stimuli that were used in the experiment; e.g., if the stimuli were the digits between 1-9, the number is 9. If this information is not available, leave empty."
                         }
                         text={"Number of stimuli"}
                       />

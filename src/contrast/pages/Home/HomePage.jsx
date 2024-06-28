@@ -39,7 +39,6 @@ export default function HomePage() {
     backgroundImage: `url(${isMoblile ? mobileBrain : brain})`,
   };
 
-  console.log(data?.data);
   return (
     <div>
       <Navbar />

@@ -259,11 +259,28 @@ export function DeleteClassificationField(
   return async (values, index) => {
     if (Array.isArray(values)) {
       if (!values[index].id) {
-        if (fieldValues.length !== 1) {
-          const newArr = [...fieldValues];
+        // case no id= field is uncompleted form, just clearing content
+        const newArr = [...fieldValues];
+        if (fieldValues.length === 1) {
+          const updatedState = {};
+          Object.keys(fieldValues[0]).map((key) => {
+            updatedState[key] = "";
+          });
+          setFieldValues([updatedState]);
+        } else {
           newArr.splice(index, 1);
           setFieldValues(newArr);
         }
+        return;
+      }
+    } else {
+      if (!values.id) {
+        // clearing content case field is not array
+        const updatedState = {};
+        Object.keys(fieldValues).map((key) => {
+          updatedState[key] = "";
+        });
+        setFieldValues(updatedState);
         return;
       }
     }
@@ -273,12 +290,14 @@ export function DeleteClassificationField(
       classificationName !== "techniques"
     ) {
       try {
+        // in case field has id (it's a real data on server) we delete and clearing content
+        let id = Array.isArray(values) ? values[index].id : values.id;
         const res = await deleteFieldFromExperiments({
           isUncontrast,
           study_pk,
           experiment_pk,
           classificationName,
-          id: Array.isArray(values) ? values[index].id : values.id,
+          id: id,
         });
 
         if (res.status === 204) {
@@ -297,7 +316,9 @@ export function DeleteClassificationField(
           } else {
             const updatedState = {};
             Object.keys(fieldValues).map((key) => {
-              updatedState[key] = "";
+              if (key !== "suppressed_stimulus") {
+                updatedState[key] = "";
+              }
             });
             setFieldValues(updatedState);
           }
@@ -322,7 +343,9 @@ export function DeleteClassificationField(
           } else {
             const updatedState = {};
             Object.keys(fieldValues[0]).map((key) => {
-              updatedState[key] = "";
+              if (key !== "suppressed_stimulus") {
+                updatedState[key] = "";
+              }
             });
             setFieldValues([updatedState]);
           }
@@ -450,4 +473,16 @@ export function calculateHistogramData(xValues, yValues, binSize = 1) {
     .map((edge, i) => (edge + binEdges[i + 1]) / 2);
 
   return { bins, binMiddles };
+}
+
+export function duplicateArray(arr, n) {
+  // Create an empty array to hold the result
+  let result = [];
+
+  // Loop n times to concatenate the array to the result
+  for (let i = 0; i < n; i++) {
+    result = result.concat(arr);
+  }
+
+  return result;
 }

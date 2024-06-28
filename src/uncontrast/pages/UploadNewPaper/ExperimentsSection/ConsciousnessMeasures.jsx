@@ -220,6 +220,12 @@ export default function ConsciousnessMeasures({
                         </Text>
                       </div>
                       <div className="w-1/4 flex justify-between items-center gap-2">
+                        <TooltipExplanation
+                          isHeadline
+                          tooltip={
+                            " Indicate how many trials were taken for the objective awareness measure"
+                          }
+                        />
                         <input
                           min={0}
                           disabled={fieldValues[index].id}
@@ -250,12 +256,6 @@ export default function ConsciousnessMeasures({
                             fieldValues[index].id &&
                             "bg-grayDisable text-gray-400"
                           } `}
-                        />
-                        <TooltipExplanation
-                          isHeadline
-                          tooltip={
-                            " Indicate how many trials were taken for the objective awareness measure"
-                          }
                         />
                       </div>
                     </div>
@@ -300,13 +300,12 @@ export default function ConsciousnessMeasures({
                             "bg-grayDisable text-gray-400"
                           } `}
                         />
-                        <TooltipExplanation isHeadline tooltip={" ?"} />
                       </div>
                     </div>
                     <div className="flex gap-2 w-full items-center">
                       <div className="w-3/4">
                         <Text weight={"bold"} color={"grayReg"}>
-                          Is cm same participants as task?
+                          Same participants as the main task?
                         </Text>
                       </div>
                       <div className="w-1/4 flex justify-between items-center gap-2">
@@ -326,7 +325,6 @@ export default function ConsciousnessMeasures({
                             { value: false, label: "No" },
                           ]}
                         />
-                        <TooltipExplanation isHeadline tooltip={" ?"} />
                       </div>
                     </div>
                     <div className="flex gap-2 w-full items-center">
@@ -351,7 +349,6 @@ export default function ConsciousnessMeasures({
                             { value: false, label: "No" },
                           ]}
                         />
-                        <TooltipExplanation isHeadline tooltip={" ?"} />
                       </div>
                     </div>
                     <div className="flex gap-2 w-full items-center">
@@ -377,7 +374,6 @@ export default function ConsciousnessMeasures({
                             { value: false, label: "No" },
                           ]}
                         />
-                        <TooltipExplanation isHeadline tooltip={" ?"} />
                       </div>
                     </div>
                   </div>

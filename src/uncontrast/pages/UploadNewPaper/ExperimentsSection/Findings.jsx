@@ -115,6 +115,12 @@ export default function Findings({
                       </Text>
                     </div>
                     <div className="w-2/3 flex items-center gap-2">
+                      <TooltipExplanation
+                        text={""}
+                        tooltip={
+                          " Indicate the dependent variable that was measured and analyzed for this effect."
+                        }
+                      />
                       <CustomSelect
                         disabled={fieldValue?.id}
                         value={fieldValue.outcome}
@@ -126,12 +132,6 @@ export default function Findings({
                             handleSubmit(fieldValues, index);
                         }}
                         options={fieldOptions}
-                      />
-                      <TooltipExplanation
-                        text={""}
-                        tooltip={
-                          " Indicate the dependent variable that was measured and analyzed for this effect."
-                        }
                       />
                     </div>
                   </div>
@@ -158,12 +158,6 @@ export default function Findings({
                           { value: false, label: "No" },
                         ]}
                       />
-
-                      <TooltipExplanation
-                        tooltip={
-                          "If this finding is interpreted as an NCC, select “True”. If this finding is reported not to be an NCC (e.g., it is not found under a no-report paradigm, where participants were conscious of the stimulus), indicate “False”."
-                        }
-                      />
                     </div>
                   </div>
                   <div className="flex gap-2 w-full items-center">
@@ -187,12 +181,6 @@ export default function Findings({
                           { value: true, label: "Yes" },
                           { value: false, label: "No" },
                         ]}
-                      />
-
-                      <TooltipExplanation
-                        tooltip={
-                          "If this finding is interpreted as an NCC, select “True”. If this finding is reported not to be an NCC (e.g., it is not found under a no-report paradigm, where participants were conscious of the stimulus), indicate “False”."
-                        }
                       />
                     </div>
                   </div>

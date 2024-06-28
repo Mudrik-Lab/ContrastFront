@@ -46,10 +46,11 @@ export default function Homepage() {
         style={containerStyle}
         className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center ">
         <div className="headline w-full text-center sm:text-left">
-          <h1 className="text-white text-5xl font-bold mb-10">
+          <h1 className="text-white text-5xl font-bold mb-4">
             UnconTrust Database
           </h1>
-          <div className="my-24">
+          <h2 className="text-white text-3xl font-bold mb-4">(beta version)</h2>
+          <div className="my-16">
             <h1 className="text-white text-3xl">Examine trends</h1>
             <h1 className="text-blue text-3xl">
               {" "}

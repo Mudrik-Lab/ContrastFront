@@ -294,7 +294,7 @@ export default function UncompletedPaper({
                             <TooltipExplanation
                               text={""}
                               tooltip={
-                                "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format [LAST_NAME PRIVATE_NAME_INITIALS.; for example, Sanchez G. "
+                                "Start typing the author’s last name and choose from the list below. If the author’s name does not appear in the list, add it manually following this format: LAST_NAME PRIVATE_NAME_INITIALS; for example, Sanchez G."
                               }
                             />{" "}
                           </div>

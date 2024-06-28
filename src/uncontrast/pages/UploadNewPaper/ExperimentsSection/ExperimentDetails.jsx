@@ -45,7 +45,6 @@ export default function ExperimentDetails({
     outcomes: data?.dataavailable_outcomes_type,
   };
   const paradigmsWithFamily = data?.data.available_main_paradigm_type;
-  console.log(experiment);
   return (
     <div className="w-1/2">
       {isSuccess && (

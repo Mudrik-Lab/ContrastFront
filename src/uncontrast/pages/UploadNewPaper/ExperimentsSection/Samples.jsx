@@ -12,7 +12,6 @@ import {
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../../Utils/functions";
-import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function Samples({
   fieldOptions,
@@ -69,7 +68,6 @@ export default function Samples({
       );
     }
   }, []);
-
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.type &&
@@ -219,9 +217,9 @@ export default function Samples({
                         />
                       </div>
                       {fieldValue.size_included &&
-                        fieldValue.size_included < 0 && (
+                        fieldValue.size_included <= 0 && (
                           <span className="text-flourishRed ">
-                            No negative numbers
+                            No zero or negative numbers
                           </span>
                         )}
                     </div>

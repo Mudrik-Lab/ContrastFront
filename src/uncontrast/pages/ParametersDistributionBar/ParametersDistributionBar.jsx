@@ -18,6 +18,7 @@ import {
   isMoblile,
   sideSectionClass,
   plotConfig,
+  sideWidth,
 } from "../../../Utils/HardCoded";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -230,10 +231,15 @@ export default function ParametersDistributionBar() {
                   config={plotConfig}
                   layout={{
                     barmode: isStacked ? "stack" : "group",
-                    width: isMoblile ? screenWidth : screenWidth - 400,
+                    width: isMoblile ? screenWidth : screenWidth - sideWidth,
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                    legend: { itemwidth: 90, x: -0.25, y: 1.05 },
+                    legend: {
+                      itemwidth: 20,
+                      x: 1,
+                      y: 1.05,
+                      font: { size: 18 },
+                    },
 
                     xaxis: {
                       title: "Number of experiments",
@@ -242,7 +248,7 @@ export default function ParametersDistributionBar() {
                       tickmode: "linear",
                       dtick: 10,
                       tickfont: {
-                        size: 16,
+                        size: 12,
                         standoff: 50,
                       },
                     },
@@ -251,7 +257,7 @@ export default function ParametersDistributionBar() {
                       automargin: true,
                       ticks: "outside",
                       tickfont: {
-                        size: 10,
+                        size: 18,
                         standoff: 50,
                       },
                     },

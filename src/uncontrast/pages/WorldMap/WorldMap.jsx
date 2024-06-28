@@ -129,8 +129,14 @@ export default function WorldMap() {
         yanchor: "bottom",
         orientation: "h",
         x: 0.5,
-        y: 0.02,
+        y: 0.03,
         title: "# of experiments",
+        ticklabelposition: "inside",
+        tickfont: {
+          size: 12,
+          color: "white",
+        },
+        ticks: "none", // Can also be 'inside'/'outside' if needed
       },
     },
     {

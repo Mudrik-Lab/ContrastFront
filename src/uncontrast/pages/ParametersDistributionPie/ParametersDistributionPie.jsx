@@ -25,6 +25,7 @@ import {
   rawTextToShow,
   showTextToRaw,
   buildUrl,
+  duplicateArray,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 // import { designerColors } from "../../../Utils/Colors";
@@ -47,22 +48,15 @@ export default function ParametersDistributionPie() {
   const navigate = useNavigate();
   const pageName = "parameter-distribution-pie";
   const designerColors = [
-    "#0D3061",
-    "#084154",
-    "#074D54",
-    "#095C4A",
-    "#38176B",
-    "#701960",
-    "#088515",
-    "#496B9B",
-    "#6789B9",
-    "#5A9DB4",
-    "#58ACB5",
-    "#5FB8A5",
-    "#CFBAF0",
-    "#A3C4F3",
-    "#90DBF4",
     "#8EECF5",
+    "#90DBF4",
+    "#A3C4F3",
+    "#CFBAF0",
+    "#5FB8A5",
+    "#58ACB5",
+    "#5A9DB4",
+    "#6789B9",
+    "#496B9B",
   ];
 
   const { data, isSuccess, isLoading } = useQuery({
@@ -99,7 +93,10 @@ export default function ParametersDistributionPie() {
       );
     });
   });
+  const itemsInPie = data?.data.length;
+  const strechColorsArrFactor = Math.ceil(itemsInPie / designerColors.length);
 
+  console.log(itemsInPie);
   const initialGraphData = [
     //inner pie
     {
@@ -114,7 +111,7 @@ export default function ParametersDistributionPie() {
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
       marker: {
-        colors: designerColors,
+        colors: duplicateArray(designerColors, strechColorsArrFactor),
         line: { width: 1, color: "white" },
       },
     },
