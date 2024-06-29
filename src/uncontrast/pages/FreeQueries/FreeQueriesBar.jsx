@@ -68,7 +68,7 @@ export default function FreeQueriesBar() {
   const pageName = "parameter-distribution-free-queries";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
-    [`parent_theories`],
+    [`uncon_configs`],
     getUncontrastConfiguration
   );
 

@@ -28,7 +28,7 @@ export default function Homepage() {
   const navigate = useNavigate();
 
   const { data, isSuccess } = useQuery(
-    [`more_configurations`, "uncontrast"],
+    ["uncon_configs"],
     getUncontrastConfiguration
   );
   const cite = "uncontrustdb.tau.ac.il";
