@@ -80,7 +80,6 @@ export default function EffectsDistributionLines() {
   });
 
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
-
   const graphsData = [];
   data?.data.forEach((row) => {
     graphsData.push(
@@ -88,7 +87,7 @@ export default function EffectsDistributionLines() {
         x: row.series.map((a) => parseInt(a.key)),
         y: row.series.map((a) => a.value),
         name: rawTextToShow(row.series_name),
-        autobinx: true,
+        autobinx: false,
         histnorm: "count",
         marker: {
           color: colors[row.series_name],
@@ -113,7 +112,7 @@ export default function EffectsDistributionLines() {
       }
     );
   });
-
+  console.log(graphsData);
   let flatedY = [];
   let highestY;
   if (data) {
@@ -230,7 +229,7 @@ export default function EffectsDistributionLines() {
                     tickmode: "linear",
                     dtick: highestY > 10 ? 10 : 1,
                   },
-                  autosize: false,
+                  autosize: false, // Use true to let Plotly automatically size the plot
                   showlegend: !isMoblile,
                   legend: {
                     x: 10,
