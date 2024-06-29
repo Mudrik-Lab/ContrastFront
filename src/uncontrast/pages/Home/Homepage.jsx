@@ -2,10 +2,9 @@ import { useSnapshot } from "valtio";
 import { state } from "../../../state.jsx";
 import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../../apiHooks/getExtraConfig.jsx";
 import copy from "copy-to-clipboard";
 import { isMoblile } from "../../../Utils/HardCoded.jsx";
-import mobileBrain from "../../../assets/images/mobile-brain.jpeg";
+import mobileBrain from "../../../assets/images/uncon-brain-mobile2.png";
 import brain from "../../../assets/images/uncon-brain.png";
 import Navbar from "../../../sharedComponents/Navbar.jsx";
 import {
@@ -29,7 +28,7 @@ export default function Homepage() {
   const navigate = useNavigate();
 
   const { data, isSuccess } = useQuery(
-    [`more_configurations`, "uncontrast"],
+    ["uncon_configs"],
     getUncontrastConfiguration
   );
   const cite = "uncontrustdb.tau.ac.il";
@@ -44,9 +43,19 @@ export default function Homepage() {
       <Navbar />
       <div
         style={containerStyle}
-        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center ">
-        <div className="headline w-full text-center sm:text-left">
-          <h1 className="text-white text-5xl font-bold mb-4">
+        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center relative">
+        {!isMoblile && (
+          <a
+            href="https://contrastdb.tau.ac.il/"
+            target="_blank"
+            className=" text-white text-lg font-bold absolute bottom-2 left-1/2">
+            {" "}
+            Also interested in studies of theories of consciousness? Visit the
+            ConTraSt database
+          </a>
+        )}
+        <div className="headline w-full text-center sm:text-left ">
+          <h1 className="text-white text-5xl font-bold mb-4 mt-8 md:mt-0">
             UnconTrust Database
           </h1>
           <h2 className="text-white text-3xl font-bold mb-4">(beta version)</h2>

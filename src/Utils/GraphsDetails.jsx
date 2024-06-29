@@ -62,7 +62,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can select a specific parameter of interest, and see how it distributes across experiments that either supported or challenged the existence of unconscious processing.",
     figureText:
-      "You can choose whether to see this distribution for experiments that showed positive evidence for unconscious processing, ones that showed negative evidence, or ones that showed both. Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
+      "Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
   "Distribution of Experiments Across Parameter": {
@@ -75,7 +75,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
     figureText:
-      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
   "Parameter Distribution Bar": {
@@ -130,7 +130,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across effects that supported or challenged the existence of unconscious processing.",
     figureText:
-      "The inner circle of the pie describes the distribution of different levels across all effects, while the outer circle describes the distribution of the positive vs. negative effects for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice). Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+      "The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
   "Trends Over Time": {
@@ -144,7 +144,20 @@ export const graphsHeaders = {
       "Here, you can select a specific parameter of interest, and see how the experiments in the database distribute over the different levels of that parameter over time.",
     figureText:
       "The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
-    siteToDisplay: "both",
+    siteToDisplay: "contrast",
+  },
+  "Trends Over Time": {
+    text: "Trends Over Time",
+    tooltip:
+      "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time.",
+    icon: <Trends />,
+    color: "purple",
+    route: "/trends-over-time",
+    figureLine:
+      "The plot is a cumulative figure that shows the number of experiments per level at each point in time. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    figureText:
+      "The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    siteToDisplay: "uncontrast",
   },
   "Theory Driven": {
     text: "Theory Driven",
@@ -228,7 +241,7 @@ export const graphsHeaders = {
     figureLine:
       " Here, you can see in which journals the effects that supported or challenged unconscious processing were published.",
     figureText:
-      "Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+      "Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
     siteToDisplay: "uncontrast",
   },
   "World Map": {
@@ -254,7 +267,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can see how unconscious processing has been studied in different countries around the world.",
     figureText:
-      "The map presents the distribution of the effects in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of effects supporting or challenging the existence of unconscious processing (i.e., positive or negative effects). You can choose either type of findings or both. Using the ‘Minimum number of reported effects’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+      "The map presents the distribution of the effects in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments showing positive, negative or mixed evidence for unconscious processing. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
 };

@@ -19,7 +19,7 @@ export default function ExperimentDetails({
   setExperimentToShow,
 }) {
   const { data, isSuccess } = useQuery(
-    [`more_configurations`, "uncontrast"],
+    ["uncon_configs"],
     getUncontrastConfiguration
   );
   const tasks = data?.data.available_tasks_types;

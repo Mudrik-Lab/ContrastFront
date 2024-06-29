@@ -38,7 +38,10 @@ export default function EffectsDistributionLines() {
   const pageName = "distribution-of-Experiments-across-parameters";
   const continuousBreakdownOptions = [
     { value: "number_of_stimuli", label: "Number of Stimuli" },
-    { value: "outcome_number_of_trials", label: "Outcome Number of Trials" },
+    {
+      value: "outcome_number_of_trials",
+      label: "Main Task Number of Trials Per Condition",
+    },
     { value: "sample_size_excluded", label: "Sample Size Excluded" },
     { value: "sample_size_included", label: "Sample Size Included" },
     {
@@ -47,11 +50,11 @@ export default function EffectsDistributionLines() {
     },
     {
       value: "unconsciousness_measure_number_of_participants_in_awareness_test",
-      label: "Unconsciousness Measure Number of Participants in Awareness Test",
+      label: "Number of Participants in the Awareness Test",
     },
     {
       value: "unconsciousness_measure_number_of_trials",
-      label: "Unconsciousness Measure Number of Trials",
+      label: "Awareness Measure Number of Trials",
     },
   ];
   const { data, isSuccess, isLoading } = useQuery({

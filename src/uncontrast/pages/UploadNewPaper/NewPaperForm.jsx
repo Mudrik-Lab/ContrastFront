@@ -48,7 +48,7 @@ export default function NewPaperForm({
     data: extraConfig,
     isSuccess: extraConfigSuccess,
     refetch: extraConfigRefetch,
-  } = useQuery([`more_configurations`], getUncontrastConfiguration);
+  } = useQuery([`uncon_configs`], getUncontrastConfiguration);
 
   const journals = extraConfig?.data.existing_journals.map((journal) => ({
     value: journal,

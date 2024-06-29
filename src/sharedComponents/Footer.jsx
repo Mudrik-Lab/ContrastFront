@@ -4,20 +4,19 @@ import UnconLogo from "../assets/logoes/uncon-negative.png";
 import CifarLogo from "../assets/logoes/cifar.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
-import classNames from "classnames";
-import { footerHeight } from "../Utils/HardCoded";
+import { footerHeight, isMoblile } from "../Utils/HardCoded";
 import { Site } from "../config/siteType";
 
 export default function Footer({ isFixed }) {
   const isUncontrast = Site.type === "uncontrast";
   return (
     <div
-      style={{ height: footerHeight }}
-      className={classNames(
-        `${
-          isFixed && "absolute bottom-0"
-        } w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black rounded-t-lg sm:rounded-none`
-      )}>
+      style={{
+        height: isMoblile ? "100%" : footerHeight,
+        position: isFixed ? "absolute" : "static",
+        bottom: 0,
+      }}
+      className="w-full flex flex-col sm:flex-row justify-between items-center py-4 sm:px-16 bg-black ">
       <div className="flex gap-2 items-center w-1/3">
         <div className="logo-cifar flex gap-1 items-center ">
           <img
@@ -34,7 +33,7 @@ export default function Footer({ isFixed }) {
           <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
           <div className="invisible lg:visible border-r border-white h-8 "></div>
           <Text xs color="white" className={"invisible lg:visible"}>
-            High Level <br /> Cognition Lab
+            Brain, Mind and <br /> Consciousness program
           </Text>
         </div>
       </div>
@@ -54,7 +53,7 @@ export default function Footer({ isFixed }) {
           </a>
         </Text>
       </div>
-      <div className="flex justify-end w-1/3">
+      <div className="flex justify-end sm:w-1/3">
         <div className="w-20">
           <Text color="white">
             <a

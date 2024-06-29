@@ -68,7 +68,7 @@ export default function FreeQueriesBar() {
   const pageName = "parameter-distribution-free-queries";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
-    [`parent_theories`],
+    [`uncon_configs`],
     getUncontrastConfiguration
   );
 
@@ -413,8 +413,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={outcome}
                       options={outcomeTypesArr}
-                      placeholder="Outcome Types"
-                      aria-label="Outcome Types"
+                      placeholder="Outcome Type"
+                      aria-label="Outcome Type"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -448,8 +448,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={paradigms}
                       options={paradigmsArr}
-                      placeholder="Paradigms"
-                      aria-label="Paradigms"
+                      placeholder="Paradigm"
+                      aria-label="Paradigm"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -482,8 +482,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={processingDomain}
                       options={processingDomainArr}
-                      placeholder="Processing Domain Types"
-                      aria-label="Processing Domain Types"
+                      placeholder="Processing Domain Type"
+                      aria-label="Processing Domain Type"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -500,8 +500,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliCategories}
                       options={stimuliCategoriesArr}
-                      placeholder="Suppressed Stimuli Categories"
-                      aria-label="Suppressed Stimuli Categories"
+                      placeholder="Suppressed Stimuli Category"
+                      aria-label="Suppressed Stimuli Category"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -517,8 +517,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={stimuliModalities}
                       options={stimuliModalitiesArr}
-                      placeholder="Suppressed Stimuli Modalities"
-                      aria-label="Suppressed Stimuli Modalities"
+                      placeholder="Suppressed Stimuli Modality"
+                      aria-label="Suppressed Stimuli Modality"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -535,8 +535,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={targetStimuliCategories}
                       options={stimuliCategoriesArr}
-                      placeholder="Target Stimuli Categories"
-                      aria-label="Target Stimuli Categories"
+                      placeholder="Target Stimuli Category"
+                      aria-label="Target Stimuli Category"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -552,8 +552,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={targetStimuliModalities}
                       options={stimuliModalitiesArr}
-                      placeholder="Target Stimuli Modalities"
-                      aria-label="Target Stimuli Modalities"
+                      placeholder="Target Stimuli Modality"
+                      aria-label="Target Stimuli Modality"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -588,8 +588,8 @@ export default function FreeQueriesBar() {
                       isMulti={true}
                       value={types}
                       options={typesArr}
-                      placeholder="Types"
-                      aria-label="Types"
+                      placeholder="Type of Evidence"
+                      aria-label="Type of Evidence"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,

@@ -39,7 +39,7 @@ export default function ExperimentForm({
   });
 
   const { data: configurations, isSuccess } = useQuery(
-    [`uncon_configurations`],
+    [`uncon_configs`],
     getUncontrastConfiguration
   );
 

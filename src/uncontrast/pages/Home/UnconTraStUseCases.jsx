@@ -15,13 +15,13 @@ export default function UnconTraStUseCases() {
     {
       video: "https://player.vimeo.com/video/870160728?h=6dfa7054fc",
       title: "Discover trends over time",
-      text: "For each Parameters, explore how the experiments in the ConTraSt database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
+      text: "For each Parameters, explore how the experiments in the UnconTrust database distribute at each point in time, so to unravel interesting trends and changes in the field over the years",
     },
-    {
-      video: "https://player.vimeo.com/video/870160616?h=9afb6fdd5d",
-      title: "Get a high level snapshot of findings",
-      text: "For both anatomical and temporal findings, get plots that summarize the current state of affairs and provide an overview of the way theories of consciousness have been studied",
-    },
+    // {
+    //   video: "https://player.vimeo.com/video/870160616?h=9afb6fdd5d",
+    //   title: "Get a high level snapshot of findings",
+    //   text: "For both anatomical and temporal findings, get plots that summarize the current state of affairs and provide an overview of the way theories of consciousness have been studied",
+    // },
     {
       video:
         "https://player.vimeo.com/video/870160616?h=9afb6fdd5d&title=0&byline=0&portrait=0",

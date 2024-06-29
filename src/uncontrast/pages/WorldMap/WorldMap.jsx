@@ -7,6 +7,7 @@ import {
   Reset,
   SideControl,
   Text,
+  TooltipExplanation,
   TopGraphText,
 } from "../../../sharedComponents/Reusble";
 
@@ -17,34 +18,53 @@ import {
   grayReg,
   isMoblile,
   plotConfig,
+  sideSectionClass,
 } from "../../../Utils/HardCoded";
 import getNations from "../../../apiHooks/getNations";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, buildUrlForMultiSelect } from "../../../Utils/functions";
+import {
+  buildUrl,
+  buildUrlForMultiSelect,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-geo-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
+import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration";
 
 const Plot = createPlotlyComponent(Plotly);
 
 export default function WorldMap() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [experimentsNum, setExperimentsNum] = React.useState();
+
   const navigate = useNavigate();
   const pageName = "unconsciousness-world-map";
 
   const { data: configuration, isSuccess: configSuccess } = useQuery(
-    [`parent_theories`],
-    getConfiguration
+    [`uncon_configs`],
+    getUncontrastConfiguration
+  );
+  const paradigmsOptions = configSuccess
+    ? configuration?.data.available_main_paradigm_type.map((type, index) => ({
+        value: type.id,
+        label: type.name,
+      }))
+    : [];
+  const paradigmsArr = [{ label: "", value: undefined }].concat(
+    paradigmsOptions
   );
 
+  const [paradigm, setParadigm] = React.useState(paradigmsArr[0]);
+  console.log(paradigmsArr);
   const { data, isLoading } = useQuery(
-    ["unconsciousness-world-map", experimentsNum],
+    ["unconsciousness-world-map", experimentsNum, paradigm?.value],
     () =>
       getNations({
         min_number_of_experiments: experimentsNum,
+        paradigm: paradigm?.value,
         isUncontrast: true,
       })
   );
@@ -52,7 +72,6 @@ export default function WorldMap() {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
-
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)
         .sort()
@@ -187,7 +206,7 @@ export default function WorldMap() {
     },
 
     showlegend: false,
-    autosize: true,
+    // autosize: true,
   };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
@@ -195,6 +214,18 @@ export default function WorldMap() {
     queryParams.get("min_number_of_experiments")
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
+
+    if (queryParams.get("paradigm")) {
+      console.log(queryParams.get("paradigm"));
+      setParadigm({
+        value: queryParams.get("paradigm"),
+        label: paradigmsArr.find(
+          (option) => option.value == queryParams.get("paradigm")
+        )?.label,
+      });
+    } else {
+      setParadigm(paradigmsArr[0]);
+    }
   }, [searchParams]);
   return (
     <div>
@@ -211,6 +242,23 @@ export default function WorldMap() {
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
+              <div className={sideSectionClass}>
+                <Select
+                  className="text-lg w-[300px]"
+                  closeMenuOnSelect={true}
+                  isMulti={false}
+                  placeholder="Select.."
+                  options={paradigmsArr}
+                  value={paradigm}
+                  onChange={(e) => {
+                    buildUrl(pageName, "paradigm", e.value, navigate);
+                  }}
+                />
+                <TooltipExplanation
+                  text={"Paradigm"}
+                  tooltip="Choose the dependent variable to be queried."
+                />
+              </div>
 
               <div className="w-full flex items-center justify-between my-4">
                 <CSV data={data} />

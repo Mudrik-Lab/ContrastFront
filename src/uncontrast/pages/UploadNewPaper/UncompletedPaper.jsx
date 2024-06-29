@@ -67,7 +67,7 @@ export default function UncompletedPaper({
   const countryOption = useMemo(() => countryList().getData(), []);
 
   const { data, isSuccess } = useQuery(
-    [`more_configurations`, "uncontrast"],
+    ["uncon_configs"],
     getUncontrastConfiguration
   );
   const authorsList = data?.data.available_authors.map((author) => ({
