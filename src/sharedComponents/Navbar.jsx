@@ -175,14 +175,18 @@ export default function Navbar() {
                   High Level <br /> Cognition Lab{" "}
                 </Text>
               </div>
-              <div className="logo-cifar flex gap-1 items-center ">
+
+              <a
+                href="https://cifar.ca/"
+                target="_blank"
+                className="logo-cifar flex gap-1 items-center ">
                 <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
                 <div className=" border-r border-black h-8 "></div>
                 <Text xs color="grayHeavy">
                   {" "}
                   Brain, Mind and <br /> Consciousness program
                 </Text>
-              </div>
+              </a>
             </div>
             <div className="navigate-buttons w-1/3 items-center justify-center flex ">
               <ul className="flex flex-row text-black space-x-12">

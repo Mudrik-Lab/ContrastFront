@@ -45,7 +45,7 @@ export default function ParametersDistributionExperimentsComparison() {
 
   const navigate = useNavigate();
   const pageName = "experiments-comparison";
-  const sizeProportionsForPlot = 2.5;
+  const sizeProportionsForPlot = 3;
   const { data, isLoading, isSuccess } = useQuery({
     queryKey: [
       "parameters_distribution_experiments_comparison",
@@ -201,6 +201,12 @@ export default function ParametersDistributionExperimentsComparison() {
                         },
                       },
                     ],
+                    margin: {
+                      l: 15, // Remove left margin
+                      r: 15, // Remove right margin
+                      t: 15, // Remove top margin
+                      b: 15, // Remove bottom margin
+                    },
                   }}
                 />
               ))

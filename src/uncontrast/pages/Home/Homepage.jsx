@@ -4,8 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import copy from "copy-to-clipboard";
 import { isMoblile } from "../../../Utils/HardCoded.jsx";
-import mobileBrain from "../../../assets/images/uncon-brain-mobile2.png";
-import brain from "../../../assets/images/uncon-brain.png";
+import mobileBrain from "../../../assets/images/uncon-brain-mobile2.jpg";
+import brain from "../../../assets/images/uncon-brain.jpg";
 import Navbar from "../../../sharedComponents/Navbar.jsx";
 import {
   Button,
