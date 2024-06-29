@@ -44,7 +44,15 @@ export default function Homepage() {
       <Navbar />
       <div
         style={containerStyle}
-        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center ">
+        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center relative">
+        <a
+          href="https://contrastdb.tau.ac.il/"
+          target="_blank"
+          className=" text-white text-lg font-bold absolute bottom-2 left-1/2">
+          {" "}
+          Also interested in studies of theories of consciousness? Visit the
+          ConTraSt database
+        </a>
         <div className="headline w-full text-center sm:text-left">
           <h1 className="text-white text-5xl font-bold mb-4">
             UnconTrust Database

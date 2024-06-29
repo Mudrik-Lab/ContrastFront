@@ -197,7 +197,7 @@ export default function ParametersDistributionBar() {
                 <Text>Stacked</Text>
                 <TooltipExplanation
                   text=""
-                  tooltip="You can choose how to display the comparison between experiments supporting (blue bars) vs. challenging (red bars) the chosen theory family. Choosing “stacked’ will show the distribution of the experiments challenging the chosen theory family on top of the ones supporting it. While choosing “side by side” will show them one next to the other."
+                  tooltip="You can choose how to display the comparison between experiments showing positive (green bars) vs. negative (purple bars) evidence for unconscious processing. Choosing “stacked’ will show the distribution of the experiments showing negative evidence on top of the ones showing positive evidence, while choosing “side by side” will show them one next to the other."
                 />
               </div>
             </div>

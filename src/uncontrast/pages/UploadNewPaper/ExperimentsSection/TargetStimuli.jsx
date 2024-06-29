@@ -9,7 +9,6 @@ import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
-  alphabetizeByLabels,
   rawTextToShow,
 } from "../../../../Utils/functions";
 
@@ -69,7 +68,7 @@ export default function TargetStimuli({
           is_target_same_as_suppressed_stimulus:
             targetValues.is_target_same_as_suppressed_stimulus ? "yes" : "no",
           id: targetValues.id,
-          suppressed_stimulus,
+          suppressed_stimulus: suppressed_stimulus,
         });
       }
     }
@@ -122,16 +121,19 @@ export default function TargetStimuli({
                         onChange={(value) => {
                           const newObj = { ...fieldValues };
                           newObj.is_target_same_as_suppressed_stimulus = value;
+                          newObj.suppressed_stimulus = suppressed_stimulus;
                           if (value === "yes") {
                             newObj.category = suppressedValues.category;
                             newObj.sub_category = suppressedValues.sub_category;
                             newObj.modality = suppressedValues.modality;
                             newObj.number_of_stimuli =
                               suppressedValues.number_of_stimuli;
+                            setFieldValues(newObj);
+                            handleSubmit(newObj, 0);
+                          } else {
+                            setFieldValues(newObj);
+                            submitCondition() && handleSubmit(fieldValues, 0);
                           }
-                          setFieldValues(newObj);
-                          value === "yes" && handleSubmit(newObj, 0);
-                          submitCondition() && handleSubmit(fieldValues, 0);
                         }}
                         options={[
                           { value: "yes", label: "Yes" },

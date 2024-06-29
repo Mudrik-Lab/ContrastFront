@@ -52,7 +52,6 @@ export default function WorldMap() {
     acc[country] = (acc[country] || 0) + value;
     return acc;
   }, {});
-
   const sortedResult = sumPerCountry
     ? Object.keys(sumPerCountry)
         .sort()

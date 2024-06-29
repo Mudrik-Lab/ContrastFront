@@ -34,7 +34,7 @@ export default function Footer({ isFixed }) {
           <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
           <div className="invisible lg:visible border-r border-white h-8 "></div>
           <Text xs color="white" className={"invisible lg:visible"}>
-            High Level <br /> Cognition Lab
+            Brain, Mind and <br /> Consciousness program
           </Text>
         </div>
       </div>
