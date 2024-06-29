@@ -63,7 +63,11 @@ export default function Navbar() {
             <div
               className="logo-right flex gap-3 items-center cursor-pointer"
               onClick={() => navigate("/")}>
-              <img src={isUncontrast ? UnconLogo : Logo} alt="logo-right" />
+              <img
+                src={isUncontrast ? UnconLogo : Logo}
+                width={100}
+                alt="logo-right"
+              />
               <div className=" border-r border-black h-10 "></div>
               <Text xs color="grayHeavy">
                 {" "}
