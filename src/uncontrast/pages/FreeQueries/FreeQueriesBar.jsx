@@ -152,6 +152,11 @@ export default function FreeQueriesBar() {
         label: type.name,
       }))
     : [];
+  const yesNoOptions = [
+    { label: "", value: "" },
+    { label: "Yes", value: "true" },
+    { label: "No", value: "false" },
+  ];
 
   const { data, isLoading } = useQuery({
     queryKey: [
@@ -192,7 +197,7 @@ export default function FreeQueriesBar() {
         target_stimuli_modalities: targetStimuliModalities,
         tasks,
         types,
-        are_participants_excluded: participantsExcluded,
+        are_participants_excluded: participantsExcluded?.value,
         outcome_types: outcome,
       }),
     enabled: Boolean(selected?.value),
@@ -229,7 +234,7 @@ export default function FreeQueriesBar() {
         queryParams.getAll(queryName).map((item) => {
           return {
             value: Number(item) === parseFloat(item) ? parseInt(item) : item,
-            label: optionsArr.find((x) => x.value == item).label,
+            label: optionsArr.find((x) => x.value == item)?.label,
           };
         })
       );
@@ -244,8 +249,14 @@ export default function FreeQueriesBar() {
       : setExperimentsNum(0);
 
     queryParams.get("are_participants_excluded")
-      ? setParticipantsExcluded(queryParams.get("are_participants_excluded"))
-      : setParticipantsExcluded();
+      ? setParticipantsExcluded({
+          value: queryParams.get("are_participants_excluded"),
+          label: yesNoOptions.find(
+            (option) =>
+              option.value === queryParams.get("are_participants_excluded")
+          )?.label,
+        })
+      : setParticipantsExcluded(null);
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -255,55 +266,54 @@ export default function FreeQueriesBar() {
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
-    if (configSuccess) {
-      updateMultiFilterState(
-        setConsciousnessMeasurePhases,
-        "consciousness_measure_phases",
-        consciousnessMeasurePhaseArr
-      );
-      updateMultiFilterState(
-        setConsciousnessMeasureTypes,
-        "consciousness_measure_types",
-        consciousnessMeasureTypesArr
-      );
-      updateMultiFilterState(
-        setModeOfPresentation,
-        "mode_of_presentation",
-        modeOfPresentationArr
-      );
-      updateMultiFilterState(setParadigms, "paradigms", paradigmsArr);
 
-      updateMultiFilterState(setPopulations, "populations", populationsArr);
-      updateMultiFilterState(
-        setProcessingDomain,
-        "processing_domain_types",
-        processingDomainArr
-      );
-      updateMultiFilterState(
-        setStimuliCategories,
-        "suppressed_stimuli_categories",
-        stimuliCategoriesArr
-      );
-      updateMultiFilterState(
-        setStimuliModalities,
-        "suppressed_stimuli_modalities",
-        stimuliModalitiesArr
-      );
-      updateMultiFilterState(
-        setTargetStimuliCategories,
-        "target_stimuli_categories",
-        stimuliCategoriesArr
-      );
-      updateMultiFilterState(
-        setTargetStimuliModalities,
-        "target_stimuli_modalities",
-        stimuliModalitiesArr
-      );
-      updateMultiFilterState(setTasks, "tasks", tasksArr);
-      updateMultiFilterState(setOutcome, "outcome_types", outcomeTypesArr);
-      updateMultiFilterState(setTypes, "types", typesArr);
-    }
-  }, [searchParams]);
+    updateMultiFilterState(
+      setConsciousnessMeasurePhases,
+      "consciousness_measure_phases",
+      consciousnessMeasurePhaseArr
+    );
+    updateMultiFilterState(
+      setConsciousnessMeasureTypes,
+      "consciousness_measure_types",
+      consciousnessMeasureTypesArr
+    );
+    updateMultiFilterState(
+      setModeOfPresentation,
+      "mode_of_presentation",
+      modeOfPresentationArr
+    );
+    updateMultiFilterState(setParadigms, "paradigms", paradigmsArr);
+
+    updateMultiFilterState(setPopulations, "populations", populationsArr);
+    updateMultiFilterState(
+      setProcessingDomain,
+      "processing_domain_types",
+      processingDomainArr
+    );
+    updateMultiFilterState(
+      setStimuliCategories,
+      "suppressed_stimuli_categories",
+      stimuliCategoriesArr
+    );
+    updateMultiFilterState(
+      setStimuliModalities,
+      "suppressed_stimuli_modalities",
+      stimuliModalitiesArr
+    );
+    updateMultiFilterState(
+      setTargetStimuliCategories,
+      "target_stimuli_categories",
+      stimuliCategoriesArr
+    );
+    updateMultiFilterState(
+      setTargetStimuliModalities,
+      "target_stimuli_modalities",
+      stimuliModalitiesArr
+    );
+    updateMultiFilterState(setTasks, "tasks", tasksArr);
+    updateMultiFilterState(setOutcome, "outcome_types", outcomeTypesArr);
+    updateMultiFilterState(setTypes, "types", typesArr);
+  }, [searchParams, configSuccess]);
 
   const referrerUrl = document.referrer;
   const csvRef = useRef(null);
@@ -313,6 +323,7 @@ export default function FreeQueriesBar() {
       csvRef.current?.click();
     }
   }, [csvRef.current]);
+
   console.log(participantsExcluded);
 
   return (
@@ -587,26 +598,25 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     /> */}
-                    //TODO: change yes/no
+
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={false}
                       value={participantsExcluded}
-                      options={[
-                        { label: "Yes", value: true },
-                        { label: "No", value: false },
-                      ]}
+                      options={yesNoOptions}
                       placeholder="Are Participants Excluded"
                       aria-label="Are Participants Excluded"
-                      onChange={(e) => {
-                        console.log(e);
-                        buildUrl(
-                          pageName,
-                          "are_participants_excluded",
-                          e.value,
-                          navigate
-                        );
+                      onChange={({ value }) => {
+                        if (value === "true" || value === "false") {
+                          const queryParams = new URLSearchParams(
+                            location.search
+                          );
+                          queryParams.set("are_participants_excluded", value);
+                          navigate(
+                            "/" + pageName + "?" + queryParams.toString()
+                          );
+                        }
                       }}
                     />
                   </div>
