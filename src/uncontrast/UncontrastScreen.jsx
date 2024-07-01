@@ -23,6 +23,7 @@ import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage.jsx";
 import Histogram from "./pages/histogram.jsx";
 import TermOfUse from "../contrast/pages/TermsOfUse/TermsOfUse.jsx";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance.jsx";
+import "./plotlyStyle.css"; // Import custom CSS for the plots
 
 const UncontrastScreens = () => {
   return (

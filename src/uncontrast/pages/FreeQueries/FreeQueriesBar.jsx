@@ -43,14 +43,12 @@ export default function FreeQueriesBar() {
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = useState();
   const [significance, setSignificance] = useState();
-
   const [stimuliCategories, setStimuliCategories] = useState([]);
   const [stimuliModalities, setStimuliModalities] = useState([]);
   const [targetStimuliCategories, setTargetStimuliCategories] = useState([]);
   const [targetStimuliModalities, setTargetStimuliModalities] = useState([]);
   const [tasks, setTasks] = useState([]);
   const [types, setTypes] = useState([]);
-
   const [paradigms, setParadigms] = useState([]);
   const [populations, setPopulations] = useState([]);
   const [consciousnessMeasureTypes, setConsciousnessMeasureTypes] = useState(
@@ -166,6 +164,7 @@ export default function FreeQueriesBar() {
       consciousnessMeasurePhases?.map((row) => row.label).join(","),
       consciousnessMeasureTypes?.map((row) => row.label).join(","),
       modeOfPresentation?.map((row) => row.label).join(","),
+      processingDomain.map((row) => row.label).join(","),
       paradigms?.map((row) => row.label).join(","),
       populations?.map((row) => row.label).join(","),
       stimuliCategories?.map((row) => row.label).join(","),
@@ -184,7 +183,7 @@ export default function FreeQueriesBar() {
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
         mode_of_presentation: modeOfPresentation,
-        paradigms,
+        paradigms: paradigms,
         populations,
         processing_domain_types: processingDomain,
         suppressed_stimuli_categories: stimuliCategories,
@@ -222,13 +221,6 @@ export default function FreeQueriesBar() {
     type: "bar",
   };
 
-  const selectStyles = {
-    control: (provided) => ({
-      ...provided,
-      width: 300,
-      fontSize: 16,
-    }),
-  };
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -321,6 +313,7 @@ export default function FreeQueriesBar() {
       csvRef.current?.click();
     }
   }, [csvRef.current]);
+  console.log(participantsExcluded);
 
   return (
     <div>
@@ -441,7 +434,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -493,7 +485,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -528,7 +519,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -563,7 +553,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -581,8 +570,7 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-
-                    <Select
+                    {/* <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
@@ -598,8 +586,8 @@ export default function FreeQueriesBar() {
                           navigate
                         );
                       }}
-                    />
-
+                    /> */}
+                    //TODO: change yes/no
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -612,6 +600,7 @@ export default function FreeQueriesBar() {
                       placeholder="Are Participants Excluded"
                       aria-label="Are Participants Excluded"
                       onChange={(e) => {
+                        console.log(e);
                         buildUrl(
                           pageName,
                           "are_participants_excluded",
