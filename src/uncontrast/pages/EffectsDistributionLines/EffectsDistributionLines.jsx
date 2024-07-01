@@ -95,21 +95,21 @@ export default function EffectsDistributionLines() {
         opacity: 0.5,
         xbins: { start: 0, size: binSize },
         type: "histogram",
-      },
-      {
-        x: row.series.map((a) => a.key),
-        y: row.series.map((a) => a.value),
-        name: rawTextToShow(row.series_name),
-        autobinx: false,
-        histnorm: "count",
-        line: {
-          shape: "spline", // Set the line shape to 'spline' for smooth curves
-          color: colors[row.series_name],
-        },
-        opacity: 0.5,
-        type: "scatter",
-        mode: "lines",
       }
+      // {
+      //   x: row.series.map((a) => a.key),
+      //   y: row.series.map((a) => a.value),
+      //   name: rawTextToShow(row.series_name),
+      //   autobinx: false,
+      //   histnorm: "count",
+      //   line: {
+      //     shape: "spline", // Set the line shape to 'spline' for smooth curves
+      //     color: colors[row.series_name],
+      //   },
+      //   opacity: 0.5,
+      //   type: "scatter",
+      //   mode: "lines",
+      // }
     );
   });
   console.log(graphsData);
