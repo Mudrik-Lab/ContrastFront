@@ -1,37 +1,41 @@
 import React from "react";
 import Navbar from "../../../sharedComponents/Navbar";
 import Footer from "../../../sharedComponents/Footer";
+import { Site } from "../../../config/siteType";
 
 export default function TermOfUse() {
+  const siteName = Site.type === "contrast" ? "Contrast" : "UnconTrust";
+  console.log(siteName);
   const htmlEl = (
     <div className="text-base">
       <h1 className="text-2xl text-center text-blue font-bold mt-2   ">
-        Terms of use of the Contrast Website
+        Terms of use of the {siteName + " "} Website
       </h1>
 
       <h2 className="text-base font-bold mt-2   ">1. General</h2>
       <p className="  ">
-        Upon entering the website of "ConTraSt" (henceforth: "the website"), and
-        prior to carrying out any action on the website and/or using any service
-        or information of any kind offered on the website, you are requested to
-        read, carefully, the terms of service detailed below, including the
-        website content, the services and usage options found and offered
-        through it (henceforth: the "Terms of Use").
+        Upon entering the website of "{siteName + " "}" (henceforth: "the
+        website"), and prior to carrying out any action on the website and/or
+        using any service or information of any kind offered on the website, you
+        are requested to read, carefully, the terms of service detailed below,
+        including the website content, the services and usage options found and
+        offered through it (henceforth: the "Terms of Use").
       </p>
 
       <h2 className="text-base font-bold mt-2   ">
-        2. What is the ConTraSt website?
+        2. What is the {siteName + " "} website?
       </h2>
       <p className="  ">
-        The ConTraSt website aims at providing a bird's eye view on the field of
-        consciousness studies, and specifically, on how leading theories of
-        consciousness have been studied. It allows users to analyze prominent
-        trends and generate figures, conduct queries of the data, and upload new
-        papers to be added to the paradigm.
+        The {siteName + " "} website aims at providing a bird's eye view on the
+        field of consciousness studies, and specifically, on how leading
+        theories of consciousness have been studied. It allows users to analyze
+        prominent trends and generate figures, conduct queries of the data, and
+        upload new papers to be added to the paradigm.
       </p>
       <p className="  ">
-        Use of the ConTraSt website constitutes your agreement to the following
-        topics, without you being explicitly required to consent to these terms.
+        Use of the {siteName + " "} website constitutes your agreement to the
+        following topics, without you being explicitly required to consent to
+        these terms.
       </p>
       <h2 className="text-base font-bold mt-2   ">
         3.  Information and figures on the website:
@@ -171,8 +175,8 @@ export default function TermOfUse() {
           distribute, make changes, broadcast, publicly display, reproduce,
           publish, issue a license, create derivative works from the information
           and data published on the website and/or deliver to any third party
-          any of the above, without citing the ConTraSt website as the source of
-          this information.
+          any of the above, without citing the {siteName + " "} website as the
+          source of this information.
         </span>
       </p>
 
@@ -194,7 +198,7 @@ export default function TermOfUse() {
           may be copied, reproduced, distributed, sold, marketed, or translated
           from the website, nor may any data published on the website be used
           for the purpose of displaying such data on any other website or
-          service without citing the ConTraSt website.
+          service without citing the {siteName + " "} website.
         </span>
       </p>
 

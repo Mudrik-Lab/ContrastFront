@@ -432,7 +432,7 @@ export const CSV = ({ data, ref }) => {
     </a>
   );
 };
-export const Reset = ({ pageName, setInterpretation }) => {
+export const Reset = ({ pageName }) => {
   const navigate = useNavigate();
   return (
     <div>

@@ -5,77 +5,231 @@ import getEffectsDistribution from "../../apiHooks/getEffectsDistribution";
 import { screenHeight, screenWidth } from "../../Utils/HardCoded";
 
 function Histogram() {
-  const {
-    data: histData,
-    isSuccess,
-    isLoading,
-  } = useQuery({
-    queryKey: [
-      "distribution_of_effects_across_parameters",
-      1,
-      1,
-      "number_of_stimuli",
-    ],
-    queryFn: () =>
-      getEffectsDistribution({
-        min_number_of_experiments: 1,
-        binSize: 1,
-        continuous_breakdown: "number_of_stimuli",
-        isUncontrast: true,
-      }),
-  });
-
-  var trace1 = {
-    x: histData?.data[1].series.map((x) => x.key),
-    y: histData?.data[1].series.map((y) => y.value),
-    name: "control",
-    autobinx: false,
-    histnorm: "count",
-    marker: {
-      color: "rgba(255, 100, 102, 0.7)",
-      line: {
-        color: "rgba(255, 100, 102, 1)",
-        width: 1,
-      },
+  const data = [
+    {
+      series_name: "Mixed",
+      series: [
+        {
+          key: "20.00",
+          value: 3,
+        },
+        {
+          key: "40.00",
+          value: 1,
+        },
+        {
+          key: "60.00",
+          value: 4,
+        },
+        {
+          key: "80.00",
+          value: 1,
+        },
+        {
+          key: "100.00",
+          value: 1,
+        },
+        {
+          key: "140.00",
+          value: 1,
+        },
+        {
+          key: "320.00",
+          value: 2,
+        },
+      ],
     },
-    opacity: 0.5,
-    type: "histogram",
-  };
-  // var trace2 = {
-  //   x: x2,
-  //   y: y2,
-  //   autobinx: false,
-  //   marker: {
-  //     color: "rgba(100, 200, 102, 0.7)",
-  //     line: {
-  //       color: "rgba(100, 200, 102, 1)",
-  //       width: 1,
-  //     },
-  //   },
-  //   name: "experimental",
-  //   opacity: 0.75,
-  //   type: "histogram",
-  //   xbins: {
-  //     end: 4,
-  //     size: 0.06,
-  //     start: -3.2,
-  //   },
-  // };
-  var data = [trace1];
-  var layout = {
-    bargap: 0.05,
-    bargroupgap: 0.2,
-    barmode: "overlay",
-    title: "Sampled Results",
-    xaxis: { title: "Value" },
-    yaxis: { title: "Count" },
-    width: screenWidth,
-    height: screenHeight,
-  };
+    {
+      series_name: "Negative",
+      series: [
+        {
+          key: "20.00",
+          value: 3,
+        },
+        {
+          key: "40.00",
+          value: 8,
+        },
+        {
+          key: "60.00",
+          value: 6,
+        },
+        {
+          key: "80.00",
+          value: 2,
+        },
+        {
+          key: "100.00",
+          value: 4,
+        },
+        {
+          key: "140.00",
+          value: 1,
+        },
+        {
+          key: "160.00",
+          value: 4,
+        },
+        {
+          key: "180.00",
+          value: 7,
+        },
+        {
+          key: "360.00",
+          value: 1,
+        },
+      ],
+    },
+    {
+      series_name: "Positive",
+      series: [
+        {
+          key: "20.00",
+          value: 18,
+        },
+        {
+          key: "40.00",
+          value: 10,
+        },
+        {
+          key: "60.00",
+          value: 15,
+        },
+        {
+          key: "80.00",
+          value: 8,
+        },
+        {
+          key: "100.00",
+          value: 1,
+        },
+        {
+          key: "120.00",
+          value: 5,
+        },
+        {
+          key: "140.00",
+          value: 5,
+        },
+        {
+          key: "160.00",
+          value: 1,
+        },
+        {
+          key: "180.00",
+          value: 3,
+        },
+        {
+          key: "200.00",
+          value: 2,
+        },
+        {
+          key: "220.00",
+          value: 3,
+        },
+        {
+          key: "280.00",
+          value: 1,
+        },
+        {
+          key: "320.00",
+          value: 7,
+        },
+        {
+          key: "460.00",
+          value: 3,
+        },
+      ],
+    },
+  ];
+  const graphsData = [
+    // {
+    //   x: [20, 40, 60, 80, 100, 140, 320],
+    //   y: [3, 1, 4, 1, 1, 1, 2],
+    //   name: "Mixed",
+    //   histnorm: "count",
+    //   marker: {
+    //     color: "#088515",
+    //   },
+    //   opacity: 0.5,
+    //   xbins: {
+    //     start: 0,
+    //     end: 339.5,
+    //     size: "20",
+    //   },
+    //   type: "histogram",
+    // },
+    // {
+    //   x: [20, 40, 60, 80, 100, 140, 160, 180, 360],
+    //   y: [3, 8, 6, 2, 4, 1, 4, 7, 1],
+    //   name: "Negative",
+    //   histnorm: "count",
+    //   marker: {
+    //     color: "#CA535A",
+    //   },
+    //   opacity: 0.5,
+    //   xbins: {
+    //     start: 0,
+    //     end: 379.5,
+    //     size: "20",
+    //   },
+    //   type: "histogram",
+    // },
+    {
+      x: [20, 40, 60, 80, 100, 120, 140, 160, 180, 200, 220, 280, 320, 460],
+      y: [18, 10, 15, 8, 1, 5, 5, 1, 3, 2, 3, 1, 7, 3],
+
+      name: "Positive",
+      histnorm: "count",
+      marker: {
+        color: "#159DEA",
+      },
+      opacity: 0.5,
+      // xbins: {
+      //   start: 0,
+      //   end: 479.5,
+      //   size: 20,
+      // },
+      type: "bar",
+    },
+  ];
 
   return (
     <div>
-      <Plot data={data} layout={layout} />
+      <Plot
+        data={graphsData}
+        layout={{
+          bargap: 0.02,
+          bargroupgap: 0.02,
+          barmode: "overlay",
+          xaxis: {
+            title: "Range",
+          },
+          yaxis: {
+            title: "Number of experiments",
+            tickmode: "linear",
+          },
+          autosize: false, // Use true to let Plotly automatically size the plot
+
+          legend: {
+            x: 10,
+            xanchor: "left",
+            y: 1,
+            font: {
+              size: 16,
+              color: "#000000",
+            },
+          },
+          hoverlabel: {
+            namelength: 40,
+            font: {
+              family: "Arial",
+              size: 12,
+              color: "#FFFFFF",
+            },
+          },
+        }}
+      />
     </div>
   );
 }
