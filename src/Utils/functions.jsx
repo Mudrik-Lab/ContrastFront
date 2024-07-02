@@ -303,8 +303,10 @@ export function DeleteClassificationField(
         if (res.status === 204) {
           if (Array.isArray(fieldValues)) {
             if (fieldValues.length !== 1) {
-              const newArr = [...fieldValues];
-              newArr.splice(index, 1);
+              const deletedId = id;
+              const newArr = fieldValues.filter(
+                (item) => item.id.toString() !== deletedId.toString()
+              );
               setFieldValues(newArr);
             } else {
               const updatedState = {};
@@ -485,4 +487,15 @@ export function duplicateArray(arr, n) {
   }
 
   return result;
+}
+export function fixTrueToYes(data) {
+  return data?.map((item) => {
+    if (item.key === "True") {
+      return { ...item, key: "Yes" };
+    } else if (item.key === "False") {
+      return { ...item, key: "No" };
+    } else {
+      return item;
+    }
+  });
 }

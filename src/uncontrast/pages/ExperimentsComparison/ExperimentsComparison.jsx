@@ -27,6 +27,7 @@ import {
   breakLongLines,
   rawTextToShow,
   buildUrl,
+  fixTrueToYes,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -64,6 +65,16 @@ export default function ParametersDistributionExperimentsComparison() {
   });
 
   const chartsData = data?.data;
+
+  chartsData?.map((pie) =>
+    pie.series.forEach((element) => {
+      element.key === "True"
+        ? (element.key = "Yes")
+        : element.key === "False"
+        ? (element.key = "No")
+        : null;
+    })
+  );
   const keysArr = [];
   chartsData?.map((theory) =>
     theory.series
@@ -86,6 +97,7 @@ export default function ParametersDistributionExperimentsComparison() {
   [...new Set(trimedKeysArr)]?.map((key, index) => {
     keysColors[key] = someColors[index];
   });
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 

@@ -25,6 +25,7 @@ export default function Navbar() {
   const navigate = useNavigate();
 
   const isUncontrast = Site.type === "uncontrast";
+
   const graphs = isUncontrast
     ? Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
@@ -32,7 +33,6 @@ export default function Navbar() {
     : Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "contrast" || x.siteToDisplay === "both"
       );
-
   const page = window.location.pathname;
 
   const snap = useSnapshot(state);

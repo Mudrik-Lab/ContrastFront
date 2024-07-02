@@ -204,7 +204,7 @@ export default function AcrossTheYears() {
                     },
                   },
                   width: screenWidth - sideWidth,
-                  height: screenHeight - footerHeight - uploadPaperUsedHeight,
+                  height: screenHeight - footerHeight,
                 }}
               />
             ) : (

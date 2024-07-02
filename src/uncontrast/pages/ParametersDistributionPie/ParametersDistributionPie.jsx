@@ -81,6 +81,15 @@ export default function ParametersDistributionPie() {
   const values2 = [];
   const labels2 = [];
 
+  data?.data.forEach((element) => {
+    console.log(element.series_name);
+    return element.series_name === "True"
+      ? (element.series_name = "Yes")
+      : element.series_name === "False"
+      ? (element.series_name = "No")
+      : null;
+  });
+
   data?.data?.map((x, index) => {
     values1.push(x.value);
     labels1.push(rawTextToShow(x.series_name));
@@ -96,7 +105,6 @@ export default function ParametersDistributionPie() {
   const itemsInPie = data?.data.length;
   const strechColorsArrFactor = Math.ceil(itemsInPie / designerColors.length);
 
-  console.log(itemsInPie);
   const initialGraphData = [
     //inner pie
     {

@@ -25,7 +25,7 @@ export default function ContactPage() {
       <Spacer height={navHeight + 20} />
       <div className="container w-[730px] mx-auto">
         <h1 className="text-blue text-center text-6xl mb-8">
-          Contact UnconTraSt
+          Contact UnconTrust
         </h1>
         <div className="w-full mx-auto text-base">
           <p className="text-justify">

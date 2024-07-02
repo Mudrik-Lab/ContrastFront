@@ -14,6 +14,7 @@ import {
   TypeOfConsciousnessFilter,
 } from "../../../sharedComponents/Reusble";
 import {
+  footerHeight,
   isMoblile,
   plotConfig,
   screenHeight,
@@ -25,7 +26,11 @@ import {
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import { buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  buildUrl,
+  fixTrueToYes,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -64,7 +69,13 @@ export default function AcrossTheYears() {
       x: row.series.map((a) => a.year),
       y: row.series.map((a) => a.value),
       type: "scatter",
-      name: rawTextToShow(row.series_name),
+      name: rawTextToShow(
+        row.series_name === "True"
+          ? "Yes"
+          : row.series_name === "False"
+          ? "No"
+          : row.series_name
+      ),
       mode: "lines+markers",
     });
   });
@@ -175,7 +186,7 @@ export default function AcrossTheYears() {
                   showlegend: !isMoblile,
                   legend: {
                     x: 1.1,
-                    xanchor: "left",
+                    xanchor: "right",
                     y: 1,
                     font: {
                       size: 16,
@@ -191,7 +202,7 @@ export default function AcrossTheYears() {
                     },
                   },
                   width: screenWidth - sideWidth,
-                  height: screenHeight,
+                  height: screenHeight - footerHeight,
                 }}
               />
             ) : (

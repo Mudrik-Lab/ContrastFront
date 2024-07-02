@@ -137,15 +137,15 @@ export const parametersOptions = [
 export const uncontrastParametersOptions = [
   {
     value: "is_cm_same_participants_as_task",
-    label: "Is Consciousness Measure Same Participants as Task",
+    label: "Is the measure taken from the same sample as the task?",
   },
   {
     value: "is_performance_above_chance",
-    label: "Is Performance Above Chance",
+    label: "Above-chance performance in the objective measure",
   },
   {
     value: "is_trial_excluded_based_on_measure",
-    label: "Is Trial Excluded Based on Measure",
+    label: "Trial exclusion based on awareness measure?",
   },
   { value: "modes_of_presentation", label: "Modes of Presentation" },
 
@@ -182,7 +182,32 @@ export const uncontrastParametersOptions = [
   { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
   { value: "task", label: "Task" },
 ];
-
+export const continuousBreakdownOptions = [
+  { value: "number_of_stimuli", label: "Number of Stimuli" },
+  {
+    value: "number_of_suppressed_stimuli",
+    label: "Number of Suppressed Stimuli",
+  },
+  { value: "number_of_target_stimuli", label: "Number of Target Stimuli" },
+  {
+    value: "outcome_number_of_trials",
+    label: "Main Task Number of Trials Per Condition",
+  },
+  { value: "sample_size_excluded", label: "Sample Size Excluded" },
+  { value: "sample_size_included", label: "Sample Size Included" },
+  {
+    value: "suppressed_stimuli_duration",
+    label: "Suppressed Stimuli Duration",
+  },
+  {
+    value: "unconsciousness_measure_number_of_participants_in_awareness_test",
+    label: "Number of Participants in the Awareness Test",
+  },
+  {
+    value: "unconsciousness_measure_number_of_trials",
+    label: "Awareness Measure Number of Trials",
+  },
+];
 export const FrequenciesColors = {
   Delta: "#4D3991",
   Theta: "#8949A2",

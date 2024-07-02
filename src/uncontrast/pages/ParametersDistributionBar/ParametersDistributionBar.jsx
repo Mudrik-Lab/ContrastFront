@@ -61,12 +61,21 @@ export default function ParametersDistributionBar() {
     },
     enabled: Boolean(selected?.value),
   });
-  const X1 = data?.data?.map((row) => row.series[0].value).reverse();
+  const graphData = data?.data;
+  graphData?.forEach((element) => {
+    return element.series_name === "True"
+      ? (element.series_name = "Yes")
+      : element.series_name === "False"
+      ? (element.series_name = "No")
+      : null;
+  });
 
-  const Y = data?.data?.map((row) => rawTextToShow(row.series_name)).reverse();
+  const X1 = graphData?.map((row) => row.series[0].value).reverse();
 
-  const X2 = data?.data?.map((row) => row.series[1]?.value || 0).reverse();
-  const X3 = data?.data?.map((row) => row.series[2]?.value || 0).reverse();
+  const Y = graphData?.map((row) => rawTextToShow(row.series_name)).reverse();
+
+  const X2 = graphData?.map((row) => row.series[1]?.value || 0).reverse();
+  const X3 = graphData?.map((row) => row.series[2]?.value || 0).reverse();
 
   var trace1 = {
     x: X1,

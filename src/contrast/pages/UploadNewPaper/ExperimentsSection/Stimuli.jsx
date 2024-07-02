@@ -28,6 +28,7 @@ export default function Stimuli({
 }) {
   const initialValues = {
     category: "",
+    sub_category: "",
     modality: "",
     duration: "",
   };
@@ -72,11 +73,22 @@ export default function Stimuli({
     }
   }, []);
 
+  function creatSubOptions(index) {
+    console.log(fieldValues[index].category);
+    return [
+      ...new Set(
+        subCategories.filter((sub) => sub.parent == fieldValues[index].category)
+      ),
+    ];
+  }
   const submitCondition = (index) => {
     return (
       fieldValues[index]?.category &&
       fieldValues[index]?.modality &&
-      fieldValues[index]?.duration
+      fieldValues[index]?.duration &&
+      (creatSubOptions(index).length > 0
+        ? fieldValues[index]?.sub_category
+        : true)
     );
   };
 
@@ -94,7 +106,10 @@ export default function Stimuli({
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={`${classificationName}-${index}`}>
+          <div
+            key={`${classificationName}-${index}-${
+              fieldValue.id ? fieldValue.id : "new"
+            }`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
@@ -135,18 +150,19 @@ export default function Stimuli({
                           Sub-category (optional)
                         </Text>
                         <CustomSelect
-                          disabled={fieldValue.id}
-                          defaultValue={fieldValue.sub_category}
+                          disabled={
+                            fieldValue.id ||
+                            creatSubOptions(index)?.length === 0
+                          }
+                          value={fieldValue.sub_category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
-                            value !== ""
-                              ? (newArray[index].sub_category = value)
-                              : delete newArray[index].sub_category;
+                            newArray[index].sub_category = value;
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);
                           }}
-                          options={alphabetizeByLabels(subCategories)}
+                          options={creatSubOptions(index)}
                         />
                       </div>
                     </div>

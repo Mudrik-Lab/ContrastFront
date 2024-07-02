@@ -149,7 +149,10 @@ export default function WorldMap() {
         orientation: "h",
         x: 0.5,
         y: 0.03,
-        title: "# of experiments",
+        title: {
+          text: "# of experiments",
+          side: "top", // This positions the title inside the color scale bar
+        },
         ticklabelposition: "inside",
         tickfont: {
           size: 12,

@@ -82,7 +82,10 @@ export default function ConsciousnessMeasures({
       headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
         return (
-          <div key={`${classificationName}-${index}`}>
+          <div
+            key={`${classificationName}-${index}-${
+              fieldValue.id ? fieldValue.id : "new"
+            }`}>
             <form className="flex flex-col gap-2">
               <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
