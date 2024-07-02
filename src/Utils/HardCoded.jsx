@@ -145,7 +145,7 @@ export const uncontrastParametersOptions = [
   },
   {
     value: "is_trial_excluded_based_on_measure",
-    label: "Is Trial Excluded Based on Measure",
+    label: "Trial exclusion based on awareness measure?",
   },
   { value: "modes_of_presentation", label: "Modes of Presentation" },
 

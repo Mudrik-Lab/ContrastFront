@@ -130,7 +130,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across effects that supported or challenged the existence of unconscious processing.",
     figureText:
-      "The inner circle of the pie describes the distribution of different levels across theories,while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "The inner circle of the pie describes the distribution of different levels across theories, while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
   "Trends Over Time": {
@@ -146,7 +146,7 @@ export const graphsHeaders = {
       "The plot is a cumulative figure that shows the number of experiments per level at each point in time. You can also filter the results according to consciousness type and reporting technique. Note: This plot is dynamic: by clicking on one of the labels on the right side of the figure, you can hide the data related to the clicked label (reversible by re-clicking on the label). Hovering on each point in time shows you the number of experiments of that feature of interest up until that year. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "contrast",
   },
-  "Trends Over Time": {
+  "Trends Over Time Uncontrast": {
     text: "Trends Over Time",
     tooltip:
       "The graph depicts the cumulative distribution of experiments according to the selected parameter values over time.",
@@ -241,7 +241,7 @@ export const graphsHeaders = {
     figureLine:
       " Here, you can see in which journals the effects that supported or challenged unconscious processing were published.",
     figureText:
-      "Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. Note that the plot refers to reported effects as the independent variable (i.e., if two different effects were reported in one experiment, each will be counted separately).",
+      "Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable (i.e., if two different experiments were reported in one paper, each will be counted separately).",
     siteToDisplay: "uncontrast",
   },
   "World Map": {

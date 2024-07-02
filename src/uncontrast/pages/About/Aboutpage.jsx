@@ -15,7 +15,7 @@ export default function Aboutpage() {
       <Navbar />
       <Spacer height={navHeight + 64} />
       <div className="max-w-[1018px] mx-auto">
-        <h1 className="text-blue text-center text-6xl">About UnconTrast</h1>
+        <h1 className="text-blue text-center text-6xl">About UnconTrust</h1>
         <div className="about-database sm:mt-10 mx-auto ">
           <Text xl3 className=" leading-snug" center>
             The database for Unconscious processing studies that we Trust
@@ -120,7 +120,7 @@ export default function Aboutpage() {
             </div>
             <div id="steering_committee">
               <Text xl3 center>
-                UnconTraSt Steering Committee
+                UnconTruSt Steering Committee
               </Text>
               <TeamMembersCards />
               <Spacer height={40} />
