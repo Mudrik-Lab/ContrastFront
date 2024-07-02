@@ -137,11 +137,11 @@ export const parametersOptions = [
 export const uncontrastParametersOptions = [
   {
     value: "is_cm_same_participants_as_task",
-    label: "Is Consciousness Measure Same Participants as Task",
+    label: "Is the measure taken from the same sample as the task?",
   },
   {
     value: "is_performance_above_chance",
-    label: "Is Performance Above Chance",
+    label: "Above-chance performance in the objective measure",
   },
   {
     value: "is_trial_excluded_based_on_measure",

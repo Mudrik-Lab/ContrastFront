@@ -28,6 +28,7 @@ import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 import {
   buildUrl,
   buildUrlForMultiSelect,
+  fixTrueToYes,
   rawTextToShow,
 } from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -203,7 +204,8 @@ export default function FreeQueriesBar() {
     enabled: Boolean(selected?.value),
   });
   const X1 = data?.data.map((row) => row.value).reverse();
-  const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
+  const fixedData = fixTrueToYes(data?.data);
+  const Y = fixedData?.map((row) => rawTextToShow(row.key)).reverse();
 
   var trace1 = {
     x: X1,
