@@ -182,7 +182,32 @@ export const uncontrastParametersOptions = [
   { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
   { value: "task", label: "Task" },
 ];
-
+export const continuousBreakdownOptions = [
+  { value: "number_of_stimuli", label: "Number of Stimuli" },
+  {
+    value: "number_of_suppressed_stimuli",
+    label: "Number of Suppressed Stimuli",
+  },
+  { value: "number_of_target_stimuli", label: "Number of Target Stimuli" },
+  {
+    value: "outcome_number_of_trials",
+    label: "Main Task Number of Trials Per Condition",
+  },
+  { value: "sample_size_excluded", label: "Sample Size Excluded" },
+  { value: "sample_size_included", label: "Sample Size Included" },
+  {
+    value: "suppressed_stimuli_duration",
+    label: "Suppressed Stimuli Duration",
+  },
+  {
+    value: "unconsciousness_measure_number_of_participants_in_awareness_test",
+    label: "Number of Participants in the Awareness Test",
+  },
+  {
+    value: "unconsciousness_measure_number_of_trials",
+    label: "Awareness Measure Number of Trials",
+  },
+];
 export const FrequenciesColors = {
   Delta: "#4D3991",
   Theta: "#8949A2",

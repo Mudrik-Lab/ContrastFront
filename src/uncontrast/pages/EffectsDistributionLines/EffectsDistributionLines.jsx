@@ -11,6 +11,7 @@ import {
   TopGraphText,
 } from "../../../sharedComponents/Reusble";
 import {
+  continuousBreakdownOptions,
   footerHeight,
   isMoblile,
   plotConfig,
@@ -33,35 +34,10 @@ export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [binSize, setBinSize] = React.useState(1);
+  const [binSize, setBinSize] = React.useState();
   const navigate = useNavigate();
   const pageName = "distribution-of-Experiments-across-parameters";
-  const continuousBreakdownOptions = [
-    { value: "number_of_stimuli", label: "Number of Stimuli" },
-    {
-      value: "number_of_suppressed_stimuli",
-      label: "Number of Suppressed Stimuli",
-    },
-    { value: "number_of_target_stimuli", label: "Number of Target Stimuli" },
-    {
-      value: "outcome_number_of_trials",
-      label: "Main Task Number of Trials Per Condition",
-    },
-    { value: "sample_size_excluded", label: "Sample Size Excluded" },
-    { value: "sample_size_included", label: "Sample Size Included" },
-    {
-      value: "suppressed_stimuli_duration",
-      label: "Suppressed Stimuli Duration",
-    },
-    {
-      value: "unconsciousness_measure_number_of_participants_in_awareness_test",
-      label: "Number of Participants in the Awareness Test",
-    },
-    {
-      value: "unconsciousness_measure_number_of_trials",
-      label: "Awareness Measure Number of Trials",
-    },
-  ];
+
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "distribution_of_effects_across_parameters",
@@ -186,7 +162,7 @@ export default function EffectsDistributionLines() {
             <div className="w-full py-5 flex flex-col items-center gap-3 ">
               <RangeInput
                 isBinSize={true}
-                number={binSize || 1}
+                number={binSize}
                 setNumber={(e) => {
                   buildUrl(pageName, "bin_size", e, navigate);
                 }}
