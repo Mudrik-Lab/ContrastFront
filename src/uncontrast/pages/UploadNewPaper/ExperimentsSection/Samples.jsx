@@ -235,7 +235,7 @@ export default function Samples({
                           tooltip={
                             "Were participants excluded from analysis based on the awareness measure?"
                           }
-                          text={"Excluded participants?"}
+                          text={"Excluded based on measure"}
                         />
 
                         <CustomSelect

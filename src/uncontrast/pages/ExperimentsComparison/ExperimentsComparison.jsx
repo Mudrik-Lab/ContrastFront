@@ -106,9 +106,12 @@ export default function ParametersDistributionExperimentsComparison() {
       : setExperimentsNum(0);
 
     if (queryParams.get("breakdown")) {
+      const breackdownValue = queryParams.get("breakdown");
       setSelected({
-        value: queryParams.get("breakdown"),
-        label: rawTextToShow(queryParams.get("breakdown")),
+        value: breackdownValue,
+        label: uncontrastParametersOptions.find(
+          (item) => item.value === breackdownValue
+        )?.label,
       });
     } else {
       setSelected(uncontrastParametersOptions[0]);

@@ -26,11 +26,7 @@ import {
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import {
-  buildUrl,
-  fixTrueToYes,
-  rawTextToShow,
-} from "../../../Utils/functions";
+import { buildUrl, rawTextToShow } from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -99,9 +95,12 @@ export default function AcrossTheYears() {
       : setExperimentsNum(0);
 
     if (queryParams.get("breakdown")) {
+      const breackdownValue = queryParams.get("breakdown");
       setSelected({
-        value: queryParams.get("breakdown"),
-        label: rawTextToShow(queryParams.get("breakdown")),
+        value: breackdownValue,
+        label: uncontrastParametersOptions.find(
+          (item) => item.value === breackdownValue
+        )?.label,
       });
     } else {
       setSelected(uncontrastParametersOptions[0]);
@@ -185,8 +184,8 @@ export default function AcrossTheYears() {
                   autosize: false,
                   showlegend: !isMoblile,
                   legend: {
-                    x: 1.1,
-                    xanchor: "right",
+                    x: 1,
+                    xanchor: "left",
                     y: 1,
                     font: {
                       size: 16,
@@ -206,6 +205,41 @@ export default function AcrossTheYears() {
                 }}
               />
             ) : (
+              // <Plot
+              //   data={graphsData}
+              //   config={plotConfig}
+              //   layout={{
+              //     xaxis: {
+              //       title: "Years",
+              //     },
+              //     yaxis: {
+              //       title: "Number of experiments",
+              //       tickmode: "linear",
+              //       dtick: Math.max(...highestY) > 20 ? 20 : 1,
+              //     },
+              //     autosize: false,
+              //     showlegend: !isMoblile,
+              //     legend: {
+              //       x: 1.1,
+              //       xanchor: "right",
+              //       y: 1,
+              //       font: {
+              //         size: 16,
+              //         color: "#000000",
+              //       },
+              //     },
+              //     hoverlabel: {
+              //       namelength: 40,
+              //       font: {
+              //         family: "Arial",
+              //         size: 12,
+              //         color: "#FFFFFF",
+              //       },
+              //     },
+              //     width: screenWidth - sideWidth,
+              //     height: screenHeight - footerHeight,
+              //   }}
+              // />
               <NoResults />
             )}
           </div>
