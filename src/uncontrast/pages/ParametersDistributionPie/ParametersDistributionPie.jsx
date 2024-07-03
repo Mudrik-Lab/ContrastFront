@@ -205,17 +205,18 @@ export default function ParametersDistributionPie() {
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
-    queryParams.get("min_number_of_experiments")
-      ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
-      : setExperimentsNum(0);
     if (queryParams.get("breakdown")) {
+      const breackdownValue = queryParams.get("breakdown");
       setSelected({
-        value: queryParams.get("breakdown"),
-        label: rawTextToShow(queryParams.get("breakdown")),
+        value: breackdownValue,
+        label: uncontrastParametersOptions.find(
+          (item) => item.value === breackdownValue
+        )?.label,
       });
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
+
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 

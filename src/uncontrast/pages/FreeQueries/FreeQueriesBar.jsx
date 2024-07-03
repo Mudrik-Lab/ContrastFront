@@ -26,6 +26,7 @@ import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 import {
+  alphabetizeByLabels,
   buildUrl,
   buildUrlForMultiSelect,
   fixTrueToYes,
@@ -261,14 +262,16 @@ export default function FreeQueriesBar() {
       : setParticipantsExcluded(null);
 
     if (queryParams.get("breakdown")) {
+      const breackdownValue = queryParams.get("breakdown");
       setSelected({
-        value: queryParams.get("breakdown"),
-        label: rawTextToShow(queryParams.get("breakdown")),
+        value: breackdownValue,
+        label: uncontrastParametersOptions.find(
+          (item) => item.value === breackdownValue
+        )?.label,
       });
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
-
     updateMultiFilterState(
       setConsciousnessMeasurePhases,
       "consciousness_measure_phases",
@@ -351,7 +354,7 @@ export default function FreeQueriesBar() {
                   closeMenuOnSelect={true}
                   isMulti={false}
                   isClearable={false}
-                  options={uncontrastParametersOptions}
+                  options={alphabetizeByLabels(uncontrastParametersOptions)}
                   value={selected}
                   onChange={(e) => {
                     buildUrl(pageName, "breakdown", e.value, navigate);
@@ -384,7 +387,9 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={consciousnessMeasurePhases}
-                      options={consciousnessMeasurePhaseArr}
+                      options={alphabetizeByLabels(
+                        consciousnessMeasurePhaseArr
+                      )}
                       placeholder={"When was consciousness measured? "}
                       aria-label={"When was consciousness measured? "}
                       onChange={(e) => {
@@ -401,7 +406,9 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={consciousnessMeasureTypes}
-                      options={consciousnessMeasureTypesArr}
+                      options={alphabetizeByLabels(
+                        consciousnessMeasureTypesArr
+                      )}
                       placeholder="How was consciousness measured?"
                       aria-label="How was consciousness measured?"
                       onChange={(e) => {
@@ -418,7 +425,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={outcome}
-                      options={outcomeTypesArr}
+                      options={alphabetizeByLabels(outcomeTypesArr)}
                       placeholder="Outcome Type"
                       aria-label="Outcome Type"
                       onChange={(e) => {
@@ -436,7 +443,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={modeOfPresentation}
-                      options={modeOfPresentationArr}
+                      options={alphabetizeByLabels( modeOfPresentationArr)}
                       placeholder="Mode of Presentation"
                       aria-label="Mode of Presentation"
                       onChange={(e) => {
@@ -453,7 +460,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={paradigms}
-                      options={paradigmsArr}
+                      options={alphabetizeByLabels(paradigmsArr)}
                       placeholder="Paradigm"
                       aria-label="Paradigm"
                       onChange={(e) => {
@@ -470,7 +477,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={populations}
-                      options={populationsArr}
+                      options={alphabetizeByLabels(populationsArr)}
                       placeholder="Population"
                       aria-label="Population"
                       onChange={(e) => {
@@ -487,7 +494,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={processingDomain}
-                      options={processingDomainArr}
+                      options={alphabetizeByLabels(processingDomainArr)}
                       placeholder="Processing Domain Type"
                       aria-label="Processing Domain Type"
                       onChange={(e) => {
@@ -504,7 +511,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={stimuliCategories}
-                      options={stimuliCategoriesArr}
+                      options={alphabetizeByLabels(stimuliCategoriesArr)}
                       placeholder="Suppressed Stimuli Category"
                       aria-label="Suppressed Stimuli Category"
                       onChange={(e) => {
@@ -521,7 +528,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={stimuliModalities}
-                      options={stimuliModalitiesArr}
+                      options={alphabetizeByLabels(stimuliModalitiesArr)}
                       placeholder="Suppressed Stimuli Modality"
                       aria-label="Suppressed Stimuli Modality"
                       onChange={(e) => {
@@ -538,7 +545,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={targetStimuliCategories}
-                      options={stimuliCategoriesArr}
+                      options={alphabetizeByLabels(stimuliCategoriesArr)}
                       placeholder="Target Stimuli Category"
                       aria-label="Target Stimuli Category"
                       onChange={(e) => {
@@ -555,7 +562,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={targetStimuliModalities}
-                      options={stimuliModalitiesArr}
+                      options={alphabetizeByLabels(stimuliModalitiesArr)}
                       placeholder="Target Stimuli Modality"
                       aria-label="Target Stimuli Modality"
                       onChange={(e) => {
@@ -572,7 +579,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={tasks}
-                      options={tasksArr}
+                      options={alphabetizeByLabels(tasksArr)}
                       placeholder="Task"
                       aria-label="Task"
                       onChange={(e) => {
@@ -589,7 +596,7 @@ export default function FreeQueriesBar() {
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={types}
-                      options={typesArr}
+                      options={alphabetizeByLabels( typesArr)}
                       placeholder="Type of Evidence"
                       aria-label="Type of Evidence"
                       onChange={(e) => {

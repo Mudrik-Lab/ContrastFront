@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { alphabetizeByLabels } from "./functions";
 
 export const screenWidth = window.screen.width;
 export const screenHeight = window.screen.height;
@@ -16,7 +17,7 @@ export const sideSectionClass =
 export const errorMsgClass = "text-red-500 text-sm mt-1 text-center";
 export const plotConfig = {
   modeBarButtonsToRemove: ["pan", "select", "lasso", "autoscale2d"],
-  scrollZoom: false,
+
   displayModeBar: true,
   toImageButtonOptions: {
     format: "svg", // one of png, svg, jpeg, webp
@@ -24,6 +25,10 @@ export const plotConfig = {
     scale: 1, // Multiply title/legend/axis/canvas sizes by this factor
   },
   displaylogo: false,
+  scrollZoom: false,
+  doubleClick: "reset",
+  showAxisDragHandles: true,
+  showAxisRangeEntryBoxes: true,
 };
 export const isMoblile = screenWidth < 600;
 
@@ -71,7 +76,7 @@ export const studyValidationSchema = Yup.object().shape({
     .matches(/^10\./, "Please enter a valid DOI.")
     .required("DOI is required."),
 });
-export const parametersOptions = [
+export const parametersOptions = alphabetizeByLabels([
   {
     value: "paradigm_family",
     label: "Paradigm Family",
@@ -132,9 +137,9 @@ export const parametersOptions = [
     value: "measure",
     label: "Measure",
   },
-];
+]);
 
-export const uncontrastParametersOptions = [
+export const uncontrastParametersOptions = alphabetizeByLabels([
   {
     value: "is_cm_same_participants_as_task",
     label: "Is the measure taken from the same sample as the task?",
@@ -181,8 +186,8 @@ export const uncontrastParametersOptions = [
   },
   { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
   { value: "task", label: "Task" },
-];
-export const continuousBreakdownOptions = [
+]);
+export const continuousBreakdownOptions = alphabetizeByLabels([
   { value: "number_of_stimuli", label: "Number of Stimuli" },
   {
     value: "number_of_suppressed_stimuli",
@@ -207,7 +212,7 @@ export const continuousBreakdownOptions = [
     value: "unconsciousness_measure_number_of_trials",
     label: "Awareness Measure Number of Trials",
   },
-];
+]);
 export const FrequenciesColors = {
   Delta: "#4D3991",
   Theta: "#8949A2",

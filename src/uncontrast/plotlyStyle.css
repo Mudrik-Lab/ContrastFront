@@ -1,10 +1,20 @@
 /* plotlyStyles.css */
+.plotly .modebar {
+  position: absolute;
+  top: auto;
+  bottom: 0;
+  left: 0;
+  right: 100px;
+  display: flex;
+  justify-content: end; /* Center align the mode bar */
+}
+
+/* Example to change the size of the icons */
 .plotly .modebar-btn {
-    font-size: 20px; /* Increase the icon size */
-  }
-  
-  .plotly .modebar-btn svg {
-    width: 20px; /* Adjust width */
-    height: 20px; /* Adjust height */
-  }
-  
+  font-size: 20px; /* Increase the icon size */
+}
+
+.plotly .modebar-btn svg {
+  width: 20px; /* Adjust width */
+  height: 20px; /* Adjust height */
+}

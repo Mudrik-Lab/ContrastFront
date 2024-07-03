@@ -158,7 +158,7 @@ export default function Navbar() {
           </div>
         </nav>
       ) : (
-        <nav className="bg-white px-16 py-2.5 flex items-center fixed w-full z-30 top-0 left-0 shadow-lg ">
+        <nav className="bg-white px-2 xl:px-16 py-2.5 flex items-center fixed w-full z-30 top-0 left-0 shadow-lg ">
           <div className=" flex flex-wrap items-center justify-between w-full ">
             <div className="flex items-center gap-2 w-1/3">
               <div
@@ -166,30 +166,34 @@ export default function Navbar() {
                 onClick={() => navigate("/")}>
                 <img
                   src={isUncontrast ? UnconLogo : Logo}
-                  width={100}
+                  className="w-20 xl:w-[100px]"
                   alt="logo-right"
                 />
-                <div className=" border-r border-black h-8 "></div>
-                <Text xs color="grayHeavy">
+                <div className=" border-r border-black h-6 xl:h-8 "></div>
+                <p className="text-grayHeavy text-[10px] xl:text-xs ">
                   {" "}
                   High Level <br /> Cognition Lab{" "}
-                </Text>
+                </p>
               </div>
 
               <a
                 href="https://cifar.ca/"
                 target="_blank"
                 className="logo-cifar flex gap-1 items-center ">
-                <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
-                <div className=" border-r border-black h-8 "></div>
-                <Text xs color="grayHeavy">
+                <img
+                  src={CifarLogo}
+                  alt="CifarLogo"
+                  className="w-12 xl:w-[60px]"
+                />
+                <div className=" border-r border-black h-6 xl:h-8 "></div>
+                <p className="text-grayHeavy text-[10px] xl:text-xs ">
                   {" "}
                   Brain, Mind and <br /> Consciousness program
-                </Text>
+                </p>
               </a>
             </div>
             <div className="navigate-buttons w-1/3 items-center justify-center flex ">
-              <ul className="flex flex-row text-black space-x-12">
+              <ul className="flex flex-row text-black space-x-12 items-center text-center">
                 <li className="flex items-center relative">
                   <button
                     className="flex items-center text-black border-0 gap-1 text-base "
@@ -264,7 +268,7 @@ export default function Navbar() {
                     <NavLink
                       to="/upload-new-paper"
                       className={classNames(
-                        `${
+                        `lg:whitespace-nowrap ${
                           page === "/upload-new-paper"
                             ? "text-blue font-bold text-base"
                             : "text-base"

@@ -8,9 +8,9 @@ export default function NoResults() {
       <div className="flex flex-col justify-center items-center">
         <SubmitIcon />
         <Text color={"gray"}>These parameters had given no results</Text>
-        <Text xs color={"gray"}>
+        {/* <Text xs color={"gray"}>
           These parameters had given no results
-        </Text>
+        </Text> */}
       </div>
     </div>
   );

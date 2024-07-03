@@ -225,19 +225,11 @@ export default function ExperimentDetails({
                         <Text sm>{stimulus.soa}</Text>
                       </div>
                     </div>
+
                     <div className="flex gap-1">
                       <Text sm weight={"bold"} color={"grayReg"}>
-                        is_target_same_as_suppressed_stimulus?
-                      </Text>
-                      <Text sm>
-                        {experiment.is_target_same_as_suppressed_stimulus
-                          ? "Yes"
-                          : "No"}
-                      </Text>
-                    </div>
-                    <div className="flex gap-1">
-                      <Text sm weight={"bold"} color={"grayReg"}>
-                        is_target_stimulus?
+                        Are there also non-suppressed stimuli that participants
+                        had to provide a response to (i.e., a target)?
                       </Text>
                       <Text sm>
                         {experiment.is_target_stimulus ? "Yes" : "No"}
@@ -256,6 +248,17 @@ export default function ExperimentDetails({
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
+                    <div className="flex gap-1">
+                      <Text sm weight={"bold"} color={"grayReg"}>
+                        Is the non-suppressed stimulus the same as the
+                        suppressed stimulus?
+                      </Text>
+                      <Text sm>
+                        {experiment.is_target_same_as_suppressed_stimulus
+                          ? "Yes"
+                          : "No"}
+                      </Text>
+                    </div>
                     <div className="flex w-full justify-between ">
                       <div>
                         <Text sm weight={"bold"} color={"grayReg"}>
@@ -432,7 +435,7 @@ export default function ExperimentDetails({
                       </div>
                       <div className="flex w-full items-center gap-4">
                         <Text weight={"bold"} color={"grayReg"}>
-                          Is cm same participants as task?
+                          Same participants as the main task?
                         </Text>
                         <Text>
                           {cm.is_cm_same_participants_as_task ? "Yes" : "No"}

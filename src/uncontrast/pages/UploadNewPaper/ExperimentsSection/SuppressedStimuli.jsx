@@ -102,10 +102,7 @@ export default function SuppressedStimuli({
   }
 
   return (
-    <ExpandingBox
-      number={fieldsNum}
-      disabled={disabled}
-      headline={rawTextToShow(classificationName)}>
+    <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
         return (
           <div
@@ -199,7 +196,7 @@ export default function SuppressedStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Enter the presentation duration of the critical stimulus in ms. If this information is not available, enter NA."
+                          "Enter the presentation duration of the critical stimulus in ms. If this information is not available, enter 0."
                         }
                         text={"Duration"}
                       />
@@ -255,7 +252,7 @@ export default function SuppressedStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Enter the number of different non-suppressed stimuli that were used in the experiment; e.g., if the stimuli were the digits between 1-9, the number is 9. If this information is not available, leave empty."
+                          "Enter the number of different non-suppressed stimuli that were used in the experiment; e.g., if the stimuli were the digits between 1-9, the number is 9. If this information is not available, enter 0"
                         }
                         text={"Number of stimuli"}
                       />
@@ -308,7 +305,7 @@ export default function SuppressedStimuli({
                       <TooltipExplanation
                         isHeadline
                         tooltip={
-                          "Enter the time between the appearance of the suppressed stimulus and appearance of the non-suppressed stimulus.If information is not available or irrelevant, leave empty"
+                          "Enter the time between the appearance of the suppressed stimulus and appearance of the non-suppressed stimulus."
                         }
                         text={"SOA (ms)"}
                       />
