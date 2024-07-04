@@ -6,13 +6,11 @@ import {
   Spacer,
   Text,
   ToastBox,
-  ToastErrorBox,
 } from "../../../sharedComponents/Reusble";
 import ExperimentsBox from "./ExperimentsBox";
 import ExperimentDetails from "./ExperimentsSection/ExperimentDetails";
 import { countries } from "countries-list";
 import countryList from "react-select-country-list";
-
 import classNames from "classnames";
 import { ErrorMessage, Field, Form, Formik } from "formik";
 import {
@@ -25,7 +23,6 @@ import CreatableSelect from "react-select/creatable";
 import Select from "react-select";
 import MultiSelect from "../../../sharedComponents/SelectField";
 import { useQuery } from "@tanstack/react-query";
-import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import { EditUncompletedStudy } from "../../../apiHooks/getStudies";
 import ExperimentForm from "./ExperimentsSection/ExperimentForm";
 import { ReactComponent as V } from "../../../assets/icons/white-circle-v.svg";
@@ -55,12 +52,7 @@ export default function UncompletedPaper({
   const [nameSubmitted, setNameSubmitted] = useState(false);
   const [authorsOptions, setAuthorOptions] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [value, setValue] = useState(
-    study.authors.map((author) => ({
-      value: author.id,
-      label: author.name,
-    })) || []
-  );
+  const [value, setValue] = useState([]);
   const [authorsError, setAuthorsError] = useState(false);
   const isUncontrast = true;
 
@@ -79,9 +71,27 @@ export default function UncompletedPaper({
     label: journal,
   }));
 
+  const initialValues = {
+    DOI: study.DOI || "",
+    authors_key_words: study.authors_key_words || [],
+    year: study.year,
+    source_title: { label: study.source_title, value: study.source_title },
+    countries: study.countries.map((country) => ({
+      value: country,
+      label: countries[country].name,
+    })),
+    is_author_submitter: study.is_author_submitter || false,
+  };
+
   useEffect(() => {
+    setValue(
+      study.authors.map((author) => ({
+        value: author.id,
+        label: author.name,
+      }))
+    );
     setTitle(study.title);
-  }, []);
+  }, [study.id]);
 
   useEffect(() => {
     setAuthorOptions(authorsList);
@@ -107,18 +117,6 @@ export default function UncompletedPaper({
     }
   };
 
-  const initialValues = {
-    DOI: study.DOI || "",
-    authors_key_words: study.authors_key_words || [],
-    year: study.year,
-    source_title: study.source_title,
-    countries: study.countries.map((country) => ({
-      value: country,
-      label: countries[country].name,
-    })),
-    is_author_submitter: study.is_author_submitter || false,
-  };
-
   const handleSubmit = async (values) => {
     if (!value.length) {
       setAuthorsError("Please select at least one author");
@@ -135,11 +133,12 @@ export default function UncompletedPaper({
         authors: value.map((author) => author.value),
         countries: values.countries.map((country) => country.value),
         DOI: values.DOI,
-        source_title: values.source_title,
+        source_title: values.source_title.value,
         is_author_submitter: values?.is_author_submitter,
         isUncontrast,
       });
       if (res.status === 200) {
+        refetch();
         toast.success(
           <ToastBox
             headline={"Success"}
@@ -335,9 +334,9 @@ export default function UncompletedPaper({
                               name={"source_title"}
                               id={"source_title"}
                               isClearable
-                              defaultInputValue={values?.source_title}
+                              value={values?.source_title}
                               onChange={(v) => {
-                                setFieldValue("source_title", v?.value);
+                                setFieldValue("source_title", v);
                               }}
                               options={journalsList}
                             />

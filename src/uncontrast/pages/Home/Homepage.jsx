@@ -43,7 +43,7 @@ export default function Homepage() {
       <Navbar />
       <div
         style={containerStyle}
-        className="header h-full sm:h-[512px] py-10 sm:py-20 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center relative">
+        className="header h-full sm:h-[512px] py-10 sm:py-16 px-2 sm:px-28 mt-14 bg-no-repeat bg-cover bg-center relative">
         {!isMoblile && (
           <a
             href="https://contrastdb.tau.ac.il/"
@@ -70,7 +70,7 @@ export default function Homepage() {
             </h1>
           </div>
         </div>
-        <div className="header-buttons flex flex-col items-center sm:flex-row sm:justify-start gap-4 mt-60 sm:mt-24">
+        <div className="header-buttons flex flex-col items-center sm:flex-row sm:justify-start gap-4 mt-60 sm:mt-20">
           <WhiteButton
             onClick={() => navigate("/parameter-distribution-free-queries")}>
             <Graph /> Start Exploring
