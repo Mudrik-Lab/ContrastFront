@@ -203,7 +203,7 @@ export default function Navbar() {
                   </button>
                   {graphMenue && (
                     <div
-                      className="fixed z-10 inset-0 flex justify-center modal overflow-y-auto"
+                      className="fixed z-10 inset-0 flex justify-center modal overflow-y-auto text-left"
                       onClick={() => setGraphMenue(false)}>
                       <div
                         id="dropdown-navbar"

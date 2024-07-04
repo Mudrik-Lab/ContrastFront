@@ -18,7 +18,7 @@ export default function PapersIconsMenu() {
         <Text center weight="bold" lg>
           With a Range of Unique Data Visualization Tools:{" "}
         </Text>
-        <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-8 mt-4">
+        <div className="graphs-icons-box flex flex-wrap justify-center max-w-3xl mx-auto gap-10 mt-4">
           {Object.values(graphsHeaders)
             .filter(
               (graph) =>
