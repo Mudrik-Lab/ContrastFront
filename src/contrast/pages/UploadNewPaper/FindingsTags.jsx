@@ -27,7 +27,7 @@ export default function FindingsTags({ experiment, findingOptions }) {
         return (
           <div
             className="flex w-[49%] items-start border border-blue border-x-4 p-2 rounded-md overflow-hidden"
-            key={tag.type + index}>
+            key={tag.id}>
             <div className="h-full flex items-center">
               <CircledIndex index={index} />
             </div>
@@ -77,7 +77,7 @@ export default function FindingsTags({ experiment, findingOptions }) {
                       text={tag.analysis_type}
                     />
                   </div>
-                ) : tag.family == families["SpatialAreas"] ? (
+                ) : tag.family == families["Spatial Areas"] ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element
                       headline={" AAL atlas tag"}
@@ -89,6 +89,7 @@ export default function FindingsTags({ experiment, findingOptions }) {
                 ) : (
                   <></>
                 )}
+                {tag.notes && <Element headline={"Notes"} text={tag.notes} />}
               </div>
             </div>
           </div>

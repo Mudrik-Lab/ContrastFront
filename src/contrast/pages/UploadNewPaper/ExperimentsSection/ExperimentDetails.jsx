@@ -124,7 +124,7 @@ export default function ExperimentDetails({
               {experiment.paradigms.map((paradigm, index) => {
                 return (
                   <div
-                    key={paradigm.name}
+                    key={paradigm.id}
                     className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                     <CircledIndex index={index} />
                     <div className="w-full flex flex-col gap-2">
@@ -161,40 +161,48 @@ export default function ExperimentDetails({
                   </div>
                 );
               })}
+              <div className="pl-2">
+                <Text weight={"bold"} color={"grayReg"}>
+                  Notes
+                </Text>
+                <Text>{experiment.paradigms_notes}</Text>
+              </div>
             </ExpandingBox>
 
             <ExpandingBox
               headline={"Samples"}
               number={experiment.samples.length}>
-              {experiment.samples.map((sample, index) => (
-                <div
-                  key={sample.type}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="w-full flex flex-col gap-2">
-                    <div className="w-full flex gap-2 items-start justify-between px-2">
-                      <div className=" flex flex-col ">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Type
-                        </Text>
-                        <Text>{rawTextToShow(sample.type)}</Text>
-                      </div>
-                      <div className="flex flex-col ">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Total
-                        </Text>
-                        <Text>{sample.total_size}</Text>
-                      </div>
-                      <div className="flex flex-col ">
-                        <Text weight={"bold"} color={"grayReg"}>
-                          Included
-                        </Text>
-                        <Text>{sample.size_included}</Text>
+              {experiment.samples.map((sample, index) => {
+                return (
+                  <div
+                    key={sample.id}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                    <CircledIndex index={index} />
+                    <div className="w-full flex flex-col gap-2">
+                      <div className="w-full flex gap-2 items-start justify-between px-2">
+                        <div className=" flex flex-col ">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Type
+                          </Text>
+                          <Text>{rawTextToShow(sample.type)}</Text>
+                        </div>
+                        <div className="flex flex-col ">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Total
+                          </Text>
+                          <Text>{sample.total_size}</Text>
+                        </div>
+                        <div className="flex flex-col ">
+                          <Text weight={"bold"} color={"grayReg"}>
+                            Included
+                          </Text>
+                          <Text>{sample.size_included}</Text>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div className="pl-2">
                 <Text weight={"bold"} color={"grayReg"}>
                   Notes
@@ -203,21 +211,25 @@ export default function ExperimentDetails({
               </div>
             </ExpandingBox>
             <ExpandingBox headline={"Tasks"} number={experiment.tasks.length}>
-              {experiment.tasks.map((task, index) => (
-                <div
-                  key={task + index}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="flex flex-col w-full gap-2">
-                    <div className="flex gap-2">
-                      <Text weight={"bold"} color={"grayReg"}>
-                        Type
-                      </Text>
-                      <Text>{tasks.find((x) => x.id === task.type)?.name}</Text>
+              {experiment.tasks.map((task, index) => {
+                return (
+                  <div
+                    key={task.id}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                    <CircledIndex index={index} />
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="flex gap-2">
+                        <Text weight={"bold"} color={"grayReg"}>
+                          Type
+                        </Text>
+                        <Text>
+                          {tasks.find((x) => x.id === task.type)?.name}
+                        </Text>
+                      </div>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
               <div className="pl-2">
                 <Text weight={"bold"} color={"grayReg"}>
                   Notes
@@ -228,108 +240,106 @@ export default function ExperimentDetails({
             <ExpandingBox
               headline={"Stimuli"}
               number={experiment.stimuli.length}>
-              {experiment.stimuli.map((stimulus, index) => (
-                <div
-                  key={stimulus.category.name + index}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="flex flex-col w-full gap-2">
-                    <div className="flex w-full justify-between ">
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Category
-                        </Text>
-                        <Text sm>
-                          {
-                            stimuliCategories.find(
-                              (row) => row.id === stimulus.category
-                            )?.name
-                          }
-                        </Text>
-                      </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Sub-category
-                        </Text>
-                        <Text sm>
-                          {stimuliSubCategories.find(
-                            (row) => row.id === stimulus.sub_category
-                          )?.name || "none"}
-                        </Text>
-                      </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Modality
-                        </Text>
-                        <Text sm>
-                          {
-                            stimuliModality.find(
-                              (row) => row.id === stimulus.modality
-                            ).name
-                          }
-                        </Text>
-                      </div>
+              {experiment.stimuli.map((stimulus, index) => {
+                return (
+                  <div
+                    key={stimulus.id}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                    <CircledIndex index={index} />
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="flex w-full justify-between ">
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Category
+                          </Text>
+                          <Text sm>
+                            {
+                              stimuliCategories.find(
+                                (row) => row.id === stimulus.category
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Sub-category
+                          </Text>
+                          <Text sm>
+                            {stimuliSubCategories.find(
+                              (row) => row.id === stimulus.sub_category
+                            )?.name || "none"}
+                          </Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Modality
+                          </Text>
+                          <Text sm>
+                            {
+                              stimuliModality.find(
+                                (row) => row.id === stimulus.modality
+                              ).name
+                            }
+                          </Text>
+                        </div>
 
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Duration
-                        </Text>
-                        <Text sm>
-                          {Number(stimulus.duration).toFixed() + " (ms)"}
-                        </Text>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Duration
+                          </Text>
+                          <Text sm>
+                            {Number(stimulus.duration).toFixed() + " (ms)"}
+                          </Text>
+                        </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}
-              <div className="pl-2">
-                <Text weight={"bold"} color={"grayReg"}>
-                  Notes
-                </Text>
-                <Text>{experiment.stimuli_notes}</Text>
-              </div>
+                );
+              })}
             </ExpandingBox>
             <ExpandingBox
               headline={"Consciousness Measures"}
               number={experiment.consciousness_measures.length}>
-              {experiment.consciousness_measures.map((cm, index) => (
-                <div
-                  key={cm + index}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="w-full flex items-start">
-                    <div className="w-full flex flex-col gap-2">
-                      <div className="flex w-full gap-2">
-                        <div className="w-1/2">
-                          <Text weight={"bold"} color={"grayReg"}>
-                            Type
-                          </Text>
-                          <Text>
-                            {
-                              consciousnessMeasuresTypes.find(
-                                (row) => row.id === cm.type
-                              )?.name
-                            }
-                          </Text>
-                        </div>
-                        <div className="w-1/2">
-                          <Text weight={"bold"} color={"grayReg"}>
-                            Phase
-                          </Text>
-                          <Text>
-                            {" "}
-                            {
-                              consciousnessMeasuresPhases.find(
-                                (row) => row.id === cm.phase
-                              )?.name
-                            }
-                          </Text>
+              {experiment.consciousness_measures.map((cm, index) => {
+                return (
+                  <div
+                    key={cm.id}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                    <CircledIndex index={index} />
+                    <div className="w-full flex items-start">
+                      <div className="w-full flex flex-col gap-2">
+                        <div className="flex w-full gap-2">
+                          <div className="w-1/2">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Type
+                            </Text>
+                            <Text>
+                              {
+                                consciousnessMeasuresTypes.find(
+                                  (row) => row.id === cm.type
+                                )?.name
+                              }
+                            </Text>
+                          </div>
+                          <div className="w-1/2">
+                            <Text weight={"bold"} color={"grayReg"}>
+                              Phase
+                            </Text>
+                            <Text>
+                              {" "}
+                              {
+                                consciousnessMeasuresPhases.find(
+                                  (row) => row.id === cm.phase
+                                )?.name
+                              }
+                            </Text>
+                          </div>
                         </div>
                       </div>
                     </div>
                   </div>
-                </div>
-              ))}{" "}
+                );
+              })}{" "}
               <div className="pl-2">
                 <Text weight={"bold"} color={"grayReg"}>
                   Notes
@@ -342,7 +352,7 @@ export default function ExperimentDetails({
               number={experiment.techniques.length}>
               {experiment.techniques.map((technique, index) => (
                 <div
-                  key={technique + index}
+                  key={technique.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-1/2">
@@ -360,7 +370,7 @@ export default function ExperimentDetails({
               number={experiment.measures.length}>
               {experiment.measures.map((measure, index) => (
                 <div
-                  key={measure + index}
+                  key={measure.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-full flex ">

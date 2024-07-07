@@ -4,7 +4,10 @@ import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../../apiHooks/getExtraConfig";
 
 import BasicClassification from "./BasicClassification";
-import { rawTextToShow } from "../../../../Utils/functions";
+import {
+  alphabetizeByLabels,
+  rawTextToShow,
+} from "../../../../Utils/functions";
 import Samples from "./Samples";
 import Stimuli from "./Stimuli";
 import Techniques from "./Techniques";
@@ -190,6 +193,7 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData?.paradigms}
+              notes={experimentData?.paradigms_notes}
             />
 
             <Samples
@@ -200,6 +204,7 @@ export default function ExperimentForm({
               study_pk={study.id}
               disabled={!experimentID}
               values={experimentData}
+              notes={experimentData?.sample_notes}
             />
             <Tasks
               setMinimumClassifications={setMinimumClassifications}
@@ -246,7 +251,7 @@ export default function ExperimentForm({
             <Measures
               setMinimumClassifications={setMinimumClassifications}
               minimumClassifications={minimumClassifications}
-              fieldOptions={measuresOptions}
+              fieldOptions={alphabetizeByLabels(measuresOptions)}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}

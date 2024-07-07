@@ -23,13 +23,14 @@ export default function Paradigms({
   values,
   minimumClassifications,
   setMinimumClassifications,
+  notes,
 }) {
   const initialValues = {
     main: "",
     specific: "",
     sub_type: "",
   };
-  const [description, setDescription] = useState(values?.paradigms || "");
+  const [description, setDescription] = useState(notes || "");
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "paradigms";
 

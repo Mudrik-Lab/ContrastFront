@@ -442,6 +442,7 @@ export default function UncompletedPaper({
             )}
             {experimentToShow && !newPaper && (
               <ExperimentDetails
+                setExperimentToShow={setExperimentToShow}
                 experiment={experimentToShow}
                 study={study}
                 setPaperToShow={setExperimentToShow}
