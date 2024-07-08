@@ -189,7 +189,7 @@ export default function FreeQueriesBar() {
         significance,
         consciousness_measure_phases: consciousnessMeasurePhases,
         consciousness_measure_types: consciousnessMeasureTypes,
-        mode_of_presentation: modeOfPresentation,
+        modes_of_presentation: modeOfPresentation,
         paradigms: paradigms,
         populations,
         processing_domain_types: processingDomain,
@@ -284,7 +284,7 @@ export default function FreeQueriesBar() {
     );
     updateMultiFilterState(
       setModeOfPresentation,
-      "mode_of_presentation",
+      "modes_of_presentation",
       modeOfPresentationArr
     );
     updateMultiFilterState(setParadigms, "paradigms", paradigmsArr);
@@ -437,24 +437,24 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                    {/* TODO: Server Error on this filter. uncomment after fix
+                    TODO: Server Error on this filter. uncomment after fix
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
                       isMulti={true}
                       value={modeOfPresentation}
-                      options={alphabetizeByLabels( modeOfPresentationArr)}
+                      options={alphabetizeByLabels(modeOfPresentationArr)}
                       placeholder="Mode of Presentation"
                       aria-label="Mode of Presentation"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
-                          "mode_of_presentation",
+                          "modes_of_presentation",
                           searchParams,
                           navigate
                         );
                       }}
-                    /> */}
+                    />
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}
@@ -608,7 +608,6 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     /> */}
-
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}

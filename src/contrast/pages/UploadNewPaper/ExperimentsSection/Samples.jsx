@@ -22,8 +22,9 @@ export default function Samples({
   values,
   setMinimumClassifications,
   minimumClassifications,
+  notes,
 }) {
-  const [description, setDescription] = useState(values?.samples_notes || "");
+  const [description, setDescription] = useState(notes || "");
   const initialValues = {
     type: "",
     size_included: "",
