@@ -6,7 +6,6 @@ import {
 } from "../../../../sharedComponents/Reusble";
 import { useQuery } from "@tanstack/react-query";
 import { rawTextToShow } from "../../../../Utils/functions";
-import FindingsTags from "../FindingsTags";
 import {
   uploadPaperPageTopSection,
   uploadPaperUsedHeight,
@@ -154,97 +153,100 @@ export default function ExperimentDetails({
             <ExpandingBox
               headline={"Suppressed Stimuli"}
               number={experiment.suppressed_stimuli.length}>
-              {experiment.suppressed_stimuli.map((stimulus, index) => (
-                <div
-                  key={stimulus.category.name}
-                  className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-                  <CircledIndex index={index} />
-                  <div className="flex flex-col w-full gap-2">
-                    <div className="flex w-full justify-between ">
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Category
-                        </Text>
-                        <Text sm>
-                          {
-                            stimuliCategories.find(
-                              (row) => row.id === stimulus.category
-                            )?.name
-                          }
-                        </Text>
+              {experiment.suppressed_stimuli.map((stimulus, index) => {
+                return (
+                  <div
+                    key={stimulus.id}
+                    className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+                    <CircledIndex index={index} />
+                    <div className="flex flex-col w-full gap-2">
+                      <div className="flex w-full justify-between ">
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Category
+                          </Text>
+                          <Text sm>
+                            {
+                              stimuliCategories.find(
+                                (row) => row.id === stimulus.category
+                              )?.name
+                            }
+                          </Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Sub-category
+                          </Text>
+                          <Text sm>
+                            {stimuliSubCategories.find(
+                              (row) => row.id === stimulus.sub_category
+                            )?.name || "none"}
+                          </Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Modality
+                          </Text>
+                          <Text sm>
+                            {
+                              stimuliModality.find(
+                                (row) => row.id === stimulus.modality
+                              ).name
+                            }
+                          </Text>
+                        </div>
+
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Duration
+                          </Text>
+                          <Text sm>
+                            {Number(stimulus.duration).toFixed() + " (ms)"}
+                          </Text>
+                        </div>
                       </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Sub-category
-                        </Text>
-                        <Text sm>
-                          {stimuliSubCategories.find(
-                            (row) => row.id === stimulus.sub_category
-                          )?.name || "none"}
-                        </Text>
-                      </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Modality
-                        </Text>
-                        <Text sm>
-                          {
-                            stimuliModality.find(
-                              (row) => row.id === stimulus.modality
-                            ).name
-                          }
-                        </Text>
+                      <div className="flex w-full justify-between ">
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Presentation Mode
+                          </Text>
+                          <Text sm>{stimulus.mode_of_presentation}</Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            Number of Stimuli
+                          </Text>
+                          <Text sm>{stimulus.number_of_stimuli}</Text>
+                        </div>
+                        <div>
+                          <Text sm weight={"bold"} color={"grayReg"}>
+                            SOA
+                          </Text>
+                          <Text sm>{stimulus.soa}</Text>
+                        </div>
                       </div>
 
-                      <div>
+                      <div className="flex gap-1">
                         <Text sm weight={"bold"} color={"grayReg"}>
-                          Duration
+                          Are there also non-suppressed stimuli that
+                          participants had to provide a response to (i.e., a
+                          target)?
                         </Text>
                         <Text sm>
-                          {Number(stimulus.duration).toFixed() + " (ms)"}
+                          {experiment.is_target_stimulus ? "Yes" : "No"}
                         </Text>
                       </div>
-                    </div>
-                    <div className="flex w-full justify-between ">
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Presentation Mode
-                        </Text>
-                        <Text sm>{stimulus.mode_of_presentation}</Text>
-                      </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          Number of Stimuli
-                        </Text>
-                        <Text sm>{stimulus.number_of_stimuli}</Text>
-                      </div>
-                      <div>
-                        <Text sm weight={"bold"} color={"grayReg"}>
-                          SOA
-                        </Text>
-                        <Text sm>{stimulus.soa}</Text>
-                      </div>
-                    </div>
-
-                    <div className="flex gap-1">
-                      <Text sm weight={"bold"} color={"grayReg"}>
-                        Are there also non-suppressed stimuli that participants
-                        had to provide a response to (i.e., a target)?
-                      </Text>
-                      <Text sm>
-                        {experiment.is_target_stimulus ? "Yes" : "No"}
-                      </Text>
                     </div>
                   </div>
-                </div>
-              ))}
+                );
+              })}
             </ExpandingBox>
             <ExpandingBox
               headline={"Target Stimuli"}
               number={experiment.target_stimuli.length}>
               {experiment.target_stimuli.map((stimulus, index) => (
                 <div
-                  key={stimulus.category.name}
+                  key={stimulus.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
@@ -313,7 +315,7 @@ export default function ExperimentDetails({
               number={experiment.suppression_methods.length}>
               {experiment.suppression_methods.map((method, index) => (
                 <div
-                  key={method + index}
+                  key={method.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
@@ -350,7 +352,7 @@ export default function ExperimentDetails({
               number={experiment.processing_domains.length}>
               {experiment.processing_domains.map((domain, index) => (
                 <div
-                  key={domain + index}
+                  key={domain.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="flex flex-col w-full gap-2">
@@ -375,7 +377,7 @@ export default function ExperimentDetails({
               number={experiment.consciousness_measures.length}>
               {experiment.consciousness_measures.map((cm, index) => (
                 <div
-                  key={cm + index}
+                  key={cm.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
                   <CircledIndex index={index} />
                   <div className="w-full flex items-start">
@@ -477,7 +479,7 @@ export default function ExperimentDetails({
               headline={"Experiment's Findings"}
               number={experiment.findings?.length}>
               {experiment.findings.map((finding) => (
-                <div>
+                <div key={finding.id}>
                   <div className="flex w-full justify-between gap-4">
                     <div>
                       <Text sm weight={"bold"} color={"grayReg"}>
