@@ -65,19 +65,19 @@ export const graphsHeaders = {
       "Using the ‘Minimum number of experiments scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable.",
     siteToDisplay: "uncontrast",
   },
-  // "Distribution of Experiments Across Parameter": {
-  //   text: "Distribution of Experiments Across Parameter",
-  //   tooltip:
-  //     "The graph depicts the distribution of effects for a specific parameter of interest.",
-  //   color: "someRed",
-  //   icon: <Histogram />,
-  //   route: "/distribution-of-experiments-across-parameters",
-  //   figureLine:
-  //     "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
-  //   figureText:
-  //     "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
-  //   siteToDisplay: "uncontrast",
-  // },
+  "Distribution of Experiments Across Parameter": {
+    text: "Distribution of Experiments Across Parameter",
+    tooltip:
+      "The graph depicts the distribution of effects for a specific parameter of interest.",
+    color: "someRed",
+    icon: <Histogram />,
+    route: "/distribution-of-experiments-across-parameters",
+    figureLine:
+      "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
+    figureText:
+      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    siteToDisplay: "uncontrast",
+  },
   "Parameter Distribution Bar": {
     text: "Parameter Distribution Bar",
     tooltip:
