@@ -20,7 +20,6 @@ import RegisterComponent from "../contrast/pages/Register/Register.jsx";
 import SecondaryRegister from "../contrast/pages/Register/SecondaryRegister.jsx";
 import ProtectedRoute from "../Utils/ProtectedRoute.jsx";
 import UploadNewPaper from "./pages/UploadNewPaper/UploadNewPaperPage.jsx";
-import Histogram from "./pages/histogram.jsx";
 import TermOfUse from "../contrast/pages/TermsOfUse/TermsOfUse.jsx";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance.jsx";
 import "./plotlyStyle.css"; // Import custom CSS for the plots
@@ -103,10 +102,6 @@ const UncontrastScreens = () => {
           }
         />
 
-        <Route
-          path="/histogram"
-          element={isMoblile ? <MobileScreen /> : <Histogram />}
-        />
         <Route
           path="/parameter-distribution-pie"
           element={isMoblile ? <MobileScreen /> : <ParametersDistributionPie />}
