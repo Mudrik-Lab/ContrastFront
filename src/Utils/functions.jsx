@@ -305,7 +305,7 @@ export function DeleteClassificationField(
             if (fieldValues.length !== 1) {
               const deletedId = id;
               const newArr = fieldValues.filter(
-                (item) => item.id.toString() !== deletedId.toString()
+                (item) => item.id?.toString() !== deletedId.toString()
               );
               setFieldValues(newArr);
             } else {

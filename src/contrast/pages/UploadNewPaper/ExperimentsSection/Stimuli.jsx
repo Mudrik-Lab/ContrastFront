@@ -52,10 +52,10 @@ export default function Stimuli({
   );
 
   useEffect(() => {
-    if (fieldValues[0].sub_category === "") {
-      delete fieldValues[0].sub_category;
+    if (fieldValues[fieldValues.length - 1].sub_category === "") {
+      delete fieldValues[fieldValues.length - 1].sub_category;
     }
-  }, [fieldValues[0]]);
+  }, [fieldValues[fieldValues.length - 1]]);
 
   useEffect(() => {
     if (values && values.stimuli?.length > 0) {
@@ -74,7 +74,6 @@ export default function Stimuli({
   }, []);
 
   function creatSubOptions(index) {
-    console.log(fieldValues[index].category);
     return [
       ...new Set(
         subCategories.filter((sub) => sub.parent == fieldValues[index].category)
@@ -82,6 +81,7 @@ export default function Stimuli({
     ];
   }
   const submitCondition = (index) => {
+    console.log(creatSubOptions(index));
     return (
       fieldValues[index]?.category &&
       fieldValues[index]?.modality &&
