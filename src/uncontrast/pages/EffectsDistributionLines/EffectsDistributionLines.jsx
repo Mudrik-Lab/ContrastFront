@@ -69,7 +69,7 @@ export default function EffectsDistributionLines() {
           color: colors[row.series_name],
         },
         opacity: 0.5,
-        xbins: { start: 0, size: binSize },
+        // xbins: { size: binSize },
         type: "bar",
       }
       // {
