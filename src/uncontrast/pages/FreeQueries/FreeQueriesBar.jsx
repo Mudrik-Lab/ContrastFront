@@ -437,7 +437,7 @@ export default function FreeQueriesBar() {
                         );
                       }}
                     />
-                    TODO: Server Error on this filter. uncomment after fix
+
                     <Select
                       className="text-lg w-[300px]"
                       closeMenuOnSelect={true}

@@ -123,7 +123,7 @@ export const parametersOptions = alphabetizeByLabels([
   },
   {
     value: "consciousness_measure_type",
-    label: "how was consciousness measured?",
+    label: "How was consciousness measured?",
   },
   {
     value: "type_of_consciousness",

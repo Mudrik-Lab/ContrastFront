@@ -267,7 +267,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can see how unconscious processing has been studied in different countries around the world.",
     figureText:
-      "The map presents the distribution of the effects in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments showing positive, negative or mixed evidence for unconscious processing. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "The map presents the distribution of the experiments in the database according to nations extracted from author affiliations. The radius of each concentric circle describes the number of experiments showing positive, negative or mixed evidence for unconscious processing. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
 };

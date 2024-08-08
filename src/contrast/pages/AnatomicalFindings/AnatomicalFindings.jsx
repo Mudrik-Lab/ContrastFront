@@ -20,9 +20,9 @@ export default function AnatomicalFindings() {
       {isSuccess && (
         <div className="h-auto w-full ">
           <TopGraphText
-            text={graphsHeaders["AnatomicalFindings"].figureText}
-            firstLine={graphsHeaders["AnatomicalFindings"].figureLine}
-            legendLine={graphsHeaders["AnatomicalFindings"].legendLine}
+            text={graphsHeaders["Anatomical Findings"].figureText}
+            firstLine={graphsHeaders["Anatomical Findings"].figureLine}
+            legendLine={graphsHeaders["Anatomical Findings"].legendLine}
           />
           <Spacer height={50} />
           <Text xl3 weight="bold" color="blue" center>

@@ -173,7 +173,7 @@ export default function Navbar() {
                 onClick={() => navigate("/")}>
                 <img
                   src={isUncontrast ? UnconLogo : Logo}
-                  className="w-20 xl:w-[100px]"
+                  className="w-[70px] xl:w-[95px]"
                   alt="logo-right"
                 />
                 <div className=" border-r border-black h-6 xl:h-8 "></div>
@@ -190,7 +190,7 @@ export default function Navbar() {
                 <img
                   src={CifarLogo}
                   alt="CifarLogo"
-                  className="w-12 xl:w-[60px]"
+                  className="w-[45px] xl:w-[55px]"
                 />
                 <div className=" border-r border-black h-6 xl:h-8 "></div>
                 <p className="text-grayHeavy text-[10px] xl:text-xs ">
