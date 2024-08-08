@@ -369,7 +369,7 @@ export default function Findings({
 
                           <TooltipExplanation
                             tooltip={
-                              " If for this finding, its presence is associated with f consciousness, mark it as “Positive”. If its absence is associated with consciousness, mark it as “Negative”."
+                              " If for this finding, its presence is associated with consciousness, mark it as “Positive”. If its absence is associated with consciousness, mark it as “Negative”."
                             }
                           />
                         </div>
