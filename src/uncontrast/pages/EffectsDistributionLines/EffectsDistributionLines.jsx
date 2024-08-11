@@ -88,7 +88,6 @@ export default function EffectsDistributionLines() {
       // }
     );
   });
-  console.log(graphsData);
   let flatedY = [];
   let highestY;
   if (data) {

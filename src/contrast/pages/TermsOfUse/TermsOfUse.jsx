@@ -5,7 +5,7 @@ import { Site } from "../../../config/siteType";
 
 export default function TermOfUse() {
   const siteName = Site.type === "contrast" ? "Contrast" : "UnconTrust";
-  console.log(siteName);
+
   const htmlEl = (
     <div className="text-base">
       <h1 className="text-2xl text-center text-blue font-bold mt-2   ">

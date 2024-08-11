@@ -82,7 +82,6 @@ export default function ParametersDistributionPie() {
   const labels2 = [];
 
   data?.data.forEach((element) => {
-    console.log(element.series_name);
     return element.series_name === "True"
       ? (element.series_name = "Yes")
       : element.series_name === "False"

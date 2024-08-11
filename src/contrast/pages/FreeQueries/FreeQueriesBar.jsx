@@ -661,9 +661,6 @@ export default function FreeQueriesBar() {
                       placeholder="Theories"
                       aria-label="Theories"
                       onChange={(e) => {
-                        if (e.length === 0) {
-                          console.log(e);
-                        }
                         return buildUrlForMultiSelect(
                           e,
                           "interpretation_theories",

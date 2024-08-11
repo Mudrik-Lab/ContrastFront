@@ -329,8 +329,6 @@ export default function FreeQueriesBar() {
     }
   }, [csvRef.current]);
 
-  console.log(participantsExcluded);
-
   return (
     <div>
       {configSuccess && (
