@@ -20,6 +20,7 @@ export default function FinalSubmit({ study, refetch, onClose }) {
       }
       refetch();
     } catch (e) {
+      console.log(e);
       ToastError(e);
     }
   }
