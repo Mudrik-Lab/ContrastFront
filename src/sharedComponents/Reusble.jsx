@@ -271,41 +271,28 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
   );
 };
 
-export const SideControl = ({ children, headline, isUploadPaper = false }) => {
+export const SideControl = ({ children, headline, fullHeight }) => {
   const isMoblile = screenWidth < 600;
 
   return (
     <div
-      className={classNames(
-        `side-filter-box p-2 flex flex-col items-center  ${
-          isUploadPaper ? "pt-0 h-full relative" : ""
-        }`
-      )}
+      className={"side-filter-box p-2 flex flex-col items-center"}
       style={{
         width: "100%",
         maxHeight: isMoblile
           ? "400px"
+          : fullHeight
+          ? "h-full"
           : `calc(100vh - ${navHeight + footerHeight}px)`,
       }}>
-      {isUploadPaper ? (
-        <div className=" w-full">{headline}</div>
-      ) : (
-        <div className="p-4 ">
-          <Text xl3 weight="bold" color="blue" center>
-            {headline}
-          </Text>
-        </div>
-      )}
+      <div className="p-4 ">
+        <Text xl3 weight="bold" color="blue" center>
+          {headline}
+        </Text>
+      </div>
 
       <div
-        className={classNames(
-          `shadow-xl w-full mt-6 rounded-md bg-white flex flex-col  gap-2 px-4 py-2 overflow-y-scroll z-20 ${
-            isUploadPaper ? "items-start h-full " : "items-center"
-          }`
-        )}>
-        {isUploadPaper && (
-          <h2 className=" text-grayReg font-bold text-base ">My Papers</h2>
-        )}
+        className={`shadow-xl w-full mt-6 items-center bg-white flex flex-col gap-2 px-4 py-2 overflow-y-scroll z-20 `}>
         {children}
         <Spacer height={20} />
       </div>
