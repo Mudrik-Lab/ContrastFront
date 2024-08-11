@@ -330,7 +330,6 @@ export default function UncompletedPaper({
                                 isClearable
                                 value={values.source_title}
                                 onChange={(v) => {
-                                  console.log(v);
                                   setFieldValue("source_title", v);
                                 }}
                                 options={journalsList}

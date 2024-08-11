@@ -81,7 +81,6 @@ export default function Stimuli({
     ];
   }
   const submitCondition = (index) => {
-    console.log(creatSubOptions(index));
     return (
       fieldValues[index]?.category &&
       fieldValues[index]?.modality &&

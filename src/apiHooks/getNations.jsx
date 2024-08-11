@@ -9,7 +9,6 @@ export default async function getNations({
   paradigm,
   isUncontrast,
 }) {
-  console.log(paradigm);
   const theoriesArr = theory?.map((t) => "&theory=" + t.value);
   const url = isUncontrast
     ? "uncontrast_studies/experiments_graphs/nations_of_consciousness"

@@ -12,7 +12,6 @@ import { Site } from "../../config/siteType.js"; //"../site/Site";
 export default function MobileScreen() {
   const navigate = useNavigate();
   const isUncontrust = Site.type === "uncontrast";
-  console.log(isUncontrust);
   return (
     <div>
       <Navbar />

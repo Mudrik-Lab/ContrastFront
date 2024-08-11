@@ -255,6 +255,7 @@ export default function FreeQueriesBar() {
       fontSize: 16,
     }),
   };
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -356,12 +357,24 @@ export default function FreeQueriesBar() {
     }
   }, [csvRef.current]);
 
+  useEffect(() => {
+    if (theoryFamilies.length === 0) {
+      setInterpretations([]);
+
+      setSearchParams((prev) => {
+        const newParams = new URLSearchParams(prev);
+        newParams.delete("interpretations_types");
+        return newParams;
+      });
+    }
+  }, [theoryFamilies]);
+
   return (
     <div>
       {extraConfigSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={"Free Queries"}>
+            <SideControl fullHeight headline={"Free Queries"}>
               <Text center lg weight="bold">
                 Axis Controls
               </Text>
@@ -647,20 +660,20 @@ export default function FreeQueriesBar() {
                       options={theories}
                       placeholder="Theories"
                       aria-label="Theories"
-                      onChange={(e) =>
-                        buildUrlForMultiSelect(
+                      onChange={(e) => {
+                        return buildUrlForMultiSelect(
                           e,
                           "interpretation_theories",
                           searchParams,
                           navigate
-                        )
-                      }
+                        );
+                      }}
                     />
                     <Select
                       isDisabled={theoryFamilies.length === 0}
                       closeMenuOnSelect={true}
                       isMulti={true}
-                      className="text-lg w-[300px]"
+                      className="text-lg w-full"
                       value={interpretations}
                       options={interpretationsArr}
                       placeholder="interpretations"

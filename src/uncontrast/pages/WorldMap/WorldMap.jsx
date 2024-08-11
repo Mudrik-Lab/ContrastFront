@@ -58,7 +58,6 @@ export default function WorldMap() {
   );
 
   const [paradigm, setParadigm] = React.useState(paradigmsArr[0]);
-  console.log(paradigmsArr);
   const { data, isLoading } = useQuery(
     ["unconsciousness-world-map", experimentsNum, paradigm?.value],
     () =>
@@ -219,7 +218,6 @@ export default function WorldMap() {
       : setExperimentsNum(0);
 
     if (queryParams.get("paradigm")) {
-      console.log(queryParams.get("paradigm"));
       setParadigm({
         value: queryParams.get("paradigm"),
         label: paradigmsArr.find(
