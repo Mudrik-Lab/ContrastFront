@@ -114,10 +114,10 @@ export default function TheoryDriven() {
       marker: {
         colors: labels1.map((label) =>
           label === "post-hoc"
-            ? designerColors[32]
+            ? designerColors[12]
             : label === "mentioning"
-            ? designerColors[28]
-            : designerColors[33]
+            ? designerColors[13]
+            : designerColors[14]
         ),
         line: { width: 1, color: "white" },
       },
