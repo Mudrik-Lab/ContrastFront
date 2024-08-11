@@ -255,6 +255,8 @@ export default function FreeQueriesBar() {
       fontSize: 16,
     }),
   };
+
+  console.log(trace1);
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -355,6 +357,17 @@ export default function FreeQueriesBar() {
       csvRef.current?.click();
     }
   }, [csvRef.current]);
+  useEffect(() => {
+    console.log(theoryFamilies);
+    if (theoryFamilies.length === 0) {
+      setInterpretations([]);
+
+      setSearchParams((prev) => {
+        prev.delete(`interpretations_types`);
+        return prev;
+      });
+    }
+  }, [theoryFamilies]);
 
   return (
     <div>
