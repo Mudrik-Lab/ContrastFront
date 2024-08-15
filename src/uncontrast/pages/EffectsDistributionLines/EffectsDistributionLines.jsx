@@ -69,7 +69,7 @@ export default function EffectsDistributionLines() {
           color: colors[row.series_name],
         },
         opacity: 0.5,
-        // xbins: { size: binSize },
+        xbins: { size: Number(binSize) },
         type: "bar",
       }
       // {
@@ -118,6 +118,7 @@ export default function EffectsDistributionLines() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+  console.log(graphsData);
   return (
     <div>
       <PageTemplate
