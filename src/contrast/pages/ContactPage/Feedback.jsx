@@ -11,6 +11,7 @@ import {
 } from "../../../sharedComponents/Reusble";
 import sendFeedback from "../../../apiHooks/sendFeedback";
 import { toast } from "react-toastify";
+import { ToastError } from "../../../Utils/functions";
 
 export default function Feedback() {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -50,7 +51,7 @@ export default function Feedback() {
         toast.success(
           <ToastBox
             headline={"Feedback was sent successfully"}
-            text={"Thank you for your feedback!"}
+            text={"Thank you for your message!"}
           />
         );
         resetForm();
@@ -134,7 +135,7 @@ export default function Feedback() {
                   </p>
                   <Field
                     as="textarea"
-                    placeholder={"Thank you for your feedback!"}
+                    placeholder={"Thank you for your message!"}
                     id="message"
                     name="message"
                     className="border border-gray-300 rounded-sm p-2 h-40 w-full"

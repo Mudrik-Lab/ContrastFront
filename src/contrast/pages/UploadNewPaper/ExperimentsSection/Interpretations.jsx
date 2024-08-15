@@ -75,7 +75,7 @@ export default function Interpretations({
             blackHeadline
             hover
             tooltip={
-              "Indicate if the experiment's findings were interpreted as Supporting/Challenging or Neutral regarding each of the theories. If the theory wasn’t mentioned in the paper (or was mentioned but without being portrayed as supported/challenged), indicate “Neutral.”"
+              'Indicate if the experiment`s findings were interpreted as Supporting/Challenging or Neutral regarding each of the theory groups: GWT = Global Neuronal Theories; IIT = Integrated Information Theories; HOT = Higher Order Theories; FOT = First Order & Predictive Processing Theories. If the theory group wasn’t mentioned in the paper (or was mentioned but without being portrayed as supported/challenged), indicate "Neutral"'
             }
           />
         </div>
@@ -92,7 +92,7 @@ export default function Interpretations({
                 <div className="w-full flex gap-2 items-start">
                   <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
-                      Theory
+                      Theory Group
                     </Text>
                     <input
                       readOnly
@@ -107,7 +107,7 @@ export default function Interpretations({
 
                   <div className="w-full">
                     <Text weight={"bold"} color={"grayReg"}>
-                      Type
+                      Interpretation
                     </Text>
 
                     <CustomSelect

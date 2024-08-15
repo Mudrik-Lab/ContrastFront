@@ -79,7 +79,7 @@ export const studyValidationSchema = Yup.object().shape({
 export const parametersOptions = alphabetizeByLabels([
   {
     value: "paradigm_family",
-    label: "Paradigm Family",
+    label: "Paradigm family",
   },
   {
     value: "paradigm",
@@ -91,11 +91,11 @@ export const parametersOptions = alphabetizeByLabels([
   },
   {
     value: "finding_tag",
-    label: "Finding Tag",
+    label: "Finding tag",
   },
   {
     value: "finding_tag_family",
-    label: "Finding Tag Family",
+    label: "Finding tag family",
   },
   {
     value: "reporting",
@@ -103,7 +103,7 @@ export const parametersOptions = alphabetizeByLabels([
   },
   {
     value: "theory_driven",
-    label: "Theory Driven",
+    label: "Theory driven",
   },
   {
     value: "task",
@@ -111,7 +111,7 @@ export const parametersOptions = alphabetizeByLabels([
   },
   {
     value: "stimuli_category",
-    label: "Stimulus Category",
+    label: "Stimulus category",
   },
   {
     value: "modality",
@@ -127,7 +127,7 @@ export const parametersOptions = alphabetizeByLabels([
   },
   {
     value: "type_of_consciousness",
-    label: "Type of Consciousness",
+    label: "Type of consciousness",
   },
   {
     value: "technique",

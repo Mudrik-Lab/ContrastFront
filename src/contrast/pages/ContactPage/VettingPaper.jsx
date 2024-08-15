@@ -38,7 +38,7 @@ export default function VettingPaper() {
         toast.success(
           <ToastBox
             headline={"Feedback was sent successfully"}
-            text={"Thank you for your feedback!"}
+            text={"Thank you for your message!"}
           />
         );
         resetForm();
