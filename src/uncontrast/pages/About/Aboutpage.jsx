@@ -74,7 +74,7 @@ export default function Aboutpage() {
               become a major hub for the community of consciousness studies,{" "}
               <a className={aLinkClass} href="/contact">
                 {" "}
-                and welcome your feedback and suggestions.
+                and welcome your message and suggestions.
               </a>
             </Text>
           </div>

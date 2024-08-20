@@ -32,10 +32,10 @@ export default function AboutPage() {
               theories of consciousness have been studied and conduct your own
               queries on the data. Here, we focus on four leading families of
               theories: Global Workspace theories (GWT), Integrated Information
-              Theories (IIT), Higher Order Theories theories (HOT) and First
-              order & predictive processing theories (FOT). We provide analytics
-              on papers that interpret their findings in light of these
-              theories, aiming at identifying trends in methodological choices,
+              Theories (IIT), Higher Order theories (HOT) and First Order &
+              Predictive Processing theories (FOT). We provide analytics on
+              papers that interpret their findings in light of these theories,
+              aiming at identifying trends in methodological choices,
               interpretations, findings, and more, by classifying and
               quantifying the original authors’ point of view with regard to
               their studies. Below is a list of plots and searches that can be
@@ -62,7 +62,7 @@ export default function AboutPage() {
               hope that it will become a major hub for the community of
               consciousness studies,{" "}
               <a className={aLinkClass} href="/contact">
-                and welcome your feedback and suggestions
+                and welcome your message and suggestions
               </a>
             </Text>
           </div>

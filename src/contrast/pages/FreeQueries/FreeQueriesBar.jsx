@@ -131,7 +131,8 @@ export default function FreeQueriesBar() {
   const paradigmsArr = extraConfigSuccess
     ? extraConfig?.data.available_paradigms.map((type, index) => ({
         value: type.id,
-        label: type.name,
+        label: type.sub_type ? `${type.name} : ${type.sub_type}` : type.name,
+        //TODO
       }))
     : [];
 

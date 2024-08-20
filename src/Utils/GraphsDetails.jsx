@@ -68,7 +68,7 @@ export const graphsHeaders = {
   "Distribution of Experiments Across Parameter": {
     text: "Distribution of Experiments Across Parameter",
     tooltip:
-      "The graph depicts the distribution of effects for a specific parameter of interest.",
+      "The graph depicts the distribution of experiments for a specific parameter of interest.",
     color: "someRed",
     icon: <Histogram />,
     route: "/distribution-of-experiments-across-parameters",
