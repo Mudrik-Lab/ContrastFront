@@ -25,11 +25,7 @@ export default function PapersIconsMenu() {
                 graph.siteToDisplay === "uncontrast" ||
                 graph.siteToDisplay === "both"
             )
-            .filter(
-              (item) =>
-                item.text !== "Distribution of Experiments Across Parameter"
-              //TODO: after fix of histogram graph- remove this second filter
-            )
+
             .map((paper) => (
               <div
                 role="button"

@@ -27,16 +27,10 @@ export default function Navbar() {
   const isUncontrast = Site.type === "uncontrast";
 
   const graphs = isUncontrast
-    ? Object.values(graphsHeaders)
-        .filter(
-          (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
-        )
-        .filter(
-          (item) => item.text !== "Distribution of Experiments Across Parameter"
-        )
-    : //TODO: after fix of histogram graph- remove this second filter
-
-      Object.values(graphsHeaders).filter(
+    ? Object.values(graphsHeaders).filter(
+        (x) => x.siteToDisplay === "uncontrast" || x.siteToDisplay === "both"
+      )
+    : Object.values(graphsHeaders).filter(
         (x) => x.siteToDisplay === "contrast" || x.siteToDisplay === "both"
       );
 

@@ -42,19 +42,19 @@ export default function EffectsDistributionLines() {
     queryKey: [
       "distribution_of_effects_across_parameters",
       experimentsNum,
-      binSize,
+      1,
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
         min_number_of_experiments: experimentsNum,
-        binSize,
+        binSize: 1,
         continuous_breakdown:
           selected?.value || continuousBreakdownOptions[0].value,
         isUncontrast: true,
       }),
   });
-
+  console.log(binSize);
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
   const graphsData = [];
   data?.data.forEach((row) => {
@@ -64,13 +64,13 @@ export default function EffectsDistributionLines() {
         y: row.series.map((a) => a.value),
         name: rawTextToShow(row.series_name),
         autobinx: false,
-        histnorm: "count",
+        // histnorm: "count",
         marker: {
           color: colors[row.series_name],
         },
         opacity: 0.5,
-        xbins: { size: Number(binSize) },
-        type: "bar",
+        xbins: { size: binSize },
+        type: "histogram",
       }
       // {
       //   x: row.series.map((a) => a.key),
