@@ -241,6 +241,7 @@ export default function ParametersDistributionTheoriesComparison() {
                       type: "pie",
                       hovertemplate: "%{label}: %{value} <extra></extra>",
                       textinfo: "label+number",
+                      textfont: { size: 20 },
                       textposition: "inside",
                       hole: 0.4,
                       marker: {
@@ -265,7 +266,7 @@ export default function ParametersDistributionTheoriesComparison() {
 
                         style: { whiteSpace: "pre-wrap" },
                         font: {
-                          size: 16,
+                          size: 18,
                         },
                       },
                     ],

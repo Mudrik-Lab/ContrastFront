@@ -258,23 +258,31 @@ export default function Frequencies() {
                       config={plotConfig}
                       layout={{
                         autosize: true,
-                        barmode: "stack",
-                        // width: isMoblile
-                        //   ? screenWidth
-                        //   : screenWidth - sideWidth - 300,
-                        // height: screenHeight - 360,
-
-                        margin: { autoexpand: true, l: 50 },
+                        legend: { itemwidth: 25, font: { size: 18 } },
                         showlegend: false,
                         yaxis: {
-                          title: " Experment Index",
-                          zeroline: false, // hide the zeroline
+                          showgrid: false,
+                          title: { text: "Experiments", font: { size: 24 } },
+                          zeroline: true,
+
+                          tickfont: {
+                            size: 20,
+                            standoff: 50,
+                          },
                           zerolinecolor: "#969696", // customize the color of the zeroline
                           zerolinewidth: 2, // customize the width of the zeroline
                         },
                         xaxis: {
-                          title: " Frequency (Hz)",
-                          zeroline: false, // hide the zeroline
+                          showgrid: false,
+                          title: {
+                            text: " Frequency (Hz)",
+                            font: { size: 24 },
+                          },
+
+                          tickfont: {
+                            size: 20,
+                            standoff: 50,
+                          },
                           zerolinecolor: "#969696", // customize the color of the zeroline
                           zerolinewidth: 2, // customize the width of the zeroline
                         },

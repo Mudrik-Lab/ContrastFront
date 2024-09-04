@@ -23,6 +23,7 @@ import {
   plotConfig,
   screenWidth,
   sideSectionClass,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
 import getFreeQueries from "../../../apiHooks/getFreeQueries";
@@ -725,22 +726,13 @@ export default function FreeQueriesBar() {
                     height: 35 * Y?.length + 250,
                     margin: { autoexpand: true, l: 20 },
                     legend: { itemwidth: 90 },
-                    xaxis: {
-                      title: "Number of experiments",
-                      zeroline: true,
-                      side: "top",
-                      tickfont: {
-                        size: 16,
-                        standoff: 50,
-                      },
-                    },
+                    xaxis: xAxisConfig,
                     yaxis: {
                       automargin: true,
-
                       ticks: "outside",
                       tickangle: 315,
                       tickfont: {
-                        size: 12,
+                        size: 18,
                         standoff: 50,
                       },
                     },

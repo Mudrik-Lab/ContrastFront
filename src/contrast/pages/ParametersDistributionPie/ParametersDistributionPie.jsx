@@ -97,6 +97,7 @@ export default function ParametersDistributionPie() {
       labels: labels1,
       type: "pie",
       textinfo: "label+number",
+      textfont: { size: 20 },
       hovertemplate: "%{label}: %{value} <extra></extra>",
       textposition: "inside",
       insidetextorientation: "horizontal",

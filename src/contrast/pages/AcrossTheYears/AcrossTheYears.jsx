@@ -15,14 +15,12 @@ import {
 import {
   footerHeight,
   isMoblile,
-  navHeight,
   parametersOptions,
   plotConfig,
   screenHeight,
   screenWidth,
   sideSectionClass,
   sideWidth,
-  uploadPaperUsedHeight,
 } from "../../../Utils/HardCoded";
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
@@ -177,15 +175,35 @@ export default function AcrossTheYears() {
                 config={plotConfig}
                 layout={{
                   xaxis: {
-                    title: "Years",
+                    showgrid: false,
+                    title: {
+                      text: "Years",
+                      font: { size: 28 },
+                      standoff: 10,
+                    },
+                    zeroline: true,
+                    side: "bottom",
+                    tickfont: {
+                      size: 20,
+                      standoff: 50,
+                    },
                   },
                   yaxis: {
-                    title: "Number of experiments",
-                    tickmode: "linear",
+                    showline: true,
+                    showgrid: false,
+                    zeroline: true,
+                    title: {
+                      text: "Number of experiments",
+                      font: { size: 24 },
+                    },
+                    tickfont: {
+                      size: 20,
+                      standoff: 50,
+                    },
                     dtick: Math.max(...highestY) > 20 ? 20 : 1,
                   },
                   autosize: false,
-                  showlegend: !isMoblile,
+                  showlegend: true,
                   legend: {
                     x: 1,
                     xanchor: "left",

@@ -325,22 +325,33 @@ export default function Timings() {
                   data={traces}
                   config={plotConfig}
                   style={{
-                    width: "calc(100% - 200px)",
+                    width: "calc(100% - 300px)",
                     height: "calc(100% - 100px)",
                   }}
                   layout={{
                     autosize: true,
-                    legend: { itemwidth: 15, font: { size: 18 } },
+                    legend: { itemwidth: 25, font: { size: 18 } },
                     showlegend: false,
                     yaxis: {
-                      title: "Experiments",
-                      zeroline: false, // hide the zeroline
+                      showgrid: false,
+                      title: { text: "Experiments", font: { size: 24 } },
+                      zeroline: true,
+
+                      tickfont: {
+                        size: 20,
+                        standoff: 50,
+                      },
                       zerolinecolor: "#969696", // customize the color of the zeroline
                       zerolinewidth: 2, // customize the width of the zeroline
                     },
                     xaxis: {
-                      title: "Time (ms)",
-                      zeroline: false, // hide the zeroline
+                      showgrid: false,
+                      title: { text: "Time (ms)", font: { size: 24 } },
+
+                      tickfont: {
+                        size: 20,
+                        standoff: 50,
+                      },
                       zerolinecolor: "#969696", // customize the color of the zeroline
                       zerolinewidth: 2, // customize the width of the zeroline
                     },
@@ -349,18 +360,19 @@ export default function Timings() {
                 {screenHeight > 500 && (
                   <div
                     style={{
-                      height: "calc(100% - 200px)",
+                      height: "calc(100vh - 300px)",
                       marginTop: "50px",
+                      overflowY: "scroll",
                     }}>
                     {blueToYellow(legendArray.length).map((color, index) => (
                       <div
                         key={index}
-                        className="flex justify-start items-center gap-2 "
+                        className=" flex justify-start items-center gap-2 "
                         id="color">
                         <div
-                          className="w-3 h-3  "
+                          className="w-3 h-3"
                           style={{ backgroundColor: color }}></div>
-                        <p className="text-xs">
+                        <p className="text-md">
                           {Object.values(legendArray)[index]}
                         </p>
                       </div>

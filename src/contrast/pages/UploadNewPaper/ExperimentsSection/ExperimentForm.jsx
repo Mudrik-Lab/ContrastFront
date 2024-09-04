@@ -64,6 +64,8 @@ export default function ExperimentForm({
     label: task.name,
   }));
   const paradigms = extraConfig?.data.available_paradigms;
+  const paradigmsSubTypes = extraConfig?.data.available_paradigms_sub_types;
+
   const stimulusCategories =
     extraConfig?.data.available_stimulus_category_type.map((cat) => ({
       value: cat.id,
@@ -189,6 +191,7 @@ export default function ExperimentForm({
               minimumClassifications={minimumClassifications}
               fieldOptions={paradigmsFamilies}
               optionalParadigms={paradigms}
+              paradigmsSubTypes={paradigmsSubTypes}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}

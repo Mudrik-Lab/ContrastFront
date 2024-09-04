@@ -92,7 +92,23 @@ export default function TheoryDriven() {
     theory.series.map((row) => keysArr.push(row.key))
   );
   const trimedKeysArr = [...new Set(keysArr)];
-  const someColors = designerColors.slice(0, trimedKeysArr.length);
+  const liadChosenColors = [
+    "#44976C",
+    "#c4b815",
+    "#774B84",
+    "#6A57B1",
+    "#B24362",
+    "#38176B",
+    "#2775AB",
+    "#9E4C07",
+    "#074D54",
+    "#084154",
+    "#A6000A",
+    "#948B0C",
+  ];
+  // const someColors = designerColors.slice(0, trimedKeysArr.length);
+  const someColors = liadChosenColors.slice(0, trimedKeysArr.length);
+  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
@@ -110,14 +126,14 @@ export default function TheoryDriven() {
       textposition: "inside",
       automargin: true,
       domain: { x: [0.5, 0.5], y: [0.3, 0.7] },
-      textfont: { size: 20 },
+      textfont: { size: 24 },
       marker: {
         colors: labels1.map((label) =>
           label === "post-hoc"
-            ? designerColors[12]
+            ? "#575456"
             : label === "mentioning"
-            ? designerColors[13]
-            : designerColors[14]
+            ? "#C2C2C2"
+            : "#858585"
         ),
         line: { width: 1, color: "white" },
       },
@@ -135,7 +151,7 @@ export default function TheoryDriven() {
       hole: 0.4,
       textposition: "inside",
       automargin: true,
-      textfont: { size: 16 },
+      textfont: { size: 20 },
       marker: {
         colors: cleanLabels2.map((label) => keysColors[label]),
         line: { width: 1, color: "white" },

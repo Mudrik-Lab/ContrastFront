@@ -17,6 +17,7 @@ import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 export default function Paradigms({
   fieldOptions,
   optionalParadigms,
+  paradigmsSubTypes,
   disabled,
   experiment_pk,
   study_pk,
@@ -64,14 +65,18 @@ export default function Paradigms({
       );
     }
   }, []);
+
   async function uniqSubmit(index) {
-    let chosenParadigm = fieldValues[index].sub_type
-      ? optionalParadigms.find(
-          (paradigm) => paradigm.sub_type === fieldValues[index].sub_type
-        ).id
-      : optionalParadigms.find(
-          (paradigm) => paradigm.name === fieldValues[index].specific
-        ).id;
+    let chosenParadigm;
+    if (fieldValues[index].sub_type) {
+      chosenParadigm = paradigmsSubTypes.find(
+        (paradigm) => paradigm.name === fieldValues[index].sub_type
+      ).id;
+    } else {
+      chosenParadigm = optionalParadigms.find(
+        (paradigm) => paradigm.name === fieldValues[index].specific
+      ).id;
+    }
     handleSubmit(chosenParadigm, index);
   }
 

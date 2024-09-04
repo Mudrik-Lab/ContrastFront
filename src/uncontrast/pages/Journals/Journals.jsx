@@ -10,7 +10,12 @@ import {
   TopGraphText,
   SignificanceFilter,
 } from "../../../sharedComponents/Reusble";
-import { plotConfig, screenWidth, sideWidth } from "../../../Utils/HardCoded";
+import {
+  plotConfig,
+  screenWidth,
+  sideWidth,
+  xAxisConfig,
+} from "../../../Utils/HardCoded";
 import getJournals from "../../../apiHooks/getJournals";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -115,22 +120,14 @@ export default function Journals() {
                   showlegend: false,
 
                   legend: { itemwidth: 90 },
-                  xaxis: {
-                    title: "Number of experiments",
-                    zeroline: true,
-                    side: "top",
-                    tickfont: {
-                      size: 16,
-                      standoff: 50,
-                    },
-                  },
+                  xaxis: xAxisConfig,
                   yaxis: {
                     automargin: true,
-
+                    showgrid: false,
                     ticks: "outside",
                     tickangle: 315,
                     tickfont: {
-                      size: 12,
+                      size: 18,
                       standoff: 50,
                     },
                   },

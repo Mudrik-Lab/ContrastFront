@@ -16,6 +16,7 @@ import {
   SideControl,
   Text,
   TopGraphText,
+  Spacer,
 } from "../../../sharedComponents/Reusble";
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 
@@ -114,6 +115,7 @@ export default function ParametersDistributionPie() {
       textinfo: "label+number",
       hovertemplate: "%{label}: %{value} <extra></extra>",
       textposition: "inside",
+      textfont: { size: 20 },
       insidetextorientation: "horizontal",
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
@@ -132,6 +134,7 @@ export default function ParametersDistributionPie() {
       type: "pie",
       hovertemplate: "%{label}: %{value} <extra></extra>",
       textinfo: "label+value",
+      textfont: { size: 20 },
       hole: 0.75,
       textposition: "inside",
       domain: { x: [0, 1], y: [0, 1] },
@@ -190,6 +193,7 @@ export default function ParametersDistributionPie() {
         type: "pie",
         hovertemplate: "%{label}: %{value} <extra></extra>",
         textinfo: "label+value",
+        textfont: { size: 20 },
         hole: 0.4,
         textposition: "inside",
         domain: { x: [0, 1], y: [0, 1] },
@@ -249,7 +253,7 @@ export default function ParametersDistributionPie() {
               tooltip="Choose the dependent variable to be queried."
             />
           </div>
-
+          <Spacer height={50} />
           <div className="w-full flex items-center justify-between my-4">
             <CSV data={data} />
             <Reset pageName={pageName} />

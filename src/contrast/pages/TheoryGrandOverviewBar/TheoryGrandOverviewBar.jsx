@@ -20,6 +20,7 @@ import {
   isMoblile,
   sideSectionClass,
   plotConfig,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import Spinner from "../../../sharedComponents/Spinner";
@@ -251,26 +252,22 @@ export default function TheoryGrandOverviewBar() {
                       width: isMoblile ? screenWidth : screenWidth - 400,
                       height: 100 * Y?.length + 350,
                       margin: { autoexpand: true, l: 20, t: 150 },
-                      legend: { itemwidth: 90, x: -0.1, y: 1.2 },
-
-                      xaxis: {
-                        title: {
-                          text: "Number of experiments",
-                          font: { size: 16 },
+                      legend: {
+                        font: {
+                          size: 20, // Increase the font size of the legend
                         },
-                        zeroline: true,
-                        side: "top",
-                        tickmode: "linear",
-                        dtick: 20,
-                        tickfont: {
-                          size: 14,
-                        },
+                        x: 0.9, // Position legend to the right
+                        y: 0.1, // Position legend at the bottom
+                        xanchor: "right",
+                        yanchor: "bottom",
                       },
+
+                      xaxis: xAxisConfig,
                       yaxis: {
                         automargin: true,
                         ticks: "outside",
                         tickfont: {
-                          size: 14,
+                          size: 18,
                           standoff: 50,
                         },
                       },

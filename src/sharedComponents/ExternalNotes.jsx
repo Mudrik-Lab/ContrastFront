@@ -28,7 +28,7 @@ export default function ExternalNotes({
   };
   const handleKeyDown = (event) => {
     if (event.key === "Enter") {
-      event.preventDefault(); // Prevent the default behavior
+      // event.preventDefault(); // Prevent the default behavior
       handleNotes();
     }
   };
