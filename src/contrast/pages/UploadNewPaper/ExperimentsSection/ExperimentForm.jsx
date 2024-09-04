@@ -52,10 +52,7 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-  console.log({
-    paradigms_family: extraConfig?.data.available_paradigms_families,
-  });
-  console.log({ paradigms_specific: extraConfig?.data.available_paradigms });
+
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.name, label: family.name })
   );
@@ -67,6 +64,8 @@ export default function ExperimentForm({
     label: task.name,
   }));
   const paradigms = extraConfig?.data.available_paradigms;
+  const paradigmsSubTypes = extraConfig?.data.available_paradigms_sub_types;
+
   const stimulusCategories =
     extraConfig?.data.available_stimulus_category_type.map((cat) => ({
       value: cat.id,
@@ -192,6 +191,7 @@ export default function ExperimentForm({
               minimumClassifications={minimumClassifications}
               fieldOptions={paradigmsFamilies}
               optionalParadigms={paradigms}
+              paradigmsSubTypes={paradigmsSubTypes}
               experiment_pk={experimentID}
               study_pk={study.id}
               disabled={!experimentID}
