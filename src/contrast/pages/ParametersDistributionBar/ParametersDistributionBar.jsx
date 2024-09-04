@@ -263,10 +263,12 @@ export default function ParametersDistributionBar() {
                       margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
                       legend: {
                         font: {
-                          size: 20, // Increase the font size of the legend
+                          size: 18, // Increase the font size of the legend
                         },
-                        x: -0.25, // Position legend to the right
-                        y: 1.05, // Position legend at the bottom
+                        x: 1, // Position legend to the right
+                        y: 0, // Position legend at the bottom
+                        xanchor: "right",
+                        yanchor: "bottom",
                       },
 
                       xaxis: xAxisConfig,

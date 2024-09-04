@@ -19,6 +19,7 @@ import {
   sideSectionClass,
   plotConfig,
   sideWidth,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -247,23 +248,16 @@ export default function ParametersDistributionBar() {
                     height: 35 * Y?.length + 350,
                     margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
                     legend: {
-                      itemwidth: 20,
-                      x: 1,
-                      y: 1.05,
-                      font: { size: 18 },
+                      font: {
+                        size: 18, // Increase the font size of the legend
+                      },
+                      x: 1, // Position legend to the right
+                      y: 0, // Position legend at the bottom
+                      xanchor: "right",
+                      yanchor: "bottom",
                     },
 
-                    xaxis: {
-                      title: "Number of experiments",
-                      zeroline: true,
-                      side: "top",
-                      tickmode: "linear",
-                      dtick: 10,
-                      tickfont: {
-                        size: 12,
-                        standoff: 50,
-                      },
-                    },
+                    xaxis: xAxisConfig,
                     yaxis: {
                       showticklabels: !isMoblile,
                       automargin: true,

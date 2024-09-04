@@ -174,10 +174,26 @@ export default function AcrossTheYears() {
                 config={plotConfig}
                 layout={{
                   xaxis: {
-                    title: "Years",
+                    title: { text: "Years", font: { size: 28 } },
+                    zeroline: true,
+                    showgrid: false,
+                    tickfont: {
+                      size: 20,
+                      standoff: 50,
+                    },
                   },
                   yaxis: {
-                    title: "Number of experiments",
+                    showgrid: false,
+                    title: {
+                      text: "Number of experiments",
+                      font: { size: 28 },
+                    },
+                    zeroline: true,
+                    side: "top",
+                    tickfont: {
+                      size: 20,
+                      standoff: 50,
+                    },
                     tickmode: "linear",
                     dtick: Math.max(...highestY) > 20 ? 20 : 1,
                   },
@@ -205,41 +221,6 @@ export default function AcrossTheYears() {
                 }}
               />
             ) : (
-              // <Plot
-              //   data={graphsData}
-              //   config={plotConfig}
-              //   layout={{
-              //     xaxis: {
-              //       title: "Years",
-              //     },
-              //     yaxis: {
-              //       title: "Number of experiments",
-              //       tickmode: "linear",
-              //       dtick: Math.max(...highestY) > 20 ? 20 : 1,
-              //     },
-              //     autosize: false,
-              //     showlegend: !isMoblile,
-              //     legend: {
-              //       x: 1.1,
-              //       xanchor: "right",
-              //       y: 1,
-              //       font: {
-              //         size: 16,
-              //         color: "#000000",
-              //       },
-              //     },
-              //     hoverlabel: {
-              //       namelength: 40,
-              //       font: {
-              //         family: "Arial",
-              //         size: 12,
-              //         color: "#FFFFFF",
-              //       },
-              //     },
-              //     width: screenWidth - sideWidth,
-              //     height: screenHeight - footerHeight,
-              //   }}
-              // />
               <NoResults />
             )}
           </div>

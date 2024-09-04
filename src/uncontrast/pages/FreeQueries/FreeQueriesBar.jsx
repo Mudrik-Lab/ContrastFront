@@ -19,6 +19,7 @@ import {
   screenWidth,
   sideSectionClass,
   uncontrastParametersOptions,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -659,22 +660,14 @@ export default function FreeQueriesBar() {
                     height: 35 * Y?.length + 250, // set the height of graph based on horizoned chars number. the minimum (1 result) is 285px
                     margin: { autoexpand: true, l: 20 },
                     legend: { itemwidth: 90 },
-                    xaxis: {
-                      title: "Number of experiments",
-                      zeroline: true,
-                      side: "top",
-                      tickfont: {
-                        size: 16,
-                        standoff: 50,
-                      },
-                    },
+                    xaxis: xAxisConfig,
                     yaxis: {
                       automargin: true,
-
+                      showgrid: false,
                       ticks: "outside",
                       tickangle: 315,
                       tickfont: {
-                        size: 12,
+                        size: 18,
                         standoff: 50,
                       },
                     },

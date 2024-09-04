@@ -46,7 +46,6 @@ export const xAxisConfig = {
 export const yAxisConfig = {
   yaxis: {
     automargin: true,
-
     ticks: "outside",
     tickangle: 315,
     tickfont: {

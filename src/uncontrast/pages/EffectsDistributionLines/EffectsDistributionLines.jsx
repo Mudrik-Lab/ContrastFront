@@ -198,23 +198,34 @@ export default function EffectsDistributionLines() {
                   bargroupgap: 0.02,
                   barmode: "overlay",
                   xaxis: {
-                    title: "Range",
+                    showgrid: false,
+                    title: {
+                      text: "Range",
+                      font: { size: 28 },
+                      standoff: 20,
+                    },
+                    zeroline: true,
+                    tickfont: {
+                      size: 20,
+                      standoff: 50,
+                    },
                   },
                   yaxis: {
-                    title: "Number of experiments",
+                    title: {
+                      text: "Number of experiments",
+                      font: { size: 28 },
+                    },
                     tickmode: "linear",
                     dtick: highestY > 10 ? 10 : 1,
                   },
                   autosize: false, // Use true to let Plotly automatically size the plot
                   showlegend: !isMoblile,
                   legend: {
-                    x: 10,
-                    xanchor: "left",
-                    y: 1,
                     font: {
-                      size: 16,
-                      color: "#000000",
+                      size: 20, // Increase the font size of the legend
                     },
+                    x: 0.9, // Position legend to the right
+                    y: 1.05, // Position legend at the bottom
                   },
                   hoverlabel: {
                     namelength: 40,
@@ -224,7 +235,7 @@ export default function EffectsDistributionLines() {
                       color: "#FFFFFF",
                     },
                   },
-                  width: screenWidth,
+                  width: screenWidth - sideWidth,
                   height: screenHeight - footerHeight,
                 }}
               />
