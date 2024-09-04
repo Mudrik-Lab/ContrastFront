@@ -18,6 +18,7 @@ import {
   plotConfig,
   screenWidth,
   sideSectionClass,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import getJournals from "../../../apiHooks/getJournals";
@@ -191,22 +192,15 @@ export default function Journals() {
                   showlegend: false,
 
                   legend: { itemwidth: 90 },
-                  xaxis: {
-                    title: "Number of experiments",
-                    zeroline: true,
-                    side: "top",
-                    tickfont: {
-                      size: 16,
-                      standoff: 50,
-                    },
-                  },
+                  xaxis: xAxisConfig,
+
                   yaxis: {
                     automargin: true,
-
+                    showgrid: false,
                     ticks: "outside",
                     tickangle: 315,
                     tickfont: {
-                      size: 12,
+                      size: 18,
                       standoff: 50,
                     },
                   },

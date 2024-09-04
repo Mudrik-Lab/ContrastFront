@@ -17,7 +17,6 @@ export const sideSectionClass =
 export const errorMsgClass = "text-red-500 text-sm mt-1 text-center";
 export const plotConfig = {
   modeBarButtonsToRemove: ["pan", "select", "lasso", "autoscale2d"],
-
   displayModeBar: true,
   toImageButtonOptions: {
     format: "svg", // one of png, svg, jpeg, webp
@@ -29,6 +28,32 @@ export const plotConfig = {
   doubleClick: "reset",
   showAxisDragHandles: true,
   showAxisRangeEntryBoxes: true,
+};
+export const xAxisConfig = {
+  showgrid: false,
+  title: {
+    text: "Number of experiments",
+    font: { size: 28 },
+    standoff: 20,
+  },
+  zeroline: true,
+  side: "top",
+  tickfont: {
+    size: 20,
+    standoff: 50,
+  },
+};
+export const yAxisConfig = {
+  yaxis: {
+    automargin: true,
+
+    ticks: "outside",
+    tickangle: 315,
+    tickfont: {
+      size: 18,
+      standoff: 50,
+    },
+  },
 };
 export const isMoblile = screenWidth < 600;
 

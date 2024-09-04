@@ -69,3 +69,12 @@ input[type="range"] {
    margin: 0;
    width: 100% !important;
 }
+.custom-plotly .modebar-btn {
+   width: 110px; /* Increase width */
+   height: 150px; /* Increase height */
+   font-size: 200px; /* Increase font size if needed */
+ }
+ .modebar-btn>svg{
+   width: 25px; /* Increase width */
+   height: 25px; /* Increase height */
+ }

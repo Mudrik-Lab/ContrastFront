@@ -52,7 +52,10 @@ export default function ExperimentForm({
     [`more_configurations`],
     getExtraConfig
   );
-
+  console.log({
+    paradigms_family: extraConfig?.data.available_paradigms_families,
+  });
+  console.log({ paradigms_specific: extraConfig?.data.available_paradigms });
   const paradigmsFamilies = extraConfig?.data.available_paradigms_families.map(
     (family) => ({ value: family.name, label: family.name })
   );

@@ -18,6 +18,7 @@ import {
   isMoblile,
   sideSectionClass,
   plotConfig,
+  xAxisConfig,
 } from "../../../Utils/HardCoded";
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import Spinner from "../../../sharedComponents/Spinner";
@@ -92,6 +93,7 @@ export default function ParametersDistributionBar() {
     textfont: {
       size: 18,
       color: "white",
+      weight: "bold",
     },
     marker: {
       color: designerColors[25],
@@ -115,6 +117,7 @@ export default function ParametersDistributionBar() {
     textfont: {
       size: 18,
       color: "white",
+      weight: "bold",
     },
     marker: {
       color: designerColors[22],
@@ -250,6 +253,7 @@ export default function ParametersDistributionBar() {
               ) : (
                 <div id="graphDiv">
                   <Plot
+                    className="custom-plotly"
                     data={[trace1, trace2]}
                     config={plotConfig}
                     layout={{
@@ -257,25 +261,22 @@ export default function ParametersDistributionBar() {
                       width: isMoblile ? screenWidth : screenWidth - 400,
                       height: 35 * Y?.length + 350,
                       margin: { autoexpand: true, l: isMoblile ? 20 : 200 },
-                      legend: { itemwidth: 90, x: -0.25, y: 1.05 },
-
-                      xaxis: {
-                        title: "Number of experiments",
-                        zeroline: true,
-                        side: "top",
-                        tickmode: "linear",
-                        dtick: 10,
-                        tickfont: {
-                          size: 16,
-                          standoff: 50,
+                      legend: {
+                        font: {
+                          size: 20, // Increase the font size of the legend
                         },
+                        x: -0.25, // Position legend to the right
+                        y: 1.05, // Position legend at the bottom
                       },
+
+                      xaxis: xAxisConfig,
                       yaxis: {
-                        showticklabels: !isMoblile,
                         automargin: true,
+
                         ticks: "outside",
+                        tickangle: 315,
                         tickfont: {
-                          size: 10,
+                          size: 18,
                           standoff: 50,
                         },
                       },
