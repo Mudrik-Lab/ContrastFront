@@ -32,9 +32,12 @@ import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [binSize, setBinSize] = React.useState();
+  const [binSize, setBinSize] = React.useState(
+    searchParams.get("bin_size") || 50
+  );
   const navigate = useNavigate();
   const pageName = "distribution-of-Experiments-across-parameters";
 
@@ -42,19 +45,19 @@ export default function EffectsDistributionLines() {
     queryKey: [
       "distribution_of_effects_across_parameters",
       experimentsNum,
-      1,
+
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
       getEffectsDistribution({
         min_number_of_experiments: experimentsNum,
-        binSize: 1,
+        binSize: 1, // the bin size is not calculated in server but in here
         continuous_breakdown:
           selected?.value || continuousBreakdownOptions[0].value,
         isUncontrast: true,
       }),
   });
-  console.log(binSize);
+
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
   const graphsData = [];
   data?.data.forEach((row) => {
@@ -96,6 +99,28 @@ export default function EffectsDistributionLines() {
       .flat();
     highestY = Math.max(...flatedY);
   }
+
+  useEffect(() => {
+    // if (
+    //   searchParams.get("breakdown") ===
+    //   "unconsciousness_measure_number_of_trials"
+    // ) {
+    //   setBinSize(
+    //     continuousBreakdownOptions.find(
+    //       (x) => x.value === "unconsciousness_measure_number_of_trials"
+    //     ).initialBin
+    //   );
+    //   buildUrl(pageName, "bin_size", binSize, navigate);
+    // } else {
+    let breakdown = searchParams.get("breakdown");
+
+    setBinSize(
+      continuousBreakdownOptions.find((x) => x.value === breakdown)?.initialBin
+    );
+    buildUrl(pageName, "bin_size", binSize, navigate);
+    // }
+  }, []);
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -103,9 +128,11 @@ export default function EffectsDistributionLines() {
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
 
-    queryParams.get("bin_size")
-      ? setBinSize(queryParams.get("bin_size"))
-      : setBinSize(1);
+    if (queryParams.get("bin_size")) {
+      setBinSize(queryParams.get("bin_size"));
+    } else {
+      setBinSize(1);
+    }
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -118,7 +145,24 @@ export default function EffectsDistributionLines() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
-  console.log(graphsData);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const breakdown = queryParams.get("breakdown");
+
+    if (!breakdown) {
+      buildUrl(
+        pageName,
+        "breakdown",
+        continuousBreakdownOptions[0].value,
+        navigate
+      );
+    } else {
+      setSelected(breakdown);
+    }
+  }, []);
+
+  console.log(binSize);
   return (
     <div>
       <PageTemplate
@@ -150,6 +194,14 @@ export default function EffectsDistributionLines() {
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);
+                  const bin = continuousBreakdownOptions.find(
+                    (x) => x.value === e.value
+                  )?.initialBin;
+
+                  const queryParams = new URLSearchParams(location.search);
+
+                  queryParams.set("bin_size", bin);
+                  setSearchParams(queryParams);
                 }}
               />
 
