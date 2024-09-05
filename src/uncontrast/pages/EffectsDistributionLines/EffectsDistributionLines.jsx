@@ -32,9 +32,12 @@ import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
+
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
-  const [binSize, setBinSize] = React.useState();
+  const [binSize, setBinSize] = React.useState(
+    searchParams.get("bin_size") || 50
+  );
   const navigate = useNavigate();
   const pageName = "distribution-of-Experiments-across-parameters";
 
@@ -42,7 +45,6 @@ export default function EffectsDistributionLines() {
     queryKey: [
       "distribution_of_effects_across_parameters",
       experimentsNum,
-      1,
       selected?.value || continuousBreakdownOptions[0].value,
     ],
     queryFn: () =>
@@ -54,40 +56,25 @@ export default function EffectsDistributionLines() {
         isUncontrast: true,
       }),
   });
-  console.log(binSize);
+
+  // Define main colors
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
   const graphsData = [];
   data?.data.forEach((row) => {
-    graphsData.push(
-      {
-        x: row.series.map((a) => parseInt(a.key)),
-        y: row.series.map((a) => a.value),
-        name: rawTextToShow(row.series_name),
-        autobinx: false,
-        // histnorm: "count",
-        marker: {
-          color: colors[row.series_name],
-        },
-        opacity: 0.5,
-        xbins: { size: binSize },
-        type: "histogram",
-      }
-      // {
-      //   x: row.series.map((a) => a.key),
-      //   y: row.series.map((a) => a.value),
-      //   name: rawTextToShow(row.series_name),
-      //   autobinx: false,
-      //   histnorm: "count",
-      //   line: {
-      //     shape: "spline", // Set the line shape to 'spline' for smooth curves
-      //     color: colors[row.series_name],
-      //   },
-      //   opacity: 0.5,
-      //   type: "scatter",
-      //   mode: "lines",
-      // }
-    );
+    graphsData.push({
+      x: row.series.map((a) => parseInt(a.key)),
+      y: row.series.map((a) => a.value),
+      name: rawTextToShow(row.series_name),
+      autobinx: false,
+      marker: {
+        color: colors[row.series_name],
+      },
+      opacity: 0.5, // Ensure opacity so bars can overlap
+      xbins: { size: binSize },
+      type: "histogram",
+    });
   });
+
   let flatedY = [];
   let highestY;
   if (data) {
@@ -96,6 +83,37 @@ export default function EffectsDistributionLines() {
       .flat();
     highestY = Math.max(...flatedY);
   }
+
+  // Add blended colors for overlapping bars
+  const blendedColors = {
+    Positive_Negative: "#7DA3CB", // Blend of Positive and Negative colors
+    Positive_Mixed: "#4CB0BA", // Blend of Positive and Mixed colors
+    Mixed_Negative: "#A68B72", // Blend of Mixed and Negative colors
+    Mixed_Negative_Positive: "#5E94AE", // Blend of Mixed and Negative colors
+  };
+
+  Object.keys(blendedColors).forEach((key) => {
+    graphsData.push({
+      x: [null], // No actual data, just for legend
+      y: [null],
+      name: `${key.replaceAll("_", " + ")}`,
+      marker: {
+        color: blendedColors[key],
+      },
+      opacity: 1, // Full opacity for the legend
+      type: "histogram",
+    });
+  });
+
+  useEffect(() => {
+    let breakdown = searchParams.get("breakdown");
+
+    setBinSize(
+      continuousBreakdownOptions.find((x) => x.value === breakdown)?.initialBin
+    );
+    buildUrl(pageName, "bin_size", binSize, navigate);
+  }, []);
+
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -103,9 +121,11 @@ export default function EffectsDistributionLines() {
       ? setExperimentsNum(queryParams.get("min_number_of_experiments"))
       : setExperimentsNum(0);
 
-    queryParams.get("bin_size")
-      ? setBinSize(queryParams.get("bin_size"))
-      : setBinSize(1);
+    if (queryParams.get("bin_size")) {
+      setBinSize(queryParams.get("bin_size"));
+    } else {
+      setBinSize(1);
+    }
 
     if (queryParams.get("breakdown")) {
       setSelected({
@@ -118,7 +138,23 @@ export default function EffectsDistributionLines() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
-  console.log(graphsData);
+
+  useEffect(() => {
+    const queryParams = new URLSearchParams(location.search);
+    const breakdown = queryParams.get("breakdown");
+
+    if (!breakdown) {
+      buildUrl(
+        pageName,
+        "breakdown",
+        continuousBreakdownOptions[0].value,
+        navigate
+      );
+    } else {
+      setSelected(breakdown);
+    }
+  }, []);
+
   return (
     <div>
       <PageTemplate
@@ -150,6 +186,14 @@ export default function EffectsDistributionLines() {
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);
+                  const bin = continuousBreakdownOptions.find(
+                    (x) => x.value === e.value
+                  )?.initialBin;
+
+                  const queryParams = new URLSearchParams(location.search);
+
+                  queryParams.set("bin_size", bin);
+                  setSearchParams(queryParams);
                 }}
               />
 
@@ -196,6 +240,7 @@ export default function EffectsDistributionLines() {
                 layout={{
                   bargap: 0.02,
                   bargroupgap: 0.02,
+                  // barmode: isStacked? "overlay": "group",
                   barmode: "overlay",
                   xaxis: {
                     showgrid: false,
@@ -211,21 +256,25 @@ export default function EffectsDistributionLines() {
                     },
                   },
                   yaxis: {
+                    showgrid: false,
                     title: {
                       text: "Number of experiments",
                       font: { size: 28 },
                     },
                     tickmode: "linear",
-                    dtick: highestY > 10 ? 10 : 1,
+                    tickfont: {
+                      size: 18,
+                      standoff: 50,
+                    },
                   },
-                  autosize: false, // Use true to let Plotly automatically size the plot
+                  autosize: false,
                   showlegend: !isMoblile,
                   legend: {
                     font: {
-                      size: 20, // Increase the font size of the legend
+                      size: 20,
                     },
-                    x: 0.9, // Position legend to the right
-                    y: 1.05, // Position legend at the bottom
+                    x: 0.9,
+                    y: 1.05,
                   },
                   hoverlabel: {
                     namelength: 40,

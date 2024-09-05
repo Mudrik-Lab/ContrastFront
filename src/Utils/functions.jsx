@@ -499,3 +499,10 @@ export function fixTrueToYes(data) {
     }
   });
 }
+export function extendColorList(colorList, minLength) {
+  const extendedColors = [];
+  while (extendedColors.length < minLength) {
+    extendedColors.push(...colorList);
+  }
+  return extendedColors.slice(0, minLength);
+}

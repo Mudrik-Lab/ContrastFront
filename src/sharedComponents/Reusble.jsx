@@ -225,23 +225,24 @@ export const Label = ({ children }) => {
 };
 
 export const RangeInput = ({ number, setNumber, isBinSize }) => {
-  const [label, setLabel] = React.useState(number);
+  const [internalNumber, setInternalNumber] = React.useState(number);
 
   useEffect(() => {
-    setLabel(number);
+    setInternalNumber(number);
   }, [number]);
-
+  console.log({ number });
+  console.log({ label: internalNumber });
   return (
     <div className={sideSectionClass}>
       <div className="relative">
         {(number || number === 0) && (
           <input
             type="range"
-            onChange={(e) => setLabel(e.target.value)}
+            onChange={(e) => setInternalNumber(e.target.value)}
             onMouseUp={(e) => setNumber(e.target.value)}
             onTouchEnd={(e) => setNumber(e.target.value)}
             min={isBinSize ? 1 : 0}
-            defaultValue={number}
+            value={internalNumber}
             max={100}
             step={1}
             className="w-full h-2 bg-gray-200 rounded-lg cursor-pointer"
@@ -251,11 +252,14 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
         )}
         <span
           style={{
-            left: label * 0.9 + (label < 10 ? 4 : 2) + "%",
+            left:
+              Number(internalNumber) * 0.9 +
+              (Number(internalNumber) < 10 ? 4 : 2) +
+              "%",
             top: 4,
           }}
           className="absolute text-sm text-blue pointer-events-none ">
-          {label}
+          {internalNumber}
         </span>
       </div>
 

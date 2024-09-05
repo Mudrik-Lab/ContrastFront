@@ -108,7 +108,6 @@ export default function TheoryDriven() {
   ];
   // const someColors = designerColors.slice(0, trimedKeysArr.length);
   const someColors = liadChosenColors.slice(0, trimedKeysArr.length);
-  console.log(someColors);
   const keysColors = {};
   [...new Set(trimedKeysArr)]?.sort().map((key, index) => {
     keysColors[key] = someColors[index];
