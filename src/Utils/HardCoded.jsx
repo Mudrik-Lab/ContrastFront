@@ -212,7 +212,6 @@ export const uncontrastParametersOptions = alphabetizeByLabels([
   { value: "task", label: "Task" },
 ]);
 export const continuousBreakdownOptions = alphabetizeByLabels([
-  { initialBin: 25, value: "number_of_stimuli", label: "Number of Stimuli" },
   {
     initialBin: 25,
     value: "number_of_suppressed_stimuli",
