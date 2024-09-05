@@ -36,6 +36,7 @@ import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 import {
   buildUrl,
   buildUrlForMultiSelect,
+  extendColorList,
   rawTextToShow,
 } from "../../../Utils/functions";
 import getConfiguration from "../../../apiHooks/getConfiguration";
@@ -226,11 +227,11 @@ export default function FreeQueriesBar() {
     enabled: Boolean(selected?.value),
   });
 
-  const X1 = data?.data.map((row) => row.value).reverse();
+  const X = data?.data.map((row) => row.value).reverse();
   const Y = data?.data.map((row) => rawTextToShow(row.key)).reverse();
 
   var trace1 = {
-    x: X1,
+    x: X,
     y: Y,
     // text: Y,
     orientation: "h",
@@ -239,7 +240,7 @@ export default function FreeQueriesBar() {
     },
     marker: {
       width: 100,
-      color: designerColors,
+      color: extendColorList(designerColors, X?.length || 10),
 
       text: {
         font: {
@@ -248,14 +249,6 @@ export default function FreeQueriesBar() {
       },
     },
     type: "bar",
-  };
-
-  const selectStyles = {
-    control: (provided) => ({
-      ...provided,
-      width: 300,
-      fontSize: 16,
-    }),
   };
 
   useEffect(() => {
@@ -717,7 +710,7 @@ export default function FreeQueriesBar() {
                 text={graphsHeaders["Free Queries"].figureText}
                 firstLine={graphsHeaders["Free Queries"].figureLine}
               />
-              {X1?.length ? (
+              {X?.length ? (
                 <Plot
                   data={[trace1]}
                   config={plotConfig}
