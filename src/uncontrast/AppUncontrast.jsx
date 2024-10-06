@@ -5,6 +5,7 @@ import useAuth from "../apiHooks/useAuth.jsx";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import UncontrastScreens from "./UncontrastScreen.jsx";
+import usePreventNumberInputScroll from "../Utils/PreventScrollEffect.ts";
 
 function AppUncontrast() {
   const client = new QueryClient({
@@ -17,6 +18,7 @@ function AppUncontrast() {
       },
     },
   });
+  usePreventNumberInputScroll();
   const { isLoadingToken, snap } = useAuth();
   return (
     <div>
