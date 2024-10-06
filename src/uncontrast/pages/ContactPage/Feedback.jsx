@@ -14,7 +14,6 @@ import { toast } from "react-toastify";
 
 export default function Feedback() {
   const [errorMsg, setErrorMsg] = useState(false);
-  const radioLabelClass = "flex flex-col items-start gap-1";
   const initialValues = {
     message: "",
     q1: "",
