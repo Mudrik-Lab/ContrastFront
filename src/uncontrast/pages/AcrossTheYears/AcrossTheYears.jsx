@@ -217,7 +217,7 @@ export default function AcrossTheYears() {
                     },
                   },
                   width: screenWidth - sideWidth,
-                  height: screenHeight - footerHeight,
+                  height: screenHeight - footerHeight - 150,
                 }}
               />
             ) : (
