@@ -36,10 +36,11 @@ import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NoResults from "../../../sharedComponents/NoResults";
-import Plotly from "plotly.js-basic-dist";
+import Plot from "react-plotly.js";
 import createPlotlyComponent from "react-plotly.js/factory";
+import Plotly from "plotly.js-basic-dist";
 
-const Plot = createPlotlyComponent(Plotly);
+const PlotlyComponent = createPlotlyComponent(Plotly);
 
 export default function ParametersDistributionPie() {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -62,7 +63,7 @@ export default function ParametersDistributionPie() {
     "#6789B9",
     "#496B9B",
   ];
-
+  const textSectionAbovePlot = 130; //height of text section
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "parameters_distribution_pie",
@@ -180,7 +181,7 @@ export default function ParametersDistributionPie() {
         textfont: { size: 30 },
         textposition: "inside",
         hole: 0,
-        domain: { x: [0, 1], y: [0.3, 0.7] },
+        domain: { x: [0, 1], y: [0.125, 0.875] },
         marker: {
           colors: [color],
           line: { width: 1, color: "white" },
@@ -279,7 +280,7 @@ export default function ParametersDistributionPie() {
             graphData.length && (
               <div>
                 {graphData[0].name !== "drilled" ? (
-                  <Plot
+                  <PlotlyComponent
                     onClick={(e) => {
                       secondaryPie(e.points[0]);
                     }}
@@ -287,7 +288,7 @@ export default function ParametersDistributionPie() {
                     config={plotConfig}
                     layout={{
                       width: screenWidth - sideWidth,
-                      height: screenHeight - navHeight - 150,
+                      height: screenHeight - navHeight - textSectionAbovePlot,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}
@@ -300,8 +301,8 @@ export default function ParametersDistributionPie() {
                     data={graphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      // width: screenHeight - sideWidth - 300,
-                      height: 400,
+                      width: screenWidth - sideWidth,
+                      height: screenHeight - navHeight - textSectionAbovePlot,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}

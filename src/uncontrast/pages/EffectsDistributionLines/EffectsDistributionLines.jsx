@@ -26,13 +26,12 @@ import { buildUrl, rawTextToShow } from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
-import Plot from "react-plotly.js";
-
 import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
+
+import Plot from "react-plotly.js";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
-
   const [selected, setSelected] = useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
   const [binSize, setBinSize] = React.useState(

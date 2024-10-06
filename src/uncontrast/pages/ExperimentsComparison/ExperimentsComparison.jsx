@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   footerHeight,
@@ -27,7 +27,6 @@ import {
   breakLongLines,
   rawTextToShow,
   buildUrl,
-  fixTrueToYes,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
