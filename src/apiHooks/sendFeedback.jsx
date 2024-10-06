@@ -8,8 +8,11 @@ export default async function sendFeedback({
   paper_uploading_score,
   comments,
 }) {
+  const isUncontrast = Site.type === "uncontrast";
   return await queryApi({
-    url: `profiles/feedbacks/site_feedback/`,
+    url: isUncontrast
+      ? `profiles/feedbacks_uncontrast/site_feedback/`
+      : `profiles/feedbacks/site_feedback/`,
     method: "POST",
     data: {
       email,

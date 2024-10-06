@@ -75,7 +75,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can examine how continuous variables distribute for positive and negative results (i.e., evidence supporting or challenging the existence of unconscious processing). ",
     figureText:
-      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents the positive effects and the red is for negative effects. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+      "Such parameters include the year of publication, the number of participants, the SOA between the suppressed stimulus and the ensuing one (e.g., the mask), the number of stimuli used in the experiment, etc. The blue histogram presents experiments showing positive evidence, the red is for negative evidence, and the green is for mixed. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
   },
   "Parameter Distribution Bar": {
@@ -128,7 +128,7 @@ export const graphsHeaders = {
     color: "lilac",
     route: "/parameter-distribution-pie",
     figureLine:
-      "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across effects that supported or challenged the existence of unconscious processing.",
+      "Here, you can select a specific parameter of interest, to explore how the different levels of the chosen parameter distribute across experiments that supported or challenged the existence of unconscious processing.",
     figureText:
       "The inner circle of the pie describes the distribution of different levels across theories, while the outer circle describes the distribution of the theory families for each inner slice. By clicking on an inner circle slice, you can generate a new pie chart focusing on that category only (reversible by re-clicking on the slice).You can also filter the results according to consciousness type, reporting technique, and ‎whether the study was theory-driven or not.‎ Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
     siteToDisplay: "uncontrast",
@@ -239,7 +239,7 @@ export const graphsHeaders = {
     color: "lightGreen",
     route: "/journals",
     figureLine:
-      " Here, you can see in which journals the effects that supported or challenged unconscious processing were published.",
+      " Here, you can see in which journals the experiments that showed positive, negative or mixed evidence for unconscious processing were published.",
     figureText:
       "Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories. Note that the plot refers to reported experiments as the independent variable (i.e., if two different experiments were reported in one paper, each will be counted separately).",
     siteToDisplay: "uncontrast",

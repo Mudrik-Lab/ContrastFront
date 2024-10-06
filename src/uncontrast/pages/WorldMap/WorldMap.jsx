@@ -18,7 +18,9 @@ import {
   grayReg,
   isMoblile,
   plotConfig,
+  screenWidth,
   sideSectionClass,
+  sideWidth,
 } from "../../../Utils/HardCoded";
 import getNations from "../../../apiHooks/getNations";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -280,7 +282,10 @@ export default function WorldMap() {
               ) : (
                 <Plot
                   data={graphData}
-                  style={{ width: "100%", height: "100%" }}
+                  style={{
+                    width: `${screenWidth - sideWidth}px`,
+                    height: "100%",
+                  }}
                   layout={layout}
                   config={plotConfig}
                 />

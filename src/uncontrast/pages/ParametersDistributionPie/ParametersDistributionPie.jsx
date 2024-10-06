@@ -3,9 +3,12 @@ import React, { useEffect } from "react";
 import Select from "react-select";
 import {
   isMoblile,
+  navHeight,
   plotConfig,
   screenHeight,
+  screenWidth,
   sideSectionClass,
+  sideWidth,
   uncontrastParametersOptions,
 } from "../../../Utils/HardCoded";
 import {
@@ -283,8 +286,8 @@ export default function ParametersDistributionPie() {
                     data={initialGraphData}
                     config={plotConfig}
                     layout={{
-                      width: screenHeight,
-                      height: screenHeight,
+                      width: screenWidth - sideWidth,
+                      height: screenHeight - navHeight - 150,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}
@@ -297,8 +300,8 @@ export default function ParametersDistributionPie() {
                     data={graphData}
                     config={{ displayModeBar: !isMoblile }}
                     layout={{
-                      width: screenHeight,
-                      height: screenHeight,
+                      // width: screenHeight - sideWidth - 300,
+                      height: 400,
                       showlegend: false,
                       annotations: [{ showarrow: false, text: "" }],
                     }}

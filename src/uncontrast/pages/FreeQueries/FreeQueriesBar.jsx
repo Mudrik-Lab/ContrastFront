@@ -654,7 +654,25 @@ export default function FreeQueriesBar() {
               {X1?.length ? (
                 <Plot
                   data={[trace1]}
-                  config={plotConfig}
+                  config={{
+                    modeBarButtonsToRemove: [
+                      "pan",
+                      "select",
+                      "lasso",
+                      "autoscale2d",
+                    ],
+                    displayModeBar: true,
+                    toImageButtonOptions: {
+                      format: "svg", // one of png, svg, jpeg, webp
+                      filename: `${window.location.href}`,
+                      scale: 1, // Multiply title/legend/axis/canvas sizes by this factor
+                    },
+                    displaylogo: false,
+                    scrollZoom: false,
+                    doubleClick: "reset",
+                    showAxisDragHandles: true,
+                    showAxisRangeEntryBoxes: true,
+                  }}
                   layout={{
                     width: isMoblile ? screenWidth : screenWidth - 400,
                     height: 35 * Y?.length + 250, // set the height of graph based on horizoned chars number. the minimum (1 result) is 285px

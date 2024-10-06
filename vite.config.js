@@ -11,7 +11,13 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
     plugins: [
       react(),
       svgr(),
-      visualizer(),
+      visualizer({
+        filename: "dist/stats.html", // Output file for the visualization
+        template: "treemap", // Other options: sunburst, network
+        open: true, // Open the visualization in the browser automatically
+        gzipSize: true, // Display gzip size
+        brotliSize: true, // Display brotli size
+      }),
       {
         name: "index-html-build-replacement",
         apply: "serve", //   docs:
