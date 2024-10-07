@@ -14,6 +14,7 @@ import {
   continuousBreakdownOptions,
   footerHeight,
   isMoblile,
+  navHeight,
   plotConfig,
   screenHeight,
   screenWidth,
@@ -58,6 +59,8 @@ export default function EffectsDistributionLines() {
 
   // Define main colors
   const colors = { Positive: "#159DEA", Mixed: "#088515", Negative: "#CA535A" };
+  const textSectionAbovePlot = 130; //height of text section
+
   const graphsData = [];
   data?.data.forEach((row) => {
     graphsData.push({
@@ -284,7 +287,7 @@ export default function EffectsDistributionLines() {
                     },
                   },
                   width: screenWidth - sideWidth,
-                  height: screenHeight - footerHeight,
+                  height: screenHeight - footerHeight - textSectionAbovePlot,
                 }}
               />
             ) : (
