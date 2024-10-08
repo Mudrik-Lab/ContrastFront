@@ -211,7 +211,7 @@ export const uncontrastParametersOptions = alphabetizeByLabels([
   },
   { value: "target_stimuli_modality", label: "Target Stimuli Modality" },
   { value: "task", label: "Task" },
-  { value: "outcome_types", label: "Outcome types" },
+  { value: "outcome_type", label: "Outcome type" },
 ]);
 export const continuousBreakdownOptions = alphabetizeByLabels([
   {
