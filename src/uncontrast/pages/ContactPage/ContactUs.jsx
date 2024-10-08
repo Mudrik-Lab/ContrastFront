@@ -129,7 +129,7 @@ export default function ContactUs() {
                   className="text-blue "
                 />
                 <label htmlFor="confirm_updates">
-                  I am interested in receiving news & updates from ConTraSt by
+                  I am interested in receiving news & updates from UnconTrust by
                   email
                 </label>
                 <ErrorMessage name="confirm_updates" component="div" />

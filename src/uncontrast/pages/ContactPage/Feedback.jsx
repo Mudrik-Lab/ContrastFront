@@ -100,7 +100,9 @@ export default function Feedback() {
                   <p className="text-sm">
                     If you think relevant papers are missing, feel free to add
                     add them to the database using{" "}
-                    <a href="" className="underline font-bold">
+                    <a
+                      href="/upload-new-paper"
+                      className=" underline font-bold">
                       this link
                     </a>
                   </p>
@@ -116,7 +118,7 @@ export default function Feedback() {
                   <p className="text-sm">
                     If you think relevant papers are missing, feel free to add
                     add them to the database using{" "}
-                    <a href="" className="underline font-bold">
+                    <a href="/upload-new-paper" className="underline font-bold">
                       this link
                     </a>
                   </p>
