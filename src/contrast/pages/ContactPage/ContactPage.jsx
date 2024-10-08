@@ -26,7 +26,7 @@ export default function ContactPage() {
           Contact ConTraSt
         </h1>
         <div className="w-full mx-auto text-base">
-          <p className="text-justify">
+          <div className="text-justify">
             Here you can{" "}
             <span
               className="underline font-bold cursor-pointer"
@@ -38,9 +38,15 @@ export default function ContactPage() {
               suggest new queries
             </span>{" "}
             you think we should add to the website, suggest{" "}
-            <a className="underline font-bold " href="">
+            <span
+              className="underline font-bold cursor-pointer"
+              onClick={() => {
+                setChosen("vet-a-paper");
+                window.location.href = "#contact-forms";
+              }}
+              href="#contact-forms">
               corrections to classifications
-            </a>{" "}
+            </span>{" "}
             done in one of our entries,{" "}
             <span
               className="underline font-bold cursor-pointer"
@@ -84,7 +90,7 @@ export default function ContactPage() {
                 with the list of all included experiments.
               </li>
             </ul>
-          </p>
+          </div>
         </div>
         <Spacer height={20} />
         <div className="mx-auto py-4 px-4 w-full bg-black mb-4 flex flex-col items-center gap-4 rounded-md">
