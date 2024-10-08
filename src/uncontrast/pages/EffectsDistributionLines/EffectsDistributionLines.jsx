@@ -14,7 +14,6 @@ import {
   continuousBreakdownOptions,
   footerHeight,
   isMoblile,
-  navHeight,
   plotConfig,
   screenHeight,
   screenWidth,
@@ -30,6 +29,7 @@ import NoResults from "../../../sharedComponents/NoResults";
 import getEffectsDistribution from "../../../apiHooks/getEffectsDistribution";
 
 import Plot from "react-plotly.js";
+import Plotly from "plotly.js-dist-min";
 
 export default function EffectsDistributionLines() {
   const [searchParams, setSearchParams] = useSearchParams();
