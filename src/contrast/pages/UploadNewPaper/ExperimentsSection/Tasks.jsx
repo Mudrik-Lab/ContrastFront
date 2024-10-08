@@ -31,7 +31,6 @@ export default function Tasks({
 
   const handleSubmit = (fieldValues, index) => {
     if (Object.hasOwn(fieldValues[index], "editble")) {
-      console.log({ fieldValues });
       return;
     }
     console.log("first");

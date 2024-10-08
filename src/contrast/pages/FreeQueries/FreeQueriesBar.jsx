@@ -2,7 +2,6 @@ import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useRef, useState } from "react";
 import Select from "react-select";
 import {
-  CSV,
   TooltipExplanation,
   RangeInput,
   ReportFilter,

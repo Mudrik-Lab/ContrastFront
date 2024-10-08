@@ -230,8 +230,7 @@ export const RangeInput = ({ number, setNumber, isBinSize }) => {
   useEffect(() => {
     setInternalNumber(number);
   }, [number]);
-  console.log({ number });
-  console.log({ label: internalNumber });
+
   return (
     <div className={sideSectionClass}>
       <div className="relative">

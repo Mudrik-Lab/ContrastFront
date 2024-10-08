@@ -17,7 +17,6 @@ import {
   ReportFilter,
   Reset,
   SideControl,
-  Spacer,
   Text,
   TheoryDrivenFilter,
   TopGraphText,
