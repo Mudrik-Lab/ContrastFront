@@ -29,19 +29,13 @@ export default function Tasks({
   const [fieldValues, setFieldValues] = useState([initialValues]);
   const classificationName = "tasks";
 
-  const handleSubmit = (fieldValues, index) => {
-    if (Object.hasOwn(fieldValues[index], "editble")) {
-      return;
-    }
-    console.log("first");
-    SubmitClassificationField(
-      study_pk,
-      experiment_pk,
-      classificationName,
-      fieldValues,
-      setFieldValues
-    );
-  };
+  const handleSubmit = SubmitClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
 
   const handleDelete = DeleteClassificationField(
     study_pk,
@@ -115,15 +109,6 @@ export default function Tasks({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <button
-                    type="button"
-                    onClick={() => {
-                      const newArray = [...fieldValues];
-                      newArray[index].editble = true;
-                      setFieldValues(newArray);
-                    }}>
-                    edit
-                  </button>
                 </div>
               </div>
             </form>
