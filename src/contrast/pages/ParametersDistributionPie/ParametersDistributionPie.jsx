@@ -28,6 +28,7 @@ import {
   rawTextToShow,
   showTextToRaw,
   buildUrl,
+  extendColorList,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -77,15 +78,15 @@ export default function ParametersDistributionPie() {
   const values2 = [];
   const labels2 = [];
 
+  const colors = extendColorList(designerColors, data?.data.length);
+
   data?.data?.map((x, index) => {
     values1.push(x.value);
     labels1.push(rawTextToShow(x.series_name));
     x.series.map((y) => {
       values2.push(y.value);
       labels2.push(`<span id=${index} >` + y.key + "</span>");
-      outsideColors.push(
-        hexToRgba(designerColors[index])?.slice(0, -2) + "0.7)"
-      );
+      outsideColors.push(hexToRgba(colors[index])?.slice(0, -2) + "0.7)");
     });
   });
 
@@ -104,7 +105,7 @@ export default function ParametersDistributionPie() {
       hole: 0.1,
       domain: { x: [0, 1], y: [0.125, 0.875] },
       marker: {
-        colors: designerColors,
+        colors: colors,
         line: { width: 1, color: "white" },
       },
     },
