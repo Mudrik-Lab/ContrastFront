@@ -207,6 +207,7 @@ export default function Findings({
         setFieldValues={setFieldValues}
       />
       <ExternalNotes
+        rows={6}
         isUncontrast={isUncontrast}
         description={description}
         setDescription={setDescription}
