@@ -48,12 +48,13 @@ export default function ParametersDistributionBar() {
     [`parent_theories`],
     getConfiguration
   );
-  const parentTheories = configuration?.data.available_parent_theories.map(
-    (parentTheory) => ({
-      value: parentTheory,
-      label: parentTheory,
-    })
-  );
+  const parentTheories =
+    configuration?.data.available_parent_theories_including_all.map(
+      (parentTheory) => ({
+        value: parentTheory,
+        label: parentTheory,
+      })
+    );
 
   const { data, isLoading } = useQuery({
     queryKey: [
