@@ -103,6 +103,10 @@ export const studyValidationSchema = Yup.object().shape({
 });
 export const parametersOptions = alphabetizeByLabels([
   {
+    value: "theory",
+    label: "Theory",
+  },
+  {
     value: "paradigm_family",
     label: "Paradigm family",
   },
