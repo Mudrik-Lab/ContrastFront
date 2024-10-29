@@ -11,6 +11,7 @@ export default function ExternalNotes({
   experiment_pk,
   classification,
   isUncontrast,
+  rows,
 }) {
   const handleNotes = async () => {
     try {
@@ -45,7 +46,7 @@ export default function ExternalNotes({
           <div className="flex gap-2">
             <textarea
               defaultValue={description}
-              rows={2}
+              rows={rows || 6}
               onChange={(e) => {
                 setDescription(e.target.value);
               }}

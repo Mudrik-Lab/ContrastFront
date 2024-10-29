@@ -14,6 +14,7 @@ import {
   alphabetizeByLabels,
   rawTextToShow,
 } from "../../../../Utils/functions";
+import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 
 export default function Stimuli({
   fieldOptions,
@@ -33,6 +34,8 @@ export default function Stimuli({
     duration: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [description, setDescription] = useState(values?.stimuli_notes || "");
+
   const classificationName = "stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -275,6 +278,13 @@ export default function Stimuli({
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
+      />
+      <ExternalNotes
+        description={description}
+        setDescription={setDescription}
+        classification={classificationName}
+        study_pk={study_pk}
+        experiment_pk={experiment_pk}
       />
     </ExpandingBox>
   );

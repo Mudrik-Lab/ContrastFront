@@ -11,6 +11,7 @@ import {
   Text,
   TopGraphText,
   TypeOfConsciousnessFilter,
+  RadioInput,
 } from "../../../sharedComponents/Reusble";
 import {
   footerHeight,
@@ -39,6 +40,7 @@ export default function AcrossTheYears() {
   const [selected, setSelected] = useState();
   const [reporting, setReporting] = React.useState();
   const [consciousness, setConsciousness] = React.useState();
+  const [inrerpretation, setInrerpretation] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
 
   const navigate = useNavigate();
@@ -50,12 +52,14 @@ export default function AcrossTheYears() {
       consciousness,
       reporting,
       experimentsNum,
+      inrerpretation,
       selected?.value || parametersOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
         type_of_consciousness: consciousness,
         is_reporting: reporting,
+        inrerpretation,
         min_number_of_experiments: experimentsNum,
         breakdown: selected?.value || parametersOptions[0].value,
       }),
@@ -85,6 +89,10 @@ export default function AcrossTheYears() {
     queryParams.get("is_reporting")
       ? setReporting(queryParams.get("is_reporting"))
       : setReporting("either");
+
+    queryParams.get("inrerpretation")
+      ? setInrerpretation(queryParams.get("inrerpretation"))
+      : setInrerpretation("either");
 
     queryParams.get("type_of_consciousness")
       ? setConsciousness(queryParams.get("type_of_consciousness"))
@@ -149,6 +157,23 @@ export default function AcrossTheYears() {
                 buildUrl(pageName, "type_of_consciousness", e, navigate);
               }}
             />
+
+            <div className={sideSectionClass}>
+              <RadioInput
+                name="inrerpretation"
+                values={[
+                  { value: "pro", name: "Support" },
+                  { value: "challenge", name: "Challenge" },
+                  { value: "either", name: "Either" },
+                ]}
+                checked={inrerpretation}
+                setChecked={setInrerpretation}
+              />
+              <TooltipExplanation
+                text="Type of consciousness"
+                tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+              />
+            </div>
             <ReportFilter
               checked={reporting}
               setChecked={(e) => {

@@ -555,7 +555,7 @@ export default function Findings({
                       disabled={fieldValues[index].id}
                       type="textarea"
                       defaultValue={fieldValue.notes}
-                      rows={4}
+                      rows={6}
                       onChange={(e) => {
                         setFieldValues((prev) =>
                           prev.map((item, i) =>
