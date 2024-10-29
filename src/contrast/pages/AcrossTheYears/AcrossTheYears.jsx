@@ -113,6 +113,8 @@ export default function AcrossTheYears() {
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+
+  const queryParams = new URLSearchParams(location.search);
   return (
     <div>
       <PageTemplate
@@ -158,22 +160,24 @@ export default function AcrossTheYears() {
               }}
             />
 
-            <div className={sideSectionClass}>
-              <RadioInput
-                name="inrerpretation"
-                values={[
-                  { value: "pro", name: "Support" },
-                  { value: "challenge", name: "Challenge" },
-                  { value: "either", name: "Either" },
-                ]}
-                checked={inrerpretation}
-                setChecked={setInrerpretation}
-              />
-              <TooltipExplanation
-                text="Type of consciousness"
-                tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
-              />
-            </div>
+            {queryParams.get("breakdown") === "theory" && (
+              <div className={sideSectionClass}>
+                <RadioInput
+                  name="inrerpretation"
+                  values={[
+                    { value: "pro", name: "Support" },
+                    { value: "challenge", name: "Challenge" },
+                    { value: "either", name: "Either" },
+                  ]}
+                  checked={inrerpretation}
+                  setChecked={setInrerpretation}
+                />
+                <TooltipExplanation
+                  text="Type of consciousness"
+                  tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+                />
+              </div>
+            )}
             <ReportFilter
               checked={reporting}
               setChecked={(e) => {
