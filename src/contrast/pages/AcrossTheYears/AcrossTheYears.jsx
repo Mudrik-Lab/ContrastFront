@@ -45,6 +45,12 @@ export default function AcrossTheYears() {
 
   const navigate = useNavigate();
   const pageName = "trends-over-time";
+  const breakdownOptions = parametersOptions.concat([
+    {
+      value: "theory",
+      label: "Theory",
+    },
+  ]);
 
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
@@ -53,7 +59,7 @@ export default function AcrossTheYears() {
       reporting,
       experimentsNum,
       inrerpretation,
-      selected?.value || parametersOptions[0].value,
+      selected?.value || breakdownOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
@@ -61,7 +67,7 @@ export default function AcrossTheYears() {
         is_reporting: reporting,
         inrerpretation,
         min_number_of_experiments: experimentsNum,
-        breakdown: selected?.value || parametersOptions[0].value,
+        breakdown: selected?.value || breakdownOptions[0].value,
       }),
   });
 
@@ -108,7 +114,7 @@ export default function AcrossTheYears() {
         label: rawTextToShow(queryParams.get("breakdown")),
       });
     } else {
-      setSelected(parametersOptions[0]);
+      setSelected(breakdownOptions[0]);
     }
 
     navigate({ search: queryParams.toString() });
@@ -141,7 +147,7 @@ export default function AcrossTheYears() {
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}
-                options={parametersOptions}
+                options={breakdownOptions}
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);
