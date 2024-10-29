@@ -45,6 +45,12 @@ export default function AcrossTheYears() {
 
   const navigate = useNavigate();
   const pageName = "trends-over-time";
+  const breakdownOptions = parametersOptions.concat([
+    {
+      value: "theory",
+      label: "Theory",
+    },
+  ]);
 
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
@@ -53,7 +59,7 @@ export default function AcrossTheYears() {
       reporting,
       experimentsNum,
       inrerpretation,
-      selected?.value || parametersOptions[0].value,
+      selected?.value || breakdownOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
@@ -61,7 +67,7 @@ export default function AcrossTheYears() {
         is_reporting: reporting,
         inrerpretation,
         min_number_of_experiments: experimentsNum,
-        breakdown: selected?.value || parametersOptions[0].value,
+        breakdown: selected?.value || breakdownOptions[0].value,
       }),
   });
 
@@ -108,11 +114,13 @@ export default function AcrossTheYears() {
         label: rawTextToShow(queryParams.get("breakdown")),
       });
     } else {
-      setSelected(parametersOptions[0]);
+      setSelected(breakdownOptions[0]);
     }
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
+
+  const queryParams = new URLSearchParams(location.search);
   return (
     <div>
       <PageTemplate
@@ -139,7 +147,7 @@ export default function AcrossTheYears() {
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}
-                options={parametersOptions}
+                options={breakdownOptions}
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);
@@ -158,22 +166,24 @@ export default function AcrossTheYears() {
               }}
             />
 
-            <div className={sideSectionClass}>
-              <RadioInput
-                name="inrerpretation"
-                values={[
-                  { value: "pro", name: "Support" },
-                  { value: "challenge", name: "Challenge" },
-                  { value: "either", name: "Either" },
-                ]}
-                checked={inrerpretation}
-                setChecked={setInrerpretation}
-              />
-              <TooltipExplanation
-                text="Type of consciousness"
-                tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
-              />
-            </div>
+            {queryParams.get("breakdown") === "theory" && (
+              <div className={sideSectionClass}>
+                <RadioInput
+                  name="inrerpretation"
+                  values={[
+                    { value: "pro", name: "Support" },
+                    { value: "challenge", name: "Challenge" },
+                    { value: "either", name: "Either" },
+                  ]}
+                  checked={inrerpretation}
+                  setChecked={setInrerpretation}
+                />
+                <TooltipExplanation
+                  text="Type of consciousness"
+                  tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+                />
+              </div>
+            )}
             <ReportFilter
               checked={reporting}
               setChecked={(e) => {
