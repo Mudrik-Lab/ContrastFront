@@ -114,3 +114,21 @@ export async function addFieldToexperiment({
     data: field,
   });
 }
+
+export async function editClassificationField({
+  isUncontrast,
+  field,
+  study_pk,
+  experiment_pk,
+  classificationName,
+  id,
+}) {
+  let UrlPrefix = isUncontrast ? "uncontrast_" : "";
+  return await queryApi({
+    ///               studies/submitted_studies/{study_pk}/experiments/{experiment_pk}/measures/{id}/
+    url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classificationName}/${id}/`,
+    method: "PUT",
+    isProtected: true,
+    data: { ...field, experiment: experiment_pk },
+  });
+}
