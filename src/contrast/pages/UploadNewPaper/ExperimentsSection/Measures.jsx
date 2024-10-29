@@ -11,10 +11,13 @@ import {
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
+  EditClassificationFields,
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
+import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
+import { set } from "date-fns";
 
 export default function Measures({
   fieldOptions,
@@ -30,9 +33,17 @@ export default function Measures({
     notes: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [editble, setEditble] = useState(Array(values.length).fill(false));
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+  const handleEdit = EditClassificationFields(
     study_pk,
     experiment_pk,
     classificationName,
@@ -69,12 +80,19 @@ export default function Measures({
     });
   }, [fieldsNum]);
 
+  const enableEdit = (index) => {
+    setEditble((prevStates) =>
+      prevStates.map((item, i) => (i === index ? !item : item))
+    );
+  };
+
   return (
     <ExpandingBox
       number={fieldsNum}
       disabled={disabled}
       headline={rawTextToShow(classificationName)}>
       {fieldValues.map((fieldValue, index) => {
+        const disableCondition = fieldValue.id && !editble[index];
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -94,15 +112,12 @@ export default function Measures({
                       text={"Type"}
                     />
                     <CustomSelect
-                      disabled={fieldValue.id}
+                      disabled={disableCondition}
                       value={fieldValue.type}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
                         newArray[index].type = value;
                         setFieldValues(newArray);
-                        // fieldValue?.notes &&
-                        //   fieldValue?.type &&
-                        //   handleSubmit(fieldValues, index);
                       }}
                       options={fieldOptions}
                     />
@@ -115,7 +130,7 @@ export default function Measures({
 
                     <div className="flex gap-2">
                       <textarea
-                        disabled={fieldValues[index].id}
+                        disabled={disableCondition}
                         type="textarea"
                         defaultValue={fieldValue.notes}
                         rows={4}
@@ -129,8 +144,7 @@ export default function Measures({
                           );
                         }}
                         className={`border w-full border-gray-300 rounded-md p-2 ${
-                          fieldValues[index].id &&
-                          "bg-grayDisable text-gray-400"
+                          disableCondition && "bg-grayDisable text-gray-400"
                         } `}
                       />
                     </div>
@@ -145,15 +159,30 @@ export default function Measures({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={!fieldValue?.type || fieldValue.id}
-                  />
+                  {!disableCondition && (
+                    <SubmitButton
+                      submit={async () => {
+                        if (!editble[index]) {
+                          handleSubmit(fieldValues, index);
+                        } else {
+                          const res = await handleEdit(fieldValue, index);
+                          res && enableEdit(index);
+                        }
+                      }}
+                      disabled={!fieldValue?.type || disableCondition}
+                    />
+                  )}
+                  {disableCondition && (
+                    <button type="button" onClick={() => enableEdit(index)}>
+                      <Edit className="w-6 h-6" />
+                    </button>
+                  )}
                 </div>
               </div>
             </form>
+            {editble[index] && (
+              <h1 className="text-xl text-red-600">Editble</h1>
+            )}
           </div>
         );
       })}

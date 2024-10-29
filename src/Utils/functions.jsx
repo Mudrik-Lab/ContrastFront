@@ -3,6 +3,7 @@ import { ToastErrorBox } from "../sharedComponents/Reusble";
 import {
   addFieldToexperiment,
   addPropertyToexperiment,
+  editClassificationField,
 } from "../apiHooks/createExperiment";
 import {
   deleteFieldFromExperiments,
@@ -248,6 +249,7 @@ export function SubmitClassificationField(
     }
   };
 }
+
 export function DeleteClassificationField(
   study_pk,
   experiment_pk,
@@ -355,6 +357,32 @@ export function DeleteClassificationField(
       } catch (e) {
         ToastError(e);
       }
+    }
+  };
+}
+
+export function EditClassificationFields(
+  study_pk,
+  experiment_pk,
+  classificationName,
+  fieldValues,
+  setFieldValues
+) {
+  return async (values, index) => {
+    try {
+      const res = await editClassificationField({
+        field: values,
+        study_pk,
+        experiment_pk,
+        classificationName,
+        id: values.id,
+      });
+      if (res.status === 200) {
+        return true;
+      }
+    } catch (e) {
+      console.log(e);
+      ToastError(e);
     }
   };
 }
