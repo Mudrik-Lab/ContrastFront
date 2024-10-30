@@ -33,7 +33,9 @@ export default function Measures({
     notes: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const [editble, setEditble] = useState(Array(values.length).fill(false));
+  const [editble, setEditble] = useState(
+    Array(values?.length).fill(false) || []
+  );
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -180,9 +182,6 @@ export default function Measures({
                 </div>
               </div>
             </form>
-            {editble[index] && (
-              <h1 className="text-xl text-red-600">Editble</h1>
-            )}
           </div>
         );
       })}
