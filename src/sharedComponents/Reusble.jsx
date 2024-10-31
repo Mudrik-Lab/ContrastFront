@@ -182,7 +182,7 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
     </div>
   );
 };
-Tooltip;
+
 export const TooltipExplanation = ({
   text,
   tooltip,
