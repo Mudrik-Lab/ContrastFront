@@ -25,3 +25,7 @@ dist-uncontrast
 *.sln
 *.sw?
 stats.html
+/test-results/
+/playwright-report/
+/blob-report/
+/playwright/.cache/
