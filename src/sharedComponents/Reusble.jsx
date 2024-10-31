@@ -5,6 +5,7 @@ import { ReactComponent as Trash } from "../assets/icons/trash.svg";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
+import { ReactComponent as SaveIcon } from "../assets/icons/save-icon.svg";
 
 import { ReactComponent as RessetIcon } from "../assets/icons/reset.svg";
 import { Tooltip } from "flowbite-react";
@@ -663,11 +664,11 @@ export const SubmitButton = ({ disabled, submit }) => {
         disabled ? "Must fill all field in order to save" : "Click to save"
       }>
       <button
-        className="bg-blue text-white rounded-full text-xs font-semibold px-1 py-2 hover:opacity-40 disabled:opacity-40 flex justify-center items-center"
+        // className="bg-blue text-white rounded-full text-xs font-semibold px-1 py-2 hover:opacity-40 disabled:opacity-40 flex justify-center items-center"
         type="button"
         disabled={disabled}
         onClick={submit}>
-        Save
+        <SaveIcon className="w-5  h-5" />
       </button>
     </Tooltip>
   );
