@@ -17,7 +17,6 @@ import {
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
-import { set } from "date-fns";
 import classNames from "classnames";
 
 export default function Measures({
