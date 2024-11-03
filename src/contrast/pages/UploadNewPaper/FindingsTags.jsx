@@ -21,6 +21,7 @@ export default function FindingsTags({ experiment, findingOptions }) {
     result[item.name] = item.id;
     return result;
   }, {});
+
   return (
     <div className="flex flex-wrap justify-between gap-y-2 ">
       {experiment.finding_tags.map((tag, index) => {
@@ -56,6 +57,10 @@ export default function FindingsTags({ experiment, findingOptions }) {
                   }
                 />
 
+                <Element
+                  headline={"Is NCC?"}
+                  text={tag.is_NCC ? "Yes" : "No"}
+                />
                 {tag.family == families["Temporal"] ? (
                   <div className=" w-full flex flex-col gap-2">
                     <Element headline={"Onset"} text={tag.onset} />
