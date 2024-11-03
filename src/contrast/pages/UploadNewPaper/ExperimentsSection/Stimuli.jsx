@@ -112,10 +112,10 @@ export default function Stimuli({
             key={`${classificationName}-${index}-${
               fieldValue.id ? fieldValue.id : "new"
             }`}>
-            <form className="flex flex-col gap-2">
+            <form className="flex flex-col gap-2 ">
               <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
                 <CircledIndex index={index} />
-                <div className="flex flex-col gap-2">
+                <div className="flex flex-col gap-2 w-full ">
                   <div className="flex items-start gap-2">
                     <div className="w-full flex gap-2 items-start">
                       <div className="w-full">
@@ -191,7 +191,7 @@ export default function Stimuli({
                         options={modalities}
                       />
                     </div>
-                    <div className="w-20">
+                    <div className="w-24">
                       <TooltipExplanation
                         isHeadline
                         tooltip={
