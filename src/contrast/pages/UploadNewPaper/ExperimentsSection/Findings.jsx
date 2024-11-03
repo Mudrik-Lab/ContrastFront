@@ -11,9 +11,12 @@ import {
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
+  EditClassificationFields,
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../../Utils/functions";
+import { Tooltip } from "flowbite-react";
+import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
 
 export default function Findings({
   fieldOptions,
@@ -28,6 +31,11 @@ export default function Findings({
     type: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [editble, setEditble] = useState([]);
+  useEffect(() => {
+    setEditble(Array(fieldValues.length).fill(false));
+  }, [fieldValues.length]);
+
   const classificationName = "finding_tags";
 
   const handleSubmit = SubmitClassificationField(
@@ -39,6 +47,14 @@ export default function Findings({
   );
 
   const handleDelete = DeleteClassificationField(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+
+  const handleEdit = EditClassificationFields(
     study_pk,
     experiment_pk,
     classificationName,
@@ -103,6 +119,13 @@ export default function Findings({
     }
     return true;
   };
+
+  const enableEdit = (index) => {
+    setEditble((prevStates) =>
+      prevStates.map((item, i) => (i === index ? !item : item))
+    );
+  };
+
   return (
     <ExpandingBox
       number={
@@ -124,6 +147,7 @@ export default function Findings({
         </div>
       }>
       {fieldValues.map((fieldValue, index) => {
+        const disableCondition = fieldValue.id && !editble[index];
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -142,7 +166,7 @@ export default function Findings({
                     </div>
                     <div className="w-2/3 flex items-center gap-2">
                       <CustomSelect
-                        disabled={fieldValue?.id}
+                        disabled={disableCondition}
                         value={fieldValue.technique}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
@@ -178,7 +202,7 @@ export default function Findings({
                     </div>
                     <div className="w-2/3 flex items-center gap-2">
                       <CustomSelect
-                        disabled={fieldValue?.id}
+                        disabled={disableCondition}
                         value={fieldValue.family}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
@@ -203,7 +227,7 @@ export default function Findings({
                     </div>
                     <div className="w-2/3  flex items-center gap-2">
                       <CustomSelect
-                        disabled={fieldValue?.id}
+                        disabled={disableCondition}
                         value={fieldValue.type}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
@@ -231,7 +255,7 @@ export default function Findings({
                     </div>
                     <div className="w-2/3 flex justify-between items-center gap-2">
                       <CustomSelect
-                        disabled={fieldValue?.id}
+                        disabled={disableCondition}
                         value={fieldValue.is_NCC}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
@@ -262,7 +286,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-2 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             name="onset"
                             min={0}
@@ -277,8 +301,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -294,7 +317,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-2 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             min={0}
                             defaultValue={fieldValue.offset}
@@ -308,8 +331,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -328,7 +350,7 @@ export default function Findings({
                       </div>
                       <div className="w-2/3">
                         <CustomSelect
-                          disabled={fieldValues[index].id}
+                          disabled={disableCondition}
                           value={fieldValue.AAL_atlas_tag}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
@@ -354,7 +376,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex justify-between items-center gap-2">
                           <CustomSelect
-                            disabled={fieldValue?.id}
+                            disabled={disableCondition}
                             value={fieldValue.direction}
                             onChange={(value) => {
                               const newArray = [...fieldValues];
@@ -382,7 +404,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-1 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             min={0}
                             defaultValue={fieldValue.band_lower_bound}
@@ -399,8 +421,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -421,7 +442,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-1 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             min={0}
                             defaultValue={fieldValue.band_higher_bound}
@@ -438,8 +459,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -460,7 +480,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex items-center gap-2">
                           <CustomSelect
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             value={fieldValue.analysis_type}
                             onChange={(value) => {
                               const newArray = [...fieldValues];
@@ -486,7 +506,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-1 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             min={0}
                             name="onset"
@@ -501,8 +521,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -518,7 +537,7 @@ export default function Findings({
                         </div>
                         <div className="w-2/3 flex gap-1 items-center">
                           <input
-                            disabled={fieldValues[index].id}
+                            disabled={disableCondition}
                             type="number"
                             min={0}
                             defaultValue={fieldValue.offset}
@@ -532,8 +551,7 @@ export default function Findings({
                               );
                             }}
                             className={`border w-full border-gray-300 rounded-md p-2 ${
-                              fieldValues[index].id &&
-                              "bg-grayDisable text-gray-400"
+                              disableCondition && "bg-grayDisable text-gray-400"
                             } `}
                           />
                           <Text weight={"bold"} color={"grayReg"}>
@@ -552,7 +570,7 @@ export default function Findings({
                       Notes (optional)
                     </Text>
                     <textarea
-                      disabled={fieldValues[index].id}
+                      disabled={disableCondition}
                       type="textarea"
                       defaultValue={fieldValue.notes}
                       rows={6}
@@ -566,7 +584,7 @@ export default function Findings({
                         );
                       }}
                       className={`border w-full border-gray-300 rounded-md p-2 ${
-                        fieldValues[index].id && "bg-grayDisable text-gray-400"
+                        disableCondition && "bg-grayDisable text-gray-400"
                       } `}
                     />
                   </div>
@@ -578,12 +596,31 @@ export default function Findings({
                     fieldValues={fieldValues}
                     index={index}
                   />
-                  <SubmitButton
-                    submit={() => {
-                      handleSubmit(fieldValues, index);
-                    }}
-                    disabled={!submitConditions(index) || fieldValue.id}
-                  />
+                  {!disableCondition && (
+                    <SubmitButton
+                      submit={async () => {
+                        if (!editble[index]) {
+                          handleSubmit(fieldValues, index);
+                        } else {
+                          const res = await handleEdit(fieldValue, index);
+                          res && enableEdit(index);
+                        }
+                      }}
+                      disabled={!submitConditions(index) || disableCondition}
+                    />
+                  )}
+
+                  {disableCondition && (
+                    <Tooltip animation content="Edit" trigger="hover">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          enableEdit(index);
+                        }}>
+                        <Edit className="w-6 h-6" />
+                      </button>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </form>
