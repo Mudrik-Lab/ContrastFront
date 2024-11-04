@@ -131,6 +131,12 @@ export default function TargetStimuli({
                       </Text>
                     </div>
                     <div className="w-1/3 flex justify-between items-center gap-2">
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
+                        }
+                      />
                       <CustomSelect
                         disabled={disableCondition}
                         value={
@@ -151,7 +157,7 @@ export default function TargetStimuli({
                             setEditble(false);
                           } else {
                             setFieldValues(newObj);
-                            // submitCondition() && handleSubmit(fieldValues, 0);
+                            submitCondition() && handleSubmit(fieldValues, 0);
                           }
                         }}
                         options={[
@@ -159,12 +165,6 @@ export default function TargetStimuli({
                           { value: "no", label: "No" },
                         ]}
                       />
-                      {/* <TooltipExplanation
-                        isHeadline
-                        tooltip={
-                          "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
-                        }
-                      /> */}
                     </div>
                   </div>
                 </div>
@@ -202,7 +202,7 @@ export default function TargetStimuli({
                               newObj.sub_category = undefined;
                             }
                             setFieldValues(newObj);
-                            // submitCondition() && handleSubmit(fieldValues, 0);
+                            submitCondition() && handleSubmit(fieldValues, 0);
                           }}
                           options={fieldOptions}
                         />
@@ -221,7 +221,7 @@ export default function TargetStimuli({
                             const newObj = { ...fieldValues };
                             newObj.sub_category = value;
                             setFieldValues(newObj);
-                            // submitCondition() && handleSubmit(fieldValues, 0);
+                            submitCondition() && handleSubmit(fieldValues, 0);
                           }}
                           options={creatSubOptions()}
                         />
@@ -244,7 +244,7 @@ export default function TargetStimuli({
                           const newObj = { ...fieldValues };
                           newObj.modality = value;
                           setFieldValues(newObj);
-                          // submitCondition() && handleSubmit(fieldValues, 0);
+                          submitCondition() && handleSubmit(fieldValues, 0);
                         }}
                         options={modalities}
                       />
@@ -272,24 +272,24 @@ export default function TargetStimuli({
                               number_of_stimuli: e.target.value,
                             }));
                           }}
-                          // onBlur={(e) => {
-                          //   e.stopPropagation();
-                          //   if (submitCondition()) {
-                          //     e.preventDefault();
+                          onBlur={(e) => {
+                            e.stopPropagation();
+                            if (submitCondition()) {
+                              e.preventDefault();
 
-                          //     handleSubmit(fieldValues, 0);
-                          //   }
-                          // }}
-                          // onKeyDown={(e) => {
-                          //   e.stopPropagation();
+                              handleSubmit(fieldValues, 0);
+                            }
+                          }}
+                          onKeyDown={(e) => {
+                            e.stopPropagation();
 
-                          //   if (e.key === "Enter" && submitCondition()) {
-                          //     e.preventDefault();
-                          //     handleSubmit(fieldValues, 0);
-                          //   } else if (e.key === "Enter") {
-                          //     e.preventDefault();
-                          //   }
-                          // }}
+                            if (e.key === "Enter" && submitCondition()) {
+                              e.preventDefault();
+                              handleSubmit(fieldValues, 0);
+                            } else if (e.key === "Enter") {
+                              e.preventDefault();
+                            }
+                          }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             disableCondition && "bg-grayDisable text-gray-400"
                           } `}
@@ -309,7 +309,7 @@ export default function TargetStimuli({
                   handleDelete={handleDelete}
                 />
               </div>
-              {disableCondition && (
+              {/* {disableCondition && (
                 <Tooltip animation content="Edit" trigger="hover">
                   <button
                     type="button"
@@ -332,7 +332,7 @@ export default function TargetStimuli({
                   }}
                   disabled={!submitCondition || disableCondition}
                 />
-              )}
+              )} */}
             </div>
           </div>
         </div>
