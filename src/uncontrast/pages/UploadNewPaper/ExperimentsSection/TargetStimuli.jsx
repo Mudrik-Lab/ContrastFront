@@ -137,7 +137,6 @@ export default function TargetStimuli({
                           fieldValues.is_target_same_as_suppressed_stimulus
                         }
                         onChange={(value) => {
-                          console.log(value);
                           const newObj = { ...fieldValues };
                           newObj.is_target_same_as_suppressed_stimulus = value;
                           newObj.suppressed_stimulus = suppressed_stimulus;
@@ -229,7 +228,7 @@ export default function TargetStimuli({
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2 mt-2">
                     <div className="w-1/2">
                       <TooltipExplanation
                         isHeadline

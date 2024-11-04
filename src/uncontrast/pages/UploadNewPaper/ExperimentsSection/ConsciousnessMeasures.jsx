@@ -6,13 +6,18 @@ import {
   CustomSelect,
   CircledIndex,
   Text,
+  SubmitButton,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
+  EditClassificationFields,
   SubmitClassificationField,
 } from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
+import { Tooltip } from "flowbite-react";
+import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
+import classNames from "classnames";
 
 export default function ConsciousnessMeasures({
   fieldOptions,
@@ -40,6 +45,11 @@ export default function ConsciousnessMeasures({
     values?.consciousness_measures_notes || ""
   );
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [editble, setEditble] = useState([]);
+  useEffect(() => {
+    setEditble(Array(fieldValues.length).fill(false));
+  }, [fieldValues.length]);
+
   const classificationName = "consciousness_measures";
 
   const OBJECTIVE_CASE_TOOLTIP =
@@ -58,6 +68,13 @@ export default function ConsciousnessMeasures({
     isUncontrast
   );
 
+  const handleEdit = EditClassificationFields(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
   const handleDelete = DeleteClassificationField(
     study_pk,
     experiment_pk,
@@ -110,10 +127,15 @@ export default function ConsciousnessMeasures({
       fieldValues[index]?.phase &&
       fieldValues[index]?.number_of_trials &&
       fieldValues[index]?.number_of_participants_in_awareness_test &&
-      fieldValues[index]?.is_cm_same_participants_as_task &&
-      fieldValues[index]?.is_performance_above_chance &&
-      fieldValues[index]?.is_trial_excluded_based_on_measure &&
+      fieldValues[index]?.is_cm_same_participants_as_task !== "" &&
+      fieldValues[index]?.is_performance_above_chance !== "" &&
+      fieldValues[index]?.is_trial_excluded_based_on_measure !== "" &&
       (createSubTypes(index)?.length > 0 ? fieldValues[index]?.sub_type : true)
+    );
+  };
+  const enableEdit = (index) => {
+    setEditble((prevStates) =>
+      prevStates.map((item, i) => (i === index ? !item : item))
     );
   };
 
@@ -131,6 +153,8 @@ export default function ConsciousnessMeasures({
       disabled={disabled}
       headline={"Consciousness Measures"}>
       {fieldValues.map((fieldValue, index) => {
+        const disableCondition = fieldValue.id && !editble[index];
+
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -151,14 +175,14 @@ export default function ConsciousnessMeasures({
                           text={"Type"}
                         />
                         <CustomSelect
-                          disabled={fieldValue.id}
+                          disabled={disableCondition}
                           value={fieldValue.type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].type = value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
+                            // submitCondition(index) &&
+                            //   handleSubmit(fieldValues, index);
                           }}
                           options={fieldOptions}
                         />
@@ -179,15 +203,16 @@ export default function ConsciousnessMeasures({
                         />
                         <CustomSelect
                           disabled={
-                            fieldValue.id || createSubTypes(index)?.length === 0
+                            disableCondition ||
+                            createSubTypes(index)?.length === 0
                           }
                           value={fieldValue.sub_type}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].sub_type = value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
+                            // submitCondition(index) &&
+                            //   handleSubmit(fieldValues, index);
                           }}
                           options={createSubTypes(index)}
                         />
@@ -203,14 +228,14 @@ export default function ConsciousnessMeasures({
                       text={"Phase"}
                     />
                     <CustomSelect
-                      disabled={fieldValue.id}
+                      disabled={disableCondition}
                       value={fieldValue.phase}
                       onChange={(value) => {
                         const newArray = [...fieldValues];
                         newArray[index].phase = value;
                         setFieldValues(newArray);
-                        submitCondition(index) &&
-                          handleSubmit(fieldValues, index);
+                        // submitCondition(index) &&
+                        //   handleSubmit(fieldValues, index);
                       }}
                       options={analysisPhaseOptions}
                     />
@@ -231,7 +256,7 @@ export default function ConsciousnessMeasures({
                         />
                         <input
                           min={0}
-                          disabled={fieldValues[index].id}
+                          disabled={disableCondition}
                           type="number"
                           value={fieldValue.number_of_trials}
                           onChange={(e) => {
@@ -246,18 +271,17 @@ export default function ConsciousnessMeasures({
                               )
                             );
                           }}
-                          onBlur={() =>
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
-                          onKeyDown={(e) =>
-                            e.key === "Enter" &&
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
+                          // onBlur={() =>
+                          //   submitCondition(index) &&
+                          //   handleSubmit(fieldValues, index)
+                          // }
+                          // onKeyDown={(e) =>
+                          //   e.key === "Enter" &&
+                          //   submitCondition(index) &&
+                          //   handleSubmit(fieldValues, index)
+                          // }
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
@@ -271,7 +295,7 @@ export default function ConsciousnessMeasures({
                       <div className="w-1/4 flex justify-between items-center gap-2">
                         <input
                           min={0}
-                          disabled={fieldValues[index].id}
+                          disabled={disableCondition}
                           type="number"
                           value={
                             fieldValue.number_of_participants_in_awareness_test
@@ -289,18 +313,17 @@ export default function ConsciousnessMeasures({
                               )
                             );
                           }}
-                          onBlur={() =>
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
-                          onKeyDown={(e) =>
-                            e.key === "Enter" &&
-                            submitCondition(index) &&
-                            handleSubmit(fieldValues, index)
-                          }
+                          // onBlur={() =>
+                          //   submitCondition(index) &&
+                          //   handleSubmit(fieldValues, index)
+                          // }
+                          // onKeyDown={(e) =>
+                          //   e.key === "Enter" &&
+                          //   submitCondition(index) &&
+                          //   handleSubmit(fieldValues, index)
+                          // }
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
@@ -313,15 +336,15 @@ export default function ConsciousnessMeasures({
                       </div>
                       <div className="w-1/4 flex justify-between items-center gap-2">
                         <CustomSelect
-                          disabled={fieldValue?.id}
+                          disabled={disableCondition}
                           value={fieldValue.is_cm_same_participants_as_task}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].is_cm_same_participants_as_task =
                               value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
+                            // submitCondition(index) &&
+                            //   handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -338,14 +361,14 @@ export default function ConsciousnessMeasures({
                       </div>
                       <div className="w-1/4 flex justify-between items-center gap-2">
                         <CustomSelect
-                          disabled={fieldValue?.id}
+                          disabled={disableCondition}
                           value={fieldValue.is_performance_above_chance}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].is_performance_above_chance = value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
+                            // submitCondition(index) &&
+                            //   handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -362,15 +385,15 @@ export default function ConsciousnessMeasures({
                       </div>
                       <div className="w-1/4 flex justify-between items-center gap-2">
                         <CustomSelect
-                          disabled={fieldValue?.id}
+                          disabled={disableCondition}
                           value={fieldValue.is_trial_excluded_based_on_measure}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].is_trial_excluded_based_on_measure =
                               value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
+                            // submitCondition(index) &&
+                            //   handleSubmit(fieldValues, index);
                           }}
                           options={[
                             { value: true, label: "Yes" },
@@ -382,12 +405,38 @@ export default function ConsciousnessMeasures({
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
-                <div id="trash+submit">
+                <div
+                  className="flex flex-col items-center gap-1"
+                  id="trash+submit">
                   <TrashButton
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
                     index={index}
                   />
+                  {!disableCondition && (
+                    <SubmitButton
+                      disabled={!submitCondition(index)}
+                      submit={async () => {
+                        if (!editble[index]) {
+                          handleSubmit(fieldValues, index);
+                        } else {
+                          const res = await handleEdit(fieldValue, index);
+                          res && enableEdit(index);
+                        }
+                      }}
+                    />
+                  )}
+                  {disableCondition && (
+                    <Tooltip animation content="Edit" trigger="hover">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          enableEdit(index);
+                        }}>
+                        <Edit className="w-6 h-6" />
+                      </button>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </form>
