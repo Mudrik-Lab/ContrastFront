@@ -38,7 +38,6 @@ export default function BasicClassification({
     theory_driven: "",
     theories: [],
   });
-
   useEffect(() => {
     if (experimentData) {
       setValues({
@@ -53,6 +52,16 @@ export default function BasicClassification({
       });
     }
   }, []);
+  let filteredTheories = theories;
+  if (experimentData?.theory_driven_theories?.length > 0) {
+    filteredTheories = theories.filter(
+      (item1) => !values.theories.some((item2) => item2.label === item1.label)
+    );
+  }
+
+  console.log(theories);
+  console.log(values.theories);
+  console.log(filteredTheories);
   const handleSubmit = async (values) => {
     try {
       const res = await createExperiments({
@@ -240,7 +249,7 @@ export default function BasicClassification({
                   placeholder="Theories"
                   isMulti={true}
                   component={MultiSelect}
-                  options={theories}
+                  options={filteredTheories}
                 />
 
                 <TooltipExplanation

@@ -17,7 +17,7 @@ import {
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
-import { set } from "date-fns";
+import classNames from "classnames";
 
 export default function Measures({
   fieldOptions,
@@ -33,9 +33,11 @@ export default function Measures({
     notes: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
-  const [editble, setEditble] = useState(
-    Array(values?.length).fill(false) || []
-  );
+  const [editble, setEditble] = useState([]);
+  useEffect(() => {
+    setEditble(Array(fieldValues.length).fill(false));
+  }, [fieldValues.length]);
+
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -101,7 +103,11 @@ export default function Measures({
               fieldValue.id ? fieldValue.id : "new"
             }`}>
             <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
+              <div
+                className={classNames(
+                  "flex gap-2 items-center border  border-x-4 p-2 rounded-md",
+                  editble[index] ? "border-flourishRed" : "border-blue"
+                )}>
                 <CircledIndex index={index} />
 
                 <div className="w-full flex gap-2 items-start">
@@ -175,9 +181,15 @@ export default function Measures({
                     />
                   )}
                   {disableCondition && (
-                    <button type="button" onClick={() => enableEdit(index)}>
-                      <Edit className="w-6 h-6" />
-                    </button>
+                    <Tooltip animation content="Edit" trigger="hover">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          enableEdit(index);
+                        }}>
+                        <Edit className="w-6 h-6" />
+                      </button>
+                    </Tooltip>
                   )}
                 </div>
               </div>

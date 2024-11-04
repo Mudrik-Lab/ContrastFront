@@ -23,6 +23,7 @@ import { state } from "../state";
 import { ErrorMessage, Field } from "formik";
 import { rawTextToShow } from "../Utils/functions";
 import { removeToken } from "../Utils/tokenHandler";
+import SaveIcon from "./SaveIcon";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -182,7 +183,7 @@ export const RadioInput = ({ name, values, checked, setChecked, isFlat }) => {
     </div>
   );
 };
-Tooltip;
+
 export const TooltipExplanation = ({
   text,
   tooltip,
@@ -614,6 +615,7 @@ export const ExpandingBox = ({
 export function TrashButton({ handleDelete, fieldValues, index }) {
   return (
     <button
+      className="mb-4"
       type="button"
       aria-label="delete this field"
       onClick={() => {
@@ -663,11 +665,11 @@ export const SubmitButton = ({ disabled, submit }) => {
         disabled ? "Must fill all field in order to save" : "Click to save"
       }>
       <button
-        className="bg-blue text-white rounded-full text-xs font-semibold px-1 py-2 hover:opacity-40 disabled:opacity-40 flex justify-center items-center"
+        // className="bg-blue text-white rounded-full text-xs font-semibold px-1 py-2 hover:opacity-40 disabled:opacity-40 flex justify-center items-center"
         type="button"
         disabled={disabled}
         onClick={submit}>
-        Save
+        <SaveIcon disabled={disabled} />
       </button>
     </Tooltip>
   );
