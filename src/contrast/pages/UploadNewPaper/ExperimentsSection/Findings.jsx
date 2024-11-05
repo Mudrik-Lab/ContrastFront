@@ -126,6 +126,10 @@ export default function Findings({
     );
   };
 
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
+
   return (
     <ExpandingBox
       number={
@@ -590,8 +594,11 @@ export default function Findings({
                   </div>
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
-                <div id="trash+submit">
+                <div
+                  id="trash+submit"
+                  className="flex flex-col items-center gap-6">
                   <TrashButton
+                    disabled={!editble.every((field) => !Boolean(field))}
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
                     index={index}
@@ -628,6 +635,7 @@ export default function Findings({
         );
       })}
       <AddFieldButton
+        disabled={disableAddBttns}
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
