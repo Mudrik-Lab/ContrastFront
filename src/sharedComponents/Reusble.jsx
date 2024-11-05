@@ -1,7 +1,6 @@
 /** @format */
 import React, { useEffect, useState } from "react";
 import classNames from "classnames";
-import { ReactComponent as Trash } from "../assets/icons/trash.svg";
 import { ReactComponent as QuestionMark } from "../assets/icons/help-q-mark.svg";
 RessetIcon;
 import { ReactComponent as CsvIcon } from "../assets/icons/csv-file.svg";
@@ -24,6 +23,7 @@ import { ErrorMessage, Field } from "formik";
 import { rawTextToShow } from "../Utils/functions";
 import { removeToken } from "../Utils/tokenHandler";
 import SaveIcon from "./SaveIcon";
+import TrashIcon from "./TrashIcon";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -612,21 +612,26 @@ export const ExpandingBox = ({
   );
 };
 
-export function TrashButton({ handleDelete, fieldValues, index }) {
+export function TrashButton({ handleDelete, fieldValues, index, disabled }) {
   return (
     <button
-      className="mb-4"
+      disabled={disabled}
       type="button"
       aria-label="delete this field"
       onClick={() => {
         handleDelete(fieldValues, index);
       }}>
-      <Trash />
+      <TrashIcon disabled={disabled} />
     </button>
   );
 }
 
-export function AddFieldButton({ fieldValues, setFieldValues, initialValues }) {
+export function AddFieldButton({
+  fieldValues,
+  setFieldValues,
+  initialValues,
+  disabled,
+}) {
   return (
     <div className="w-full flex  justify-center">
       {fieldValues.length > 0 && (
@@ -634,7 +639,9 @@ export function AddFieldButton({ fieldValues, setFieldValues, initialValues }) {
           id="add"
           type="button"
           aria-label="add field"
-          disabled={!fieldValues[fieldValues.length - 1].id}
+          disabled={
+            disabled ? disabled : !fieldValues[fieldValues.length - 1].id
+          }
           onClick={() => {
             setFieldValues([
               ...fieldValues,

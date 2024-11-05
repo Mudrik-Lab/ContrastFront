@@ -59,9 +59,6 @@ export default function BasicClassification({
     );
   }
 
-  console.log(theories);
-  console.log(values.theories);
-  console.log(filteredTheories);
   const handleSubmit = async (values) => {
     try {
       const res = await createExperiments({
