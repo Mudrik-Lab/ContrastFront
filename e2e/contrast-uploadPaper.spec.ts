@@ -46,16 +46,6 @@ test("user can add new paper", async ({ page }) => {
   expect(await page.getByText("Success").isVisible());
 });
 
-test("user can delete paper from Uncompleted submissions", async ({ page }) => {
-  await login({ page });
-  await page.getByRole("link", { name: "Upload New Paper" }).click();
-  await page.getByRole("link", { name: "Upload New Paper" }).click();
-  await page.getByText("Uncompleted submissions(1)").click();
-  await page.getByText("delete").click();
-  await page.getByRole("button", { name: "Yes' Delete it!" }).click();
-  expect(await page.getByText("Study was deleted successfully").isVisible());
-});
-
 test("user can edit paper from Uncompleted submissions", async ({ page }) => {
   await login({ page });
   await page.getByRole("link", { name: "Upload New Paper" }).click();
@@ -72,35 +62,6 @@ test("user can edit paper from Uncompleted submissions", async ({ page }) => {
   await page.locator("#react-select-5-input").press("Escape");
   await page.getByRole("button", { name: "Update Paper" }).click();
   expect(await page.getByText("Study's details were updated").isVisible());
-});
-
-test("user cant add new paper if not all fields r full", async ({ page }) => {
-  await login({ page });
-  await page.getByRole("link", { name: "Upload New Paper" }).click();
-  await page.getByRole("link", { name: "Upload New Paper" }).click();
-
-  await page.getByRole("button", { name: "Add New Paper" }).click();
-  await page.getByPlaceholder("Enter New Paper Title").click();
-  await page.getByPlaceholder("Enter New Paper Title").fill("TestPaper");
-  await page.getByPlaceholder("Enter your DOI identifier").click();
-  await page.getByPlaceholder("Enter your DOI identifier").click();
-  await page
-    .getByPlaceholder("Enter your DOI identifier")
-    .fill("10.1177/00225266209743");
-  //skip year field
-  await page
-    .locator("div")
-    .filter({ hasText: /^Select or Add Authors$/ })
-    .nth(2)
-    .click();
-  await page.getByText("Aantaa R.", { exact: true }).click();
-  await page.getByLabel("Select jurnal").fill("f");
-  await page
-    .getByText("Cogn. Affect. Behav. Neurosci.", { exact: true })
-    .dblclick();
-  await page.getByText("Afghanistan", { exact: true }).click();
-
-  expect(await page.getByRole("button", { name: "Save Paper" }).isDisabled());
 });
 
 test("user can add an experiment", async ({ page }) => {
@@ -146,4 +107,43 @@ test("user can add an experiment", async ({ page }) => {
       )
       .isVisible()
   );
+});
+
+test("user can delete paper from Uncompleted submissions", async ({ page }) => {
+  await login({ page });
+  await page.getByRole("link", { name: "Upload New Paper" }).click();
+  await page.getByRole("link", { name: "Upload New Paper" }).click();
+  await page.getByText("Uncompleted submissions(1)").click();
+  await page.getByText("delete").click();
+  await page.getByRole("button", { name: "Yes' Delete it!" }).click();
+  expect(await page.getByText("Study was deleted successfully").isVisible());
+});
+
+test("user cant add new paper if not all fields r full", async ({ page }) => {
+  await login({ page });
+  await page.getByRole("link", { name: "Upload New Paper" }).click();
+  await page.getByRole("link", { name: "Upload New Paper" }).click();
+
+  await page.getByRole("button", { name: "Add New Paper" }).click();
+  await page.getByPlaceholder("Enter New Paper Title").click();
+  await page.getByPlaceholder("Enter New Paper Title").fill("TestPaper");
+  await page.getByPlaceholder("Enter your DOI identifier").click();
+  await page.getByPlaceholder("Enter your DOI identifier").click();
+  await page
+    .getByPlaceholder("Enter your DOI identifier")
+    .fill("10.1177/00225266209743");
+  //skip year field
+  await page
+    .locator("div")
+    .filter({ hasText: /^Select or Add Authors$/ })
+    .nth(2)
+    .click();
+  await page.getByText("Aantaa R.", { exact: true }).click();
+  await page.getByLabel("Select jurnal").fill("f");
+  await page
+    .getByText("Cogn. Affect. Behav. Neurosci.", { exact: true })
+    .dblclick();
+  await page.getByText("Afghanistan", { exact: true }).click();
+
+  expect(await page.getByRole("button", { name: "Save Paper" }).isDisabled());
 });
