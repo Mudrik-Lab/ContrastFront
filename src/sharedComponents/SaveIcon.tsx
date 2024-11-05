@@ -10,9 +10,9 @@ export default function SaveIcon({ disabled }) {
       xmlns="http://www.w3.org/2000/svg"
       aria-labelledby="saveIconTitle"
       stroke={disabled ? "#6d6d6d" : "#379EEA"}
-      stroke-width="2"
-      stroke-linecap="square"
-      stroke-linejoin="miter"
+      strokeWidth="2"
+      strokeLinecap="square"
+      strokeLinejoin="miter"
       fill="none"
       color="#000000">
       <title id="saveIconTitle">Save</title>{" "}

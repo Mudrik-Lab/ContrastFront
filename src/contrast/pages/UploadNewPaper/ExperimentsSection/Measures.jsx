@@ -18,6 +18,7 @@ import {
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
 import classNames from "classnames";
+import { Site } from "../../../../config/siteType";
 
 export default function Measures({
   fieldOptions,
@@ -89,6 +90,9 @@ export default function Measures({
       prevStates.map((item, i) => (i === index ? !item : item))
     );
   };
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
 
   return (
     <ExpandingBox
@@ -160,9 +164,10 @@ export default function Measures({
                 </div>
                 <div className="border-r-2 border-blue h-24"></div>
                 <div
-                  className="flex flex-col items-center gap-1"
+                  className="flex flex-col items-center gap-6"
                   id="trash+submit">
                   <TrashButton
+                    disabled={!editble.every((field) => !Boolean(field))}
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
                     index={index}
@@ -201,11 +206,12 @@ export default function Measures({
         <Tooltip
           placement="top"
           content={
-            fieldValues[fieldValues.length - 1].id
+            !disableAddBttns
               ? "Add measures field"
               : "Add another measures field is abled after clicking save button on right side of the field"
           }>
           <AddFieldButton
+            disabled={disableAddBttns}
             initialValues={initialValues}
             fieldValues={fieldValues}
             setFieldValues={setFieldValues}

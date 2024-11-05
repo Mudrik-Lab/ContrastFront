@@ -1,4 +1,5 @@
 import { queryApi } from "../Utils/api";
+import { Site } from "../config/siteType";
 
 export async function createExperiments({
   is_reporting,
@@ -123,7 +124,8 @@ export async function editClassificationField({
   classificationName,
   id,
 }) {
-  let UrlPrefix = isUncontrast ? "uncontrast_" : "";
+  const isUncontrust = Site.type === Site.unContrast;
+  let UrlPrefix = isUncontrust ? "uncontrast_" : "";
   return await queryApi({
     ///               studies/submitted_studies/{study_pk}/experiments/{experiment_pk}/measures/{id}/
     url: `${UrlPrefix}studies/submitted_studies/${study_pk}/experiments/${experiment_pk}/${classificationName}/${id}/`,

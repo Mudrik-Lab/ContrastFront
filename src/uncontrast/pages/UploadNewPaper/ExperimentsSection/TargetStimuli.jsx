@@ -4,13 +4,17 @@ import {
   TooltipExplanation,
   TrashButton,
   CustomSelect,
+  SubmitButton,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
   DeleteClassificationField,
   SubmitClassificationField,
+  EditClassificationFields,
   rawTextToShow,
 } from "../../../../Utils/functions";
+import { Tooltip } from "flowbite-react";
+import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
 
 export default function TargetStimuli({
   fieldOptions,
@@ -33,6 +37,8 @@ export default function TargetStimuli({
     suppressed_stimulus,
   };
   const [fieldValues, setFieldValues] = useState(initialValues);
+  const [editble, setEditble] = useState(false);
+
   const classificationName = "target_stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -42,6 +48,14 @@ export default function TargetStimuli({
     fieldValues,
     setFieldValues,
     isUncontrast
+  );
+
+  const handleEdit = EditClassificationFields(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
   );
 
   const handleDelete = DeleteClassificationField(
@@ -93,7 +107,11 @@ export default function TargetStimuli({
     } else if (fieldValues.is_target_same_as_suppressed_stimulus === "yes")
       return true;
   };
-
+  //TODO: relaese commented code to enable edit option
+  // const enableEdit = () => {
+  //   setEditble(!editble);
+  // };
+  const disableCondition = fieldValues.id && !editble;
   return (
     <ExpandingBox
       noNumber
@@ -102,7 +120,7 @@ export default function TargetStimuli({
       <div>
         <div className="flex flex-col gap-2">
           <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
-            <div className="flex flex-col gap-2">
+            <div className="flex flex-col gap-2 w-full">
               <div>
                 <div className="flex items-start gap-2">
                   <div className="flex gap-2 w-full items-center">
@@ -113,8 +131,14 @@ export default function TargetStimuli({
                       </Text>
                     </div>
                     <div className="w-1/3 flex justify-between items-center gap-2">
+                      <TooltipExplanation
+                        isHeadline
+                        tooltip={
+                          "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
+                        }
+                      />
                       <CustomSelect
-                        disabled={fieldValues.id}
+                        disabled={disableCondition}
                         value={
                           fieldValues.is_target_same_as_suppressed_stimulus
                         }
@@ -130,6 +154,7 @@ export default function TargetStimuli({
                               suppressedValues.number_of_stimuli;
                             setFieldValues(newObj);
                             handleSubmit(newObj, 0);
+                            setEditble(false);
                           } else {
                             setFieldValues(newObj);
                             submitCondition() && handleSubmit(fieldValues, 0);
@@ -140,12 +165,6 @@ export default function TargetStimuli({
                           { value: "no", label: "No" },
                         ]}
                       />
-                      {/* <TooltipExplanation
-                        isHeadline
-                        tooltip={
-                          "In most experiments, participants are asked to respond to non suppressed stimuli. If this is the case, enter “yes”"
-                        }
-                      /> */}
                     </div>
                   </div>
                 </div>
@@ -171,7 +190,7 @@ export default function TargetStimuli({
                         </div>
 
                         <CustomSelect
-                          disabled={fieldValues?.id}
+                          disabled={disableCondition}
                           value={fieldValues?.category}
                           onChange={(value) => {
                             const newObj = { ...fieldValues };
@@ -196,7 +215,7 @@ export default function TargetStimuli({
                           Sub-category
                         </Text>
                         <CustomSelect
-                          disabled={fieldValues?.id}
+                          disabled={disableCondition}
                           value={fieldValues?.sub_category}
                           onChange={(value) => {
                             const newObj = { ...fieldValues };
@@ -209,7 +228,7 @@ export default function TargetStimuli({
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-start gap-2">
+                  <div className="flex items-start gap-2 mt-2">
                     <div className="w-1/2">
                       <TooltipExplanation
                         isHeadline
@@ -219,7 +238,7 @@ export default function TargetStimuli({
                         text={"Modality"}
                       />
                       <CustomSelect
-                        disabled={fieldValues?.id}
+                        disabled={disableCondition}
                         value={fieldValues?.modality}
                         onChange={(value) => {
                           const newObj = { ...fieldValues };
@@ -242,7 +261,7 @@ export default function TargetStimuli({
                       <div className="flex flex-col items-center">
                         <input
                           min={0}
-                          disabled={fieldValues.id}
+                          disabled={disableCondition}
                           type="number"
                           value={fieldValues.number_of_stimuli}
                           onChange={(e) => {
@@ -272,7 +291,7 @@ export default function TargetStimuli({
                             }
                           }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues.id && "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
@@ -282,12 +301,38 @@ export default function TargetStimuli({
               </div>
             </div>
             <div className="border-r-2 border-blue h-24"></div>
-            <div id="trash+submit">
-              <TrashButton
-                fieldValues={fieldValues}
-                index={0}
-                handleDelete={handleDelete}
-              />
+            <div className="flex flex-col items-center gap-1">
+              <div id="trash+submit">
+                <TrashButton
+                  fieldValues={fieldValues}
+                  index={0}
+                  handleDelete={handleDelete}
+                />
+              </div>
+              {/* {disableCondition && (
+                <Tooltip animation content="Edit" trigger="hover">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      enableEdit(index);
+                    }}>
+                    <Edit className="w-6 h-6" />
+                  </button>
+                </Tooltip>
+              )}
+              {!disableCondition && (
+                <SubmitButton
+                  submit={async () => {
+                    if (!editble) {
+                      handleSubmit(fieldValues);
+                    } else {
+                      const res = await handleEdit(fieldValues);
+                      res && enableEdit(false);
+                    }
+                  }}
+                  disabled={!submitCondition || disableCondition}
+                />
+              )} */}
             </div>
           </div>
         </div>
