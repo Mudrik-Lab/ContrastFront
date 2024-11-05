@@ -107,10 +107,10 @@ export default function TargetStimuli({
     } else if (fieldValues.is_target_same_as_suppressed_stimulus === "yes")
       return true;
   };
-
-  const enableEdit = () => {
-    setEditble(!editble);
-  };
+  //TODO: relaese commented code to enable edit option
+  // const enableEdit = () => {
+  //   setEditble(!editble);
+  // };
   const disableCondition = fieldValues.id && !editble;
   return (
     <ExpandingBox

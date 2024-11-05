@@ -124,7 +124,7 @@ export async function editClassificationField({
   classificationName,
   id,
 }) {
-  const isUncontrust = Site.type === "uncontrast";
+  const isUncontrust = Site.type === Site.unContrast;
   let UrlPrefix = isUncontrust ? "uncontrast_" : "";
   return await queryApi({
     ///               studies/submitted_studies/{study_pk}/experiments/{experiment_pk}/measures/{id}/

@@ -146,7 +146,7 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
-
+  //TODO: relaese commented code to enable edit option
   return (
     <ExpandingBox
       number={fieldsNum}
