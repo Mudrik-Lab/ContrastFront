@@ -18,6 +18,7 @@ import {
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
 import classNames from "classnames";
+import { Site } from "../../../../config/siteType";
 
 export default function Measures({
   fieldOptions,
