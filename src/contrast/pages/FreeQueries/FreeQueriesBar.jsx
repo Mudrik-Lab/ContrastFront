@@ -29,7 +29,7 @@ import getFreeQueries from "../../../apiHooks/getFreeQueries";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
-import { useNavigate, useSearchParams } from "react-router-dom";
+import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 
 import {
@@ -42,6 +42,7 @@ import getConfiguration from "../../../apiHooks/getConfiguration";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
+import ReactGA from "react-ga4";
 
 const Plot = createPlotlyComponent(Plotly);
 
@@ -362,6 +363,26 @@ export default function FreeQueriesBar() {
       });
     }
   }, [theoryFamilies]);
+
+  //Google Analytics
+  const location = useLocation();
+
+  useEffect(() => {
+    // Extract the search params
+    const searchParams = new URLSearchParams(location.search);
+    const filters = {};
+    searchParams.forEach((value, key) => {
+      filters[key] = value;
+    });
+
+    // Send pageview with filters to Google Analytics
+    ReactGA.send({
+      hitType: "pageview",
+      page: location.pathname,
+      filters: filters, // Custom parameters
+      customDimensions: filters,
+    });
+  }, [location]);
 
   return (
     <div>
