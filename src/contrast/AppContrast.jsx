@@ -6,6 +6,7 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContrastScreens from "./ContrastScreens.jsx";
 import usePreventNumberInputScroll from "../Utils/PreventScrollEffect.ts";
+import ReactGA from "react-ga4";
 
 function AppContrast() {
   const client = new QueryClient({
@@ -19,6 +20,8 @@ function AppContrast() {
     },
   });
   usePreventNumberInputScroll();
+  ReactGA.initialize("G-9XP6GJSL3K");
+
   const { isLoadingToken, snap } = useAuth();
   return (
     <div>
