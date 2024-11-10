@@ -172,7 +172,7 @@ export default function AcrossTheYears() {
                   name="inrerpretation"
                   values={[
                     { value: "pro", name: "Support" },
-                    { value: "challenge", name: "Challenge" },
+                    { value: "challenges", name: "Challenges" },
                     { value: "either", name: "Either" },
                   ]}
                   checked={inrerpretation}
