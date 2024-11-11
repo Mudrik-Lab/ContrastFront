@@ -29,7 +29,7 @@ import getFreeQueries from "../../../apiHooks/getFreeQueries";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
-import { useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 
 import {
@@ -173,7 +173,7 @@ export default function FreeQueriesBar() {
     : [];
   const interpretationsArr = [
     { value: "challenges", label: "Challenges" },
-    { value: "pro", label: "Support" },
+    { value: "pro", label: "Supports" },
     { value: "neutral", label: "Neutral" },
   ];
 

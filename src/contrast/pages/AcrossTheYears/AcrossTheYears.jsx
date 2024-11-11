@@ -171,7 +171,7 @@ export default function AcrossTheYears() {
                 <RadioInput
                   name="inrerpretation"
                   values={[
-                    { value: "pro", name: "Support" },
+                    { value: "pro", name: "Supports" },
                     { value: "challenges", name: "Challenges" },
                     { value: "either", name: "Either" },
                   ]}
