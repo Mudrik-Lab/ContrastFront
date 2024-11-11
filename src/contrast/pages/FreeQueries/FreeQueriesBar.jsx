@@ -173,7 +173,7 @@ export default function FreeQueriesBar() {
     : [];
   const interpretationsArr = [
     { value: "challenges", label: "Challenges" },
-    { value: "pro", label: "Support" },
+    { value: "pro", label: "Supports" },
     { value: "neutral", label: "Neutral" },
   ];
 

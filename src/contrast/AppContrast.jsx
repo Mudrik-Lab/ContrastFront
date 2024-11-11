@@ -19,6 +19,7 @@ function AppContrast() {
     },
   });
   usePreventNumberInputScroll();
+
   const { isLoadingToken, snap } = useAuth();
   return (
     <div>
