@@ -55,7 +55,16 @@ export default function HomePage() {
             Also interested in studies of unconscious processing? Visit the
             UnconTrust database
           </a>
-          <h1 className="text-white text-5xl font-bold mb-10">
+          <h1
+            onClick={() =>
+              ReactGA.event({
+                category: "HomePage",
+                action: "Click-On-Headline",
+                label: "headline",
+                debug_mode: true,
+              })
+            }
+            className="text-white text-5xl font-bold mb-10">
             {" "}
             ConTraSt Database
           </h1>

@@ -8,7 +8,6 @@ import ContrastScreens from "./ContrastScreens.jsx";
 import usePreventNumberInputScroll from "../Utils/PreventScrollEffect.ts";
 import ReactGA from "react-ga";
 ReactGA.initialize("G-9XP6GJSL3K", { debug: true });
-// ReactGA.initialize("G-9XP6GJSL3K");
 
 function AppContrast() {
   const client = new QueryClient({
