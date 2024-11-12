@@ -23,6 +23,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../../state";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
+import ReactGA from "react-ga";
 
 export default function HomePage() {
   const snap = useSnapshot(state);
@@ -111,7 +112,15 @@ export default function HomePage() {
               <Button
                 extraClass="text-lg sm:text-sm "
                 black
-                onClick={copyToClipboard}>
+                onClick={() => {
+                  console.log("first");
+                  ReactGA.event({
+                    category: "HomePage",
+                    action: "cite",
+                    label: "cite-button",
+                  });
+                  copyToClipboard();
+                }}>
                 <QouteIcon /> Copy Citation to Clipboard
               </Button>
             </div>
