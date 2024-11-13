@@ -23,7 +23,7 @@ import { useSnapshot } from "valtio";
 import { state } from "../../../state";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
-import ReactGA from "react-ga";
+import ReactGA from "react-ga4";
 
 export default function HomePage() {
   const snap = useSnapshot(state);
@@ -56,14 +56,14 @@ export default function HomePage() {
             UnconTrust database
           </a>
           <h1
-            onClick={() =>
+            onClick={() => {
+              console.log("first");
               ReactGA.event({
                 category: "HomePage",
                 action: "Click-On-Headline",
                 label: "headline",
-                debug_mode: true,
-              })
-            }
+              });
+            }}
             className="text-white text-5xl font-bold mb-10">
             {" "}
             ConTraSt Database
