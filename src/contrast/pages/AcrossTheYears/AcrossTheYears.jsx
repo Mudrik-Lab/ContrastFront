@@ -40,7 +40,7 @@ export default function AcrossTheYears() {
   const [selected, setSelected] = useState();
   const [reporting, setReporting] = React.useState();
   const [consciousness, setConsciousness] = React.useState();
-  const [inrerpretation, setInrerpretation] = React.useState();
+  const [interpretation, setInterpretation] = React.useState();
   const [experimentsNum, setExperimentsNum] = React.useState();
 
   const navigate = useNavigate();
@@ -58,14 +58,14 @@ export default function AcrossTheYears() {
       consciousness,
       reporting,
       experimentsNum,
-      inrerpretation,
+      interpretation,
       selected?.value || breakdownOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
         type_of_consciousness: consciousness,
         is_reporting: reporting,
-        inrerpretation,
+        interpretation,
         min_number_of_experiments: experimentsNum,
         breakdown: selected?.value || breakdownOptions[0].value,
       }),
@@ -96,9 +96,9 @@ export default function AcrossTheYears() {
       ? setReporting(queryParams.get("is_reporting"))
       : setReporting("either");
 
-    queryParams.get("inrerpretation")
-      ? setInrerpretation(queryParams.get("inrerpretation"))
-      : setInrerpretation("either");
+    queryParams.get("interpretation")
+      ? setInterpretation(queryParams.get("interpretation"))
+      : setInterpretation("either");
 
     queryParams.get("type_of_consciousness")
       ? setConsciousness(queryParams.get("type_of_consciousness"))
@@ -169,18 +169,20 @@ export default function AcrossTheYears() {
             {queryParams.get("breakdown") === "theory" && (
               <div className={sideSectionClass}>
                 <RadioInput
-                  name="inrerpretation"
+                  name="interpretation"
                   values={[
                     { value: "pro", name: "Supports" },
                     { value: "challenges", name: "Challenges" },
                     { value: "either", name: "Either" },
                   ]}
-                  checked={inrerpretation}
-                  setChecked={setInrerpretation}
+                  checked={interpretation}
+                  setChecked={(e) =>
+                    buildUrl(pageName, "interpretation", e, navigate)
+                  }
                 />
                 <TooltipExplanation
-                  text="Type of consciousness"
-                  tooltip="You can use this to filter the result so to include only experiments that studied content consciousness,state consciousness, both types of consciousness in the same experiment (an AND operator), or either (show all experiments that studied either content or state consciousness; an OR operator)"
+                  text="Interpretation"
+                  tooltip="In order to use this filter please choose a theory in ״Theries״ field and then choose interpretation for that theory"
                 />
               </div>
             )}

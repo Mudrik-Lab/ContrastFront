@@ -6,6 +6,14 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import ContrastScreens from "./ContrastScreens.jsx";
 import usePreventNumberInputScroll from "../Utils/PreventScrollEffect.ts";
+import ReactGA from "react-ga4";
+ReactGA.initialize("G-9XP6GJSL3K", {
+  debug: true,
+  titleCase: false,
+  gaOptions: {
+    siteSpeedSampleRate: 100,
+  },
+});
 
 function AppContrast() {
   const client = new QueryClient({
