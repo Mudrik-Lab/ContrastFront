@@ -53,18 +53,6 @@ export default defineConfig(({ command, mode, isSsrBuild, isPreview }) => {
           return html;
         },
       },
-      {
-        name: "configure-mime-type",
-        apply: "serve",
-        configureServer(server) {
-          server.middlewares.use((req, res, next) => {
-            if (req.url.endsWith(".jsx")) {
-              res.setHeader("Content-Type", "text/javascript");
-            }
-            next();
-          });
-        },
-      },
     ],
   };
   switch (mode) {
