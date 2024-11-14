@@ -29,6 +29,7 @@ import {
   showTextToRaw,
   buildUrl,
   extendColorList,
+  AnalyticsPlotInteraction,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -211,6 +212,7 @@ export default function ParametersDistributionPie() {
       setSelected(parametersOptions[0]);
     }
     navigate({ search: queryParams.toString() });
+    AnalyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   return (

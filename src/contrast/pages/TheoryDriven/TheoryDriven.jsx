@@ -21,7 +21,11 @@ import {
 import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 import Toggle from "../../../sharedComponents/Toggle";
 import Spinner from "../../../sharedComponents/Spinner";
-import { buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  AnalyticsPlotInteraction,
+  buildUrl,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { designerColors } from "../../../Utils/Colors";
@@ -187,6 +191,7 @@ export default function TheoryDriven() {
     }
 
     navigate({ search: queryParams.toString() });
+    AnalyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
   return (
     <PageTemplate

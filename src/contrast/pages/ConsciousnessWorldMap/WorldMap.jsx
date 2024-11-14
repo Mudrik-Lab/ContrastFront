@@ -26,7 +26,11 @@ import getNations from "../../../apiHooks/getNations";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, buildUrlForMultiSelect } from "../../../Utils/functions";
+import {
+  AnalyticsPlotInteraction,
+  buildUrl,
+  buildUrlForMultiSelect,
+} from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-geo-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -241,6 +245,7 @@ export default function WorldMap() {
         }))
       );
     }
+    AnalyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   useEffect(() => {

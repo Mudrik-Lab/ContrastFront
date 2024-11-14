@@ -414,9 +414,18 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
   );
 };
 export const CSV = ({ data, ref }) => {
+  console.log(window.location.pathname);
   return (
     <a href={data?.request.responseURL + "&is_csv=true"} id="download_csv">
-      <Button extraClass={"px-3 py-1.5 "} ref={ref}>
+      <Button
+        extraClass={"px-3 py-1.5 "}
+        ref={ref}
+        onClick={() => {
+          window.gtag("event", `${window.location.pathname}- csv download`, {
+            event_category: "csv download",
+            event_label: "csv download",
+          });
+        }}>
         <CsvIcon />
         Download
       </Button>

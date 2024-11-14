@@ -33,6 +33,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 
 import {
+  AnalyticsPlotInteraction,
   buildUrl,
   buildUrlForMultiSelect,
   extendColorList,
@@ -340,6 +341,8 @@ export default function FreeQueriesBar() {
       );
     }
     navigate({ search: queryParams.toString() });
+
+    AnalyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, extraConfigSuccess]);
 
   const referrerUrl = document.referrer;

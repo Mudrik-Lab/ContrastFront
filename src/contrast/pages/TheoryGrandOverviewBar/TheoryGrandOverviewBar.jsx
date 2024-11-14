@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect } from "react";
+import React, { useEffect, useRef } from "react";
 import {
   TooltipExplanation,
   RangeInput,
@@ -30,6 +30,7 @@ import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
+  AnalyticsPlotInteraction,
   breakLongLines,
   buildUrl,
   rawTextToShow,
@@ -174,8 +175,9 @@ export default function TheoryGrandOverviewBar() {
     } else if (configurationSuccess) {
       setSelectedParent(parentTheories[0]);
     }
-
     navigate({ search: queryParams.toString() });
+
+    AnalyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
 
   return (

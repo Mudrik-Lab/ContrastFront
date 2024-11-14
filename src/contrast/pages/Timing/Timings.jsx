@@ -20,7 +20,10 @@ import {
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import getTimings from "../../../apiHooks/getTimings";
 import Spinner from "../../../sharedComponents/Spinner";
-import { blueToYellow } from "../../../Utils/functions";
+import {
+  AnalyticsPlotInteraction,
+  blueToYellow,
+} from "../../../Utils/functions";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { useNavigate, useSearchParams } from "react-router-dom";
@@ -168,6 +171,7 @@ export default function Timings() {
         selectedTagValues.map((item) => ({ value: item, label: item }))
       );
     }
+    AnalyticsPlotInteraction(searchParams, pageName);
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 
