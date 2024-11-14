@@ -55,16 +55,7 @@ export default function HomePage() {
             Also interested in studies of unconscious processing? Visit the
             UnconTrust database
           </a>
-          <h1
-            onClick={() => {
-              console.log("first");
-              ReactGA.event({
-                category: "HomePage",
-                action: "Click-On-Headline",
-                label: "headline",
-              });
-            }}
-            className="text-white text-5xl font-bold mb-10">
+          <h1 className="text-white text-5xl font-bold mb-10">
             {" "}
             ConTraSt Database
           </h1>
@@ -122,12 +113,6 @@ export default function HomePage() {
                 extraClass="text-lg sm:text-sm "
                 black
                 onClick={() => {
-                  console.log("first");
-                  ReactGA.event({
-                    category: "HomePage",
-                    action: "cite",
-                    label: "cite-button",
-                  });
                   copyToClipboard();
                 }}>
                 <QouteIcon /> Copy Citation to Clipboard
