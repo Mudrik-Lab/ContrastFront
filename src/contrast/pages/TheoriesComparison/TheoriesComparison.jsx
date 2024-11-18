@@ -30,6 +30,7 @@ import {
   breakLongLines,
   rawTextToShow,
   buildUrl,
+  analyticsPlotInteraction,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
@@ -141,6 +142,7 @@ export default function ParametersDistributionTheoriesComparison() {
     }
 
     navigate({ search: queryParams.toString() });
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   return (

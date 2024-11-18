@@ -15,6 +15,7 @@ import {
 } from "../../../Utils/tokenHandler";
 import { state } from "../../../state";
 import { useState } from "react";
+import { Site } from "../../../config/siteType";
 
 export default function RegisterComponent() {
   const [errorMsg, setErrorMsg] = useState(false);
@@ -36,7 +37,7 @@ export default function RegisterComponent() {
       .matches(/^(?=.*[0-9])/, "Password must contain at least one digit")
       .required("Password is required"),
   });
-
+  console.log(Site.name);
   const handleSubmit = async (values) => {
     try {
       const result = await createRegistration({
@@ -46,7 +47,12 @@ export default function RegisterComponent() {
       });
       if (result.status === 201) {
         state.tempUsername = values.name;
+        window.gtag("event", `Registration-${Site.type}`, {
+          event_category: "registration",
+          event_label: "registration",
+        });
         const res = await useLogin(values.name, values.password);
+
         if (res.error) {
           setServerError(res.error.message);
         } else {

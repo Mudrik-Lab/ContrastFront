@@ -26,7 +26,7 @@ import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
-import { buildUrl } from "../../../Utils/functions";
+import { analyticsPlotInteraction, buildUrl } from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -111,6 +111,7 @@ export default function Journals() {
     }
 
     navigate({ search: queryParams.toString() });
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   return (

@@ -27,7 +27,11 @@ import { designerColors } from "../../../Utils/Colors";
 import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  analyticsPlotInteraction,
+  buildUrl,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
 
@@ -157,6 +161,8 @@ export default function ParametersDistributionBar() {
     }
 
     navigate({ search: queryParams.toString() });
+
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
 
   return (

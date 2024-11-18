@@ -23,7 +23,11 @@ import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { buildUrl, buildUrlForMultiSelect } from "../../../Utils/functions";
+import {
+  analyticsPlotInteraction,
+  buildUrl,
+  buildUrlForMultiSelect,
+} from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
@@ -138,6 +142,7 @@ export default function Frequencies() {
       );
     }
     navigate({ search: queryParams.toString() });
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   // useEffect to state the initial values on mount (insert all options or take from url)

@@ -26,7 +26,11 @@ import {
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import { buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  analyticsPlotInteraction,
+  buildUrl,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -118,6 +122,7 @@ export default function AcrossTheYears() {
     }
 
     navigate({ search: queryParams.toString() });
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   const queryParams = new URLSearchParams(location.search);
