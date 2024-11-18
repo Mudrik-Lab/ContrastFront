@@ -27,7 +27,7 @@ import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   buildUrl,
   rawTextToShow,
 } from "../../../Utils/functions";
@@ -122,7 +122,7 @@ export default function AcrossTheYears() {
     }
 
     navigate({ search: queryParams.toString() });
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   const queryParams = new URLSearchParams(location.search);

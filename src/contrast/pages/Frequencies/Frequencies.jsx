@@ -24,7 +24,7 @@ import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   buildUrl,
   buildUrlForMultiSelect,
 } from "../../../Utils/functions";
@@ -142,7 +142,7 @@ export default function Frequencies() {
       );
     }
     navigate({ search: queryParams.toString() });
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   // useEffect to state the initial values on mount (insert all options or take from url)

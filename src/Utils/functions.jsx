@@ -534,11 +534,11 @@ export function extendColorList(colorList, minLength) {
   }
   return extendedColors.slice(0, minLength);
 }
-export function AnalyticsPlotInteraction(searchParams, pageName) {
+export function analyticsPlotInteraction(searchParams, pageName) {
   // Fires GA event so user's interaction with the plot will be counted
   if (searchParams.size > 0) {
     window.gtag("event", `${pageName}- plot interaction`, {
-      event_category: "plot interactions",
+      event_category: "plot_interactions",
       event_label: searchParams,
     });
   }

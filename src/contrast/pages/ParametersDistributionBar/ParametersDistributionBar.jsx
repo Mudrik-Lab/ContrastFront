@@ -28,7 +28,7 @@ import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   buildUrl,
   rawTextToShow,
 } from "../../../Utils/functions";
@@ -162,7 +162,7 @@ export default function ParametersDistributionBar() {
 
     navigate({ search: queryParams.toString() });
 
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
 
   return (

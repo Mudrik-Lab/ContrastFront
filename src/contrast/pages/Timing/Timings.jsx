@@ -21,7 +21,7 @@ import getConfiguration from "../../../apiHooks/getConfiguration";
 import getTimings from "../../../apiHooks/getTimings";
 import Spinner from "../../../sharedComponents/Spinner";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   blueToYellow,
 } from "../../../Utils/functions";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
@@ -171,7 +171,7 @@ export default function Timings() {
         selectedTagValues.map((item) => ({ value: item, label: item }))
       );
     }
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
 

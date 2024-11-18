@@ -48,8 +48,8 @@ export default function RegisterComponent() {
       if (result.status === 201) {
         state.tempUsername = values.name;
         window.gtag("event", `Registration-${Site.type}`, {
-          event_category: "Registration",
-          event_label: "Registration",
+          event_category: "registration",
+          event_label: "registration",
         });
         const res = await useLogin(values.name, values.password);
 

@@ -22,7 +22,7 @@ import getExperimentsGraphs from "../../../apiHooks/getExperimentsGraphs";
 import Toggle from "../../../sharedComponents/Toggle";
 import Spinner from "../../../sharedComponents/Spinner";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   buildUrl,
   rawTextToShow,
 } from "../../../Utils/functions";
@@ -191,7 +191,7 @@ export default function TheoryDriven() {
     }
 
     navigate({ search: queryParams.toString() });
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
   return (
     <PageTemplate

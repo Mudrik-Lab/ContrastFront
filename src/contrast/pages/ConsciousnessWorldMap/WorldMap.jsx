@@ -27,7 +27,7 @@ import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   buildUrl,
   buildUrlForMultiSelect,
 } from "../../../Utils/functions";
@@ -245,7 +245,7 @@ export default function WorldMap() {
         }))
       );
     }
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 
   useEffect(() => {

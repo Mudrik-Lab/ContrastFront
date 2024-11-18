@@ -30,7 +30,7 @@ import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import {
-  AnalyticsPlotInteraction,
+  analyticsPlotInteraction,
   breakLongLines,
   buildUrl,
   rawTextToShow,
@@ -177,7 +177,7 @@ export default function TheoryGrandOverviewBar() {
     }
     navigate({ search: queryParams.toString() });
 
-    AnalyticsPlotInteraction(searchParams, pageName);
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
 
   return (

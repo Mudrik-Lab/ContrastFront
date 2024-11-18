@@ -422,8 +422,8 @@ export const CSV = ({ data, ref }) => {
         ref={ref}
         onClick={() => {
           window.gtag("event", `${window.location.pathname}- csv download`, {
-            event_category: "csv download",
-            event_label: "csv download",
+            event_category: "csv_download",
+            event_label: "csv_download",
           });
         }}>
         <CsvIcon />
