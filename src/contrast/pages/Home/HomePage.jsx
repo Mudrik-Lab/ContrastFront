@@ -23,7 +23,6 @@ import { useSnapshot } from "valtio";
 import { state } from "../../../state";
 import { useQuery } from "@tanstack/react-query";
 import getExtraConfig from "../../../apiHooks/getExtraConfig";
-import ReactGA from "react-ga4";
 
 export default function HomePage() {
   const snap = useSnapshot(state);
