@@ -8,7 +8,7 @@ import {
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
   SubmitClassificationField,
   rawTextToShow,
 } from "../../../../Utils/functions";
@@ -45,7 +45,7 @@ export default function SuppressionMethod({
     isUncontrast
   );
 
-  const handleDelete = DeleteClassificationField(
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,

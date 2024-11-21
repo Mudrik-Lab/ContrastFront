@@ -8,7 +8,7 @@ import {
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
   SubmitClassificationField,
 } from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
@@ -42,7 +42,7 @@ export default function ConsciousnessMeasures({
     setFieldValues
   );
 
-  const handleDelete = DeleteClassificationField(
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,

@@ -690,7 +690,13 @@ export const SubmitButton = ({ disabled, submit }) => {
     </Tooltip>
   );
 };
-export const CustomSelect = ({ options, value, onChange, disabled }) => {
+export const CustomSelect = ({
+  noBlank,
+  options,
+  value,
+  onChange,
+  disabled,
+}) => {
   return (
     <select
       disabled={disabled}
@@ -701,7 +707,7 @@ export const CustomSelect = ({ options, value, onChange, disabled }) => {
       onChange={(e) => {
         onChange(e.currentTarget.value);
       }}>
-      <option></option>
+      {!noBlank && <option></option>}
       {options?.map((opt) => {
         return (
           <option key={opt.value} value={opt.value}>

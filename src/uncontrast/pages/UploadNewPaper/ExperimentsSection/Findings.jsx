@@ -10,7 +10,7 @@ import {
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
   SubmitClassificationField,
   alphabetizeByLabels,
 } from "../../../../Utils/functions";
@@ -44,7 +44,7 @@ export default function Findings({
     isUncontrast
   );
 
-  const handleDelete = DeleteClassificationField(
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
