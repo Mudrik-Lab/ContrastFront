@@ -53,9 +53,6 @@ export default function stimuliHandleChange({
               <div className="mt-4 flex justify-start gap-2">
                 <button
                   onClick={async () => {
-                    newArray[index].is_target_stimulus = "no";
-                    setFieldValues(newArray);
-                    setPreviousValue("");
                     const res = await deleteFieldFromExperiments({
                       isUncontrast: true,
                       study_pk,
@@ -63,6 +60,11 @@ export default function stimuliHandleChange({
                       classificationName: "target_stimuli",
                       id: targetValues.id, // TODO: put real ID of the target stimuli
                     });
+                    if (res.status === 204) {
+                      newArray[index].is_target_stimulus = "no";
+                      setFieldValues(newArray);
+                      setPreviousValue("");
+                    }
                     onClose();
                   }}
                   className="bg-blue text-white font-bold p-2 rounded-full">
