@@ -10,14 +10,13 @@ import {
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
   EditClassificationFields,
   SubmitClassificationField,
 } from "../../../../Utils/functions";
 import ExternalNotes from "../../../../sharedComponents/ExternalNotes";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
-import classNames from "classnames";
 
 export default function ConsciousnessMeasures({
   fieldOptions,
@@ -75,7 +74,7 @@ export default function ConsciousnessMeasures({
     fieldValues,
     setFieldValues
   );
-  const handleDelete = DeleteClassificationField(
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
@@ -146,7 +145,7 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
-  //TODO: relaese commented code to enable edit option
+
   return (
     <ExpandingBox
       number={fieldsNum}

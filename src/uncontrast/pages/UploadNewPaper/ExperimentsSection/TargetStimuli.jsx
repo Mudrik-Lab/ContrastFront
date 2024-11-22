@@ -5,10 +5,11 @@ import {
   TrashButton,
   CustomSelect,
   SubmitButton,
+  Button,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
   SubmitClassificationField,
   EditClassificationFields,
   rawTextToShow,
@@ -58,7 +59,7 @@ export default function TargetStimuli({
     setFieldValues
   );
 
-  const handleDelete = DeleteClassificationField(
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
@@ -72,7 +73,6 @@ export default function TargetStimuli({
       const targetValues = values.target_stimuli.find(
         (row) => row.suppressed_stimulus === suppressed_stimulus
       );
-
       if (targetValues) {
         setFieldValues({
           category: targetValues.category,
@@ -107,10 +107,9 @@ export default function TargetStimuli({
     } else if (fieldValues.is_target_same_as_suppressed_stimulus === "yes")
       return true;
   };
-  //TODO: relaese commented code to enable edit option
-  // const enableEdit = () => {
-  //   setEditble(!editble);
-  // };
+  const enableEdit = () => {
+    setEditble(!editble);
+  };
   const disableCondition = fieldValues.id && !editble;
   return (
     <ExpandingBox
@@ -272,24 +271,24 @@ export default function TargetStimuli({
                               number_of_stimuli: e.target.value,
                             }));
                           }}
-                          onBlur={(e) => {
-                            e.stopPropagation();
-                            if (submitCondition()) {
-                              e.preventDefault();
+                          // onBlur={(e) => {
+                          //   e.stopPropagation();
+                          //   if (submitCondition()) {
+                          //     e.preventDefault();
 
-                              handleSubmit(fieldValues, 0);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            e.stopPropagation();
+                          //     handleSubmit(fieldValues, 0);
+                          //   }
+                          // }}
+                          // onKeyDown={(e) => {
+                          //   e.stopPropagation();
 
-                            if (e.key === "Enter" && submitCondition()) {
-                              e.preventDefault();
-                              handleSubmit(fieldValues, 0);
-                            } else if (e.key === "Enter") {
-                              e.preventDefault();
-                            }
-                          }}
+                          //   if (e.key === "Enter" && submitCondition()) {
+                          //     e.preventDefault();
+                          //     handleSubmit(fieldValues, 0);
+                          //   } else if (e.key === "Enter") {
+                          //     e.preventDefault();
+                          //   }
+                          // }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             disableCondition && "bg-grayDisable text-gray-400"
                           } `}
@@ -309,7 +308,7 @@ export default function TargetStimuli({
                   handleDelete={handleDelete}
                 />
               </div>
-              {/* {disableCondition && (
+              {disableCondition && (
                 <Tooltip animation content="Edit" trigger="hover">
                   <button
                     type="button"
@@ -332,7 +331,7 @@ export default function TargetStimuli({
                   }}
                   disabled={!submitCondition || disableCondition}
                 />
-              )} */}
+              )}
             </div>
           </div>
         </div>

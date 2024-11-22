@@ -6,14 +6,22 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  SubmitButton,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
-  DeleteClassificationField,
+  deleteClassificationField,
+  EditClassificationFields,
   SubmitClassificationField,
+  confirmFunction,
   rawTextToShow,
 } from "../../../../Utils/functions";
 import TargetStimuli from "./TargetStimuli";
+import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
+import { Tooltip } from "flowbite-react";
+import { confirmAlert } from "react-confirm-alert";
+import { deleteFieldFromExperiments } from "../../../../apiHooks/deleteExperiment";
+import stimuliHandleChange from "./handleChangeOnStimuli";
 
 export default function SuppressedStimuli({
   fieldOptions,
@@ -36,6 +44,12 @@ export default function SuppressedStimuli({
     is_target_stimulus: "",
   };
   const [fieldValues, setFieldValues] = useState([initialValues]);
+  const [editble, setEditble] = useState([]);
+  const [previousValue, setPreviousValue] = useState("");
+  useEffect(() => {
+    setEditble(Array(fieldValues.length).fill(false));
+  }, [fieldValues.length]);
+
   const classificationName = "suppressed_stimuli";
 
   const handleSubmit = SubmitClassificationField(
@@ -47,7 +61,14 @@ export default function SuppressedStimuli({
     isUncontrast
   );
 
-  const handleDelete = DeleteClassificationField(
+  const handleEdit = EditClassificationFields(
+    study_pk,
+    experiment_pk,
+    classificationName,
+    fieldValues,
+    setFieldValues
+  );
+  const handleDelete = deleteClassificationField(
     study_pk,
     experiment_pk,
     classificationName,
@@ -55,6 +76,7 @@ export default function SuppressedStimuli({
     setFieldValues,
     isUncontrast
   );
+
   useEffect(() => {
     if (values && values.suppressed_stimuli?.length > 0) {
       setFieldValues(
@@ -100,10 +122,21 @@ export default function SuppressedStimuli({
       ),
     ];
   }
+  const enableEdit = (index) => {
+    setEditble((prevStates) =>
+      prevStates.map((item, i) => (i === index ? !item : item))
+    );
+  };
 
   return (
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
+        const disableCondition = fieldValue.id && !editble[index];
+        // if (values && values.target_stimuli?.length > 0) {
+        const targetValues = values.target_stimuli.find(
+          (row) => row.suppressed_stimulus === fieldValue.id
+        );
+        // }
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -129,7 +162,7 @@ export default function SuppressedStimuli({
                         </div>
 
                         <CustomSelect
-                          disabled={fieldValue.id}
+                          disabled={disableCondition}
                           value={fieldValue.category}
                           onChange={(value) => {
                             const newArray = [...fieldValues];
@@ -138,8 +171,6 @@ export default function SuppressedStimuli({
                               newArray[index].sub_category = undefined;
                             }
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
                           }}
                           options={fieldOptions}
                         />
@@ -154,7 +185,7 @@ export default function SuppressedStimuli({
                         </Text>
                         <CustomSelect
                           disabled={
-                            fieldValue.id ||
+                            disableCondition ||
                             creatSubOptions(index)?.length === 0
                           }
                           value={fieldValue.sub_category}
@@ -162,8 +193,6 @@ export default function SuppressedStimuli({
                             const newArray = [...fieldValues];
                             newArray[index].sub_category = value;
                             setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
                           }}
                           options={creatSubOptions(index)}
                         />
@@ -180,14 +209,12 @@ export default function SuppressedStimuli({
                         text={"Modality"}
                       />
                       <CustomSelect
-                        disabled={fieldValue.id}
+                        disabled={disableCondition}
                         value={fieldValue.modality}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
                           newArray[index].modality = value;
                           setFieldValues(newArray);
-                          submitCondition(index) &&
-                            handleSubmit(fieldValues, index);
                         }}
                         options={modalities}
                       />
@@ -204,7 +231,7 @@ export default function SuppressedStimuli({
                       <div className="flex flex-col items-center">
                         <input
                           min={0}
-                          disabled={fieldValues[index]?.id}
+                          disabled={disableCondition}
                           type="number"
                           value={fieldValues[index].duration}
                           onChange={(e) => {
@@ -218,27 +245,8 @@ export default function SuppressedStimuli({
                               )
                             );
                           }}
-                          onBlur={(e) => {
-                            e.stopPropagation();
-                            if (submitCondition(index)) {
-                              e.preventDefault();
-
-                              handleSubmit(fieldValues, index);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            e.stopPropagation();
-
-                            if (e.key === "Enter" && submitCondition(index)) {
-                              e.preventDefault();
-                              handleSubmit(fieldValues, index);
-                            } else if (e.key === "Enter") {
-                              e.preventDefault();
-                            }
-                          }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                         <Text xs weight={"bold"} color={"grayReg"}>
@@ -259,7 +267,7 @@ export default function SuppressedStimuli({
                       <div className="flex flex-col items-center">
                         <input
                           min={0}
-                          disabled={fieldValues[index]?.id}
+                          disabled={disableCondition}
                           type="number"
                           value={fieldValues[index].number_of_stimuli}
                           onChange={(e) => {
@@ -276,27 +284,8 @@ export default function SuppressedStimuli({
                               )
                             );
                           }}
-                          onBlur={(e) => {
-                            e.stopPropagation();
-                            if (submitCondition(index)) {
-                              e.preventDefault();
-
-                              handleSubmit(fieldValues, index);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            e.stopPropagation();
-
-                            if (e.key === "Enter" && submitCondition(index)) {
-                              e.preventDefault();
-                              handleSubmit(fieldValues, index);
-                            } else if (e.key === "Enter") {
-                              e.preventDefault();
-                            }
-                          }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
@@ -312,7 +301,7 @@ export default function SuppressedStimuli({
                       <div className="flex flex-col items-center">
                         <input
                           min={0}
-                          disabled={fieldValues[index]?.id}
+                          disabled={disableCondition}
                           type="number"
                           value={fieldValues[index].soa}
                           onChange={(e) => {
@@ -326,27 +315,8 @@ export default function SuppressedStimuli({
                               )
                             );
                           }}
-                          onBlur={(e) => {
-                            e.stopPropagation();
-                            if (submitCondition(index)) {
-                              e.preventDefault();
-
-                              handleSubmit(fieldValues, index);
-                            }
-                          }}
-                          onKeyDown={(e) => {
-                            e.stopPropagation();
-
-                            if (e.key === "Enter" && submitCondition(index)) {
-                              e.preventDefault();
-                              handleSubmit(fieldValues, index);
-                            } else if (e.key === "Enter") {
-                              e.preventDefault();
-                            }
-                          }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
-                            fieldValues[index].id &&
-                            "bg-grayDisable text-gray-400"
+                            disableCondition && "bg-grayDisable text-gray-400"
                           } `}
                         />
                       </div>
@@ -361,14 +331,12 @@ export default function SuppressedStimuli({
                         text={"Mode of presentation"}
                       />
                       <CustomSelect
-                        disabled={fieldValue.id}
+                        disabled={disableCondition}
                         value={fieldValue.mode_of_presentation}
                         onChange={(value) => {
                           const newArray = [...fieldValues];
                           newArray[index].mode_of_presentation = value;
                           setFieldValues(newArray);
-                          submitCondition(index) &&
-                            handleSubmit(fieldValues, index);
                         }}
                         options={[
                           { value: "liminal", label: "Liminal" },
@@ -394,15 +362,22 @@ export default function SuppressedStimuli({
                           }
                         />
                         <CustomSelect
-                          disabled={fieldValue?.id}
+                          noBlank
+                          disabled={disableCondition}
                           value={fieldValue.is_target_stimulus}
-                          onChange={(value) => {
-                            const newArray = [...fieldValues];
-                            newArray[index].is_target_stimulus = value;
-                            setFieldValues(newArray);
-                            submitCondition(index) &&
-                              handleSubmit(fieldValues, index);
-                          }}
+                          onChange={(value) =>
+                            stimuliHandleChange({
+                              value,
+                              index,
+                              fieldValues,
+                              setFieldValues,
+                              study_pk,
+                              experiment_pk,
+                              previousValue,
+                              setPreviousValue,
+                              targetValues,
+                            })
+                          }
                           options={[
                             { value: "yes", label: "Yes" },
                             { value: "no", label: "No" },
@@ -411,7 +386,7 @@ export default function SuppressedStimuli({
                       </div>
                     </div>
                   </div>
-                  {fieldValue.is_target_stimulus && (
+                  {fieldValue.is_target_stimulus === "yes" && (
                     <TargetStimuli
                       fieldOptions={fieldOptions}
                       subCategories={subCategories}
@@ -433,6 +408,30 @@ export default function SuppressedStimuli({
                     fieldValues={fieldValues}
                     index={index}
                   />
+                  {!disableCondition && (
+                    <SubmitButton
+                      disabled={!submitCondition(index)}
+                      submit={async () => {
+                        if (!editble[index]) {
+                          handleSubmit(fieldValues, index);
+                        } else {
+                          const res = await handleEdit(fieldValue, index);
+                          res && enableEdit(index);
+                        }
+                      }}
+                    />
+                  )}
+                  {disableCondition && (
+                    <Tooltip animation content="Edit" trigger="hover">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          enableEdit(index);
+                        }}>
+                        <Edit className="w-6 h-6" />
+                      </button>
+                    </Tooltip>
+                  )}
                 </div>
               </div>
             </form>

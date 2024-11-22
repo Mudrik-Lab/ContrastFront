@@ -250,7 +250,7 @@ export function SubmitClassificationField(
   };
 }
 
-export function DeleteClassificationField(
+export function deleteClassificationField(
   study_pk,
   experiment_pk,
   classificationName,
