@@ -12,6 +12,7 @@ export default function stimuliHandleChange({
   setPreviousValue,
   targetValues,
 }) {
+  console.log(targetValues);
   const newArray = [...fieldValues];
   if (newArray[index].is_target_stimulus === "yes" && value === "no") {
     setPreviousValue(newArray[index].is_target_stimulus);
@@ -39,7 +40,7 @@ export default function stimuliHandleChange({
                       study_pk,
                       experiment_pk,
                       classificationName: "target_stimuli",
-                      id: targetValues.id, // TODO: put real ID of the target stimuli
+                      id: targetValues?.id,
                     });
                     if (res.status === 204) {
                       newArray[index].is_target_stimulus = "no";

@@ -362,7 +362,7 @@ export default function SuppressedStimuli({
                           }
                         />
                         <CustomSelect
-                          noBlank
+                          // noBlank
                           disabled={disableCondition}
                           value={fieldValue.is_target_stimulus}
                           onChange={(value) =>
