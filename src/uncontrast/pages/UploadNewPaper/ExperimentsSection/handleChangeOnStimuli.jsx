@@ -13,7 +13,12 @@ export default function stimuliHandleChange({
   targetValues,
 }) {
   const newArray = [...fieldValues];
-  if (newArray[index].is_target_stimulus === "yes" && value === "no") {
+  if (
+    newArray[index].id &&
+    newArray[index].is_target_stimulus === "yes" &&
+    value === "no"
+  ) {
+    debugger;
     setPreviousValue(newArray[index].is_target_stimulus);
     confirmAlert({
       customUI: ({ onClose }) => {

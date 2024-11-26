@@ -139,7 +139,13 @@ export default function TargetStimuli({
                       <CustomSelect
                         disabled={disableCondition}
                         value={
-                          fieldValues.is_target_same_as_suppressed_stimulus
+                          fieldValues.is_target_same_as_suppressed_stimulus ===
+                          false
+                            ? "no"
+                            : fieldValues.is_target_same_as_suppressed_stimulus ===
+                              true
+                            ? "yes"
+                            : fieldValues.is_target_same_as_suppressed_stimulus
                         }
                         onChange={(value) => {
                           const newObj = { ...fieldValues };
@@ -271,24 +277,6 @@ export default function TargetStimuli({
                               number_of_stimuli: e.target.value,
                             }));
                           }}
-                          // onBlur={(e) => {
-                          //   e.stopPropagation();
-                          //   if (submitCondition()) {
-                          //     e.preventDefault();
-
-                          //     handleSubmit(fieldValues, 0);
-                          //   }
-                          // }}
-                          // onKeyDown={(e) => {
-                          //   e.stopPropagation();
-
-                          //   if (e.key === "Enter" && submitCondition()) {
-                          //     e.preventDefault();
-                          //     handleSubmit(fieldValues, 0);
-                          //   } else if (e.key === "Enter") {
-                          //     e.preventDefault();
-                          //   }
-                          // }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             disableCondition && "bg-grayDisable text-gray-400"
                           } `}
