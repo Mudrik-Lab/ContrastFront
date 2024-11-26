@@ -26,7 +26,11 @@ import {
 import getAcrossTheYears from "../../../apiHooks/getAcrossTheYearsGraph";
 import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import { buildUrl, rawTextToShow } from "../../../Utils/functions";
+import {
+  alphabetizeByLabels,
+  buildUrl,
+  rawTextToShow,
+} from "../../../Utils/functions";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -42,19 +46,28 @@ export default function AcrossTheYears() {
   const [experimentsNum, setExperimentsNum] = React.useState();
   const navigate = useNavigate();
   const pageName = "trends-over-time";
+  const uniqUncontrastParametersOptions = [
+    ...uncontrastParametersOptions,
+    {
+      value: "significance",
+      label: "Significance",
+    },
+  ];
+
+  console.log(uniqUncontrastParametersOptions);
   const { data, isSuccess, isLoading } = useQuery({
     queryKey: [
       "across_the_years",
       "uncontrast",
       significance,
       experimentsNum,
-      selected?.value || uncontrastParametersOptions[0].value,
+      selected?.value || uniqUncontrastParametersOptions[0].value,
     ],
     queryFn: () =>
       getAcrossTheYears({
         significance,
         min_number_of_experiments: experimentsNum,
-        breakdown: selected?.value || uncontrastParametersOptions[0].value,
+        breakdown: selected?.value || uniqUncontrastParametersOptions[0].value,
         isUncontrast: true,
       }),
   });
@@ -95,15 +108,15 @@ export default function AcrossTheYears() {
       : setExperimentsNum(0);
 
     if (queryParams.get("breakdown")) {
-      const breackdownValue = queryParams.get("breakdown");
+      const breakdownValue = queryParams.get("breakdown");
       setSelected({
-        value: breackdownValue,
-        label: uncontrastParametersOptions.find(
-          (item) => item.value === breackdownValue
+        value: breakdownValue,
+        label: uniqUncontrastParametersOptions.find(
+          (item) => item.value === breakdownValue
         )?.label,
       });
     } else {
-      setSelected(uncontrastParametersOptions[0]);
+      setSelected(uniqUncontrastParametersOptions[0]);
     }
 
     navigate({ search: queryParams.toString() });
@@ -134,7 +147,7 @@ export default function AcrossTheYears() {
                 closeMenuOnSelect={true}
                 isMulti={false}
                 isClearable={false}
-                options={uncontrastParametersOptions}
+                options={uniqUncontrastParametersOptions}
                 value={selected}
                 onChange={(e) => {
                   buildUrl(pageName, "breakdown", e.value, navigate);

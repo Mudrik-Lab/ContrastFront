@@ -92,7 +92,6 @@ export default function AcrossTheYears() {
       .map((row) => row.series.slice(-1).map((x) => x.value))
       .flat();
   }
-
   useEffect(() => {
     const queryParams = new URLSearchParams(location.search);
 
@@ -164,13 +163,6 @@ export default function AcrossTheYears() {
                 tooltip="Choose the dependent variable to be queried."
               />
             </div>
-            <TypeOfConsciousnessFilter
-              checked={consciousness}
-              setChecked={(e) => {
-                buildUrl(pageName, "type_of_consciousness", e, navigate);
-              }}
-            />
-
             {queryParams.get("breakdown") === "theory" && (
               <div className={sideSectionClass}>
                 <RadioInput
@@ -191,6 +183,13 @@ export default function AcrossTheYears() {
                 />
               </div>
             )}
+            <TypeOfConsciousnessFilter
+              checked={consciousness}
+              setChecked={(e) => {
+                buildUrl(pageName, "type_of_consciousness", e, navigate);
+              }}
+            />
+
             <ReportFilter
               checked={reporting}
               setChecked={(e) => {

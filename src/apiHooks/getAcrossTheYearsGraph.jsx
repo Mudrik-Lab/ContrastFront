@@ -8,15 +8,16 @@ export default async function getAcrossTheYears({
   type_of_consciousness,
   isUncontrast,
   significance,
-  inrerpretation,
+  interpretation,
 }) {
+  console.log(interpretation);
   return await queryApi({
     url: isUncontrast
       ? `uncontrast_studies/experiments_graphs/trends_over_years/`
       : `studies/experiments_graphs/trends_over_years`,
     params: {
       breakdown,
-      aggregated_interpretation_filter: inrerpretation,
+      aggregated_interpretation_filter: interpretation,
       min_number_of_experiments,
       significance,
       is_reporting: is_reporting,

@@ -1,23 +1,5 @@
-import { Tooltip } from "flowbite-react";
-import { useState, useEffect } from "react";
 import { confirmAlert } from "react-confirm-alert";
 import { deleteFieldFromExperiments } from "../../../../apiHooks/deleteExperiment";
-import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
-import {
-  ExpandingBox,
-  CircledIndex,
-  TooltipExplanation,
-  CustomSelect,
-  TrashButton,
-  SubmitButton,
-  AddFieldButton,
-} from "../../../../sharedComponents/Reusble";
-import {
-  SubmitClassificationField,
-  EditClassificationFields,
-  deleteClassificationField,
-} from "../../../../Utils/functions";
-import TargetStimuli from "./TargetStimuli";
 
 export default function stimuliHandleChange({
   value,
@@ -30,7 +12,6 @@ export default function stimuliHandleChange({
   setPreviousValue,
   targetValues,
 }) {
-  console.log(fieldValues);
   const newArray = [...fieldValues];
   if (newArray[index].is_target_stimulus === "yes" && value === "no") {
     setPreviousValue(newArray[index].is_target_stimulus);
