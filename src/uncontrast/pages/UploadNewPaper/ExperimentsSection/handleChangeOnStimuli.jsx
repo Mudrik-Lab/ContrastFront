@@ -12,7 +12,6 @@ export default function stimuliHandleChange({
   setPreviousValue,
   targetValues,
 }) {
-  console.log(targetValues);
   const newArray = [...fieldValues];
   if (newArray[index].is_target_stimulus === "yes" && value === "no") {
     setPreviousValue(newArray[index].is_target_stimulus);
