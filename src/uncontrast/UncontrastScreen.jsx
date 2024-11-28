@@ -21,6 +21,7 @@ import ProtectedRoute from "../Utils/ProtectedRoute.jsx";
 import TermOfUse from "../contrast/pages/TermsOfUse/TermsOfUse.jsx";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance.jsx";
 import "./plotlyStyle.css"; // Import custom CSS for the plots
+import GrandOverviewPie from "./pages/GrandOverviewPie/GrandOverviewPie.jsx";
 
 const UncontrastScreens = () => {
   const WorldMap = React.lazy(() => import("./pages/WorldMap/WorldMap"));
@@ -76,6 +77,10 @@ const UncontrastScreens = () => {
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/terms-of-use" element={<TermOfUse />} />
           <Route path="/modes-of-governance" element={<ModesOfGoverance />} />
+          <Route
+            path="/grand_overview_pie"
+            element={isMoblile ? <MobileScreen /> : <GrandOverviewPie />}
+          />
           <Route
             path="/parameter-distribution-free-queries"
             element={isMoblile ? <MobileScreen /> : <FreeQueriesBar />}

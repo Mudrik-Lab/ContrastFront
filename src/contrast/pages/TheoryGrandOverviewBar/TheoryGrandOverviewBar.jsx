@@ -66,7 +66,7 @@ export default function TheoryGrandOverviewBar() {
 
   const { data, isLoading } = useQuery({
     queryKey: [
-      `parameters_distribution_bar`,
+      "theory_grand_overview_bar",
       consciousness,
       selected?.value,
       theoryDriven,

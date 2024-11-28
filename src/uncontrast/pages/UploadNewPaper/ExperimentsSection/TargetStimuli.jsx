@@ -13,6 +13,7 @@ import {
   SubmitClassificationField,
   EditClassificationFields,
   rawTextToShow,
+  yesNoInputValue,
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
@@ -138,9 +139,9 @@ export default function TargetStimuli({
                       />
                       <CustomSelect
                         disabled={disableCondition}
-                        value={
+                        value={yesNoInputValue(
                           fieldValues.is_target_same_as_suppressed_stimulus
-                        }
+                        )}
                         onChange={(value) => {
                           const newObj = { ...fieldValues };
                           newObj.is_target_same_as_suppressed_stimulus = value;
@@ -271,24 +272,6 @@ export default function TargetStimuli({
                               number_of_stimuli: e.target.value,
                             }));
                           }}
-                          // onBlur={(e) => {
-                          //   e.stopPropagation();
-                          //   if (submitCondition()) {
-                          //     e.preventDefault();
-
-                          //     handleSubmit(fieldValues, 0);
-                          //   }
-                          // }}
-                          // onKeyDown={(e) => {
-                          //   e.stopPropagation();
-
-                          //   if (e.key === "Enter" && submitCondition()) {
-                          //     e.preventDefault();
-                          //     handleSubmit(fieldValues, 0);
-                          //   } else if (e.key === "Enter") {
-                          //     e.preventDefault();
-                          //   }
-                          // }}
                           className={`border w-full border-gray-300 rounded-md p-2 ${
                             disableCondition && "bg-grayDisable text-gray-400"
                           } `}

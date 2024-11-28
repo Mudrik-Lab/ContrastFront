@@ -15,6 +15,7 @@ import {
   SubmitClassificationField,
   confirmFunction,
   rawTextToShow,
+  yesNoInputValue,
 } from "../../../../Utils/functions";
 import TargetStimuli from "./TargetStimuli";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
@@ -132,11 +133,9 @@ export default function SuppressedStimuli({
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
         const disableCondition = fieldValue.id && !editble[index];
-        // if (values && values.target_stimuli?.length > 0) {
         const targetValues = values.target_stimuli.find(
           (row) => row.suppressed_stimulus === fieldValue.id
         );
-        // }
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -362,9 +361,8 @@ export default function SuppressedStimuli({
                           }
                         />
                         <CustomSelect
-                          noBlank
                           disabled={disableCondition}
-                          value={fieldValue.is_target_stimulus}
+                          value={yesNoInputValue(fieldValue.is_target_stimulus)}
                           onChange={(value) =>
                             stimuliHandleChange({
                               value,
@@ -386,7 +384,8 @@ export default function SuppressedStimuli({
                       </div>
                     </div>
                   </div>
-                  {fieldValue.is_target_stimulus === "yes" && (
+                  {(fieldValue.is_target_stimulus === "yes" ||
+                    fieldValue.is_target_stimulus === true) && (
                     <TargetStimuli
                       fieldOptions={fieldOptions}
                       subCategories={subCategories}

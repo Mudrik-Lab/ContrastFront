@@ -543,3 +543,6 @@ export function analyticsPlotInteraction(searchParams, pageName) {
     });
   }
 }
+export function yesNoInputValue(value) {
+  return value === false ? "no" : value === true ? "yes" : value;
+}

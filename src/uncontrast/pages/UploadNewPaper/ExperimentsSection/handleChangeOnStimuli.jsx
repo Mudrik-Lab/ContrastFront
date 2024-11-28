@@ -13,7 +13,12 @@ export default function stimuliHandleChange({
   targetValues,
 }) {
   const newArray = [...fieldValues];
-  if (newArray[index].is_target_stimulus === "yes" && value === "no") {
+  if (
+    newArray[index].id &&
+    newArray[index].is_target_stimulus === "yes" &&
+    value === "no"
+  ) {
+    debugger;
     setPreviousValue(newArray[index].is_target_stimulus);
     confirmAlert({
       customUI: ({ onClose }) => {
@@ -39,7 +44,7 @@ export default function stimuliHandleChange({
                       study_pk,
                       experiment_pk,
                       classificationName: "target_stimuli",
-                      id: targetValues.id, // TODO: put real ID of the target stimuli
+                      id: targetValues?.id,
                     });
                     if (res.status === 204) {
                       newArray[index].is_target_stimulus = "no";
