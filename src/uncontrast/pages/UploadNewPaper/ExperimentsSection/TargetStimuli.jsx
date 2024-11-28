@@ -13,6 +13,7 @@ import {
   SubmitClassificationField,
   EditClassificationFields,
   rawTextToShow,
+  yesNoInputValue,
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
@@ -138,15 +139,9 @@ export default function TargetStimuli({
                       />
                       <CustomSelect
                         disabled={disableCondition}
-                        value={
-                          fieldValues.is_target_same_as_suppressed_stimulus ===
-                          false
-                            ? "no"
-                            : fieldValues.is_target_same_as_suppressed_stimulus ===
-                              true
-                            ? "yes"
-                            : fieldValues.is_target_same_as_suppressed_stimulus
-                        }
+                        value={yesNoInputValue(
+                          fieldValues.is_target_same_as_suppressed_stimulus
+                        )}
                         onChange={(value) => {
                           const newObj = { ...fieldValues };
                           newObj.is_target_same_as_suppressed_stimulus = value;

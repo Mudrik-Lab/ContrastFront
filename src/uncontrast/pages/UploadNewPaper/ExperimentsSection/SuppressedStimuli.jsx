@@ -15,6 +15,7 @@ import {
   SubmitClassificationField,
   confirmFunction,
   rawTextToShow,
+  yesNoInputValue,
 } from "../../../../Utils/functions";
 import TargetStimuli from "./TargetStimuli";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
@@ -361,13 +362,7 @@ export default function SuppressedStimuli({
                         />
                         <CustomSelect
                           disabled={disableCondition}
-                          value={
-                            fieldValue.is_target_stimulus === false
-                              ? "no"
-                              : fieldValue.is_target_stimulus === true
-                              ? "yes"
-                              : fieldValue.is_target_stimulus
-                          }
+                          value={yesNoInputValue(fieldValue.is_target_stimulus)}
                           onChange={(value) =>
                             stimuliHandleChange({
                               value,
