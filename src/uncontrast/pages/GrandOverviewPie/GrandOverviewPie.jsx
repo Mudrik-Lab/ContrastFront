@@ -13,11 +13,9 @@ import {
 } from "../../../sharedComponents/Reusble";
 import {
   footerHeight,
-  isMoblile,
   navHeight,
   plotConfig,
   screenHeight,
-  screenWidth,
   sideSectionClass,
 } from "../../../Utils/HardCoded";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
@@ -27,16 +25,13 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 import {
   alphabetizeByLabels,
-  breakLongLines,
   buildUrl,
   buildUrlForMultiSelect,
-  extendColorList,
   rawTextToShow,
 } from "../../../Utils/functions";
 import NoResults from "../../../sharedComponents/NoResults";
 import Plotly from "plotly.js-basic-dist";
 import createPlotlyComponent from "react-plotly.js/factory";
-import getUncontrastFreeQueries from "../../../apiHooks/getUncontrastFreeQueries.jsx";
 import getUncontrastConfiguration from "../../../apiHooks/getUncontrastConfiguration.jsx";
 import getUncontrastGrandOverview from "../../../apiHooks/getUncontrastGrandOverview.jsx";
 import Spinner from "../../../sharedComponents/Spinner.jsx";
@@ -202,23 +197,20 @@ export default function GrandOverviewPie() {
         are_participants_excluded: participantsExcluded?.value,
         outcome_types: outcome,
       }),
-    // enabled: Boolean(selected?.value),
   });
-  console.log(data?.data);
-  const values1 = [];
-  const labels1 = [];
+  const values = [];
+  const labels = [];
 
   data?.data?.series.map((row, index) => {
-    values1.push(row.value);
-    labels1.push(row.key);
+    values.push(row.value);
+    labels.push(row.key);
   });
-  console.log(values1, labels1);
   const initialGraphData = [
     {
       direction: "clockwise",
       insidetextorientation: "horizontal",
-      values: values1,
-      labels: labels1,
+      values: values,
+      labels: labels,
       sort: false,
       type: "pie",
       hovertemplate: "%{label}: %{value} <extra></extra>",
