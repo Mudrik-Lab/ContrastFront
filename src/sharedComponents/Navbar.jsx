@@ -221,7 +221,7 @@ export default function Navbar() {
                                   className={classNames(
                                     `${
                                       "bg-" + row.color
-                                    }  green rounded-full w-3 h-3`
+                                    }  green rounded-full w-3 h-3 px-1.5`
                                   )}></div>
                                 {row.text}
                               </a>
