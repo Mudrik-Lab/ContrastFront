@@ -123,7 +123,8 @@ export const graphsHeaders = {
   },
   "Grand Overview Pie": {
     text: "Grand Overview",
-    tooltip: "",
+    tooltip:
+      "The graph depicts the overall distribution of experiments who show positive, negative or mixed findings",
     icon: <UnconGrandPie />,
     color: "azure",
     route: "/grand_overview_pie",
