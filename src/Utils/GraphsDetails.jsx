@@ -11,6 +11,7 @@ import { ReactComponent as Journals } from "../assets/icons/journals.svg";
 import { ReactComponent as AnatomicalFindings } from "../assets/icons/anatomical-findings.svg";
 import { ReactComponent as WorldMap } from "../assets/icons/consciousness-world-map.svg";
 import { ReactComponent as Histogram } from "../assets/icons/histogram.svg";
+import { ReactComponent as UnconGrandPie } from "../assets/icons/pie-chart.svg";
 
 export const graphsHeaders = {
   "Theory Support Overview": {
@@ -119,6 +120,19 @@ export const graphsHeaders = {
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
     siteToDisplay: "contrast",
+  },
+  "Grand Overview Pie": {
+    text: "Grand Overview",
+    tooltip:
+      "The graph depicts the overall distribution of experiments who show positive, negative or mixed findings",
+    icon: <UnconGrandPie />,
+    color: "azure",
+    route: "/grand_overview_pie",
+    figureLine:
+      "Here, you can see the distribution of the experiments in the database between the type of finding they show: positive evidence for unconscious processing, negative evidence, or mixed (meaning that both positive and negative effects were found).",
+    figureText:
+      "Use the toolbar on the left to filter the results according to specific methodological decisions. Using the ‘Minimum number of experiments’ scale you can limit the size of the presented categories.",
+    siteToDisplay: "uncontrast",
   },
   "Parameter Distribution Pie uncontrast": {
     text: "Parameter Distribution Pie",
@@ -258,11 +272,11 @@ export const graphsHeaders = {
     siteToDisplay: "contrast",
   },
   "World Map uncontrast": {
-    text: "Unconscious processing world map",
+    text: "Unconscious Processing World Map",
     tooltip:
       "Distribution of the experiments in the database according to nations extracted from author affiliations.",
     icon: <WorldMap />,
-    color: "lightGreen",
+    color: "hunterGreen",
     route: "/unconsciousness-world-map",
     figureLine:
       "Here, you can see how unconscious processing has been studied in different countries around the world.",
