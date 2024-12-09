@@ -97,9 +97,7 @@ export default function Findings({
       return false;
     }
     if (field?.family == families["Temporal"]) {
-      return [field.onset, field?.offset].every(
-        (condition) => Boolean(condition) === true
-      );
+      return Boolean(field.onset) === Boolean(field.offset);
     }
 
     if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
@@ -108,14 +106,15 @@ export default function Findings({
       );
     }
     if (field?.family == families["Frequency"]) {
-      return [
-        field.direction,
-        field.onset,
-        field.offset,
-        field.band_higher_bound,
-        field.band_lower_bound,
-        field.analysis_type,
-      ].every((condition) => Boolean(condition) === true);
+      return (
+        [
+          field.direction,
+          field.band_higher_bound,
+          field.band_lower_bound,
+          field.analysis_type,
+        ].every((condition) => Boolean(condition) === true) &&
+        Boolean(field.onset) === Boolean(field.offset)
+      );
     }
     return true;
   };
