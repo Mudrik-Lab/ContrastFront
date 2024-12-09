@@ -320,7 +320,7 @@ export default function GrandOverviewPie() {
       {configSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={"Grand Overview Pie"}>
+            <SideControl headline={"Grand Overview"}>
               <Text center lg weight="bold">
                 Axis Controls
               </Text>
@@ -330,12 +330,12 @@ export default function GrandOverviewPie() {
                   buildUrl(pageName, "min_number_of_experiments", e, navigate);
                 }}
               />
-              <SignificanceFilter
+              {/* <SignificanceFilter
                 checked={significance}
                 setChecked={(e) => {
                   buildUrl(pageName, "significance", e, navigate);
                 }}
-              />
+              /> */}
               {configSuccess && (
                 <div>
                   <div className="flex flex-col items-center">
@@ -459,8 +459,8 @@ export default function GrandOverviewPie() {
                       isMulti={true}
                       value={processingDomain}
                       options={alphabetizeByLabels(processingDomainArr)}
-                      placeholder="Processing Domain Type"
-                      aria-label="Processing Domain Type"
+                      placeholder="Processing Domain"
+                      aria-label="Processing Domain"
                       onChange={(e) => {
                         buildUrlForMultiSelect(
                           e,
@@ -596,13 +596,9 @@ export default function GrandOverviewPie() {
           graph={
             <div className="h-full">
               <TopGraphText
-                text={graphsHeaders["Parameter Distribution Pie"].figureText}
-                legendLine={
-                  graphsHeaders["Parameter Distribution Pie"].legendLine
-                }
-                firstLine={
-                  graphsHeaders["Parameter Distribution Pie"].figureLine
-                }
+                text={graphsHeaders["Grand Overview Pie"].figureText}
+                legendLine={graphsHeaders["Grand Overview Pie"].legendLine}
+                firstLine={graphsHeaders["Grand Overview Pie"].figureLine}
               />
               {isLoading ? (
                 <Spinner />
@@ -619,7 +615,7 @@ export default function GrandOverviewPie() {
                         text:
                           // breakLongLines(data?.data.series_name, 11) +
                           // " <br />" +
-                          "Total = " + data?.data.value,
+                          "Total = " + "<br />" + data?.data.value,
                         showarrow: false,
 
                         style: { whiteSpace: "pre-wrap" },

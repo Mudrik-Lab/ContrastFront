@@ -17,6 +17,7 @@ module.exports = {
       },
       colors: {
         blue: "#159DEA",
+        azure: "#8EECF5",
         grayHeavy: "#6D6D6D",
         grayReg: "#999999",
         grayLight: "#E9E9E9",
@@ -32,6 +33,7 @@ module.exports = {
         darkTeal: "#5A9DB4",
         darkBlue: "#3A5C8D",
         teal: "#58ACB5",
+        hunterGreen: "#5FB8A5",
         lightGreen: "#72CC7C",
         lightTeal: "#5FB8A5",
         lightGreen: "#72CC7C",
@@ -58,7 +60,7 @@ module.exports = {
   safelist: [
     {
       pattern:
-        /(bg|text|border)-( blue|grayHeavy|grayReg|grayLight|grayFrame|grayDisable|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|lightGreen|lightTeal|lightGreen|flourishRed|revoltingGreen|someRed)/,
+        /(bg|text|border)-( blue |azure|grayHeavy|grayReg|grayLight|grayFrame|grayDisable|yellow|orange|pink|lilac|purple|navyBlue|darkTeal|teal|hunterGreen|lightGreen|lightTeal|lightGreen|flourishRed|revoltingGreen|someRed)/,
     },
   ],
 };
