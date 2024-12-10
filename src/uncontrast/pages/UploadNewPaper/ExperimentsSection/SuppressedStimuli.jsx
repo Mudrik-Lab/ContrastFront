@@ -128,7 +128,9 @@ export default function SuppressedStimuli({
       prevStates.map((item, i) => (i === index ? !item : item))
     );
   };
-
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
   return (
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
@@ -438,11 +440,24 @@ export default function SuppressedStimuli({
         );
       })}
 
-      <AddFieldButton
-        initialValues={initialValues}
-        fieldValues={fieldValues}
-        setFieldValues={setFieldValues}
-      />
+      <div className="w-full flex justify-center">
+        <Tooltip
+          placement="top"
+          content={
+            !disableAddBttns
+              ? "Add stimuly field"
+              : !editble.every((value) => value === false)
+              ? "Adding another stimuli is only enabled after saving pending edits (use the save button on the right of the stimuli being edited)"
+              : "Add another stimuli field is abled after clicking save button on right side of the field"
+          }>
+          <AddFieldButton
+            disabled={disableAddBttns}
+            initialValues={initialValues}
+            fieldValues={fieldValues}
+            setFieldValues={setFieldValues}
+          />
+        </Tooltip>
+      </div>
     </ExpandingBox>
   );
 }

@@ -145,6 +145,9 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
 
   return (
     <ExpandingBox
@@ -442,11 +445,24 @@ export default function ConsciousnessMeasures({
           </div>
         );
       })}
-      <AddFieldButton
-        initialValues={initialValues}
-        fieldValues={fieldValues}
-        setFieldValues={setFieldValues}
-      />
+      <div className="w-full flex justify-center">
+        <Tooltip
+          placement="top"
+          content={
+            !disableAddBttns
+              ? "Add findings field"
+              : !editble.every((value) => value === false)
+              ? "Adding another findings is only enabled after saving pending edits (use the save button on the right of the findings being edited)"
+              : "Add another findings field is abled after clicking save button on right side of the field"
+          }>
+          <AddFieldButton
+            disabled={disableAddBttns}
+            initialValues={initialValues}
+            fieldValues={fieldValues}
+            setFieldValues={setFieldValues}
+          />
+        </Tooltip>
+      </div>
       <ExternalNotes
         rows={6}
         isUncontrast={isUncontrast}
