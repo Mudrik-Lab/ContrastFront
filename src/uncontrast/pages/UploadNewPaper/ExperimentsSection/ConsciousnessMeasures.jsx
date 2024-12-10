@@ -7,6 +7,7 @@ import {
   CircledIndex,
   Text,
   SubmitButton,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -445,24 +446,14 @@ export default function ConsciousnessMeasures({
           </div>
         );
       })}
-      <div className="w-full flex justify-center">
-        <Tooltip
-          placement="top"
-          content={
-            !disableAddBttns
-              ? "Add findings field"
-              : !editble.every((value) => value === false)
-              ? "Adding another findings is only enabled after saving pending edits (use the save button on the right of the findings being edited)"
-              : "Add another findings field is abled after clicking save button on right side of the field"
-          }>
-          <AddFieldButton
-            disabled={disableAddBttns}
-            initialValues={initialValues}
-            fieldValues={fieldValues}
-            setFieldValues={setFieldValues}
-          />
-        </Tooltip>
-      </div>
+      <AddFieldButtononEditbleField
+        fieldName={"consciousness-measures"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
+        initialValues={initialValues}
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
       <ExternalNotes
         rows={6}
         isUncontrast={isUncontrast}

@@ -7,6 +7,7 @@ import {
   CustomSelect,
   CircledIndex,
   SubmitButton,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -440,24 +441,14 @@ export default function SuppressedStimuli({
         );
       })}
 
-      <div className="w-full flex justify-center">
-        <Tooltip
-          placement="top"
-          content={
-            !disableAddBttns
-              ? "Add stimuly field"
-              : !editble.every((value) => value === false)
-              ? "Adding another stimuli is only enabled after saving pending edits (use the save button on the right of the stimuli being edited)"
-              : "Add another stimuli field is abled after clicking save button on right side of the field"
-          }>
-          <AddFieldButton
-            disabled={disableAddBttns}
-            initialValues={initialValues}
-            fieldValues={fieldValues}
-            setFieldValues={setFieldValues}
-          />
-        </Tooltip>
-      </div>
+      <AddFieldButtononEditbleField
+        fieldName={"stimuli"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
+        initialValues={initialValues}
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }

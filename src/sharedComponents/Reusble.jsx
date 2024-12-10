@@ -730,3 +730,33 @@ export const CircledIndex = ({ index }) => {
     </div>
   );
 };
+
+export function AddFieldButtononEditbleField({
+  disableAddBttns,
+  editble,
+  initialValues,
+  fieldValues,
+  setFieldValues,
+  fieldName,
+}) {
+  return (
+    <div className="w-full flex justify-center">
+      <Tooltip
+        placement="top"
+        content={
+          !disableAddBttns
+            ? `Add ${fieldName} field`
+            : !editble.every((value) => value === false)
+            ? `Adding another ${fieldName} is only enabled after saving pending edits (use the save button on the right of the ${fieldName} being edited)`
+            : `Add another ${fieldName} field is abled after clicking save button on right side of the field`
+        }>
+        <AddFieldButton
+          disabled={disableAddBttns}
+          initialValues={initialValues}
+          fieldValues={fieldValues}
+          setFieldValues={setFieldValues}
+        />
+      </Tooltip>
+    </div>
+  );
+}

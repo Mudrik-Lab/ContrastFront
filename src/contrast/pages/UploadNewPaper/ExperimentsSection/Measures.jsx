@@ -7,6 +7,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -38,7 +39,7 @@ export default function Measures({
   useEffect(() => {
     setEditble(Array(fieldValues.length).fill(false));
   }, [fieldValues.length]);
-  console.log(editble);
+
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -202,24 +203,14 @@ export default function Measures({
           </div>
         );
       })}
-      <div className="w-full flex justify-center">
-        <Tooltip
-          placement="top"
-          content={
-            !disableAddBttns
-              ? "Add measures field"
-              : !editble.every((value) => value === false)
-              ? "Adding another measure is only enabled after saving pending edits (use the save button on the right of the measure being edited)"
-              : "Add another measures field is abled after clicking save button on right side of the field"
-          }>
-          <AddFieldButton
-            disabled={disableAddBttns}
-            initialValues={initialValues}
-            fieldValues={fieldValues}
-            setFieldValues={setFieldValues}
-          />
-        </Tooltip>
-      </div>
+      <AddFieldButtononEditbleField
+        fieldName={"measures"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
+        initialValues={initialValues}
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }
