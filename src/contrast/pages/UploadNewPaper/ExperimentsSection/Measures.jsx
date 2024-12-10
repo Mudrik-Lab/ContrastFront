@@ -38,7 +38,7 @@ export default function Measures({
   useEffect(() => {
     setEditble(Array(fieldValues.length).fill(false));
   }, [fieldValues.length]);
-
+  console.log(editble);
   const classificationName = "measures";
 
   const handleSubmit = SubmitClassificationField(
@@ -208,6 +208,8 @@ export default function Measures({
           content={
             !disableAddBttns
               ? "Add measures field"
+              : !editble.every((value) => value === false)
+              ? "Adding another measure is only enabled after saving pending edits (use the save button on the right of the measure being edited)"
               : "Add another measures field is abled after clicking save button on right side of the field"
           }>
           <AddFieldButton
