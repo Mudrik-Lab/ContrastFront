@@ -7,6 +7,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -202,22 +203,14 @@ export default function Measures({
           </div>
         );
       })}
-      <div className="w-full flex justify-center">
-        <Tooltip
-          placement="top"
-          content={
-            !disableAddBttns
-              ? "Add measures field"
-              : "Add another measures field is abled after clicking save button on right side of the field"
-          }>
-          <AddFieldButton
-            disabled={disableAddBttns}
-            initialValues={initialValues}
-            fieldValues={fieldValues}
-            setFieldValues={setFieldValues}
-          />
-        </Tooltip>
-      </div>
+      <AddFieldButtononEditbleField
+        fieldName={"measures"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
+        initialValues={initialValues}
+        fieldValues={fieldValues}
+        setFieldValues={setFieldValues}
+      />
     </ExpandingBox>
   );
 }

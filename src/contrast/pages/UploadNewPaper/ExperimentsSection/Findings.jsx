@@ -7,6 +7,7 @@ import {
   TrashButton,
   CustomSelect,
   CircledIndex,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -90,16 +91,14 @@ export default function Findings({
     result[item.label] = item.value;
     return result;
   }, {});
-
+  console.log(fieldValues);
   const submitConditions = (index) => {
     const field = fieldValues[index];
     if (!(field?.type && field?.family && field.technique && field.is_NCC)) {
       return false;
     }
     if (field?.family == families["Temporal"]) {
-      return [field.onset, field?.offset].every(
-        (condition) => Boolean(condition) === true
-      );
+      return Boolean(field.onset) === Boolean(field.offset);
     }
 
     if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
@@ -108,14 +107,15 @@ export default function Findings({
       );
     }
     if (field?.family == families["Frequency"]) {
-      return [
-        field.direction,
-        field.onset,
-        field.offset,
-        field.band_higher_bound,
-        field.band_lower_bound,
-        field.analysis_type,
-      ].every((condition) => Boolean(condition) === true);
+      return (
+        [
+          field.direction,
+          field.band_higher_bound,
+          field.band_lower_bound,
+          field.analysis_type,
+        ].every((condition) => Boolean(condition) === true) &&
+        Boolean(field.onset) === Boolean(field.offset)
+      );
     }
     return true;
   };
@@ -634,8 +634,10 @@ export default function Findings({
           </div>
         );
       })}
-      <AddFieldButton
-        disabled={disableAddBttns}
+      <AddFieldButtononEditbleField
+        fieldName={"findings"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}

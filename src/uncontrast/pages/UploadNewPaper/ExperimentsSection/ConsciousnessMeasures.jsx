@@ -7,6 +7,7 @@ import {
   CircledIndex,
   Text,
   SubmitButton,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -145,6 +146,9 @@ export default function ConsciousnessMeasures({
       consciousnessMeasures: fieldsNum,
     });
   }, [fieldsNum]);
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
 
   return (
     <ExpandingBox
@@ -442,7 +446,10 @@ export default function ConsciousnessMeasures({
           </div>
         );
       })}
-      <AddFieldButton
+      <AddFieldButtononEditbleField
+        fieldName={"consciousness-measures"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}

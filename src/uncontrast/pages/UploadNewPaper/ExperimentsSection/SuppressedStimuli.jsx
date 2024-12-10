@@ -7,6 +7,7 @@ import {
   CustomSelect,
   CircledIndex,
   SubmitButton,
+  AddFieldButtononEditbleField,
 } from "../../../../sharedComponents/Reusble";
 import { useEffect, useState } from "react";
 import {
@@ -128,7 +129,9 @@ export default function SuppressedStimuli({
       prevStates.map((item, i) => (i === index ? !item : item))
     );
   };
-
+  const disableAddBttns =
+    !fieldValues[fieldValues.length - 1].id ||
+    !editble.every((field) => !Boolean(field));
   return (
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
@@ -438,7 +441,10 @@ export default function SuppressedStimuli({
         );
       })}
 
-      <AddFieldButton
+      <AddFieldButtononEditbleField
+        fieldName={"stimuli"}
+        editble={editble}
+        disableAddBttns={disableAddBttns}
         initialValues={initialValues}
         fieldValues={fieldValues}
         setFieldValues={setFieldValues}
