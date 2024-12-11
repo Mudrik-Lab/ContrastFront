@@ -28,6 +28,7 @@ import Spinner from "../../../sharedComponents/Spinner";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import {
   alphabetizeByLabels,
+  analyticsPlotInteraction,
   buildUrl,
   rawTextToShow,
 } from "../../../Utils/functions";
@@ -118,7 +119,7 @@ export default function AcrossTheYears() {
     } else {
       setSelected(uniqUncontrastParametersOptions[0]);
     }
-
+    analyticsPlotInteraction(searchParams, pageName);
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
   return (

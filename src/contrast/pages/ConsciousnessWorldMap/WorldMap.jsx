@@ -245,6 +245,7 @@ export default function WorldMap() {
         }))
       );
     }
+
     analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams]);
 

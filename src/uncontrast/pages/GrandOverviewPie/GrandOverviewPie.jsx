@@ -25,6 +25,7 @@ import { useNavigate, useSearchParams } from "react-router-dom";
 import { ReactComponent as CsvIcon } from "../../../assets/icons/csv-file.svg";
 import {
   alphabetizeByLabels,
+  analyticsPlotInteraction,
   buildUrl,
   buildUrlForMultiSelect,
   rawTextToShow,
@@ -304,6 +305,8 @@ export default function GrandOverviewPie() {
     updateMultiFilterState(setTasks, "tasks", tasksArr);
     updateMultiFilterState(setOutcome, "outcome_types", outcomeTypesArr);
     updateMultiFilterState(setTypes, "types", typesArr);
+
+    analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configSuccess]);
 
   const referrerUrl = document.referrer;
