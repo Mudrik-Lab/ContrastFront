@@ -30,6 +30,7 @@ import {
   showTextToRaw,
   buildUrl,
   duplicateArray,
+  analyticsPlotInteraction,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 // import { designerColors } from "../../../Utils/Colors";
@@ -223,6 +224,7 @@ export default function ParametersDistributionPie() {
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
+    analyticsPlotInteraction(searchParams, pageName);
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);

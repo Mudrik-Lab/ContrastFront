@@ -115,6 +115,7 @@ export default function ParametersDistributionExperimentsComparison() {
     } else {
       setSelected(uncontrastParametersOptions[0]);
     }
+    analyticsPlotInteraction(searchParams, pageName);
 
     navigate({ search: queryParams.toString() });
   }, [searchParams]);
