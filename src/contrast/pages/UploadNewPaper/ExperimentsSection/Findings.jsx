@@ -648,7 +648,7 @@ export default function Findings({
         );
       })}
       <AddFieldButtononEditbleField
-        fieldName={"findings"}
+        fieldName={"finding"}
         editble={editble}
         disableAddBttns={disableAddBttns}
         initialValues={initialValues}
