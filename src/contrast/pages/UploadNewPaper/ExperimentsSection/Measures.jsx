@@ -204,7 +204,7 @@ export default function Measures({
         );
       })}
       <AddFieldButtononEditbleField
-        fieldName={"measures"}
+        fieldName={"measure"}
         editble={editble}
         disableAddBttns={disableAddBttns}
         initialValues={initialValues}

@@ -24,6 +24,7 @@ import { Tooltip } from "flowbite-react";
 import { confirmAlert } from "react-confirm-alert";
 import { deleteFieldFromExperiments } from "../../../../apiHooks/deleteExperiment";
 import stimuliHandleChange from "./handleChangeOnStimuli";
+import classNames from "classnames";
 
 export default function SuppressedStimuli({
   fieldOptions,
@@ -145,7 +146,11 @@ export default function SuppressedStimuli({
               fieldValue.id ? fieldValue.id : "new"
             }`}>
             <form className="flex flex-col gap-2">
-              <div className="flex gap-2 items-center  border border-blue border-x-4 p-2 rounded-md">
+              <div
+                className={classNames(
+                  "flex gap-2 items-center border  border-x-4 p-2 rounded-md",
+                  editble[index] ? "border-flourishRed" : "border-blue"
+                )}>
                 <CircledIndex index={index} />
                 <div className="flex flex-col gap-2 w-full">
                   <div className="flex items-start gap-2">
