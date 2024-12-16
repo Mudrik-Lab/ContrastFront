@@ -135,7 +135,6 @@ export default function Stimuli({
                           disabled={fieldValue.id}
                           value={fieldValue.category}
                           onChange={(value) => {
-                            console.log(typeof value);
                             const newArray = [...fieldValues];
                             newArray[index].category = value;
                             if (value === "25") {
