@@ -414,7 +414,6 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
   );
 };
 export const CSV = ({ data, ref }) => {
-  console.log(window.location.pathname);
   return (
     <a href={data?.request.responseURL + "&is_csv=true"} id="download_csv">
       <Button

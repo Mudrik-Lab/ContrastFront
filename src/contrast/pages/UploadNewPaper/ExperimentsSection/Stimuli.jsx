@@ -137,6 +137,13 @@ export default function Stimuli({
                           onChange={(value) => {
                             const newArray = [...fieldValues];
                             newArray[index].category = value;
+                            if (value === "25") {
+                              newArray[index].modality = "2";
+                              newArray[index].duration = 0;
+                              setFieldValues(newArray);
+
+                              handleSubmit(fieldValues, index);
+                            }
                             setFieldValues(newArray);
                             submitCondition(index) &&
                               handleSubmit(fieldValues, index);

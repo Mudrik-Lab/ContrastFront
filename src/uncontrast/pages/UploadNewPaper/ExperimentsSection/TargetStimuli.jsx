@@ -17,6 +17,7 @@ import {
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
+import classNames from "classnames";
 
 export default function TargetStimuli({
   fieldOptions,
@@ -119,7 +120,11 @@ export default function TargetStimuli({
       headline={rawTextToShow(classificationName)}>
       <div>
         <div className="flex flex-col gap-2">
-          <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+          <div
+            className={classNames(
+              "flex gap-2 items-center border  border-x-4 p-2 rounded-md",
+              editble ? "border-flourishRed" : "border-blue"
+            )}>
             <div className="flex flex-col gap-2 w-full">
               <div>
                 <div className="flex items-start gap-2">

@@ -18,6 +18,7 @@ import {
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
+import classNames from "classnames";
 
 export default function Findings({
   fieldOptions,
@@ -91,10 +92,18 @@ export default function Findings({
     result[item.label] = item.value;
     return result;
   }, {});
-  console.log(fieldValues);
+
   const submitConditions = (index) => {
     const field = fieldValues[index];
-    if (!(field?.type && field?.family && field.technique && field.is_NCC)) {
+    if (
+      !(
+        field?.type &&
+        field?.family &&
+        field.technique &&
+        field.is_NCC !== undefined &&
+        field.is_NCC !== ""
+      )
+    ) {
       return false;
     }
     if (field?.family == families["Temporal"]) {
@@ -158,7 +167,11 @@ export default function Findings({
               fieldValue.id ? fieldValue.id : "new"
             }`}>
             <form className="flex flex-col gap-2 w-full">
-              <div className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">
+              <div
+                className={classNames(
+                  "flex gap-2 items-center border  border-x-4 p-2 rounded-md",
+                  editble[index] ? "border-flourishRed" : "border-blue"
+                )}>
                 <CircledIndex index={index} />
 
                 <div className="flex flex-col gap-2 w-full">
@@ -598,7 +611,7 @@ export default function Findings({
                   id="trash+submit"
                   className="flex flex-col items-center gap-6">
                   <TrashButton
-                    disabled={!editble.every((field) => !Boolean(field))}
+                    disabled={editble[index]}
                     handleDelete={handleDelete}
                     fieldValues={fieldValues}
                     index={index}
@@ -635,7 +648,7 @@ export default function Findings({
         );
       })}
       <AddFieldButtononEditbleField
-        fieldName={"findings"}
+        fieldName={"finding"}
         editble={editble}
         disableAddBttns={disableAddBttns}
         initialValues={initialValues}
