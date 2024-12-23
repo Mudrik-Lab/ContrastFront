@@ -27,6 +27,7 @@ import {
   breakLongLines,
   rawTextToShow,
   buildUrl,
+  analyticsPlotInteraction,
 } from "../../../Utils/functions";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { designerColors } from "../../../Utils/Colors";
