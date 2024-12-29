@@ -538,16 +538,10 @@ export function extendColorList(colorList, minLength) {
 export function analyticsPlotInteraction(searchParams, pageName) {
   // Fires GA event so user's interaction with the plot will be counted
   if (searchParams.size > 0) {
-    window.gtag(
-      "event",
-      `${
-        Site.type === "contrast" ? "" : "Uncon-"
-      }${pageName}- plot interaction`,
-      {
-        event_category: "plot_interactions",
-        event_label: searchParams,
-      }
-    );
+    window.gtag("event", `${pageName}- plot interaction`, {
+      event_category: "plot_interactions",
+      event_label: searchParams,
+    });
   }
 }
 export function yesNoInputValue(value) {
