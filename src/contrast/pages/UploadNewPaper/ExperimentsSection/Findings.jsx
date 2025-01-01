@@ -107,7 +107,7 @@ export default function Findings({
       return false;
     }
     if (field?.family == families["Temporal"]) {
-      return Boolean(field.onset) === Boolean(field.offset);
+      return Boolean(field.onset) && Boolean(field.offset);
     }
 
     if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
