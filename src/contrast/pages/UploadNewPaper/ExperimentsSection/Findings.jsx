@@ -15,6 +15,7 @@ import {
   EditClassificationFields,
   SubmitClassificationField,
   alphabetizeByLabels,
+  sizeWarning,
 } from "../../../../Utils/functions";
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
@@ -106,6 +107,15 @@ export default function Findings({
     ) {
       return false;
     }
+    if (fieldValues[index].onset || fieldValues[index].offset) {
+      if (
+        parseInt(fieldValues[index]?.onset) >
+        parseInt(fieldValues[index]?.offset)
+      ) {
+        return false;
+      }
+    }
+
     if (field?.family == families["Temporal"]) {
       return Boolean(field.onset) && Boolean(field.offset);
     }
@@ -356,6 +366,7 @@ export default function Findings({
                           </Text>
                         </div>
                       </div>
+                      {sizeWarning(fieldValue)}
                     </div>
                   ) : fieldValue.family == families["Spatial Areas"] &&
                     fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
@@ -576,6 +587,7 @@ export default function Findings({
                           </Text>
                         </div>
                       </div>
+                      {sizeWarning(fieldValue)}
                     </div>
                   ) : fieldValue.family == families["miscellaneous"] ? (
                     <div></div>
