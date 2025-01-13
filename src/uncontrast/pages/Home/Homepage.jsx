@@ -54,11 +54,10 @@ export default function Homepage() {
             ConTraSt database
           </a>
         )}
-        <div className="headline w-full text-center sm:text-left ">
-          <h1 className="text-white text-5xl font-bold mb-4 mt-8 md:mt-0">
+        <div className="headline w-full text-center sm:text-left mt-10 ">
+          <h1 className="text-white text-5xl font-bold md:mt-0">
             UnconTrust Database
           </h1>
-          <h2 className="text-white text-3xl font-bold mb-4">(beta version)</h2>
           <div className="my-16">
             <h1 className="text-white text-3xl">Examine trends</h1>
             <h1 className="text-blue text-3xl">

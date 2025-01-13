@@ -547,3 +547,13 @@ export function analyticsPlotInteraction(searchParams, pageName) {
 export function yesNoInputValue(value) {
   return value === false ? "no" : value === true ? "yes" : value;
 }
+
+export function sizeWarning(fieldValue) {
+  return (
+    parseInt(fieldValue.onset) > parseInt(fieldValue.offset) && (
+      <span className="text-flourishRed ">
+        Onset's value must not be bigger than offset
+      </span>
+    )
+  );
+}
