@@ -31,7 +31,8 @@ export default function Homepage() {
     ["uncon_configs"],
     getUncontrastConfiguration
   );
-  const cite = "uncontrustdb.tau.ac.il";
+  const cite =
+    "Schreiber, M., Stockart, F. & Mudrik, L. The UnconTrust Database for Studies of Unconscious Semantic Processing and Attentional Allocation. Sci Data 12, 157 (2025). https://doi.org/10.1038/s41597-025-04465-3";
   const copyToClipboard = () => {
     copy(cite);
   };
@@ -48,7 +49,7 @@ export default function Homepage() {
           <a
             href="https://contrastdb.tau.ac.il/"
             target="_blank"
-            className=" text-white text-lg font-bold absolute bottom-2 left-1/2">
+            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 underline">
             {" "}
             Also interested in studies of theories of consciousness? Visit the
             ConTraSt database
@@ -87,16 +88,22 @@ export default function Homepage() {
       </div>
       <div className="px-4">
         <div className="citing sm:max-w-[870px] mx-auto mt-10">
+          <h1 className="text-center text-xl">
+            If using outputs from this websites, please cite us:
+          </h1>
           <div className=" border cite-box bg-grayLight mx-auto sm:flex justify-between items-center gap-2 p-4">
             <div className="w-16">
               <Quote />
             </div>
             <Text>
+              Schreiber, M., Stockart, F. & Mudrik, L. The UnconTrust Database
+              for Studies of Unconscious Semantic Processing and Attentional
+              Allocation. Sci Data 12, 157 (2025).
               <a
                 className="text-darkBlue underline break-all"
-                href={cite}
+                href={" https://doi.org/10.1038/s41597-025-04465-3"}
                 target="_blank">
-                {cite}
+                https://doi.org/10.1038/s41597-025-04465-3
               </a>
             </Text>
             <div className=" border-b my-4 sm:my-0 sm:border-r border-black sm:h-16 "></div>

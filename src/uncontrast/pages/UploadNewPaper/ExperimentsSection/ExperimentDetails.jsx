@@ -243,8 +243,8 @@ export default function ExperimentDetails({
             </ExpandingBox>
             <ExpandingBox
               headline={"Target Stimuli"}
-              number={experiment.target_stimuli.length}>
-              {experiment.target_stimuli.map((stimulus, index) => (
+              number={experiment.target_stimuli?.length}>
+              {experiment.target_stimuli?.map((stimulus, index) => (
                 <div
                   key={stimulus.id}
                   className="flex gap-2 items-center border border-blue border-x-4 p-2 rounded-md">

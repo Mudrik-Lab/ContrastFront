@@ -49,7 +49,7 @@ export default function HomePage() {
           <a
             href="https://uncontrustdb.tau.ac.il/"
             target="_blank"
-            className=" text-white text-lg font-bold absolute bottom-2 left-1/2">
+            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 underline">
             {" "}
             Also interested in studies of unconscious processing? Visit the
             UnconTrust database
