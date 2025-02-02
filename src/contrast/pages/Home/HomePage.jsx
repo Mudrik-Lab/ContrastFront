@@ -49,10 +49,10 @@ export default function HomePage() {
           <a
             href="https://uncontrustdb.tau.ac.il/"
             target="_blank"
-            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 underline">
+            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 ">
             {" "}
             Also interested in studies of unconscious processing? Visit the
-            UnconTrust database
+            <strong className="underline">{" UnconTrust database"}</strong>
           </a>
           <h1 className="text-white text-5xl font-bold mb-10">
             {" "}

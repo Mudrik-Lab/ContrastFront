@@ -49,10 +49,10 @@ export default function Homepage() {
           <a
             href="https://contrastdb.tau.ac.il/"
             target="_blank"
-            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 underline">
+            className=" text-white text-lg font-bold absolute bottom-2 left-1/2 ">
             {" "}
             Also interested in studies of theories of consciousness? Visit the
-            ConTraSt database
+            <strong className="underline">{" ConTraSt database"} </strong>
           </a>
         )}
         <div className="headline w-full text-center sm:text-left mt-10 ">
