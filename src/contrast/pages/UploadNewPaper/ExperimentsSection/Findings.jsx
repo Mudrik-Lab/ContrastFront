@@ -79,7 +79,7 @@ export default function Findings({
             is_NCC: row.is_NCC,
             band_lower_bound: row.band_lower_bound,
             band_higher_bound: row.band_higher_bound,
-            AAL_atlas_tag: row.AAL_atlas_tag,
+            AAL_atlas_tags: row.AAL_atlas_tags,
             notes: row.notes,
             analysis_type: row.analysis_type,
             id: row.id,
@@ -120,8 +120,8 @@ export default function Findings({
       return Boolean(field.onset) && Boolean(field.offset);
     }
 
-    if (field?.family == families["Spatial Areas"] && field?.technique == 4) {
-      return [field.AAL_atlas_tag].every(
+    if (field?.family == families["Spatial Areas"] && field?.technique == 5) {
+      return [field.AAL_atlas_tags].every(
         (condition) => Boolean(condition) === true
       );
     }
@@ -172,6 +172,7 @@ export default function Findings({
       {fieldValues.map((fieldValue, index) => {
         console.log(fieldValue);
         const disableCondition = fieldValue.id && !editble[index];
+        console.log(disableCondition);
         return (
           <div
             key={`${classificationName}-${index}-${
@@ -374,18 +375,51 @@ export default function Findings({
                     <div className="flex gap-2 w-full items-center">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
-                          AAL atlas tag
+                          AAL atlas tags
                         </Text>
                       </div>
                       <div className="w-2/3 flex justify-between items-center gap-2">
                         <Select
                           isMulti
-                          disabled={disableCondition}
-                          value={fieldValue.AAL_atlas_tag}
-                          onChange={(value) => {
-                            console.log(value);
+                          styles={{
+                            container: (provided) => ({
+                              ...provided,
+                              width: "100%", // Ensure the container takes full width
+                            }),
+                            control: (provided) => ({
+                              ...provided,
+                              minHeight: "42.13px", // Set minimum height
+                              height: "auto", // Allow it to expand if needed
+                              borderRadius: "0.375rem", // Optional: Rounded corners for better styling
+                              width: "100%",
+                            }),
+                            valueContainer: (provided) => ({
+                              ...provided,
+                              minHeight: "40px", // Ensures the value container also maintains height
+                              display: "flex",
+                              alignItems: "center", // Keeps text vertically centered
+                            }),
+                            input: (provided) => ({
+                              ...provided,
+                              minHeight: "30.13px", // Ensure input field matches height
+                            }),
+                            placeholder: (provided, state) => ({
+                              ...provided,
+                              display: "none",
+                            }),
+                          }}
+                          isDisabled={disableCondition}
+                          value={fieldValue.AAL_atlas_tags?.map((value) => ({
+                            value,
+                            label:
+                              fieldOptions.AALOptions.find(
+                                (opt) => opt.value === value
+                              )?.label || value,
+                          }))} // Ensure the selected value is correctly formatted
+                          onChange={(selectedOptions) => {
                             const newArray = [...fieldValues];
-                            newArray[index].AAL_atlas_tag = value;
+                            newArray[index].AAL_atlas_tags =
+                              selectedOptions.map((option) => option.value); // Extract only values
                             setFieldValues(newArray);
                           }}
                           options={alphabetizeByLabels(fieldOptions.AALOptions)}
