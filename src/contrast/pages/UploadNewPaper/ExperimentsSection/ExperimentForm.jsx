@@ -127,10 +127,10 @@ export default function ExperimentForm({
       value: type.id,
       label: type.name,
     }));
-  const AALOptions = extraConfig?.data.available_AAL_atlas_tag_types?.map(
+  const AALOptions = extraConfig?.data.available_AAL_atlas_tags_types?.map(
     (type) => ({
-      value: type,
-      label: type,
+      value: type.id,
+      label: rawTextToShow(type.name),
     })
   );
 

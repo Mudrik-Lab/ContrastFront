@@ -20,7 +20,7 @@ import {
 import { Tooltip } from "flowbite-react";
 import { ReactComponent as Edit } from "../../../../assets/icons/edit-icon.svg";
 import classNames from "classnames";
-
+import Select from "react-select";
 export default function Findings({
   fieldOptions,
   disabled,
@@ -170,6 +170,7 @@ export default function Findings({
         </div>
       }>
       {fieldValues.map((fieldValue, index) => {
+        console.log(fieldValue);
         const disableCondition = fieldValue.id && !editble[index];
         return (
           <div
@@ -369,30 +370,32 @@ export default function Findings({
                       {sizeWarning(fieldValue)}
                     </div>
                   ) : fieldValue.family == families["Spatial Areas"] &&
-                    fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
-                    <div className="flex gap-2 w-full">
+                    fieldValue.technique == 5 ? ( //technique==4 =>"fMRI"
+                    <div className="flex gap-2 w-full items-center">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
                           AAL atlas tag
                         </Text>
                       </div>
-                      <div className="w-2/3">
-                        <CustomSelect
+                      <div className="w-2/3 flex justify-between items-center gap-2">
+                        <Select
+                          isMulti
                           disabled={disableCondition}
                           value={fieldValue.AAL_atlas_tag}
                           onChange={(value) => {
+                            console.log(value);
                             const newArray = [...fieldValues];
                             newArray[index].AAL_atlas_tag = value;
                             setFieldValues(newArray);
                           }}
                           options={alphabetizeByLabels(fieldOptions.AALOptions)}
                         />
+                        <TooltipExplanation
+                          tooltip={
+                            'Please indicate the area relevant to this finding according to the AAL Atlas. If there is more than one relevant area, choose one here and add the rest in the "Notes" field below.'
+                          }
+                        />
                       </div>
-                      <TooltipExplanation
-                        tooltip={
-                          'Please indicate the area relevant to this finding according to the AAL Atlas. If there is more than one relevant area, choose one here and add the rest in the "Notes" field below.'
-                        }
-                      />
                     </div>
                   ) : fieldValue.family == families["Frequency"] ? (
                     <div className="flex flex-col gap-2">
