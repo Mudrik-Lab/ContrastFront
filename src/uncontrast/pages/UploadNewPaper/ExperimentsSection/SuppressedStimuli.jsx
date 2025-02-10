@@ -133,11 +133,13 @@ export default function SuppressedStimuli({
   const disableAddBttns =
     !fieldValues[fieldValues.length - 1].id ||
     !editble.every((field) => !Boolean(field));
+
+  console.log(values);
   return (
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {
         const disableCondition = fieldValue.id && !editble[index];
-        const targetValues = values.target_stimuli.find(
+        const targetValues = values?.target_stimuli?.find(
           (row) => row.suppressed_stimulus === fieldValue.id
         );
         return (
