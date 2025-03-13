@@ -37,7 +37,6 @@ export default function RegisterComponent() {
       .matches(/^(?=.*[0-9])/, "Password must contain at least one digit")
       .required("Password is required"),
   });
-  console.log(Site.name);
   const handleSubmit = async (values) => {
     try {
       const result = await createRegistration({

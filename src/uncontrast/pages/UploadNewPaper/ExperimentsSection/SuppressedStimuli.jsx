@@ -134,7 +134,6 @@ export default function SuppressedStimuli({
     !fieldValues[fieldValues.length - 1].id ||
     !editble.every((field) => !Boolean(field));
 
-  console.log(values);
   return (
     <ExpandingBox number={fieldsNum} disabled={disabled} headline={"Stimuli"}>
       {fieldValues.map((fieldValue, index) => {

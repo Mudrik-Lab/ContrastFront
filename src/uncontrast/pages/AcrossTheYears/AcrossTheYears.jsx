@@ -55,8 +55,7 @@ export default function AcrossTheYears() {
     },
   ];
 
-  console.log(uniqUncontrastParametersOptions);
-  const { data, isSuccess, isLoading } = useQuery({
+  const { data, isLoading } = useQuery({
     queryKey: [
       "across_the_years",
       "uncontrast",

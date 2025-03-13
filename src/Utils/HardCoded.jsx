@@ -2,7 +2,6 @@ import * as Yup from "yup";
 import { alphabetizeByLabels } from "./functions";
 
 export const screenWidth = window.innerWidth;
-console.log(screenWidth);
 export const screenHeight = window.innerHeight;
 export const navHeight = 70;
 export const sideWidth = 400;

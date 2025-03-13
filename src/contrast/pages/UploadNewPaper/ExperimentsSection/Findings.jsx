@@ -170,9 +170,7 @@ export default function Findings({
         </div>
       }>
       {fieldValues.map((fieldValue, index) => {
-        console.log(fieldValue);
         const disableCondition = fieldValue.id && !editble[index];
-        console.log(disableCondition);
         return (
           <div
             key={`${classificationName}-${index}-${

@@ -10,7 +10,6 @@ export default async function getAcrossTheYears({
   significance,
   interpretation,
 }) {
-  console.log(interpretation);
   return await queryApi({
     url: isUncontrast
       ? `uncontrast_studies/experiments_graphs/trends_over_years/`
