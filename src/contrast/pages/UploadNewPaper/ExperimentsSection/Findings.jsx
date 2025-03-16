@@ -369,7 +369,8 @@ export default function Findings({
                       {sizeWarning(fieldValue)}
                     </div>
                   ) : fieldValue.family == families["Spatial Areas"] &&
-                    fieldValue.technique == 5 ? ( //technique==4 =>"fMRI"
+                    // TODO: change to condition by name (id is not stable)
+                    fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
                     <div className="flex gap-2 w-full items-center">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
