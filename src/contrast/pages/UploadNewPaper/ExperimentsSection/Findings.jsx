@@ -149,6 +149,14 @@ export default function Findings({
     !fieldValues[fieldValues.length - 1].id ||
     !editble.every((field) => !Boolean(field));
 
+  // triming the list of option so no duplicated options
+  const trimmedTechOptions = fieldOptions.techniquesOptions.filter(
+    (obj, index, self) =>
+      index ===
+      self.findIndex((t) => t.value === obj.value && t.label === obj.label)
+  );
+  const fMRI = trimmedTechOptions.find((opt) => opt.label === "fMRI").value;
+
   return (
     <ExpandingBox
       number={
@@ -200,17 +208,7 @@ export default function Findings({
                           newArray[index].technique = value;
                           setFieldValues(newArray);
                         }}
-                        options={alphabetizeByLabels(
-                          // triming the list of option so no duplicated options
-                          fieldOptions.techniquesOptions.filter(
-                            (obj, index, self) =>
-                              index ===
-                              self.findIndex(
-                                (t) =>
-                                  t.value === obj.value && t.label === obj.label
-                              )
-                          )
-                        )}
+                        options={alphabetizeByLabels(trimmedTechOptions)}
                       />
                       <TooltipExplanation
                         text={""}
@@ -369,8 +367,7 @@ export default function Findings({
                       {sizeWarning(fieldValue)}
                     </div>
                   ) : fieldValue.family == families["Spatial Areas"] &&
-                    // TODO: change to condition by name (id is not stable)
-                    fieldValue.technique == 4 ? ( //technique==4 =>"fMRI"
+                    fieldValue.technique == fMRI ? (
                     <div className="flex gap-2 w-full items-center">
                       <div className="w-1/3">
                         <Text weight={"bold"} color={"grayReg"}>
