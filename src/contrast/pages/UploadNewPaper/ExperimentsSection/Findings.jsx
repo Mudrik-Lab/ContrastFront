@@ -155,7 +155,7 @@ export default function Findings({
       index ===
       self.findIndex((t) => t.value === obj.value && t.label === obj.label)
   );
-  const fMRI = trimmedTechOptions.find((opt) => opt.label === "fMRI").value;
+  const fMRI = trimmedTechOptions.find((opt) => opt.label === "fMRI")?.value;
 
   return (
     <ExpandingBox
