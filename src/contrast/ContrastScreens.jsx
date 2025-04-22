@@ -12,7 +12,9 @@ import ParametersDistributionPie from "./pages/ParametersDistributionPie/Paramet
 import ParametersDistributionTheoriesComparison from "./pages/TheoriesComparison/TheoriesComparison";
 import TheoryDriven from "./pages/TheoryDriven/TheoryDriven";
 import TermOfUse from "./pages/TermsOfUse/TermsOfUse";
+import AnatomicalFindings2 from "./pages/AnatomicalFindings/AnatomicalFindings2";
 import AnatomicalFindings from "./pages/AnatomicalFindings/AnatomicalFindings";
+
 import MobileScreen from "../sharedComponents/MobileScreen/MobileScreen";
 import { isMoblile } from "../Utils/HardCoded.jsx";
 import ModesOfGoverance from "./pages/ModesOfGov/ModesOfGoverance";
@@ -111,6 +113,10 @@ const ContrastScreens = () => {
         <Route
           path="/anatomical-findings"
           element={isMoblile ? <MobileScreen /> : <AnatomicalFindings />}
+        />
+         <Route
+          path="/anatomical-findings2"
+          element={isMoblile ? <MobileScreen /> : <AnatomicalFindings2 />}
         />
         <Route
           path="/frequencies"
