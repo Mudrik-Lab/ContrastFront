@@ -9,7 +9,7 @@ export default async function getBrains({
 }) {
 
   return await queryApi({
-    url: `studies/experiments_graphs/brain_images`,
+    url: `studies/experiments_graphs/brain_images/`,
     params: {
       theory,
       is_reporting,
