@@ -24,8 +24,8 @@ import { analyticsPlotInteraction, buildUrl } from "../../../Utils/functions";
 import getBrains from "../../../apiHooks/getBrains";
 import NoResults from "../../../sharedComponents/NoResults";
 
-export default function ParametersDistributionBar() {
-  const [searchParams, setSearchParams] = useSearchParams();
+export default function AnatomicalFindings() {
+  const [searchParams] = useSearchParams();
   const [selectedParent, setSelectedParent] = React.useState();
   const [reporting, setReporting] = React.useState();
   const [consciousness, setConsciousness] = React.useState();
@@ -34,7 +34,7 @@ export default function ParametersDistributionBar() {
   const [isCsv, setIsCsv] = React.useState(false);
 
   const navigate = useNavigate();
-  const pageName = "anatomical-findings";
+  const pageName = "anatomical-findings2";
   const imgType = "image/png";
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
@@ -52,7 +52,6 @@ export default function ParametersDistributionBar() {
   const { data, isLoading } = useQuery({
     queryKey: [
       pageName,
-
       selectedParent?.value,
       reporting,
       theoryDriven,
