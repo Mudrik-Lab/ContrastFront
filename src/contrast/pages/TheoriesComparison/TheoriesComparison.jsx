@@ -168,7 +168,7 @@ export default function ParametersDistributionTheoriesComparison() {
               isClearable={false}
               options={parametersOptions}
               value={selected}
-              aria-label=" Parameter of interest"
+              aria-label="Parameter of interest"
               onChange={(e) => {
                 buildUrl(pageName, "breakdown", e.value, navigate);
               }}
