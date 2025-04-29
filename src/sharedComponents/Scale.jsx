@@ -11,7 +11,7 @@ export default function Scale({ color_list }) {
     borderRadius: "2px",
     border: "1px solid black",
   };
-  //   " #d76964f2 0%, #d7696479 50%, #00000000 100%  "
+
   // Marks on the side of the gradient
   const marks = [
     { value: "1", position: "0.25%" },
