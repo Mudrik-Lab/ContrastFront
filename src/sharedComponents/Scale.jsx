@@ -9,12 +9,12 @@ export default function Scale({ color_list }) {
     position: "relative",
     width: "30px",
     borderRadius: "2px",
-    border: "1px solid #ddd",
+    border: "1px solid black",
   };
   //   " #d76964f2 0%, #d7696479 50%, #00000000 100%  "
   // Marks on the side of the gradient
   const marks = [
-    { value: "1", position: "1%" },
+    { value: "1", position: "0.25%" },
     { value: "0.75", position: "25%" },
     { value: "0.5", position: "50%" },
     { value: "0.25", position: "75%" },
@@ -34,7 +34,7 @@ export default function Scale({ color_list }) {
 
   return (
     <div className="flex items-center justify-center h-1/2">
-      <div className="relative flex h-full">
+      <div className="relative flex h-full ">
         <div
           style={gradientStyle}
           onMouseMove={handleMouseMove}
@@ -49,8 +49,8 @@ export default function Scale({ color_list }) {
               key={index}
               className="absolute flex items-center"
               style={{ top: mark.position, transform: "translateY(-50%)" }}>
-              <div className="w-2 h-px bg-gray-400"></div>
-              <span className="ml-1 text-xs text-gray-500">{mark.value}</span>
+              <div className="w-2 h-[0.25px] bg-black"></div>
+              <span className="ml-1 text-xs text-black">{mark.value}</span>
             </div>
           ))}
         </div>
