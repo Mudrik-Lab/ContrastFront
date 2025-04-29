@@ -100,6 +100,44 @@ export function hexToRgba(hexColor) {
   return `rgba(${r}, ${g}, ${b}, 1)`;
 }
 
+export function CreateScale(stops) {
+  function rgbaFloatToHex(r, g, b, a) {
+    const to255 = (v) => Math.round(v * 255);
+    const toHex = (n) => n.toString(16).padStart(2, "0");
+
+    return (
+      "#" +
+      toHex(to255(r)) +
+      toHex(to255(g)) +
+      toHex(to255(b)) +
+      (a < 1 ? toHex(to255(a)) : "")
+    ).toLowerCase();
+  }
+
+  const res = stops
+    .map((stop) => {
+      // ensure the stop is in the expected format
+      const match = stop.match(/\(([^,]+),\s*\(([^)]+)\)\)/);
+      if (!match) return null;
+      //first item in stop is the position of the color on the scale.
+      const positionOnScale = parseFloat(match[1]);
+      // here we turn it to a percentage (and flip it)
+      const percent = `${Math.round(100 - positionOnScale * 100)}%`;
+
+      //Second item in stop is the color. here we turn it to hex
+      const [r, g, b, a] = match[2].split(",").map(Number);
+      const hex = rgbaFloatToHex(r, g, b, a);
+
+      //this is the format needed for the gradient's css
+      return `${hex} ${percent}`;
+    })
+    .filter(Boolean)
+    .reverse()
+    .join(", ");
+  //desired result's format: "#d76964f2 0%, #d7696479 50%, #00000000 100%"
+  return res;
+}
+
 export function fixArraytoURL(arr, name) {
   const queriesArr = arr?.map((item) => "&" + name + "=" + item.value);
   const urlString = queriesArr?.join("");

@@ -16,13 +16,13 @@ import {
 import { sideSectionClass } from "../../../Utils/HardCoded";
 import getConfiguration from "../../../apiHooks/getConfiguration";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
-import Toggle from "../../../sharedComponents/Toggle";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import { analyticsPlotInteraction, buildUrl } from "../../../Utils/functions";
 
 import getBrains from "../../../apiHooks/getBrains";
 import NoResults from "../../../sharedComponents/NoResults";
+import Scale from "../../../sharedComponents/Scale";
 
 export default function AnatomicalFindings() {
   const [searchParams] = useSearchParams();
@@ -104,7 +104,8 @@ export default function AnatomicalFindings() {
 
     analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
-
+  const color_list = data?.data[0].color_list;
+  console.log(color_list)
   return (
     <div>
       {configurationSuccess && (
@@ -141,7 +142,6 @@ export default function AnatomicalFindings() {
                 />
               </div>
 
-             
               <TypeOfConsciousnessFilter
                 checked={consciousness}
                 setChecked={(e) => {
@@ -173,23 +173,39 @@ export default function AnatomicalFindings() {
                 firstLine={graphsHeaders["Anatomical Findings"].figureLine}
               />
               <div className="flex-1 overflow-auto ">
-              {isLoading ? (
-                <div className="h-full flex flex-col items-center justify-center">
-                  <img src={"/src/assets/brain-loader.gif"} width={"50%"} />
-                  <h1 className="text-xl">We're processing the data...</h1>
-                </div>
-              ) : data && (
-                <div className="h-full flex items-center justify-between">
-                  {data?.data[0].medial?<img
-                    width={"50%"}
-                    src={`data:${imgType};base64,${data?.data[0].medial}`}
-                  />: <NoResults />}
-                 {data?.data[0].lateral? <img
-                    width={"50%"}
-                    src={`data:${imgType};base64,${data?.data[0].lateral}`}
-                  />: <NoResults />}
-                </div>
-              ) }
+                {isLoading ? (
+                  <div className=" flex flex-col items-center justify-center">
+                    <img src={"/src/assets/brain-loader.gif"} width={"50%"} />
+                    <h1 className="text-xl">We're processing the data...</h1>
+                  </div>
+                ) : data&&color_list ? (
+                  <div className="h-full flex flex-col items-center justify-center p-20">
+                    <h3 className="text-xl">{data?.data[0].title_text}</h3>
+                    <div className="h-full flex items-center justify-between">
+                      <div className="flex flex-col items-center justify-center">
+                        <h3 className="text-xl">Medial View </h3>
+                        <img
+                          src={`data:${imgType};base64,${data?.data[0].medial}`}
+                        />
+                      </div>
+
+                      <div className="flex flex-col items-center justify-center">
+                        <h3 className="text-xl ">Lateral View </h3>
+                        <img
+                          src={`data:${imgType};base64,${data?.data[0].lateral}`}
+                        />
+                      </div>
+                      {/* <div
+                        className="w-16 h-1/2 border" style={{ backgroundColor: color }} ></div> */}
+                        <Scale color_list={color_list} />
+                    </div>
+                    <h4 className="text-xl">{data?.data[0].caption_text}</h4>
+                  </div>
+                ) : (
+                  <div className="h-full flex items-center justify-center">
+                    <NoResults />
+                  </div>
+                )}
               </div>
             </div>
           }
