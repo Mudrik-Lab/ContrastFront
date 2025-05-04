@@ -35,7 +35,7 @@ export default function AnatomicalFindings() {
   const [isCsv, setIsCsv] = React.useState(false);
 
   const navigate = useNavigate();
-  const pageName = "anatomical-findings2";
+  const pageName = "anatomical-findings";
   const imgType = "image/png";
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
