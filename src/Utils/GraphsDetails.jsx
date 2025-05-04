@@ -227,7 +227,7 @@ export const graphsHeaders = {
     figureLine:
       "Here, you can see the findings in the spatial domain, of the experiments in the database which used fMRI.",
     figureText:
-      "Red, yellow, blue, and green activations represent experiments supporting the global workspace theories, integrated information, higher order, and re-entry and predictive processing theories, respectively. The intensity of the color of each activation indicates the relative frequency of the activation in each brain area, within the findings supporting each theory family. Note that this does not include any statistical analysis of the data, just a simple “vote count” of the number of experiments in which a specific area was reported. ",
+    "Red, yellow, blue, and cyan activations represent experiments supporting the Global Workspace, Integrated Information, Higher Order, and First Order and Predictive Processing theories, respectively. The intensity of the color of each activation indicates the relative frequency of the activation in each brain area, within the findings supporting each theory family. Note that this does not include any statistical analysis of the data, just a simple “vote count” of the number of experiments in which a specific area was reported. Areas were encoded in the database according to the Automated Anatomical Labeling 3 atlas labels (Rolls et al., 2020), and irrespective of laterality.",
     legendLine:
       "FOT = First order & predictive processing theories, GWT = Global workspace theories, HOT = Higher order theories, IIT = Integrated information theories.",
     siteToDisplay: "contrast",

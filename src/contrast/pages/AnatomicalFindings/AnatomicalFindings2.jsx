@@ -23,6 +23,7 @@ import { analyticsPlotInteraction, buildUrl } from "../../../Utils/functions";
 import getBrains from "../../../apiHooks/getBrains";
 import NoResults from "../../../sharedComponents/NoResults";
 import Scale from "../../../sharedComponents/Scale";
+import Spinner from "../../../sharedComponents/Spinner";
 
 export default function AnatomicalFindings() {
   const [searchParams] = useSearchParams();
@@ -34,20 +35,21 @@ export default function AnatomicalFindings() {
   const [isCsv, setIsCsv] = React.useState(false);
 
   const navigate = useNavigate();
-  const pageName = "anatomical-findings2";
+  const pageName = "anatomical-findings";
   const imgType = "image/png";
 
   const { data: configuration, isSuccess: configurationSuccess } = useQuery(
     [`parent_theories`],
     getConfiguration
   );
-  const parentTheories =
-    configuration?.data.available_parent_theories_including_all.map(
-      (parentTheory) => ({
-        value: parentTheory,
-        label: parentTheory,
-      })
-    );
+  const parentTheories = configuration?.data.available_parent_theories.map(
+    (parentTheory) => ({
+      value: parentTheory,
+      label: parentTheory,
+    })
+
+    // Notice: options here dont include the "all" option. add in the future
+  );
 
   const { data, isLoading } = useQuery({
     queryKey: [
@@ -102,10 +104,10 @@ export default function AnatomicalFindings() {
 
     navigate({ search: queryParams.toString() });
 
-    analyticsPlotInteraction(searchParams, pageName);
+    // analyticsPlotInteraction(searchParams, pageName);
   }, [searchParams, configurationSuccess]);
   const color_list = data?.data[0].color_list;
-  console.log(color_list)
+  
   return (
     <div>
       {configurationSuccess && (
@@ -175,12 +177,11 @@ export default function AnatomicalFindings() {
               <div className="flex-1 overflow-auto ">
                 {isLoading ? (
                   <div className=" flex flex-col items-center justify-center">
-                    <img src={"/src/assets/brain-loader.gif"} width={"50%"} />
-                    <h1 className="text-xl">We're processing the data...</h1>
+                    <Spinner />
                   </div>
-                ) : data&&color_list ? (
+                ) : data && color_list.length>0  ? (
                   <div className="h-full flex flex-col items-center justify-center p-20">
-                    <h3 className="text-xl">{data?.data[0].title_text}</h3>
+                    <h2 className="text-3xl">{data?.data[0].title_text}</h2>
                     <div className="h-full flex items-center justify-between">
                       <div className="flex flex-col items-center justify-center">
                         <h3 className="text-xl">Medial View </h3>
@@ -197,7 +198,7 @@ export default function AnatomicalFindings() {
                       </div>
                       {/* <div
                         className="w-16 h-1/2 border" style={{ backgroundColor: color }} ></div> */}
-                        <Scale color_list={color_list} />
+                      <Scale color_list={color_list} />
                     </div>
                     <h4 className="text-xl">{data?.data[0].caption_text}</h4>
                   </div>

@@ -110,12 +110,12 @@ const ContrastScreens = () => {
             )
           }
         />
-        <Route
+        {/* <Route
           path="/anatomical-findings"
           element={isMoblile ? <MobileScreen /> : <AnatomicalFindings />}
-        />
+        /> */}
          <Route
-          path="/anatomical-findings2"
+          path="/anatomical-findings"
           element={isMoblile ? <MobileScreen /> : <AnatomicalFindings2 />}
         />
         <Route
