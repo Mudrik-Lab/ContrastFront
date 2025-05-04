@@ -179,7 +179,7 @@ export default function AnatomicalFindings() {
                   <div className=" flex flex-col items-center justify-center">
                     <Spinner />
                   </div>
-                ) : data && color_list ? (
+                ) : data && color_list.length>0  ? (
                   <div className="h-full flex flex-col items-center justify-center p-20">
                     <h2 className="text-3xl">{data?.data[0].title_text}</h2>
                     <div className="h-full flex items-center justify-between">
