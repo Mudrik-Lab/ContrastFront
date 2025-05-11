@@ -18,7 +18,7 @@ import getConfiguration from "../../../apiHooks/getConfiguration";
 import PageTemplate from "../../../sharedComponents/PageTemplate";
 import { graphsHeaders } from "../../../Utils/GraphsDetails";
 import { useNavigate, useSearchParams } from "react-router-dom";
-import { analyticsPlotInteraction, buildUrl } from "../../../Utils/functions";
+import {  buildUrl } from "../../../Utils/functions";
 
 import getBrains from "../../../apiHooks/getBrains";
 import NoResults from "../../../sharedComponents/NoResults";
@@ -113,7 +113,7 @@ export default function AnatomicalFindings() {
       {configurationSuccess && (
         <PageTemplate
           control={
-            <SideControl headline={" Parameters Distribution Bar"}>
+            <SideControl headline={"Anatomical Findings"}>
               <Text lg weight="bold">
                 Axis Controls
               </Text>
