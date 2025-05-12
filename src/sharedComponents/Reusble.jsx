@@ -24,6 +24,7 @@ import { rawTextToShow } from "../Utils/functions";
 import { removeToken } from "../Utils/tokenHandler";
 import SaveIcon from "./SaveIcon";
 import TrashIcon from "./TrashIcon";
+import { Site } from "../config/siteType";
 
 export const TextInput = ({ ...config }) => {
   return (
@@ -414,6 +415,7 @@ export const TopGraphText = ({ firstLine, text, legendLine }) => {
   );
 };
 export const CSV = ({ data, ref }) => {
+  console.log(data)
   return (
     <a href={data?.request.responseURL + "&is_csv=true"} id="download_csv">
       <Button
