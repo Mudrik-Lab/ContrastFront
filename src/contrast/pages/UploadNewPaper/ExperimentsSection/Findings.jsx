@@ -120,10 +120,16 @@ export default function Findings({
       return Boolean(field.onset) && Boolean(field.offset);
     }
 
-    if (field?.family == families["Spatial Areas"] && field?.technique == 5) {
-      return [field.AAL_atlas_tags].every(
-        (condition) => Boolean(condition) === true
-      );
+    if (field?.family == families["Spatial Areas"]) {
+      if (field?.technique == fMRI) {
+        // AAL tags required only for fMRI
+        return [field.AAL_atlas_tags].every(
+          (condition) => Boolean(condition) === true
+        );
+      } else {
+        // For non-fMRI techniques, no AAL tags required
+        return true;
+      }
     }
     if (field?.family == families["Frequency"]) {
       return (
@@ -156,6 +162,9 @@ export default function Findings({
       self.findIndex((t) => t.value === obj.value && t.label === obj.label)
   );
   const fMRI = trimmedTechOptions.find((opt) => opt.label === "fMRI")?.value;
+  if (!fMRI) {
+    console.warn("fMRI technique not found in available options");
+  }
 
   return (
     <ExpandingBox
