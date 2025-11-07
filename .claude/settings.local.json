@@ -1,0 +1,12 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(identify:*)",
+      "Bash(sips:*)",
+      "Bash(mkdir:*)",
+      "Bash(wc:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}
