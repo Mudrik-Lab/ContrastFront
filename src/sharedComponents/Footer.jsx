@@ -2,6 +2,7 @@ import React from "react";
 import Logo from "../assets/logoes/logo-negative.png";
 import UnconLogo from "../assets/logoes/uncon-negative.png";
 import CifarLogo from "../assets/logoes/cifar.png";
+import ErcNegativeLogo from "../assets/logoes/erc-negative.png";
 import { Text } from "./Reusble";
 import { ReactComponent as Drorsoft } from "../assets/logoes/drorsoft-logo.svg";
 import { footerHeight, isMoblile } from "../Utils/HardCoded";
@@ -29,13 +30,20 @@ export default function Footer({ isFixed }) {
             High Level <br /> Cognition Lab
           </Text>
         </div>
-        <div className="logo-cifar flex gap-1 items-center ">
-          <img src={CifarLogo} alt="CifarLogo" width={"60px"} />
-          <div className="invisible lg:visible border-r border-white h-8 "></div>
-          <Text xs color="white" className={"invisible lg:visible"}>
-            Brain, Mind and <br /> Consciousness program
-          </Text>
-        </div>
+        {isUncontrast && (
+          <>
+            <a href="https://cifar.ca/" target="_blank" rel="noreferrer">
+              <img src={CifarLogo} alt="cifar logo on footer" width={60} />
+            </a>
+            <a href="https://erc.europa.eu/" target="_blank" rel="noreferrer">
+              <img src={ErcNegativeLogo} alt="erc logo on footer" width={60} />
+            </a>
+            <div className="invisible lg:visible border-r border-white h-8 "></div>
+            <Text xs color="white" className={"invisible lg:visible"}>
+              Brain, Mind and <br /> Consciousness program
+            </Text>
+          </>
+        )}
       </div>
 
       <div className="flex flex-col justify-center items-center sm:flex-row sm:gap-2 lg:gap-14 my-6 sm:my-0 w-1/2">

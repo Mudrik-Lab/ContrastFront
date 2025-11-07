@@ -7,6 +7,7 @@ import { ReactComponent as X } from "../assets/icons/x-icon.svg";
 import Logo from "../assets/logoes/logo.png";
 import UnconLogo from "../assets/logoes/uncon-logo.png";
 import CifarLogo from "../assets/logoes/cifar.png";
+import ErcLogo from "../assets/logoes/erc-logo.png";
 import { useQuery } from "@tanstack/react-query";
 import { Button, Text } from "./Reusble";
 import { NavLink, useNavigate } from "react-router-dom";
@@ -177,21 +178,37 @@ export default function Navbar() {
                 </p>
               </div>
 
-              <a
-                href="https://cifar.ca/"
-                target="_blank"
-                className="logo-cifar flex gap-1 items-center ">
-                <img
-                  src={CifarLogo}
-                  alt="CifarLogo"
-                  className="w-[45px] xl:w-[55px]"
-                />
-                <div className=" border-r border-black h-6 xl:h-8 "></div>
-                <p className="text-grayHeavy text-[10px] xl:text-xs ">
-                  {" "}
-                  Brain, Mind and <br /> Consciousness program
-                </p>
-              </a>
+              {isUncontrast && (
+                <>
+                  <a
+                    href="https://cifar.ca/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="logo-cifar flex gap-1 items-center ">
+                    <img
+                      src={CifarLogo}
+                      alt="cifar logo on navbar"
+                      className="w-[45px] sm:w-[50px] lg:w-[55px]"
+                    />
+                  </a>
+                  <a
+                    href="https://erc.europa.eu/"
+                    target="_blank"
+                    rel="noreferrer"
+                    className="logo-erc flex gap-1 items-center ">
+                    <img
+                      src={ErcLogo}
+                      alt="erc logo on navbar"
+                      className="w-[45px] sm:w-[50px] lg:w-[55px]"
+                    />
+                  </a>
+                  <div className=" border-r border-black h-6 xl:h-8 "></div>
+                  <p className="text-grayHeavy text-[10px] xl:text-xs ">
+                    {" "}
+                    Brain, Mind and <br /> Consciousness program
+                  </p>
+                </>
+              )}
             </div>
             <div className="navigate-buttons w-1/3 items-center justify-center flex ">
               <ul className="flex flex-row text-black space-x-12 items-center text-center">

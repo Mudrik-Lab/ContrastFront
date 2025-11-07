@@ -3,6 +3,7 @@ import { Text } from "../../../sharedComponents/Reusble";
 import Tempeleton from "../../../assets/logoes/tempelton.png";
 import TelAvivUni from "../../../assets/logoes/tlv-uni.png";
 import Cifar from "../../../assets/logoes/cifar.png";
+import ErcLogo from "../../../assets/logoes/erc-logo.png";
 
 export default function UnconTraStUseCases() {
   const cardsInfo = [
@@ -61,20 +62,24 @@ export default function UnconTraStUseCases() {
       </div>
 
       <div className="footer flex justify-center items-center gap-6 mt-8 sm:mt-0">
-        <a href="https://www.arc-cogitate.com/" target="_blank">
+        <a href="https://www.arc-cogitate.com/" target="_blank" rel="noreferrer">
           <img src={Cifar} width={110} alt="https://cifar.ca/ " />{" "}
         </a>{" "}
         <a
           href="https://live-templeton-next-nhemv.appa.pantheon.site/"
-          target="_blank">
+          target="_blank"
+          rel="noreferrer">
           <img
             src={Tempeleton}
             alt="https://live-templeton-next-nhemv.appa.pantheon.site/"
           />{" "}
         </a>
-        <a href="https://www.tau.ac.il/" target="_blank">
+        <a href="https://www.tau.ac.il/" target="_blank" rel="noreferrer">
           <img src={TelAvivUni} alt="https://www.tau.ac.il/" />{" "}
         </a>{" "}
+        <a href="https://erc.europa.eu/" target="_blank" rel="noreferrer">
+          <img src={ErcLogo} width={110} alt="erc logo" />{" "}
+        </a>
       </div>
     </div>
   );
